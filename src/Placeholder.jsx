@@ -5,9 +5,8 @@ function Placeholder() {
     <div className="Placeholder">
       <h1>
         Under Construction
-        <br />
-        Coming Soon
       </h1>
+      <p>Coming Soon</p>
     </div>
   );
 }
