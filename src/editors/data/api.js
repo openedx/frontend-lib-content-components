@@ -1,49 +1,42 @@
 import { getAuthenticatedHttpClient } from '@edx/frontend-platform/auth';
+import { ActionStates, normalizeContent } from './constants';
 
 async function getAsync(setValue, setError, setLoading, params) {
   try {
-    setLoading(true);
-    const result = await new Promise(r => setTimeout(r, 2000)); //getAuthenticatedHttpClient().get(...params);
-    setValue({
-      data: "<p>Im baby palo santo ugh celiac fashion axe. La croix lo-fi venmo whatever. Beard man braid migas single-origin coffee forage ramps.</p>",
-      parentUrl: "ahiuhaknkanda",
-    }) //(result);
+    setLoading(ActionStates.IN_PROGRESS);
+    const result = await getAuthenticatedHttpClient().get(...params);
+    setValue(result);
   } catch (e) {
     setError(e);
   } finally {
-    setLoading(false);
+    setLoading(ActionStates.FINISHED);
   }
 }
 
 async function saveAsync(setInProgress, setResponse, params) {
   try {
-    const result = await new Promise(r => setTimeout(r, 2000)); //getAuthenticatedHttpClient().post(...params);
-    setResponse(
-      true
-    ) //(result);
+    const result = await getAuthenticatedHttpClient().post(...params);
+    setResponse(result);
   } catch (e) {
     setResponse(e);
   } finally {
-    setInProgress('complete');
+    setInProgress(ActionStates.FINISHED);
   }
 }
 
-export function fetchBlockById(setValue, setError, setLoading, courseId, blockId, studioEndpointUrl) {
-  const url = `${studioEndpointUrl}/api/v2/???????/${courseId}/${blockId}`;
-  const params = [url];
-  const block = getAsync(setValue, setError, setLoading, params);
-  return block;
-}
-export function fetchUnitUrl(setValue, setError, setLoading, blockId, courseId, studioEndpointUrl) {
-  const url = `${studioEndpointUrl}/api/v2/???????/${courseId}/${blockId}`;
-  const params = [url];
-  const unit = getAsync(setValue, setError, setLoading, params);
-  return unit;
+export function fetchBlockById(setValue, setError, setLoading, blockId, studioEndpointUrl) {
+  const url = `${studioEndpointUrl}/xblock/${blockId}`;
+  getAsync(setValue, setError, setLoading, [url]);
 }
 
-export function saveBlock(blockId, courseId, studioEndpointUrl, content, setInProgress, setResponse) {
-  const url = `${studioEndpointUrl}/api/v2/???????/${courseId}/${blockId}`;
-  const params = [url, content];
-  const saveResponse = saveAsync(setInProgress, setResponse, params);
-  return saveResponse;
+export function fetchUnitById(setValue, setError, setLoading, blockId, studioEndpointUrl) {
+  const url = `${studioEndpointUrl}/xblock/${blockId}?fields=ancestorInfo`;
+  getAsync(setValue, setError, setLoading, [url]);
+}
+
+export function saveBlock(blockId, blockType, courseId, studioEndpointUrl, content, setInProgress, setResponse) {
+  const normalizedContent = normalizeContent(blockType, content, blockId, courseId);
+  const url = `${studioEndpointUrl}/xblock/${encodeURI(blockId)}`;
+  const params = [url, normalizedContent];
+  saveAsync(setInProgress, setResponse, params);
 }

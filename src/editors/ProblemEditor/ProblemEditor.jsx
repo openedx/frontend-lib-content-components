@@ -1,11 +1,6 @@
-import React from "react";
+import React from 'react';
 
-export default function ProblemEditor({
-  courseId,
-  blockType,
-  blockId,
-  studioEndpointUrl
-}) {
+export default function ProblemEditor() {
   return (
     <div className="problem-editor">
       <span>Problem</span>

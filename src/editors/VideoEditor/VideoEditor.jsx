@@ -1,12 +1,6 @@
+import React from 'react';
 
-import React from "react";
-
-export default function VideoEditor({
-  courseId,
-  blockType,
-  blockId,
-  studioEndpointUrl
-}) {
+export default function VideoEditor() {
   return (
     <div className="video-editor">
       <span>Video</span>
