@@ -27,7 +27,7 @@ export default function EditorPage({
         return (
           <FormattedMessage
             id="authoring.editorpage.selecteditor.error"
-            defaultMessage='Error: Could Not find Editor'
+            defaultMessage="Error: Could Not find Editor"
             description="Error Message Dispayed When An unsopported Editor is desired in V2"
           />
         );
