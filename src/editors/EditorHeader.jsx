@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import React, { useContext } from 'react';
 import { Close } from '@edx/paragon/icons';
 import EditorPageContext from './EditorPageContext';
-import { ActionStates } from './data/constants';
+import { ActionStates, mapBlockTypeToName } from './data/constants';
 
 const EditorHeader = ({ title }) => {
   const { unitUrl, unitUrlLoading, studioEndpointUrl } = useContext(EditorPageContext);
@@ -13,7 +13,7 @@ const EditorHeader = ({ title }) => {
   const onCancelClicked = () => {
     if (unitUrlLoading === ActionStates.FINISHED) {
       const destination = `${studioEndpointUrl}/container/${unitUrl.data.ancestors[0].id}`;
-      window.location.href = destination;
+      window.location.assign(destination);
     } else {
       // TODO: ADD AN ELSE HERE
     }
@@ -23,7 +23,7 @@ const EditorHeader = ({ title }) => {
       <ModalDialog.Header>
         <ActionRow>
           <ModalDialog.Title>
-            {title}
+            {mapBlockTypeToName(title)}
           </ModalDialog.Title>
           <ActionRow.Spacer />
           <IconButton

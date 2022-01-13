@@ -19,13 +19,30 @@ const EditorPageProvider = ({
   const [saveUnderway, setSaveUnderway] = useState(ActionStates.NOT_BEGUN);
   useEffect(() => {
     if (unitUrlLoading === ActionStates.NOT_BEGUN) {
-      fetchUnitById(setUnitUrlValue, setUnitUrlError, setUnitUrlLoading, blockId, studioEndpointUrl);
+      fetchUnitById({ // pass as object for testing purposes.
+        setValue: setUnitUrlValue,
+        setError: setUnitUrlError,
+        setLoading: setUnitUrlLoading,
+      }, blockId, studioEndpointUrl);
     }
     if (blockLoading === ActionStates.NOT_BEGUN) {
-      fetchBlockById(setBlockValue, setBlockError, setBlockLoading, blockId, studioEndpointUrl);
+      fetchBlockById(
+        {
+          setValue: setBlockValue,
+          setError: setBlockError,
+          setLoading: setBlockLoading,
+        }, blockId, studioEndpointUrl,
+      );
     }
     if (saveUnderway === ActionStates.IN_PROGRESS) {
-      saveBlock(blockId, blockType, courseId, studioEndpointUrl, blockContent, setSaveUnderway, setSaveResponse);
+      saveBlock(
+        blockId,
+        blockType,
+        courseId,
+        studioEndpointUrl,
+        blockContent,
+        { setInProgress: setSaveUnderway, setResponse: setSaveResponse },
+      );
     }
   }, [saveUnderway]);
 

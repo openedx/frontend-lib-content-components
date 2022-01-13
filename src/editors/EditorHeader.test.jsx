@@ -1,86 +1,52 @@
-import React from "react";
-import EditorHeader from "./EditorHeader";
-import { render, screen } from "@testing-library/react";
-import { EditorPageContext } from "./EditorPageProvider";
-import userEvent from "@testing-library/user-event";
+import React from 'react';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import EditorHeader from './EditorHeader';
+import EditorPageContext from './EditorPageContext';
+import { ActionStates } from './data/constants';
 
-describe("EditorHeader", () => {
-    describe("It Renders correctly", () => {
-        const title = "An Awesome Block"
-        const context = {
-        };
-        beforeEach(() => {
-            render(
-              <EditorPageContext.Provider value={context}>
-                <EditorHeader title={title}/>
-              </EditorPageContext.Provider>
-            );
-        });
-        it('Renders the title', () => {
-            expect(screen.getbyText(title).toBeTruthy());
-        });
-        it('Renders the close button', () => {
-            expect(screen.getByLabelText("Close").toBeTruthy());
-        });
-    });
-    describe("It handles context correctly when not loaded", () => {
-        const title = "An Awesome Block"
-        const context = {
-            unitUrl: null,
-            unitUrlError: null,
-            unitUrlLoading: true,
-        };
-        beforeEach(() => {
-            render(
-              <EditorPageContext.Provider value={context}>
-                <EditorHeader title={title}/>
-              </EditorPageContext.Provider>
-            );
-            userEvent.click(screen.getByLabelText("Close"));
-        });
-        it('Nothing Happens on click of close', () => {
-           // TODO: FINSIH THESE TESTS
-        });
-    });
-    describe("It handles context correctly when loaded correctly", () => {
-        const title = "An Awesome Block"
-        const context = {
-            unitUrl: 'edx.org',
-            unitUrlError: null,
-            unitUrlLoading: false,
-        };
-        beforeEach(() => {
-            render(
-              <EditorPageContext.Provider value={context}>
-                <EditorHeader title={title}/>
-              </EditorPageContext.Provider>
-            );
-            userEvent.click(screen.getByLabelText("Close"));
-        });
-        it('Nothing Happens on click of close', () => {
-            expect(screen.).toBeTruthy()
-        });
-    });
-    describe("It handles context correctly when loaded with error", () => {
-        const title = "An Error Block"
-        const context = {
-            unitUrl: 'edx.com',
-            unitUrlError: {message: "Error: You Didn't go to the right unit",},
-            unitUrlLoading: false,
-        };
-        beforeEach(() => {
-            render(
-              <EditorPageContext.Provider value={context}>
-                <EditorHeader title={title}/>
-              </EditorPageContext.Provider>
-            );
-            userEvent.click(screen.getByLabelText("Close"));
-        });
-        it('Nothing Happens on click of close', () => {
-            expect(screen.).toBeTruthy()
-        });
-    });
+delete window.location;
+window.location = {
+  assign: jest.fn(),
+};
 
+test('Rendering And Click Button: Not YetLoaded', () => {
+  const title = 'An Awesome Block';
+  const context = {
+    unitUrlLoading: ActionStates.IN_PROGRESS,
+  };
+  render(
+    <EditorPageContext.Provider value={context}>
+      <EditorHeader title={title} />
+    </EditorPageContext.Provider>,
+  );
+  expect(screen.getByText(title)).toBeTruthy();
+  expect(screen.getByLabelText('Close')).toBeTruthy();
+  userEvent.click(screen.getByLabelText('Close'));
+  expect(window.location.assign).not.toHaveBeenCalled();
+});
 
-
+test('Rendering And Click Button: Loaded', () => {
+  const title = 'An Awesome Block';
+  const context = {
+    unitUrlLoading: ActionStates.FINISHED,
+    unitUrl: {
+      data: {
+        ancestors:
+        [
+          { id: 'fakeblockid' },
+        ],
+      },
+    },
+    studioEndpointUrl: 'Testurl',
+  };
+  render(
+    <EditorPageContext.Provider value={context}>
+      <EditorHeader title={title} />
+    </EditorPageContext.Provider>,
+  );
+  expect(screen.getByText(title)).toBeTruthy();
+  expect(screen.getByLabelText('Close')).toBeTruthy();
+  userEvent.click(screen.getByLabelText('Close'));
+  expect(window.location.assign).toHaveBeenCalled();
 });

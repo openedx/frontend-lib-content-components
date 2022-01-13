@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { ModalDialog } from '@edx/paragon';
+import { FormattedMessage } from '@edx/frontend-platform/i18n';
 import TextEditor from './TextEditor/TextEditor';
 import VideoEditor from './VideoEditor/VideoEditor';
 import ProblemEditor from './ProblemEditor/ProblemEditor';
@@ -23,7 +24,13 @@ export default function EditorPage({
       case 'problem':
         return <ProblemEditor />;
       default:
-        return <p>Error- Invalid Editor</p>;
+        return (
+          <FormattedMessage
+            id="authoring.editorpage.selecteditor.error"
+            defaultMessage={`Error: Could Not find Editor of type ${type}`}
+            description="Error Message Dispayed When An unsopported Editor is desired in V2"
+          />
+        );
     }
   };
 

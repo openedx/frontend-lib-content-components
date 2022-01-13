@@ -1,60 +1,51 @@
-import React from "react";
-import TextEditor from "./TextEditor";
-import { render, screen } from "@testing-library/react";
-import { EditorPageContext } from "../EditorPageProvider";
+import React from 'react';
+import { render, screen } from '@testing-library/react';
+import TextEditor from './TextEditor';
+import EditorPageContext from '../EditorPageContext';
+import { ActionStates } from '../data/constants';
 
-describe("EditorHeader", () => {
-    describe("Loading State", () => {
-        const context = {
-            blockValue:null,
-            blockError:null,
-            blockLoading:true,
-            editorRef: null,
-        };
-        beforeEach(() => {
-            render(
-              <EditorPageContext.Provider value={context}>
-                <TextEditor/>
-              </EditorPageContext.Provider>
-            );
-        });
-        it('Renders a spinner', () => {
-            expect(screen.getbyText("Loading")).toBeTruthy();
-        });
-    });
-    describe("Loaded State-- No Error", () => {
-        const htmltext = '<p>Im baby palo santo ugh celiac fashion axe. La croix lo-fi venmo whatever. Beard man braid migas single-origin coffee forage ramps.</p>';
-        const context = {
-            blockValue: text,
-            blockError:null,
-            blockLoading:false,
-            editorRef: React.useRef(null),
-        };
-        beforeEach(() => {
-            render(
-              <EditorPageContext.Provider value={context}>
-                <TextEditor/>
-              </EditorPageContext.Provider>
-            );
-        });
-        it('Renders an Editor', () => {
-            expect(screen.getbyRole("application")).toBeTruthy();
-        });
-        it('Can extract content from the editor with default content', () => {
-            expect(context.editorRef.current.getContent()=== htmltext).toBeTruthy();
-        });
-    });
-    describe("Loaded State-- Error",()=>{
-        const error = { message: 'There was an error loading content'}
-        const context = {
-            blockValue: "",
-            blockError: error,
-            blockLoading:false,
-            editorRef: null,
-        };
-        it('Renders an Editor and a toast', () => {
-            expect(screen.findbyRole("alert")).toBeTruthy();
-            expect(screen.getbyRole("application")).toBeTruthy();
-        });
-    });
+// Per https://github.com/tinymce/tinymce-react/issues/91 React unit testing in JSDOM is not supported by tinymce.
+// Consequently, mock the Editor out.
+const mockRole = 'Tiny-MCE-Mock';
+jest.mock('@tinymce/tinymce-react', () => {
+  const originalModule = jest.requireActual('@tinymce/tinymce-react');
+  return {
+    __esModule: true,
+    ...originalModule,
+    Editor: () => <div role={mockRole} />
+    ,
+  };
+});
+
+test('Loading State:', () => {
+  const context = {
+    blockValue: null,
+    blockError: null,
+    blockLoading: ActionStates.IN_PROGRESS,
+    editorRef: null,
+  };
+  render(
+    <EditorPageContext.Provider value={context}>
+      <TextEditor />
+    </EditorPageContext.Provider>,
+  );
+  expect(screen.queryByRole(mockRole)).not.toBeTruthy();
+});
+test('Loaded State-- No Error', () => {
+  const htmltext = 'Im baby palo santo ugh celiac fashion axe. La croix lo-fi venmo whatever. Beard man braid migas single-origin coffee forage ramps.';
+  const context = {
+    blockValue:
+      {
+        data:
+      { data: { htmltext } },
+      },
+    blockError: null,
+    blockLoading: ActionStates.FINISHED,
+  };
+  render(
+    <EditorPageContext.Provider value={context}>
+      <TextEditor />
+    </EditorPageContext.Provider>,
+  );
+  expect(screen.findByRole(mockRole)).toBeTruthy();
 });

@@ -1,42 +1,42 @@
 import { getAuthenticatedHttpClient } from '@edx/frontend-platform/auth';
 import { ActionStates, normalizeContent } from './constants';
 
-async function getAsync(setValue, setError, setLoading, params) {
+async function getAsync(updateContext, params) {
   try {
-    setLoading(ActionStates.IN_PROGRESS);
+    updateContext.setLoading(ActionStates.IN_PROGRESS);
     const result = await getAuthenticatedHttpClient().get(...params);
-    setValue(result);
+    updateContext.setValue(result);
   } catch (e) {
-    setError(e);
+    updateContext.setError(e);
   } finally {
-    setLoading(ActionStates.FINISHED);
+    updateContext.setLoading(ActionStates.FINISHED);
   }
 }
 
-async function saveAsync(setInProgress, setResponse, params) {
+async function saveAsync(updateContext, params) {
   try {
     const result = await getAuthenticatedHttpClient().post(...params);
-    setResponse(result);
+    updateContext.setResponse(result);
   } catch (e) {
-    setResponse(e);
+    updateContext.setResponse(e);
   } finally {
-    setInProgress(ActionStates.FINISHED);
+    updateContext.setInProgress(ActionStates.FINISHED);
   }
 }
 
-export function fetchBlockById(setValue, setError, setLoading, blockId, studioEndpointUrl) {
+export async function fetchBlockById(updateContext, blockId, studioEndpointUrl) {
   const url = `${studioEndpointUrl}/xblock/${blockId}`;
-  getAsync(setValue, setError, setLoading, [url]);
+  getAsync(updateContext, [url]);
 }
 
-export function fetchUnitById(setValue, setError, setLoading, blockId, studioEndpointUrl) {
+export async function fetchUnitById(updateContext, blockId, studioEndpointUrl) {
   const url = `${studioEndpointUrl}/xblock/${blockId}?fields=ancestorInfo`;
-  getAsync(setValue, setError, setLoading, [url]);
+  getAsync(updateContext, [url]);
 }
 
-export function saveBlock(blockId, blockType, courseId, studioEndpointUrl, content, setInProgress, setResponse) {
+export async function saveBlock(blockId, blockType, courseId, studioEndpointUrl, content, updateContext) {
   const normalizedContent = normalizeContent(blockType, content, blockId, courseId);
   const url = `${studioEndpointUrl}/xblock/${encodeURI(blockId)}`;
   const params = [url, normalizedContent];
-  saveAsync(setInProgress, setResponse, params);
+  saveAsync(updateContext, params);
 }
