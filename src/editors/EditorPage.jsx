@@ -27,7 +27,7 @@ export default function EditorPage({
         return (
           <FormattedMessage
             id="authoring.editorpage.selecteditor.error"
-            defaultMessage={`Error: Could Not find Editor of type ${type}`}
+            defaultMessage='Error: Could Not find Editor'
             description="Error Message Dispayed When An unsopported Editor is desired in V2"
           />
         );
@@ -42,7 +42,7 @@ export default function EditorPage({
       studioEndpointUrl={studioEndpointUrl}
     >
       <ModalDialog
-        title={blockType} // TODO: INTERNALTIONALIZE STRINGS and add "Text":
+        title={blockType}
         isOpen
         size="fullscreen"
         onClose={() => {}}

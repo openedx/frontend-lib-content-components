@@ -14,8 +14,6 @@ const EditorHeader = ({ title }) => {
     if (unitUrlLoading === ActionStates.FINISHED) {
       const destination = `${studioEndpointUrl}/container/${unitUrl.data.ancestors[0].id}`;
       window.location.assign(destination);
-    } else {
-      // TODO: ADD AN ELSE HERE
     }
   };
   return (

@@ -34,8 +34,6 @@ export default function EditorFooter() {
     if (unitUrlLoading === ActionStates.FINISHED) {
       const destination = `${studioEndpointUrl}/container/${unitUrl.data.ancestors[0].id}`;
       navigateAway(destination);
-    } else {
-      // TODO: add an else here
     }
   };
   useEffect(() => {
