@@ -35,5 +35,5 @@ test('rendering correctly with expected Error', () => {
   expect(screen.getByText('Cancel')).toBeTruthy();
   expect(screen.getAllByLabelText('Close')).toBeTruthy();
   expect(screen.getByText('Add To Course')).toBeTruthy();
-  expect(screen.getByText(`Error: Could Not find Editor`)).toBeTruthy();
+  expect(screen.getByText('Error: Could Not find Editor')).toBeTruthy();
 });
