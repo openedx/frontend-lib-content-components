@@ -45,7 +45,7 @@ export default function EditorFooter() {
     }
   }, [saveUnderway]);
   return (
-    <div className="editor-footer">
+    <div className="editor-footer mt-auto">
       { saveUnderway === 'complete' && saveResponse.error != null
       && (
       <Toast><FormattedMessage

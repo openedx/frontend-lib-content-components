@@ -17,8 +17,32 @@ const blockId = 'coursev1:2uX@4345432';
 const studioEndpointUrl = 'hortus.coa';
 
 test('fetchBlockById 404', () => {
+  get.mockRejectedValue({ response: { status: 401 } });
+  fetchBlockById(saveFunctionsGet, blockId, studioEndpointUrl);
+  expect(saveFunctionsGet.setLoading).toHaveBeenCalled();
+  expect(saveFunctionsGet.setError).toHaveBeenCalled();
+});
+test('fetchBlockById 403', () => {
+  get.mockRejectedValue({ response: { status: 403 } });
+  fetchBlockById(saveFunctionsGet, blockId, studioEndpointUrl);
+  expect(saveFunctionsGet.setLoading).toHaveBeenCalled();
+  expect(saveFunctionsGet.setError).toHaveBeenCalled();
+});
+test('fetchBlockById 408', () => {
+  get.mockRejectedValue({ response: { status: 408 } });
+  fetchBlockById(saveFunctionsGet, blockId, studioEndpointUrl);
+  expect(saveFunctionsGet.setLoading).toHaveBeenCalled();
+  expect(saveFunctionsGet.setError).toHaveBeenCalled();
+});
+test('fetchBlockById 404', () => {
   get.mockRejectedValue({ response: { status: 404 } });
   fetchBlockById(saveFunctionsGet, blockId, studioEndpointUrl);
+  expect(saveFunctionsGet.setLoading).toHaveBeenCalled();
+  expect(saveFunctionsGet.setError).toHaveBeenCalled();
+});
+test('fetchUnitById 401', () => {
+  get.mockRejectedValue({ response: { status: 401 } });
+  fetchUnitById(saveFunctionsGet, blockId, studioEndpointUrl);
   expect(saveFunctionsGet.setLoading).toHaveBeenCalled();
   expect(saveFunctionsGet.setError).toHaveBeenCalled();
 });
@@ -28,7 +52,12 @@ test('fetchUnitById 404', () => {
   expect(saveFunctionsGet.setLoading).toHaveBeenCalled();
   expect(saveFunctionsGet.setError).toHaveBeenCalled();
 });
-
+test('saveBlock 408', () => {
+  post.mockRejectedValue({ response: { status: 404 } });
+  saveBlock(blockId, 'funBlock', 'demo2uX', studioEndpointUrl, 'Im baby palo santo ugh celiac fashion axe. La croix lo-fi venmo whatever. Beard man braid migas single-origin coffee forage ramps.', saveFunctionsSave);
+  expect(saveFunctionsSave.setInProgress).toHaveBeenCalled();
+  expect(saveFunctionsSave.setResponse).toHaveBeenCalled();
+});
 test('saveBlock 404', () => {
   post.mockRejectedValue({ response: { status: 404 } });
   saveBlock(blockId, 'funBlock', 'demo2uX', studioEndpointUrl, 'Im baby palo santo ugh celiac fashion axe. La croix lo-fi venmo whatever. Beard man braid migas single-origin coffee forage ramps.', saveFunctionsSave);

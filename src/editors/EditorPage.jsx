@@ -49,9 +49,12 @@ export default function EditorPage({
         hasCloseButton={false}
         variant="dark"
       >
-        <EditorHeader title={blockType} />
-        {selectEditor(blockType)}
-        <EditorFooter />
+        <div className="d-flex flex-column vh-100">
+          <EditorHeader title={blockType} />
+          {selectEditor(blockType)}
+          <EditorFooter />
+        </div>
+
       </ModalDialog>
     </EditorPageProvider>
   );

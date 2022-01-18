@@ -1,7 +1,6 @@
-// TODO: Add translations here?
 export function mapBlockTypeToName(blockType) {
   if (blockType === 'html') {
-    return 'Text'; // or a translation
+    return 'Text';
   }
   return blockType[0].toUpperCase() + blockType.substring(1);
 }
@@ -13,8 +12,13 @@ export const ActionStates = {
 };
 
 export function normalizeContent(blockType, content, blockId, courseId) {
+  /*
+  For Each V2 Block type, return a javascript object which updates the requisite data fields,
+  to be POST-messaged to the CMS.
+  */
   switch (blockType) {
     case 'html':
+      /**/
       return {
         id: blockId,
         category: blockType,

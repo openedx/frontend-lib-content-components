@@ -4,6 +4,9 @@ import { fetchBlockById, fetchUnitById, saveBlock } from './data/api';
 import EditorPageContext from './EditorPageContext';
 import { ActionStates } from './data/constants';
 
+/* This Component serves as a container for state for V2 editors,
+to avoid prop drilling for: saving, loading, and navigating away from content. */
+
 const EditorPageProvider = ({
   blockType, courseId, blockId, studioEndpointUrl, children,
 }) => {

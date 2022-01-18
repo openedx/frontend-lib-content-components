@@ -11,7 +11,7 @@ const TextEditor = () => {
   } = useContext(EditorPageContext);
 
   return (
-    <div className="editor-body row-8">
+    <div className="editor-body h-75">
       <Toast show={blockError != null} onClose={() => {}}>
         <FormattedMessage
           id="authoring.texteditor.load.error"
@@ -20,7 +20,11 @@ const TextEditor = () => {
         />
       </Toast>
       {blockLoading !== ActionStates.FINISHED
-        ? <Spinner animation="border" className="m-3" screenreadertext="loading" />
+        ? (
+          <div className="text-center p-6">
+            <Spinner animation="border" className="m-3" screenreadertext="loading" />
+          </div>
+        )
         : (
           <Editor
             onInit={(evt, editor) => { editorRef.current = editor; }}
@@ -30,7 +34,7 @@ const TextEditor = () => {
               menubar: false,
               plugins: [
                 'advlist autolink lists link image charmap print preview anchor',
-                'searchreplace visualblocks code fullscreen',
+                'searchreplace visual blocks code fullscreen',
                 'insertdatetime media table paste code help wordcount',
                 'autoresize',
               ],
@@ -40,7 +44,8 @@ const TextEditor = () => {
             + 'removeformat | help',
               content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
               max_height: 900,
-              min_height: 500,
+              min_height: 700,
+              branding: false,
             }}
           />
         )}

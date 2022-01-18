@@ -10,7 +10,7 @@ window.location = {
   assign: jest.fn(),
 };
 
-test('Rendering And Click Button: Not YetLoaded', () => {
+test('Rendering And Click Close Button: Does not Navigate off of Page When Loading', () => {
   const title = 'An Awesome Block';
   const context = {
     unitUrlLoading: ActionStates.IN_PROGRESS,
@@ -26,7 +26,7 @@ test('Rendering And Click Button: Not YetLoaded', () => {
   expect(window.location.assign).not.toHaveBeenCalled();
 });
 
-test('Rendering And Click Button: Loaded', () => {
+test('Rendering And Click Button: Loaded Navigates Away', () => {
   const title = 'An Awesome Block';
   const context = {
     unitUrlLoading: ActionStates.FINISHED,
