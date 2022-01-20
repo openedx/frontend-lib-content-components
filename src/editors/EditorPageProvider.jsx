@@ -1,4 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, {
+  useState, useEffect, useRef, useMemo,
+} from 'react';
 import PropTypes from 'prop-types';
 import { fetchBlockById, fetchUnitById, saveBlock } from './data/api';
 import EditorPageContext from './EditorPageContext';
@@ -20,6 +22,25 @@ const EditorPageProvider = ({
   const [blockContent, setBlockContent] = useState(null); // This is the updated content to be saved via api call
   const [saveResponse, setSaveResponse] = useState(null);
   const [saveUnderway, setSaveUnderway] = useState(ActionStates.NOT_BEGUN);
+
+  const value = useMemo(() => ({
+    editorRef,
+    blockValue,
+    blockError,
+    blockLoading,
+    unitUrl,
+    unitUrlError,
+    unitUrlLoading,
+    setBlockContent,
+    saveResponse,
+    setSaveUnderway,
+    saveUnderway,
+    studioEndpointUrl,
+    blockId,
+    courseId,
+    blockType,
+  }), [blockLoading, unitUrlLoading, saveUnderway]);
+
   useEffect(() => {
     if (unitUrlLoading === ActionStates.NOT_BEGUN) {
       fetchUnitById({ // pass as object for testing purposes.
@@ -51,23 +72,7 @@ const EditorPageProvider = ({
 
   return (
     <EditorPageContext.Provider
-      value={{
-        editorRef,
-        blockValue,
-        blockError,
-        blockLoading,
-        unitUrl,
-        unitUrlError,
-        unitUrlLoading,
-        setBlockContent,
-        saveResponse,
-        setSaveUnderway,
-        saveUnderway,
-        studioEndpointUrl,
-        blockId,
-        courseId,
-        blockType,
-      }}
+      value={value}
     >
       {children}
     </EditorPageContext.Provider>
