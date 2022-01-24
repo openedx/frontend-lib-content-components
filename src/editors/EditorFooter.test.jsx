@@ -1,10 +1,10 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { mount } from 'enzyme';
 import EditorFooter from './EditorFooter';
 import EditorPageContext from './EditorPageContext';
 import { ActionStates } from './data/constants';
-import { mount } from 'enzyme';
 
 const locationTemp = window.location;
 beforeAll(() => {
@@ -101,13 +101,13 @@ test('Navigation: Save', () => {
     saveUnderway: mockUnderway,
     setBlockContent: () => {},
   };
-  const wrapper= mount(
+  const wrapper = mount(
     <EditorPageContext.Provider value={context}>
       <EditorFooter />
-    </EditorPageContext.Provider>
+    </EditorPageContext.Provider>,
   );
 
-  const button = wrapper.find({children: 'Add To Course'})
+  const button = wrapper.find({ children: 'Add To Course' });
   expect(button).toBeTruthy();
   button.simulate('click');
   expect(mockSetSaveUnderway).toHaveBeenCalledWith(ActionStates.IN_PROGRESS);
