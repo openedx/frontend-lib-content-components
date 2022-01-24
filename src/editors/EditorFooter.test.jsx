@@ -4,7 +4,6 @@ import userEvent from '@testing-library/user-event';
 import EditorFooter from './EditorFooter';
 import EditorPageContext from './EditorPageContext';
 import { ActionStates } from './data/constants';
-import { saveBlock } from './data/api';
 import { mount } from 'enzyme';
 
 const locationTemp = window.location;
