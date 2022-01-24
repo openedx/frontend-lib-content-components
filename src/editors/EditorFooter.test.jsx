@@ -5,6 +5,7 @@ import EditorFooter from './EditorFooter';
 import EditorPageContext from './EditorPageContext';
 import { ActionStates } from './data/constants';
 import { saveBlock } from './data/api';
+import { mount } from 'enzyme';
 
 const locationTemp = window.location;
 beforeAll(() => {
@@ -79,6 +80,7 @@ test('Navigation: Cancel', () => {
 
 test('Navigation: Save', () => {
   let mockUnderway = ActionStates.NOT_BEGUN;
+  const mockSetSaveUnderway = jest.fn().mockImplementation((input) => { mockUnderway = input; });
   const context = {
     unitUrlLoading: ActionStates.FINISHED,
     blockLoading: ActionStates.FINISHED,
@@ -96,18 +98,19 @@ test('Navigation: Save', () => {
         getContent: () => 'Some Content',
       },
     },
-    setSaveUnderway: (input) => { mockUnderway = input; },
+    setSaveUnderway: mockSetSaveUnderway,
     saveUnderway: mockUnderway,
     setBlockContent: () => {},
   };
-  render(
+  const wrapper= mount(
     <EditorPageContext.Provider value={context}>
       <EditorFooter />
-    </EditorPageContext.Provider>,
+    </EditorPageContext.Provider>
   );
 
-  expect(screen.getByText('Add To Course')).toBeTruthy();
-  userEvent.click(screen.getByText('Add To Course'));
-  expect(saveBlock).not.toHaveBeenCalled(); // not called by footer, called in provider
+  const button = wrapper.find({children: 'Add To Course'})
+  expect(button).toBeTruthy();
+  button.simulate('click');
+  expect(mockSetSaveUnderway).toHaveBeenCalledWith(ActionStates.IN_PROGRESS);
   expect(window.location.assign).toHaveBeenCalledWith(`${context.studioEndpointUrl}/container/${context.unitUrl.data.ancestors[0].id}`);
 });
