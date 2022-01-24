@@ -23,6 +23,9 @@ const EditorPageProvider = ({
   const [saveResponse, setSaveResponse] = useState(null);
   const [saveUnderway, setSaveUnderway] = useState(ActionStates.NOT_BEGUN);
 
+  /* We memoize the context value, so it it is only updated
+  (and therefore only causes a re-render of the consumers of this provider)
+  when blockLoading, unitUrlLoading, or saveUnderway change */
   const value = useMemo(() => ({
     editorRef,
     blockValue,
@@ -42,8 +45,9 @@ const EditorPageProvider = ({
   }), [blockLoading, unitUrlLoading, saveUnderway]);
 
   useEffect(() => {
+    // On init, begin fetching data
     if (unitUrlLoading === ActionStates.NOT_BEGUN) {
-      fetchUnitById({ // pass as object for testing purposes.
+      fetchUnitById({
         setValue: setUnitUrlValue,
         setError: setUnitUrlError,
         setLoading: setUnitUrlLoading,

@@ -6,10 +6,16 @@ import EditorPageContext from './EditorPageContext';
 import { ActionStates } from './data/constants';
 import { saveBlock } from './data/api';
 
-delete window.location;
-window.location = {
-  assign: jest.fn(),
-};
+const locationTemp = window.location;
+beforeAll(() => {
+  delete window.location;
+  window.location = {
+    assign: jest.fn(),
+  };
+});
+afterAll(() => {
+  window.location = locationTemp;
+});
 jest.mock('./data/api', () => {
   const originalModule = jest.requireActual('./data/api');
 

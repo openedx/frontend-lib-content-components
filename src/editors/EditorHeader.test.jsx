@@ -5,10 +5,16 @@ import EditorHeader from './EditorHeader';
 import EditorPageContext from './EditorPageContext';
 import { ActionStates } from './data/constants';
 
-delete window.location;
-window.location = {
-  assign: jest.fn(),
-};
+const locationTemp = window.location;
+beforeEach(() => {
+  delete window.location;
+  window.location = {
+    assign: jest.fn(),
+  };
+});
+afterAll(() => {
+  window.location = locationTemp;
+});
 
 test('Rendering And Click Close Button: Does not Navigate off of Page When Loading', () => {
   const title = 'An Awesome Block';

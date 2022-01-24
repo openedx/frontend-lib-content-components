@@ -54,7 +54,6 @@ export default function EditorPage({
           {selectEditor(blockType)}
           <EditorFooter />
         </div>
-
       </ModalDialog>
     </EditorPageProvider>
   );

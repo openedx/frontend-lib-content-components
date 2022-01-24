@@ -18,7 +18,6 @@ export function normalizeContent(blockType, content, blockId, courseId) {
   */
   switch (blockType) {
     case 'html':
-      /**/
       return {
         id: blockId,
         category: blockType,
@@ -26,6 +25,7 @@ export function normalizeContent(blockType, content, blockId, courseId) {
         data: content,
         couseKey: courseId,
       };
-    default: return {};
+    default:
+      throw new TypeError(`No Block in V2 Editors named /"${blockType}/", Cannot Save Content.`);
   }
 }

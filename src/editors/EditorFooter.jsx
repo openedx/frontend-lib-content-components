@@ -7,7 +7,7 @@ import EditorPageContext from './EditorPageContext';
 import { ActionStates } from './data/constants';
 
 const navigateAway = (destination) => {
-  window.location.assign(destination); // do we want to do window replace?
+  window.location.assign(destination);
 };
 
 export default function EditorFooter() {
@@ -50,16 +50,16 @@ export default function EditorFooter() {
       && (
       <Toast><FormattedMessage
         id="authoring.editorfooter.save.error"
-        defaultMessage="Error: Could Not Save Content"
-        description="Error Message Dispayed When content fails to save"
+        defaultMessage="Error: Content save failed. Try again later."
+        description="Error message sisplayed when content fails to save."
       />
       </Toast>
       )}
       <ModalDialog.Footer>
         <ActionRow>
           <ActionRow.Spacer />
-          <Button variant="tertiary" onClick={onCancelClicked}>Cancel</Button>
-          <Button onClick={onSaveClicked} aria-label="Save">
+          <Button aria-label="Discard Changes and Return to Learning Context" variant="tertiary" onClick={onCancelClicked}>Cancel</Button>
+          <Button aria-label="Save Changes and Return to Learning Context" onClick={onSaveClicked}>
             {unitUrlLoading !== ActionStates.FINISHED
               ? <Spinner animation="border" className="mr-3" />
               : (

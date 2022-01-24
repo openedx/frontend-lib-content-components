@@ -25,6 +25,7 @@ const EditorHeader = ({ title }) => {
           </ModalDialog.Title>
           <ActionRow.Spacer />
           <IconButton
+            aria-label="Cancel Changes and Return to Learning Context"
             src={Close}
             iconAs={Icon}
             alt="Close"
