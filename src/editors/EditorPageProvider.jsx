@@ -1,5 +1,5 @@
 import React, {
-  useState, useEffect, useRef, useMemo,
+  useState, useEffect, useMemo,
 } from 'react';
 import PropTypes from 'prop-types';
 import { fetchBlockById, fetchUnitById, saveBlock } from './data/api';
@@ -12,7 +12,7 @@ to avoid prop drilling for: saving, loading, and navigating away from content. *
 const EditorPageProvider = ({
   blockType, courseId, blockId, studioEndpointUrl, children,
 }) => {
-  const editorRef = useRef(null);
+  const editorRef = React.useRef(null);
   const [blockValue, setBlockValue] = useState(null); // this is the intial block, as called in from the api.
   const [blockError, setBlockError] = useState(null);
   const [blockLoading, setBlockLoading] = useState(ActionStates.NOT_BEGUN);

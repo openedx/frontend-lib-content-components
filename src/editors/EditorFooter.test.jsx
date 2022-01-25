@@ -5,6 +5,8 @@ import { mount } from 'enzyme';
 import EditorFooter from './EditorFooter';
 import EditorPageContext from './EditorPageContext';
 import { ActionStates } from './data/constants';
+import EditorPageProvider from './EditorPageProvider';
+import { saveBlock } from './data/api';
 
 const locationTemp = window.location;
 beforeAll(() => {
@@ -16,15 +18,21 @@ beforeAll(() => {
 afterAll(() => {
   window.location = locationTemp;
 });
+
 jest.mock('./data/api', () => {
   const originalModule = jest.requireActual('./data/api');
-
   // Mock the default export and named export saveBlock
   return {
     __esModule: true,
     ...originalModule,
     saveBlock: jest.fn(() => {}),
   };
+});
+
+jest.spyOn(React, 'useRef').mockReturnValue({
+  current: {
+    getContent: () => '',
+  },
 });
 
 test('Rendering: loaded', () => {
@@ -78,38 +86,19 @@ test('Navigation: Cancel', () => {
 });
 
 test('Navigation: Save', () => {
-  let mockUnderway = ActionStates.NOT_BEGUN;
-  const mockSetSaveUnderway = jest.fn().mockImplementation((input) => { mockUnderway = input; });
-  const context = {
-    unitUrlLoading: ActionStates.FINISHED,
-    blockLoading: ActionStates.FINISHED,
-    unitUrl: {
-      data: {
-        ancestors:
-        [
-          { id: 'fakeblockid' },
-        ],
-      },
-    },
-    studioEndpointUrl: 'Testurl',
-    editorRef: {
-      current: {
-        getContent: () => 'Some Content',
-      },
-    },
-    setSaveUnderway: mockSetSaveUnderway,
-    saveUnderway: mockUnderway,
-    setBlockContent: () => {},
-  };
   const wrapper = mount(
-    <EditorPageContext.Provider value={context}>
+    <EditorPageProvider
+      blockType="html"
+      courseId="myCourse101"
+      blockId="redosablocksalot"
+      studioEndpointUrl="celaicboss.axe"
+    >
       <EditorFooter />
-    </EditorPageContext.Provider>,
+    </EditorPageProvider>,
   );
-
   const button = wrapper.find({ children: 'Add To Course' });
   expect(button).toBeTruthy();
   button.simulate('click');
-  expect(mockSetSaveUnderway).toHaveBeenCalledWith(ActionStates.IN_PROGRESS);
-  expect(window.location.assign).toHaveBeenCalledWith(`${context.studioEndpointUrl}/container/${context.unitUrl.data.ancestors[0].id}`);
+  expect(saveBlock).toHaveBeenCalled();
+  expect(window.location.assign).toHaveBeenCalled();
 });
