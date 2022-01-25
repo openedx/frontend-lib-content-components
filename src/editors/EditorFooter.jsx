@@ -51,7 +51,7 @@ export default function EditorFooter() {
       <Toast><FormattedMessage
         id="authoring.editorfooter.save.error"
         defaultMessage="Error: Content save failed. Try again later."
-        description="Error message sisplayed when content fails to save."
+        description="Error message displayed when content fails to save."
       />
       </Toast>
       )}
