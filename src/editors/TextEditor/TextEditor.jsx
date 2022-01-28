@@ -31,17 +31,24 @@ const TextEditor = () => {
             initialValue={blockValue ? blockValue.data.data : ''}
             init={{
               height: '100%',
-              menubar: false,
+              menubar: 'tools | insert',
               plugins: [
                 'advlist autolink lists link image charmap print preview anchor',
                 'searchreplace visual blocks code fullscreen',
                 'insertdatetime media table paste code help wordcount',
                 'autoresize',
+                'code',
+                'charmap',
+                'link',
+                'autolink',
+                'emoticons',
+                'hr',
               ],
               toolbar: 'undo redo | formatselect | '
             + 'bold italic backcolor | alignleft aligncenter '
-            + 'alignright alignjustify | bullist numlist outdent indent | '
-            + 'removeformat | help',
+            + 'alignright alignjustify | bullist numlist outdent indent | hr | '
+            + 'link | emoticons | charmap'
+            + 'removeformat | code | help',
               content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
               max_height: 900,
               min_height: 700,
