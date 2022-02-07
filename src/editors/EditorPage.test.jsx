@@ -13,10 +13,10 @@ test('rendering correctly with expected Input', () => {
     blockId={blockId}
     studioEndpointUrl={studioEndpointUrl}
   />);
-  expect(screen.getByText('Text')).toBeTruthy();
   expect(screen.getByText('Cancel')).toBeTruthy();
+  expect(screen.getAllByLabelText('Edit')).toBeTruthy();
   expect(screen.getAllByLabelText('Close')).toBeTruthy();
-  expect(screen.getByText('Add To Course')).toBeTruthy();
+  expect(screen.getByText('Save')).toBeTruthy();
   expect(screen.getByText('Error: Could Not Load Text Content')).toBeTruthy();
 });
 
@@ -31,9 +31,9 @@ test('rendering correctly with expected Error', () => {
     blockId={blockId}
     studioEndpointUrl={studioEndpointUrl}
   />);
-  expect(screen.getByText(blockType)).toBeTruthy();
   expect(screen.getByText('Cancel')).toBeTruthy();
+  expect(screen.getAllByLabelText('Edit')).toBeTruthy();
   expect(screen.getAllByLabelText('Close')).toBeTruthy();
-  expect(screen.getByText('Add To Course')).toBeTruthy();
+  expect(screen.getByText('Save')).toBeTruthy();
   expect(screen.getByText('Error: Could Not find Editor')).toBeTruthy();
 });

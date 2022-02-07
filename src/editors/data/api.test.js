@@ -10,8 +10,8 @@ const saveFunctionsGet = {
   setLoading: jest.fn(),
 };
 const saveFunctionsSave = {
-  setResponse: jest.fn(),
   setInProgress: jest.fn(),
+  setResponse: jest.fn(),
 };
 const blockId = 'coursev1:2uX@4345432';
 const studioEndpointUrl = 'hortus.coa';
@@ -54,13 +54,13 @@ test('fetchUnitById 404', () => {
 });
 test('saveBlock 408', () => {
   post.mockRejectedValue({ response: { status: 408 } });
-  saveBlock(blockId, 'html', 'demo2uX', studioEndpointUrl, 'Im baby palo santo ugh celiac fashion axe. La croix lo-fi venmo whatever. Beard man braid migas single-origin coffee forage ramps.', saveFunctionsSave);
+  saveBlock(blockId, 'html', 'demo2uX', studioEndpointUrl, 'tesT Title', 'Im baby palo santo ugh celiac fashion axe. La croix lo-fi venmo whatever. Beard man braid migas single-origin coffee forage ramps.', saveFunctionsSave);
   expect(saveFunctionsSave.setInProgress).toHaveBeenCalled();
   expect(saveFunctionsSave.setResponse).toHaveBeenCalled();
 });
 test('saveBlock 404', () => {
   post.mockRejectedValue({ response: { status: 404 } });
-  saveBlock(blockId, 'html', 'demo2uX', studioEndpointUrl, 'Im baby palo santo ugh celiac fashion axe. La croix lo-fi venmo whatever. Beard man braid migas single-origin coffee forage ramps.', saveFunctionsSave);
+  saveBlock(blockId, 'html', 'demo2uX', studioEndpointUrl, 'tesT Title', 'Im baby palo santo ugh celiac fashion axe. La croix lo-fi venmo whatever. Beard man braid migas single-origin coffee forage ramps.', saveFunctionsSave);
   expect(saveFunctionsSave.setInProgress).toHaveBeenCalled();
   expect(saveFunctionsSave.setResponse).toHaveBeenCalled();
 });

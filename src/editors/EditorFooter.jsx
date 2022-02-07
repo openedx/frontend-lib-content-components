@@ -65,7 +65,7 @@ export default function EditorFooter() {
               : (
                 <FormattedMessage
                   id="authoring.editorfooter.savebutton.label"
-                  defaultMessage="Add To Course"
+                  defaultMessage="Save"
                   description="Label for Save button"
                 />
               )}

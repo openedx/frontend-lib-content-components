@@ -12,6 +12,7 @@ to avoid prop drilling for: saving, loading, and navigating away from content. *
 const EditorPageProvider = ({
   blockType, courseId, blockId, studioEndpointUrl, children,
 }) => {
+  const titleRef = React.useRef(null);
   const editorRef = React.useRef(null);
   const [blockValue, setBlockValue] = useState(null); // this is the intial block, as called in from the api.
   const [blockError, setBlockError] = useState(null);
@@ -19,6 +20,7 @@ const EditorPageProvider = ({
   const [unitUrl, setUnitUrlValue] = useState(null);
   const [unitUrlError, setUnitUrlError] = useState(null);
   const [unitUrlLoading, setUnitUrlLoading] = useState(ActionStates.NOT_BEGUN);
+  const [blockTitle, setBlockTitle] = useState(null); // This is the updated title to bbe saved via api call
   const [blockContent, setBlockContent] = useState(null); // This is the updated content to be saved via api call
   const [saveResponse, setSaveResponse] = useState(null);
   const [saveUnderway, setSaveUnderway] = useState(ActionStates.NOT_BEGUN);
@@ -27,6 +29,7 @@ const EditorPageProvider = ({
   (and therefore only causes a re-render of the consumers of this provider)
   when blockLoading, unitUrlLoading, or saveUnderway change */
   const value = useMemo(() => ({
+    titleRef,
     editorRef,
     blockValue,
     blockError,
@@ -34,6 +37,7 @@ const EditorPageProvider = ({
     unitUrl,
     unitUrlError,
     unitUrlLoading,
+    setBlockTitle,
     setBlockContent,
     saveResponse,
     setSaveUnderway,
@@ -54,13 +58,11 @@ const EditorPageProvider = ({
       }, blockId, studioEndpointUrl);
     }
     if (blockLoading === ActionStates.NOT_BEGUN) {
-      fetchBlockById(
-        {
-          setValue: setBlockValue,
-          setError: setBlockError,
-          setLoading: setBlockLoading,
-        }, blockId, studioEndpointUrl,
-      );
+      fetchBlockById({
+        setValue: setBlockValue,
+        setError: setBlockError,
+        setLoading: setBlockLoading,
+      }, blockId, studioEndpointUrl);
     }
     if (saveUnderway === ActionStates.IN_PROGRESS) {
       saveBlock(
@@ -68,6 +70,7 @@ const EditorPageProvider = ({
         blockType,
         courseId,
         studioEndpointUrl,
+        blockTitle,
         blockContent,
         { setInProgress: setSaveUnderway, setResponse: setSaveResponse },
       );

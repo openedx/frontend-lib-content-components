@@ -47,10 +47,9 @@ export default function EditorPage({
         size="fullscreen"
         onClose={() => {}}
         hasCloseButton={false}
-        variant="dark"
       >
         <div className="d-flex flex-column vh-100">
-          <EditorHeader title={blockType} />
+          <EditorHeader blockType={blockType} />
           {selectEditor(blockType)}
           <EditorFooter />
         </div>

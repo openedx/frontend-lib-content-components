@@ -45,7 +45,7 @@ test('Rendering: loaded', () => {
     </EditorPageContext.Provider>,
   );
   expect(screen.getByText('Cancel')).toBeTruthy();
-  expect(screen.getByText('Add To Course')).toBeTruthy();
+  expect(screen.getByText('Save')).toBeTruthy();
 });
 
 test('Rendering: loading url', () => {
@@ -59,7 +59,7 @@ test('Rendering: loading url', () => {
   );
   expect(screen.getByText('Cancel')).toBeTruthy();
   expect(screen.getAllByRole('button', { 'aria-label': 'Save' })).toBeTruthy();
-  expect(screen.queryByText('Add To Course')).toBeNull();
+  expect(screen.queryByText('Save')).toBeNull();
 });
 
 test('Navigation: Cancel', () => {
@@ -96,7 +96,7 @@ test('Navigation: Save', () => {
       <EditorFooter />
     </EditorPageProvider>,
   );
-  const button = wrapper.find({ children: 'Add To Course' });
+  const button = wrapper.find({ children: 'Save' });
   expect(button).toBeTruthy();
   button.simulate('click');
   expect(saveBlock).toHaveBeenCalled();

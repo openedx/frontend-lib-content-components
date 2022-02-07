@@ -17,23 +17,23 @@ afterAll(() => {
 });
 
 test('Rendering And Click Close Button: Does not Navigate off of Page When Loading', () => {
-  const title = 'An Awesome Block';
+  const blockType = 'Text';
   const context = {
     unitUrlLoading: ActionStates.IN_PROGRESS,
   };
   render(
     <EditorPageContext.Provider value={context}>
-      <EditorHeader title={title} />
+      <EditorHeader blockType={blockType} />
     </EditorPageContext.Provider>,
   );
-  expect(screen.getByText(title)).toBeTruthy();
+  // expect(screen.getByLabelText('Edit')).toBeTruthy();
   expect(screen.getByLabelText('Close')).toBeTruthy();
   userEvent.click(screen.getByLabelText('Close'));
   expect(window.location.assign).not.toHaveBeenCalled();
 });
 
 test('Rendering And Click Button: Loaded Navigates Away', () => {
-  const title = 'An Awesome Block';
+  const blockType = 'Text';
   const context = {
     unitUrlLoading: ActionStates.FINISHED,
     unitUrl: {
@@ -48,10 +48,10 @@ test('Rendering And Click Button: Loaded Navigates Away', () => {
   };
   render(
     <EditorPageContext.Provider value={context}>
-      <EditorHeader title={title} />
+      <EditorHeader blockType={blockType} />
     </EditorPageContext.Provider>,
   );
-  expect(screen.getByText(title)).toBeTruthy();
+  // expect(screen.getByLabelText('Edit')).toBeTruthy();
   expect(screen.getByLabelText('Close')).toBeTruthy();
   userEvent.click(screen.getByLabelText('Close'));
   expect(window.location.assign).toHaveBeenCalled();

@@ -11,7 +11,7 @@ export const ActionStates = {
   FINISHED: 'finished',
 };
 
-export function normalizeContent(blockType, content, blockId, courseId) {
+export function normalizeContent(blockType, title, content, blockId, courseId) {
   /*
   For Each V2 Block type, return a javascript object which updates the requisite data fields,
   to be POST-messaged to the CMS.
@@ -22,6 +22,9 @@ export function normalizeContent(blockType, content, blockId, courseId) {
         id: blockId,
         category: blockType,
         has_changes: true,
+        metadata: {
+          display_name: title,
+        },
         data: content,
         couseKey: courseId,
       };

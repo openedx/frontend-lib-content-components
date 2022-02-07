@@ -34,8 +34,8 @@ export async function fetchUnitById(updateContext, blockId, studioEndpointUrl) {
   getAsync(updateContext, [url]);
 }
 
-export async function saveBlock(blockId, blockType, courseId, studioEndpointUrl, content, updateContext) {
-  const normalizedContent = normalizeContent(blockType, content, blockId, courseId);
+export async function saveBlock(blockId, blockType, courseId, studioEndpointUrl, title, content, updateContext) {
+  const normalizedContent = normalizeContent(blockType, title, content, blockId, courseId);
   const url = `${studioEndpointUrl}/xblock/${blockId}`;
   const params = [url, normalizedContent];
   saveAsync(updateContext, params);
