@@ -6,21 +6,21 @@ import 'babel-polyfill';
 
 Enzyme.configure({ adapter: new Adapter() });
 
-/* need to mock window for tinymce on import, as it is JSDOM incompatible*/
+/* need to mock window for tinymce on import, as it is JSDOM incompatible */
 
 Object.defineProperty(window, 'matchMedia', {
-    writable: true,
-    value: jest.fn().mockImplementation(query => ({
-      matches: false,
-      media: query,
-      onchange: null,
-      addListener: jest.fn(), // Deprecated
-      removeListener: jest.fn(), // Deprecated
-      addEventListener: jest.fn(),
-      removeEventListener: jest.fn(),
-      dispatchEvent: jest.fn(),
-    })),
-  });
+  writable: true,
+  value: jest.fn().mockImplementation(query => ({
+    matches: false,
+    media: query,
+    onchange: null,
+    addListener: jest.fn(), // Deprecated
+    removeListener: jest.fn(), // Deprecated
+    addEventListener: jest.fn(),
+    removeEventListener: jest.fn(),
+    dispatchEvent: jest.fn(),
+  })),
+});
 
 // These configuration values are usually set in webpack's EnvironmentPlugin however
 // Jest does not use webpack so we need to set these so for testing
