@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
+import { FormattedMessage } from '@edx/frontend-platform/i18n';
 import { Spinner, Toast } from '@edx/paragon';
 import { Editor } from '@tinymce/tinymce-react';
-import { FormattedMessage } from '@edx/frontend-platform/i18n';
 import EditorPageContext from '../EditorPageContext';
 import { ActionStates } from '../data/constants';
 

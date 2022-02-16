@@ -26,7 +26,7 @@ test('Rendering And Click Close Button: Does not Navigate off of Page When Loadi
       <EditorHeader blockType={blockType} />
     </EditorPageContext.Provider>,
   );
-  // expect(screen.getByLabelText('Edit')).toBeTruthy();
+  expect(screen.getByText('Loading...')).toBeTruthy();
   expect(screen.getByLabelText('Close')).toBeTruthy();
   userEvent.click(screen.getByLabelText('Close'));
   expect(window.location.assign).not.toHaveBeenCalled();
@@ -51,8 +51,39 @@ test('Rendering And Click Button: Loaded Navigates Away', () => {
       <EditorHeader blockType={blockType} />
     </EditorPageContext.Provider>,
   );
-  // expect(screen.getByLabelText('Edit')).toBeTruthy();
+  expect(screen.getByText('Loading...')).toBeTruthy();
   expect(screen.getByLabelText('Close')).toBeTruthy();
   userEvent.click(screen.getByLabelText('Close'));
   expect(window.location.assign).toHaveBeenCalled();
+});
+
+test('Loaded Header With BlockType Title', () => {
+  const blockType = 'Text';
+  const context = { blockLoading: ActionStates.FINISHED };
+  render(
+    <EditorPageContext.Provider value={context}>
+      <EditorHeader blockType={blockType} />
+    </EditorPageContext.Provider>,
+  );
+  expect(screen.getByText('Text')).toBeTruthy();
+  expect(screen.getByLabelText('Edit')).toBeTruthy();
+  expect(screen.getByLabelText('Close')).toBeTruthy();
+});
+
+test('Loaded Header With Title', () => {
+  const blockType = 'Text';
+  const context = {
+    blockLoading: ActionStates.FINISHED,
+    blockValue: {
+      data: { display_name: 'sample title' },
+    },
+  };
+  render(
+    <EditorPageContext.Provider value={context}>
+      <EditorHeader blockType={blockType} />
+    </EditorPageContext.Provider>,
+  );
+  expect(screen.getByText('sample title')).toBeTruthy();
+  expect(screen.getByLabelText('Edit')).toBeTruthy();
+  expect(screen.getByLabelText('Close')).toBeTruthy();
 });

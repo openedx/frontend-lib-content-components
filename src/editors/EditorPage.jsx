@@ -26,9 +26,9 @@ export default function EditorPage({
       default:
         return (
           <FormattedMessage
-            id="authoring.editorpage.selecteditor.error"
             defaultMessage="Error: Could Not find Editor"
             description="Error Message Dispayed When An unsopported Editor is desired in V2"
+            id="authoring.editorpage.selecteditor.error"
           />
         );
     }
@@ -36,9 +36,9 @@ export default function EditorPage({
 
   return (
     <EditorPageProvider
+      blockId={blockId}
       blockType={blockType}
       courseId={courseId}
-      blockId={blockId}
       studioEndpointUrl={studioEndpointUrl}
     >
       <ModalDialog
