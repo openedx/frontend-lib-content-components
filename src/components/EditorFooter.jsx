@@ -13,7 +13,7 @@ import { FormattedMessage } from '@edx/frontend-platform/i18n';
 
 import { RequestKeys } from 'data/constants/requests';
 import { selectors, actions } from 'data/redux';
-import * as urls from 'data/urls';
+import * as urls from 'data/services/lms/urls';
 
 import * as module from './EditorFooter';
 

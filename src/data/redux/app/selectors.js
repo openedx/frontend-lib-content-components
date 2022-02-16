@@ -1,9 +1,5 @@
 import { createSelector } from 'reselect';
 
-import { feedbackRequirement, oraTypes } from 'data/services/lms/constants';
-
-import { StrictDict } from 'utils';
-
 import * as module from './selectors';
 
 export const appSelector = (state) => state.app;

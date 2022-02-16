@@ -1,8 +1,6 @@
 import { StrictDict } from 'utils';
 import { createSlice } from '@reduxjs/toolkit';
 
-import { ActionStates } from 'data/constants';
-
 const initialState = {
   blockValue: null,
   unitUrl: null,

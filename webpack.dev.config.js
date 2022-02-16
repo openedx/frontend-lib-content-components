@@ -4,7 +4,7 @@ const { createConfig } = require('@edx/frontend-build');
 module.exports = createConfig('webpack-dev', {
   entry: path.resolve(__dirname, 'src'),
   output: {
-    path: path.resolve(__dirname, 'src/dist'),
+    path: path.resolve(__dirname, 'dist'),
     publicPath: '/',
   },
   resolve: {

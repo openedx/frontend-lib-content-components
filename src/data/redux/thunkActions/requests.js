@@ -1,8 +1,8 @@
 import { StrictDict } from 'utils';
 
 import { RequestKeys } from 'data/constants/requests';
-import { actions } from 'data/redux';
-import api from 'data/services/lms/api';
+import { actions, selectors } from 'data/redux';
+import * as api from 'data/services/lms/api';
 
 import * as module from './requests';
 
@@ -40,12 +40,11 @@ export const networkRequest = ({
  * @param {[func]} onFailure - onFailure method ((error) => { ... })
  */
 export const fetchBlock = ({ ...rest }) => (dispatch, getState) => {
-  const url = getBlockUrl(getState());
   dispatch(module.networkRequest({
     requestKey: RequestKeys.fetchBlock,
-    promise: api.fetchByBlockId({
-      selectors.app.studioEndpointUrl(getState()),
-      selectors.app.blockId(getState()),
+    promise: api.fetchBlockById({
+      studioEndpointUrl: selectors.app.studioEndpointUrl(getState()),
+      blockId: selectors.app.blockId(getState()),
     }),
     ...rest,
   }));
@@ -57,12 +56,12 @@ export const fetchBlock = ({ ...rest }) => (dispatch, getState) => {
  * @param {[func]} onSuccess - onSuccess method ((response) => { ... })
  * @param {[func]} onFailure - onFailure method ((error) => { ... })
  */
-export const fetchUnit = ({ ...rest }) => (dispatch) => {
+export const fetchUnit = ({ ...rest }) => (dispatch, getState) => {
   dispatch(module.networkRequest({
     requestKey: RequestKeys.fetchUnit,
     promise: api.fetchByUnitId({
-      selectors.app.studioEndpointUrl(getState()),
-      selectors.app.blockId(getState()),
+      studioEndpointUrl: selectors.app.studioEndpointUrl(getState()),
+      blockId: selectors.app.blockId(getState()),
     }),
     ...rest,
   }));
@@ -80,13 +79,13 @@ export const saveBlock = ({
   blockType,
   courseId,
   content,
-  ...rest,
-}) => (dispatch) => {
+  ...rest
+}) => (dispatch, getState) => {
   dispatch(module.networkRequest({
     requestKey: RequestKeys.saveBlock,
     promise: api.saveBlock({
-      selectors.app.studioEndpointUrl(getState()),
-      selectors.app.blockId(getState()),
+      studioEndpointUrl: selectors.app.studioEndpointUrl(getState()),
+      blockId: selectors.app.blockId(getState()),
       blockType,
       courseId,
       content,

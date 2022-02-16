@@ -3,15 +3,14 @@ import { get, post } from './utils';
 const blockUrl = (studioUrl, blockId) => `${studioUrl}/xblock/${blockId}`;
 
 export const fetchBlockById = ({ blockId, studioEndpointUrl }) => get(
-  blockUrl(studioEndpointUrl, blockId)
+  blockUrl(studioEndpointUrl, blockId),
 );
 
 export const fetchByUnitId = ({ blockId, studioEndpointUrl }) => get(
-  `${blockUrl(studioEndpointUrl, blockId)}?fields=ancestorInfo`
+  `${blockUrl(studioEndpointUrl, blockId)}?fields=ancestorInfo`,
 );
 
-
-export normalizeContent = (blockType, content, blockId, courseId) => {
+export const normalizeContent = (blockType, content, blockId, courseId) => {
   if (blockType === 'html') {
     return {
       id: blockId,
@@ -20,10 +19,9 @@ export normalizeContent = (blockType, content, blockId, courseId) => {
       data: content,
       couseKey: courseId,
     };
-  } else {
-    throw new TypeError(`No Block in V2 Editors named /"${blockType}/", Cannot Save Content.`);
   }
-}
+  throw new TypeError(`No Block in V2 Editors named /"${blockType}/", Cannot Save Content.`);
+};
 
 export const saveBlock = ({
   blockId,

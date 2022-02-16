@@ -2,15 +2,18 @@ import React, { useRef, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from '@edx/frontend-platform/i18n';
+import { AppProvider } from '@edx/frontend-platform/react';
 
 import { blockTypes } from 'data/constants/app';
-import { thunkActions } from 'data/redux';
+import { actions } from 'data/redux';
 
-import TextEditor from './TextEditor/TextEditor';
-import VideoEditor from './VideoEditor/VideoEditor';
-import ProblemEditor from './ProblemEditor/ProblemEditor';
-import EditorFooter from './EditorFooter';
-import EditorHeader from './EditorHeader';
+import store from 'data/store';
+
+import TextEditor from './editors/TextEditor/TextEditor';
+import VideoEditor from './editors/VideoEditor/VideoEditor';
+import ProblemEditor from './editors/ProblemEditor/ProblemEditor';
+import EditorFooter from './components/EditorFooter';
+import EditorHeader from './components/EditorHeader';
 
 export const messages = {
   id: 'authoring.editorpage.selecteditor.error',
@@ -62,23 +65,25 @@ export const EditorPage = ({
   const Editor = supportedEditors[blockType];
 
   return (
-    <div className="d-flex flex-column vh-100">
-      <div
-        className="pgn__modal-fullscreen"
-        role="dialog"
-        aria-label={blockType}
-      >
-        <EditorHeader />
+    <AppProvider store={store}>
+      <div className="d-flex flex-column vh-100">
+        <div
+          className="pgn__modal-fullscreen"
+          role="dialog"
+          aria-label={blockType}
+        >
+          <EditorHeader />
 
-        {refReady && (
-          (Editor !== undefined)
-            ? <Editor {...{ editorRef, setEditorRef }} />
-            : <FormattedMessage {...messages.couldNotFindEditor} />
-        )}
+          {refReady && (
+            (Editor !== undefined)
+              ? <Editor {...{ editorRef, setEditorRef }} />
+              : <FormattedMessage {...messages.couldNotFindEditor} />
+          )}
 
-        <EditorFooter />
+          <EditorFooter />
+        </div>
       </div>
-    </div>
+    </AppProvider>
   );
 };
 EditorPage.defaultProps = {
@@ -97,7 +102,7 @@ EditorPage.propTypes = {
 };
 export const mapStateToProps = () => ({});
 export const mapDispatchToProps = {
-  initialize: thunkActions.app.initialize,
+  initialize: actions.app.initialize,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditorPage);
