@@ -31,13 +31,16 @@ const EditorPageProvider = ({
     blockValue,
     blockError,
     blockLoading,
+
     unitUrl,
     unitUrlError,
     unitUrlLoading,
+
     setBlockContent,
     saveResponse,
     setSaveUnderway,
     saveUnderway,
+
     studioEndpointUrl,
     blockId,
     courseId,

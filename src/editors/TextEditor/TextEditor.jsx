@@ -1,12 +1,7 @@
-import React, { useContext } from 'react';
+import React from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { Editor } from '@tinymce/tinymce-react';
-import { FormattedMessage } from '@edx/frontend-platform/i18n';
-import {
-  useToggle, Spinner, Toast,
-} from '@edx/paragon';
-import EditorPageContext from '../EditorPageContext';
-import { ActionStates } from '../data/constants';
-import ImageUploadModal from './ImageUpload/Wizard/ImageUploadModal';
 
 import 'tinymce';
 import 'tinymce/themes/silver';
@@ -21,24 +16,57 @@ import 'tinymce/plugins/charmap';
 import 'tinymce/plugins/code';
 import 'tinymce/plugins/autoresize';
 
-const TextEditor = () => {
-  const {
-    blockValue, blockError, blockLoading, editorRef,
-  } = useContext(EditorPageContext);
+import { FormattedMessage } from '@edx/frontend-platform/i18n';
+import {
+  useToggle,
+  Spinner,
+  Toast,
+} from '@edx/paragon';
 
+import { selectors } from 'data/redux';
+import { RequestKeys } from 'data/constants/requests';
+import ImageUploadModal from './ImageUpload/Wizard/ImageUploadModal';
+
+export const messages = {
+  couldNotLoadTextContext: {
+    id: 'authoring.texteditor.load.error',
+    defaultMessage: 'Error: Could Not Load Text Content',
+    description: 'Error Message Dispayed When HTML content fails to Load',
+  },
+};
+
+export const nullMethod = () => {};
+
+export const editorSetup = (openUploadModal) => (editor) => {
+  editor.ui.registry.addButton('imageuploadbutton', {
+    icon: 'image',
+    onAction: () => openUploadModal(),
+  });
+};
+
+export const initializeEditor = (setEditorRef) => (evt, editor) => setEditorRef(editor);
+
+export const TextEditor = ({
+  setEditorRef,
+  // redux
+  blockValue,
+  blockFailed,
+  blockFinished,
+}) => {
   const [isImageUploadModalOpen, openUploadModal, closeUploadModal] = useToggle(false);
 
   return (
     <div className="editor-body h-75">
-      <ImageUploadModal isOpen={isImageUploadModalOpen} close={closeUploadModal} />
-      <Toast show={blockError != null} onClose={() => {}}>
-        <FormattedMessage
-          id="authoring.texteditor.load.error"
-          defaultMessage="Error: Could Not Load Text Content"
-          description="Error Message Dispayed When HTML content fails to Load"
-        />
+      <ImageUploadModal
+        isOpen={isImageUploadModalOpen}
+        close={closeUploadModal}
+      />
+
+      <Toast show={blockFailed} onClose={module.nullMethod}>
+        <FormattedMessage {...messages.couldNotLoadTextContext} />
       </Toast>
-      {blockLoading !== ActionStates.FINISHED
+
+      {(!blockFinished)
         ? (
           <div className="text-center p-6">
             <Spinner animation="border" className="m-3" screenreadertext="loading" />
@@ -46,17 +74,10 @@ const TextEditor = () => {
         )
         : (
           <Editor
-            onInit={(evt, editor) => {
-              editorRef.current = editor;
-            }}
+            onInit={module.initializeEditor}
             initialValue={blockValue ? blockValue.data.data : ''}
             init={{
-              setup: (editor) => {
-                editor.ui.registry.addButton('imageuploadbutton', {
-                  icon: 'image',
-                  onAction: () => openUploadModal(),
-                });
-              },
+              setup: module.editorSetup(openUploadModal),
               plugins: 'link codesample emoticons table charmap code autoresize',
               menubar: false,
               toolbar: 'undo redo | formatselect | '
@@ -74,5 +95,19 @@ const TextEditor = () => {
     </div>
   );
 };
+TextEditor.propTypes = {
+  setEditorRef: PropTypes.func.isRequired,
+  // redux
+  blockValue: PropTypes.string.isRequired,
+  blockFailed: PropTypes.bool.isRequired,
+  blockFinished: PropTypes.bool.isRequired,
+};
 
-export default TextEditor;
+export const mapStateToProps = (state) => ({
+  blockValue: selectors.app.blockValue(state),
+  blockFailed: selectors.requests.isFailed(state, { requestKey: RequestKeys.fetchBlock }),
+  blockFinished: selectors.requests.isFinished(state, { requestKey: RequestKeys.fetchBlock }),
+
+});
+
+export default connect(mapStateToProps)(TextEditor);
