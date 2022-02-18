@@ -11,8 +11,13 @@ const config = createConfig('eslint', {
 
 config.settings = {
   "import/resolver": {
+    alias: {
+      map: [
+        ['editors', './src/editors'],
+      ],
+    },
     node: {
-      paths: ["src", "node_modules"],
+      paths: ["editors", "node_modules"],
       extensions: [".js", ".jsx"],
     },
   },
