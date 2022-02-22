@@ -5,9 +5,6 @@ exports[`EditorFooter snapshots Save Failed, error message raised 1`] = `
   className="editor-footer mt-auto"
 >
   <Toast
-    action={null}
-    closeLabel="Close"
-    delay={5000}
     onClose={[MockFunction nullMethod]}
     show={true}
   >
@@ -15,21 +12,13 @@ exports[`EditorFooter snapshots Save Failed, error message raised 1`] = `
       defaultMessage="Error: Content save failed. Try again later."
       description="Error message displayed when content fails to save."
       id="authoring.editorfooter.save.error"
-      values={Object {}}
     />
   </Toast>
-  <ModalDialogFooter
-    as="div"
-  >
-    <ActionRow
-      as="div"
-      isStacked={false}
-    >
-      <ActionRowSpacer />
-      <ForwardRef
-        active={false}
+  <Component>
+    <ActionRow>
+      <Component />
+      <Button
         aria-label="Discard Changes and Return to Learning Context"
-        disabled={false}
         onClick={
           Object {
             "handleCancelClicked": Object {
@@ -40,9 +29,8 @@ exports[`EditorFooter snapshots Save Failed, error message raised 1`] = `
         variant="tertiary"
       >
         Cancel
-      </ForwardRef>
-      <ForwardRef
-        active={false}
+      </Button>
+      <Button
         aria-label="Save Changes and Return to Learning Context"
         disabled={false}
         onClick={
@@ -54,17 +42,15 @@ exports[`EditorFooter snapshots Save Failed, error message raised 1`] = `
             },
           }
         }
-        variant="primary"
       >
         <FormattedMessage
           defaultMessage="Save"
           description="Label for Save button"
           id="authoring.editorfooter.savebutton.label"
-          values={Object {}}
         />
-      </ForwardRef>
+      </Button>
     </ActionRow>
-  </ModalDialogFooter>
+  </Component>
 </div>
 `;
 
@@ -72,18 +58,11 @@ exports[`EditorFooter snapshots not intialized, Spinner appears and button is di
 <div
   className="editor-footer mt-auto"
 >
-  <ModalDialogFooter
-    as="div"
-  >
-    <ActionRow
-      as="div"
-      isStacked={false}
-    >
-      <ActionRowSpacer />
-      <ForwardRef
-        active={false}
+  <Component>
+    <ActionRow>
+      <Component />
+      <Button
         aria-label="Discard Changes and Return to Learning Context"
-        disabled={false}
         onClick={
           Object {
             "handleCancelClicked": Object {
@@ -94,9 +73,8 @@ exports[`EditorFooter snapshots not intialized, Spinner appears and button is di
         variant="tertiary"
       >
         Cancel
-      </ForwardRef>
-      <ForwardRef
-        active={false}
+      </Button>
+      <Button
         aria-label="Save Changes and Return to Learning Context"
         disabled={true}
         onClick={
@@ -108,15 +86,14 @@ exports[`EditorFooter snapshots not intialized, Spinner appears and button is di
             },
           }
         }
-        variant="primary"
       >
         <Spinner
           animation="border"
           className="mr-3"
         />
-      </ForwardRef>
+      </Button>
     </ActionRow>
-  </ModalDialogFooter>
+  </Component>
 </div>
 `;
 
@@ -124,18 +101,11 @@ exports[`EditorFooter snapshots renders as expected with default behavior 1`] = 
 <div
   className="editor-footer mt-auto"
 >
-  <ModalDialogFooter
-    as="div"
-  >
-    <ActionRow
-      as="div"
-      isStacked={false}
-    >
-      <ActionRowSpacer />
-      <ForwardRef
-        active={false}
+  <Component>
+    <ActionRow>
+      <Component />
+      <Button
         aria-label="Discard Changes and Return to Learning Context"
-        disabled={false}
         onClick={
           Object {
             "handleCancelClicked": Object {
@@ -146,9 +116,8 @@ exports[`EditorFooter snapshots renders as expected with default behavior 1`] = 
         variant="tertiary"
       >
         Cancel
-      </ForwardRef>
-      <ForwardRef
-        active={false}
+      </Button>
+      <Button
         aria-label="Save Changes and Return to Learning Context"
         disabled={false}
         onClick={
@@ -160,16 +129,14 @@ exports[`EditorFooter snapshots renders as expected with default behavior 1`] = 
             },
           }
         }
-        variant="primary"
       >
         <FormattedMessage
           defaultMessage="Save"
           description="Label for Save button"
           id="authoring.editorfooter.savebutton.label"
-          values={Object {}}
         />
-      </ForwardRef>
+      </Button>
     </ActionRow>
-  </ModalDialogFooter>
+  </Component>
 </div>
 `;
