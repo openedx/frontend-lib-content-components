@@ -1,9 +1,8 @@
 import React from 'react';
 import { shallow } from 'enzyme';
+import * as module from './EditableHeader';
 import { Icon, Form } from '@edx/paragon';
 import { Edit } from '@edx/paragon/icons';
-
-import { EditableHeader } from './EditableHeader';
 
 describe('EditableHeader', () => {
   let props = {
@@ -15,7 +14,7 @@ describe('EditableHeader', () => {
   };
   let el;
   beforeEach(() => {
-    el = shallow(<EditableHeader {...props} />);
+    el = shallow(<module.EditableHeader {...props} />);
   });
   test('snapshot', () => {
     expect(el).toMatchSnapshot();
