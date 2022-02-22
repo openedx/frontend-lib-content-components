@@ -1,0 +1,126 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`EditorFooter Component Save Failed, error message raised 1`] = `
+<div
+  className="editor-footer mt-auto"
+>
+  <Toast
+    action={null}
+    closeLabel="Close"
+    delay={5000}
+    show={true}
+  >
+    <FormattedMessage
+      defaultMessage="Error: Content save failed. Try again later."
+      description="Error message displayed when content fails to save."
+      id="authoring.editorfooter.save.error"
+      values={Object {}}
+    />
+  </Toast>
+  <ModalDialogFooter
+    as="div"
+  >
+    <ActionRow
+      as="div"
+      isStacked={false}
+    >
+      <ActionRowSpacer />
+      <ForwardRef
+        active={false}
+        aria-label="Discard Changes and Return to Learning Context"
+        disabled={false}
+        variant="tertiary"
+      >
+        Cancel
+      </ForwardRef>
+      <ForwardRef
+        active={false}
+        aria-label="Save Changes and Return to Learning Context"
+        disabled={false}
+        variant="primary"
+      >
+        <FormattedMessage
+          defaultMessage="Save"
+          description="Label for Save button"
+          id="authoring.editorfooter.savebutton.label"
+          values={Object {}}
+        />
+      </ForwardRef>
+    </ActionRow>
+  </ModalDialogFooter>
+</div>
+`;
+
+exports[`EditorFooter Component not intialized, Spinner appears and button is disabled 1`] = `
+<div
+  className="editor-footer mt-auto"
+>
+  <ModalDialogFooter
+    as="div"
+  >
+    <ActionRow
+      as="div"
+      isStacked={false}
+    >
+      <ActionRowSpacer />
+      <ForwardRef
+        active={false}
+        aria-label="Discard Changes and Return to Learning Context"
+        disabled={false}
+        variant="tertiary"
+      >
+        Cancel
+      </ForwardRef>
+      <ForwardRef
+        active={false}
+        aria-label="Save Changes and Return to Learning Context"
+        disabled={true}
+        variant="primary"
+      >
+        <Spinner
+          animation="border"
+          className="mr-3"
+        />
+      </ForwardRef>
+    </ActionRow>
+  </ModalDialogFooter>
+</div>
+`;
+
+exports[`EditorFooter Component renders as expected with default behavior 1`] = `
+<div
+  className="editor-footer mt-auto"
+>
+  <ModalDialogFooter
+    as="div"
+  >
+    <ActionRow
+      as="div"
+      isStacked={false}
+    >
+      <ActionRowSpacer />
+      <ForwardRef
+        active={false}
+        aria-label="Discard Changes and Return to Learning Context"
+        disabled={false}
+        variant="tertiary"
+      >
+        Cancel
+      </ForwardRef>
+      <ForwardRef
+        active={false}
+        aria-label="Save Changes and Return to Learning Context"
+        disabled={false}
+        variant="primary"
+      >
+        <FormattedMessage
+          defaultMessage="Save"
+          description="Label for Save button"
+          id="authoring.editorfooter.savebutton.label"
+          values={Object {}}
+        />
+      </ForwardRef>
+    </ActionRow>
+  </ModalDialogFooter>
+</div>
+`;
