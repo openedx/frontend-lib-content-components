@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`EditorFooter Component Save Failed, error message raised 1`] = `
+exports[`EditorFooter snapshots Save Failed, error message raised 1`] = `
 <div
   className="editor-footer mt-auto"
 >
@@ -8,6 +8,7 @@ exports[`EditorFooter Component Save Failed, error message raised 1`] = `
     action={null}
     closeLabel="Close"
     delay={5000}
+    onClose={[MockFunction nullMethod]}
     show={true}
   >
     <FormattedMessage
@@ -29,6 +30,13 @@ exports[`EditorFooter Component Save Failed, error message raised 1`] = `
         active={false}
         aria-label="Discard Changes and Return to Learning Context"
         disabled={false}
+        onClick={
+          Object {
+            "handleCancelClicked": Object {
+              "returnUrl": "hocuspocus.ca",
+            },
+          }
+        }
         variant="tertiary"
       >
         Cancel
@@ -37,6 +45,15 @@ exports[`EditorFooter Component Save Failed, error message raised 1`] = `
         active={false}
         aria-label="Save Changes and Return to Learning Context"
         disabled={false}
+        onClick={
+          Object {
+            "handleSaveClicked": Object {
+              "editorRef": [MockFunction args.editorRef],
+              "returnUrl": "hocuspocus.ca",
+              "saveBlock": [MockFunction args.saveBlock],
+            },
+          }
+        }
         variant="primary"
       >
         <FormattedMessage
@@ -51,7 +68,7 @@ exports[`EditorFooter Component Save Failed, error message raised 1`] = `
 </div>
 `;
 
-exports[`EditorFooter Component not intialized, Spinner appears and button is disabled 1`] = `
+exports[`EditorFooter snapshots not intialized, Spinner appears and button is disabled 1`] = `
 <div
   className="editor-footer mt-auto"
 >
@@ -67,6 +84,13 @@ exports[`EditorFooter Component not intialized, Spinner appears and button is di
         active={false}
         aria-label="Discard Changes and Return to Learning Context"
         disabled={false}
+        onClick={
+          Object {
+            "handleCancelClicked": Object {
+              "returnUrl": "hocuspocus.ca",
+            },
+          }
+        }
         variant="tertiary"
       >
         Cancel
@@ -75,6 +99,15 @@ exports[`EditorFooter Component not intialized, Spinner appears and button is di
         active={false}
         aria-label="Save Changes and Return to Learning Context"
         disabled={true}
+        onClick={
+          Object {
+            "handleSaveClicked": Object {
+              "editorRef": [MockFunction args.editorRef],
+              "returnUrl": "hocuspocus.ca",
+              "saveBlock": [MockFunction args.saveBlock],
+            },
+          }
+        }
         variant="primary"
       >
         <Spinner
@@ -87,7 +120,7 @@ exports[`EditorFooter Component not intialized, Spinner appears and button is di
 </div>
 `;
 
-exports[`EditorFooter Component renders as expected with default behavior 1`] = `
+exports[`EditorFooter snapshots renders as expected with default behavior 1`] = `
 <div
   className="editor-footer mt-auto"
 >
@@ -103,6 +136,13 @@ exports[`EditorFooter Component renders as expected with default behavior 1`] = 
         active={false}
         aria-label="Discard Changes and Return to Learning Context"
         disabled={false}
+        onClick={
+          Object {
+            "handleCancelClicked": Object {
+              "returnUrl": "hocuspocus.ca",
+            },
+          }
+        }
         variant="tertiary"
       >
         Cancel
@@ -111,6 +151,15 @@ exports[`EditorFooter Component renders as expected with default behavior 1`] = 
         active={false}
         aria-label="Save Changes and Return to Learning Context"
         disabled={false}
+        onClick={
+          Object {
+            "handleSaveClicked": Object {
+              "editorRef": [MockFunction args.editorRef],
+              "returnUrl": "hocuspocus.ca",
+              "saveBlock": [MockFunction args.saveBlock],
+            },
+          }
+        }
         variant="primary"
       >
         <FormattedMessage

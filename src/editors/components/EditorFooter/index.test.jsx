@@ -17,8 +17,7 @@ jest.mock('../../data/redux', () => ({
       studioEndpointUrl: jest.fn(state => ({ studioEndpointUrl: state })),
     },
     requests: {
-      // eslint-disable-next-line no-unused-vars
-      isFailed: jest.fn((state, requestkey) => ({ isFailed: state })),
+      isFailed: jest.fn((state, params) => ({ isFailed: { state, params } })),
     },
   },
 }));
@@ -29,25 +28,38 @@ jest.mock('.', () => {
   return {
     __esModule: true, // Use it when dealing with esModules
     ...originalModule,
-    handleCancelClicked: jest.fn().mockName('handleCancelClicked'),
-    handleSaveClicked: jest.fn().mockName('handleSaveClicked'),
+    handleCancelClicked: jest.fn(args => ({ handleCancelClicked: args })),
+    handleSaveClicked: jest.fn(args => ({ handleSaveClicked: args })),
   };
 });
 
 jest.mock('../../hooks', () => ({
   saveTextBlock: jest.fn(),
   navigateCallback: jest.fn(),
+  nullMethod: jest.fn().mockName('nullMethod'),
 }));
 
 describe('EditorFooter', () => {
-  describe('Component', () => {
-    const props = {
-      editorRef: jest.fn(),
-      isInitialized: true,
-      returnUrl: 'hocuspocus.ca',
-      saveFailed: false,
-      saveBlock: jest.fn(),
-    };
+  const props = {
+    editorRef: jest.fn().mockName('args.editorRef'),
+    isInitialized: true,
+    returnUrl: 'hocuspocus.ca',
+    saveFailed: false,
+    saveBlock: jest.fn().mockName('args.saveBlock'),
+  };
+  describe('behavior', () => {
+    const realmodule = jest.requireActual('./index');
+    test('handleSaveClicked calls saveTextBlock', () => {
+      const createdCallback = realmodule.handleSaveClicked(props);
+      createdCallback();
+      expect(saveTextBlock).toHaveBeenCalled();
+    });
+    test('handleCancelClicked calls navigateCallback', () => {
+      realmodule.handleCancelClicked({ returnUrl: props.returnUrl });
+      expect(navigateCallback).toHaveBeenCalledWith(props.returnUrl);
+    });
+  });
+  describe('snapshots', () => {
     test('renders as expected with default behavior', () => {
       expect(shallow(<module.EditorFooter {...props} />)).toMatchSnapshot();
     });
@@ -57,20 +69,8 @@ describe('EditorFooter', () => {
     test('Save Failed, error message raised', () => {
       expect(shallow(<module.EditorFooter {...props} saveFailed />)).toMatchSnapshot();
     });
-    describe('On Click Handlers', () => {
-      const realmodule = jest.requireActual('./index');
-      test('handleSaveClicked calls saveTextBlock', () => {
-        const createdCallback = realmodule.handleSaveClicked(props);
-        createdCallback();
-        expect(saveTextBlock).toHaveBeenCalled();
-      });
-      test('handleCancelClicked calls navigateCallback', () => {
-        realmodule.handleCancelClicked({ returnUrl: props.returnUrl });
-        expect(navigateCallback).toHaveBeenCalledWith(props.returnUrl);
-      });
-    });
   });
-  describe('MapStateToProps', () => {
+  describe('mapStateToProps', () => {
     const testState = { A: 'pple', B: 'anana', C: 'ucumber' };
     test('isInitialized from app.isInitialized', () => {
       expect(
@@ -88,7 +88,7 @@ describe('EditorFooter', () => {
       ).toEqual(selectors.requests.isFailed(testState, { requestKey: RequestKeys.saveBlock }));
     });
   });
-  describe('MapDispatchToProps', () => {
+  describe('mapDispatchToProps', () => {
     test('saveBlock from thunkActions.app.saveBlock', () => {
       expect(module.mapDispatchToProps.saveBlock).toEqual(thunkActions.app.saveBlock);
     });
