@@ -22,16 +22,13 @@ jest.mock('../../data/redux', () => ({
   },
 }));
 
-jest.mock('.', () => {
-  // Require the original module to not be mocked...
-  const originalModule = jest.requireActual('./index');
-  return {
+jest.mock('.', () => ({
     __esModule: true, // Use it when dealing with esModules
-    ...originalModule,
+    ...jest.requireActual('./index'),
     handleCancelClicked: jest.fn(args => ({ handleCancelClicked: args })),
     handleSaveClicked: jest.fn(args => ({ handleSaveClicked: args })),
-  };
-});
+  }
+));
 
 jest.mock('../../hooks', () => ({
   saveTextBlock: jest.fn(),
