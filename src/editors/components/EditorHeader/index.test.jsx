@@ -1,9 +1,25 @@
 import React from 'react';
+import { shallow } from 'enzyme';
+
+import { EditorHeader } from './index';
+
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import EditorHeader from './EditorHeader';
 import EditorPageContext from './EditorPageContext';
 import { ActionStates } from './data/constants';
+
+describe('Editor Header Component', () => {
+  let props = {
+    returnUrl: 'test-url'
+  }
+  describe('behavior');
+  describe('snapshots', () => {
+    expect(shallow(<EditorHeader {...props} />)).toMatchSnapshot();
+  });
+  describe('mapStateToProps');
+  describe('mapDispatchToProps');
+});
 
 const locationTemp = window.location;
 beforeEach(() => {

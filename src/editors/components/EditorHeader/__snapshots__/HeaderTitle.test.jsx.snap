@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`HeaderTitle snapshots initialized 1`] = `
+<div
+  className="d-flex"
+>
+  <div
+    style={
+      Object {
+        "lineHeight": "1.5",
+        "paddingRight": ".25em",
+      }
+    }
+  >
+    html
+  </div>
+  <IconButton
+    alt="Edit"
+    aria-label="Edit Title"
+    className="mr-2"
+    iconAs="Icon"
+    onClick={[Function]}
+    size="sm"
+    src={[MockFunction icons.Edit]}
+  />
+</div>
+`;
+
+exports[`HeaderTitle snapshots not initialized 1`] = `
+<FormattedMessage
+  defaultMessage="Loading..."
+  description="Message displayed while loading content"
+  id="authoring.texteditor.title.loading"
+/>
+`;
