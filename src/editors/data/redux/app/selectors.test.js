@@ -1,5 +1,4 @@
 // import * in order to mock in-file references
-import { blockTypes } from '../../constants/app';
 import * as urls from '../../services/cms/urls';
 import * as selectors from './selectors';
 
@@ -12,7 +11,6 @@ jest.mock('../../services/cms/urls', () => ({
 
 const testState = { some: 'arbitraryValue' };
 const testValue = 'my VALUE';
-const testKey = 'MY key';
 
 describe('app selectors unit tests', () => {
   const {

@@ -1,4 +1,3 @@
-import { locationId } from '../../constants/app';
 import { actions } from '..';
 import * as thunkActions from './app';
 
