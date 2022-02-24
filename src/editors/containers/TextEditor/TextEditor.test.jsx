@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 import { TextEditor, mapStateToProps, mapDispatchToProps } from './TextEditor';
 import { actions, selectors } from '../../data/redux';
 import { RequestKeys } from '../../data/constants/requests';
-import {editorConfig, modalToggle} from './hooks';
+import { modalToggle } from './hooks';
 
 // Per https://github.com/tinymce/tinymce-react/issues/91 React unit testing in JSDOM is not supported by tinymce.
 // Consequently, mock the Editor out.
@@ -44,7 +44,7 @@ describe('TextEditor', () => {
   const props = {
     setEditorRef: jest.fn().mockName('args.setEditorRef'),
     // redux
-    blockValue: {data: 'HYleTsEditTeaxt'},
+    blockValue: { data: 'HYleTsEditTeaxt' },
     blockFailed: false,
     blockFinished: true,
     initializeEditor: jest.fn().mockName('args.intializeEditor'),
@@ -53,7 +53,7 @@ describe('TextEditor', () => {
     modalToggle.mockReturnValue({
       isOpen: false,
       openModal: jest.fn().mockName('modal.openModal'),
-      closeModal: jest.fn().mockName('modal.closeModal')
+      closeModal: jest.fn().mockName('modal.closeModal'),
     });
     test('renders as expected with default behavior', () => {
       expect(shallow(<TextEditor {...props} />)).toMatchSnapshot();
