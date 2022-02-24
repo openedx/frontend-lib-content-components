@@ -5,7 +5,7 @@ const testingState = {
   arbitraryField: 'arbitrary',
 };
 
-describe('requests reducer', () => {
+describe('app reducer', () => {
   it('has initial state', () => {
     expect(reducer(undefined, {})).toEqual(initialState);
   });
