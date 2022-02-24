@@ -40,9 +40,6 @@ export const TextEditor = ({
   blockFinished,
   initializeEditor,
 }) => {
-  console.log({
-    blockValue, blockFailed, blockFinished, test: 1,
-  });
   const { isOpen, openModal, closeModal } = modalToggle();
 
   return (

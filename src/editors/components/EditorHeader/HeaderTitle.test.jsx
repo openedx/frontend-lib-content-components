@@ -30,19 +30,19 @@ describe('HeaderTitle', () => {
     setBlockTitle: jest.fn().mockName('args.setBlockTitle'),
     typeHeader: 'html',
   };
-  const hookProps = {
-    inputRef: jest.fn().mockName('titleHooks.inputRef'),
+  const localTitleHooksProps = {
+    inputRef: jest.fn().mockName('localTitleHooks.inputRef'),
     isEditing: false,
-    handleChange: jest.fn().mockName('titleHooks.handleChange'),
-    handleKeyDown: jest.fn().mockName('titleHooks.handleKeyDown'),
+    handleChange: jest.fn().mockName('localTitleHooks.handleChange'),
+    handleKeyDown: jest.fn().mockName('localTitleHooks.handleKeyDown'),
     localTitle: 'TeST LocALtitLE',
-    startEditing: jest.fn().mockName('titleHooks.startEditing'),
-    updateTitle: jest.fn().mockName('titleHooks.updateTitle'),
+    startEditing: jest.fn().mockName('localTitleHooks.startEditing'),
+    updateTitle: jest.fn().mockName('localTitleHooks.updateTitle'),
   };
 
   describe('behavior', () => {
     it(' calls localTitleHooks with initialization args', () => {
-      localTitleHooks.mockReturnValue(hookProps);
+      localTitleHooks.mockReturnValue(localTitleHooksProps);
       shallow(<module.HeaderTitle {...props} isInitialized />);
       expect(localTitleHooks).toHaveBeenCalledWith({
         editorRef: props.editorRef,
