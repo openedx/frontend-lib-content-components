@@ -5,7 +5,7 @@ exports[`TextEditor snapshots block failed to load, Toast is shown 1`] = `
   className="editor-body h-75"
 >
   <ImageUploadModal
-    close={[Function]}
+    close={[MockFunction modal.closeModal]}
     isOpen={false}
   />
   <Toast
@@ -21,10 +21,12 @@ exports[`TextEditor snapshots block failed to load, Toast is shown 1`] = `
   <Editor
     editorConfig={
       Object {
-        "blockValue": null,
+        "blockValue": Object {
+          "data": "HYleTsEditTeaxt",
+        },
         "initializeEditor": [MockFunction args.intializeEditor],
-        "openModal": undefined,
-        "setEditorRef": undefined,
+        "openModal": [MockFunction modal.openModal],
+        "setEditorRef": [MockFunction args.setEditorRef],
       }
     }
   />
@@ -36,7 +38,7 @@ exports[`TextEditor snapshots not yet loaded, Spinner appears 1`] = `
   className="editor-body h-75"
 >
   <ImageUploadModal
-    close={[Function]}
+    close={[MockFunction modal.closeModal]}
     isOpen={false}
   />
   <Toast
@@ -66,7 +68,7 @@ exports[`TextEditor snapshots renders as expected with default behavior 1`] = `
   className="editor-body h-75"
 >
   <ImageUploadModal
-    close={[Function]}
+    close={[MockFunction modal.closeModal]}
     isOpen={false}
   />
   <Toast
@@ -82,10 +84,12 @@ exports[`TextEditor snapshots renders as expected with default behavior 1`] = `
   <Editor
     editorConfig={
       Object {
-        "blockValue": null,
+        "blockValue": Object {
+          "data": "HYleTsEditTeaxt",
+        },
         "initializeEditor": [MockFunction args.intializeEditor],
-        "openModal": undefined,
-        "setEditorRef": undefined,
+        "openModal": [MockFunction modal.openModal],
+        "setEditorRef": [MockFunction args.setEditorRef],
       }
     }
   />
