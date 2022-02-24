@@ -1,4 +1,6 @@
-import { useRef, useEffect, useCallback, useState } from 'react';
+import {
+  useRef, useEffect, useCallback, useState,
+} from 'react';
 
 export const initializeApp = ({ initialize, data }) => useEffect(() => initialize(data), []);
 

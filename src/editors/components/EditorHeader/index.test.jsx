@@ -1,74 +1,57 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import { EditorHeader } from './index';
+import { IconButton } from '@edx/paragon';
+import * as module from './index';
+import { selectors } from '../../data/redux';
+import * as appHooks from '../../hooks';
 
-import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import EditorHeader from './EditorHeader';
-import EditorPageContext from './EditorPageContext';
-import { ActionStates } from './data/constants';
+jest.mock('.', () => ({
+  __esModule: true, // Use it when dealing with esModules
+  ...jest.requireActual('./index'),
+  handleCloseClicked: jest.fn(args => ({ handleCloseClicked: args })),
+}));
 
-describe('Editor Header Component', () => {
-  let props = {
-    returnUrl: 'test-url'
-  }
-  describe('behavior');
-  describe('snapshots', () => {
-    expect(shallow(<EditorHeader {...props} />)).toMatchSnapshot();
-  });
-  describe('mapStateToProps');
-  describe('mapDispatchToProps');
-});
-
-const locationTemp = window.location;
-beforeEach(() => {
-  delete window.location;
-  window.location = {
-    assign: jest.fn(),
-  };
-});
-afterAll(() => {
-  window.location = locationTemp;
-});
-
-test('Rendering And Click Close Button: Does not Navigate off of Page When Loading', () => {
-  const title = 'An Awesome Block';
-  const context = {
-    unitUrlLoading: ActionStates.IN_PROGRESS,
-  };
-  render(
-    <EditorPageContext.Provider value={context}>
-      <EditorHeader title={title} />
-    </EditorPageContext.Provider>,
-  );
-  expect(screen.getByText(title)).toBeTruthy();
-  expect(screen.getByLabelText('Close')).toBeTruthy();
-  userEvent.click(screen.getByLabelText('Close'));
-  expect(window.location.assign).not.toHaveBeenCalled();
-});
-
-test('Rendering And Click Button: Loaded Navigates Away', () => {
-  const title = 'An Awesome Block';
-  const context = {
-    unitUrlLoading: ActionStates.FINISHED,
-    unitUrl: {
-      data: {
-        ancestors:
-        [
-          { id: 'fakeblockid' },
-        ],
-      },
+jest.mock('../../data/redux', () => ({
+  selectors: {
+    app: {
+      returnUrl: jest.fn().mockName('actions.app.returnUrl'),
     },
-    studioEndpointUrl: 'Testurl',
+  },
+}));
+
+jest.mock('../../hooks', () => ({
+  navigateCallback: jest.fn(),
+}));
+
+jest.mock('./HeaderTitle', () => 'HeaderTitle');
+
+describe('Editor Header index', () => {
+  const props = {
+    returnUrl: 'TeST-ReTurNurL',
   };
-  render(
-    <EditorPageContext.Provider value={context}>
-      <EditorHeader title={title} />
-    </EditorPageContext.Provider>,
-  );
-  expect(screen.getByText(title)).toBeTruthy();
-  expect(screen.getByLabelText('Close')).toBeTruthy();
-  userEvent.click(screen.getByLabelText('Close'));
-  expect(window.location.assign).toHaveBeenCalled();
+  let el;
+  beforeEach(() => {
+    el = shallow(<module.EditorHeader {...props} />);
+  });
+
+  describe('behavior', () => {
+    test('IconButton onClick calls navigateCallback', () => {
+      const iconButtonControl = el.find(IconButton);
+      iconButtonControl.simulate('click');
+      expect(appHooks.navigateCallback).toHaveBeenCalledWith(props.returnUrl);
+    });
+  });
+
+  describe('snapshot', () => {
+    expect(el).toMatchSnapshot();
+  });
+
+  describe('mapStateToProps', () => {
+    const testState = { T: 'est', S: 'tate' };
+    test('returnUrl from app.returnUrl', () => {
+      expect(module.mapStateToProps(testState).returnUrl)
+        .toEqual(selectors.app.returnUrl(testState));
+    });
+  });
 });
