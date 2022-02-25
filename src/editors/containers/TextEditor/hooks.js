@@ -9,7 +9,6 @@ export const addImageUploadButton = (openModal) => (editor) => {
 };
 
 export const initializeEditorRef = (setRef) => (evt, editor) => {
-  console.log('hello world');
   setRef(editor);
 };
 
@@ -23,7 +22,6 @@ export const editorConfig = ({
   initializeEditor,
 }) => ({
   onInit: (evt, editor) => {
-    console.log("onitCalled");
     module.initializeEditorRef(setEditorRef)(evt, editor);
     initializeEditor();
   },

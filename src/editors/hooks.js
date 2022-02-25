@@ -28,7 +28,6 @@ export const saveTextBlock = ({
   returnUrl,
   saveBlock,
 }) => {
-  console.log({ editorRef });
   saveBlock({
     returnToUnit: module.navigateCallback(returnUrl),
     content: editorRef.current.getContent(),

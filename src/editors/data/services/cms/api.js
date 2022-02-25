@@ -44,6 +44,5 @@ export const saveBlock = ({
     courseId,
     title,
   });
-  console.log({ normalizedContent });
   return post(urls.block({ studioEndpointUrl, blockId }), normalizedContent);
 };
