@@ -44,7 +44,7 @@ describe('TextEditor', () => {
   const props = {
     setEditorRef: jest.fn().mockName('args.setEditorRef'),
     // redux
-    blockValue: { data: 'HYleTsEditTeaxt' },
+    blockValue: { data: 'eDiTablE Text' },
     blockFailed: false,
     blockFinished: true,
     initializeEditor: jest.fn().mockName('args.intializeEditor'),
