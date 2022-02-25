@@ -1,6 +1,7 @@
 import { RequestKeys } from '../../constants/requests';
 import api from '../../services/cms/api';
 import * as requests from './requests';
+import { actions, selectors } from '../index';
 
 const studioEndpointUrl = 'ASVouAGE.S$e';
 const blockId = 'CHalockIDmaiw@alcioUSness';
@@ -8,27 +9,16 @@ const blockType = 'hTMl';
 const courseId = 'BEnX:INtrOToUNIttEsTing';
 const title = 'MYbLock';
 
-jest.mock('..', () => ({
-  ...jest.requireActual('..'),
-  selectors: ({
-    app: {
-      studioEndpointUrl: (args) => studioEndpointUrl,
-      blockId: (args) => blockId,
-      blockType: (args) => blockType,
-      courseId: (args) => courseId,
-      title: (args) => title,
-    },
-  }),
-}));
+jest.spyOn(selectors.app, 'studioEndpointUrl').mockImplementation(() => studioEndpointUrl);
+jest.spyOn(selectors.app, 'blockId').mockImplementation(() => blockId);
+jest.spyOn(selectors.app, 'blockType').mockImplementation(() => blockType);
+jest.spyOn(selectors.app, 'courseId').mockImplementation(() => courseId);
+jest.spyOn(selectors.app, 'title').mockImplementation(() => title);
 
 jest.mock('../../services/cms/api', () => ({
-  fetchBlockById: ({ blockId, studioEndpointUrl }) => ({ blockId, studioEndpointUrl }),
-  initializeApp: (locationId) => ({ initializeApp: locationId }),
-  fetchSubmissionStatus: (submissionUUID) => ({ fetchSubmissionStatus: submissionUUID }),
-  fetchSubmission: (submissionUUID) => ({ fetchSubmission: submissionUUID }),
-  lockSubmission: ({ submissionUUID }) => ({ lockSubmission: { submissionUUID } }),
-  unlockSubmission: ({ submissionUUID }) => ({ unlockSubmission: { submissionUUID } }),
-  updateGrade: (submissionUUID, gradeData) => ({ updateGrade: { submissionUUID, gradeData } }),
+  fetchBlockById: ({ id, url }) => ({ id, url }),
+  fetchByUnitId: ({ id, url }) => ({ id, url }),
+  saveBlock: (args) => args,
 }));
 
 let dispatch;
@@ -43,7 +33,7 @@ describe('requests thunkActions module', () => {
 
   describe('networkRequest', () => {
     const requestKey = 'test-request';
-    const testData = { some: 'test data' };
+    const testData = ({ some: 'test data' });
     let resolveFn;
     let rejectFn;
     beforeEach(() => {
@@ -121,11 +111,11 @@ describe('requests thunkActions module', () => {
       });
     });
   };
-
   describe('network request actions', () => {
-    const sometestStateGetter=()=>({
+    const sometestStateGetter = () => ({
       some: 'data',
     });
+
     beforeEach(() => {
       requests.networkRequest = jest.fn(args => ({ networkRequest: args }));
     });
@@ -136,8 +126,38 @@ describe('requests thunkActions module', () => {
         testState: sometestStateGetter,
         expectedString: 'with fetchBlock promise',
         expectedData: {
-          requestKey: RequestKeys.initialize,
+          ...sometestStateGetter(),
+          requestKey: RequestKeys.fetchBlock,
           promise: api.fetchBlockById({ studioEndpointUrl, blockId }),
+        },
+      });
+    });
+    describe('fetchUnit', () => {
+      testNetworkRequestAction({
+        action: requests.fetchUnit,
+        args: { some: 'data' },
+        testState: sometestStateGetter,
+        expectedString: 'with fetchUnit promise',
+        expectedData: {
+          ...sometestStateGetter(),
+          requestKey: RequestKeys.fetchUnit,
+          promise: api.fetchByUnitId({ studioEndpointUrl, blockId }),
+        },
+      });
+    });
+    describe('saveBlock', () => {
+      const content = 'SoME HtMl CoNtent As String';
+      testNetworkRequestAction({
+        action: requests.saveBlock,
+        args: { content, some: 'data' },
+        testState: sometestStateGetter,
+        expectedString: 'with saveBlock promise',
+        expectedData: {
+          ...sometestStateGetter(),
+          requestKey: RequestKeys.saveBlock,
+          promise: api.saveBlock({
+            blockId, blockType, courseId, content, studioEndpointUrl, title,
+          }),
         },
       });
     });

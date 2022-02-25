@@ -1,6 +1,7 @@
 import {
   useRef, useEffect, useCallback, useState,
 } from 'react';
+import * as module from './hooks';
 
 export const initializeApp = ({ initialize, data }) => useEffect(() => initialize(data), []);
 
@@ -25,6 +26,7 @@ export const saveTextBlock = ({
   returnUrl,
   saveBlock,
 }) => {
+  console.log(editorRef);
   saveBlock({
     returnToUnit: module.navigateCallback(returnUrl),
     content: editorRef.current.getContent(),
