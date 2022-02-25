@@ -16,8 +16,7 @@ jest.mock('../app/selectors', () => ({
   blockType: () => (blockType),
   courseId: () => (courseId),
   blockTitle: () => (title),
- }));
-
+}));
 
 jest.mock('../../services/cms/api', () => ({
   fetchBlockById: ({ id, url }) => ({ id, url }),
