@@ -10,10 +10,14 @@ const courseId = 'BEnX:INtrOToUNIttEsTing';
 const title = 'MYbLock';
 
 jest.spyOn(selectors.app, 'studioEndpointUrl').mockImplementation(() => studioEndpointUrl);
-jest.spyOn(selectors.app, 'blockId').mockImplementation(() => blockId);
-jest.spyOn(selectors.app, 'blockType').mockImplementation(() => blockType);
-jest.spyOn(selectors.app, 'courseId').mockImplementation(() => courseId);
-jest.spyOn(selectors.app, 'blockTitle').mockImplementation(() => title);
+jest.mock('../app/selectors', () => ({
+  studioEndpointUrl: () => (studioEndpointUrl),
+  blockId: () => (blockId),
+  blockType: () => (blockType),
+  courseId: () => (courseId),
+  blockTitle: () => (title),
+ }));
+
 
 jest.mock('../../services/cms/api', () => ({
   fetchBlockById: ({ id, url }) => ({ id, url }),

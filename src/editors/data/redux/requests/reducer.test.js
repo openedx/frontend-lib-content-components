@@ -12,21 +12,23 @@ describe('requests reducer', () => {
   describe('handling actions', () => {
     const requestsList = ['fetchUnit', 'fetchBlock', 'saveBlock'];
     const createTestParams = (requestKey) => [
-      [requestKey, 'startRequest', requestKey, { status: RequestStates.pending }],
-      [requestKey, 'completeRequest', { requestKey }, { status: RequestStates.completed, response: undefined }],
-      [requestKey, 'failRequest', { requestKey }, { status: RequestStates.failed, error: undefined }],
-      [requestKey, 'clearRequest', { requestKey }, {}],
+      {target: requestKey, action: 'startRequest', payload: requestKey, testValue: { status: RequestStates.pending }},
+      {target: requestKey, action: 'completeRequest',payload:{ requestKey }, testValue:{ status: RequestStates.completed, response: undefined }},
+      {target: requestKey, action: 'failRequest', payload: { requestKey }, testValue: { status: RequestStates.failed, error: undefined }},
+      {target: requestKey, action: 'clearRequest', payload: { requestKey },testValue: {}},
     ];
-    const lifecycletest = (target, action, payload, testValue) => {
-      describe(action, () => {
-        it(`load ${target} from payload`, () => {
-          expect(reducer(testingState, actions[action](payload))).toEqual({
-            ...testingState,
-            [target]: testValue,
+    requestsList.forEach(requestKey => {
+      createTestParams(requestKey).map((params) => {
+        const {target, action, payload, testValue} = params
+        describe(action, () => {
+          it(`load ${target} from payload`, () => {
+            expect(reducer(testingState, actions[action](payload))).toEqual({
+              ...testingState,
+              [target]: testValue,
+            });
           });
         });
       });
-    };
-    requestsList.flatMap(val => createTestParams(val)).map((value) => lifecycletest(...value));
+    });
   });
 });
