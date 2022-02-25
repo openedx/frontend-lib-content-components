@@ -78,6 +78,7 @@ EditorFooter.propTypes = {
 };
 
 export const mapStateToProps = (state) => ({
+  returnUrl: selectors.app.returnUrl(state),
   isInitialized: selectors.app.isInitialized(state),
   saveFailed: selectors.requests.isFailed(state, { requestKey: RequestKeys.saveBlock }),
   studioEndpointUrl: selectors.app.studioEndpointUrl(state),

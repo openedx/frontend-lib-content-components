@@ -19,7 +19,8 @@ export const navigateTo = (destination) => {
   window.location.assign(destination);
 };
 
-export const navigateCallback = (destination) => () => navigateTo(destination);
+export const navigateCallback = (destination) => () => {//navigateTo(destination)
+};
 
 export const saveTextBlock = ({
   editorRef,
