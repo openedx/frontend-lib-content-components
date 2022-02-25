@@ -10,7 +10,7 @@ describe('requests reducer', () => {
     expect(reducer(undefined, {})).toEqual(initialState);
   });
   describe('handling actions', () => {
-    const requestsList = ['fetchUnit', 'fetchBlock', 'saveBlock'];
+    const requestsList = [RequestKeys.fetchUnit, RequestKeys.fetchBlock, RequestKeys.saveBlock];
     requestsList.forEach(requestKey => {
       describe(`${requestKey} lifecycle`, () => {
         const testAction = (action, args, expected) => {
