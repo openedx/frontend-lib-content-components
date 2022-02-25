@@ -36,13 +36,14 @@ export const saveBlock = ({
   courseId,
   studioEndpointUrl,
   title,
-}) => post(
-  urls.block({ studioEndpointUrl, blockId }),
-  normalizeContent({
+}) => {
+  const normalizedContent = normalizeContent({
+    blockId,
     blockType,
     content,
-    blockId,
     courseId,
     title,
-  }),
-);
+  });
+  console.log({ normalizedContent });
+  return post(urls.block({ studioEndpointUrl, blockId }), normalizedContent);
+};

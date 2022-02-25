@@ -19,7 +19,8 @@ export const navigateTo = (destination) => {
   window.location.assign(destination);
 };
 
-export const navigateCallback = (destination) => () => {//navigateTo(destination)
+export const navigateCallback = (destination) => () => {
+  navigateTo(destination);
 };
 
 export const saveTextBlock = ({
@@ -27,7 +28,7 @@ export const saveTextBlock = ({
   returnUrl,
   saveBlock,
 }) => {
-  console.log(editorRef);
+  console.log({ editorRef });
   saveBlock({
     returnToUnit: module.navigateCallback(returnUrl),
     content: editorRef.current.getContent(),
