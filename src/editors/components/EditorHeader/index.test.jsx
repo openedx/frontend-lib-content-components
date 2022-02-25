@@ -30,11 +30,10 @@ describe('Editor Header index', () => {
   const props = {
     returnUrl: 'TeST-ReTurNurL',
   };
+  const { EditorHeader } = module;
   let el;
-  beforeEach(() => {
-    el = shallow(<module.EditorHeader {...props} />);
-  });
-
+  el = shallow(<EditorHeader {...props} />);
+  
   describe('behavior', () => {
     test('IconButton onClick calls navigateCallback', () => {
       const iconButtonControl = el.find(IconButton);
