@@ -11,32 +11,33 @@ describe('requests reducer', () => {
   });
   describe('handling actions', () => {
     const requestsList = ['fetchUnit', 'fetchBlock', 'saveBlock'];
-    const createTestParams = (requestKey) => [
-      {
-        target: requestKey, action: 'startRequest', payload: requestKey, testValue: { status: RequestStates.pending },
-      },
-      {
-        target: requestKey, action: 'completeRequest', payload: { requestKey }, testValue: { status: RequestStates.completed, response: undefined },
-      },
-      {
-        target: requestKey, action: 'failRequest', payload: { requestKey }, testValue: { status: RequestStates.failed, error: undefined },
-      },
-      {
-        target: requestKey, action: 'clearRequest', payload: { requestKey }, testValue: {},
-      },
-    ];
     requestsList.forEach(requestKey => {
-      createTestParams(requestKey).map((params) => {
-        const {
-          target, action, payload, testValue,
-        } = params;
-        describe(action, () => {
-          it(`load ${target} from payload`, () => {
-            expect(reducer(testingState, actions[action](payload))).toEqual({
-              ...testingState,
-              [target]: testValue,
-            });
+      describe(`${requestKey} lifecycle`, () => {
+        const testAction = (action, args, expected) => {
+          expect(reducer(testingState, actions[action](args))).toEqual({
+            ...testingState,
+            [requestKey]: expected,
           });
+        };
+        test('startRequest sets pending status', () => {
+          testAction('startRequest', requestKey, { status: RequestStates.pending });
+        });
+        test('completeRequest sets completed status and loads response', () => {
+          testAction(
+            'completeRequest',
+            { requestKey },
+            { status: RequestStates.completed },
+          );
+        });
+        test('failRequest sets failed state and loads error', () => {
+          testAction(
+            'failResponse',
+            { requestKey },
+            { status: RequestStates.failed },
+          );
+        });
+        test('clearRequest clears request state', () => {
+          testAction('clearRequest', { requestKey }, {});
         });
       });
     });
