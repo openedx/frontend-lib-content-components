@@ -7,9 +7,9 @@ import { Edit } from '@edx/paragon/icons';
 import { FormattedMessage } from '@edx/frontend-platform/i18n';
 
 import { actions, selectors } from '../../data/redux';
+import { localTitleHooks } from './hooks';
 import messages from '../messages';
 import EditableHeader from './EditableHeader';
-import { localTitleHooks } from './hooks';
 
 export const HeaderTitle = ({
   editorRef,
@@ -18,6 +18,10 @@ export const HeaderTitle = ({
   typeHeader,
 }) => {
   if (!isInitialized) { return <FormattedMessage {...messages.loading} />; }
+<<<<<<< HEAD
+=======
+
+>>>>>>> main
   const {
     inputRef,
     isEditing,
@@ -51,13 +55,13 @@ export const HeaderTitle = ({
         {localTitle}
       </div>
       <IconButton
-        iconAs={Icon}
-        src={Edit}
-        onClick={startEditing}
         alt="Edit"
         aria-label="Edit Title"
         className="mr-2"
+        iconAs={Icon}
+        onClick={startEditing}
         size="sm"
+        src={Edit}
       />
     </div>
   );
