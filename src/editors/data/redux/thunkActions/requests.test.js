@@ -9,7 +9,6 @@ const blockType = 'hTMl';
 const courseId = 'BEnX:INtrOToUNIttEsTing';
 const title = 'MYbLock';
 
-jest.spyOn(selectors.app, 'studioEndpointUrl').mockImplementation(() => studioEndpointUrl);
 jest.mock('../app/selectors', () => ({
   studioEndpointUrl: () => (studioEndpointUrl),
   blockId: () => (blockId),
