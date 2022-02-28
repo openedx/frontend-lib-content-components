@@ -1,4 +1,3 @@
-import { actions } from '..';
 import { RequestKeys } from '../../constants/requests';
 import api from '../../services/cms/api';
 import * as requests from './requests';
