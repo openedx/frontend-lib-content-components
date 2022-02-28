@@ -9,8 +9,11 @@ describe('requests reducer', () => {
   test('intial state generated on create', () => {
     expect(reducer(undefined, {})).toEqual(initialState);
   });
+
   describe('handling actions', () => {
-    const requestsList = [RequestKeys.fetchUnit, RequestKeys.fetchBlock, RequestKeys.saveBlock];
+    const arbitraryKey = 'ArbItrAryKey';
+    const requestsList = [RequestKeys.fetchUnit, RequestKeys.fetchBlock, RequestKeys.saveBlock, arbitraryKey];
+
     requestsList.forEach(requestKey => {
       describe(`${requestKey} lifecycle`, () => {
         const testAction = (action, args, expected) => {
@@ -31,7 +34,7 @@ describe('requests reducer', () => {
         });
         test('failRequest sets failed state and loads error', () => {
           testAction(
-            'failResponse',
+            'failRequest',
             { requestKey },
             { status: RequestStates.failed },
           );
