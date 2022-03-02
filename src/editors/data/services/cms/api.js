@@ -50,6 +50,7 @@ export const apiMethods = {
 
 export const checkMockApi = (key) => {
   if (process.env.REACT_APP_DEVGALLERY) {
+    // eslint-disable-next-line
     console.log('use devgallery api methods');
     return mockApi[key];
   }
