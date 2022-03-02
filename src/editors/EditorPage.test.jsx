@@ -5,15 +5,14 @@ import EditorPage from './EditorPage';
 const props = {
   courseId: 'course-v1:edX+DemoX+Demo_Course',
   blockType: 'html',
-  blockId:'block-v1:edX+DemoX+Demo_Course+type@html+block@030e35c4756a4ddc8d40b95fbbfff4d4',
-  studioEndpointUrl: 'fakeurl.com',};
+  blockId: 'block-v1:edX+DemoX+Demo_Course+type@html+block@030e35c4756a4ddc8d40b95fbbfff4d4',
+  studioEndpointUrl: 'fakeurl.com',
+};
 
 describe('Editor Page', () => {
   describe('snapshots', () => {
     test('rendering correctly with expected Input', () => {
-        expect(shallow(<EditorPage {...props}
-        />)).toMatchSnapshot();
-      });
+      expect(shallow(<EditorPage {...props} />)).toMatchSnapshot();
+    });
   });
 });
-
