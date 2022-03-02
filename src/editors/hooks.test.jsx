@@ -5,7 +5,7 @@ jest.mock('react', () => {
   const updateStateMock = jest.fn();
   return {
     updateState: updateStateMock,
-    useState: jest.fn(val => ([{ state: val }, (newVal) => updateState({ val, newVal })])),
+    useState: jest.fn(val => ([{ state: val }, (newVal) => updateStateMock({ val, newVal })])),
     useRef: jest.fn(val => ({ current: val })),
     useEffect: jest.fn(),
     useCallback: (cb, prereqs) => ({ cb, prereqs }),
@@ -29,7 +29,7 @@ describe('hooks', () => {
       module.initializeApp({ initialize: mockIntialize, data: fakedata });
       expect(mockIntialize).not.toHaveBeenCalledWith(fakedata);
       const [cb, prereqs] = useEffect.mock.calls[0];
-      expect(prereqs).toBe([]);
+      expect(prereqs).toStrictEqual([]);
       cb();
       expect(mockIntialize).toHaveBeenCalledWith(fakedata);
     });
@@ -53,7 +53,7 @@ describe('hooks', () => {
       expect(output.editorRef.current).toBe(fakeEditor);
       expect(updateState).not.toHaveBeenCalled();
       const [cb, prereqs] = useEffect.mock.calls[0];
-      expect(prereqs).toBe([]);
+      expect(prereqs).toStrictEqual([]);
       cb();
       expect(updateState).toHaveBeenCalledWith({ newVal: true, val: false });
     });
