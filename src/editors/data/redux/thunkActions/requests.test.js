@@ -10,11 +10,11 @@ const courseId = 'BEnX:INtrOToUNIttEsTing';
 const title = 'MYbLock';
 
 jest.mock('../app/selectors', () => ({
-  studioEndpointUrl: () => (studioEndpointUrl),
-  blockId: () => (blockId),
-  blockType: () => (blockType),
-  courseId: () => (courseId),
-  blockTitle: () => (title),
+  studioEndpointUrl: (state) => ({studioEndpointUrl: state}),
+  blockId: (state) => ({blockId: state}),
+  blockType: (state) => ({blockType: state}),
+  courseId: (state) => ({courseId: state}),
+  blockTitle: (state) => ({title:state}),
 }));
 
 jest.mock('../../services/cms/api', () => ({
@@ -130,7 +130,10 @@ describe('requests thunkActions module', () => {
         expectedData: {
           ...sometestStateGetter(),
           requestKey: RequestKeys.fetchBlock,
-          promise: api.fetchBlockById({ studioEndpointUrl, blockId }),
+          promise: api.fetchBlockById({
+            studioEndpointUrl: selectors.app.studioEndpointUrl(sometestStateGetter()),
+            blockId: selectors.app.blockId(sometestStateGetter()),
+          }),
         },
       });
     });
@@ -143,7 +146,10 @@ describe('requests thunkActions module', () => {
         expectedData: {
           ...sometestStateGetter(),
           requestKey: RequestKeys.fetchUnit,
-          promise: api.fetchByUnitId({ studioEndpointUrl, blockId }),
+          promise: api.fetchByUnitId({
+            studioEndpointUrl: selectors.app.studioEndpointUrl(sometestStateGetter()),
+            blockId: selectors.app.blockId(sometestStateGetter()),
+          }),
         },
       });
     });
@@ -158,7 +164,12 @@ describe('requests thunkActions module', () => {
           ...sometestStateGetter(),
           requestKey: RequestKeys.saveBlock,
           promise: api.saveBlock({
-            blockId, blockType, courseId, content, studioEndpointUrl, title,
+            blockId: selectors.app.blockId(sometestStateGetter()),
+            blockType: selectors.app.blockType(sometestStateGetter()),
+            courseId: selectors.app.courseId(sometestStateGetter()),
+            content,
+            studioEndpointUrl: selectors.app.studioEndpointUrl(sometestStateGetter()),
+            title: selectors.app.blockTitle(sometestStateGetter()),
           }),
         },
       });
