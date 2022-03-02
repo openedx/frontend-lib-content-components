@@ -1,4 +1,3 @@
-// eslint-disable-next-line
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 
