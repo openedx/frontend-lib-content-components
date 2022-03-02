@@ -1,3 +1,4 @@
+import { useEffect, updateState } from 'react';
 import * as module from './hooks';
 
 jest.mock('react', () => {
@@ -6,12 +7,11 @@ jest.mock('react', () => {
       updateState,
       useState: jest.fn(val => ([{ state: val }, (newVal) => updateState({ val, newVal })])),
       useRef: jest.fn(val => ({ current: val })),
-      useEffect: jest.fn(f=>()=>f()),
-      useCallback: jest.fn(val => () => {}),
+      useEffect: jest.fn(),
+      useCallback: (cb, prereqs) => ({cb, prereqs}),
     };
 });
 describe('hooks', () => {
-
     const locationTemp = window.location;
     beforeAll(() => {
         delete window.location;
@@ -29,8 +29,10 @@ describe('hooks', () => {
         beforeEach(() => {
             output = module.initializeApp({initialize: mockIntialize, data: fakedata});
         });
-        test('calls provided function with provided data as args', () => {
-            output();
+        test('calls provided function with provided data as args when useeffect is called', () => {
+            expect(mockIntialize).not.toHaveBeenCalledWith(fakedata);
+            const [cb, prereqs] = useEffect.mock.calls[0];
+            cb();
             expect(mockIntialize).toHaveBeenCalledWith(fakedata);
         });
     });
@@ -39,13 +41,22 @@ describe('hooks', () => {
         beforeEach(() => {
             output = module.prepareEditorRef();
         });
-        test('sets refReady to false by default', () => {
-            expect(output.refReady.state).toBe(false);
+        afterEach(() => {
+            jest.clearAllMocks();
         });
-        test('calling setEditorRef sets the ref to have a value', () => {
+        test('sets refReady to false by default, ref is null', () => {
+            expect(output.refReady.state).toBe(false);
+            expect(output.editorRef.current).toBe(null);
+        });
+        test('calling setEditorRef sets the ref to have a value which is only ready when useEffect is called', () => {
             const fakeEditor = {editor: 'faKe Editor'};
-            output.setEditorRef(fakeEditor);
+            expect(output.editorRef.current).not.toBe(fakeEditor);
+            output.setEditorRef.cb(fakeEditor);
             expect(output.editorRef.current).toBe(fakeEditor);
+            expect(updateState).not.toHaveBeenCalled();
+            const [cb, prereqs] = useEffect.mock.calls[0];
+            cb();
+            expect(updateState).toHaveBeenCalledWith({newVal: true, val: false});
         });
     });
     describe('navigateTo', () => {

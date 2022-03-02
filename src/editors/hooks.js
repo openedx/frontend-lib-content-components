@@ -7,9 +7,9 @@ export const initializeApp = ({ initialize, data }) => useEffect(() => initializ
 
 export const prepareEditorRef = () => {
   const editorRef = useRef(null);
-  const setEditorRef = (ref) => {
+  const setEditorRef = useCallback((ref) => {
     editorRef.current = ref;
-  };
+  }, []);
   const [refReady, setRefReady] = useState(false);
   useEffect(() => setRefReady(true), []);
   return { editorRef, refReady, setEditorRef };
