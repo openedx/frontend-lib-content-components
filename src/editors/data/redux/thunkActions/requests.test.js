@@ -3,18 +3,16 @@ import api from '../../services/cms/api';
 import * as requests from './requests';
 import { actions, selectors } from '../index';
 
-const studioEndpointUrl = 'ASVouAGE.S$e';
-const blockId = 'CHalockIDmaiw@alcioUSness';
-const blockType = 'hTMl';
-const courseId = 'BEnX:INtrOToUNIttEsTing';
-const title = 'MYbLock';
+const testState = {
+  some: 'data',
+};
 
 jest.mock('../app/selectors', () => ({
-  studioEndpointUrl: (state) => ({studioEndpointUrl: state}),
-  blockId: (state) => ({blockId: state}),
-  blockType: (state) => ({blockType: state}),
-  courseId: (state) => ({courseId: state}),
-  blockTitle: (state) => ({title:state}),
+  studioEndpointUrl: (state) => ({ studioEndpointUrl: state }),
+  blockId: (state) => ({ blockId: state }),
+  blockType: (state) => ({ blockType: state }),
+  courseId: (state) => ({ courseId: state }),
+  blockTitle: (state) => ({ title: state }),
 }));
 
 jest.mock('../../services/cms/api', () => ({
@@ -89,13 +87,12 @@ describe('requests thunkActions module', () => {
   const testNetworkRequestAction = ({
     action,
     args,
-    testState,
     expectedData,
     expectedString,
   }) => {
     let dispatchedAction;
     beforeEach(() => {
-      action({ ...args, onSuccess, onFailure })(dispatch, testState);
+      action({ ...args, onSuccess, onFailure })(dispatch, () => testState);
       [[dispatchedAction]] = dispatch.mock.calls;
     });
     it('dispatches networkRequest', () => {
@@ -114,25 +111,21 @@ describe('requests thunkActions module', () => {
     });
   };
   describe('network request actions', () => {
-    const sometestStateGetter = () => ({
-      some: 'data',
-    });
-
+    const fetchParams = { fetchParam1: 'param1', fetchParam2: 'param2' };
     beforeEach(() => {
       requests.networkRequest = jest.fn(args => ({ networkRequest: args }));
     });
     describe('fetchBlock', () => {
       testNetworkRequestAction({
         action: requests.fetchBlock,
-        args: { some: 'data' },
-        testState: sometestStateGetter,
+        args: fetchParams,
         expectedString: 'with fetchBlock promise',
         expectedData: {
-          ...sometestStateGetter(),
+          ...fetchParams,
           requestKey: RequestKeys.fetchBlock,
           promise: api.fetchBlockById({
-            studioEndpointUrl: selectors.app.studioEndpointUrl(sometestStateGetter()),
-            blockId: selectors.app.blockId(sometestStateGetter()),
+            studioEndpointUrl: selectors.app.studioEndpointUrl(testState),
+            blockId: selectors.app.blockId(testState),
           }),
         },
       });
@@ -140,15 +133,14 @@ describe('requests thunkActions module', () => {
     describe('fetchUnit', () => {
       testNetworkRequestAction({
         action: requests.fetchUnit,
-        args: { some: 'data' },
-        testState: sometestStateGetter,
+        args: fetchParams,
         expectedString: 'with fetchUnit promise',
         expectedData: {
-          ...sometestStateGetter(),
+          ...fetchParams,
           requestKey: RequestKeys.fetchUnit,
           promise: api.fetchByUnitId({
-            studioEndpointUrl: selectors.app.studioEndpointUrl(sometestStateGetter()),
-            blockId: selectors.app.blockId(sometestStateGetter()),
+            studioEndpointUrl: selectors.app.studioEndpointUrl(testState),
+            blockId: selectors.app.blockId(testState),
           }),
         },
       });
@@ -158,18 +150,17 @@ describe('requests thunkActions module', () => {
       testNetworkRequestAction({
         action: requests.saveBlock,
         args: { content, some: 'data' },
-        testState: sometestStateGetter,
         expectedString: 'with saveBlock promise',
         expectedData: {
-          ...sometestStateGetter(),
+          ...testState,
           requestKey: RequestKeys.saveBlock,
           promise: api.saveBlock({
-            blockId: selectors.app.blockId(sometestStateGetter()),
-            blockType: selectors.app.blockType(sometestStateGetter()),
-            courseId: selectors.app.courseId(sometestStateGetter()),
+            blockId: selectors.app.blockId(testState),
+            blockType: selectors.app.blockType(testState),
+            courseId: selectors.app.courseId(testState),
             content,
-            studioEndpointUrl: selectors.app.studioEndpointUrl(sometestStateGetter()),
-            title: selectors.app.blockTitle(sometestStateGetter()),
+            studioEndpointUrl: selectors.app.studioEndpointUrl(testState),
+            title: selectors.app.blockTitle(testState),
           }),
         },
       });
