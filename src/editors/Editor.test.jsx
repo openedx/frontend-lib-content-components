@@ -3,55 +3,42 @@ import { shallow } from 'enzyme';
 import { Editor, mapDispatchToProps } from './Editor';
 import { thunkActions } from './data/redux';
 import * as hooks from './hooks';
+import { blockTypes } from './data/constants/app';
 
-const prepareEditorRefSpy = jest.spyOn(hooks, 'prepareEditorRef');
+jest.mock('./hooks', () => ({
+  initializeApp: jest.fn(),
+  prepareEditorRef: jest.fn().mockName('prepareEditorRef'),
+}));
+
+jest.mock('./containers/TextEditor/TextEditor', () => 'TextEditor');
+jest.mock('./containers/VideoEditor/VideoEditor', () => 'VideoEditor');
+jest.mock('./containers/ProblemEditor/ProblemEditor', () => 'ProblemEditor');
+jest.mock('./components/EditorFooter', () => 'EditorFooter');
+jest.mock('./components/EditorHeader', () => 'EditorHeader');
 
 const props = {
   courseId: 'course-v1:edX+DemoX+Demo_Course',
-  blockType: 'html',
   blockId: 'block-v1:edX+DemoX+Demo_Course+type@html+block@030e35c4756a4ddc8d40b95fbbfff4d4',
   studioEndpointUrl: 'fakeurl.com',
   initialize: jest.fn(),
 };
 
-jest.mock('./data/redux', () => ({
-  actions: {
-    app: {
-      initializeEditor: jest.fn().mockName('actions.app.initializeEditor'),
-    },
-  },
-  thunkActions: {
-    app: {
-      initialize: jest.fn().mockName('thunkActions.app.initialize'),
-    },
-  },
-  selectors: {
-    app: {
-      blockValue: jest.fn(state => ({ blockValue: state })),
-    },
-    requests: {
-      isFailed: jest.fn((state, params) => ({ isFailed: { state, params } })),
-      isFinished: jest.fn((state, params) => ({ isFailed: { state, params } })),
-    },
-  },
-}));
-
 describe('Editor', () => {
   describe('snapshots', () => {
     test('renders no editor when ref isnt ready', () => {
-      prepareEditorRefSpy.mockImplementationOnce(
+      hooks.prepareEditorRef.mockImplementationOnce(
         () => ({ editorRef: null, refReady: false, setEditorRef: jest.fn() }),
       );
-      expect(shallow(<Editor {...props} />)).toMatchSnapshot();
+      expect(shallow(<Editor blockType="AblOck" {...props} />)).toMatchSnapshot();
     });
-    test('renders editor when ref is ready', () => {
-      prepareEditorRefSpy.mockImplementationOnce(
+    test.each(Object.values(blockTypes))('renders %p editor when ref is ready', (blockType) => {
+      hooks.prepareEditorRef.mockImplementationOnce(
         () => ({ editorRef: { current: 'ref' }, refReady: true, setEditorRef: jest.fn().mockName('setEditorRef') }),
       );
-      expect(shallow(<Editor {...props} />)).toMatchSnapshot();
+      expect(shallow(<Editor blockType={blockType} {...props} />)).toMatchSnapshot();
     });
     test('presents error message if no relevant editor found and ref ready', () => {
-      prepareEditorRefSpy.mockImplementationOnce(
+      hooks.prepareEditorRef.mockImplementationOnce(
         () => ({ editorRef: { current: 'ref' }, refReady: true, setEditorRef: jest.fn().mockName('setEditorRef') }),
       );
       expect(shallow(<Editor

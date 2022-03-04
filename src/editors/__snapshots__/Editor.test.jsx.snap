@@ -9,7 +9,7 @@ exports[`Editor snapshots presents error message if no relevant editor found and
     className="pgn__modal-fullscreen"
     role="dialog"
   >
-    <Connect(EditorHeader)
+    <EditorHeader
       editorRef={
         Object {
           "current": "ref",
@@ -21,7 +21,7 @@ exports[`Editor snapshots presents error message if no relevant editor found and
       description="Error Message Dispayed When An unsopported Editor is desired in V2"
       id="authoring.editorpage.selecteditor.error"
     />
-    <Connect(EditorFooter)
+    <EditorFooter
       editorRef={
         Object {
           "current": "ref",
@@ -32,7 +32,7 @@ exports[`Editor snapshots presents error message if no relevant editor found and
 </div>
 `;
 
-exports[`Editor snapshots renders editor when ref is ready 1`] = `
+exports[`Editor snapshots renders "html" editor when ref is ready 1`] = `
 <div
   className="d-flex flex-column vh-100"
 >
@@ -41,17 +41,77 @@ exports[`Editor snapshots renders editor when ref is ready 1`] = `
     className="pgn__modal-fullscreen"
     role="dialog"
   >
-    <Connect(EditorHeader)
+    <EditorHeader
       editorRef={
         Object {
           "current": "ref",
         }
       }
     />
-    <Connect(TextEditor)
+    <TextEditor
       setEditorRef={[MockFunction setEditorRef]}
     />
-    <Connect(EditorFooter)
+    <EditorFooter
+      editorRef={
+        Object {
+          "current": "ref",
+        }
+      }
+    />
+  </div>
+</div>
+`;
+
+exports[`Editor snapshots renders "problem" editor when ref is ready 1`] = `
+<div
+  className="d-flex flex-column vh-100"
+>
+  <div
+    aria-label="problem"
+    className="pgn__modal-fullscreen"
+    role="dialog"
+  >
+    <EditorHeader
+      editorRef={
+        Object {
+          "current": "ref",
+        }
+      }
+    />
+    <ProblemEditor
+      setEditorRef={[MockFunction setEditorRef]}
+    />
+    <EditorFooter
+      editorRef={
+        Object {
+          "current": "ref",
+        }
+      }
+    />
+  </div>
+</div>
+`;
+
+exports[`Editor snapshots renders "video" editor when ref is ready 1`] = `
+<div
+  className="d-flex flex-column vh-100"
+>
+  <div
+    aria-label="video"
+    className="pgn__modal-fullscreen"
+    role="dialog"
+  >
+    <EditorHeader
+      editorRef={
+        Object {
+          "current": "ref",
+        }
+      }
+    />
+    <VideoEditor
+      setEditorRef={[MockFunction setEditorRef]}
+    />
+    <EditorFooter
       editorRef={
         Object {
           "current": "ref",
@@ -67,7 +127,7 @@ exports[`Editor snapshots renders no editor when ref isnt ready 1`] = `
   className="d-flex flex-column vh-100"
 >
   <div
-    aria-label="html"
+    aria-label="AblOck"
     className="pgn__modal-fullscreen"
     role="dialog"
   />

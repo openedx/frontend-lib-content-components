@@ -23,9 +23,9 @@ describe('hooks', () => {
     window.location = locationTemp;
   });
   describe('initializeApp', () => {
-    const fakedata = { some: 'data' };
-    const mockIntialize = jest.fn(val => (val));
     test('calls provided function with provided data as args when useEffect is called', () => {
+      const mockIntialize = jest.fn(val => (val));
+      const fakedata = { some: 'data' };
       module.initializeApp({ initialize: mockIntialize, data: fakedata });
       expect(mockIntialize).not.toHaveBeenCalledWith(fakedata);
       const [cb, prereqs] = useEffect.mock.calls[0];
@@ -46,16 +46,18 @@ describe('hooks', () => {
       expect(output.refReady.state).toBe(false);
       expect(output.editorRef.current).toBe(null);
     });
-    test('calling setEditorRef sets the ref to have a value which is only ready when useEffect is called', () => {
-      const fakeEditor = { editor: 'faKe Editor' };
-      expect(output.editorRef.current).not.toBe(fakeEditor);
-      output.setEditorRef.cb(fakeEditor);
-      expect(output.editorRef.current).toBe(fakeEditor);
+    test('"when useEffect triggers, refReady is set to true"', () => {
       expect(updateState).not.toHaveBeenCalled();
       const [cb, prereqs] = useEffect.mock.calls[0];
       expect(prereqs).toStrictEqual([]);
       cb();
       expect(updateState).toHaveBeenCalledWith({ newVal: true, val: false });
+    });
+    test('calling setEditorRef sets the ref value', () => {
+      const fakeEditor = { editor: 'faKe Editor' };
+      expect(output.editorRef.current).not.toBe(fakeEditor);
+      output.setEditorRef.cb(fakeEditor);
+      expect(output.editorRef.current).toBe(fakeEditor);
     });
   });
   describe('navigateTo', () => {
@@ -80,16 +82,20 @@ describe('hooks', () => {
     });
   });
   describe('saveBlock', () => {
-    const mockSaveFn = jest.fn(val => val);
-    const navSpy = jest.spyOn(module, 'navigateCallback');
-    const getContentMock = jest.fn();
-    const mockEditorRef = { current: { getContent: getContentMock } };
-    const url = 'rEtUrNUrl';
-    test('it calls the save function with correct arguements', () => {
-      module.saveBlock({ editorRef: mockEditorRef, returnUrl: url, saveFunction: mockSaveFn });
-      expect(mockSaveFn).toHaveBeenCalled();
-      expect(navSpy).toHaveBeenCalledWith(url);
-      expect(getContentMock).toHaveBeenCalled();
+    test('saveBlock calls the save function provided with created nav callback and content', () => {
+      const mockNavCallback = (returnUrl) => ({ navigateCallback: returnUrl });
+      jest.spyOn(module, 'navigateCallback').mockImplementationOnce(mockNavCallback);
+      const content = { some: 'content' };
+      const args = {
+        editorRef: { current: { getContent: () => content } },
+        returnUrl: 'rEtUrNUrl',
+        saveFunction: jest.fn(),
+      };
+      module.saveBlock(args);
+      expect(args.saveFunction).toHaveBeenCalledWith({
+        returnToUnit: mockNavCallback(args.returnUrl),
+        content,
+      });
     });
   });
 });

@@ -8,6 +8,10 @@ const props = {
   blockId: 'block-v1:edX+DemoX+Demo_Course+type@html+block@030e35c4756a4ddc8d40b95fbbfff4d4',
   studioEndpointUrl: 'fakeurl.com',
 };
+jest.mock('react-redux', () => ({
+  Provider: 'Provider',
+}));
+jest.mock('./Editor', () => 'Editor');
 
 describe('Editor Page', () => {
   describe('snapshots', () => {
