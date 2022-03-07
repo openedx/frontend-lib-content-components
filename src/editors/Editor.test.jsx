@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { mount, shallow } from 'enzyme';
 import { Editor, mapDispatchToProps, supportedEditors } from './Editor';
 import { thunkActions } from './data/redux';
 import * as hooks from './hooks';
@@ -36,16 +36,14 @@ describe('Editor', () => {
         () => ({ editorRef: { current: 'ref' }, refReady: true, setEditorRef: jest.fn().mockName('setEditorRef') }),
       );
       const wrapper = shallow(<Editor blockType={blockType} {...props} />);
-      expect(wrapper).toMatchSnapshot();
-      expect(wrapper.exists(supportedEditors[blockType])).toBe(true);
+      if(blockType == 'html'){ // snap just one editor to make viewing easier
+        expect(wrapper).toMatchSnapshot();
+      };
+      expect(wrapper.children().children().at(1).is(supportedEditors[blockType])).toBe(true);
     });
     test('presents error message if no relevant editor found and ref ready', () => {
       hooks.prepareEditorRef.mockImplementationOnce(
-        () => ({
-          editorRef: { current: 'ref' },
-          refReady: true,
-          setEditorRef: jest.fn().mockName('setEditorRef'),
-        }),
+        () => ({ editorRef: { current: 'ref' }, refReady: true, setEditorRef: jest.fn().mockName('setEditorRef') }),
       );
       expect(shallow(<Editor
         {...props}

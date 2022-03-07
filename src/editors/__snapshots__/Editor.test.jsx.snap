@@ -62,66 +62,6 @@ exports[`Editor snapshots renders "html" editor when ref is ready 1`] = `
 </div>
 `;
 
-exports[`Editor snapshots renders "problem" editor when ref is ready 1`] = `
-<div
-  className="d-flex flex-column vh-100"
->
-  <div
-    aria-label="problem"
-    className="pgn__modal-fullscreen"
-    role="dialog"
-  >
-    <EditorHeader
-      editorRef={
-        Object {
-          "current": "ref",
-        }
-      }
-    />
-    <ProblemEditor
-      setEditorRef={[MockFunction setEditorRef]}
-    />
-    <EditorFooter
-      editorRef={
-        Object {
-          "current": "ref",
-        }
-      }
-    />
-  </div>
-</div>
-`;
-
-exports[`Editor snapshots renders "video" editor when ref is ready 1`] = `
-<div
-  className="d-flex flex-column vh-100"
->
-  <div
-    aria-label="video"
-    className="pgn__modal-fullscreen"
-    role="dialog"
-  >
-    <EditorHeader
-      editorRef={
-        Object {
-          "current": "ref",
-        }
-      }
-    />
-    <VideoEditor
-      setEditorRef={[MockFunction setEditorRef]}
-    />
-    <EditorFooter
-      editorRef={
-        Object {
-          "current": "ref",
-        }
-      }
-    />
-  </div>
-</div>
-`;
-
 exports[`Editor snapshots renders no editor when ref isnt ready 1`] = `
 <div
   className="d-flex flex-column vh-100"
