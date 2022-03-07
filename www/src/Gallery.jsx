@@ -3,14 +3,17 @@ import React from 'react';
 import { Form } from '@edx/paragon';
 
 import { EditorPage } from '@edx/frontend-lib-content-components';
+// eslint-disable-next-line
+import { blockTypes } from '@edx/frontend-lib-content-components/editors/data/constants/app';
+// eslint-disable-next-line
+import { mockBlockIdByType } from '@edx/frontend-lib-content-components/editors/data/constants/mockData';
 
 export const EditorGallery = () => {
   const [blockType, setBlockType] = React.useState('html');
-  const blockIds = {
-    html: 'html-block-id',
-    video: 'video-block-id',
-    problem: 'problem-block-id',
-  };
+  const blockIds = Object.keys(blockTypes).reduce((obj, blockTypeKey) => {
+    const type = blockTypes[blockTypeKey];
+    return { ...obj, [type]: mockBlockIdByType(type) };
+  }, {});
   const courseId = 'fake-course-id';
   const studioEndpointUrl = 'fake-studio-endpoint-url';
   const handleChange = (e) => setBlockType(e.target.value);
