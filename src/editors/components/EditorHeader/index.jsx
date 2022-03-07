@@ -2,7 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { ActionRow, IconButton, Icon, ModalDialog } from '@edx/paragon';
+import {
+  ActionRow,
+  IconButton,
+  Icon,
+  ModalDialog,
+} from '@edx/paragon';
 import { Close } from '@edx/paragon/icons';
 
 import { selectors } from '../../data/redux';
@@ -10,9 +15,7 @@ import * as appHooks from '../../hooks';
 
 import HeaderTitle from './HeaderTitle';
 
-export const EditorHeader = ({
-  returnUrl,
-}) => (
+export const EditorHeader = ({ returnUrl }) => (
   <div className="editor-header">
     <ModalDialog.Header>
       <ActionRow>
