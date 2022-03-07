@@ -46,7 +46,7 @@ describe('hooks', () => {
       expect(output.refReady.state).toBe(false);
       expect(output.editorRef.current).toBe(null);
     });
-    test('"when useEffect triggers, refReady is set to true"', () => {
+    test('when useEffect triggers, refReady is set to true', () => {
       expect(updateState).not.toHaveBeenCalled();
       const [cb, prereqs] = useEffect.mock.calls[0];
       expect(prereqs).toStrictEqual([]);
