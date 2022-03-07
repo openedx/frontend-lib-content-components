@@ -39,7 +39,11 @@ describe('Editor', () => {
     });
     test('presents error message if no relevant editor found and ref ready', () => {
       hooks.prepareEditorRef.mockImplementationOnce(
-        () => ({ editorRef: { current: 'ref' }, refReady: true, setEditorRef: jest.fn().mockName('setEditorRef') }),
+        () => ({
+          editorRef: { current: 'ref' },
+          refReady: true, 
+          setEditorRef: jest.fn().mockName('setEditorRef'),
+        }),
       );
       expect(shallow(<Editor
         {...props}
