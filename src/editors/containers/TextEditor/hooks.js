@@ -6,9 +6,16 @@ export const addImageUploadButton = (openModal) => (editor) => {
     icon: 'image',
     onAction: openModal,
   });
+  editor.ui.registry.addButton('imageSettingsButton', {
+    icon: 'image',
+    onAction: openModal,
+  });
 };
 
-export const initializeEditorRef = (setRef) => (evt, editor) => { setRef(editor); };
+export const initializeEditorRef = (setRef,initializeEditor) => (editor) => {
+  setRef(editor);
+  initializeEditor();
+};
 
 // for toast onClose to avoid console warnings
 export const nullMethod = () => {};
@@ -19,10 +26,7 @@ export const editorConfig = ({
   openModal,
   initializeEditor,
 }) => ({
-  onInit: () => {
-    module.initializeEditorRef(setEditorRef);
-    initializeEditor();
-  },
+  onInit: (evt, editor)=> module.initializeEditorRef(setEditorRef, initializeEditor)(editor),
   initialValue: blockValue ? blockValue.data.data : '',
   init: {
     setup: module.addImageUploadButton(openModal),

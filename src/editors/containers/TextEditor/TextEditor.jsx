@@ -33,6 +33,7 @@ import messages from './messages';
 import ImageUploadModal from './components/ImageUploadModal';
 
 export const TextEditor = ({
+  editorRef,
   setEditorRef,
   // redux
   blockValue,
@@ -47,8 +48,8 @@ export const TextEditor = ({
       <ImageUploadModal
         isOpen={isOpen}
         close={closeModal}
+        editorRef={editorRef}
       />
-
       <Toast show={blockFailed} onClose={nullMethod}>
         <FormattedMessage {...messages.couldNotLoadTextContext} />
       </Toast>
@@ -76,6 +77,10 @@ TextEditor.defaultProps = {
   blockValue: null,
 };
 TextEditor.propTypes = {
+  editorRef: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.shape({ current: PropTypes.any }),
+  ]),
   setEditorRef: PropTypes.func.isRequired,
   // redux
   blockValue: PropTypes.shape({

@@ -68,7 +68,7 @@ export const ImageSettingsModal = ({
   const dimensions = module.hooks.dimensions();
   const altText = module.hooks.altText();
   const onImgLoad = module.hooks.onImgLoad(dimensions.initialize);
-  const onSaveClick = module.hooks.onSave({
+  const onSaveClick = () => module.hooks.onSave({
     saveToEditor,
     dimensions: dimensions.value,
     altText: altText.value,
