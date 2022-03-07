@@ -35,7 +35,7 @@ describe('Editor', () => {
       hooks.prepareEditorRef.mockImplementationOnce(
         () => ({ editorRef: { current: 'ref' }, refReady: true, setEditorRef: jest.fn().mockName('setEditorRef') }),
       );
-      const wrapper = shallow(<Editor blockType={blockType} {...props} />)
+      const wrapper = shallow(<Editor blockType={blockType} {...props} />);
       expect(wrapper).toMatchSnapshot();
       expect(wrapper.exists(supportedEditors[blockType])).toBe(true);
     });
@@ -43,7 +43,7 @@ describe('Editor', () => {
       hooks.prepareEditorRef.mockImplementationOnce(
         () => ({
           editorRef: { current: 'ref' },
-          refReady: true, 
+          refReady: true,
           setEditorRef: jest.fn().mockName('setEditorRef'),
         }),
       );
