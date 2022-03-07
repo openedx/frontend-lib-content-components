@@ -1,10 +1,6 @@
 import { initialState, actions, reducer } from './reducer';
 import { RequestStates, RequestKeys } from '../../constants/requests';
 
-const testingState = {
-  ...initialState,
-  arbitraryField: 'arbitrary',
-};
 describe('requests reducer', () => {
   test('intial state generated on create', () => {
     expect(reducer(undefined, {})).toEqual(initialState);
@@ -17,6 +13,11 @@ describe('requests reducer', () => {
     requestsList.forEach(requestKey => {
       describe(`${requestKey} lifecycle`, () => {
         const testAction = (action, args, expected) => {
+          const testingState = {
+            ...initialState,
+            arbitraryField: 'arbitrary',
+            [requestKey]: { arbitrary: 'state' },
+          };
           expect(reducer(testingState, actions[action](args))).toEqual({
             ...testingState,
             [requestKey]: expected,
