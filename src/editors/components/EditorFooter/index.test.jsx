@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 import * as module from './index';
 import { selectors, thunkActions } from '../../data/redux';
 import { RequestKeys } from '../../data/constants/requests';
-import { saveTextBlock, navigateCallback } from '../../hooks';
+import { saveBlock, navigateCallback } from '../../hooks';
 
 jest.mock('../../data/redux', () => ({
   thunkActions: {
@@ -31,7 +31,7 @@ jest.mock('.', () => ({
 
 
 jest.mock('../../hooks', () => ({
-  saveTextBlock: jest.fn(),
+  saveBlock: jest.fn(),
   navigateCallback: jest.fn(),
   nullMethod: jest.fn().mockName('nullMethod'),
 }));
@@ -46,10 +46,10 @@ describe('EditorFooter', () => {
   };
   describe('behavior', () => {
     const realmodule = jest.requireActual('./index');
-    test('handleSaveClicked calls saveTextBlock', () => {
+    test('handleSaveClicked calls saveBlock', () => {
       const createdCallback = realmodule.handleSaveClicked(props);
       createdCallback();
-      expect(saveTextBlock).toHaveBeenCalled();
+      expect(saveBlock).toHaveBeenCalled();
     });
     test('handleCancelClicked calls navigateCallback', () => {
       realmodule.handleCancelClicked({ returnUrl: props.returnUrl });
