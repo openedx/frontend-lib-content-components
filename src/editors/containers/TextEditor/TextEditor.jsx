@@ -15,6 +15,8 @@ import 'tinymce/plugins/emoticons/js/emojis';
 import 'tinymce/plugins/charmap';
 import 'tinymce/plugins/code';
 import 'tinymce/plugins/autoresize';
+import 'tinymce/plugins/image';
+import 'tinymce/plugins/imagetools';
 
 import { FormattedMessage } from '@edx/frontend-platform/i18n';
 import {
@@ -49,6 +51,7 @@ export const TextEditor = ({
         isOpen={isOpen}
         close={closeModal}
         editorRef={editorRef}
+        selection
       />
       <Toast show={blockFailed} onClose={nullMethod}>
         <FormattedMessage {...messages.couldNotLoadTextContext} />
