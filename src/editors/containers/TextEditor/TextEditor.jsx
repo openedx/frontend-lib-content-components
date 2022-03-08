@@ -44,6 +44,12 @@ export const TextEditor = ({
   initializeEditor,
 }) => {
   const { isOpen, openModal, closeModal } = modalToggle();
+  const [selection, setSelection] = React.useState(null);
+  const triggerModal = (file) => {
+    console.log({file});
+    setSelection(file);
+    openModal();
+  };
 
   return (
     <div className="editor-body h-75">
@@ -51,7 +57,7 @@ export const TextEditor = ({
         isOpen={isOpen}
         close={closeModal}
         editorRef={editorRef}
-        selection
+        inputSelection={selection}
       />
       <Toast show={blockFailed} onClose={nullMethod}>
         <FormattedMessage {...messages.couldNotLoadTextContext} />
@@ -68,7 +74,7 @@ export const TextEditor = ({
             {...editorConfig({
               setEditorRef,
               blockValue,
-              openModal,
+              triggerModal,
               initializeEditor,
             })}
           />

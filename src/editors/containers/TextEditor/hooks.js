@@ -2,17 +2,18 @@ import { useState } from 'react';
 import * as module from './hooks';
 
 export const addImageUploadButton = (openModal) => (editor) => {
+  console.log(openModal)
   editor.ui.registry.addButton('imageuploadbutton', {
     icon: 'image',
-    onAction: openModal,
+    onAction() { openModal(null); },
   });
   editor.ui.registry.addButton('editimagesettings', {
     icon: 'image',
-    onAction: openModal,
+    onAction() { openModal(editor.selection.getNode()); },
   });
 };
 
-export const initializeEditorRef = (setRef,initializeEditor) => (editor) => {
+export const initializeEditorRef = (setRef, initializeEditor) => (editor) => {
   setRef(editor);
   initializeEditor();
 };

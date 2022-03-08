@@ -3,7 +3,9 @@ import PropTypes from 'prop-types';
 import ImageSettingsModal from './ImageSettingsModal';
 import SelectImageModal from './SelectImageModal';
 
-const ImageUploadModal = ({ isOpen, close, editorRef, inputSelection }) => {
+const ImageUploadModal = ({
+  isOpen, close, editorRef, inputSelection,
+}) => {
   // selected image file reference data object.
   // existance of this field determines which child modal is displayed
   const [selection, setSelection] = React.useState(null);
@@ -45,6 +47,6 @@ ImageUploadModal.propTypes = {
     PropTypes.func,
     PropTypes.shape({ current: PropTypes.any }),
   ]),
-  //inputSelection: PropTypes.shape()
+  // inputSelection: PropTypes.shape()
 };
 export default ImageUploadModal;
