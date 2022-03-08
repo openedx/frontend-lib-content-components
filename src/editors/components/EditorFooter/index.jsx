@@ -27,7 +27,7 @@ export const EditorFooter = ({
   isInitialized,
   returnUrl,
   saveFailed,
-  saveBlock,
+  saveBlockContent,
 }) => (
   <div className="editor-footer mt-auto">
     {saveFailed && (
@@ -49,7 +49,7 @@ export const EditorFooter = ({
           onClick={module.handleSaveClicked({
             editorRef,
             returnUrl,
-            saveBlock,
+            saveBlockContent,
           })}
           disabled={!isInitialized}
         >
@@ -74,7 +74,7 @@ EditorFooter.propTypes = {
   isInitialized: PropTypes.bool.isRequired,
   returnUrl: PropTypes.string,
   saveFailed: PropTypes.bool.isRequired,
-  saveBlock: PropTypes.func.isRequired,
+  saveBlockContent: PropTypes.func.isRequired,
 };
 
 export const mapStateToProps = (state) => ({
@@ -85,7 +85,7 @@ export const mapStateToProps = (state) => ({
 });
 
 export const mapDispatchToProps = {
-  saveBlock: thunkActions.app.saveBlock,
+  saveBlockContent: thunkActions.app.saveBlock,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditorFooter);

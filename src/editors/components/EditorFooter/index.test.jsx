@@ -9,12 +9,14 @@ jest.mock('../../data/redux', () => ({
   thunkActions: {
     app: {
       saveBlock: jest.fn().mockName('thunkActions.app.saveBlock'),
+      fetchImages: jest.fn().mockName('thunkActions.app.fetchImages'),
     },
   },
   selectors: {
     app: {
       isInitialized: jest.fn(state => ({ isInitialized: state })),
       studioEndpointUrl: jest.fn(state => ({ studioEndpointUrl: state })),
+      returnUrl: jest.fn(state => ({ returnUrl: state })),
     },
     requests: {
       isFailed: jest.fn((state, params) => ({ isFailed: { state, params } })),
@@ -29,7 +31,6 @@ jest.mock('.', () => ({
   handleSaveClicked: jest.fn(args => ({ handleSaveClicked: args })),
 }));
 
-
 jest.mock('../../hooks', () => ({
   saveBlock: jest.fn(),
   navigateCallback: jest.fn(),
@@ -42,7 +43,7 @@ describe('EditorFooter', () => {
     isInitialized: true,
     returnUrl: 'hocuspocus.ca',
     saveFailed: false,
-    saveBlock: jest.fn().mockName('args.saveBlock'),
+    saveBlockContent: jest.fn().mockName('args.saveBlock'),
   };
   describe('behavior', () => {
     const realmodule = jest.requireActual('./index');
@@ -69,6 +70,11 @@ describe('EditorFooter', () => {
   });
   describe('mapStateToProps', () => {
     const testState = { A: 'pple', B: 'anana', C: 'ucumber' };
+    test('isInitialized from app.returnUrl', () => {
+      expect(
+        module.mapStateToProps(testState).returnUrl,
+      ).toEqual(selectors.app.returnUrl(testState));
+    });
     test('isInitialized from app.isInitialized', () => {
       expect(
         module.mapStateToProps(testState).isInitialized,
@@ -87,7 +93,7 @@ describe('EditorFooter', () => {
   });
   describe('mapDispatchToProps', () => {
     test('saveBlock from thunkActions.app.saveBlock', () => {
-      expect(module.mapDispatchToProps.saveBlock).toEqual(thunkActions.app.saveBlock);
+      expect(module.mapDispatchToProps.saveBlockContent).toEqual(thunkActions.app.saveBlock);
     });
   });
 });
