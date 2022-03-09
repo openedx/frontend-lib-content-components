@@ -3,8 +3,10 @@ import PropTypes from 'prop-types';
 
 import {
   ActionRow,
+  Button,
   ModalDialog,
 } from '@edx/paragon';
+import { Add } from '@edx/paragon/icons'
 
 export const BaseModal = ({
   isOpen,
@@ -12,6 +14,8 @@ export const BaseModal = ({
   title,
   children,
   confirmAction,
+  showUploadButton,
+  handleUpload,
 }) => (
   <ModalDialog
     title="My dialog"
@@ -21,6 +25,7 @@ export const BaseModal = ({
     variant="default"
     hasCloseButton
     isFullscreenOnMobile
+    isFullscreenScroll
   >
     <ModalDialog.Header>
       <ModalDialog.Title>
@@ -32,6 +37,13 @@ export const BaseModal = ({
     </ModalDialog.Body>
     <ModalDialog.Footer>
       <ActionRow>
+        {showUploadButton
+          ? <Button iconBefore={Add} onClick={handleUpload} variant="link">
+              Upload a new image
+            </Button>
+          : null
+        }
+        <ActionRow.Spacer/>
         <ModalDialog.CloseButton variant="tertiary" onClick={close}>
           Cancel
         </ModalDialog.CloseButton>
@@ -47,6 +59,8 @@ BaseModal.propTypes = {
   title: PropTypes.node.isRequired,
   children: PropTypes.node.isRequired,
   confirmAction: PropTypes.node.isRequired,
+  showUploadButton: PropTypes.bool.isRequired,
+  handleUpload: PropTypes.func.isRequired,
 };
 
 export default BaseModal;
