@@ -15,6 +15,8 @@ import 'tinymce/plugins/emoticons/js/emojis';
 import 'tinymce/plugins/charmap';
 import 'tinymce/plugins/code';
 import 'tinymce/plugins/autoresize';
+import 'tinymce/plugins/image';
+import 'tinymce/plugins/imagetools';
 
 import { FormattedMessage } from '@edx/frontend-platform/i18n';
 import {
@@ -34,6 +36,7 @@ import ImageUploadModal from './components/ImageUploadModal';
 
 export const TextEditor = ({
   setEditorRef,
+  editorRef,
   // redux
   blockValue,
   blockFailed,
@@ -42,11 +45,18 @@ export const TextEditor = ({
 }) => {
   const { isOpen, openModal, closeModal } = modalToggle();
 
+  // selected image file reference data object.
+  // existance of this field determines which child modal is displayed
+  const [imageSelection, setImageSelection] = React.useState(null);
+
   return (
     <div className="editor-body h-75">
       <ImageUploadModal
         isOpen={isOpen}
         close={closeModal}
+        editorRef={editorRef}
+        selection = {imageSelection}
+        setSelection = {setImageSelection}
       />
 
       <Toast show={blockFailed} onClose={nullMethod}>
@@ -66,6 +76,7 @@ export const TextEditor = ({
               blockValue,
               openModal,
               initializeEditor,
+              setSelection: setImageSelection,
             })}
           />
         )}
