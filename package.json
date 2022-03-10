@@ -34,9 +34,9 @@
   "homepage": "https://github.com/edx/frontend-lib-content-components#readme",
   "devDependencies": {
     "@edx/brand": "npm:@edx/brand-openedx@1.1.0",
-    "@edx/frontend-build": "9.0.4",
-    "@edx/frontend-platform": "1.14.4",
-    "@edx/paragon": "16.22.0",
+    "@edx/frontend-build": "9.1.2",
+    "@edx/frontend-platform": "1.15.2",
+    "@edx/paragon": "19.6.0",
     "@testing-library/dom": "^8.11.1",
     "@testing-library/react": "12.1.1",
     "@testing-library/user-event": "^13.5.0",
