@@ -14,7 +14,7 @@ const ImageUploadModal = ({
 }) => {
   const clearSelection = () => setSelection(null);
   const saveToEditor = (settings) => {
-    editorRef.current.execCommand('mceInsertContent', false, `<img src="${selection.externalUrl}" alt="${settings.isDecorative? '' : settings.altText}" width="${settings.dimensions.width}" height="${settings.dimensions.height}">`);
+    editorRef.current.execCommand('mceInsertContent', false, `<img src="${selection.externalUrl}" alt="${settings.isDecorative ? '' : settings.altText}" width="${settings.dimensions.width}" height="${settings.dimensions.height}">`);
     clearSelection();
     close();
   };
@@ -42,6 +42,12 @@ ImageUploadModal.defaultProps = {
   editorRef: null,
 };
 ImageUploadModal.propTypes = {
+  selection: PropTypes.shape({
+    url: PropTypes.string,
+    externalUrl: PropTypes.string,
+    altText: PropTypes.bool,
+  }).isRequired,
+  setSelection: PropTypes.func.isRequired,
   isOpen: PropTypes.bool.isRequired,
   close: PropTypes.func.isRequired,
   editorRef: PropTypes.oneOfType([

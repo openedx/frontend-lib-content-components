@@ -55,8 +55,8 @@ export const TextEditor = ({
         isOpen={isOpen}
         close={closeModal}
         editorRef={editorRef}
-        selection = {imageSelection}
-        setSelection = {setImageSelection}
+        selection={imageSelection}
+        setSelection={setImageSelection}
       />
 
       <Toast show={blockFailed} onClose={nullMethod}>
@@ -85,8 +85,13 @@ export const TextEditor = ({
 };
 TextEditor.defaultProps = {
   blockValue: null,
+  editorRef: null,
 };
 TextEditor.propTypes = {
+  editorRef: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.shape({ current: PropTypes.any }),
+  ]),
   setEditorRef: PropTypes.func.isRequired,
   // redux
   blockValue: PropTypes.shape({
