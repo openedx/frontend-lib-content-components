@@ -12,14 +12,13 @@ const ImageUploadModal = ({
   selection,
   setSelection,
 }) => {
-  const clearSelection = () => setSelection(null);
   const saveToEditor = (settings) => {
     editorRef.current.execCommand('mceInsertContent', false, `<img src="${selection.externalUrl}" alt="${settings.isDecorative ? '' : settings.altText}" width="${settings.dimensions.width}" height="${settings.dimensions.height}">`);
-    clearSelection();
+    setSelection(null);
     close();
   };
   const closeAndReset = () => {
-    clearSelection();
+    setSelection(null);
     close();
   };
   if (selection) {
@@ -30,7 +29,7 @@ const ImageUploadModal = ({
           close: closeAndReset,
           selection,
           saveToEditor,
-          returnToSelection: clearSelection,
+          returnToSelection: () => setSelection(null),
         }}
       />
     );
