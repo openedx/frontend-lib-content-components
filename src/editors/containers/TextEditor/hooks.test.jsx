@@ -34,19 +34,18 @@ describe('TextEditor hooks', () => {
     });
     describe('initializeEditorRef', () => {
       const mockSetRef = jest.fn(val => ({ editor: val }));
+      const mockInitializeEditor = jest.fn();
       const editor = {
         editme: 'MakE sOMe Text',
       };
-      const evt = {
-        garbage: 'fOr TInYmCE',
-      };
       let output;
       beforeEach(() => {
-        output = module.initializeEditorRef(mockSetRef);
+        output = module.initializeEditorRef(mockSetRef, mockInitializeEditor);
       });
       test('It calls setref with editor as params', () => {
-        output(evt, editor);
+        output(editor);
         expect(mockSetRef).toHaveBeenCalledWith(editor);
+        expect(mockInitializeEditor).toHaveBeenCalled();
       });
     });
     describe('editorConfig', () => {
