@@ -54,6 +54,11 @@ export const uploadImage = ({ file, setSelection }) => (dispatch) => {
   }));
 };
 
+export const fetchVideos = ({ onSuccess }) => () => {
+  // get images
+  onSuccess(mockData.mockVideoData);
+};
+
 export default StrictDict({
   fetchBlock,
   fetchUnit,
@@ -61,4 +66,5 @@ export default StrictDict({
   saveBlock,
   fetchImages,
   uploadImage,
+  fetchVideos,
 });
