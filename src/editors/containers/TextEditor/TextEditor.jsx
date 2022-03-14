@@ -46,7 +46,7 @@ export const TextEditor = ({
   const { isOpen, openModal, closeModal } = modalToggle();
 
   // selected image file reference data object.
-  // existance of this field determines which child modal is displayed
+  // this field determines the step of the ImageUploadModal
   const [imageSelection, setImageSelection] = React.useState(null);
 
   return (
