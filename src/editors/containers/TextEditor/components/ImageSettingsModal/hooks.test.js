@@ -38,8 +38,8 @@ const restoreState = () => {
   hooks.state = { ...oldState };
 };
 
-const mockStateVal = (key, val, setter) => (
-  hooks.state[key].mockReturnValueOnce([val, setter])
+const mockStateVal = (key, val) => (
+  hooks.state[key].mockReturnValueOnce([val, setState[key]])
 );
 
 let hook;
@@ -158,9 +158,6 @@ describe('ImageSettingsModal hooks', () => {
     describe('dimensionLockHooks', () => {
       beforeEach(() => {
         mockState();
-        jest.spyOn(hooks, hookKeys.lockDimensions).mockImplementationOnce(
-          ({ dimensions }) => setState.locked({ ...dimensions }),
-        );
         hook = hooks.dimensionLockHooks({ dimensions: simpleDims });
       });
       afterEach(() => {
@@ -174,12 +171,16 @@ describe('ImageSettingsModal hooks', () => {
         hook.initializeLock();
         expect(setState.lockInitialized).toHaveBeenCalledWith(true);
       });
-      test('lock is successful if lockInitialized is true', () => {
+      test('lock calls lockDimensions with lockInitialized, dimensions, and setLocked', () => {
         mockStateVal(stateKeys.lockInitialized, true, setState.lockInitialized);
         hook = hooks.dimensionLockHooks({ dimensions: simpleDims });
-        expect(hook.locked).toEqual(null);
+        const lockDimensionsSpy = jest.spyOn(hooks, hookKeys.lockDimensions);
         hook.lock();
-        expect(setState.locked).toHaveBeenCalledWith({ ...simpleDims });
+        expect(lockDimensionsSpy).toHaveBeenCalledWith({
+          dimensions: simpleDims,
+          setLocked: setState.locked,
+          lockInitialized: true,
+        });
       });
       test('unlock sets locked to null', () => {
         hook = hooks.dimensionLockHooks({ dimensions: simpleDims });
@@ -274,6 +275,11 @@ describe('ImageSettingsModal hooks', () => {
       const isDecorative = 'IS WE Decorating?';
       mockStateVal(stateKeys.altText, value, setState.altText);
       mockStateVal(stateKeys.isDecorative, isDecorative, setState.isDecorative);
+      hook = hooks.altTextHooks();
+      expect(hook.value).toEqual(value);
+      expect(hook.setValue).toEqual(setState.altText);
+      expect(hook.isDecorative).toEqual(isDecorative);
+      expect(hook.setIsDecorative).toEqual(setState.isDecorative);
     });
   });
   describe('onInputChange', () => {
