@@ -19,7 +19,7 @@ exports[`TextEditor snapshots block failed to load, Toast is shown 1`] = `
         "state": null,
       }
     }
-    setSelection={[MockFunction setState]}
+    setSelection={[MockFunction setSelection]}
   />
   <Toast
     onClose={[MockFunction nullMethod]}
@@ -40,7 +40,7 @@ exports[`TextEditor snapshots block failed to load, Toast is shown 1`] = `
         "initializeEditor": [MockFunction args.intializeEditor],
         "openModal": [MockFunction modal.openModal],
         "setEditorRef": [MockFunction args.setEditorRef],
-        "setSelection": [MockFunction setState],
+        "setSelection": [MockFunction setSelection],
       }
     }
   />
@@ -66,7 +66,7 @@ exports[`TextEditor snapshots not yet loaded, Spinner appears 1`] = `
         "state": null,
       }
     }
-    setSelection={[MockFunction setState]}
+    setSelection={[MockFunction setSelection]}
   />
   <Toast
     onClose={[MockFunction nullMethod]}
@@ -109,7 +109,7 @@ exports[`TextEditor snapshots renders as expected with default behavior 1`] = `
         "state": null,
       }
     }
-    setSelection={[MockFunction setState]}
+    setSelection={[MockFunction setSelection]}
   />
   <Toast
     onClose={[MockFunction nullMethod]}
@@ -130,7 +130,7 @@ exports[`TextEditor snapshots renders as expected with default behavior 1`] = `
         "initializeEditor": [MockFunction args.intializeEditor],
         "openModal": [MockFunction modal.openModal],
         "setEditorRef": [MockFunction args.setEditorRef],
-        "setSelection": [MockFunction setState],
+        "setSelection": [MockFunction setSelection],
       }
     }
   />

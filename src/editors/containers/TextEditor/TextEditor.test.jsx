@@ -20,11 +20,15 @@ jest.mock('./components/ImageUploadModal', () => 'ImageUploadModal');
 jest.mock('./components/SelectImageModal', () => 'SelectImageModal');
 jest.mock('./components/ImageSettingsModal', () => 'ImageSettingsModal');
 
-jest.mock('./hooks', () => ({
+
+jest.mock('./hooks', () => {
+  const updateState = jest.fn();
+  return ({
   editorConfig: jest.fn(args => ({ editorConfig: args })),
   modalToggle: jest.fn(args => ({ modalToggle: args })),
+  selectedImage: jest.fn(val => ([{ state: val }, jest.fn((newVal) => updateState({ val, newVal })).mockName('setSelection')])),
   nullMethod: jest.fn().mockName('nullMethod'),
-}));
+})});
 
 jest.mock('react', () => {
   const updateState = jest.fn();

@@ -30,6 +30,7 @@ import {
   editorConfig,
   modalToggle,
   nullMethod,
+  selectedImage,
 } from './hooks';
 import messages from './messages';
 import ImageUploadModal from './components/ImageUploadModal';
@@ -47,7 +48,7 @@ export const TextEditor = ({
 
   // selected image file reference data object.
   // this field determines the step of the ImageUploadModal
-  const [imageSelection, setImageSelection] = React.useState(null);
+  const [imageSelection, setImageSelection] = selectedImage(null);
 
   return (
     <div className="editor-body h-75">

@@ -1,8 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
 import ImageSettingsModal from './ImageSettingsModal';
 import SelectImageModal from './SelectImageModal';
+import * as module from './ImageUploadModal';
+
+export const hooks = {
+  createSaveCallback: ({
+    close, editorRef, setSelection, selection,
+  }) => (settings) => {
+    editorRef.current.execCommand('mceInsertContent', false, module.hooks.getImgTag({ settings, selection }));
+    setSelection(null);
+    close();
+  },
+  getImgTag: ({ settings, selection }) => `<img src="${selection.externalUrl}" alt="${settings.isDecorative ? '' : settings.altText}" width="${settings.dimensions.width}" height="${settings.dimensions.height}">`,
+};
 
 const ImageUploadModal = ({
   // eslint-disable-next-line
@@ -12,11 +23,10 @@ const ImageUploadModal = ({
   selection,
   setSelection,
 }) => {
-  const saveToEditor = (settings) => {
-    editorRef.current.execCommand('mceInsertContent', false, `<img src="${selection.externalUrl}" alt="${settings.isDecorative ? '' : settings.altText}" width="${settings.dimensions.width}" height="${settings.dimensions.height}">`);
-    setSelection(null);
-    close();
-  };
+  const saveToEditor = module.hooks.createSaveCallback({
+    close, editorRef, setSelection, selection,
+  });
+
   const closeAndReset = () => {
     setSelection(null);
     close();
