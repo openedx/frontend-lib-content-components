@@ -130,20 +130,20 @@ describe('TextEditor hooks', () => {
       });
     });
   });
-  describe('selectedImage', ()=>{
-    const val = {a: 'VaLUe'};
-    const newVal = {some: 'vAlUe'}
+  describe('selectedImage', () => {
+    const val = { a: 'VaLUe' };
+    const newVal = { some: 'vAlUe' };
     let output;
     let setter;
     beforeEach(() => {
       [output, setter] = module.selectedImage(val);
     });
     test('returns a field which with state input val', () => {
-      expect(output).toMatchObject({state: val})
+      expect(output).toMatchObject({ state: val });
     });
-    test('calling setter with new val sets with respect to new val',()=>{
-      setter(newVal)
-      expect(React.updateState).toHaveBeenCalledWith({val,newVal});
+    test('calling setter with new val sets with respect to new val', () => {
+      setter(newVal);
+      expect(React.updateState).toHaveBeenCalledWith({ val, newVal });
     });
   });
   describe('modalToggle hook', () => {
