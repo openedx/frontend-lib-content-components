@@ -26,7 +26,6 @@ const ImageUploadModal = ({
   const saveToEditor = module.hooks.createSaveCallback({
     close, editorRef, setSelection, selection,
   });
-
   const closeAndReset = () => {
     setSelection(null);
     close();

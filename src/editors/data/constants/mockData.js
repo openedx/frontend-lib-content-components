@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-=======
-import { blockTypes } from './app';
-
->>>>>>> 5bf40c8... chore: link mock block ids to real block type api
 export const mockImageData = [
   {
     displayName: 'shahrukh.jpg',
