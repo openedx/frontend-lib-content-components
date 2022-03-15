@@ -55,7 +55,7 @@ describe('ImageUploadModal hooks', () => {
       jest.clearAllMocks();
     });
     test('It creates a callback, that when called, inserts to the editor, sets the selection to be null, and calls close', () => {
-      jest.spyOn(module.hooks, 'getImgTag').mockImplementationOnce(({settings }) => ({ selection, settings }));
+      jest.spyOn(module.hooks, 'getImgTag').mockImplementationOnce(({ settings }) => ({ selection, settings }));
       expect(execCommandMock).not.toBeCalled();
       expect(setSelection).not.toBeCalled();
       expect(close).not.toBeCalled();

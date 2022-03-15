@@ -119,9 +119,15 @@ describe('TextEditor hooks', () => {
       });
       test('It configures plugins and toolbars correctly', () => {
         output = module.editorConfig(props);
-        expect(output.init.plugins).toBe(module.getConfig('plugins'));
-        expect(output.init.toolbar).toBe(module.getConfig('toolbar'));
-        expect(output.init.imagetools_toolbar).toBe(module.getConfig('imageToolbar'));
+        Object.values(module.pluginConfig.plugins).forEach(
+          value => expect(output.init.plugins.includes(value)).toBe(true),
+        );
+        Object.values(module.pluginConfig.toolbar).forEach(
+          value => expect(output.init.toolbar.includes(value)).toBe(true),
+        );
+        Object.values(module.pluginConfig.imageToolbar).forEach(
+          value => expect(output.init.imagetools_toolbar.includes(value)).toBe(true),
+        );
         expect(output.init.menubar).toBe(false);
         expect(output.init.imagetools_cors_hosts).toMatchObject(['courses.edx.org']);
         expect(output.init.height).toBe('100%');
