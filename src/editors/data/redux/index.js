@@ -5,6 +5,7 @@ import { StrictDict } from '../../utils';
 import * as app from './app';
 import * as requests from './requests';
 
+/* eslint-disable import/prefer-default-export */
 export { default as thunkActions } from './thunkActions';
 
 const modules = {
