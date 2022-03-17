@@ -22,8 +22,7 @@ export const SelectImageModal = ({
     imgList,
     searchString, setSearchString,
     sortFilter, setSortFilter,
-    selected,
-    selectImg,
+    selected, setSelected,
     onConfirmSelection,
   } = hooks.imgHooks({fetchImages, setSelection});
   const {
@@ -93,14 +92,14 @@ export const SelectImageModal = ({
                 <SelectableBox.Set
                   columns={1}
                   name='images'
-                  onChange={selectImg}
+                  onChange={e => setSelected(e.target.value)}
                   type='radio'
                   value={selected}
                 >
                   {imgList.map(
                     img => (
-                      <SelectableBox type='radio' value={img.id}>
-                        <div key={img.externalUrl} style={{display: 'flex', flexFlow: 'row nowrap'}}>
+                      <SelectableBox key={img.externalUrl} type='radio' value={img.id}>
+                        <div style={{display: 'flex', flexFlow: 'row nowrap'}}>
                           <Image style={{ width: '100px', height: '100px' }} src={img.externalUrl} />
                           <div className="img-desc align-baseline" style={{padding: '10px 15px'}}>
                             <h3>{img.displayName}</h3>

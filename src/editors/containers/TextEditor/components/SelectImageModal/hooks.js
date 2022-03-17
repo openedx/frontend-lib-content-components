@@ -10,9 +10,6 @@ export const state = {
   sortFilter: (val) => React.useState(val),
 };
 
-// setState(null)
-//sortCategory
-
 export const imgHooks = ({ fetchImages, setSelection }) => {
   const [loading, setLoading] = module.state.loading(true);
   const [images, setImages] = module.state.images([]);
@@ -30,9 +27,8 @@ export const imgHooks = ({ fetchImages, setSelection }) => {
     imgList: getFilteredImages(images, searchString, sortFilter),
     searchString, setSearchString,
     sortFilter, setSortFilter,
-    selected,
-    selectImg: (e) => onSelectImg(e, setSelected),
-    onConfirmSelection: setSelection(images.find(img => img.id === selected)),
+    selected, setSelected,
+    onConfirmSelection: setSelection(getImg(selected, images)),
   };
 };
 
@@ -70,10 +66,15 @@ export const getFilteredImages = (images, searchString, sortFilter) => {
   return list;
 };
 
-export const onSelectImg = (e, setSelected) => 
+export const onSelectImg = (e, setSelected) => {
   e.target.value === selected
   ? setSelected("")
   : setSelected(e.target.value);
+};
+
+export const getImg = (imgId, images) => {
+  return images.find(img => img.id === imgId);
+};
 
 export default {
   imgHooks,
