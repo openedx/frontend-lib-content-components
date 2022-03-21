@@ -44,7 +44,7 @@ export const saveBlock = ({ content, returnToUnit }) => (dispatch) => {
   }));
 };
 
-export const fetchImages = ({ onSuccess }) => () => {
+export const fetchImages = ({ onSuccess, stopLoading }) => () => {
   // get images
   const processedData = Array.from(mockData.mockImageData, el => {
     const sortDate = new Date(el.dateAdded.replace(" at", "")).getTime();
@@ -53,10 +53,12 @@ export const fetchImages = ({ onSuccess }) => () => {
       sortDate: sortDate,
     };
   });
+  //setLoading(false);
+  stopLoading();
   return onSuccess(processedData);
 };
 
-export const uploadImage = ({ file, onSuccess }) => () => {
+export const uploadImage = ({ file, startLoading, stopLoading, resetFile, setError }) => () => {
   //input file
   // lastModified: 1643131112097
   // lastModifiedDate: Tue Jan 25 2022 12:18:32 GMT-0500 (Eastern Standard Time) {}
@@ -80,9 +82,13 @@ export const uploadImage = ({ file, onSuccess }) => () => {
   //   "msg": "Upload completed"
   // }
 
-  // should fetch images again on success?
-  console.log(file);
-  // return setTimeout(fetchImages({ onSuccess }),2000000);
+  console.log(file)
+  startLoading();
+  setTimeout(()=>{ 
+    stopLoading();
+    resetFile();
+    setError('test error');
+  }, 5000);
   return null;
 };
 

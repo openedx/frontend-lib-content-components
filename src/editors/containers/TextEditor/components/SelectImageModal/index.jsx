@@ -2,13 +2,14 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { ActionRow, Button, Dropdown, Form, Icon, IconButton, Image, Stack, Scrollable, SelectableBox, Spinner } from '@edx/paragon';
-import { Close, Search } from '@edx/paragon/icons';
+import { Button, Stack } from '@edx/paragon';
 
 import { thunkActions } from '../../../../data/redux';
-import BaseModal from '../BaseModal';
 import hooks from './hooks';
-import * as sortUtils from './sortUtils';
+import BaseModal from '../BaseModal';
+import ErrorAlert from './ErrorAlert';
+import SearchSort from './SearchSort';
+import Gallery from './Gallery';
 
 export const SelectImageModal = ({
   fetchImages,
@@ -18,27 +19,28 @@ export const SelectImageModal = ({
   setSelection,
 }) => {
   const {
-    loading,
     imgList,
     searchString, setSearchString,
     sortFilter, setSortFilter,
-    selected, setSelected,
-    onConfirmSelection,
-  } = hooks.imgHooks({fetchImages, setSelection});
-  const {
+    highlighted, setHighlighted,
     addFileRef,
     addFileClick,
     addFile,
-  } = hooks.uploadHooks({uploadImage});
-  
+    onConfirmSelection,
+    loading,
+    error, setError,
+  } = hooks.imgHooks({fetchImages, uploadImage, setSelection});
+
   return (
     <BaseModal
       close={close}
       confirmAction={
         <Button 
           variant="primary" 
-          onClick={onConfirmSelection}>
-            Next
+          onClick={onConfirmSelection}
+          disabled={!highlighted}
+        >
+          Next
         </Button>
       }
       handleUpload={addFileClick}
@@ -46,79 +48,28 @@ export const SelectImageModal = ({
       showUploadButton
       title="Add an image"
     >
+      <ErrorAlert
+        error={error}
+        setError={setError} 
+      />
       <Stack gap={3}>
-
-        {/* Search Filtering */}
-        <ActionRow>
-          <Form.Group style={{margin: 0}}>
-            <Form.Control
-              autoFocus
-              onChange={e => setSearchString(e.target.value)}
-              placeholder="Search"
-              trailingElement={
-                searchString
-                  ? <IconButton 
-                      iconAs={Icon} 
-                      invertColors 
-                      isActive 
-                      onClick={() => setSearchString("")} 
-                      size="sm"
-                      src={Close} />
-                  : <Icon src={Search} />
-              }
-              value={searchString}
-            />
-          </Form.Group>
-          <ActionRow.Spacer/>
-          <Dropdown>
-            <Dropdown.Toggle id="img-sort-button" variant="light">
-              {sortUtils.OPTIONS[sortFilter]}
-            </Dropdown.Toggle>
-            <Dropdown.Menu>
-              {sortUtils.OPTIONS.map(
-                (el, ind) => (
-                  <Dropdown.Item onClick={() => setSortFilter(ind)}>{el}</Dropdown.Item>
-                )
-              )}
-            </Dropdown.Menu>
-          </Dropdown>
-        </ActionRow>
-
-        {/* Content Selection */}
-        {loading
-          ? <Spinner animation="border" className="mie-3" screenReaderText="loading" />
-          : <Scrollable style={{height: '375px'}}>
-              <div className="p-4">
-                <SelectableBox.Set
-                  columns={1}
-                  name='images'
-                  onChange={e => setSelected(e.target.value)}
-                  type='radio'
-                  value={selected}
-                >
-                  {imgList.map(
-                    img => (
-                      <SelectableBox key={img.externalUrl} type='radio' value={img.id}>
-                        <div style={{display: 'flex', flexFlow: 'row nowrap'}}>
-                          <Image style={{ width: '100px', height: '100px' }} src={img.externalUrl} />
-                          <div className="img-desc align-baseline" style={{padding: '10px 15px'}}>
-                            <h3>{img.displayName}</h3>
-                            <p>Added {img.dateAdded}</p>
-                          </div>
-                        </div>
-                      </SelectableBox>
-                    )
-                  )}
-                </SelectableBox.Set>
-              </div>
-            </Scrollable>
-        }
-
+        <SearchSort
+          searchString={searchString}
+          setSearchString={setSearchString}
+          sortFilter={sortFilter}
+          setSortFilter={setSortFilter}
+        />
+        <Gallery 
+          highlighted={highlighted}
+          imgList={imgList}
+          loading={loading} 
+          setHighlighted={setHighlighted}
+        />
         <input 
           accept=".gif,.jpg,.jpeg,.png,.tif,.tiff"
+          className="upload d-none"
           onChange={e => addFile(e.target.files[0])} 
           ref={addFileRef} 
-          style={{display: 'none'}} 
           type='file'
         />
       </Stack>

@@ -3,53 +3,69 @@ import * as module from './hooks';
 import * as sortUtils from './sortUtils';
 
 export const state = {
-  loading: (val) => React.useState(val),
   images: (val) => React.useState(val),
-  selected: (val) => React.useState(val),
+  highlighted: (val) => React.useState(val),
   searchString: (val) => React.useState(val),
   sortFilter: (val) => React.useState(val),
+  loading: (val) => React.useState(val),
+  error: (val) => React.useState(val),
 };
 
-export const imgHooks = ({ fetchImages, setSelection }) => {
-  const [loading, setLoading] = module.state.loading(true);
+export const imgHooks = ({ fetchImages, uploadImage, setSelection }) => {
   const [images, setImages] = module.state.images([]);
-  const [selected, setSelected] = module.state.selected("");
+  const [highlighted, setHighlighted] = module.state.highlighted(null);
   const [searchString, setSearchString] = module.state.searchString("");
   const [sortFilter, setSortFilter] = module.state.sortFilter(0);
+  const addFileRef = React.useRef();
+  const { loading, startLoading, stopLoading } = module.loadingHooks();
+  const { error, setError } = module.errorHooks();
 
   React.useEffect(() => {
-    fetchImages({ onSuccess: setImages });
-    setLoading(false);
+    fetchImages({ onSuccess: setImages, stopLoading });
+    stopLoading();
   }, []);
 
   return {
-    loading,
     imgList: getFilteredImages(images, searchString, sortFilter),
     searchString, setSearchString,
     sortFilter, setSortFilter,
-    selected, setSelected,
-    onConfirmSelection: setSelection(getImg(selected, images)),
+    highlighted, setHighlighted,
+    addFileRef,
+    addFileClick: () => addFileRef.current.click(),
+    addFile: (file) => uploadImage({
+      file,
+      startLoading, stopLoading, 
+      resetFile: () => addFileRef.current.value = "",
+      setError,
+    }),
+    onConfirmSelection: () => setSelection(getImg(highlighted, images)),
+    loading,
+    error, setError,
   };
 };
 
-export const uploadHooks = ({ uploadImage }) => {
-  const addFileRef = React.useRef();
-
+export const loadingHooks = () => {
+  const [loading, setLoading] = module.state.loading(true);
   return {
-    addFileRef,
-    addFileClick: () => addFileRef.current.click(),
-    addFile: (file) => {
-      console.log(file)
-      uploadImage(file)
-    },
-  }
+    loading,
+    startLoading: () => setLoading(true),
+    stopLoading: () => setLoading(false),
+  };
 };
 
-export const getFilteredImages = (images, searchString, sortFilter) => {
+export const errorHooks = () => {
+  const [error, setError] = module.state.error(null);
+  return {
+    error,
+    setError,
+  };
+};
+
+export const getFilteredImages = (images, searchString, sortBy) => {
   const list = images.filter(img => 
     img.displayName.toLowerCase().includes(searchString.toLowerCase())  
   );
-  switch ( sortFilter ) {
+  switch ( sortBy ) {
     case 0:
       list.sort(sortUtils.dateNewest);
       break;
@@ -66,17 +82,10 @@ export const getFilteredImages = (images, searchString, sortFilter) => {
   return list;
 };
 
-export const onSelectImg = (e, setSelected) => {
-  e.target.value === selected
-  ? setSelected("")
-  : setSelected(e.target.value);
-};
-
-export const getImg = (imgId, images) => {
-  return images.find(img => img.id === imgId);
+export const getImg = (imgId, imgList) => {
+  return imgList.find(img => img.id == imgId);
 };
 
 export default {
   imgHooks,
-  uploadHooks,
 };
