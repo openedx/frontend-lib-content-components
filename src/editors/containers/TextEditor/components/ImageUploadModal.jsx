@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import tinyMCEKeys from '../../../data/constants/tinyMCE';
 import ImageSettingsModal from './ImageSettingsModal';
 import SelectImageModal from './SelectImageModal';
 import * as module from './ImageUploadModal';
@@ -16,19 +17,14 @@ export const imgProps = ({ settings, selection }) => ({
   height: settings.dimensions.height,
 });
 
-export const imgTag = ({ settings, selection }) => {
-  const props = module.imgProps({ settings, selection });
-  return `<img ${propsString(props)} />`;
-};
-
 export const hooks = {
   createSaveCallback: ({
     close, editorRef, setSelection, selection,
   }) => (settings) => {
     editorRef.current.execCommand(
-      'mceInsertContent',
+      tinyMCEKeys.commands.insertContent,
       false,
-      module.imgTag({ settings, selection })
+      module.hooks.imgTag({ settings, selection })
     );
     setSelection(null);
     close();
@@ -36,6 +32,10 @@ export const hooks = {
   onClose: ({ clearSelection, close }) => {
     clearSelection();
     close();
+  },
+  imgTag: ({ settings, selection }) => {
+    const props = module.imgProps({ settings, selection });
+    return `<img ${propsString(props)} />`;
   },
 };
 

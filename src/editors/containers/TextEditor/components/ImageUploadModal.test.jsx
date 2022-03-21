@@ -1,7 +1,8 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import { StrictDict } from '../../../utils';
+import { keyStore } from '../../../utils';
+import tinyMCEKeys from '../../../data/constants/tinyMCE';
 
 import * as module from './ImageUploadModal';
 jest.mock('./ImageSettingsModal', () => 'ImageSettingsModal');
@@ -9,95 +10,85 @@ jest.mock('./SelectImageModal', () => 'SelectImageModal');
 
 const { ImageUploadModal } = module;
 
-describe('ImageUploadModal hooks', () => {
-  describe('getImgTag', () => {
-    const selection = { externalUrl: 'sOmEuRl.cOm' };
-    let settings;
-    let expected;
-    let output;
-    test('It returns a html string which matches an image tag', () => {
-      settings = {
-        altText: 'aLt tExt',
-        isDecorative: false,
-        dimensions: {
-          width: 2022,
-          height: 1619,
-        },
-      };
-      expected = {
+const moduleKeys = keyStore(module);
+const hookKeys = keyStore(module.hooks);
+
+const settings = {
+  altText: 'aLt tExt',
+  isDecorative: false,
+  dimensions: {
+    width: 2022,
+    height: 1619,
+  },
+};
+describe('ImageUploadModal', () => {
+  describe('hooks', () => {
+    describe('imgTag', () => {
+      const selection = { externalUrl: 'sOmEuRl.cOm' };
+      const expected = {
         src: selection.externalUrl,
         alt: settings.altText,
         width: settings.dimensions.width,
         height: settings.dimensions.height,
       };
-      output = module.imgTag({ selection, settings });
-      expect(output).toEqual(`<img ${module.propsString(expected)} />`);
-    });
-    test('If Is decorative is true, alt text is an empty string', () => {
-      settings = {
-        isDecorative: true,
-        altText: 'aLt tExt',
-        dimensions: {
-          width: 2022,
-          height: 1619,
-        },
+      const testImgTag = ({ settings, expected }) => {
+        const output = module.hooks.imgTag({ settings, selection });
+        expect(output).toEqual(`<img ${module.propsString(expected)} />`);
       };
-      expected = {
-        src: selection.externalUrl,
-        alt: '',
-        width: settings.dimensions.width,
-        height: settings.dimensions.height,
-      };
-      output = module.imgTag({
-        selection: selection,
-        settings: settings,
+      test('It returns a html string which matches an image tag', () => {
+        testImgTag({ settings, expected });
       });
-      expect(output).toEqual(`<img ${module.propsString(expected)} />`);
-    });
-  });
-
-  describe('createSaveCallback', () => {
-    const close = jest.fn();
-    const execCommandMock = jest.fn();
-    const editorRef = { current: { some: 'dATa', execCommand: execCommandMock } };
-    const setSelection = jest.fn();
-    const selection = jest.fn();
-    const settings = {
-      altText: 'aLt tExt',
-      isDecorative: false,
-      dimensions: {
-        width: 2022,
-        height: 1619,
-      },
-    };
-    let output;
-    beforeEach(() => {
-      output = module.hooks.createSaveCallback({
-        close, editorRef, setSelection, selection,
+      test('If isDecorative is true, alt text is an empty string', () => {
+        testImgTag({
+          settings: { ...settings, isDecorative: true },
+          expected: { ...expected, alt: '' },
+        });
       });
     });
-    afterEach(() => {
-      jest.clearAllMocks();
+    describe('createSaveCallback', () => {
+      const close = jest.fn();
+      const execCommandMock = jest.fn();
+      const editorRef = { current: { some: 'dATa', execCommand: execCommandMock } };
+      const setSelection = jest.fn();
+      const selection = jest.fn();
+      let output;
+      beforeEach(() => {
+        output = module.hooks.createSaveCallback({
+          close, editorRef, setSelection, selection,
+        });
+      });
+      afterEach(() => {
+        jest.clearAllMocks();
+      });
+      test('It creates a callback, that when called, inserts to the editor, sets the selection to be null, and calls close', () => {
+        jest.spyOn(module.hooks, hookKeys.imgTag)
+          .mockImplementationOnce(({ settings }) => ({ selection, settings }));
+        expect(execCommandMock).not.toBeCalled();
+        expect(setSelection).not.toBeCalled();
+        expect(close).not.toBeCalled();
+        output(settings);
+        expect(execCommandMock).toBeCalledWith(
+          tinyMCEKeys.commands.insertContent,
+          false,
+          { selection, settings: settings },
+        );
+        expect(setSelection).toBeCalledWith(null);
+        expect(close).toBeCalled();
+      });
     });
-    test('It creates a callback, that when called, inserts to the editor, sets the selection to be null, and calls close', () => {
-      jest.spyOn(module, 'imgTag')
-        .mockImplementationOnce(({ settings }) => ({ selection, settings }));
-      expect(execCommandMock).not.toBeCalled();
-      expect(setSelection).not.toBeCalled();
-      expect(close).not.toBeCalled();
-      output(settings);
-      expect(execCommandMock).toBeCalledWith('mceInsertContent', false, { selection, settings: settings });
-      expect(setSelection).toBeCalledWith(null);
-      expect(close).toBeCalled();
+    describe('onClose', () => {
+      it('takes and calls clearSelection and close callbacks', () => {
+        const clearSelection = jest.fn();
+        const close = jest.fn();
+        module.hooks.onClose({ clearSelection, close });
+        expect(clearSelection).toHaveBeenCalled();
+        expect(close).toHaveBeenCalled();
+      });
     });
   });
 
   describe('component', () => {
     let props;
-    const hookKeys = StrictDict(Object.keys(module.hooks).reduce(
-      (obj, key) => ({ ...obj, [key]: jest.fn() }),
-      {},
-    ));
     let hooks;
     beforeAll(() => {
       hooks = module.hooks;
