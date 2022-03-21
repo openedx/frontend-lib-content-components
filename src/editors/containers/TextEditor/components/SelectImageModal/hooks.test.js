@@ -2,24 +2,22 @@ import React from 'react';
 import * as module from './hooks';
 import * as sortUtils from './sortUtils';
 
-jest.mock('react', () => {
-  return {
-    useState: jest.fn(),
-    useEffect: jest.fn(),
-  };
-});
+jest.mock('react', () => ({
+  useState: jest.fn(),
+  useEffect: jest.fn(),
+}));
 
 describe('imgHooks behavior', () => {
   const fetchImages = jest.fn();
   const setSelection = jest.fn();
   let output;
   beforeEach(() => {
-    output = module.imgHooks({fetchImages, setSelection});
+    output = module.imgHooks({ fetchImages, setSelection });
   });
   it('loads images on render', () => {
     const [cb, prereqs] = useEffect.mock.calls[0];
     cb();
-    expect(fetchImages).toBeCalledWith({onSuccess: setImages});
+    expect(fetchImages).toBeCalledWith({ onSuccess: setImages });
   });
   it('sets a selection when user select an image');
   it('updates searchString when user enters a search');

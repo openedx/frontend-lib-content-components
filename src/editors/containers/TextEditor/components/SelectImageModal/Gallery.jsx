@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Image, Scrollable, SelectableBox, Spinner } from '@edx/paragon';
+import {
+  Image, Scrollable, SelectableBox, Spinner,
+} from '@edx/paragon';
 
 export const Gallery = ({
   loading,
@@ -9,13 +11,13 @@ export const Gallery = ({
   highlighted,
   setHighlighted,
 }) => {
-  const type = "radio";
+  const type = 'radio';
 
   if (loading) {
-    return <Spinner animation="border" className="mie-3" screenReaderText="loading" />
+    return <Spinner animation="border" className="mie-3" screenReaderText="loading" />;
   }
   return (
-    <Scrollable className="gallery bg-gray-100" style={{height: '375px'}}>
+    <Scrollable className="gallery bg-gray-100" style={{ height: '375px' }}>
       <div className="p-4">
         <SelectableBox.Set
           columns={1}
@@ -29,8 +31,8 @@ export const Gallery = ({
               <SelectableBox className="card bg-light-100" key={img.externalUrl} type={type} value={img.id}>
                 <div className="card-div d-flex flex-row flex-nowrap">
                   <Image
-                    style={{ width: '100px', height: '100px' }} 
-                    src={img.externalUrl} 
+                    style={{ width: '100px', height: '100px' }}
+                    src={img.externalUrl}
                   />
                   <div className="img-text p-3">
                     <h3>{img.displayName}</h3>
@@ -38,7 +40,7 @@ export const Gallery = ({
                   </div>
                 </div>
               </SelectableBox>
-            )
+            ),
           )}
         </SelectableBox.Set>
       </div>
@@ -48,7 +50,7 @@ export const Gallery = ({
 
 Gallery.propTypes = {
   loading: PropTypes.bool.isRequired,
-  imgList: PropTypes.array.isRequired,
+  imgList: PropTypes.arrayOf(PropTypes.object).isRequired,
   highlighted: PropTypes.string.isRequired,
   setHighlighted: PropTypes.func.isRequired,
 };

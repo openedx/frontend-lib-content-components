@@ -6,7 +6,7 @@ import {
   Button,
   ModalDialog,
 } from '@edx/paragon';
-import { Add } from '@edx/paragon/icons'
+import { Add } from '@edx/paragon/icons';
 
 export const BaseModal = ({
   isOpen,
@@ -38,12 +38,13 @@ export const BaseModal = ({
     <ModalDialog.Footer>
       <ActionRow>
         {showUploadButton
-          ? <Button iconBefore={Add} onClick={handleUpload} variant="link">
+          ? (
+            <Button iconBefore={Add} onClick={handleUpload} variant="link">
               Upload a new image
             </Button>
-          : null
-        }
-        <ActionRow.Spacer/>
+          )
+          : null}
+        <ActionRow.Spacer />
         <ModalDialog.CloseButton variant="tertiary" onClick={close}>
           Cancel
         </ModalDialog.CloseButton>

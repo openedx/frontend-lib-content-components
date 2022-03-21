@@ -47,19 +47,20 @@ export const saveBlock = ({ content, returnToUnit }) => (dispatch) => {
 export const fetchImages = ({ onSuccess, stopLoading }) => () => {
   // get images
   const processedData = Array.from(mockData.mockImageData, el => {
-    const sortDate = new Date(el.dateAdded.replace(" at", "")).getTime();
+    const sortDate = new Date(el.dateAdded.replace(' at', '')).getTime();
     return {
       ...el,
-      sortDate: sortDate,
+      sortDate,
     };
   });
-  //setLoading(false);
   stopLoading();
   return onSuccess(processedData);
 };
 
-export const uploadImage = ({ file, startLoading, stopLoading, resetFile, setError }) => () => {
-  //input file
+export const uploadImage = ({
+  file, startLoading, stopLoading, resetFile, setError,
+}) => () => {
+  // input file
   // lastModified: 1643131112097
   // lastModifiedDate: Tue Jan 25 2022 12:18:32 GMT-0500 (Eastern Standard Time) {}
   // name: "Profile.jpg"
@@ -82,9 +83,9 @@ export const uploadImage = ({ file, startLoading, stopLoading, resetFile, setErr
   //   "msg": "Upload completed"
   // }
 
-  console.log(file)
+  console.log(file);
   startLoading();
-  setTimeout(()=>{ 
+  setTimeout(() => {
     stopLoading();
     resetFile();
     setError('test error');

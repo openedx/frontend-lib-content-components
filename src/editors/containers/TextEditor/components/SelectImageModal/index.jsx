@@ -29,20 +29,20 @@ export const SelectImageModal = ({
     onConfirmSelection,
     loading,
     error, setError,
-  } = hooks.imgHooks({fetchImages, uploadImage, setSelection});
+  } = hooks.imgHooks({ fetchImages, uploadImage, setSelection });
 
   return (
     <BaseModal
       close={close}
-      confirmAction={
-        <Button 
-          variant="primary" 
+      confirmAction={(
+        <Button
+          variant="primary"
           onClick={onConfirmSelection}
           disabled={!highlighted}
         >
           Next
         </Button>
-      }
+      )}
       handleUpload={addFileClick}
       isOpen={isOpen}
       showUploadButton
@@ -50,7 +50,7 @@ export const SelectImageModal = ({
     >
       <ErrorAlert
         error={error}
-        setError={setError} 
+        setError={setError}
       />
       <Stack gap={3}>
         <SearchSort
@@ -59,18 +59,18 @@ export const SelectImageModal = ({
           sortFilter={sortFilter}
           setSortFilter={setSortFilter}
         />
-        <Gallery 
+        <Gallery
           highlighted={highlighted}
           imgList={imgList}
-          loading={loading} 
+          loading={loading}
           setHighlighted={setHighlighted}
         />
-        <input 
+        <input
           accept=".gif,.jpg,.jpeg,.png,.tif,.tiff"
           className="upload d-none"
-          onChange={e => addFile(e.target.files[0])} 
-          ref={addFileRef} 
-          type='file'
+          onChange={e => addFile(e.target.files[0])}
+          ref={addFileRef}
+          type="file"
         />
       </Stack>
     </BaseModal>
@@ -83,7 +83,7 @@ SelectImageModal.propTypes = {
   setSelection: PropTypes.func.isRequired,
   // redux
   fetchImages: PropTypes.func.isRequired,
-  uploadImage: PropTypes.func.isRequired
+  uploadImage: PropTypes.func.isRequired,
 };
 
 export const mapStateToProps = () => ({});

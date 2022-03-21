@@ -11,10 +11,31 @@ export const state = {
   error: (val) => React.useState(val),
 };
 
+export const getFilteredImages = (images, searchString, sortBy) => {
+  const list = images.filter(img => img.displayName.toLowerCase().includes(searchString.toLowerCase()));
+  switch (sortBy) {
+    case 1:
+      list.sort(sortUtils.dateOldest);
+      break;
+    case 2:
+      list.sort(sortUtils.nameAscending);
+      break;
+    case 3:
+      list.sort(sortUtils.nameDescending);
+      break;
+    default:
+      list.sort(sortUtils.dateNewest);
+      break;
+  }
+  return list;
+};
+
+export const getImg = (imgId, imgList) => imgList.find(img => img.id === imgId);
+
 export const imgHooks = ({ fetchImages, uploadImage, setSelection }) => {
   const [images, setImages] = module.state.images([]);
   const [highlighted, setHighlighted] = module.state.highlighted(null);
-  const [searchString, setSearchString] = module.state.searchString("");
+  const [searchString, setSearchString] = module.state.searchString('');
   const [sortFilter, setSortFilter] = module.state.sortFilter(0);
   const addFileRef = React.useRef();
   const { loading, startLoading, stopLoading } = module.loadingHooks();
@@ -27,20 +48,27 @@ export const imgHooks = ({ fetchImages, uploadImage, setSelection }) => {
 
   return {
     imgList: getFilteredImages(images, searchString, sortFilter),
-    searchString, setSearchString,
-    sortFilter, setSortFilter,
-    highlighted, setHighlighted,
+    searchString,
+    setSearchString,
+    sortFilter,
+    setSortFilter,
+    highlighted,
+    setHighlighted,
     addFileRef,
     addFileClick: () => addFileRef.current.click(),
     addFile: (file) => uploadImage({
       file,
-      startLoading, stopLoading, 
-      resetFile: () => addFileRef.current.value = "",
+      startLoading,
+      stopLoading,
+      resetFile: () => {
+        addFileRef.current.value = '';
+      },
       setError,
     }),
     onConfirmSelection: () => setSelection(getImg(highlighted, images)),
     loading,
-    error, setError,
+    error,
+    setError,
   };
 };
 
@@ -59,31 +87,6 @@ export const errorHooks = () => {
     error,
     setError,
   };
-};
-
-export const getFilteredImages = (images, searchString, sortBy) => {
-  const list = images.filter(img => 
-    img.displayName.toLowerCase().includes(searchString.toLowerCase())  
-  );
-  switch ( sortBy ) {
-    case 0:
-      list.sort(sortUtils.dateNewest);
-      break;
-    case 1:
-      list.sort(sortUtils.dateOldest);
-      break;
-    case 2:
-      list.sort(sortUtils.nameAscending);
-      break;
-    case 3:
-      list.sort(sortUtils.nameDescending);
-      break;
-  }
-  return list;
-};
-
-export const getImg = (imgId, imgList) => {
-  return imgList.find(img => img.id == imgId);
 };
 
 export default {
