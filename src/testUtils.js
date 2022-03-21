@@ -112,6 +112,7 @@ export class MockUseState {
     this.hooks = hooks;
     this.oldState = null;
     this.setState = {};
+    this.stateVals = {};
 
     this.mock = this.mock.bind(this);
     this.restore = this.restore.bind(this);
@@ -134,10 +135,18 @@ export class MockUseState {
   mock() {
     this.oldState = this.hooks.state;
     Object.keys(this.keys).forEach(key => {
-      this.hooks.state[key] = jest.fn(val => [val, this.setState[key]]);
+      this.hooks.state[key] = jest.fn(val => {
+        this.stateVals[key] = val;
+        return [val, this.setState[key]];
+      });
     });
     this.setState = Object.keys(this.keys).reduce(
-      (obj, key) => ({ ...obj, [key]: jest.fn() }),
+      (obj, key) => ({
+        ...obj,
+        [key]: jest.fn(val => {
+          this.hooks.state[key] = val;
+        }),
+      }),
       {},
     );
   }

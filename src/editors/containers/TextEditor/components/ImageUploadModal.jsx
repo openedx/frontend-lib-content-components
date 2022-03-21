@@ -1,44 +1,68 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import ImageSettingsModal from './ImageSettingsModal';
 import SelectImageModal from './SelectImageModal';
 import * as module from './ImageUploadModal';
+
+export const propsString = (props) => Object.keys(props)
+  .map(key => `${key}="${props[key]}"`)
+  .join(' ');
+
+export const imgProps = ({ settings, selection }) => ({
+  src: selection.externalUrl,
+  alt: settings.isDecorative ? '' : settings.altText,
+  width: settings.dimensions.width,
+  height: settings.dimensions.height,
+});
+
+export const imgTag = ({ settings, selection }) => {
+  const props = module.imgProps({ settings, selection });
+  return `<img ${propsString(props)} />`;
+};
 
 export const hooks = {
   createSaveCallback: ({
     close, editorRef, setSelection, selection,
   }) => (settings) => {
-    editorRef.current.execCommand('mceInsertContent', false, module.hooks.getImgTag({ settings, selection }));
+    editorRef.current.execCommand(
+      'mceInsertContent',
+      false,
+      module.imgTag({ settings, selection })
+    );
     setSelection(null);
     close();
   },
-  getImgTag: ({ settings, selection }) => `<img src="${selection.externalUrl}" alt="${settings.isDecorative ? '' : settings.altText}" width="${settings.dimensions.width}" height="${settings.dimensions.height}">`,
+  onClose: ({ clearSelection, close }) => {
+    clearSelection();
+    close();
+  },
 };
 
-const ImageUploadModal = ({
+
+export const ImageUploadModal = ({
   // eslint-disable-next-line
   editorRef,
   isOpen,
   close,
+  clearSelection,
   selection,
   setSelection,
 }) => {
-  const saveToEditor = module.hooks.createSaveCallback({
-    close, editorRef, setSelection, selection,
-  });
-  const closeAndReset = () => {
-    setSelection(null);
-    close();
-  };
   if (selection) {
     return (
       <ImageSettingsModal
         {...{
           isOpen,
-          close: closeAndReset,
+          close: module.hooks.onClose({ clearSelection, close }),
           selection,
-          saveToEditor,
-          returnToSelection: () => setSelection(null),
+          saveToEditor: module.hooks.createSaveCallback({
+            close,
+            editorRef,
+            selection,
+            setSelection,
+          }),
+          returnToSelection: clearSelection,
         }}
       />
     );

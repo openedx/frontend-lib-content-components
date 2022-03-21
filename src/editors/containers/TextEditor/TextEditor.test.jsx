@@ -12,19 +12,27 @@ jest.mock('@tinymce/tinymce-react', () => {
   return {
     __esModule: true,
     ...originalModule,
-    Editor: () => 'TiNYmCE EDitOR'
-    ,
+    Editor: () => 'TiNYmCE EDitOR',
   };
 });
+
 jest.mock('./components/ImageUploadModal', () => 'ImageUploadModal');
 
 jest.mock('./hooks', () => {
   const updateState = jest.fn();
   return ({
     editorConfig: jest.fn(args => ({ editorConfig: args })),
-    modalToggle: jest.fn(args => ({ modalToggle: args })),
-    selectedImage: jest.fn(val => ([{ state: val }, jest.fn((newVal) => updateState({ val, newVal })).mockName('setSelection')])),
-    nullMethod: jest.fn().mockName('nullMethod'),
+    modalToggle: jest.fn(() => ({
+      isOpen: true,
+      openModal: jest.fn().mockName('openModal'),
+      closeModal: jest.fn().mockName('closeModal'),
+    })),
+    selectedImage: jest.fn(val => ({
+      selection: 'hooks.selectedImage.selection',
+      setSelection: jest.fn().mockName('hooks.selectedImage.setSelection'),
+      clearSelection: jest.fn().mockName('hooks.selectedImage.clearSelection'),
+    })),
+    nullMethod: jest.fn().mockName('hooks.nullMethod'),
   });
 });
 
