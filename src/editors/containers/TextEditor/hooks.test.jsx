@@ -12,6 +12,10 @@ const state = new MockUseState(module);
 
 describe('TextEditor hooks', () => {
   describe('Editor Init hooks', () => {
+    describe('state hooks', () => {
+      state.testGetter(state.keys.isModalOpen);
+      state.testGetter(state.keys.imageSelection);
+    });
     const mockOpenModal = jest.fn();
     const mockAddbutton = jest.fn(val => ({ onAction: val }));
     const mockNode = {

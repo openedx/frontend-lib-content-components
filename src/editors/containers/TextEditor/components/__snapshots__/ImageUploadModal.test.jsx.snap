@@ -19,23 +19,3 @@ exports[`ImageUploadModal component snapshot: with selection content (ImageSetti
   }
 />
 `;
-
-exports[`ImageUploadModal hooks component snapshot: no selection (Select Image Modal) 1`] = `
-<SelectImageModal
-  close={[MockFunction props.close]}
-  isOpen={false}
-  setSelection={[MockFunction props.setSelection]}
-/>
-`;
-
-exports[`ImageUploadModal hooks component snapshot: with selection content (ImageSettingsUpload) 1`] = `
-<ImageSettingsModal
-  isOpen={false}
-  returnToSelection={[MockFunction props.clearSelection]}
-  selection={
-    Object {
-      "some": "images",
-    }
-  }
-/>
-`;
