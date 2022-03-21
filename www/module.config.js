@@ -7,6 +7,7 @@ module.exports = {
     dist: The sub-directory of the source code where it puts its build artifact.  Often "dist".
     */
   localModules: [
+    { moduleName: '@edx/brand', dir: '../../../brand-edx.org' },
     { moduleName: '@edx/frontend-lib-content-components', dir: '../../frontend-lib-content-components' },
   ],
 };
