@@ -1,4 +1,4 @@
-import { useEffect, updateState } from 'react';
+import { useEffect } from 'react';
 
 import { MockUseState } from '../testUtils';
 import * as module from './hooks';
@@ -10,7 +10,6 @@ jest.mock('react', () => ({
   useCallback: (cb, prereqs) => ({ cb, prereqs }),
 }));
 
-const testValue = 'Some data';
 const state = new MockUseState(module);
 
 describe('hooks', () => {

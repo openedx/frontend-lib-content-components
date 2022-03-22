@@ -1,4 +1,3 @@
-import React from 'react';
 import * as module from './hooks';
 
 import { MockUseState } from '../../../testUtils';
@@ -142,7 +141,6 @@ describe('TextEditor hooks', () => {
   });
   describe('selectedImage hooks', () => {
     const val = { a: 'VaLUe' };
-    const newVal = { some: 'vAlUe' };
     let hook;
     beforeEach(() => {
       state.mock();
@@ -158,7 +156,6 @@ describe('TextEditor hooks', () => {
       expect(hook.setSelection).not.toHaveBeenCalled();
       hook.clearSelection();
       expect(hook.setSelection).toHaveBeenCalledWith(null);
-
     });
   });
   describe('modalToggle hook', () => {

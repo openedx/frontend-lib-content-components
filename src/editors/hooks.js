@@ -5,9 +5,9 @@ import {
 import { StrictDict } from './utils';
 import * as module from './hooks';
 
-export const state = {
+export const state = StrictDict({
   refReady: (val) => useState(val),
-};
+});
 
 export const initializeApp = ({ initialize, data }) => useEffect(
   () => initialize(data),

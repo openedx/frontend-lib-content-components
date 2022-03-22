@@ -18,23 +18,20 @@ jest.mock('@tinymce/tinymce-react', () => {
 
 jest.mock('./components/ImageUploadModal', () => 'ImageUploadModal');
 
-jest.mock('./hooks', () => {
-  const updateState = jest.fn();
-  return ({
-    editorConfig: jest.fn(args => ({ editorConfig: args })),
-    modalToggle: jest.fn(() => ({
-      isOpen: true,
-      openModal: jest.fn().mockName('openModal'),
-      closeModal: jest.fn().mockName('closeModal'),
-    })),
-    selectedImage: jest.fn(val => ({
-      selection: 'hooks.selectedImage.selection',
-      setSelection: jest.fn().mockName('hooks.selectedImage.setSelection'),
-      clearSelection: jest.fn().mockName('hooks.selectedImage.clearSelection'),
-    })),
-    nullMethod: jest.fn().mockName('hooks.nullMethod'),
-  });
-});
+jest.mock('./hooks', () => ({
+  editorConfig: jest.fn(args => ({ editorConfig: args })),
+  modalToggle: jest.fn(() => ({
+    isOpen: true,
+    openModal: jest.fn().mockName('openModal'),
+    closeModal: jest.fn().mockName('closeModal'),
+  })),
+  selectedImage: jest.fn(() => ({
+    selection: 'hooks.selectedImage.selection',
+    setSelection: jest.fn().mockName('hooks.selectedImage.setSelection'),
+    clearSelection: jest.fn().mockName('hooks.selectedImage.clearSelection'),
+  })),
+  nullMethod: jest.fn().mockName('hooks.nullMethod'),
+}));
 
 jest.mock('react', () => {
   const updateState = jest.fn();

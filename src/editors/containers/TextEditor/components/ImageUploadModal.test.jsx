@@ -5,12 +5,12 @@ import { keyStore } from '../../../utils';
 import tinyMCEKeys from '../../../data/constants/tinyMCE';
 
 import * as module from './ImageUploadModal';
+
 jest.mock('./ImageSettingsModal', () => 'ImageSettingsModal');
 jest.mock('./SelectImageModal', () => 'SelectImageModal');
 
 const { ImageUploadModal } = module;
 
-const moduleKeys = keyStore(module);
 const hookKeys = keyStore(module.hooks);
 
 const settings = {
@@ -21,6 +21,7 @@ const settings = {
     height: 1619,
   },
 };
+
 describe('ImageUploadModal', () => {
   describe('hooks', () => {
     describe('imgTag', () => {
@@ -31,9 +32,12 @@ describe('ImageUploadModal', () => {
         width: settings.dimensions.width,
         height: settings.dimensions.height,
       };
-      const testImgTag = ({ settings, expected }) => {
-        const output = module.hooks.imgTag({ settings, selection });
-        expect(output).toEqual(`<img ${module.propsString(expected)} />`);
+      const testImgTag = (args) => {
+        const output = module.hooks.imgTag({
+          settings: args.settings,
+          selection,
+        });
+        expect(output).toEqual(`<img ${module.propsString(args.expected)} />`);
       };
       test('It returns a html string which matches an image tag', () => {
         testImgTag({ settings, expected });
@@ -62,7 +66,7 @@ describe('ImageUploadModal', () => {
       });
       test('It creates a callback, that when called, inserts to the editor, sets the selection to be null, and calls close', () => {
         jest.spyOn(module.hooks, hookKeys.imgTag)
-          .mockImplementationOnce(({ settings }) => ({ selection, settings }));
+          .mockImplementationOnce((props) => ({ selection, settings: props.settings }));
         expect(execCommandMock).not.toBeCalled();
         expect(setSelection).not.toBeCalled();
         expect(close).not.toBeCalled();
@@ -70,7 +74,7 @@ describe('ImageUploadModal', () => {
         expect(execCommandMock).toBeCalledWith(
           tinyMCEKeys.commands.insertContent,
           false,
-          { selection, settings: settings },
+          { selection, settings },
         );
         expect(setSelection).toBeCalledWith(null);
         expect(close).toBeCalled();

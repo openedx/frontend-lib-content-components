@@ -1,12 +1,12 @@
 import { useState } from 'react';
 
-import { StrictDict } from '../../utils/index';
+import { StrictDict } from '../../utils';
 import * as module from './hooks';
 
-export const state = {
+export const state = StrictDict({
   isModalOpen: (val) => useState(val),
   imageSelection: (val) => useState(val),
-};
+});
 
 export const openModalWithSelectedImage = (editor, setImage, openModal) => () => {
   const imgHTML = editor.selection.getNode();

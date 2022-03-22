@@ -24,7 +24,7 @@ export const hooks = {
     editorRef.current.execCommand(
       tinyMCEKeys.commands.insertContent,
       false,
-      module.hooks.imgTag({ settings, selection })
+      module.hooks.imgTag({ settings, selection }),
     );
     setSelection(null);
     close();
@@ -38,7 +38,6 @@ export const hooks = {
     return `<img ${propsString(props)} />`;
   },
 };
-
 
 export const ImageUploadModal = ({
   // eslint-disable-next-line
@@ -75,17 +74,18 @@ ImageUploadModal.defaultProps = {
   selection: null,
 };
 ImageUploadModal.propTypes = {
+  clearSelection: PropTypes.func.isRequired,
+  close: PropTypes.func.isRequired,
+  editorRef: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.shape({ current: PropTypes.any }),
+  ]),
+  isOpen: PropTypes.bool.isRequired,
   selection: PropTypes.shape({
     url: PropTypes.string,
     externalUrl: PropTypes.string,
     altText: PropTypes.bool,
   }),
   setSelection: PropTypes.func.isRequired,
-  isOpen: PropTypes.bool.isRequired,
-  close: PropTypes.func.isRequired,
-  editorRef: PropTypes.oneOfType([
-    PropTypes.func,
-    PropTypes.shape({ current: PropTypes.any }),
-  ]),
 };
 export default ImageUploadModal;
