@@ -14,8 +14,7 @@ export const BaseModal = ({
   title,
   children,
   confirmAction,
-  showUploadButton,
-  handleUpload,
+  footerAction,
 }) => (
   <ModalDialog
     title="My dialog"
@@ -37,13 +36,7 @@ export const BaseModal = ({
     </ModalDialog.Body>
     <ModalDialog.Footer>
       <ActionRow>
-        {showUploadButton
-          ? (
-            <Button iconBefore={Add} onClick={handleUpload} variant="link">
-              Upload a new image
-            </Button>
-          )
-          : null}
+        {footerAction}
         <ActionRow.Spacer />
         <ModalDialog.CloseButton variant="tertiary" onClick={close}>
           Cancel
@@ -60,8 +53,7 @@ BaseModal.propTypes = {
   title: PropTypes.node.isRequired,
   children: PropTypes.node.isRequired,
   confirmAction: PropTypes.node.isRequired,
-  showUploadButton: PropTypes.bool.isRequired,
-  handleUpload: PropTypes.func.isRequired,
+  footerAction: PropTypes.node.isRequired,
 };
 
 export default BaseModal;

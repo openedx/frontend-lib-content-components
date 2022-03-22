@@ -47,10 +47,10 @@ export const saveBlock = ({ content, returnToUnit }) => (dispatch) => {
 export const fetchImages = ({ onSuccess, stopLoading }) => () => {
   // get images
   const processedData = Array.from(mockData.mockImageData, el => {
-    const sortDate = new Date(el.dateAdded.replace(' at', '')).getTime();
+    const jsDate = new Date(el.dateAdded.replace(' at', '')).getTime();
     return {
       ...el,
-      sortDate,
+      jsDate,
     };
   });
   stopLoading();

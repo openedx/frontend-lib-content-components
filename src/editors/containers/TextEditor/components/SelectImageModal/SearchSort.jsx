@@ -39,13 +39,13 @@ export const SearchSort = ({
     </Form.Group>
     <ActionRow.Spacer />
     <Dropdown>
-      <Dropdown.Toggle id="img-sort-button" variant="empty">
-        {sortUtils.OPTIONS[sortFilter]}
+      <Dropdown.Toggle id="img-sort-button" variant="tertiary">
+        {sortFilter}
       </Dropdown.Toggle>
       <Dropdown.Menu>
         {sortUtils.OPTIONS.map(
-          (el, ind) => (
-            <Dropdown.Item onClick={() => setSortFilter(ind)}>{el}</Dropdown.Item>
+          (el) => (
+            <Dropdown.Item onClick={() => setSortFilter(el)}>{el}</Dropdown.Item>
           ),
         )}
       </Dropdown.Menu>

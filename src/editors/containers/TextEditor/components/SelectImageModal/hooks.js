@@ -14,13 +14,16 @@ export const state = {
 export const getFilteredImages = (images, searchString, sortBy) => {
   const list = images.filter(img => img.displayName.toLowerCase().includes(searchString.toLowerCase()));
   switch (sortBy) {
-    case 1:
+    case 'By date added (newest)':
+      list.sort(sortUtils.dateNewest);
+      break;
+    case 'By date added (oldest)':
       list.sort(sortUtils.dateOldest);
       break;
-    case 2:
+    case 'By name (ascending)':
       list.sort(sortUtils.nameAscending);
       break;
-    case 3:
+    case 'By name (descending)':
       list.sort(sortUtils.nameDescending);
       break;
     default:
@@ -36,7 +39,7 @@ export const imgHooks = ({ fetchImages, uploadImage, setSelection }) => {
   const [images, setImages] = module.state.images([]);
   const [highlighted, setHighlighted] = module.state.highlighted(null);
   const [searchString, setSearchString] = module.state.searchString('');
-  const [sortFilter, setSortFilter] = module.state.sortFilter(0);
+  const [sortFilter, setSortFilter] = module.state.sortFilter('By date added (newest)');
   const addFileRef = React.useRef();
   const { loading, startLoading, stopLoading } = module.loadingHooks();
   const { error, setError } = module.errorHooks();

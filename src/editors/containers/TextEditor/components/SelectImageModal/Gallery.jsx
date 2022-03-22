@@ -28,7 +28,7 @@ export const Gallery = ({
         >
           {imgList.map(
             img => (
-              <SelectableBox className="card bg-light-100" key={img.externalUrl} type={type} value={img.id}>
+              <SelectableBox className="card bg-white" key={img.externalUrl} type={type} value={img.id}>
                 <div className="card-div d-flex flex-row flex-nowrap">
                   <Image
                     style={{ width: '100px', height: '100px' }}

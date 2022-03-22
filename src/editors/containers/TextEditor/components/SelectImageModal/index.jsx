@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import { Button, Stack } from '@edx/paragon';
+import { Add } from '@edx/paragon/icons';
 
 import { thunkActions } from '../../../../data/redux';
 import hooks from './hooks';
@@ -45,6 +46,11 @@ export const SelectImageModal = ({
       )}
       handleUpload={addFileClick}
       isOpen={isOpen}
+      footerAction={(
+        <Button iconBefore={Add} onClick={addFileClick} variant="link">
+          Upload a new image
+        </Button>
+      )}
       showUploadButton
       title="Add an image"
     >
