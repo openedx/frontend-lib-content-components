@@ -6,7 +6,7 @@ import { Info } from '@edx/paragon/icons';
 
 export const ErrorAlert = ({
   error,
-  setError,
+  clearError,
 }) => {
   if (!error) {
     return null;
@@ -16,7 +16,7 @@ export const ErrorAlert = ({
       variant="danger"
       icon={Info}
       dismissible
-      onClose={() => setError(null)}
+      onClose={clearError}
     >
       <Alert.Heading>
         Image not uploaded
@@ -30,7 +30,7 @@ export const ErrorAlert = ({
 
 ErrorAlert.propTypes = {
   error: PropTypes.string.isRequired,
-  setError: PropTypes.func.isRequired,
+  clearError: PropTypes.func.isRequired,
 };
 
 export default ErrorAlert;

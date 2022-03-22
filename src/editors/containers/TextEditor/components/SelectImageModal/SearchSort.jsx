@@ -18,7 +18,7 @@ export const SearchSort = ({
     <Form.Group style={{ margin: 0 }}>
       <Form.Control
         autoFocus
-        onChange={e => setSearchString(e.target.value)}
+        onChange={hooks.onInputValue(setSearchString)}
         placeholder="Search"
         trailingElement={
             searchString

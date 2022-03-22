@@ -54,23 +54,9 @@ export const SelectImageModal = ({
       showUploadButton
       title="Add an image"
     >
-      <ErrorAlert
-        error={error}
-        setError={setError}
-      />
       <Stack gap={3}>
-        <SearchSort
-          searchString={searchString}
-          setSearchString={setSearchString}
-          sortFilter={sortFilter}
-          setSortFilter={setSortFilter}
-        />
-        <Gallery
-          highlighted={highlighted}
-          imgList={imgList}
-          loading={loading}
-          setHighlighted={setHighlighted}
-        />
+        <SearchSort {...hooks.searchSortProps} />
+        <Gallery {...hooks.galleryHooks} />
         <input
           accept=".gif,.jpg,.jpeg,.png,.tif,.tiff"
           className="upload d-none"

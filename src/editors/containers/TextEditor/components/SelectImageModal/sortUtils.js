@@ -1,3 +1,11 @@
+export const sortOptions = StrictDict({
+  dateAscending: 'By date added (newest)'
+  //...
+});
+export const OPTIONS = [
+  sortOptions.dateAscending,
+
+]
 export const OPTIONS = [
   'By date added (newest)',
   'By date added (oldest)',
