@@ -12,6 +12,7 @@ export const BaseModal = ({
   title,
   children,
   confirmAction,
+  footerAction,
 }) => (
   <ModalDialog
     title="My dialog"
@@ -21,6 +22,7 @@ export const BaseModal = ({
     variant="default"
     hasCloseButton
     isFullscreenOnMobile
+    isFullscreenScroll
   >
     <ModalDialog.Header>
       <ModalDialog.Title>
@@ -32,6 +34,8 @@ export const BaseModal = ({
     </ModalDialog.Body>
     <ModalDialog.Footer>
       <ActionRow>
+        {footerAction}
+        <ActionRow.Spacer />
         <ModalDialog.CloseButton variant="tertiary" onClick={close}>
           Cancel
         </ModalDialog.CloseButton>
@@ -47,6 +51,7 @@ BaseModal.propTypes = {
   title: PropTypes.node.isRequired,
   children: PropTypes.node.isRequired,
   confirmAction: PropTypes.node.isRequired,
+  footerAction: PropTypes.node.isRequired,
 };
 
 export default BaseModal;
