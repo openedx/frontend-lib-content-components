@@ -2,12 +2,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { Image, SelectableBox } from '@edx/paragon';
+import { FormattedMessage, injectIntl, intlShape } from '@edx/frontend-platform/i18n';
+
+import messages from './messages';
 
 export const GalleryCard = ({
   img,
-  type,
+  // inject
+  intl,
 }) => (
-  <SelectableBox className="card bg-white" key={img.externalUrl} type={type} value={img.id}>
+  <SelectableBox className="card bg-white" key={img.externalUrl} type="radio" value={img.id}>
     <div className="card-div d-flex flex-row flex-nowrap">
       <Image
         style={{ width: '100px', height: '100px' }}
@@ -15,7 +19,12 @@ export const GalleryCard = ({
       />
       <div className="img-text p-3">
         <h3>{img.displayName}</h3>
-        <p>Added {img.dateAdded}</p>
+        <p>
+          <FormattedMessage {...messages.addedDatePart1Label} />
+          {intl.formatDate(img.jsDate)}
+          <FormattedMessage {...messages.addedDatePart2Label} />
+          {intl.formatTime(img.jsDate)}
+        </p>
       </div>
     </div>
   </SelectableBox>
@@ -34,7 +43,6 @@ GalleryCard.propTypes = {
     thumbnail: PropTypes.string,
     url: PropTypes.string,
   }).isRequired,
-  type: PropTypes.string.isRequired,
 };
 
-export default GalleryCard;
+export default injectIntl(GalleryCard);

@@ -9,11 +9,11 @@ import { FormattedMessage, injectIntl, intlShape } from '@edx/frontend-platform/
 import { thunkActions } from '../../../../data/redux';
 import hooks from './hooks';
 import { acceptedImgKeys } from './utils';
+import messages from './messages';
 import BaseModal from '../BaseModal';
 import ErrorAlert from './ErrorAlert';
 import SearchSort from './SearchSort';
 import Gallery from './Gallery';
-import messages from './messages';
 
 // internationalization
 // intel
@@ -37,7 +37,7 @@ export const SelectImageModal = ({
     galleryProps,
     disableNext,
 
-    addFileRef,
+    fileInputRef,
     addFileClick,
     addFile,
     onConfirmSelection,
@@ -75,7 +75,7 @@ export const SelectImageModal = ({
           accept={Object.values(acceptedImgKeys).join()}
           className="upload d-none"
           onChange={addFile}
-          ref={addFileRef}
+          ref={fileInputRef}
           type="file"
         />
       </Stack>

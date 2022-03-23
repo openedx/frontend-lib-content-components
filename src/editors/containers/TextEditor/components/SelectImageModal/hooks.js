@@ -14,7 +14,7 @@ export const state = {
 export const imgHooks = ({ fetchImages, uploadImage, setSelection }) => {
   const selection = module.selection();
   const searchSortProps = module.searchAndSort();
-  const addFileRef = React.useRef();
+  const fileInputRef = React.useRef();
   const { loading, startLoading, stopLoading } = module.loadingHooks();
   const { error, setError } = module.errorHooks();
 
@@ -32,14 +32,14 @@ export const imgHooks = ({ fetchImages, uploadImage, setSelection }) => {
     },
     disableNext: !selection.highlighted,
 
-    addFileRef,
-    addFileClick: () => addFileRef.current.click(),
+    fileInputRef,
+    addFileClick: () => fileInputRef.current.click(),
     addFile: e => uploadImage({
       file: e.target.files[0],
       startLoading,
       stopLoading,
       resetFile: () => {
-        addFileRef.current.value = '';
+        fileInputRef.current.value = '';
       },
       setError,
     }),

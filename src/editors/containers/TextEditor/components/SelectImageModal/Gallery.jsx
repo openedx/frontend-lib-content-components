@@ -13,8 +13,6 @@ export const Gallery = ({
   highlighted,
   onHighlightChange,
 }) => {
-  const type = 'radio';
-  
   if (loading) {
     return <Spinner animation="border" className="mie-3" screenReaderText="loading" />;
   }
@@ -25,10 +23,10 @@ export const Gallery = ({
           columns={1}
           name="images"
           onChange={onHighlightChange}
-          type={type}
+          type="radio"
           value={highlighted}
         >
-          {imgList.map(img => <GalleryCard img={img} type={type} />)}
+          {imgList.map(img => <GalleryCard img={img} />)}
         </SelectableBox.Set>
       </div>
     </Scrollable>

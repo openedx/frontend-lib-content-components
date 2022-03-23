@@ -41,6 +41,16 @@ export const messages = {
   },
 
   // Date added messages
+  addedDatePart1Label: {
+    id: 'authoring.texteditor.selectimagemodal.addedDate.part1.label',
+    defaultMessage: 'Added ',
+    description: 'This is the Added in: Added {date} at {time}',
+  },
+  addedDatePart2Label: {
+    id: 'authoring.texteditor.selectimagemodal.addedDate.part2.label',
+    defaultMessage: ' at ',
+    description: 'This is the at in: Added {date} at {time}'
+  },
 };
 
 export default messages;
