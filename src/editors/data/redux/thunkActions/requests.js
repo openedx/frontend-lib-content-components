@@ -88,7 +88,32 @@ export const saveBlock = ({ content, ...rest }) => (dispatch, getState) => {
   }));
 };
 
+export const uploadImage = ({ image, ...rest }) => (dispatch, getState) => {
+  dispatch(module.networkRequest({
+    requestKey: RequestKeys.uploadImage,
+    promise: api.uploadImage({
+      courseId: selectors.app.courseId(getState()),
+      studioEndpointUrl: selectors.app.studioEndpointUrl(getState()),
+      image,
+    }),
+    ...rest,
+  }));
+};
+
+export const fetchImages = ({ ...rest }) => (dispatch, getState) => {
+  dispatch(module.networkRequest({
+    requestKey: RequestKeys.fetchImages,
+    promise: api.fetchImages({
+      studioEndpointUrl: selectors.app.studioEndpointUrl(getState()),
+      courseId: selectors.app.courseId(getState()),
+    }),
+    ...rest,
+  }));
+};
+
 export default StrictDict({
+  uploadImage,
+  fetchImages,
   fetchUnit,
   fetchBlock,
   saveBlock,
