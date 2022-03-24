@@ -58,9 +58,13 @@ SelectImageModal.propTypes = {
   fetchImages: PropTypes.func.isRequired,
 };
 
-export const mapStateToProps = () => ({});
+export const mapStateToProps = (state) => ({
+  uploadFailed: selectors.requests.isFailed(state, { requestKey: RequestKeys.uploadImage }),
+  loading: selectors.requests.isPending(state, { requestKey: RequestKeys.uploadImage }) || !selectors.requests.isFinished(state, { requestKey: RequestKeys.fetchImages }),
+});
 export const mapDispatchToProps = {
   fetchImages: thunkActions.app.fetchImages,
+  uploadImage: thunkActions.app.uploadImage,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SelectImageModal);

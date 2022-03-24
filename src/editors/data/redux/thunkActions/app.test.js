@@ -1,13 +1,21 @@
 import { actions } from '..';
+import { camelizeKeys } from '../../../utils';
 import * as thunkActions from './app';
 
 jest.mock('./requests', () => ({
   fetchBlock: (args) => ({ fetchBlock: args }),
   fetchUnit: (args) => ({ fetchUnit: args }),
   saveBlock: (args) => ({ saveBlock: args }),
+  fetchImages: (args) => ({ fetchImages: args }),
+  uploadImage: (args) => ({ uploadImage: args }),
 }));
 
-const testValue = 'test VALUE';
+jest.mock('../../../utils', () => ({
+  camelizeKeys: (args) => ({ camelizeKeys: args }),
+  ...jest.requireActual('../../../utils'),
+}));
+
+const testValue = { data: { assets: 'test VALUE' } };
 
 describe('app thunkActions', () => {
   let dispatch;
@@ -53,6 +61,28 @@ describe('app thunkActions', () => {
       expect(dispatch).toHaveBeenCalledWith(actions.app.setUnitUrl(testValue));
     });
   });
+
+  describe('fetchImages', () => {
+    const mockSucess = jest.fn();
+    beforeEach(() => {
+      thunkActions.fetchImages({ onSuccess: mockSucess })(dispatch);
+      [[dispatchedAction]] = dispatch.mock.calls;
+    });
+    it('dispatches fetchUnit action', () => {
+      expect(dispatchedAction.fetchImages).not.toEqual(undefined);
+    });
+    it('calls onSuceaa on success with camleized keys', () => {
+      dispatch.mockClear();
+      dispatchedAction.fetchImages.onSuccess(testValue);
+      expect(mockSucess).toHaveBeenCalledWith(camelizeKeys(testValue.data.assets));
+    });
+    it('dispatches actions.app.setUnitUrl on failure', () => {
+      dispatch.mockClear();
+      dispatchedAction.fetchImages.onFailure(testValue);
+      expect(mockSucess).toHaveBeenCalledWith(testValue);
+    });
+  });
+
   describe('initialize', () => {
     it('dispatches actions.app.initialize, and then fetches both block and unit', () => {
       const { fetchBlock, fetchUnit } = thunkActions;
@@ -90,6 +120,23 @@ describe('app thunkActions', () => {
       calls[1][0].saveBlock.onSuccess(response);
       expect(dispatch).toHaveBeenCalledWith(actions.app.setSaveResponse(response));
       expect(returnToUnit).toHaveBeenCalled();
+    });
+  });
+  describe('uploadImage', () => {
+    const setSelected = jest.fn((img) => ({ image: img }));
+    let calls;
+    beforeEach(() => {
+      thunkActions.uploadImage({ image: testValue, setSelected })(dispatch);
+      calls = dispatch.mock.calls;
+    });
+    it('dispatches uploadImage with passed content', () => {
+      expect(calls[0][0].uploadImage.image).toEqual(testValue);
+    });
+    it('On success calls setSelected', () => {
+      dispatch.mockClear();
+      const response = 'testRESPONSE';
+      calls[0][0].uploadImage.onSuccess(response);
+      expect(setSelected).toHaveBeenCalled();
     });
   });
 });
