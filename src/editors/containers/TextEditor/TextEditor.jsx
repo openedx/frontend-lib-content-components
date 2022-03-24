@@ -117,4 +117,4 @@ export const mapDispatchToProps = {
   initializeEditor: actions.app.initializeEditor,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(injectIntl(TextEditor));
+export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(TextEditor));
