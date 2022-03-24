@@ -22,7 +22,7 @@ export const SelectImageModal = ({
   // injected
   intl,
   // redux
-  loading,
+  isFinishedLoadingImages,
   fetchImages,
   uploadImage,
 }) => {
@@ -36,6 +36,27 @@ export const SelectImageModal = ({
     onConfirmSelection,
     error, setError,
   } = hooks.imgHooks({ fetchImages, uploadImage, setSelection });
+
+  console.log({
+    isOpen,
+    close,
+    setSelection,
+    intl,
+    isFinishedLoadingImages,
+    fetchImages,
+    uploadImage,
+  });
+  console.log({
+    searchSortProps,
+    galleryProps,
+    disableNext,
+    fileInputRef,
+    addFileClick,
+    addFile,
+    onConfirmSelection,
+    error,
+    setError,
+  });
 
   return (
     <BaseModal
@@ -61,26 +82,17 @@ export const SelectImageModal = ({
         error={error}
         setError={setError}
       />
-      {(loading
-        ? (
-          <div className="text-center p-6">
-            <Spinner animation="border" className="m-3" screenreadertext="loading" />
-          </div>
-        )
-        : (
-          <Stack gap={3}>
-            <SearchSort {...searchSortProps} />
-            <Gallery {...galleryProps} />
-            <input
-              accept={Object.values(acceptedImgKeys).join()}
-              className="upload d-none"
-              onChange={addFile}
-              ref={fileInputRef}
-              type="file"
-            />
-          </Stack>
-        )
-      )}
+      <Stack gap={3}>
+        <SearchSort {...searchSortProps} />
+        <Gallery {...galleryProps} />
+        <input
+          accept={Object.values(acceptedImgKeys).join()}
+          className="upload d-none"
+          onChange={addFile}
+          ref={fileInputRef}
+          type="file"
+        />
+      </Stack>
     </BaseModal>
   );
 };
@@ -97,8 +109,8 @@ SelectImageModal.propTypes = {
 };
 
 export const mapStateToProps = (state) => ({
-  loading: !selectors.requests.isFinished(state, { requestKey: RequestKeys.fetchImages })
-  || selectors.requests.isPending(state, { requestKey: RequestKeys.uploadImage }),
+  isFinishedLoadingImages: selectors.requests.isFinished(state, { requestKey: RequestKeys.fetchImages }),
+
 });
 export const mapDispatchToProps = {
   fetchImages: thunkActions.app.fetchImages,

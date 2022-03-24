@@ -7,7 +7,6 @@ export const state = {
   highlighted: (val) => React.useState(val),
   searchString: (val) => React.useState(val),
   sortBy: (val) => React.useState(val),
-  loading: (val) => React.useState(val),
   error: (val) => React.useState(val),
 };
 
@@ -15,18 +14,16 @@ export const imgHooks = ({ fetchImages, uploadImage, setSelection }) => {
   const selection = module.selection();
   const searchSortProps = module.searchAndSort();
   const fileInputRef = React.useRef();
-  const { loading, startLoading, stopLoading } = module.loadingHooks();
   const { error, setError } = module.errorHooks();
 
   React.useEffect(() => {
-    fetchImages({ onSuccess: selection.setImages, stopLoading });
+    fetchImages({ setImages: selection.setImages });
   }, []);
 
   return {
     searchSortProps,
     galleryProps: {
       imgList: module.getFilteredImages(selection.images, searchSortProps.searchString, searchSortProps.sortBy),
-      loading,
       highlighted: selection.highlighted,
       onHighlightChange: e => selection.setHighlighted(e.target.value),
     },
@@ -36,8 +33,6 @@ export const imgHooks = ({ fetchImages, uploadImage, setSelection }) => {
     addFileClick: () => fileInputRef.current.click(),
     addFile: e => uploadImage({
       file: e.target.files[0],
-      startLoading,
-      stopLoading,
       resetFile: () => {
         fileInputRef.current.value = '';
       },
@@ -69,15 +64,6 @@ export const searchAndSort = () => {
     clearSearchString: () => setSearchString(''),
     sortBy,
     onSortClick: key => () => setSortBy(sortKeys[key]),
-  };
-};
-
-export const loadingHooks = () => {
-  const [loading, setLoading] = module.state.loading(true);
-  return {
-    loading,
-    startLoading: () => setLoading(true),
-    stopLoading: () => setLoading(false),
   };
 };
 
