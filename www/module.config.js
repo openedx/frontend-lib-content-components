@@ -8,6 +8,5 @@ module.exports = {
     */
   localModules: [
     { moduleName: '@edx/frontend-lib-content-components', dir: '../../frontend-lib-content-components' },
-    { moduleName: '@edx/brand', dir: '../../../brand-edx.org' },
   ],
 };
