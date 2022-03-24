@@ -1,19 +1,26 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import {
   Scrollable, SelectableBox, Spinner,
 } from '@edx/paragon';
 
+import { FormattedMessage, injectIntl, intlShape } from '@edx/frontend-platform/i18n';
+
+import { selectors } from '../../../../data/redux';
+import { RequestKeys } from '../../../../data/constants/requests';
+
 import GalleryCard from './GalleryCard';
 
 export const Gallery = ({
-  loading,
   displayList,
   highlighted,
   onHighlightChange,
+  // redux
+  isFinishedLoadingImages,
 }) => {
-  if (loading) {
+  if (!isFinishedLoadingImages) {
     return <Spinner animation="border" className="mie-3" screenReaderText="loading" />;
   }
   return (
@@ -34,13 +41,22 @@ export const Gallery = ({
 };
 
 Gallery.defaultProps = {
-  loading: false,
+  isFinishedLoadingImages: false,
 };
 Gallery.propTypes = {
-  loading: PropTypes.bool,
   displayList: PropTypes.arrayOf(PropTypes.object).isRequired,
   highlighted: PropTypes.string.isRequired,
   onHighlightChange: PropTypes.func.isRequired,
+  // injected
+  intl: intlShape.isRequired,
+  // redux
+  isFinishedLoadingImages: PropTypes.bool,
 };
 
-export default Gallery;
+export const mapStateToProps = (state) => ({
+  isFinishedLoadingImages: selectors.requests.isFinished(state, { requestKey: RequestKeys.fetchImages }),
+});
+
+export const mapDispatchToProps = {};
+
+export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(Gallery));

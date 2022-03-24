@@ -10,6 +10,17 @@ export const apiMethods = {
   fetchByUnitId: ({ blockId, studioEndpointUrl }) => get(
     urls.blockAncestor({ studioEndpointUrl, blockId }),
   ),
+  fetchImages: ({ courseId, studioEndpointUrl }) => get(
+    urls.courseImages({ studioEndpointUrl, courseId }),
+  ),
+  uploadImage: ({
+    courseId,
+    studioEndpointUrl,
+    image,
+  }) => post(
+    urls.courseAssets({ studioEndpointUrl, courseId }),
+    image,
+  ),
   normalizeContent: ({
     blockId,
     blockType,

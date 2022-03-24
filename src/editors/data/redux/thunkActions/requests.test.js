@@ -19,6 +19,8 @@ jest.mock('../../services/cms/api', () => ({
   fetchBlockById: ({ id, url }) => ({ id, url }),
   fetchByUnitId: ({ id, url }) => ({ id, url }),
   saveBlock: (args) => args,
+  fetchImages: ({ id, url }) => ({ id, url }),
+  uploadImage: (args) => args,
 }));
 
 let dispatch;
@@ -183,6 +185,22 @@ describe('requests thunkActions module', () => {
         },
       });
     });
+    describe('fetchImages', () => {
+      testNetworkRequestAction({
+        action: requests.fetchImages,
+        args: fetchParams,
+        expectedString: 'with fetchImages promise',
+        expectedData: {
+          ...fetchParams,
+          requestKey: RequestKeys.fetchImages,
+          promise: api.fetchImages({
+            studioEndpointUrl: selectors.app.studioEndpointUrl(testState),
+            courseId: selectors.app.courseId(testState),
+          }),
+        },
+      });
+    });
+
     describe('saveBlock', () => {
       const content = 'SoME HtMl CoNtent As String';
       testNetworkRequestAction({
@@ -199,6 +217,24 @@ describe('requests thunkActions module', () => {
             content,
             studioEndpointUrl: selectors.app.studioEndpointUrl(testState),
             title: selectors.app.blockTitle(testState),
+          }),
+        },
+      });
+    });
+
+    describe('uploadImage', () => {
+      const image = 'SoME iMage CoNtent As String';
+      testNetworkRequestAction({
+        action: requests.uploadImage,
+        args: { image, some: 'data' },
+        expectedString: 'with uploadImage promise',
+        expectedData: {
+          ...testState,
+          requestKey: RequestKeys.uploadImage,
+          promise: api.uploadImage({
+            courseId: selectors.app.courseId(testState),
+            image,
+            studioEndpointUrl: selectors.app.studioEndpointUrl(testState),
           }),
         },
       });

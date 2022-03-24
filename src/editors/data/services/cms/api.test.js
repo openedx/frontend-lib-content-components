@@ -5,6 +5,8 @@ import { get, post } from './utils';
 jest.mock('./urls', () => ({
   block: jest.fn().mockName('urls.block'),
   blockAncestor: jest.fn().mockName('urls.blockAncestor'),
+  courseImages: jest.fn().mockName('urls.courseImages'),
+  courseAssets: jest.fn().mockName('urls.courseAssets'),
 }));
 
 jest.mock('./utils', () => ({
@@ -30,6 +32,13 @@ describe('cms api', () => {
     it('should call get with url.blockAncestor', () => {
       apiMethods.fetchByUnitId({ blockId, studioEndpointUrl });
       expect(get).toHaveBeenCalledWith(urls.blockAncestor({ studioEndpointUrl, blockId }));
+    });
+  });
+
+  describe('fetchImages', () => {
+    it('should call get with url.courseImages', () => {
+      apiMethods.fetchImages({ courseId, studioEndpointUrl });
+      expect(get).toHaveBeenCalledWith(urls.courseImages({ studioEndpointUrl, courseId }));
     });
   });
 
@@ -75,6 +84,21 @@ describe('cms api', () => {
           courseId,
           title,
         }),
+      );
+    });
+  });
+
+  describe('uploadImage', () => {
+    const image = { photo: 'dAta' };
+    it('should call post with urls.block and normalizeContent', () => {
+      apiMethods.uploadImage({
+        courseId,
+        studioEndpointUrl,
+        image,
+      });
+      expect(post).toHaveBeenCalledWith(
+        urls.courseAssets({ studioEndpointUrl, courseId }),
+        image,
       );
     });
   });

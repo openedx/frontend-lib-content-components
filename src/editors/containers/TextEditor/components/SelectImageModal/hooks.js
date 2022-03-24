@@ -39,7 +39,7 @@ export const imgListHooks = ({
   const [highlighted, setHighlighted] = module.state.highlighted(null);
 
   React.useEffect(() => {
-    fetchImages({ onSuccess: setImages });
+    fetchImages({ setImages });
   }, []);
 
   return {
@@ -57,14 +57,16 @@ export const imgListHooks = ({
   };
 };
 
-export const fileInputHooks = ({ uploadImage }) => {
+export const fileInputHooks = ({ uploadImage, setSelection }) => {
   const ref = React.useRef();
   const click = () => ref.current.click();
-  const resetFile = () => { ref.current.value = ''; };
-  const addFile = (e) => uploadImage({
-    file: e.target.files[0],
-    resetFile,
-  });
+  const addFile = (e) => {
+    uploadImage({
+      file: e.target.files[0],
+      setSelection,
+    });
+  };
+
   return {
     click,
     addFile,
@@ -75,7 +77,7 @@ export const fileInputHooks = ({ uploadImage }) => {
 export const imgHooks = ({ fetchImages, uploadImage, setSelection }) => {
   const searchSortProps = module.searchAndSortHooks();
   const imgList = module.imgListHooks({ fetchImages, setSelection, searchSortProps });
-  const fileInput = module.fileInputHooks({ uploadImage });
+  const fileInput = module.fileInputHooks({ uploadImage, setSelection });
   const { selectBtnProps, galleryProps } = imgList;
 
   return {
