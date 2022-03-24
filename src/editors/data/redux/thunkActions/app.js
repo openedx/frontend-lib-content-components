@@ -1,5 +1,4 @@
-import { StrictDict } from '../../../utils';
-import * as mockData from '../../constants/mockData';
+import { StrictDict, camelizeKeys } from '../../../utils';
 import { actions } from '..';
 import * as requests from './requests';
 import * as module from './app';
@@ -44,9 +43,18 @@ export const saveBlock = ({ content, returnToUnit }) => (dispatch) => {
   }));
 };
 
-export const fetchImages = ({ onSuccess }) => () => {
-  // get images
-  onSuccess(mockData.mockImageData);
+export const fetchImages = ({ onSuccess }) => (dispatch) => {
+  dispatch(requests.fetchImages({
+    onSuccess: (response) => onSuccess(camelizeKeys(response.data.assets)),
+    onFailure: (e) => onSuccess(e),
+  }));
+};
+
+export const uploadImage = ({ image, setSelected }) => (dispatch) => {
+  dispatch(requests.uploadImage({
+    image,
+    onSuccess: () => setSelected(image),
+  }));
 };
 
 export default StrictDict({
@@ -55,4 +63,5 @@ export default StrictDict({
   initialize,
   saveBlock,
   fetchImages,
+  uploadImage,
 });

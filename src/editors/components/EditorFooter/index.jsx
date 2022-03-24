@@ -80,16 +80,13 @@ EditorFooter.propTypes = {
   saveFailed: PropTypes.bool.isRequired,
   saveBlockContent: PropTypes.func.isRequired,
 };
-
 export const mapStateToProps = (state) => ({
   returnUrl: selectors.app.returnUrl(state),
   isInitialized: selectors.app.isInitialized(state),
   saveFailed: selectors.requests.isFailed(state, { requestKey: RequestKeys.saveBlock }),
   studioEndpointUrl: selectors.app.studioEndpointUrl(state),
 });
-
 export const mapDispatchToProps = {
   saveBlockContent: thunkActions.app.saveBlock,
 };
-
 export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(EditorFooter));

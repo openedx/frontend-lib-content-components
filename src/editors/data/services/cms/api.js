@@ -10,6 +10,19 @@ export const apiMethods = {
   fetchByUnitId: ({ blockId, studioEndpointUrl }) => get(
     urls.blockAncestor({ studioEndpointUrl, blockId }),
   ),
+  fetchImages: ({ courseId, studioEndpointUrl }) => get(
+    urls.courseImages({ studioEndpointUrl, courseId }),
+  ),
+
+  uploadImage: ({
+    courseId,
+    studioEndpointUrl,
+    image,
+  }) => post(
+    urls.courseAssets({ studioEndpointUrl, courseId }),
+    image,
+  ),
+
   normalizeContent: ({
     blockId,
     blockType,
@@ -29,6 +42,7 @@ export const apiMethods = {
     }
     throw new TypeError(`No Block in V2 Editors named /"${blockType}/", Cannot Save Content.`);
   },
+
   saveBlock: ({
     blockId,
     blockType,
@@ -47,7 +61,6 @@ export const apiMethods = {
     }),
   ),
 };
-
 export const checkMockApi = (key) => {
   if (process.env.REACT_APP_DEVGALLERY) {
     // eslint-disable-next-line
@@ -56,7 +69,6 @@ export const checkMockApi = (key) => {
   }
   return module.apiMethods[key];
 };
-
 export default Object.keys(apiMethods).reduce(
   (obj, key) => ({ ...obj, [key]: checkMockApi(key) }),
   {},
