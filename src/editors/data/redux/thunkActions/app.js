@@ -43,6 +43,7 @@ export const saveBlock = ({ content, returnToUnit }) => (dispatch) => {
   }));
 };
 
+<<<<<<< HEAD
 export const fetchImages = ({ onSuccess, stopLoading }) => () => {
   // get images
   const processedData = Array.from(mockData.mockImageData, el => {
@@ -90,6 +91,8 @@ export const uploadImage = ({
     setError('test error');
   }, 5000);
   return null;
+=======
+>>>>>>> 5067226 (feat: use redux for loading)
 export const fetchImages = ({ onSuccess }) => (dispatch) => {
   dispatch(requests.fetchImages({
     onSuccess: (response) => onSuccess(camelizeKeys(response.data.assets)),
