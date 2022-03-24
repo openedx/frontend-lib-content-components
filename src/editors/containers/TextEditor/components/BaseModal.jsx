@@ -1,6 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { FormattedMessage } from '@edx/frontend-platform/i18n';
+import messages from './messages';
+
 import {
   ActionRow,
   ModalDialog,
@@ -14,7 +17,6 @@ export const BaseModal = ({
   confirmAction,
 }) => (
   <ModalDialog
-    title="My dialog"
     isOpen={isOpen}
     onClose={close}
     size="lg"
@@ -33,7 +35,7 @@ export const BaseModal = ({
     <ModalDialog.Footer>
       <ActionRow>
         <ModalDialog.CloseButton variant="tertiary" onClick={close}>
-          Cancel
+          <FormattedMessage {...messages.cancelButtonLabel} />
         </ModalDialog.CloseButton>
         {confirmAction}
       </ActionRow>
