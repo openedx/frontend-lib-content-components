@@ -1,6 +1,11 @@
-import { apiMethods } from './api';
+import { camelizeKeys } from '../../../utils';
+import * as api from './api';
 import * as urls from './urls';
 import { get, post } from './utils';
+
+jest.mock('../../../utils', () => ({
+  camelizeKeys: (keys) => ({ camelized: keys }),
+}));
 
 jest.mock('./urls', () => ({
   block: jest.fn().mockName('urls.block'),
@@ -13,6 +18,8 @@ jest.mock('./utils', () => ({
   get: jest.fn().mockName('get'),
   post: jest.fn().mockName('post'),
 }));
+
+const { apiMethods } = api;
 
 const blockId = 'coursev1:2uX@4345432';
 const content = 'Im baby palo santo ugh celiac fashion axe. La croix lo-fi venmo whatever. Beard man braid migas single-origin coffee forage ramps.';
@@ -40,6 +47,10 @@ describe('cms api', () => {
       apiMethods.fetchImages({ courseId, studioEndpointUrl });
       expect(get).toHaveBeenCalledWith(urls.courseImages({ studioEndpointUrl, courseId }));
     });
+  });
+
+  describe('loadImages', () => {
+
   });
 
   describe('normalizeContent', () => {

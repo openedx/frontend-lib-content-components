@@ -1,19 +1,16 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { Button, Stack, Spinner } from '@edx/paragon';
+import { Button, Stack } from '@edx/paragon';
 import { Add } from '@edx/paragon/icons';
 import { FormattedMessage, injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 
-import { RequestKeys } from '../../../../data/constants/requests';
-import { selectors, thunkActions } from '../../../../data/redux';
 import hooks from './hooks';
-import { acceptedImgKeys } from './utils';
 import messages from './messages';
 import BaseModal from '../BaseModal';
 import SearchSort from './SearchSort';
 import Gallery from './Gallery';
+import FileInput from './FileInput';
 
 export const SelectImageModal = ({
   isOpen,
@@ -21,17 +18,13 @@ export const SelectImageModal = ({
   setSelection,
   // injected
   intl,
-  // redux
-  isUploadingImage,
-  fetchImages,
-  uploadImage,
 }) => {
   const {
     searchSortProps,
     galleryProps,
     selectBtnProps,
     fileInput,
-  } = hooks.imgHooks({ fetchImages, uploadImage, setSelection });
+  } = hooks.imgHooks({ setSelection });
 
   return (
     <BaseModal
@@ -49,23 +42,11 @@ export const SelectImageModal = ({
       )}
       title={intl.formatMessage(messages.titleLabel)}
     >
-      {(isUploadingImage
-        ? <Spinner animation="border" className="mie-3" screenReaderText="loading" />
-        : (
-          <Stack gap={3}>
-            <SearchSort {...searchSortProps} />
-            <Gallery {...galleryProps} />
-            <input
-              accept={Object.values(acceptedImgKeys).join()}
-              className="upload d-none"
-              onChange={fileInput.addFile}
-              ref={fileInput.ref}
-              type="file"
-            />
-          </Stack>
-        )
-        )}
-
+      <Stack gap={3}>
+        <SearchSort {...searchSortProps} />
+        <Gallery {...galleryProps} />
+        <FileInput fileInput={fileInput} />
+      </Stack>
     </BaseModal>
 
   );
@@ -77,19 +58,6 @@ SelectImageModal.propTypes = {
   setSelection: PropTypes.func.isRequired,
   // injected
   intl: intlShape.isRequired,
-  // redux
-  isUploadingImage: PropTypes.bool.isRequired,
-  fetchImages: PropTypes.func.isRequired,
-  uploadImage: PropTypes.func.isRequired,
 };
 
-export const mapStateToProps = (state) => ({
-  isUploadingImage: selectors.requests.isPending(state, { requestKey: RequestKeys.uploadImage }),
-
-});
-export const mapDispatchToProps = {
-  fetchImages: thunkActions.app.fetchImages,
-  uploadImage: thunkActions.app.uploadImage,
-};
-
-export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(SelectImageModal));
+export default injectIntl(SelectImageModal);

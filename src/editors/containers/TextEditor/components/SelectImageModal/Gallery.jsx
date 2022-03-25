@@ -6,22 +6,31 @@ import {
   Scrollable, SelectableBox, Spinner,
 } from '@edx/paragon';
 
-import { FormattedMessage, injectIntl, intlShape } from '@edx/frontend-platform/i18n';
+import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 
 import { selectors } from '../../../../data/redux';
 import { RequestKeys } from '../../../../data/constants/requests';
 
+import messages from './messages';
 import GalleryCard from './GalleryCard';
 
 export const Gallery = ({
   displayList,
   highlighted,
   onHighlightChange,
+  // injected
+  intl,
   // redux
-  isFinishedLoadingImages,
+  isLoaded,
 }) => {
-  if (!isFinishedLoadingImages) {
-    return <Spinner animation="border" className="mie-3" screenReaderText="loading" />;
+  if (!isLoaded) {
+    return (
+      <Spinner
+        animation="border"
+        className="mie-3"
+        screenReaderText={intl.formatMessage(messages.loading)}
+      />
+    );
   }
   return (
     <Scrollable className="gallery bg-gray-100" style={{ height: '375px' }}>
@@ -33,16 +42,13 @@ export const Gallery = ({
           type="radio"
           value={highlighted}
         >
-          {displayList.map(img => <GalleryCard img={img} />)}
+          {displayList.map(img => <GalleryCard key={img.id} img={img} />)}
         </SelectableBox.Set>
       </div>
     </Scrollable>
   );
 };
 
-Gallery.defaultProps = {
-  isFinishedLoadingImages: false,
-};
 Gallery.propTypes = {
   displayList: PropTypes.arrayOf(PropTypes.object).isRequired,
   highlighted: PropTypes.string.isRequired,
@@ -50,11 +56,12 @@ Gallery.propTypes = {
   // injected
   intl: intlShape.isRequired,
   // redux
-  isFinishedLoadingImages: PropTypes.bool,
+  isLoaded: PropTypes.bool.isRequired,
 };
 
+const requestKey = RequestKeys.fetchImages;
 export const mapStateToProps = (state) => ({
-  isFinishedLoadingImages: selectors.requests.isFinished(state, { requestKey: RequestKeys.fetchImages }),
+  isLoaded: selectors.requests.isFinished(state, { requestKey }),
 });
 
 export const mapDispatchToProps = {};

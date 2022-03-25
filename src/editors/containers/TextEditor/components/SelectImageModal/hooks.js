@@ -1,4 +1,6 @@
 import React from 'react';
+
+import { thunkActions } from '../../../../data/redux';
 import * as module from './hooks';
 import { sortFunctions, sortKeys } from './utils';
 
@@ -31,15 +33,15 @@ export const displayList = ({ sortBy, searchString, images }) => module.filtered
 }).sort(sortFunctions[sortBy in sortKeys ? sortKeys[sortBy] : sortKeys.dateNewest]);
 
 export const imgListHooks = ({
-  fetchImages,
   setSelection,
   searchSortProps,
 }) => {
+  const dispatch = React.useDispatch();
   const [images, setImages] = module.state.images({});
   const [highlighted, setHighlighted] = module.state.highlighted(null);
 
   React.useEffect(() => {
-    fetchImages({ setImages });
+    dispatch(thunkActions.app.fetchImages({ setImages }));
   }, []);
 
   return {
@@ -57,14 +59,15 @@ export const imgListHooks = ({
   };
 };
 
-export const fileInputHooks = ({ uploadImage, setSelection }) => {
+export const fileInputHooks = ({ setSelection }) => {
+  const dispatch = React.useDispatch();
   const ref = React.useRef();
   const click = () => ref.current.click();
   const addFile = (e) => {
-    uploadImage({
+    dispatch(thunkActions.app.uploadImage({
       file: e.target.files[0],
       setSelection,
-    });
+    }));
   };
 
   return {
@@ -74,10 +77,10 @@ export const fileInputHooks = ({ uploadImage, setSelection }) => {
   };
 };
 
-export const imgHooks = ({ fetchImages, uploadImage, setSelection }) => {
+export const imgHooks = ({ setSelection }) => {
   const searchSortProps = module.searchAndSortHooks();
-  const imgList = module.imgListHooks({ fetchImages, setSelection, searchSortProps });
-  const fileInput = module.fileInputHooks({ uploadImage, setSelection });
+  const imgList = module.imgListHooks({ setSelection, searchSortProps });
+  const fileInput = module.fileInputHooks({ setSelection });
   const { selectBtnProps, galleryProps } = imgList;
 
   return {

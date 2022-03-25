@@ -1,3 +1,4 @@
+import { keyStore } from '../../../utils';
 import { RequestKeys } from '../../constants/requests';
 import api from '../../services/cms/api';
 import * as requests from './requests';
@@ -21,11 +22,17 @@ jest.mock('../../services/cms/api', () => ({
   saveBlock: (args) => args,
   fetchImages: ({ id, url }) => ({ id, url }),
   uploadImage: (args) => args,
+  loadImages: jest.fn(),
 }));
+
+const apiKeys = keyStore(api);
 
 let dispatch;
 let onSuccess;
 let onFailure;
+
+const fetchParams = { fetchParam1: 'param1', fetchParam2: 'param2' };
+
 describe('requests thunkActions module', () => {
   beforeEach(() => {
     dispatch = jest.fn();
@@ -151,7 +158,6 @@ describe('requests thunkActions module', () => {
     });
   };
   describe('network request actions', () => {
-    const fetchParams = { fetchParam1: 'param1', fetchParam2: 'param2' };
     beforeEach(() => {
       requests.networkRequest = jest.fn(args => ({ networkRequest: args }));
     });
@@ -185,19 +191,36 @@ describe('requests thunkActions module', () => {
         },
       });
     });
+
     describe('fetchImages', () => {
-      testNetworkRequestAction({
-        action: requests.fetchImages,
-        args: fetchParams,
-        expectedString: 'with fetchImages promise',
-        expectedData: {
-          ...fetchParams,
-          requestKey: RequestKeys.fetchImages,
-          promise: api.fetchImages({
-            studioEndpointUrl: selectors.app.studioEndpointUrl(testState),
-            courseId: selectors.app.courseId(testState),
-          }),
-        },
+      let fetchImages;
+      let loadImages;
+      let dispatchedAction;
+      const expectedArgs = {
+        studioEndpointUrl: selectors.app.studioEndpointUrl(testState),
+        courseId: selectors.app.courseId(testState),
+      };
+      beforeEach(() => {
+        fetchImages = jest.fn((args) => new Promise((resolve) => {
+          resolve({ fetchImages: args });
+        }));
+        jest.spyOn(api, apiKeys.fetchImages).mockImplementationOnce(fetchImages);
+        loadImages = jest.spyOn(api, apiKeys.loadImages).mockImplementationOnce(() => ({}));
+        requests.fetchImages({ ...fetchParams, onSuccess, onFailure })(dispatch, () => testState);
+        [[dispatchedAction]] = dispatch.mock.calls;
+      });
+      it('dispatches networkRequest', () => {
+        expect(dispatchedAction.networkRequest).not.toEqual(undefined);
+      });
+      test('forwards onSuccess and onFailure', () => {
+        expect(dispatchedAction.networkRequest.onSuccess).toEqual(onSuccess);
+        expect(dispatchedAction.networkRequest.onFailure).toEqual(onFailure);
+      });
+      test('api.fetchImages promise called with studioEndpointUrl and courseId', () => {
+        expect(fetchImages).toHaveBeenCalledWith(expectedArgs);
+      });
+      test('promise is chained with api.loadImages', () => {
+        expect(loadImages).toHaveBeenCalledWith({ fetchImages: expectedArgs });
       });
     });
 
@@ -205,10 +228,10 @@ describe('requests thunkActions module', () => {
       const content = 'SoME HtMl CoNtent As String';
       testNetworkRequestAction({
         action: requests.saveBlock,
-        args: { content, some: 'data' },
+        args: { content, ...fetchParams },
         expectedString: 'with saveBlock promise',
         expectedData: {
-          ...testState,
+          ...fetchParams,
           requestKey: RequestKeys.saveBlock,
           promise: api.saveBlock({
             blockId: selectors.app.blockId(testState),
@@ -226,10 +249,10 @@ describe('requests thunkActions module', () => {
       const image = 'SoME iMage CoNtent As String';
       testNetworkRequestAction({
         action: requests.uploadImage,
-        args: { image, some: 'data' },
+        args: { image, ...fetchParams },
         expectedString: 'with uploadImage promise',
         expectedData: {
-          ...testState,
+          ...fetchParams,
           requestKey: RequestKeys.uploadImage,
           promise: api.uploadImage({
             courseId: selectors.app.courseId(testState),
