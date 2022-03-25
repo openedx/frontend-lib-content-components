@@ -1,4 +1,5 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 
 import { thunkActions } from '../../../../data/redux';
 import * as module from './hooks';
@@ -36,7 +37,7 @@ export const imgListHooks = ({
   setSelection,
   searchSortProps,
 }) => {
-  const dispatch = React.useDispatch();
+  const dispatch = useDispatch();
   const [images, setImages] = module.state.images({});
   const [highlighted, setHighlighted] = module.state.highlighted(null);
 
@@ -60,7 +61,7 @@ export const imgListHooks = ({
 };
 
 export const fileInputHooks = ({ setSelection }) => {
-  const dispatch = React.useDispatch();
+  const dispatch = useDispatch();
   const ref = React.useRef();
   const click = () => ref.current.click();
   const addFile = (e) => {
