@@ -202,7 +202,7 @@ describe('requests thunkActions module', () => {
       };
       beforeEach(() => {
         fetchImages = jest.fn((args) => new Promise((resolve) => {
-          resolve({ fetchImages: args });
+          resolve({ data: { assets: { fetchImages: args } } });
         }));
         jest.spyOn(api, apiKeys.fetchImages).mockImplementationOnce(fetchImages);
         loadImages = jest.spyOn(api, apiKeys.loadImages).mockImplementationOnce(() => ({}));

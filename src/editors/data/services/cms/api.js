@@ -14,10 +14,6 @@ export const apiMethods = {
   fetchImages: ({ courseId, studioEndpointUrl }) => get(
     urls.courseImages({ studioEndpointUrl, courseId }),
   ),
-  loadImages: (assets) => camelizeKeys(assets).reduce(
-    (obj, image) => ({ ...obj, [image.id]: module.loadImage(image) }),
-    {},
-  ),
   uploadImage: ({
     courseId,
     studioEndpointUrl,
@@ -63,6 +59,11 @@ export const apiMethods = {
     }),
   ),
 };
+
+export const loadImages = (rawImages) => camelizeKeys(rawImages).reduce(
+  (obj, image) => ({ ...obj, [image.id]: module.loadImage(image) }),
+  {},
+);
 
 export const checkMockApi = (key) => {
   if (process.env.REACT_APP_DEVGALLERY) {

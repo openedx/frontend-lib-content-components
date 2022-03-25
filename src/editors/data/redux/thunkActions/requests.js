@@ -2,7 +2,7 @@ import { StrictDict } from '../../../utils';
 
 import { RequestKeys } from '../../constants/requests';
 import { actions, selectors } from '..';
-import api from '../../services/cms/api';
+import api, { loadImages } from '../../services/cms/api';
 
 import * as module from './requests';
 
@@ -105,7 +105,7 @@ export const fetchImages = ({ ...rest }) => (dispatch, getState) => {
     promise: api.fetchImages({
       studioEndpointUrl: selectors.app.studioEndpointUrl(getState()),
       courseId: selectors.app.courseId(getState()),
-    }).then(api.loadImages),
+    }).then((response) => loadImages(response.data.assets)),
     ...rest,
   }));
 };
