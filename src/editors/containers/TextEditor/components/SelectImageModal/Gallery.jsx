@@ -49,9 +49,12 @@ export const Gallery = ({
   );
 };
 
+Gallery.defaultProps = {
+  highlighted: '',
+};
 Gallery.propTypes = {
   displayList: PropTypes.arrayOf(PropTypes.object).isRequired,
-  highlighted: PropTypes.string.isRequired,
+  highlighted: PropTypes.string,
   onHighlightChange: PropTypes.func.isRequired,
   // injected
   intl: intlShape.isRequired,
