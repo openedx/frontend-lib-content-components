@@ -49,6 +49,9 @@ export const Gallery = ({
   );
 };
 
+Gallery.defaultProps = {
+  highlighted: '',
+};
 Gallery.propTypes = {
   displayList: PropTypes.arrayOf(PropTypes.object).isRequired,
   highlighted: PropTypes.string,
