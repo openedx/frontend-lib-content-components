@@ -10,7 +10,6 @@ export const blockAncestor = ({ studioEndpointUrl, blockId }) => (
   `${block({ studioEndpointUrl, blockId })}?fields=ancestorInfo`
 );
 
-
 export const courseAssets = ({ studioEndpointUrl, courseId }) => (
   `${studioEndpointUrl}/assets/${courseId}/`
 );

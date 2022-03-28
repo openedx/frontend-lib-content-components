@@ -112,7 +112,7 @@ export const saveBlock = ({
 export const uploadImage = ({
   courseId,
   studioEndpointUrl,
-  image,
+  // image,
 }) => mockPromise({
   url: urls.courseAssets({ studioEndpointUrl, courseId }),
   image: {
