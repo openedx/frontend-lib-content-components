@@ -60,7 +60,11 @@ export const DimensionControls = ({
       />
       <IconButton
         className="d-inline-block"
-        alt={isLocked ? intl.formatMessage(messages.unlockDimensionsLabel) : intl.formatMessage(messages.lockDimensionsLabel)}
+        alt={
+          isLocked
+            ? intl.formatMessage(messages.unlockDimensionsLabel)
+            : intl.formatMessage(messages.lockDimensionsLabel)
+        }
         iconAs={Icon}
         src={isLocked ? Locked : Unlocked}
         onClick={isLocked ? unlock : lock}
