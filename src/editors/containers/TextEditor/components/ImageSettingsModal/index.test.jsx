@@ -1,5 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
+
+import { formatMessage } from '../../../../../testUtils';
 import ImageSettingsModal from '.';
 
 jest.mock('./AltTextControls', () => 'AltTextControls');
@@ -24,6 +26,8 @@ describe('ImageSettingsModal', () => {
   const props = {
     isOpen: false,
     selection: { selected: 'image data' },
+    // inject
+    intl: { formatMessage },
   };
   beforeEach(() => {
     props.close = jest.fn().mockName('props.close');
