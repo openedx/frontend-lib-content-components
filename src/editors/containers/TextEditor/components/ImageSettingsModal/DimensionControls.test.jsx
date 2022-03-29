@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import { formatMessage } from '../../../../../testUtils';
-import DimensionControls from './DimensionControls';
+import { DimensionControls } from './DimensionControls';
 
 jest.mock('./hooks', () => ({
   onInputChange: (handler) => ({ 'hooks.onInputChange': handler }),
