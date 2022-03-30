@@ -14,7 +14,6 @@ jest.mock('react', () => ({
 }));
 
 const state = new MockUseState(module.hooks);
-const hookKeys = keyStore(module.hooks);
 let hook;
 const testValue = 'testVALUE';
 
@@ -51,25 +50,22 @@ describe('ErrorAlert component', () => {
     });
   });
   describe('Component', () => {
-    let props;
-    let testHooks;
-    beforeAll(() => {
-      props = {
-        isError: false,
-      };
-      testHooks = {
-        dismissAlert: jest.fn().mockName('hooks.dismissAlert'),
-      };
-    });
-    afterAll(() => {
-      module.hooks = testHooks;
-    });
     describe('Snapshots', () => {
+      let props;
+      beforeAll(() => {
+        props = {
+          isError: false,
+        };
+        jest.spyOn(module.hooks, 'dismissalHooks').mockImplementation((value) => ({ isError: value }));
+      });
+      afterAll(() => {
+        jest.clearAllMocks();
+      });
       test('snapshot:  is Null when no error (ErrorAlert)', () => {
-        expect(shallow(<ErrorAlert {...props} />)).toMatchSnapshot();
+        expect(shallow(<ErrorAlert {...props}> <p> An Error Message </p></ErrorAlert>)).toMatchSnapshot();
       });
       test('snapshot: Loads children and component when error (ErrorAlert)', () => {
-        expect(shallow(<ErrorAlert {...props} isError />)).toMatchSnapshot();
+        expect(shallow(<ErrorAlert {...props} isError> <p> An Error Message </p> </ErrorAlert>)).toMatchSnapshot();
       });
     });
   });
