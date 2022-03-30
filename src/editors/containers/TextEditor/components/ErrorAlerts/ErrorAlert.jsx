@@ -50,7 +50,7 @@ export const ErrorAlert = ({
 };
 
 ErrorAlert.propTypes = {
-  isError: PropTypes.string.isRequired,
+  isError: PropTypes.bool.isRequired,
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,
