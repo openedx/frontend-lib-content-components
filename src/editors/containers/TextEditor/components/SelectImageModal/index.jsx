@@ -27,6 +27,8 @@ export const SelectImageModal = ({
     selectBtnProps,
     fileInput,
   } = hooks.imgHooks({ setSelection });
+
+
   return (
     <BaseModal
       close={close}

@@ -64,6 +64,7 @@ export const messages = {
     defaultMessage: 'Error',
     description: 'Title of message presented to user when something goes wrong',
   },
+
 };
 
 export default messages;
