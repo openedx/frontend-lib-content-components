@@ -21,7 +21,6 @@ export const apiMethods = {
   }) => {
     const data = new FormData();
     data.append('file', image);
-    console.log(data);
     return post(
       urls.courseAssets({ studioEndpointUrl, courseId }),
       data,
