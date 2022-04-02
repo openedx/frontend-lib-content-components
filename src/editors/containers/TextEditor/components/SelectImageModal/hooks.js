@@ -53,6 +53,7 @@ export const imgListHooks = ({
       onClick: () => setSelection(images[highlighted]),
     },
     galleryProps: {
+      isEmpty: Object.keys(images).length === 4,
       highlighted,
       onHighlightChange: e => setHighlighted(e.target.value),
       displayList: module.displayList({ ...searchSortProps, images }),

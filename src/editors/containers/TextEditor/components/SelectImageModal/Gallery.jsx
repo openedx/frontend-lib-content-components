@@ -15,6 +15,7 @@ import messages from './messages';
 import GalleryCard from './GalleryCard';
 
 export const Gallery = ({
+  isEmpty,
   displayList,
   highlighted,
   onHighlightChange,
@@ -30,6 +31,13 @@ export const Gallery = ({
         className="mie-3"
         screenReaderText={intl.formatMessage(messages.loading)}
       />
+    );
+  }
+  if (isEmpty) {
+    return (
+      <div style={{ height: '375px' }}>
+        No images found. Please upload an image using the button below.
+      </div>
     );
   }
   return (
@@ -53,6 +61,7 @@ Gallery.defaultProps = {
   highlighted: '',
 };
 Gallery.propTypes = {
+  isEmpty: PropTypes.bool.isRequired,
   displayList: PropTypes.arrayOf(PropTypes.object).isRequired,
   highlighted: PropTypes.string,
   onHighlightChange: PropTypes.func.isRequired,
