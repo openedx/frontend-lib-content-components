@@ -15,7 +15,8 @@ import messages from './messages';
 import GalleryCard from './GalleryCard';
 
 export const Gallery = ({
-  isEmpty,
+  galleryIsEmpty,
+  searchIsEmpty,
   displayList,
   highlighted,
   onHighlightChange,
@@ -33,10 +34,17 @@ export const Gallery = ({
       />
     );
   }
-  if (isEmpty) {
+  if (galleryIsEmpty) {
     return (
       <div className="gallery p-4 bg-gray-100" style={{ height: '375px' }}>
         <FormattedMessage {...messages.emptyGalleryLabel} />
+      </div>
+    );
+  }
+  if (searchIsEmpty) {
+    return (
+      <div className="gallery p-4 bg-gray-100" style={{ height: '375px' }}>
+        <FormattedMessage {...messages.emptySearchLabel} />
       </div>
     );
   }
@@ -61,7 +69,8 @@ Gallery.defaultProps = {
   highlighted: '',
 };
 Gallery.propTypes = {
-  isEmpty: PropTypes.bool.isRequired,
+  galleryIsEmpty: PropTypes.bool.isRequired,
+  searchIsEmpty: PropTypes.bool.isRequired,
   displayList: PropTypes.arrayOf(PropTypes.object).isRequired,
   highlighted: PropTypes.string,
   onHighlightChange: PropTypes.func.isRequired,

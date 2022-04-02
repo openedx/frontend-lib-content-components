@@ -10,9 +10,26 @@ exports[`TextEditor Image Gallery component component snapshot: loaded but no im
   }
 >
   <FormattedMessage
-    defaultMessage="No images found. Please upload an image using the button below."
+    defaultMessage="No images found in your gallery. Please upload an image using the button below."
     description="Label for when image gallery is empty."
     id="authoring.texteditor.selectimagemodal.emptyGalleryLabel"
+  />
+</div>
+`;
+
+exports[`TextEditor Image Gallery component component snapshot: loaded but search returns no images, show 0 search result gallery 1`] = `
+<div
+  className="gallery p-4 bg-gray-100"
+  style={
+    Object {
+      "height": "375px",
+    }
+  }
+>
+  <FormattedMessage
+    defaultMessage="0 search results."
+    description="Label for when search returns nothing."
+    id="authoring.texteditor.selectimagemodal.emptySearchLabel"
   />
 </div>
 `;

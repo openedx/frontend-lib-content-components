@@ -66,8 +66,13 @@ export const messages = {
   },
   emptyGalleryLabel: {
     id: 'authoring.texteditor.selectimagemodal.emptyGalleryLabel',
-    defaultMessage: 'No images found. Please upload an image using the button below.',
+    defaultMessage: 'No images found in your gallery. Please upload an image using the button below.',
     description: 'Label for when image gallery is empty.',
+  },
+  emptySearchLabel: {
+    id: 'authoring.texteditor.selectimagemodal.emptySearchLabel',
+    defaultMessage: '0 search results.',
+    description: 'Label for when search returns nothing.',
   },
 };
 
