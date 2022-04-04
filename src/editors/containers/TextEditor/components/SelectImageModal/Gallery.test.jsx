@@ -19,6 +19,7 @@ jest.mock('./GalleryCard', () => 'GalleryCard');
 describe('TextEditor Image Gallery component', () => {
   describe('component', () => {
     const props = {
+      isEmpty: false,
       displayList: [{ id: 1 }, { id: 2 }, { id: 3 }],
       highlighted: 'props.highlighted',
       onHighlightChange: jest.fn().mockName('props.onHighlightChange'),
@@ -27,6 +28,9 @@ describe('TextEditor Image Gallery component', () => {
     };
     test('snapshot: not loaded, show spinner', () => {
       expect(shallow(<Gallery {...props} isLoaded={false} />)).toMatchSnapshot();
+    });
+    test('snapshot: loaded but no images, show empty gallery', () => {
+      expect(shallow(<Gallery {...props} isEmpty={true} />)).toMatchSnapshot();
     });
     test('snapshot: loaded, show gallery', () => {
       expect(shallow(<Gallery {...props} />)).toMatchSnapshot();

@@ -6,7 +6,7 @@ import {
   Scrollable, SelectableBox, Spinner,
 } from '@edx/paragon';
 
-import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
+import { FormattedMessage, injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 
 import { selectors } from '../../../../data/redux';
 import { RequestKeys } from '../../../../data/constants/requests';
@@ -35,8 +35,8 @@ export const Gallery = ({
   }
   if (isEmpty) {
     return (
-      <div style={{ height: '375px' }}>
-        No images found. Please upload an image using the button below.
+      <div className="gallery p-4 bg-gray-100" style={{ height: '375px' }}>
+        <FormattedMessage {...messages.emptyGalleryLabel} />
       </div>
     );
   }
