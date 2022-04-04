@@ -14,6 +14,10 @@ export const apiMethods = {
   fetchImages: ({ courseId, studioEndpointUrl }) => get(
     urls.courseImages({ studioEndpointUrl, courseId }),
   ),
+  loadImages: (assets) => camelizeKeys(assets).reduce(
+    (obj, image) => ({ ...obj, [image.id]: module.loadImage(image) }),
+    {},
+  ),
   uploadImage: ({
     courseId,
     studioEndpointUrl,
@@ -76,6 +80,11 @@ export const checkMockApi = (key) => {
   }
   return module.apiMethods[key];
 };
+
+export const loadImage = (imageData) => ({
+  ...imageData,
+  dateAdded: new Date(imageData.dateAdded.replace(' at', '')).getTime(),
+});
 
 export default Object.keys(apiMethods).reduce(
   (obj, key) => ({ ...obj, [key]: checkMockApi(key) }),

@@ -2,6 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import { formatMessage } from '../../../../../testUtils';
+import { acceptedImgKeys } from './utils';
 import BaseModal from '../BaseModal';
 import FileInput from './FileInput';
 import Gallery from './Gallery';

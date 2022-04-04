@@ -1,5 +1,4 @@
 import React from 'react';
-import { dispatch } from 'react-redux';
 
 import { MockUseState } from '../../../../../testUtils';
 import { keyStore } from '../../../../utils';
@@ -8,11 +7,24 @@ import { thunkActions } from '../../../../data/redux';
 import * as hooks from './hooks';
 import { sortFunctions, sortKeys } from './utils';
 
-jest.mock('react', () => ({
-  ...jest.requireActual('react'),
-  useRef: jest.fn(val => ({ current: val })),
-  useEffect: jest.fn(),
-  useCallback: (cb, prereqs) => ({ cb, prereqs }),
+jest.mock('react', () => {
+  const dispatch = jest.fn();
+  return {
+    ...jest.requireActual('react'),
+    dispatch,
+    useDispatch: jest.fn(() => dispatch),
+    useRef: jest.fn(val => ({ current: val })),
+    useEffect: jest.fn(),
+    useCallback: (cb, prereqs) => ({ cb, prereqs }),
+  };
+});
+jest.mock('../../../../data/redux', () => ({
+  thunkActions: {
+    app: {
+      fetchImages: jest.fn(),
+      uploadImage: jest.fn(),
+    },
+  },
 }));
 
 jest.mock('react-redux', () => {
@@ -152,7 +164,7 @@ describe('SelectImageModal hooks', () => {
         const [cb, prereqs] = React.useEffect.mock.calls[0];
         expect(prereqs).toEqual([]);
         cb();
-        expect(dispatch).toHaveBeenCalledWith(
+        expect(React.dispatch).toHaveBeenCalledWith(
           thunkActions.app.fetchImages({ setImages: state.setState.images }),
         );
       });
@@ -210,7 +222,7 @@ describe('SelectImageModal hooks', () => {
       const event = { target: { files: [testValue] } };
       it('dispatches uploadImage thunkAction with the first target file and setSelection', () => {
         hook.addFile(event);
-        expect(dispatch).toHaveBeenCalledWith(thunkActions.app.uploadImage({
+        expect(React.dispatch).toHaveBeenCalledWith(thunkActions.app.uploadImage({
           file: testValue,
           setSelection,
         }));
