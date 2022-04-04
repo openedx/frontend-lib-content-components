@@ -148,20 +148,51 @@ describe('cms api', () => {
       });
       api.loadImage = oldLoadImage;
     });
-  });
 
-  describe('uploadImage', () => {
-    const image = { photo: 'dAta' };
-    it('should call post with urls.block and normalizeContent', () => {
-      apiMethods.uploadImage({
-        courseId,
-        studioEndpointUrl,
-        image,
+    describe('uploadImage', () => {
+      const image = { photo: 'dAta' };
+      it('should call post with urls.block and normalizeContent', () => {
+        apiMethods.uploadImage({
+          courseId,
+          studioEndpointUrl,
+          image,
+        });
+        expect(post).toHaveBeenCalledWith(
+          urls.courseAssets({ studioEndpointUrl, courseId }),
+          image,
+        );
       });
-      expect(post).toHaveBeenCalledWith(
-        urls.courseAssets({ studioEndpointUrl, courseId }),
-        image,
-      );
+    });
+  });
+  describe('loadImage', () => {
+    it('loads incoming image data, replacing the dateAdded with a date field', () => {
+      const [date, time] = ['Jan 20, 2022', '9:30 PM'];
+      const imageData = { some: 'image data', dateAdded: `${date} at ${time}` };
+      expect(api.loadImage(imageData)).toEqual({
+        ...imageData,
+        dateAdded: new Date(`${date} ${time}`).getTime(),
+      });
+    });
+  });
+  describe('loadImages', () => {
+    it('loads a list of images into an object by id, using loadImage to translate', () => {
+      const ids = ['id0', 'Id1', 'ID2', 'iD3'];
+      const testData = [
+        { id: ids[0], some: 'data' },
+        { id: ids[1], other: 'data' },
+        { id: ids[2], some: 'DATA' },
+        { id: ids[3], other: 'DATA' },
+      ];
+      const oldLoadImage = api.loadImage;
+      api.loadImage = (imageData) => ({ loadImage: imageData });
+      const out = api.loadImages(testData);
+      expect(out).toEqual({
+        [ids[0]]: api.loadImage(camelize(testData[0])),
+        [ids[1]]: api.loadImage(camelize(testData[1])),
+        [ids[2]]: api.loadImage(camelize(testData[2])),
+        [ids[3]]: api.loadImage(camelize(testData[3])),
+      });
+      api.loadImage = oldLoadImage;
     });
   });
 });

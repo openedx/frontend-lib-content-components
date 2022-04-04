@@ -111,8 +111,7 @@ export const saveBlock = ({
 export const uploadImage = ({
   courseId,
   studioEndpointUrl,
-  // eslint-disable-next-line no-unused-vars
-  image,
+  // image,
 }) => mockPromise({
   url: urls.courseAssets({ studioEndpointUrl, courseId }),
   image: {
