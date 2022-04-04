@@ -22,7 +22,6 @@ jest.mock('../../services/cms/api', () => ({
   saveBlock: (args) => args,
   fetchImages: ({ id, url }) => ({ id, url }),
   uploadImage: (args) => args,
-  loadImages: jest.fn(),
 }));
 
 const apiKeys = keyStore(api);
@@ -191,36 +190,19 @@ describe('requests thunkActions module', () => {
         },
       });
     });
-
     describe('fetchImages', () => {
-      let fetchImages;
-      let loadImages;
-      let dispatchedAction;
-      const expectedArgs = {
-        studioEndpointUrl: selectors.app.studioEndpointUrl(testState),
-        courseId: selectors.app.courseId(testState),
-      };
-      beforeEach(() => {
-        fetchImages = jest.fn((args) => new Promise((resolve) => {
-          resolve({ data: { assets: { fetchImages: args } } });
-        }));
-        jest.spyOn(api, apiKeys.fetchImages).mockImplementationOnce(fetchImages);
-        loadImages = jest.spyOn(api, apiKeys.loadImages).mockImplementationOnce(() => ({}));
-        requests.fetchImages({ ...fetchParams, onSuccess, onFailure })(dispatch, () => testState);
-        [[dispatchedAction]] = dispatch.mock.calls;
-      });
-      it('dispatches networkRequest', () => {
-        expect(dispatchedAction.networkRequest).not.toEqual(undefined);
-      });
-      test('forwards onSuccess and onFailure', () => {
-        expect(dispatchedAction.networkRequest.onSuccess).toEqual(onSuccess);
-        expect(dispatchedAction.networkRequest.onFailure).toEqual(onFailure);
-      });
-      test('api.fetchImages promise called with studioEndpointUrl and courseId', () => {
-        expect(fetchImages).toHaveBeenCalledWith(expectedArgs);
-      });
-      test('promise is chained with api.loadImages', () => {
-        expect(loadImages).toHaveBeenCalledWith({ fetchImages: expectedArgs });
+      testNetworkRequestAction({
+        action: requests.fetchImages,
+        args: fetchParams,
+        expectedString: 'with fetchImages promise',
+        expectedData: {
+          ...fetchParams,
+          requestKey: RequestKeys.fetchImages,
+          promise: api.fetchImages({
+            studioEndpointUrl: selectors.app.studioEndpointUrl(testState),
+            courseId: selectors.app.courseId(testState),
+          }),
+        },
       });
     });
 
@@ -249,10 +231,10 @@ describe('requests thunkActions module', () => {
       const image = 'SoME iMage CoNtent As String';
       testNetworkRequestAction({
         action: requests.uploadImage,
-        args: { image, ...fetchParams },
+        args: { image, some: 'data' },
         expectedString: 'with uploadImage promise',
         expectedData: {
-          ...fetchParams,
+          ...testState,
           requestKey: RequestKeys.uploadImage,
           promise: api.uploadImage({
             courseId: selectors.app.courseId(testState),

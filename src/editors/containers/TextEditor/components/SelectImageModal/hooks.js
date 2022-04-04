@@ -60,15 +60,14 @@ export const imgListHooks = ({
   };
 };
 
-export const fileInputHooks = ({ setSelection }) => {
-  const dispatch = useDispatch();
+export const fileInputHooks = ({ uploadImage, setSelection }) => {
   const ref = React.useRef();
   const click = () => ref.current.click();
   const addFile = (e) => {
-    dispatch(thunkActions.app.uploadImage({
+    uploadImage({
       file: e.target.files[0],
       setSelection,
-    }));
+    });
   };
 
   return {
@@ -80,8 +79,8 @@ export const fileInputHooks = ({ setSelection }) => {
 
 export const imgHooks = ({ setSelection }) => {
   const searchSortProps = module.searchAndSortHooks();
-  const imgList = module.imgListHooks({ setSelection, searchSortProps });
-  const fileInput = module.fileInputHooks({ setSelection });
+  const imgList = module.imgListHooks({ fetchImages, setSelection, searchSortProps });
+  const fileInput = module.fileInputHooks({ uploadImage, setSelection });
   const { selectBtnProps, galleryProps } = imgList;
 
   return {

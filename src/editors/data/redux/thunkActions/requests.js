@@ -92,8 +92,8 @@ export const uploadImage = ({ image, ...rest }) => (dispatch, getState) => {
     requestKey: RequestKeys.uploadImage,
     promise: api.uploadImage({
       courseId: selectors.app.courseId(getState()),
-      image,
       studioEndpointUrl: selectors.app.studioEndpointUrl(getState()),
+      image,
     }),
     ...rest,
   }));
@@ -105,7 +105,7 @@ export const fetchImages = ({ ...rest }) => (dispatch, getState) => {
     promise: api.fetchImages({
       studioEndpointUrl: selectors.app.studioEndpointUrl(getState()),
       courseId: selectors.app.courseId(getState()),
-    }).then((response) => loadImages(response.data.assets)),
+    }),
     ...rest,
   }));
 };

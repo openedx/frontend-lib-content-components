@@ -61,6 +61,26 @@ describe('app thunkActions', () => {
       expect(dispatch).toHaveBeenCalledWith(actions.app.setUnitUrl(testValue));
     });
   });
+  describe('fetchImages', () => {
+    const mockSucess = jest.fn();
+    beforeEach(() => {
+      thunkActions.fetchImages({ setImages: mockSucess })(dispatch);
+      [[dispatchedAction]] = dispatch.mock.calls;
+    });
+    it('dispatches fetchUnit action', () => {
+      expect(dispatchedAction.fetchImages).not.toEqual(undefined);
+    });
+    it('calls onSuceaa on success with camleized keys', () => {
+      dispatch.mockClear();
+      dispatchedAction.fetchImages.onSuccess(testValue);
+      expect(mockSucess).toHaveBeenCalledWith(camelizeKeys(testValue.data.assets));
+    });
+    it('dispatches actions.app.setUnitUrl on failure', () => {
+      dispatch.mockClear();
+      dispatchedAction.fetchImages.onFailure(testValue);
+      expect(mockSucess).toHaveBeenCalledWith(testValue);
+    });
+  });
   describe('initialize', () => {
     it('dispatches actions.app.initialize, and then fetches both block and unit', () => {
       const { fetchBlock, fetchUnit } = thunkActions;
@@ -100,29 +120,18 @@ describe('app thunkActions', () => {
       expect(returnToUnit).toHaveBeenCalled();
     });
   });
-  describe('fetchImages', () => {
-    it('dispatches fetchUnit action with setImages for onSuccess param', () => {
-      const setImages = jest.fn();
-      thunkActions.fetchImages({ setImages })(dispatch);
-      [[dispatchedAction]] = dispatch.mock.calls;
-      expect(dispatchedAction.fetchImages).toEqual({ onSuccess: setImages });
-    });
-  });
   describe('uploadImage', () => {
-    const setSelection = jest.fn();
+    const resetFile = jest.fn();
+    let calls;
     beforeEach(() => {
-      thunkActions.uploadImage({ file: testValue, setSelection })(dispatch);
-      [[dispatchedAction]] = dispatch.mock.calls;
+      thunkActions.uploadImage({ file: testValue, resetFile })(dispatch);
+      calls = dispatch.mock.calls;
     });
-    it('dispatches uploadImage action', () => {
-      expect(dispatchedAction.uploadImage).not.toBe(undefined);
-    });
-    test('passes file as image prop', () => {
-      expect(dispatchedAction.uploadImage.image).toEqual(testValue);
-    });
-    test('onSuccess: calls setSelection with camelized response.data.asset', () => {
-      dispatchedAction.uploadImage.onSuccess({ data: { asset: testValue } });
-      expect(setSelection).toHaveBeenCalledWith(camelizeKeys(testValue));
+    it('On success calls resetFile', () => {
+      dispatch.mockClear();
+      const response = 'testRESPONSE';
+      calls[0][0].uploadImage.onSuccess(response);
+      expect(resetFile).toHaveBeenCalled();
     });
   });
 });

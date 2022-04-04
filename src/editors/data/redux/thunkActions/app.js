@@ -44,7 +44,19 @@ export const saveBlock = ({ content, returnToUnit }) => (dispatch) => {
 };
 
 export const fetchImages = ({ setImages }) => (dispatch) => {
-  dispatch(requests.fetchImages({ onSuccess: setImages }));
+  dispatch(requests.fetchImages({
+    onSuccess: (response) => {
+      const processedData = camelizeKeys(response.data.assets).reduce(
+        (obj, el) => {
+          const dateAdded = new Date(el.dateAdded.replace(' at', '')).getTime();
+          return { ...obj, [el.id]: { ...el, dateAdded } };
+        },
+        {},
+      );
+      return setImages(processedData);
+    },
+    onFailure: (e) => setImages(e),
+  }));
 };
 
 export const uploadImage = ({ file, setSelection }) => (dispatch) => {

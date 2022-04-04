@@ -149,4 +149,19 @@ describe('cms api', () => {
       api.loadImage = oldLoadImage;
     });
   });
+
+  describe('uploadImage', () => {
+    const image = { photo: 'dAta' };
+    it('should call post with urls.block and normalizeContent', () => {
+      apiMethods.uploadImage({
+        courseId,
+        studioEndpointUrl,
+        image,
+      });
+      expect(post).toHaveBeenCalledWith(
+        urls.courseAssets({ studioEndpointUrl, courseId }),
+        image,
+      );
+    });
+  });
 });

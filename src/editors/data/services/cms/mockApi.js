@@ -108,11 +108,11 @@ export const saveBlock = ({
   }),
 });
 
-// eslint-disable-next-line
 export const uploadImage = ({
   courseId,
   studioEndpointUrl,
-  // image,
+  // eslint-disable-next-line no-unused-vars
+  image,
 }) => mockPromise({
   url: urls.courseAssets({ studioEndpointUrl, courseId }),
   image: {
