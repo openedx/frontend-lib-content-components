@@ -105,7 +105,7 @@ export const fetchImages = ({ ...rest }) => (dispatch, getState) => {
     promise: api.fetchImages({
       studioEndpointUrl: selectors.app.studioEndpointUrl(getState()),
       courseId: selectors.app.courseId(getState()),
-    }).then(api.loadImages),
+    }).then((response) => loadImages(response.data.assets)),
     ...rest,
   }));
 };
