@@ -71,7 +71,7 @@ export const messages = {
   },
   emptySearchLabel: {
     id: 'authoring.texteditor.selectimagemodal.emptySearchLabel',
-    defaultMessage: '0 search results.',
+    defaultMessage: 'No search results.',
     description: 'Label for when search returns nothing.',
   },
 };
