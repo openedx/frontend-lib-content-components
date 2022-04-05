@@ -27,7 +27,7 @@ exports[`TextEditor Image Gallery component component snapshot: loaded but searc
   }
 >
   <FormattedMessage
-    defaultMessage="0 search results."
+    defaultMessage="No search results."
     description="Label for when search returns nothing."
     id="authoring.texteditor.selectimagemodal.emptySearchLabel"
   />
