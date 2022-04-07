@@ -17,11 +17,13 @@ import * as appHooks from '../../hooks';
 import HeaderTitle from './HeaderTitle';
 import messages from './messages';
 
-export const EditorHeader = ({ intl, returnUrl }) => (
+export const EditorHeader = ({ editorRef, intl, returnUrl }) => (
   <div className="editor-header">
     <ModalDialog.Header>
       <ActionRow>
-        <ModalDialog.Title><HeaderTitle /></ModalDialog.Title>
+        <ModalDialog.Title>
+          <HeaderTitle editorRef={editorRef} />
+        </ModalDialog.Title>
         <ActionRow.Spacer />
         <IconButton
           alt={intl.formatMessage(messages.cancelChangesLabel)}
@@ -35,7 +37,14 @@ export const EditorHeader = ({ intl, returnUrl }) => (
     </ModalDialog.Header>
   </div>
 );
+EditorHeader.defaultProps = {
+  editorRef: null,
+};
 EditorHeader.propTypes = {
+  editorRef: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.shape({ current: PropTypes.any }),
+  ]),
   // injected
   intl: intlShape.isRequired,
   // redux
