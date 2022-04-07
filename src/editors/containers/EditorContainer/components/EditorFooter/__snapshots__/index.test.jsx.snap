@@ -9,7 +9,18 @@ exports[`EditorFooter render snapshot: default args (disableSave: false, saveFai
       <ActionRow.Spacer />
       <Button
         aria-label="Discard Changes and Return to Learning Context"
-        onClick={[MockFunction args.onCancel]}
+        onClick={
+          Object {
+            "handleCancelClicked": Object {
+              "returnAnalytics": Object {
+                "blockId": null,
+                "blockType": null,
+                "courseId": null,
+              },
+              "returnUrl": "hocuspocus.ca",
+            },
+          }
+        }
         variant="tertiary"
       >
         <FormattedMessage
@@ -21,7 +32,32 @@ exports[`EditorFooter render snapshot: default args (disableSave: false, saveFai
       <Button
         aria-label="Save Changes and Return to Learning Context"
         disabled={false}
+<<<<<<< HEAD:src/editors/containers/EditorContainer/components/EditorFooter/__snapshots__/index.test.jsx.snap
         onClick={[MockFunction args.onSave]}
+=======
+        onClick={
+          Object {
+            "handleSaveClicked": Object {
+<<<<<<< HEAD
+              "editorRef": [MockFunction args.editorRef],
+              "returnUrl": "hocuspocus.ca",
+              "saveFunction": [MockFunction args.saveBlock],
+=======
+              "returnAnalytics": Object {
+                "blockId": null,
+                "blockType": null,
+                "courseId": null,
+              },
+              "saveProps": Object {
+                "editorRef": [MockFunction args.editorRef],
+                "returnUrl": "hocuspocus.ca",
+                "saveBlockContent": [MockFunction args.saveBlock],
+              },
+>>>>>>> f60f6de (feat: WIP)
+            },
+          }
+        }
+>>>>>>> 75eca98 (feat: WIP):src/editors/components/EditorFooter/__snapshots__/index.test.jsx.snap
       >
         <FormattedMessage
           defaultMessage="Save"
@@ -43,7 +79,22 @@ exports[`EditorFooter render snapshot: save disabled. Show button spinner 1`] = 
       <ActionRow.Spacer />
       <Button
         aria-label="Discard Changes and Return to Learning Context"
+<<<<<<< HEAD:src/editors/containers/EditorContainer/components/EditorFooter/__snapshots__/index.test.jsx.snap
         onClick={[MockFunction args.onCancel]}
+=======
+        onClick={
+          Object {
+            "handleCancelClicked": Object {
+              "returnAnalytics": Object {
+                "blockId": null,
+                "blockType": null,
+                "courseId": null,
+              },
+              "returnUrl": "hocuspocus.ca",
+            },
+          }
+        }
+>>>>>>> 75eca98 (feat: WIP):src/editors/components/EditorFooter/__snapshots__/index.test.jsx.snap
         variant="tertiary"
       >
         <FormattedMessage
@@ -55,7 +106,32 @@ exports[`EditorFooter render snapshot: save disabled. Show button spinner 1`] = 
       <Button
         aria-label="Save Changes and Return to Learning Context"
         disabled={true}
+<<<<<<< HEAD:src/editors/containers/EditorContainer/components/EditorFooter/__snapshots__/index.test.jsx.snap
         onClick={[MockFunction args.onSave]}
+=======
+        onClick={
+          Object {
+            "handleSaveClicked": Object {
+<<<<<<< HEAD
+              "editorRef": [MockFunction args.editorRef],
+              "returnUrl": "hocuspocus.ca",
+              "saveFunction": [MockFunction args.saveBlock],
+=======
+              "returnAnalytics": Object {
+                "blockId": null,
+                "blockType": null,
+                "courseId": null,
+              },
+              "saveProps": Object {
+                "editorRef": [MockFunction args.editorRef],
+                "returnUrl": "hocuspocus.ca",
+                "saveBlockContent": [MockFunction args.saveBlock],
+              },
+>>>>>>> f60f6de (feat: WIP)
+            },
+          }
+        }
+>>>>>>> 75eca98 (feat: WIP):src/editors/components/EditorFooter/__snapshots__/index.test.jsx.snap
       >
         <Spinner
           animation="border"
@@ -86,7 +162,22 @@ exports[`EditorFooter render snapshot: save failed.  Show error message 1`] = `
       <ActionRow.Spacer />
       <Button
         aria-label="Discard Changes and Return to Learning Context"
+<<<<<<< HEAD:src/editors/containers/EditorContainer/components/EditorFooter/__snapshots__/index.test.jsx.snap
         onClick={[MockFunction args.onCancel]}
+=======
+        onClick={
+          Object {
+            "handleCancelClicked": Object {
+              "returnAnalytics": Object {
+                "blockId": null,
+                "blockType": null,
+                "courseId": null,
+              },
+              "returnUrl": "hocuspocus.ca",
+            },
+          }
+        }
+>>>>>>> 75eca98 (feat: WIP):src/editors/components/EditorFooter/__snapshots__/index.test.jsx.snap
         variant="tertiary"
       >
         <FormattedMessage
@@ -98,7 +189,32 @@ exports[`EditorFooter render snapshot: save failed.  Show error message 1`] = `
       <Button
         aria-label="Save Changes and Return to Learning Context"
         disabled={false}
+<<<<<<< HEAD:src/editors/containers/EditorContainer/components/EditorFooter/__snapshots__/index.test.jsx.snap
         onClick={[MockFunction args.onSave]}
+=======
+        onClick={
+          Object {
+            "handleSaveClicked": Object {
+<<<<<<< HEAD
+              "editorRef": [MockFunction args.editorRef],
+              "returnUrl": "hocuspocus.ca",
+              "saveFunction": [MockFunction args.saveBlock],
+=======
+              "returnAnalytics": Object {
+                "blockId": null,
+                "blockType": null,
+                "courseId": null,
+              },
+              "saveProps": Object {
+                "editorRef": [MockFunction args.editorRef],
+                "returnUrl": "hocuspocus.ca",
+                "saveBlockContent": [MockFunction args.saveBlock],
+              },
+>>>>>>> f60f6de (feat: WIP)
+            },
+          }
+        }
+>>>>>>> 75eca98 (feat: WIP):src/editors/components/EditorFooter/__snapshots__/index.test.jsx.snap
       >
         <FormattedMessage
           defaultMessage="Save"
