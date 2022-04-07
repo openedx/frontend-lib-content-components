@@ -37,14 +37,11 @@ export const EditorHeader = ({ editorRef, intl, returnUrl }) => (
     </ModalDialog.Header>
   </div>
 );
-EditorHeader.defaultProps = {
-  editorRef: null,
-};
 EditorHeader.propTypes = {
   editorRef: PropTypes.oneOfType([
     PropTypes.func,
     PropTypes.shape({ current: PropTypes.any }),
-  ]),
+  ]).isRequired,
   // injected
   intl: intlShape.isRequired,
   // redux
