@@ -1,5 +1,5 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import {
@@ -10,28 +10,9 @@ import {
   Toast,
 } from '@edx/paragon';
 import { FormattedMessage, injectIntl, intlShape } from '@edx/frontend-platform/i18n';
-import * as appHooks from '../../../../hooks';
-import * as textEditorHooks from '../../hooks';
 
-import { RequestKeys } from '../../../../data/constants/requests';
-import { selectors, thunkActions } from '../../../../data/redux';
-
+import * as hooks from './hooks';
 import messages from './messages';
-import * as module from '.';
-
-export const hooks = {
-  handleSaveClicked: ({ dispatch, editorRef }) => () => textEditorHooks.saveBlock({
-    editorRef,
-    saveBlockContent: (...args) => dispatch(thunkActions.app.saveBlock(...args)),
-    returnUrl: useSelector(selectors.app.returnUrl),
-  }),
-  handleCancelClicked: () => appHooks.navigateCallback(useSelector(selectors.app.returnUrl)),
-  isInitialized: () => useSelector(selectors.app.isInitialized),
-  saveFailed: () => useSelector((state) => (
-    selectors.requests.isFailed(state, { requestKey: RequestKeys.saveBlock })
-  )),
-  studioEndpointUrl: () => useSelector(selectors.app.studioEndpointUrl),
-};
 
 export const EditorFooter = ({
   editorRef,
@@ -39,12 +20,12 @@ export const EditorFooter = ({
   intl,
 }) => {
   const dispatch = useDispatch();
-  const isInitialized = module.hooks.isInitialized();
-  const saveFailed = module.hooks.saveFailed();
+  const isInitialized = hooks.isInitialized();
+  const saveFailed = hooks.saveFailed();
   return (
     <div className="editor-footer mt-auto">
       {saveFailed && (
-        <Toast show onClose={textEditorHooks.nullMethod}>
+        <Toast show onClose={hooks.nullMethod}>
           <FormattedMessage {...messages.contentSaveFailed} />
         </Toast>
       )}
@@ -55,13 +36,13 @@ export const EditorFooter = ({
           <Button
             aria-label={intl.formatMessage(messages.cancelButtonAriaLabel)}
             variant="tertiary"
-            onClick={module.hooks.handleCancelClicked()}
+            onClick={hooks.handleCancelClicked()}
           >
             <FormattedMessage {...messages.cancelButtonLabel} />
           </Button>
           <Button
             aria-label={intl.formatMessage(messages.saveButtonAriaLabel)}
-            onClick={module.hooks.handleSaveClicked({ dispatch, editorRef })}
+            onClick={hooks.handleSaveClicked({ dispatch, editorRef })}
             disabled={!isInitialized}
           >
             {isInitialized

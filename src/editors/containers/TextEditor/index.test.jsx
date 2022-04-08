@@ -33,6 +33,11 @@ jest.mock('./hooks', () => ({
     clearSelection: jest.fn().mockName('hooks.selectedImage.clearSelection'),
   })),
   nullMethod: jest.fn().mockName('hooks.nullMethod'),
+  prepareEditorRef: jest.fn(() => ({
+    editorRef: { current: { value: 'something' } },
+    refReady: true,
+    setEditorRef: jest.fn().mockName('hooks.prepareEditorRef.setEditorRef'),
+  })),
 }));
 
 jest.mock('react', () => {
@@ -64,8 +69,6 @@ jest.mock('../../data/redux', () => ({
 
 describe('TextEditor', () => {
   const props = {
-    setEditorRef: jest.fn().mockName('args.setEditorRef'),
-    editorRef: { current: { value: 'something' } },
     // redux
     blockValue: { data: { some: 'eDiTablE Text' } },
     lmsEndpointUrl: 'sOmEvaLue.cOm',

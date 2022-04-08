@@ -1,5 +1,8 @@
 import React from 'react';
+import * as textEditorHooks from '../../hooks';
 import * as module from './hooks';
+
+export const { navigateCallback } = textEditorHooks;
 
 export const hooks = {
   isEditing: () => {

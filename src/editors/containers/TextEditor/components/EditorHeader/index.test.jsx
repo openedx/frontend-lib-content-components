@@ -5,7 +5,7 @@ import { IconButton } from '@edx/paragon';
 
 import { formatMessage } from '../../../../../testUtils';
 import { selectors } from '../../../../data/redux';
-import * as appHooks from '../../../../hooks';
+import * as hooks from './hooks';
 import * as module from './index';
 
 jest.mock('.', () => ({
@@ -22,9 +22,7 @@ jest.mock('../../../../data/redux', () => ({
   },
 }));
 
-jest.mock('../../../../hooks', () => ({
-  navigateCallback: jest.fn(),
-}));
+jest.mock('./hooks', () => ({ navigateCallback: jest.fn() }));
 
 jest.mock('./HeaderTitle', () => 'HeaderTitle');
 
@@ -41,7 +39,7 @@ describe('Editor Header index', () => {
     test('IconButton onClick calls navigateCallback', () => {
       const iconButtonControl = el.find(IconButton);
       iconButtonControl.simulate('click');
-      expect(appHooks.navigateCallback).toHaveBeenCalledWith(props.returnUrl);
+      expect(hooks.navigateCallback).toHaveBeenCalledWith(props.returnUrl);
     });
   });
 

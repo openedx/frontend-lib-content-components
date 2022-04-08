@@ -12,7 +12,7 @@ import { Close } from '@edx/paragon/icons';
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 
 import { selectors } from '../../../../data/redux';
-import * as appHooks from '../../../../hooks';
+import * as hooks from './hooks';
 
 import HeaderTitle from './HeaderTitle';
 import messages from './messages';
@@ -29,7 +29,7 @@ export const EditorHeader = ({ editorRef, intl, returnUrl }) => (
           alt={intl.formatMessage(messages.cancelChangesLabel)}
           src={Close}
           iconAs={Icon}
-          onClick={appHooks.navigateCallback(returnUrl)}
+          onClick={hooks.navigateCallback(returnUrl)}
           variant="light"
           className="mr-2"
         />

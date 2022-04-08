@@ -3,8 +3,12 @@ import {
 } from 'react';
 
 import { StrictDict } from '../../utils';
+import tinyMCE from '../../data/constants/tinyMCE';
 import pluginConfig from './pluginConfig';
+import * as appHooks from '../../hooks';
 import * as module from './hooks';
+
+export const { nullMethod, navigateCallback, navigateTo } = appHooks;
 
 export const state = StrictDict({
   isModalOpen: (val) => useState(val),
@@ -12,35 +16,16 @@ export const state = StrictDict({
   refReady: (val) => useState(val),
 });
 
-export const openModalWithSelectedImage = (editor, setImage, openModal) => () => {
-  const imgHTML = editor.selection.getNode();
-  setImage({
-    externalUrl: imgHTML.src,
-    altText: imgHTML.alt,
-    width: imgHTML.width,
-    height: imgHTML.height,
-  });
-  openModal();
-};
-
 export const addImageUploadBehavior = ({ openModal, setImage }) => (editor) => {
-  editor.ui.registry.addButton('imageuploadbutton', {
+  editor.ui.registry.addButton(tinyMCE.buttons.imageUploadButton, {
     icon: 'image',
     onAction: openModal,
   });
-  editor.ui.registry.addButton('editimagesettings', {
+  editor.ui.registry.addButton(tinyMCE.buttons.editImageSettings, {
     icon: 'image',
-    onAction: module.openModalWithSelectedImage(editor, setImage, openModal),
+    onAction: module.openModalWithSelectedImage({ editor, setImage, openModal }),
   });
 };
-
-export const initializeEditorRef = (setRef, initializeEditor) => (editor) => {
-  setRef(editor);
-  initializeEditor();
-};
-
-// for toast onClose to avoid console warnings
-export const nullMethod = () => {};
 
 export const editorConfig = ({
   setEditorRef,
@@ -50,7 +35,10 @@ export const editorConfig = ({
   setSelection,
   lmsEndpointUrl,
 }) => ({
-  onInit: (evt, editor) => module.initializeEditorRef(setEditorRef, initializeEditor)(editor),
+  onInit: (evt, editor) => {
+    setEditorRef(editor);
+    initializeEditor();
+  },
   initialValue: blockValue ? blockValue.data.data : '',
   init: {
     setup: module.addImageUploadBehavior({ openModal, setImage: setSelection }),
@@ -62,15 +50,6 @@ export const editorConfig = ({
   },
 });
 
-export const selectedImage = (val) => {
-  const [selection, setSelection] = module.state.imageSelection(val);
-  return {
-    clearSelection: () => setSelection(null),
-    selection,
-    setSelection,
-  };
-};
-
 export const modalToggle = () => {
   const [isOpen, setIsOpen] = module.state.isModalOpen(false);
   return {
@@ -78,6 +57,17 @@ export const modalToggle = () => {
     openModal: () => setIsOpen(true),
     closeModal: () => setIsOpen(false),
   };
+};
+
+export const openModalWithSelectedImage = ({ editor, setImage, openModal }) => () => {
+  const imgHTML = editor.selection.getNode();
+  setImage({
+    externalUrl: imgHTML.src,
+    altText: imgHTML.alt,
+    width: imgHTML.width,
+    height: imgHTML.height,
+  });
+  openModal();
 };
 
 export const prepareEditorRef = () => {
@@ -90,12 +80,6 @@ export const prepareEditorRef = () => {
   return { editorRef, refReady, setEditorRef };
 };
 
-export const navigateTo = (destination) => {
-  window.location.assign(destination);
-};
-
-export const navigateCallback = (destination) => () => module.navigateTo(destination);
-
 export const saveBlock = ({
   editorRef,
   returnUrl,
@@ -105,4 +89,13 @@ export const saveBlock = ({
     returnToUnit: module.navigateCallback(returnUrl),
     content: editorRef.current.getContent(),
   });
+};
+
+export const selectedImage = (val) => {
+  const [selection, setSelection] = module.state.imageSelection(val);
+  return {
+    clearSelection: () => setSelection(null),
+    selection,
+    setSelection,
+  };
 };

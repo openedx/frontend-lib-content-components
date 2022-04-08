@@ -33,7 +33,7 @@ export const VideoSettingsModal = ({
     <FullscreenModal
       title="Video Settings"
       className="video-settings-modal"
-      close={close}
+      onClose={close}
       isOpen={isOpen}
       confirmAction={(
         <Button variant="primary" onClick={module.hooks.onSave(dispatch)}>

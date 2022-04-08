@@ -12,3 +12,5 @@ export const navigateTo = (destination) => {
 };
 
 export const navigateCallback = (destination) => () => module.navigateTo(destination);
+
+export const nullMethod = () => ({});
