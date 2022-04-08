@@ -1,61 +1,68 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
-import {
-  Button,
-  Form,
-  Video,
-} from '@edx/paragon';
 
-import BaseModal from '../BaseModal';
+import { Button, FullscreenModal } from '@edx/paragon';
+
+import { thunkActions } from '../../../../data/redux';
+// import VideoPreview from './components/VideoPreview';
+import DurationWidget from './components/DurationWidget';
+import HandoutWidget from './components/HandoutWidget';
+import LicenseWidget from './components/LicenseWidget';
+import ThumbnailWidget from './components/ThumbnailWidget';
+import TranscriptsWidget from './components/TranscriptsWidget';
+import VideoSourceWidget from './components/VideoSourceWidget';
+import './index.scss';
 import * as module from '.';
 
 export const hooks = {
   onInputChange: (handleValue) => (e) => handleValue(e.target.value),
   onCheckboxChange: (handleValue) => (e) => handleValue(e.target.checked),
-  onSave: ({ saveToEditor }) => saveToEditor({}),
+  onSave: (dispatch) => () => {
+    dispatch(thunkActions.video.saveVideoData());
+  },
 };
 
 export const VideoSettingsModal = ({
   isOpen,
   close,
-  selection,
-  saveToEditor,
-  returnToSelection,
+  // returnToSelection,
 }) => {
-  const onSaveClick = module.hooks.onSave({
-    saveToEditor,
-  });
+  const dispatch = useDispatch();
   return (
-    <BaseModal
+    <FullscreenModal
       title="Video Settings"
+      className="video-settings-modal"
       close={close}
       isOpen={isOpen}
       confirmAction={(
-        <Button variant="primary" onClick={onSaveClick}>
+        <Button variant="primary" onClick={module.hooks.onSave(dispatch)}>
           Save
         </Button>
       )}
     >
-      <Button onClick={returnToSelection} variant="link" size="inline">
-        Select another video
-      </Button>
-      <br />
-
-      <div>
-        Form goes here
+      <div className="video-settings-modal row">
+        <div className="video-preview col col-4">
+          Video Preview goes here
+          {/* <VideoPreview /> */}
+        </div>
+        <div className="video-controls col col-8">
+          <VideoSourceWidget />
+          <ThumbnailWidget />
+          <TranscriptsWidget />
+          <DurationWidget />
+          <HandoutWidget />
+          <LicenseWidget />
+        </div>
       </div>
-    </BaseModal>
+    </FullscreenModal>
   );
 };
 
 VideoSettingsModal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   close: PropTypes.func.isRequired,
-  selection: PropTypes.shape({
-    url: PropTypes.string,
-    externalUrl: PropTypes.string,
-  }).isRequired,
-  saveToEditor: PropTypes.func.isRequired,
-  returnToSelection: PropTypes.func.isRequired,
+  // returnToSelection: PropTypes.func.isRequired,
 };
+
 export default VideoSettingsModal;

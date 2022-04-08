@@ -7,11 +7,9 @@ import { FormattedMessage } from '@edx/frontend-platform/i18n';
 import { blockTypes } from './data/constants/app';
 import { thunkActions } from './data/redux';
 
-import TextEditor from './containers/TextEditor/TextEditor';
-import VideoEditor from './containers/VideoEditor/VideoEditor';
+import TextEditor from './containers/TextEditor';
+import VideoEditor from './containers/VideoEditor';
 import ProblemEditor from './containers/ProblemEditor/ProblemEditor';
-import EditorFooter from './components/EditorFooter';
-import EditorHeader from './components/EditorHeader';
 
 import messages from './messages';
 import * as hooks from './hooks';
@@ -42,10 +40,7 @@ export const Editor = ({
     },
   });
 
-  const { editorRef, refReady, setEditorRef } = hooks.prepareEditorRef();
-
   const EditorComponent = supportedEditors[blockType];
-
   return (
     <div className="d-flex flex-column vh-100">
       <div
@@ -53,16 +48,9 @@ export const Editor = ({
         role="dialog"
         aria-label={blockType}
       >
-        {refReady && (
-          <Stack>
-            <EditorHeader editorRef={editorRef} />
-            {(EditorComponent !== undefined)
-              ? <EditorComponent {...{ setEditorRef, editorRef }} />
-              : <FormattedMessage {...messages.couldNotFindEditor} />}
-            <EditorFooter editorRef={editorRef} />
-          </Stack>
-        )}
-
+        {(EditorComponent !== undefined)
+          ? <EditorComponent />
+          : <FormattedMessage {...messages.couldNotFindEditor} />}
       </div>
     </div>
   );

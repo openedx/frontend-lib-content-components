@@ -6,7 +6,7 @@ import { Icon, IconButton } from '@edx/paragon';
 import { Edit } from '@edx/paragon/icons';
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 
-import { actions, selectors } from '../../data/redux';
+import { actions, selectors } from '../../../../data/redux';
 import { localTitleHooks } from './hooks';
 import messages from './messages';
 import EditableHeader from './EditableHeader';

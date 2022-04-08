@@ -2,10 +2,9 @@
 
 exports[`EditorFooter snapshots Save Failed, error message raised 1`] = `
 <div
-  className="editor-footer fixed-bottom"
+  className="editor-footer mt-auto"
 >
   <Toast
-    onClose={[MockFunction nullMethod]}
     show={true}
   >
     <FormattedMessage
@@ -21,9 +20,7 @@ exports[`EditorFooter snapshots Save Failed, error message raised 1`] = `
         aria-label="Discard Changes and Return to Learning Context"
         onClick={
           Object {
-            "handleCancelClicked": Object {
-              "returnUrl": "hocuspocus.ca",
-            },
+            "hooks.handleCancelClicked": undefined,
           }
         }
         variant="tertiary"
@@ -39,10 +36,9 @@ exports[`EditorFooter snapshots Save Failed, error message raised 1`] = `
         disabled={false}
         onClick={
           Object {
-            "handleSaveClicked": Object {
+            "hooks.handleSaveClicked": Object {
+              "dispatch": [MockFunction react-redux.dispatch],
               "editorRef": [MockFunction args.editorRef],
-              "returnUrl": "hocuspocus.ca",
-              "saveFunction": [MockFunction args.saveBlock],
             },
           }
         }
@@ -60,7 +56,7 @@ exports[`EditorFooter snapshots Save Failed, error message raised 1`] = `
 
 exports[`EditorFooter snapshots not intialized, Spinner appears and button is disabled 1`] = `
 <div
-  className="editor-footer fixed-bottom"
+  className="editor-footer mt-auto"
 >
   <ModalDialog.Footer>
     <ActionRow>
@@ -69,9 +65,7 @@ exports[`EditorFooter snapshots not intialized, Spinner appears and button is di
         aria-label="Discard Changes and Return to Learning Context"
         onClick={
           Object {
-            "handleCancelClicked": Object {
-              "returnUrl": "hocuspocus.ca",
-            },
+            "hooks.handleCancelClicked": undefined,
           }
         }
         variant="tertiary"
@@ -87,10 +81,9 @@ exports[`EditorFooter snapshots not intialized, Spinner appears and button is di
         disabled={true}
         onClick={
           Object {
-            "handleSaveClicked": Object {
+            "hooks.handleSaveClicked": Object {
+              "dispatch": [MockFunction react-redux.dispatch],
               "editorRef": [MockFunction args.editorRef],
-              "returnUrl": "hocuspocus.ca",
-              "saveFunction": [MockFunction args.saveBlock],
             },
           }
         }
@@ -107,7 +100,7 @@ exports[`EditorFooter snapshots not intialized, Spinner appears and button is di
 
 exports[`EditorFooter snapshots renders as expected with default behavior 1`] = `
 <div
-  className="editor-footer fixed-bottom"
+  className="editor-footer mt-auto"
 >
   <ModalDialog.Footer>
     <ActionRow>
@@ -116,9 +109,7 @@ exports[`EditorFooter snapshots renders as expected with default behavior 1`] = 
         aria-label="Discard Changes and Return to Learning Context"
         onClick={
           Object {
-            "handleCancelClicked": Object {
-              "returnUrl": "hocuspocus.ca",
-            },
+            "hooks.handleCancelClicked": undefined,
           }
         }
         variant="tertiary"
@@ -134,10 +125,9 @@ exports[`EditorFooter snapshots renders as expected with default behavior 1`] = 
         disabled={false}
         onClick={
           Object {
-            "handleSaveClicked": Object {
+            "hooks.handleSaveClicked": Object {
+              "dispatch": [MockFunction react-redux.dispatch],
               "editorRef": [MockFunction args.editorRef],
-              "returnUrl": "hocuspocus.ca",
-              "saveFunction": [MockFunction args.saveBlock],
             },
           }
         }

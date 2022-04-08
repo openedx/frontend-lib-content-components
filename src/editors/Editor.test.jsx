@@ -10,11 +10,9 @@ jest.mock('./hooks', () => ({
   prepareEditorRef: jest.fn().mockName('prepareEditorRef'),
 }));
 
-jest.mock('./containers/TextEditor/TextEditor', () => 'TextEditor');
-jest.mock('./containers/VideoEditor/VideoEditor', () => 'VideoEditor');
+jest.mock('./containers/TextEditor', () => 'TextEditor');
+jest.mock('./containers/VideoEditor', () => 'VideoEditor');
 jest.mock('./containers/ProblemEditor/ProblemEditor', () => 'ProblemEditor');
-jest.mock('./components/EditorFooter', () => 'EditorFooter');
-jest.mock('./components/EditorHeader', () => 'EditorHeader');
 
 const props = {
   courseId: 'course-v1:edX+DemoX+Demo_Course',
@@ -40,8 +38,7 @@ describe('Editor', () => {
       if (blockType === 'html') { // snap just one editor to make viewing easier
         expect(wrapper).toMatchSnapshot();
       }
-      expect(wrapper.children().children().children().at(1)
-        .is(supportedEditors[blockType])).toBe(true);
+      expect(wrapper.children().children().at(0).is(supportedEditors[blockType])).toBe(true);
     });
     test('presents error message if no relevant editor found and ref ready', () => {
       hooks.prepareEditorRef.mockImplementationOnce(

@@ -3,9 +3,9 @@ import { shallow } from 'enzyme';
 
 import { IconButton } from '@edx/paragon';
 
-import { formatMessage } from '../../../testUtils';
-import { selectors } from '../../data/redux';
-import * as appHooks from '../../hooks';
+import { formatMessage } from '../../../../../testUtils';
+import { selectors } from '../../../../data/redux';
+import * as appHooks from '../../../../hooks';
 import * as module from './index';
 
 jest.mock('.', () => ({
@@ -14,7 +14,7 @@ jest.mock('.', () => ({
   handleCloseClicked: jest.fn(args => ({ handleCloseClicked: args })),
 }));
 
-jest.mock('../../data/redux', () => ({
+jest.mock('../../../../data/redux', () => ({
   selectors: {
     app: {
       returnUrl: jest.fn().mockName('actions.app.returnUrl'),
@@ -22,7 +22,7 @@ jest.mock('../../data/redux', () => ({
   },
 }));
 
-jest.mock('../../hooks', () => ({
+jest.mock('../../../../hooks', () => ({
   navigateCallback: jest.fn(),
 }));
 
@@ -30,7 +30,7 @@ jest.mock('./HeaderTitle', () => 'HeaderTitle');
 
 describe('Editor Header index', () => {
   const props = {
-    editorRef: 'refOfTHEeditTOR',
+    editorRef: { current: 'refOfTHEeditTOR' },
     intl: { formatMessage },
     returnUrl: 'TeST-ReTurNurL',
   };

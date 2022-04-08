@@ -2,10 +2,10 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import { formatMessage } from '../../../testUtils';
-import { TextEditor, mapStateToProps, mapDispatchToProps } from './TextEditor';
 import { actions, selectors } from '../../data/redux';
 import { RequestKeys } from '../../data/constants/requests';
 import { modalToggle } from './hooks';
+import { TextEditor, mapStateToProps, mapDispatchToProps } from '.';
 
 // Per https://github.com/tinymce/tinymce-react/issues/91 React unit testing in JSDOM is not supported by tinymce.
 // Consequently, mock the Editor out.

@@ -20,24 +20,21 @@ import 'tinymce/plugins/imagetools';
 
 import {
   Spinner,
+  Stack,
   Toast,
 } from '@edx/paragon';
 import { FormattedMessage, injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 
 import { actions, selectors } from '../../data/redux';
 import { RequestKeys } from '../../data/constants/requests';
-import {
-  editorConfig,
-  modalToggle,
-  nullMethod,
-  selectedImage,
-} from './hooks';
 import ImageUploadModal from './components/ImageUploadModal';
+import EditorFooter from './components/EditorFooter';
+import EditorHeader from './components/EditorHeader';
+
+import * as hooks from './hooks';
 import messages from './messages';
 
 export const TextEditor = ({
-  setEditorRef,
-  editorRef,
   // redux
   blockValue,
   lmsEndpointUrl,
@@ -47,58 +44,62 @@ export const TextEditor = ({
   // inject
   intl,
 }) => {
-  const { isOpen, openModal, closeModal } = modalToggle();
+  const { editorRef, refReady, setEditorRef } = hooks.prepareEditorRef();
+  const { isOpen, openModal, closeModal } = hooks.modalToggle();
+  const imageSelection = hooks.selectedImage(null);
 
-  // selected image file reference data object.
-  // this field determines the step of the ImageUploadModal
-  const imageSelection = selectedImage(null);
+  if (!refReady) { return null; }
 
   return (
-    <div className="editor-body h-75 overflow-auto">
-      <ImageUploadModal
-        isOpen={isOpen}
-        close={closeModal}
-        editorRef={editorRef}
-        {...imageSelection}
-      />
+    <Stack>
+      <EditorHeader editorRef={editorRef} />
 
-      <Toast show={blockFailed} onClose={nullMethod}>
-        <FormattedMessage {...messages.couldNotLoadTextContext} />
-      </Toast>
+      <div className="editor-body h-75 overflow-auto">
+        <ImageUploadModal
+          isOpen={isOpen}
+          close={closeModal}
+          editorRef={editorRef}
+          {...imageSelection}
+        />
 
-      {(!blockFinished)
-        ? (
-          <div className="text-center p-6">
-            <Spinner animation="border" className="m-3" screenreadertext={intl.formatMessage(messages.spinnerScreenReaderText)} />
-          </div>
-        )
-        : (
-          <Editor
-            {...editorConfig({
-              setEditorRef,
-              blockValue,
-              openModal,
-              initializeEditor,
-              lmsEndpointUrl,
-              setSelection: imageSelection.setSelection,
-              clearSelection: imageSelection.clearSelection,
-            })}
-          />
-        )}
-    </div>
+        <Toast show={blockFailed} onClose={hooks.nullMethod}>
+          <FormattedMessage {...messages.couldNotLoadTextContext} />
+        </Toast>
+
+        {(!blockFinished)
+          ? (
+            <div className="text-center p-6">
+              <Spinner
+                animation="border"
+                className="m-3"
+                screenreadertext={intl.formatMessage(messages.spinnerScreenReaderText)}
+              />
+            </div>
+          )
+          : (
+            <Editor
+              {...hooks.editorConfig({
+                setEditorRef,
+                blockValue,
+                openModal,
+                initializeEditor,
+                lmsEndpointUrl,
+                setSelection: imageSelection.setSelection,
+                clearSelection: imageSelection.clearSelection,
+              })}
+            />
+          )}
+      </div>
+
+      <EditorFooter editorRef={editorRef} />
+    </Stack>
   );
 };
 TextEditor.defaultProps = {
   blockValue: null,
-  editorRef: null,
   lmsEndpointUrl: null,
 };
 TextEditor.propTypes = {
-  editorRef: PropTypes.oneOfType([
-    PropTypes.func,
-    PropTypes.shape({ current: PropTypes.any }),
-  ]),
-  setEditorRef: PropTypes.func.isRequired,
   // redux
   blockValue: PropTypes.shape({
     data: PropTypes.shape({ data: PropTypes.string }),

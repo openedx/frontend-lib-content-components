@@ -8,7 +8,11 @@ exports[` 1`] = `
     <ActionRow>
       <ModalDialog.Title>
         <HeaderTitle
-          editorRef="refOfTHEeditTOR"
+          editorRef={
+            Object {
+              "current": "refOfTHEeditTOR",
+            }
+          }
         />
       </ModalDialog.Title>
       <ActionRow.Spacer />

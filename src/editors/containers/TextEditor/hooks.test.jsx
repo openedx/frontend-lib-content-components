@@ -1,6 +1,7 @@
-import * as module from './hooks';
-
 import { MockUseState } from '../../../testUtils';
+
+import pluginConfig from './pluginConfig';
+import * as module from './hooks';
 
 jest.mock('react', () => ({
   ...jest.requireActual('react'),
@@ -124,13 +125,13 @@ describe('TextEditor hooks', () => {
       });
       test('It configures plugins and toolbars correctly', () => {
         output = module.editorConfig(props);
-        Object.values(module.pluginConfig.plugins).forEach(
+        Object.values(pluginConfig.plugins).forEach(
           value => expect(output.init.plugins.includes(value)).toBe(true),
         );
-        Object.values(module.pluginConfig.toolbar).forEach(
+        Object.values(pluginConfig.toolbar).forEach(
           value => expect(output.init.toolbar.includes(value)).toBe(true),
         );
-        Object.values(module.pluginConfig.imageToolbar).forEach(
+        Object.values(pluginConfig.imageToolbar).forEach(
           value => expect(output.init.imagetools_toolbar.includes(value)).toBe(true),
         );
         expect(output.init.menubar).toBe(false);

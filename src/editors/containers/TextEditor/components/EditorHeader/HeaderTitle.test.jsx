@@ -1,12 +1,12 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import { formatMessage } from '../../../testUtils';
-import { actions, selectors } from '../../data/redux';
+import { formatMessage } from '../../../../../testUtils';
+import { actions, selectors } from '../../../../data/redux';
 import { localTitleHooks } from './hooks';
 import * as module from './HeaderTitle';
 
-jest.mock('../../data/redux', () => ({
+jest.mock('../../../../data/redux', () => ({
   actions: {
     app: {
       setBlockTitle: jest.fn().mockName('actions.app.setBlockTitle'),

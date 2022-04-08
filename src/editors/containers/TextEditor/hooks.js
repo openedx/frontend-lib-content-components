@@ -1,11 +1,15 @@
-import { useState } from 'react';
+import {
+  useRef, useEffect, useCallback, useState,
+} from 'react';
 
 import { StrictDict } from '../../utils';
+import pluginConfig from './pluginConfig';
 import * as module from './hooks';
 
 export const state = StrictDict({
   isModalOpen: (val) => useState(val),
   imageSelection: (val) => useState(val),
+  refReady: (val) => useState(val),
 });
 
 export const openModalWithSelectedImage = (editor, setImage, openModal) => () => {
@@ -38,46 +42,6 @@ export const initializeEditorRef = (setRef, initializeEditor) => (editor) => {
 // for toast onClose to avoid console warnings
 export const nullMethod = () => {};
 
-export const pluginConfig = {
-  plugins: StrictDict({
-    link: 'link',
-    codesample: 'codesample',
-    emoticons: 'emoticons',
-    table: 'table',
-    charmap: 'charmap',
-    code: 'code',
-    autoresize: 'autoresize',
-    image: 'image',
-    imagetools: 'imagetools',
-  }),
-  menubar: false,
-  toolbar: StrictDict({
-    do: 'undo redo',
-    formatselect: 'formatselect',
-    wieght: 'bold italic backcolor',
-    align: 'alignleft aligncenter alignright alignjustify',
-    indents: 'bullist numlist outdent indent ',
-    imageupload: 'imageuploadbutton',
-    link: 'link',
-    emoticons: 'emoticons',
-    table: 'table',
-    codesample: 'codesample',
-    charmap: 'charmap',
-    removeformat: 'removeformat',
-    hr: 'hr',
-    code: 'code',
-  }),
-  imageToolbar: StrictDict({
-    editImageSettings: 'editimagesettings',
-  }),
-};
-export const getConfig = (key) => {
-  if (key === 'imageToolbar' || key === 'toolbar') {
-    return Object.values(module.pluginConfig[key]).join(' | ');
-  }
-  return Object.values(module.pluginConfig[key]).join(' ');
-};
-
 export const editorConfig = ({
   setEditorRef,
   blockValue,
@@ -90,14 +54,11 @@ export const editorConfig = ({
   initialValue: blockValue ? blockValue.data.data : '',
   init: {
     setup: module.addImageUploadBehavior({ openModal, setImage: setSelection }),
-    plugins: module.getConfig('plugins'),
-    menubar: false,
-    toolbar: module.getConfig('toolbar'),
-    imagetools_toolbar: module.getConfig('imageToolbar'),
-    imagetools_cors_hosts: [lmsEndpointUrl], // as image assets come from lms, we need to whitelist it.
-    height: '100%',
-    min_height: 500,
-    branding: false,
+    plugins: pluginConfig.plugins,
+    imagetools_toolbar: pluginConfig.imageToolbar,
+    toolbar: pluginConfig.toolbar,
+    imagetools_cors_hosts: [lmsEndpointUrl],
+    ...pluginConfig.config,
   },
 });
 
@@ -117,4 +78,31 @@ export const modalToggle = () => {
     openModal: () => setIsOpen(true),
     closeModal: () => setIsOpen(false),
   };
+};
+
+export const prepareEditorRef = () => {
+  const editorRef = useRef(null);
+  const setEditorRef = useCallback((ref) => {
+    editorRef.current = ref;
+  }, []);
+  const [refReady, setRefReady] = module.state.refReady(false);
+  useEffect(() => setRefReady(true), []);
+  return { editorRef, refReady, setEditorRef };
+};
+
+export const navigateTo = (destination) => {
+  window.location.assign(destination);
+};
+
+export const navigateCallback = (destination) => () => module.navigateTo(destination);
+
+export const saveBlock = ({
+  editorRef,
+  returnUrl,
+  saveFunction,
+}) => {
+  saveFunction({
+    returnToUnit: module.navigateCallback(returnUrl),
+    content: editorRef.current.getContent(),
+  });
 };

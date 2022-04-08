@@ -1,45 +1,36 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 
+import { thunkActions } from '../../../data/redux';
 import VideoSettingsModal from './VideoSettingsModal';
-import SelectVideoModal from './SelectVideoModal';
+// import SelectVideoModal from './SelectVideoModal';
+import * as module from './VideoEditorModal';
 
-const VideoUploadModal = ({
+export const hooks = {
+  initialize: (dispatch) => {
+    React.useEffect(() => {
+      dispatch(thunkActions.video.loadVideoData());
+    }, []);
+  },
+};
+
+const VideoEditorModal = ({
   isOpen,
   close,
 }) => {
-  const [selection, setSelection] = React.useState(null);
-  const clearSelection = () => setSelection(null);
-  const saveToEditor = () => { };
-  const closeAndReset = () => {
-    setSelection(null);
-    close();
-  };
-  if (selection) {
-    return (
-      <VideoSettingsModal
-        {...{
-          isOpen,
-          close: closeAndReset,
-          selection,
-          saveToEditor,
-          returnToSelection: clearSelection,
-        }}
-      />
-    );
-  }
-  return (<SelectVideoModal {...{ isOpen, close, setSelection }} />);
+  const dispatch = useDispatch();
+  module.hooks.initialize(dispatch);
+  return (
+    <VideoSettingsModal {...{ isOpen, close }} />
+  );
+  // TODO: add logic to show SelectVideoModal if no selection
 };
 
-VideoUploadModal.defaultProps = {
-  editorRef: null,
+VideoEditorModal.defaultProps = {
 };
-VideoUploadModal.propTypes = {
+VideoEditorModal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   close: PropTypes.func.isRequired,
-  editorRef: PropTypes.oneOfType([
-    PropTypes.func,
-    PropTypes.shape({ current: PropTypes.any }),
-  ]),
 };
-export default VideoUploadModal;
+export default VideoEditorModal;

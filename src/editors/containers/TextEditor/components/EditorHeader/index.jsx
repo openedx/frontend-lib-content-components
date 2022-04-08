@@ -11,8 +11,8 @@ import {
 import { Close } from '@edx/paragon/icons';
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 
-import { selectors } from '../../data/redux';
-import * as appHooks from '../../hooks';
+import { selectors } from '../../../../data/redux';
+import * as appHooks from '../../../../hooks';
 
 import HeaderTitle from './HeaderTitle';
 import messages from './messages';
