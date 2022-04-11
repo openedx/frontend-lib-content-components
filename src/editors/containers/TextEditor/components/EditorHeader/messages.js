@@ -7,12 +7,12 @@ export const messages = {
   cancelChangesLabel: {
     id: 'authoring.texteditor.header.cancelChangesLabel',
     defaultMessage: 'Cancel Changes and Return to Learning Context',
-    description: 'Aria label title for icon button to return to learning context',
+    description: 'Screen reader label title for icon button to return to learning context',
   },
   editTitleLabel: {
     id: 'authoring.texteditor.header.editTitleLabel',
     defaultMessage: 'Edit Title',
-    description: 'Aria label title for icon button to edit the xblock title',
+    description: 'Screen reader label title for icon button to edit the xblock title',
   },
 };
 

@@ -1,4 +1,4 @@
-import { useRef, useEffect, useCallback, createRef } from 'react';
+import { useEffect } from 'react';
 import { MockUseState } from '../../../testUtils';
 
 import tinyMCE from '../../data/constants/tinyMCE';
