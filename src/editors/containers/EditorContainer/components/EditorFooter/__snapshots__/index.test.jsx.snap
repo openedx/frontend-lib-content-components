@@ -12,7 +12,7 @@ exports[`EditorFooter render snapshot: default args (disableSave: false, saveFai
         onClick={
           Object {
             "handleCancelClicked": Object {
-              "returnAnalytics": Object {
+              "analytics": Object {
                 "blockId": null,
                 "blockType": null,
                 "courseId": null,
@@ -38,22 +38,9 @@ exports[`EditorFooter render snapshot: default args (disableSave: false, saveFai
         onClick={
           Object {
             "handleSaveClicked": Object {
-<<<<<<< HEAD
               "editorRef": [MockFunction args.editorRef],
               "returnUrl": "hocuspocus.ca",
               "saveFunction": [MockFunction args.saveBlock],
-=======
-              "returnAnalytics": Object {
-                "blockId": null,
-                "blockType": null,
-                "courseId": null,
-              },
-              "saveProps": Object {
-                "editorRef": [MockFunction args.editorRef],
-                "returnUrl": "hocuspocus.ca",
-                "saveBlockContent": [MockFunction args.saveBlock],
-              },
->>>>>>> f60f6de (feat: WIP)
             },
           }
         }
@@ -85,7 +72,7 @@ exports[`EditorFooter render snapshot: save disabled. Show button spinner 1`] = 
         onClick={
           Object {
             "handleCancelClicked": Object {
-              "returnAnalytics": Object {
+              "analytics": Object {
                 "blockId": null,
                 "blockType": null,
                 "courseId": null,
@@ -117,7 +104,7 @@ exports[`EditorFooter render snapshot: save disabled. Show button spinner 1`] = 
               "returnUrl": "hocuspocus.ca",
               "saveFunction": [MockFunction args.saveBlock],
 =======
-              "returnAnalytics": Object {
+              "analytics": Object {
                 "blockId": null,
                 "blockType": null,
                 "courseId": null,
@@ -168,7 +155,7 @@ exports[`EditorFooter render snapshot: save failed.  Show error message 1`] = `
         onClick={
           Object {
             "handleCancelClicked": Object {
-              "returnAnalytics": Object {
+              "analytics": Object {
                 "blockId": null,
                 "blockType": null,
                 "courseId": null,
@@ -200,7 +187,7 @@ exports[`EditorFooter render snapshot: save failed.  Show error message 1`] = `
               "returnUrl": "hocuspocus.ca",
               "saveFunction": [MockFunction args.saveBlock],
 =======
-              "returnAnalytics": Object {
+              "analytics": Object {
                 "blockId": null,
                 "blockType": null,
                 "courseId": null,
