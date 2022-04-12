@@ -33,7 +33,6 @@ export const editorConfig = ({
   openModal,
   initializeEditor,
   setSelection,
-  lmsEndpointUrl,
 }) => ({
   onInit: (evt, editor) => {
     setEditorRef(editor);
@@ -45,7 +44,7 @@ export const editorConfig = ({
     plugins: pluginConfig.plugins,
     imagetools_toolbar: pluginConfig.imageToolbar,
     toolbar: pluginConfig.toolbar,
-    imagetools_cors_hosts: [lmsEndpointUrl],
+    contextmenu: 'link table',
     ...pluginConfig.config,
   },
 });

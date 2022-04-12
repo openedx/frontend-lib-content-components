@@ -43,6 +43,8 @@ export default StrictDict({
     [buttons.code],
   ]),
   imageToolbar: mapToolbars([
+    // [buttons.rotate.left, buttons.rotate.right],
+    // [buttons.flip.horiz, buttons.flip.vert],
     [buttons.editImageSettings],
   ]),
   config: {
