@@ -13,7 +13,9 @@ export const navigateTo = (destination) => {
   window.location.assign(destination);
 };
 
-export const navigateCallback = (destination) => () => module.navigateTo(destination);
+export const navigateCallback = (destination) => () => {
+  module.navigateTo(destination);
+};
 
 export const nullMethod = () => ({});
 

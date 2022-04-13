@@ -61,7 +61,7 @@ export const analytics = createSelector(
     module.simpleSelectors.courseId,
   ],
   (blockId, blockType, courseId) => (
-    {blockId, blockType, courseId}
+    { blockId, blockType, courseId }
   ),
 );
 

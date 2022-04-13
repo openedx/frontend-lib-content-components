@@ -13,9 +13,9 @@ exports[`EditorFooter render snapshot: default args (disableSave: false, saveFai
           Object {
             "handleCancelClicked": Object {
               "analytics": Object {
-                "blockId": null,
-                "blockType": null,
-                "courseId": null,
+                "blockId": "BLocKid",
+                "blockType": "HtMl",
+                "courseId": "cOURsEId",
               },
               "returnUrl": "hocuspocus.ca",
             },
@@ -38,9 +38,16 @@ exports[`EditorFooter render snapshot: default args (disableSave: false, saveFai
         onClick={
           Object {
             "handleSaveClicked": Object {
-              "editorRef": [MockFunction args.editorRef],
-              "returnUrl": "hocuspocus.ca",
-              "saveFunction": [MockFunction args.saveBlock],
+              "analytics": Object {
+                "blockId": "BLocKid",
+                "blockType": "HtMl",
+                "courseId": "cOURsEId",
+              },
+              "saveProps": Object {
+                "editorRef": [MockFunction args.editorRef],
+                "returnUrl": "hocuspocus.ca",
+                "saveFunction": [MockFunction args.saveBlock],
+              },
             },
           }
         }
@@ -73,9 +80,9 @@ exports[`EditorFooter render snapshot: save disabled. Show button spinner 1`] = 
           Object {
             "handleCancelClicked": Object {
               "analytics": Object {
-                "blockId": null,
-                "blockType": null,
-                "courseId": null,
+                "blockId": "BLocKid",
+                "blockType": "HtMl",
+                "courseId": "cOURsEId",
               },
               "returnUrl": "hocuspocus.ca",
             },
@@ -99,22 +106,16 @@ exports[`EditorFooter render snapshot: save disabled. Show button spinner 1`] = 
         onClick={
           Object {
             "handleSaveClicked": Object {
-<<<<<<< HEAD
-              "editorRef": [MockFunction args.editorRef],
-              "returnUrl": "hocuspocus.ca",
-              "saveFunction": [MockFunction args.saveBlock],
-=======
               "analytics": Object {
-                "blockId": null,
-                "blockType": null,
-                "courseId": null,
+                "blockId": "BLocKid",
+                "blockType": "HtMl",
+                "courseId": "cOURsEId",
               },
               "saveProps": Object {
                 "editorRef": [MockFunction args.editorRef],
                 "returnUrl": "hocuspocus.ca",
-                "saveBlockContent": [MockFunction args.saveBlock],
+                "saveFunction": [MockFunction args.saveBlock],
               },
->>>>>>> f60f6de (feat: WIP)
             },
           }
         }
@@ -156,9 +157,9 @@ exports[`EditorFooter render snapshot: save failed.  Show error message 1`] = `
           Object {
             "handleCancelClicked": Object {
               "analytics": Object {
-                "blockId": null,
-                "blockType": null,
-                "courseId": null,
+                "blockId": "BLocKid",
+                "blockType": "HtMl",
+                "courseId": "cOURsEId",
               },
               "returnUrl": "hocuspocus.ca",
             },
@@ -182,22 +183,16 @@ exports[`EditorFooter render snapshot: save failed.  Show error message 1`] = `
         onClick={
           Object {
             "handleSaveClicked": Object {
-<<<<<<< HEAD
-              "editorRef": [MockFunction args.editorRef],
-              "returnUrl": "hocuspocus.ca",
-              "saveFunction": [MockFunction args.saveBlock],
-=======
               "analytics": Object {
-                "blockId": null,
-                "blockType": null,
-                "courseId": null,
+                "blockId": "BLocKid",
+                "blockType": "HtMl",
+                "courseId": "cOURsEId",
               },
               "saveProps": Object {
                 "editorRef": [MockFunction args.editorRef],
                 "returnUrl": "hocuspocus.ca",
-                "saveBlockContent": [MockFunction args.saveBlock],
+                "saveFunction": [MockFunction args.saveBlock],
               },
->>>>>>> f60f6de (feat: WIP)
             },
           }
         }
