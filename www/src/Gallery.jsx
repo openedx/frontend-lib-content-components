@@ -38,6 +38,7 @@ export const EditorGallery = () => {
           courseId,
           studioEndpointUrl,
           lmsEndpointUrl,
+          onClose: () => setBlockType(null),
         }}
       />
     </div>

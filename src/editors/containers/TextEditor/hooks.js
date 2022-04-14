@@ -79,16 +79,7 @@ export const prepareEditorRef = () => {
   return { editorRef, refReady, setEditorRef };
 };
 
-export const saveBlock = ({
-  editorRef,
-  returnUrl,
-  saveFunction,
-}) => {
-  saveFunction({
-    returnToUnit: module.navigateCallback(returnUrl),
-    content: editorRef.current.getContent(),
-  });
-};
+export const getContent = ({ editorRef }) => editorRef.current?.getContent();
 
 export const selectedImage = (val) => {
   const [selection, setSelection] = module.state.imageSelection(val);

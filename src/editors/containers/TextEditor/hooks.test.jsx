@@ -112,7 +112,8 @@ describe('TextEditor hooks', () => {
         Object.keys(pluginConfig.config).forEach(key => {
           expect(output.init[key]).toEqual(pluginConfig.config[key]);
         });
-        //expect(output.init.imagetools_cors_hosts).toMatchObject([props.lmsEndpointUrl]);
+        // Commented out as we investigate whether this is only needed for image proxy
+        // expect(output.init.imagetools_cors_hosts).toMatchObject([props.lmsEndpointUrl]);
       });
       it('calls addImageUploadBehavior on setup', () => {
         expect(output.init.setup).toEqual(
@@ -176,24 +177,6 @@ describe('TextEditor hooks', () => {
         expect(hook.editorRef.current).not.toBe(fakeEditor);
         hook.setEditorRef.cb(fakeEditor);
         expect(hook.editorRef.current).toBe(fakeEditor);
-      });
-    });
-
-    describe('saveBlock', () => {
-      test('saveBlock calls the save function provided with nav callback and content', () => {
-        const mockNavCallback = (returnUrl) => ({ navigateCallback: returnUrl });
-        jest.spyOn(module, moduleKeys.navigateCallback).mockImplementationOnce(mockNavCallback);
-        const content = { some: 'content' };
-        const args = {
-          editorRef: { current: { getContent: () => content } },
-          returnUrl: 'rEtUrNUrl',
-          saveFunction: jest.fn(),
-        };
-        module.saveBlock(args);
-        expect(args.saveFunction).toHaveBeenCalledWith({
-          returnToUnit: mockNavCallback(args.returnUrl),
-          content,
-        });
       });
     });
 

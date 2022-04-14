@@ -1,24 +1,23 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import { Icon, IconButton } from '@edx/paragon';
 import { Edit } from '@edx/paragon/icons';
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 
-import { actions, selectors } from '../../../../data/redux';
 import { localTitleHooks } from './hooks';
 import messages from './messages';
 import EditableHeader from './EditableHeader';
 
-export const HeaderTitle = ({
-  editorRef,
-  intl,
+export const TitleHeader = ({
   isInitialized,
-  setBlockTitle,
-  returnTitle,
+  // injected
+  intl,
 }) => {
   if (!isInitialized) { return intl.formatMessage(messages.loading); }
+  const dispatch = useDispatch();
+
   const {
     inputRef,
     isEditing,
@@ -27,11 +26,7 @@ export const HeaderTitle = ({
     localTitle,
     startEditing,
     updateTitle,
-  } = localTitleHooks({
-    editorRef,
-    setBlockTitle,
-    returnTitle,
-  });
+  } = localTitleHooks({ dispatch });
 
   if (isEditing) {
     return (
@@ -62,29 +57,13 @@ export const HeaderTitle = ({
     </div>
   );
 };
-HeaderTitle.defaultProps = {
-  editorRef: null,
-};
-HeaderTitle.propTypes = {
-  editorRef: PropTypes.oneOfType([
-    PropTypes.func,
-    PropTypes.shape({ current: PropTypes.any }),
-  ]),
+TitleHeader.defaultProps = {};
+TitleHeader.propTypes = {
+  isInitialized: PropTypes.bool.isRequired,
+  title: PropTypes.string.isRequired,
+  setTitle: PropTypes.func.isRequired,
   // injected
   intl: intlShape.isRequired,
-  // redux
-  isInitialized: PropTypes.bool.isRequired,
-  setBlockTitle: PropTypes.func.isRequired,
-  returnTitle: PropTypes.string.isRequired,
 };
 
-export const mapStateToProps = (state) => ({
-  returnTitle: selectors.app.returnTitle(state),
-  isInitialized: selectors.app.isInitialized(state),
-});
-
-export const mapDispatchToProps = {
-  setBlockTitle: actions.app.setBlockTitle,
-};
-
-export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(HeaderTitle));
+export default injectIntl(TitleHeader);

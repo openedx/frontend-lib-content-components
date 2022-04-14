@@ -18,10 +18,12 @@ jest.mock('@tinymce/tinymce-react', () => {
   };
 });
 
+jest.mock('../EditorContainer', () => 'EditorContainer');
 jest.mock('./components/ImageUploadModal', () => 'ImageUploadModal');
 
 jest.mock('./hooks', () => ({
   editorConfig: jest.fn(args => ({ editorConfig: args })),
+  getContent: jest.fn(args => ({ getContent: args })),
   modalToggle: jest.fn(() => ({
     isOpen: true,
     openModal: jest.fn().mockName('openModal'),
@@ -69,6 +71,7 @@ jest.mock('../../data/redux', () => ({
 
 describe('TextEditor', () => {
   const props = {
+    onClose: jest.fn().mockName('props.onClose'),
     // redux
     blockValue: { data: { some: 'eDiTablE Text' } },
     lmsEndpointUrl: 'sOmEvaLue.cOm',

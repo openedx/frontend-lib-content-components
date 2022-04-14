@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`HeaderTitle snapshots editing 1`] = `
+exports[`TitleHeader snapshots editing 1`] = `
 <EditableHeader
   handleChange={[MockFunction localTitleHooks.handleChange]}
   handleKeyDown={[MockFunction localTitleHooks.handleKeyDown]}
@@ -10,7 +10,7 @@ exports[`HeaderTitle snapshots editing 1`] = `
 />
 `;
 
-exports[`HeaderTitle snapshots initialized 1`] = `
+exports[`TitleHeader snapshots initialized 1`] = `
 <div
   className="d-flex"
 >
@@ -35,4 +35,4 @@ exports[`HeaderTitle snapshots initialized 1`] = `
 </div>
 `;
 
-exports[`HeaderTitle snapshots not initialized 1`] = `"Loading..."`;
+exports[`TitleHeader snapshots not initialized 1`] = `"Loading..."`;

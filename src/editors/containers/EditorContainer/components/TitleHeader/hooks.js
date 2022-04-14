@@ -1,8 +1,15 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
+
+import { actions, selectors } from '../../../../data/redux';
 import * as textEditorHooks from '../../hooks';
 import * as module from './hooks';
 
 export const { navigateCallback } = textEditorHooks;
+
+export const state = {
+  localTitle: (args) => React.useState(args),
+};
 
 export const hooks = {
   isEditing: () => {
@@ -13,40 +20,26 @@ export const hooks = {
       stopEditing: () => setIsEditing(false),
     };
   },
-  localTitle: ({
-    setBlockTitle,
-    stopEditing,
-    returnTitle,
-  }) => {
-    const [localTitle, setLocalTitle] = React.useState(returnTitle);
+
+  localTitle: ({ dispatch, stopEditing }) => {
+    const title = useSelector(selectors.app.displayTitle);
+    const [localTitle, setLocalTitle] = module.state.localTitle(title);
     return {
       updateTitle: () => {
-        setBlockTitle(localTitle);
+        dispatch(actions.app.setBlockTitle(localTitle));
         stopEditing();
       },
       handleChange: (e) => setLocalTitle(e.target.value),
       localTitle,
     };
   },
-  handleKeyDown: ({ editorRef }) => (e) => {
-    if (editorRef && (e.key === 'Tab' || e.key === 'Enter')) {
-      e.preventDefault();
-      editorRef.current.focus();
-    }
-  },
 };
 
-/* eslint-disable import/prefer-default-export */
-export const localTitleHooks = ({
-  editorRef,
-  setBlockTitle,
-  returnTitle,
-}) => {
+export const localTitleHooks = ({ dispatch }) => {
   const { isEditing, startEditing, stopEditing } = module.hooks.isEditing();
   const { localTitle, handleChange, updateTitle } = module.hooks.localTitle({
-    setBlockTitle,
+    dispatch,
     stopEditing,
-    returnTitle,
   });
   return {
     isEditing,
@@ -58,6 +51,5 @@ export const localTitleHooks = ({
     handleChange,
 
     inputRef: React.createRef(),
-    handleKeyDown: module.hooks.handleKeyDown({ editorRef }),
   };
 };

@@ -1,10 +1,9 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from '@edx/frontend-platform/i18n';
 
 import { blockTypes } from './data/constants/app';
-import { thunkActions } from './data/redux';
 
 import TextEditor from './containers/TextEditor';
 import VideoEditor from './containers/VideoEditor';
@@ -25,11 +24,11 @@ export const Editor = ({
   blockId,
   lmsEndpointUrl,
   studioEndpointUrl,
-  // redux
-  initialize,
+  onClose,
 }) => {
+  const dispatch = useDispatch();
   hooks.initializeApp({
-    initialize,
+    dispatch,
     data: {
       blockId,
       blockType,
@@ -48,7 +47,7 @@ export const Editor = ({
         aria-label={blockType}
       >
         {(EditorComponent !== undefined)
-          ? <EditorComponent />
+          ? <EditorComponent onClose={onClose} />
           : <FormattedMessage {...messages.couldNotFindEditor} />}
       </div>
     </div>
@@ -59,6 +58,7 @@ Editor.defaultProps = {
   blockId: null,
   lmsEndpointUrl: null,
   studioEndpointUrl: null,
+  onClose: null,
 };
 
 Editor.propTypes = {
@@ -66,13 +66,8 @@ Editor.propTypes = {
   blockType: PropTypes.string.isRequired,
   blockId: PropTypes.string,
   lmsEndpointUrl: PropTypes.string,
+  onClose: PropTypes.func,
   studioEndpointUrl: PropTypes.string,
-  // redux
-  initialize: PropTypes.func.isRequired,
-};
-export const mapStateToProps = () => ({});
-export const mapDispatchToProps = {
-  initialize: thunkActions.app.initialize,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Editor);
+export default Editor;

@@ -20,21 +20,20 @@ import 'tinymce/plugins/imagetools';
 
 import {
   Spinner,
-  Stack,
   Toast,
 } from '@edx/paragon';
 import { FormattedMessage, injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 
 import { actions, selectors } from '../../data/redux';
 import { RequestKeys } from '../../data/constants/requests';
-import ImageUploadModal from './components/ImageUploadModal';
-import EditorFooter from './components/EditorFooter';
-import EditorHeader from './components/EditorHeader';
 
+import EditorContainer from '../EditorContainer';
+import ImageUploadModal from './components/ImageUploadModal';
 import * as hooks from './hooks';
 import messages from './messages';
 
 export const TextEditor = ({
+  onClose,
   // redux
   blockValue,
   lmsEndpointUrl,
@@ -51,9 +50,10 @@ export const TextEditor = ({
   if (!refReady) { return null; }
 
   return (
-    <Stack>
-      <EditorHeader editorRef={editorRef} />
-
+    <EditorContainer
+      getContent={hooks.getContent({ editorRef })}
+      onClose={onClose}
+    >
       <div className="editor-body h-75 overflow-auto">
         <ImageUploadModal
           isOpen={isOpen}
@@ -91,8 +91,7 @@ export const TextEditor = ({
           )}
       </div>
 
-      <EditorFooter editorRef={editorRef} />
-    </Stack>
+    </EditorContainer>
   );
 };
 TextEditor.defaultProps = {
@@ -100,6 +99,7 @@ TextEditor.defaultProps = {
   lmsEndpointUrl: null,
 };
 TextEditor.propTypes = {
+  onClose: PropTypes.func.isRequired,
   // redux
   blockValue: PropTypes.shape({
     data: PropTypes.shape({ data: PropTypes.string }),

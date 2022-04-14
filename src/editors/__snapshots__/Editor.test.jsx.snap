@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Editor snapshots presents error message if no relevant editor found and ref ready 1`] = `
+exports[`Editor render presents error message if no relevant editor found and ref ready 1`] = `
 <div
   className="d-flex flex-column vh-100"
 >
@@ -18,7 +18,7 @@ exports[`Editor snapshots presents error message if no relevant editor found and
 </div>
 `;
 
-exports[`Editor snapshots renders "html" editor when ref is ready 1`] = `
+exports[`Editor render snapshot: renders correct editor given blockType (html -> TextEditor) 1`] = `
 <div
   className="d-flex flex-column vh-100"
 >
@@ -27,24 +27,8 @@ exports[`Editor snapshots renders "html" editor when ref is ready 1`] = `
     className="pgn__modal-fullscreen"
     role="dialog"
   >
-    <TextEditor />
-  </div>
-</div>
-`;
-
-exports[`Editor snapshots renders no editor when ref isnt ready 1`] = `
-<div
-  className="d-flex flex-column vh-100"
->
-  <div
-    aria-label="AblOck"
-    className="pgn__modal-fullscreen"
-    role="dialog"
-  >
-    <FormattedMessage
-      defaultMessage="Error: Could Not find Editor"
-      description="Error Message Dispayed When An unsopported Editor is desired in V2"
-      id="authoring.editorpage.selecteditor.error"
+    <TextEditor
+      onClose={[MockFunction props.onClose]}
     />
   </div>
 </div>
