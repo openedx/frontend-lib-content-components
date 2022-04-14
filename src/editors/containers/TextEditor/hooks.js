@@ -79,7 +79,7 @@ export const prepareEditorRef = () => {
   return { editorRef, refReady, setEditorRef };
 };
 
-export const getContent = ({ editorRef }) => editorRef.current?.getContent();
+export const getContent = ({ editorRef }) => () => editorRef.current?.getContent();
 
 export const selectedImage = (val) => {
   const [selection, setSelection] = module.state.imageSelection(val);
