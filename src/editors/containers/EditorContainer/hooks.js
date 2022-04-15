@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { RequestKeys } from '../../data/constants/requests';
 import { selectors } from '../../data/redux';
 import * as appHooks from '../../hooks';
-import analyticsEvt from '../../analyticsEvt';
+import analyticsEvt from '../../data/constants/analyticsEvt';
 
 export const {
   navigateCallback,

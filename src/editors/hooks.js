@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 
 import { sendTrackEvent } from '@edx/frontend-platform/analytics';
-import analyticsEvt from './analyticsEvt';
+import analyticsEvt from './data/constants/analyticsEvt';
 
 import { thunkActions } from './data/redux';
 import * as module from './hooks';
