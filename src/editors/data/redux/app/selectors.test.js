@@ -70,7 +70,7 @@ describe('app selectors unit tests', () => {
         simpleSelectors.blockValue,
       ]);
     });
-    it('returns true if unitUrl, blockValue, and editorInitialized are all truthy', () => {
+    it('returns true iff unitUrl, blockValue, and editorInitialized are all truthy', () => {
       const { cb } = selectors.isInitialized;
       const truthy = {
         url: { url: 'data' },
