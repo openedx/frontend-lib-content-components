@@ -2,7 +2,6 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { FullscreenModal } from '@edx/paragon';
 import { Icon, ModalDialog, IconButton } from '@edx/paragon';
 import { Close } from '@edx/paragon/icons';
 
@@ -18,27 +17,8 @@ export const EditorContainer = ({
 }) => {
   const dispatch = useDispatch();
   const isInitialized = hooks.isInitialized();
-  console.log('test', isInitialized)
   const handleCancelClicked = hooks.handleCancelClicked({ onClose });
   return (
-    // <FullscreenModal
-    //   isOpen
-    //   onClose={handleCancelClicked}
-    //   variant="primary"
-    //   footerNode={(
-    //     <EditorFooter
-    //       onCancel={handleCancelClicked}
-    //       onSave={hooks.handleSaveClicked({ getContent, dispatch })}
-    //       disableSave={!isInitialized}
-    //       saveFailed={hooks.saveFailed()}
-    //     />
-    //   )}
-    //   title={(
-    //     <TitleHeader isInitialized={isInitialized} />
-    //   )}
-    // >
-    //   {children}
-    // </FullscreenModal>
     <div>
       <ModalDialog.Header>
         <ModalDialog.Title>
