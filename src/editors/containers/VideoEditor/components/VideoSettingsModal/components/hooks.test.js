@@ -1,7 +1,7 @@
-import { useCallback, useEffect, useMemo } from 'react';
+import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
-import { StrictDict, keyStore } from '../../../../../utils';
+import { keyStore } from '../../../../../utils';
 import { actions, selectors } from '../../../../../data/redux';
 import { MockUseState } from '../../../../../../testUtils';
 
