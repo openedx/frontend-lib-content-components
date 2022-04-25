@@ -36,16 +36,24 @@ describe('EditorContainer component', () => {
       beforeEach(() => {
         el = shallow(<EditorContainer {...props}>{testContent}</EditorContainer>);
       });
-      test('close behavior is linked to modal onClose and footer onCancel', () => {
+      test('close behavior is linked to modal onClose', () => {
         const expected = hooks.handleCancelClicked({ onClose: props.onClose });
-        expect(el.children().at(2).props().onCancel).toEqual(expected);
+        // eslint-disable-next-line
+        expect(el.children().children().children().at(1).children().at(0)
+          .props().onClick).toEqual(expected);
+      });
+      test('close behavior is linked to footer onCancel', () => {
+        const expected = hooks.handleCancelClicked({ onClose: props.onClose });
+        expect(el.children().at(2)
+          .props().onCancel).toEqual(expected);
       });
       test('save behavior is linked to footer onSave', () => {
         const expected = hooks.handleSaveClicked({
           getContent: props.getContent,
           dispatch: useDispatch(),
         });
-        expect(el.children().at(2).props().onSave).toEqual(expected);
+        expect(el.children().at(2)
+          .props().onSave).toEqual(expected);
       });
     });
   });
