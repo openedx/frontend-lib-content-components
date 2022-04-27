@@ -1,3 +1,4 @@
+import { IconButton } from '@edx/paragon';
 import { shallow } from 'enzyme';
 import { useDispatch } from 'react-redux';
 
@@ -38,8 +39,7 @@ describe('EditorContainer component', () => {
       });
       test('close behavior is linked to modal onClose', () => {
         const expected = hooks.handleCancelClicked({ onClose: props.onClose });
-        // eslint-disable-next-line
-        expect(el.children().children().children().at(1).children().at(0)
+        expect(el.find(IconButton)
           .props().onClick).toEqual(expected);
       });
       test('close behavior is linked to footer onCancel', () => {
