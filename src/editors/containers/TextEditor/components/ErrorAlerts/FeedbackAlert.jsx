@@ -22,7 +22,7 @@ export const hooks = {
 };
 
 export const FeedbackAlert = ({
-  dismissCallback,
+  dismissError,
   isError,
   children,
 }) => {
@@ -37,7 +37,7 @@ export const FeedbackAlert = ({
       dismissible
       onClose={() => {
         dismissAlert();
-        dismissCallback();
+        dismissError();
       }}
     >
       {children}

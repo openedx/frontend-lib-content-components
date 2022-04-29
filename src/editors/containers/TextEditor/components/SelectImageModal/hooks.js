@@ -71,12 +71,12 @@ export const imgListHooks = ({
       onHighlightChange: e => setHighlighted(e.target.value),
     },
     addImageErrorProps: {
-      dismissAddImageError: () => setIsAddImageError(false),
-      isAddImageError,
+      dismissError: () => setIsAddImageError(false),
+      isError: isAddImageError,
     },
     selectImageErrorProps: {
-      dismissSelectImageError: () => setIsSelectImageError(false),
-      isSelectImageError,
+      dismissError: () => setIsSelectImageError(false),
+      isError: isSelectImageError,
     },
   };
 };

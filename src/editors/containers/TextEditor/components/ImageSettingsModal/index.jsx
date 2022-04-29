@@ -1,16 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import { Button, Image } from '@edx/paragon';
 import { ArrowBackIos } from '@edx/paragon/icons';
 import { FormattedMessage, injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 
-import BaseModal from '../BaseModal';
-
-import AltTextControls from './AltTextControls';
-import DimensionControls from './DimensionControls';
+import './index.scss';
 import hooks from './hooks';
 import messages from './messages';
-import './index.scss';
+import BaseModal from '../BaseModal';
+import AltTextControls from './AltTextControls';
+import DimensionControls from './DimensionControls';
+import FeedbackAlert from '../ErrorAlerts/FeedbackAlert';
 
 /**
  * Modal display wrapping the dimension and alt-text controls for image tags
@@ -38,6 +39,8 @@ export const ImageSettingsModal = ({
     dimensions: dimensions.value,
     altText: altText.value,
     isDecorative: altText.isDecorative,
+    dimensionsError: dimensions.errorProps,
+    altTextError: altText.errorProps,
   });
   return (
     <BaseModal
@@ -48,13 +51,14 @@ export const ImageSettingsModal = ({
         <Button
           variant="primary"
           onClick={onSaveClick}
-          disabled={hooks.isSaveDisabled(altText)}
         >
           <FormattedMessage {...messages.saveButtonLabel} />
         </Button>
       )}
     >
-      {/* alert for alt text*/}
+      <FeedbackAlert {...altText.errorProps}>
+        <FormattedMessage {...messages.altTextError} />
+      </FeedbackAlert>
       <Button
         onClick={returnToSelection}
         variant="link"

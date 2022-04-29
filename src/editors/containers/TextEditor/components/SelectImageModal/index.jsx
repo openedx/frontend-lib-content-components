@@ -13,8 +13,7 @@ import Gallery from './Gallery';
 import FileInput from './FileInput';
 import FetchErrorAlert from '../ErrorAlerts/FetchErrorAlert';
 import UploadErrorAlert from '../ErrorAlerts/UploadErrorAlert';
-import AddImageAlert from '../ErrorAlerts/AddImageAlert';
-import SelectImageAlert from '../ErrorAlerts/SelectImageAlert';
+import FeedbackAlert from '../ErrorAlerts/FeedbackAlert';
 
 export const SelectImageModal = ({
   isOpen,
@@ -47,10 +46,19 @@ export const SelectImageModal = ({
       )}
       title={intl.formatMessage(messages.titleLabel)}
     >
+
+      {/* Error Alerts */}
       <FetchErrorAlert />
       <UploadErrorAlert />
-      <AddImageAlert {...addImageErrorProps} />
-      <SelectImageAlert {...selectImageErrorProps} />
+
+      {/* User Feedback Alerts */}
+      <FeedbackAlert {...addImageErrorProps}>
+        <FormattedMessage {...messages.addImageError} />
+      </FeedbackAlert>
+      <FeedbackAlert {...selectImageErrorProps}>
+        <FormattedMessage {...messages.selectImageError} />
+      </FeedbackAlert>
+
       <Stack gap={3}>
         <SearchSort {...searchSortProps} />
         <Gallery {...galleryProps} />

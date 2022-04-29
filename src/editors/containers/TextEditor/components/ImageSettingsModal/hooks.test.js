@@ -285,12 +285,4 @@ describe('ImageSettingsModal hooks', () => {
       });
     });
   });
-  describe('isSaveDisabled', () => {
-    it('returns true iff is not decorative and altText value is empty', () => {
-      hook = hooks.isSaveDisabled;
-      expect(hook({ isDecorative: false, value: '' })).toEqual(true);
-      expect(hook({ isDecorative: false, value: 'test' })).toEqual(false);
-      expect(hook({ isDecorative: true, value: '' })).toEqual(false);
-    });
-  });
 });

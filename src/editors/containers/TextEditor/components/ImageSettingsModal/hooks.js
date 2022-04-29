@@ -7,6 +7,8 @@ import * as module from './hooks';
 export const state = {
   altText: (val) => React.useState(val),
   dimensions: (val) => React.useState(val),
+  isAltTextError: (val) => React.useState(val),
+  isAltTextValid: (val) => React.useState(val),
   isDecorative: (val) => React.useState(val),
   isLocked: (val) => React.useState(val),
   local: (val) => React.useState(val),
@@ -118,15 +120,28 @@ export const dimensionLockHooks = () => {
  *     @param {string} - new height string
  *   {func} setWidth - set width
  *     @param {string} - new width string
- *   {func} updateDimensions - set dimensions based on state
+ *   {func} updateDimensions - set dimensions based on state 
+ *   {obj} errorProps - props for user feedback error
+ *     {bool} isError - true if dimensions are blank
+ *     {func} setError - sets isError to true
+ *     {func} dismissError - sets isError to false
+ *     {bool} isHeightValid - true if height field is ready to save
+ *     {func} setHeightValid - sets isHeightValid to true
+ *     {func} setHeightNotValid - sets isHeightValid to false
+ *     {bool} isWidthValid - true if width field is ready to save
+ *     {func} setWidthValid - sets isWidthValid to true
+ *     {func} setWidthNotValid - sets isWidthValid to false
  */
 export const dimensionHooks = () => {
   const [dimensions, setDimensions] = module.state.dimensions(null);
   const [local, setLocal] = module.state.local(null);
   const setAll = ({ height, width }) => {
+    height = height ? height : 1;
+    width = width ? width : 1;
     setDimensions({ height, width });
     setLocal({ height, width });
   };
+  // TODO test the above behavior
   const {
     initializeLock,
     isLocked,
@@ -166,15 +181,32 @@ export const dimensionHooks = () => {
  *   {bool} isDecorative - is the image decorative?
  *   {func} setIsDecorative - set isDecorative field
  *     @param {bool} isDecorative
+ *   {obj} errorProps - props for user feedback error
+ *     {bool} isError - true if isDecorative is false and value is empty
+ *     {func} setError - sets isError to true
+ *     {func} dismissError - sets isError to false
+ *     {bool} isValid - true if alt-text fields are ready to save
+ *     {func} setValid - sets isValid to true
+ *     {func} setNotValid - sets isValid to false
  */
 export const altTextHooks = (savedText) => {
   const [value, setValue] = module.state.altText(savedText || '');
   const [isDecorative, setIsDecorative] = module.state.isDecorative(false);
+  const [isAltTextError, setIsAltTextError] = module.state.isAltTextError(false);
+  const [isAltTextValid, setIsAltTextValid] = module.state.isAltTextValid(true);
   return {
     value,
     setValue,
     isDecorative,
     setIsDecorative,
+    errorProps: {
+      isError: isAltTextError,
+      setError: () => setIsAltTextError(true),
+      dismissError: () => setIsAltTextError(false),
+      isValid: isAltTextValid,
+      setValid: () => setIsAltTextValid(true),
+      setNotValid: () => setIsAltTextValid(false),
+    },
   };
 };
 
@@ -201,32 +233,43 @@ export const onCheckboxChange = (handleValue) => (e) => handleValue(e.target.che
  * @param {object} dimension - image dimensions ({ width, height })
  * @param {bool} isDecorative - is the image decorative?
  * @param {func} saveToEditor - save method for submitting image settings.
+ * @param {object} altTextError - error handling for alt-text
+ *   {func} setError - set isError to true
+ *   {func} dismissError - set isError to false
+ *   {func} setValid - set isValid to true
+ *   {func} setNotValid - set isValid to false
  */
 export const onSaveClick = ({
   altText,
   dimensions,
   isDecorative,
   saveToEditor,
-}) => () => saveToEditor({
-  altText,
-  dimensions,
-  isDecorative,
-});
+  altTextError,
+}) => () => {
+  let error = false;
 
-/**
- * isSaveDisabled(altText)
- * Returns true the save button should be disabled (altText is missing and not decorative)
- * @param {object} altText - altText hook object
- *   {bool} isDecorative - is the image decorative?
- *   {string} value - alt text value
- * @return {bool} - should the save button be disabled?
- */
-export const isSaveDisabled = (altText) => !altText.isDecorative && (altText.value === '');
+  // Alt Text Errors
+  if (!isDecorative && (altText === '')) {
+    altTextError.setError();
+    altTextError.setNotValid();
+    error = true;
+  } else {
+    altTextError.dismissError();
+    altTextError.setValid();
+  }
+
+  if (!error) {
+    saveToEditor({
+      altText,
+      dimensions,
+      isDecorative,
+    });
+  }
+};
 
 export default {
   altText: altTextHooks,
   dimensions: dimensionHooks,
-  isSaveDisabled,
   onCheckboxChange,
   onInputChange,
   onSaveClick,

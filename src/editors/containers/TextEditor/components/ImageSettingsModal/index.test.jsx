@@ -19,7 +19,6 @@ jest.mock('./hooks', () => ({
     isDecorative: false,
   }),
   onSaveClick: (args) => ({ 'hooks.onSaveClick': args }),
-  isSaveDisabled: (args) => ({ 'hooks.isSaveDisabled': args }),
 }));
 
 describe('ImageSettingsModal', () => {
