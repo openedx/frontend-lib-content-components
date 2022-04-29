@@ -59,6 +59,16 @@ export const messages = {
     defaultMessage: 'Failed to obtain course Images. Please Try again.',
     description: 'Message presented to user when images are not found',
   },
+  addImageError: {
+    id: 'authoring.texteditor.selectimagemodal.error.addImageError',
+    defaultMessage: 'Upload an image before proceeding.',
+    description: 'Message presented to user when there are no images in the gallery',
+  },
+  selectImageError: {
+    id: 'authoring.texteditor.selectimagemodal.error.selectImageError',
+    defaultMessage: 'Select an image to continue.',
+    description: 'Message presented to user when clicking Next without selecting an image',
+  },
   errorTitle: {
     id: 'authoring.texteditor.selectimagemodal.error.errorTitle',
     defaultMessage: 'Error',

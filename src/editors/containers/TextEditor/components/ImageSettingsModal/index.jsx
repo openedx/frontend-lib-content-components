@@ -54,6 +54,7 @@ export const ImageSettingsModal = ({
         </Button>
       )}
     >
+      {/* alert for alt text*/}
       <Button
         onClick={returnToSelection}
         variant="link"
