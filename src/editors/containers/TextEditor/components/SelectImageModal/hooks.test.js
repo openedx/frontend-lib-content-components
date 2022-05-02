@@ -63,7 +63,6 @@ describe('SelectImageModal hooks', () => {
   describe('state hooks', () => {
     state.testGetter(state.keys.highlighted);
     state.testGetter(state.keys.images);
-    state.testGetter(state.keys.isZeroImageError);
     state.testGetter(state.keys.isSelectImageError);
     state.testGetter(state.keys.searchString);
     state.testGetter(state.keys.sortBy);
