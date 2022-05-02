@@ -63,6 +63,7 @@ describe('SelectImageModal hooks', () => {
   describe('state hooks', () => {
     state.testGetter(state.keys.highlighted);
     state.testGetter(state.keys.images);
+    state.testGetter(state.keys.isZeroImageError);
     state.testGetter(state.keys.isSelectImageError);
     state.testGetter(state.keys.searchString);
     state.testGetter(state.keys.sortBy);
@@ -167,6 +168,7 @@ describe('SelectImageModal hooks', () => {
         expect(state.stateVals.images).toEqual({});
       });
       it('dispatches fetchImages thunkAction once, with setImages as onSuccess param', () => {
+        expect(React.useEffect.mock.calls.length).toEqual(1);
         const [cb, prereqs] = React.useEffect.mock.calls[0];
         expect(prereqs).toEqual([]);
         cb();
