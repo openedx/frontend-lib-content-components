@@ -68,14 +68,6 @@ export const getValidDimensions = ({
   out[keys.changed] = Math.round(iter * lockDims[keys.changed]);
   out[keys.other] = Math.round(out[keys.changed] * (lockDims[keys.other] / lockDims[keys.changed]));
 
-  // if values are empty, set them to 1 TODO TEST THIS IN THE TEST.JSX
-  if (!out[keys.changed]) {
-    out[keys.changed] = 1;
-  }
-  if (!out[keys.other]) {
-    out[keys.other] = 1;
-  }
-
   return out;
 };
 
