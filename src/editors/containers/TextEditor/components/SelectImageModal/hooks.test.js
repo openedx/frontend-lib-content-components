@@ -63,7 +63,6 @@ describe('SelectImageModal hooks', () => {
   describe('state hooks', () => {
     state.testGetter(state.keys.highlighted);
     state.testGetter(state.keys.images);
-    state.testGetter(state.keys.isZeroImageError);
     state.testGetter(state.keys.isSelectImageError);
     state.testGetter(state.keys.searchString);
     state.testGetter(state.keys.sortBy);
@@ -208,16 +207,6 @@ describe('SelectImageModal hooks', () => {
             ...props.searchSortProps,
             images: hook.images,
           }));
-        });
-      });
-      describe('zeroImageErrorProps', () => {
-        it('returns isZeroImageError value, initialized to false', () => {
-          expect(hook.zeroImageErrorProps.isError).toEqual(state.stateVals.isZeroImageError);
-          expect(state.stateVals.isZeroImageError).toEqual(false);
-        });
-        test('dismissError sets isZeroImageError to false', () => {
-          hook.zeroImageErrorProps.dismissError();
-          expect(state.setState.isZeroImageError).toHaveBeenCalledWith(false);
         });
       });
       describe('selectImageErrorProps', () => {

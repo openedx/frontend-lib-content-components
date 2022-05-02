@@ -46,6 +46,7 @@ export const FeedbackAlert = ({
 };
 
 FeedbackAlert.propTypes = {
+  dismissError: PropTypes.func.isRequired,
   isError: PropTypes.bool.isRequired,
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),

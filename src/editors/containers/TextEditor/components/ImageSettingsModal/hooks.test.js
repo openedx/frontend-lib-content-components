@@ -294,7 +294,7 @@ describe('ImageSettingsModal hooks', () => {
     });
   });
   describe('onSaveClick', () => {
-    let props = {
+    const props = {
       altTextError: {
         setError: jest.fn().mockName('setError'),
         dismissError: jest.fn().mockName('dismissError'),
@@ -347,32 +347,7 @@ describe('ImageSettingsModal hooks', () => {
       it('does not call saveToEditor', () => {
         hooks.onSaveClick({ ...props })();
         expect(props.saveToEditor).not.toHaveBeenCalled();
-      })
+      });
     });
-
-    // it('calls saveToEditor with dimensions, altText and isDecorative', () => {
-    //   const dimensions = simpleDims;
-    //   const altText = 'What is this?';
-    //   const isDecorative = 'probably';
-    //   const altTextError = {
-    //     setError: jest.fn(),
-    //     dismissError: jest.fn(),
-    //     setValid: jest.fn(),
-    //     setNotValid: jest.fn(),
-    //   };
-    //   const saveToEditor = jest.fn();
-    //   hooks.onSaveClick({
-    //     altText,
-    //     dimensions,
-    //     isDecorative,
-    //     saveToEditor,
-    //   })();
-    //   expect(saveToEditor).toHaveBeenCalledWith({
-    //     altText,
-    //     dimensions,
-    //     isDecorative,
-    //   });
-    // });
-
   });
 });

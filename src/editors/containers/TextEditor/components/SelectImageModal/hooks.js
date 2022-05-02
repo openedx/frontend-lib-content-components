@@ -8,7 +8,6 @@ import { sortFunctions, sortKeys } from './utils';
 export const state = {
   highlighted: (val) => React.useState(val),
   images: (val) => React.useState(val),
-  isZeroImageError: (val) => React.useState(val),
   isSelectImageError: (val) => React.useState(val),
   searchString: (val) => React.useState(val),
   sortBy: (val) => React.useState(val),
@@ -42,7 +41,6 @@ export const imgListHooks = ({
   const dispatch = useDispatch();
   const [images, setImages] = module.state.images({});
   const [highlighted, setHighlighted] = module.state.highlighted(null);
-  const [isZeroImageError, setIsZeroImageError] = module.state.isZeroImageError(false);
   const [isSelectImageError, setIsSelectImageError] = module.state.isSelectImageError(false);
   const list = module.displayList({ ...searchSortProps, images });
 
@@ -50,17 +48,16 @@ export const imgListHooks = ({
     dispatch(thunkActions.app.fetchImages({ setImages }));
   }, []);
 
-  React.useEffect(() => {
-    setIsZeroImageError(Object.keys(images).length === 0);
-  }, [images]);
-
   return {
     images,
     // highlight by id
     selectBtnProps: {
       onClick: () => {
-        if (highlighted) setSelection(images[highlighted]);
-        else setIsSelectImageError(true);
+        if (highlighted) {
+          setSelection(images[highlighted]);
+        } else {
+          setIsSelectImageError(true);
+        }
       },
     },
     galleryProps: {
@@ -69,10 +66,6 @@ export const imgListHooks = ({
       displayList: list,
       highlighted,
       onHighlightChange: e => setHighlighted(e.target.value),
-    },
-    zeroImageErrorProps: {
-      dismissError: () => setIsZeroImageError(false),
-      isError: isZeroImageError,
     },
     selectImageErrorProps: {
       dismissError: () => setIsSelectImageError(false),
@@ -103,10 +96,9 @@ export const imgHooks = ({ setSelection }) => {
   const searchSortProps = module.searchAndSortHooks();
   const imgList = module.imgListHooks({ setSelection, searchSortProps });
   const fileInput = module.fileInputHooks({ setSelection });
-  const { 
-    selectBtnProps, 
-    galleryProps, 
-    zeroImageErrorProps,
+  const {
+    selectBtnProps,
+    galleryProps,
     selectImageErrorProps,
   } = imgList;
 
@@ -115,7 +107,6 @@ export const imgHooks = ({ setSelection }) => {
     galleryProps,
     searchSortProps,
     selectBtnProps,
-    zeroImageErrorProps,
     selectImageErrorProps,
   };
 };

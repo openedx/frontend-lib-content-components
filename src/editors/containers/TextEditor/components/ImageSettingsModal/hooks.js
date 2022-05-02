@@ -69,8 +69,12 @@ export const getValidDimensions = ({
   out[keys.other] = Math.round(out[keys.changed] * (lockDims[keys.other] / lockDims[keys.changed]));
 
   // if values are empty, set them to 1 TODO TEST THIS IN THE TEST.JSX
-  if (!out[keys.changed]) out[keys.changed] = 1;
-  if (!out[keys.other]) out[keys.other] = 1;
+  if (!out[keys.changed]) {
+    out[keys.changed] = 1;
+  }
+  if (!out[keys.other]) {
+    out[keys.other] = 1;
+  }
 
   return out;
 };
@@ -124,7 +128,7 @@ export const dimensionLockHooks = () => {
  *     @param {string} - new height string
  *   {func} setWidth - set width
  *     @param {string} - new width string
- *   {func} updateDimensions - set dimensions based on state 
+ *   {func} updateDimensions - set dimensions based on state
  *   {obj} errorProps - props for user feedback error
  *     {bool} isError - true if dimensions are blank
  *     {func} setError - sets isError to true

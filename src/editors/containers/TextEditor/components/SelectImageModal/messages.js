@@ -80,11 +80,6 @@ export const messages = {
     defaultMessage: 'Failed to obtain course Images. Please Try again.',
     description: 'Message presented to user when images are not found',
   },
-  zeroImageError: {
-    id: 'authoring.texteditor.selectimagemodal.error.zeroImageError',
-    defaultMessage: 'Upload an image before proceeding.',
-    description: 'Message presented to user when there are no images in the gallery',
-  },
   selectImageError: {
     id: 'authoring.texteditor.selectimagemodal.error.selectImageError',
     defaultMessage: 'Select an image to continue.',

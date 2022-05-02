@@ -61,10 +61,12 @@ describe('FeedbackAlert component', () => {
         jest.clearAllMocks();
       });
       test('snapshot:  is Null when no error (FeedbackAlert)', () => {
-        expect(shallow(<FeedbackAlert {...props}> <p> An Error Message </p></FeedbackAlert>)).toMatchSnapshot();
+        expect(shallow(<FeedbackAlert {...props}> <p> An Error Message </p></FeedbackAlert>))
+          .toMatchSnapshot();
       });
       test('snapshot: Loads children and component when error (FeedbackAlert)', () => {
-        expect(shallow(<FeedbackAlert {...props} isError> <p> An Error Message </p> </FeedbackAlert>)).toMatchSnapshot();
+        expect(shallow(<FeedbackAlert {...props} isError> <p> An Error Message </p> </FeedbackAlert>))
+          .toMatchSnapshot();
       });
     });
   });

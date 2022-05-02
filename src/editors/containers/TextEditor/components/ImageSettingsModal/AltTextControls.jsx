@@ -38,12 +38,13 @@ export const AltTextControls = ({
       type="input"
       value={value}
     />
-    {errorProps.isValid 
+    {errorProps.isValid
       ? null
-      : <Form.Control.Feedback type="invalid">
+      : (
+        <Form.Control.Feedback type="invalid">
           <FormattedMessage {...messages.altTextLocalFeedback} />
         </Form.Control.Feedback>
-    }
+      )}
     <Form.Checkbox
       checked={isDecorative}
       className="mt-4.5 decorative-control-label"
@@ -58,7 +59,7 @@ export const AltTextControls = ({
 AltTextControls.propTypes = {
   errorProps: PropTypes.shape({
     isValid: PropTypes.bool,
-  }),
+  }).isRequired,
   isDecorative: PropTypes.bool.isRequired,
   setValue: PropTypes.func.isRequired,
   setIsDecorative: PropTypes.func.isRequired,
