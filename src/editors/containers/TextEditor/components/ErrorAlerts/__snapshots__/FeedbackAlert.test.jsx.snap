@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FeedbackAlert component Component Snapshots snapshot:  is Null when no error (FeedbackAlert) 1`] = `""`;
+
+exports[`FeedbackAlert component Component Snapshots snapshot: Loads children and component when error (FeedbackAlert) 1`] = `
+<Alert
+  dismissible={true}
+  onClose={[Function]}
+  variant="danger"
+>
+   
+  <p>
+     An Error Message 
+  </p>
+   
+</Alert>
+`;

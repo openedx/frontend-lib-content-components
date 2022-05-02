@@ -61,8 +61,10 @@ describe('SelectImageModal hooks', () => {
     jest.clearAllMocks();
   });
   describe('state hooks', () => {
-    state.testGetter(state.keys.images);
     state.testGetter(state.keys.highlighted);
+    state.testGetter(state.keys.images);
+    state.testGetter(state.keys.isZeroImageError);
+    state.testGetter(state.keys.isSelectImageError);
     state.testGetter(state.keys.searchString);
     state.testGetter(state.keys.sortBy);
   });
@@ -166,7 +168,6 @@ describe('SelectImageModal hooks', () => {
         expect(state.stateVals.images).toEqual({});
       });
       it('dispatches fetchImages thunkAction once, with setImages as onSuccess param', () => {
-        expect(React.useEffect.mock.calls.length).toEqual(1);
         const [cb, prereqs] = React.useEffect.mock.calls[0];
         expect(prereqs).toEqual([]);
         cb();
@@ -175,12 +176,6 @@ describe('SelectImageModal hooks', () => {
         );
       });
       describe('selectBtnProps', () => {
-        it('is disabled if nothing is highlighted', () => {
-          expect(hook.selectBtnProps.disabled).toEqual(true);
-          state.mockVal(state.keys.highlighted, { some: 'value' });
-          load();
-          expect(hook.selectBtnProps.disabled).toEqual(false);
-        });
         test('on click, if sets selection to the image with the same id', () => {
           const highlighted = 'id1';
           state.mockVal(state.keys.images, { [highlighted]: testValue });
@@ -190,6 +185,14 @@ describe('SelectImageModal hooks', () => {
           hook.selectBtnProps.onClick();
           expect(props.setSelection).toHaveBeenCalledWith(testValue);
         });
+        test('on click, sets isSelectImageError to true if nothing is highlighted', () => {
+          state.mockVal(state.keys.images, { });
+          state.mockVal(state.keys.highlighted, null);
+          load();
+          hook.selectBtnProps.onClick();
+          expect(props.setSelection).not.toHaveBeenCalled();
+          expect(state.setState.isSelectImageError).toHaveBeenCalledWith(true);
+        });
       });
       describe('galleryProps', () => {
         it('returns highlighted value, initialized to null', () => {
@@ -197,7 +200,7 @@ describe('SelectImageModal hooks', () => {
           expect(state.stateVals.highlighted).toEqual(null);
         });
         test('onHighlightChange sets highlighted with event target value', () => {
-          expect(hook.galleryProps.onHighlightChange({ target: { value: testValue } }));
+          hook.galleryProps.onHighlightChange({ target: { value: testValue } });
           expect(state.setState.highlighted).toHaveBeenCalledWith(testValue);
         });
         test('displayList returns displayListhook called with searchSortProps and images', () => {
@@ -205,6 +208,26 @@ describe('SelectImageModal hooks', () => {
             ...props.searchSortProps,
             images: hook.images,
           }));
+        });
+      });
+      describe('zeroImageErrorProps', () => {
+        it('returns isZeroImageError value, initialized to false', () => {
+          expect(hook.zeroImageErrorProps.isError).toEqual(state.stateVals.isZeroImageError);
+          expect(state.stateVals.isZeroImageError).toEqual(false);
+        });
+        test('dismissError sets isZeroImageError to false', () => {
+          hook.zeroImageErrorProps.dismissError();
+          expect(state.setState.isZeroImageError).toHaveBeenCalledWith(false);
+        });
+      });
+      describe('selectImageErrorProps', () => {
+        it('returns selectImageError value, initialized to false', () => {
+          expect(hook.selectImageErrorProps.isError).toEqual(state.stateVals.isSelectImageError);
+          expect(state.stateVals.isSelectImageError).toEqual(false);
+        });
+        test('dismissError sets selectImageError to false', () => {
+          hook.selectImageErrorProps.dismissError();
+          expect(state.setState.isSelectImageError).toHaveBeenCalledWith(false);
         });
       });
     });

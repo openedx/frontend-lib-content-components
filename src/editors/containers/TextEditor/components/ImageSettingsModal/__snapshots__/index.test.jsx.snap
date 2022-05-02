@@ -5,22 +5,16 @@ exports[`ImageSettingsModal render snapshot 1`] = `
   close={[MockFunction props.close]}
   confirmAction={
     <Button
-      disabled={
-        Object {
-          "hooks.isSaveDisabled": Object {
-            "isDecorative": false,
-            "value": "alternative Taxes",
-          },
-        }
-      }
       onClick={
         Object {
           "hooks.onSaveClick": Object {
             "altText": "alternative Taxes",
+            "altTextError": undefined,
             "dimensions": Object {
               "height": 13,
               "width": 12,
             },
+            "dimensionsError": undefined,
             "isDecorative": false,
             "saveToEditor": [MockFunction props.saveToEditor],
           },
@@ -39,6 +33,13 @@ exports[`ImageSettingsModal render snapshot 1`] = `
   isOpen={false}
   title="Image Settings"
 >
+  <FeedbackAlert>
+    <FormattedMessage
+      defaultMessage="Enter alt text or specify that the image is decorative only."
+      description="Message presented to user when user attempts to save unaccepted altText configuration."
+      id="authoring.texteditor.imagesettingsmodal.error.altTextError"
+    />
+  </FeedbackAlert>
   <Button
     onClick={[MockFunction props.returnToSelector]}
     size="inline"

@@ -34,6 +34,8 @@ describe('state values', () => {
   };
   test('provides altText state value', () => testStateMethod(state.keys.altText));
   test('provides dimensions state value', () => testStateMethod(state.keys.dimensions));
+  test('provides isAltTextError state value', () => testStateMethod(state.keys.isAltTextError));
+  test('provides isAltTextValid state value', () => testStateMethod(state.keys.isAltTextValid));
   test('provides isDecorative state value', () => testStateMethod(state.keys.isDecorative));
   test('provides isLocked state value', () => testStateMethod(state.keys.isLocked));
   test('provides local state value', () => testStateMethod(state.keys.local));
@@ -42,6 +44,9 @@ describe('state values', () => {
 });
 
 describe('ImageSettingsModal hooks', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
   describe('dimensions-related hooks', () => {
     describe('getValidDimensions', () => {
       it('returns local dimensions if not locked', () => {
@@ -237,17 +242,39 @@ describe('ImageSettingsModal hooks', () => {
     });
   });
   describe('altTextHooks', () => {
-    it('returns value and isDecorative, along with associated setters', () => {
+    it('returns value, isDecorative and error props, along with associated setters', () => {
       state.mock();
       const value = 'myVAL';
       const isDecorative = 'IS WE Decorating?';
+      const isAltTextError = false;
+      const isAltTextValid = true;
       state.mockVal(state.keys.altText, value, state.setState.altText);
       state.mockVal(state.keys.isDecorative, isDecorative, state.setState.isDecorative);
+      state.mockVal(state.keys.isAltTextError, isAltTextError, state.setState.isAltTextError);
+      state.mockVal(state.keys.isAltTextValid, isAltTextValid, state.setState.isAltTextValid);
       hook = hooks.altTextHooks();
       expect(hook.value).toEqual(value);
       expect(hook.setValue).toEqual(state.setState.altText);
       expect(hook.isDecorative).toEqual(isDecorative);
       expect(hook.setIsDecorative).toEqual(state.setState.isDecorative);
+      expect(hook.errorProps.isError).toEqual(isAltTextError);
+      expect(hook.errorProps.isValid).toEqual(isAltTextValid);
+    });
+    test('setError sets isAltTextError to true', () => {
+      hook.errorProps.setError();
+      expect(state.setState.isAltTextError).toHaveBeenCalledWith(true);
+    });
+    test('dismissError sets isAltTextError to false', () => {
+      hook.errorProps.dismissError();
+      expect(state.setState.isAltTextError).toHaveBeenCalledWith(false);
+    });
+    test('setValid sets isAltTextValid to true', () => {
+      hook.errorProps.setValid();
+      expect(state.setState.isAltTextValid).toHaveBeenCalledWith(true);
+    });
+    test('setNotValid sets isAltTextValid to false', () => {
+      hook.errorProps.setNotValid();
+      expect(state.setState.isAltTextValid).toHaveBeenCalledWith(false);
     });
   });
   describe('onInputChange', () => {
@@ -267,22 +294,85 @@ describe('ImageSettingsModal hooks', () => {
     });
   });
   describe('onSaveClick', () => {
-    it('calls saveToEditor with dimensions, altText, and isDecorative', () => {
-      const dimensions = simpleDims;
-      const altText = 'What is this?';
-      const isDecorative = 'probably';
-      const saveToEditor = jest.fn();
-      hooks.onSaveClick({
-        altText,
-        dimensions,
-        isDecorative,
-        saveToEditor,
-      })();
-      expect(saveToEditor).toHaveBeenCalledWith({
-        altText,
-        dimensions,
-        isDecorative,
+    let props = {
+      altTextError: {
+        setError: jest.fn().mockName('setError'),
+        dismissError: jest.fn().mockName('dismissError'),
+        setValid: jest.fn().mockName('setValid'),
+        setNotValid: jest.fn().mockName('setNotValid'),
+      },
+      dimensions: simpleDims,
+      saveToEditor: jest.fn().mockName('saveToEditor'),
+    };
+    beforeEach(() => {
+      props.altText = 'What is this?';
+      props.isDecorative = false;
+    });
+    describe('when isDecorative is false and altText is not an empty string', () => {
+      it('calls altTextError.dismissError, altTextError.setValid and saveToEditor with dimensions, altText and isDecorative', () => {
+        hooks.onSaveClick({ ...props })();
+        expect(props.altTextError.dismissError).toHaveBeenCalled();
+        expect(props.altTextError.setValid).toHaveBeenCalled();
+        expect(props.saveToEditor).toHaveBeenCalledWith({
+          altText: props.altText,
+          dimensions: props.dimensions,
+          isDecorative: props.isDecorative,
+        });
       });
     });
+    describe('when isDecorative is true', () => {
+      beforeEach(() => {
+        props.isDecorative = true;
+      });
+      it('calls altTextError.dismissError, altTextError.setValid and saveToEditor with dimensions, altText and isDecorative', () => {
+        hooks.onSaveClick({ ...props })();
+        expect(props.altTextError.dismissError).toHaveBeenCalled();
+        expect(props.altTextError.setValid).toHaveBeenCalled();
+        expect(props.saveToEditor).toHaveBeenCalledWith({
+          altText: props.altText,
+          dimensions: props.dimensions,
+          isDecorative: props.isDecorative,
+        });
+      });
+    });
+    describe('when isDecorative is false and altText is an empty string', () => {
+      beforeEach(() => {
+        props.altText = '';
+      });
+      it('calls altTextError.setError and altTextError.setNotValid', () => {
+        hooks.onSaveClick({ ...props })();
+        expect(props.altTextError.setError).toHaveBeenCalled();
+        expect(props.altTextError.setNotValid).toHaveBeenCalled();
+      });
+      it('does not call saveToEditor', () => {
+        hooks.onSaveClick({ ...props })();
+        expect(props.saveToEditor).not.toHaveBeenCalled();
+      })
+    });
+
+    // it('calls saveToEditor with dimensions, altText and isDecorative', () => {
+    //   const dimensions = simpleDims;
+    //   const altText = 'What is this?';
+    //   const isDecorative = 'probably';
+    //   const altTextError = {
+    //     setError: jest.fn(),
+    //     dismissError: jest.fn(),
+    //     setValid: jest.fn(),
+    //     setNotValid: jest.fn(),
+    //   };
+    //   const saveToEditor = jest.fn();
+    //   hooks.onSaveClick({
+    //     altText,
+    //     dimensions,
+    //     isDecorative,
+    //     saveToEditor,
+    //   })();
+    //   expect(saveToEditor).toHaveBeenCalledWith({
+    //     altText,
+    //     dimensions,
+    //     isDecorative,
+    //   });
+    // });
+
   });
 });

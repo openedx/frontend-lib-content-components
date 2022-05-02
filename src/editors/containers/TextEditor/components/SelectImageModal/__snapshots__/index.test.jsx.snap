@@ -32,6 +32,20 @@ exports[`SelectImageModal component snapshot 1`] = `
 >
   <FetchErrorAlert />
   <UploadErrorAlert />
+  <FeedbackAlert>
+    <FormattedMessage
+      defaultMessage="Upload an image before proceeding."
+      description="Message presented to user when there are no images in the gallery"
+      id="authoring.texteditor.selectimagemodal.error.zeroImageError"
+    />
+  </FeedbackAlert>
+  <FeedbackAlert>
+    <FormattedMessage
+      defaultMessage="Select an image to continue."
+      description="Message presented to user when clicking Next without selecting an image"
+      id="authoring.texteditor.selectimagemodal.error.selectImageError"
+    />
+  </FeedbackAlert>
   <Stack
     gap={3}
   >

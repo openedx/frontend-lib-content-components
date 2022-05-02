@@ -27,7 +27,7 @@ export const SelectImageModal = ({
     galleryProps,
     searchSortProps,
     selectBtnProps,
-    addImageErrorProps,
+    zeroImageErrorProps,
     selectImageErrorProps,
   } = hooks.imgHooks({ setSelection });
   return (
@@ -52,8 +52,8 @@ export const SelectImageModal = ({
       <UploadErrorAlert />
 
       {/* User Feedback Alerts */}
-      <FeedbackAlert {...addImageErrorProps}>
-        <FormattedMessage {...messages.addImageError} />
+      <FeedbackAlert {...zeroImageErrorProps}>
+        <FormattedMessage {...messages.zeroImageError} />
       </FeedbackAlert>
       <FeedbackAlert {...selectImageErrorProps}>
         <FormattedMessage {...messages.selectImageError} />

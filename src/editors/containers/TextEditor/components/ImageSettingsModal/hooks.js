@@ -68,6 +68,10 @@ export const getValidDimensions = ({
   out[keys.changed] = Math.round(iter * lockDims[keys.changed]);
   out[keys.other] = Math.round(out[keys.changed] * (lockDims[keys.other] / lockDims[keys.changed]));
 
+  // if values are empty, set them to 1 TODO TEST THIS IN THE TEST.JSX
+  if (!out[keys.changed]) out[keys.changed] = 1;
+  if (!out[keys.other]) out[keys.other] = 1;
+
   return out;
 };
 
@@ -136,12 +140,9 @@ export const dimensionHooks = () => {
   const [dimensions, setDimensions] = module.state.dimensions(null);
   const [local, setLocal] = module.state.local(null);
   const setAll = ({ height, width }) => {
-    height = height ? height : 1;
-    width = width ? width : 1;
     setDimensions({ height, width });
     setLocal({ height, width });
   };
-  // TODO test the above behavior
   const {
     initializeLock,
     isLocked,
@@ -241,10 +242,10 @@ export const onCheckboxChange = (handleValue) => (e) => handleValue(e.target.che
  */
 export const onSaveClick = ({
   altText,
+  altTextError,
   dimensions,
   isDecorative,
   saveToEditor,
-  altTextError,
 }) => () => {
   let error = false;
 

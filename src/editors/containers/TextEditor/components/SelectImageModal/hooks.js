@@ -8,7 +8,7 @@ import { sortFunctions, sortKeys } from './utils';
 export const state = {
   highlighted: (val) => React.useState(val),
   images: (val) => React.useState(val),
-  isAddImageError: (val) => React.useState(val),
+  isZeroImageError: (val) => React.useState(val),
   isSelectImageError: (val) => React.useState(val),
   searchString: (val) => React.useState(val),
   sortBy: (val) => React.useState(val),
@@ -42,7 +42,7 @@ export const imgListHooks = ({
   const dispatch = useDispatch();
   const [images, setImages] = module.state.images({});
   const [highlighted, setHighlighted] = module.state.highlighted(null);
-  const [isAddImageError, setIsAddImageError] = module.state.isAddImageError(false);
+  const [isZeroImageError, setIsZeroImageError] = module.state.isZeroImageError(false);
   const [isSelectImageError, setIsSelectImageError] = module.state.isSelectImageError(false);
   const list = module.displayList({ ...searchSortProps, images });
 
@@ -51,7 +51,7 @@ export const imgListHooks = ({
   }, []);
 
   React.useEffect(() => {
-    setIsAddImageError(Object.keys(images).length === 0);
+    setIsZeroImageError(Object.keys(images).length === 0);
   }, [images]);
 
   return {
@@ -70,9 +70,9 @@ export const imgListHooks = ({
       highlighted,
       onHighlightChange: e => setHighlighted(e.target.value),
     },
-    addImageErrorProps: {
-      dismissError: () => setIsAddImageError(false),
-      isError: isAddImageError,
+    zeroImageErrorProps: {
+      dismissError: () => setIsZeroImageError(false),
+      isError: isZeroImageError,
     },
     selectImageErrorProps: {
       dismissError: () => setIsSelectImageError(false),
@@ -106,7 +106,7 @@ export const imgHooks = ({ setSelection }) => {
   const { 
     selectBtnProps, 
     galleryProps, 
-    addImageErrorProps,
+    zeroImageErrorProps,
     selectImageErrorProps,
   } = imgList;
 
@@ -115,7 +115,7 @@ export const imgHooks = ({ setSelection }) => {
     galleryProps,
     searchSortProps,
     selectBtnProps,
-    addImageErrorProps,
+    zeroImageErrorProps,
     selectImageErrorProps,
   };
 };
