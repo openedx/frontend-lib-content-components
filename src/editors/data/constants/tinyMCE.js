@@ -16,11 +16,13 @@ export const buttons = StrictDict({
     left: 'alignleft',
     right: 'alignright',
   }),
+
+  foreColor: 'forecolor',
   backColor: 'backcolor',
   bold: 'bold',
   bullist: 'bullist',
   charmap: 'charmap',
-  code: 'code',
+  code: 'code-modified', // use a custom button name, consistently, for our text-only button
   codesample: 'codesample',
   editImageSettings: 'editimagesettings',
   emoticons: 'emoticons',
@@ -34,6 +36,8 @@ export const buttons = StrictDict({
   indent: 'indent',
   italic: 'italic',
   link: 'link',
+  unlink: 'unlink',
+
   numlist: 'numlist',
   outdent: 'outdent',
   redo: 'redo',
@@ -48,9 +52,11 @@ export const buttons = StrictDict({
 
 export const plugins = listKeyStore([
   'link',
+  'lists',
   'codesample',
   'emoticons',
   'table',
+  'hr',
   'charmap',
   'code',
   'autoresize',

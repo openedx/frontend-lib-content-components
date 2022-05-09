@@ -31,10 +31,9 @@ export const returnUrl = createSelector(
 export const isInitialized = createSelector(
   [
     module.simpleSelectors.unitUrl,
-    module.simpleSelectors.editorInitialized,
     module.simpleSelectors.blockValue,
   ],
-  (unitUrl, editorInitialized, blockValue) => !!(unitUrl && blockValue && editorInitialized),
+  (unitUrl, blockValue) => !!(unitUrl && blockValue),
 );
 
 export const displayTitle = createSelector(
@@ -54,10 +53,21 @@ export const displayTitle = createSelector(
       : blockType[0].toUpperCase() + blockType.substring(1);
   },
 );
+export const analytics = createSelector(
+  [
+    module.simpleSelectors.blockId,
+    module.simpleSelectors.blockType,
+    module.simpleSelectors.courseId,
+  ],
+  (blockId, blockType, courseId) => (
+    { blockId, blockType, courseId }
+  ),
+);
 
 export default {
   ...simpleSelectors,
   isInitialized,
   returnUrl,
   displayTitle,
+  analytics,
 };

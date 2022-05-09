@@ -6,9 +6,11 @@ const mapToolbars = toolbars => toolbars.map(toolbar => toolbar.join(' ')).join(
 export default StrictDict({
   plugins: [
     plugins.link,
+    plugins.lists,
     plugins.codesample,
     plugins.emoticons,
     plugins.table,
+    plugins.hr,
     plugins.charmap,
     plugins.code,
     plugins.autoresize,
@@ -19,7 +21,7 @@ export default StrictDict({
   toolbar: mapToolbars([
     [buttons.undo, buttons.redo],
     [buttons.formatSelect],
-    [buttons.bold, buttons.italic, buttons.backColor],
+    [buttons.bold, buttons.italic, buttons.foreColor, buttons.backColor],
     [
       buttons.align.left,
       buttons.align.center,
@@ -32,15 +34,9 @@ export default StrictDict({
       buttons.outdent,
       buttons.indent,
     ],
-    [buttons.imageUploadButton],
-    [buttons.link],
-    [buttons.emoticons],
-    [buttons.table],
-    [buttons.codesample],
-    [buttons.charmap],
-    [buttons.removeFormat],
-    [buttons.hr],
-    [buttons.code],
+    [buttons.imageUploadButton, buttons.link, buttons.unlink, buttons.table],
+    [buttons.emoticons, buttons.charmap, buttons.hr],
+    [buttons.removeFormat, buttons.code],
   ]),
   imageToolbar: mapToolbars([
     // [buttons.rotate.left, buttons.rotate.right],
