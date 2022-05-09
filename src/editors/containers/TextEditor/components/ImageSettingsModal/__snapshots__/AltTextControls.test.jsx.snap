@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`AltTextControls render snapshot: isDecorative=true errorProps.isValid=false 1`] = `
+exports[`AltTextControls render snapshot: isDecorative=true errorProps.showSubmissionError=false 1`] = `
 <Form.Group
   className="mt-4.5"
 >
@@ -55,7 +55,7 @@ exports[`AltTextControls render snapshot: isDecorative=true errorProps.isValid=f
 </Form.Group>
 `;
 
-exports[`AltTextControls render snapshot: isDecorative=true errorProps.isValid=true 1`] = `
+exports[`AltTextControls render snapshot: isDecorative=true errorProps.showSubmissionError=true 1`] = `
 <Form.Group
   className="mt-4.5"
 >
@@ -72,7 +72,7 @@ exports[`AltTextControls render snapshot: isDecorative=true errorProps.isValid=t
     className="mt-4.5"
     disabled={true}
     floatingLabel="Alt Text"
-    isInvalid={false}
+    isInvalid={true}
     onChange={
       Object {
         "hooks.onInputChange": [MockFunction props.setValue],
@@ -81,6 +81,15 @@ exports[`AltTextControls render snapshot: isDecorative=true errorProps.isValid=t
     type="input"
     value="props.value"
   />
+  <Form.Control.Feedback
+    type="invalid"
+  >
+    <FormattedMessage
+      defaultMessage="Enter alt text"
+      description="Message feedback for user below the alt text field."
+      id="authoring.texteditor.imagesettingsmodal.error.altTextLocalFeedback"
+    />
+  </Form.Control.Feedback>
   <Form.Checkbox
     checked={true}
     className="mt-4.5 decorative-control-label"

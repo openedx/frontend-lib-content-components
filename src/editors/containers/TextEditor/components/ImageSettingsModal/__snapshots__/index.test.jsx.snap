@@ -33,13 +33,16 @@ exports[`ImageSettingsModal render snapshot 1`] = `
   isOpen={false}
   title="Image Settings"
 >
-  <FeedbackAlert>
+  <ErrorAlert
+    dismissError={null}
+    hideHeading={true}
+  >
     <FormattedMessage
       defaultMessage="Enter alt text or specify that the image is decorative only."
       description="Message presented to user when user attempts to save unaccepted altText configuration."
       id="authoring.texteditor.imagesettingsmodal.error.altTextError"
     />
-  </FeedbackAlert>
+  </ErrorAlert>
   <Button
     onClick={[MockFunction props.returnToSelector]}
     size="inline"

@@ -34,8 +34,8 @@ describe('state values', () => {
   };
   test('provides altText state value', () => testStateMethod(state.keys.altText));
   test('provides dimensions state value', () => testStateMethod(state.keys.dimensions));
-  test('provides isAltTextError state value', () => testStateMethod(state.keys.isAltTextError));
-  test('provides isAltTextValid state value', () => testStateMethod(state.keys.isAltTextValid));
+  test('provides showDismissibleError state value', () => testStateMethod(state.keys.showDismissibleError));
+  test('provides showSubmissionError state value', () => testStateMethod(state.keys.showSubmissionError));
   test('provides isDecorative state value', () => testStateMethod(state.keys.isDecorative));
   test('provides isLocked state value', () => testStateMethod(state.keys.isLocked));
   test('provides local state value', () => testStateMethod(state.keys.local));
@@ -242,39 +242,38 @@ describe('ImageSettingsModal hooks', () => {
     });
   });
   describe('altTextHooks', () => {
+    const value = 'myVAL';
+    const isDecorative = 'IS WE Decorating?';
+    const showDismissibleError = false;
+    const showSubmissionError = true;
     it('returns value, isDecorative and error props, along with associated setters', () => {
       state.mock();
-      const value = 'myVAL';
-      const isDecorative = 'IS WE Decorating?';
-      const isAltTextError = false;
-      const isAltTextValid = true;
       state.mockVal(state.keys.altText, value, state.setState.altText);
       state.mockVal(state.keys.isDecorative, isDecorative, state.setState.isDecorative);
-      state.mockVal(state.keys.isAltTextError, isAltTextError, state.setState.isAltTextError);
-      state.mockVal(state.keys.isAltTextValid, isAltTextValid, state.setState.isAltTextValid);
+      state.mockVal(state.keys.showDismissibleError, showDismissibleError, state.setState.showDismissibleError);
+      state.mockVal(state.keys.showSubmissionError, showSubmissionError, state.setState.showSubmissionError);
       hook = hooks.altTextHooks();
       expect(hook.value).toEqual(value);
-      expect(hook.setValue).toEqual(state.setState.altText);
       expect(hook.isDecorative).toEqual(isDecorative);
-      expect(hook.setIsDecorative).toEqual(state.setState.isDecorative);
-      expect(hook.errorProps.isError).toEqual(isAltTextError);
-      expect(hook.errorProps.isValid).toEqual(isAltTextValid);
+      expect(hook.errorProps.isError).toEqual(showDismissibleError);
+      expect(hook.errorProps.showSubmissionError).toEqual(showSubmissionError);
+      expect(hook.errorProps.setShowSubmissionError).toEqual(state.setState.showSubmissionError);
     });
-    test('setError sets isAltTextError to true', () => {
-      hook.errorProps.setError();
-      expect(state.setState.isAltTextError).toHaveBeenCalledWith(true);
+    test('setValue sets value', () => {
+      hook.setValue(value);
+      expect(state.setState.altText).toHaveBeenCalledWith(value);
     });
-    test('dismissError sets isAltTextError to false', () => {
+    test('setIsDecorative sets isDecorative', () => {
+      hook.setIsDecorative(isDecorative);
+      expect(state.setState.isDecorative).toHaveBeenCalledWith(isDecorative);
+    });
+    test('showError sets showDismissibleError to true', () => {
+      hook.errorProps.showError();
+      expect(state.setState.showDismissibleError).toHaveBeenCalledWith(true);
+    });
+    test('dismissError sets showDismissibleError to false', () => {
       hook.errorProps.dismissError();
-      expect(state.setState.isAltTextError).toHaveBeenCalledWith(false);
-    });
-    test('setValid sets isAltTextValid to true', () => {
-      hook.errorProps.setValid();
-      expect(state.setState.isAltTextValid).toHaveBeenCalledWith(true);
-    });
-    test('setNotValid sets isAltTextValid to false', () => {
-      hook.errorProps.setNotValid();
-      expect(state.setState.isAltTextValid).toHaveBeenCalledWith(false);
+      expect(state.setState.showDismissibleError).toHaveBeenCalledWith(false);
     });
   });
   describe('onInputChange', () => {
@@ -293,13 +292,32 @@ describe('ImageSettingsModal hooks', () => {
       expect(onChange).toHaveBeenCalledWith(checked);
     });
   });
+  describe('checkFormValidation', () => {
+    const props = {
+      onAltTextFail: jest.fn().mockName('onAltTextFail'),
+    };
+    beforeEach(() => {
+      props.altText = '';
+      props.isDecorative = false;
+    });
+    it('calls onAltTextFail when isDecorative is false and altText is an empty string', () => {
+      hooks.checkFormValidation({ ...props });
+      expect(props.onAltTextFail).toHaveBeenCalled();
+    });
+    it('returns false when isDeocrative is false and altText is an empty string', () => {
+      expect(hooks.checkFormValidation({ ...props })).toEqual(false);
+    });
+    it('returns true when isDecorative is true', () => {
+      props.isDecorative = true;
+      expect(hooks.checkFormValidation({ ...props })).toEqual(true);
+    });
+  });
   describe('onSaveClick', () => {
     const props = {
       altTextError: {
-        setError: jest.fn().mockName('setError'),
+        showError: jest.fn().mockName('showError'),
         dismissError: jest.fn().mockName('dismissError'),
-        setValid: jest.fn().mockName('setValid'),
-        setNotValid: jest.fn().mockName('setNotValid'),
+        setShowSubmissionError: jest.fn().mockName('setShowSubmissionError'),
       },
       dimensions: simpleDims,
       saveToEditor: jest.fn().mockName('saveToEditor'),
@@ -308,46 +326,30 @@ describe('ImageSettingsModal hooks', () => {
       props.altText = 'What is this?';
       props.isDecorative = false;
     });
-    describe('when isDecorative is false and altText is not an empty string', () => {
-      it('calls altTextError.dismissError, altTextError.setValid and saveToEditor with dimensions, altText and isDecorative', () => {
-        hooks.onSaveClick({ ...props })();
-        expect(props.altTextError.dismissError).toHaveBeenCalled();
-        expect(props.altTextError.setValid).toHaveBeenCalled();
-        expect(props.saveToEditor).toHaveBeenCalledWith({
-          altText: props.altText,
-          dimensions: props.dimensions,
-          isDecorative: props.isDecorative,
-        });
+    it('calls checkFormValidation', () => {
+      jest.spyOn(hooks, hookKeys.checkFormValidation);
+      hooks.onSaveClick({ ...props })();
+      expect(hooks.checkFormValidation).toHaveBeenCalled();
+    });
+    it('calls saveToEditor with dimensions, altText and isDecorative when checkFormValidation is true', () => {
+      jest.spyOn(hooks, hookKeys.checkFormValidation).mockReturnValueOnce(true);
+      hooks.onSaveClick({ ...props })();
+      expect(props.saveToEditor).toHaveBeenCalledWith({
+        altText: props.altText,
+        dimensions: props.dimensions,
+        isDecorative: props.isDecorative,
       });
     });
-    describe('when isDecorative is true', () => {
-      beforeEach(() => {
-        props.isDecorative = true;
-      });
-      it('calls altTextError.dismissError, altTextError.setValid and saveToEditor with dimensions, altText and isDecorative', () => {
-        hooks.onSaveClick({ ...props })();
-        expect(props.altTextError.dismissError).toHaveBeenCalled();
-        expect(props.altTextError.setValid).toHaveBeenCalled();
-        expect(props.saveToEditor).toHaveBeenCalledWith({
-          altText: props.altText,
-          dimensions: props.dimensions,
-          isDecorative: props.isDecorative,
-        });
-      });
+    it('calls dismissError and sets showSubmissionError to false when checkFormValidation is true', () => {
+      jest.spyOn(hooks, hookKeys.checkFormValidation).mockReturnValueOnce(true);
+      hooks.onSaveClick({ ...props })();
+      expect(props.altTextError.dismissError).toHaveBeenCalled();
+      expect(props.altTextError.setShowSubmissionError).toHaveBeenCalledWith(false);
     });
-    describe('when isDecorative is false and altText is an empty string', () => {
-      beforeEach(() => {
-        props.altText = '';
-      });
-      it('calls altTextError.setError and altTextError.setNotValid', () => {
-        hooks.onSaveClick({ ...props })();
-        expect(props.altTextError.setError).toHaveBeenCalled();
-        expect(props.altTextError.setNotValid).toHaveBeenCalled();
-      });
-      it('does not call saveToEditor', () => {
-        hooks.onSaveClick({ ...props })();
-        expect(props.saveToEditor).not.toHaveBeenCalled();
-      });
+    it('does not call saveEditor when checkFormValidation is false', () => {
+      jest.spyOn(hooks, hookKeys.checkFormValidation).mockReturnValueOnce(false);
+      hooks.onSaveClick({ ...props })();
+      expect(props.saveToEditor).not.toHaveBeenCalled();
     });
   });
 });

@@ -12,7 +12,7 @@ jest.mock('./hooks', () => ({
 describe('AltTextControls', () => {
   const props = {
     errorProps: {
-      isValid: true,
+      showSubmissionError: true,
     },
     isDecorative: true,
     value: 'props.value',
@@ -24,10 +24,10 @@ describe('AltTextControls', () => {
     props.setIsDecorative = jest.fn().mockName('props.setIsDecorative');
   });
   describe('render', () => {
-    test('snapshot: isDecorative=true errorProps.isValid=true', () => {
+    test('snapshot: isDecorative=true errorProps.showSubmissionError=true', () => {
       expect(shallow(<AltTextControls {...props} />)).toMatchSnapshot();
     });
-    test('snapshot: isDecorative=true errorProps.isValid=false', () => {
+    test('snapshot: isDecorative=true errorProps.showSubmissionError=false', () => {
       props.errorProps.isValid = false;
       expect(shallow(<AltTextControls {...props} />)).toMatchSnapshot();
     });

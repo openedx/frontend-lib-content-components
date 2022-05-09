@@ -5,6 +5,7 @@ exports[`ErrorAlert component Component Snapshots snapshot:  is Null when no err
 exports[`ErrorAlert component Component Snapshots snapshot: Loads children and component when error (ErrorAlert) 1`] = `
 <Alert
   dismissible={true}
+  onClose={[Function]}
   variant="danger"
 >
   <Alert.Heading>

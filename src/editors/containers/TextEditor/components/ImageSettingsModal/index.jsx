@@ -11,7 +11,7 @@ import messages from './messages';
 import BaseModal from '../BaseModal';
 import AltTextControls from './AltTextControls';
 import DimensionControls from './DimensionControls';
-import FeedbackAlert from '../ErrorAlerts/FeedbackAlert';
+import ErrorAlert from '../ErrorAlerts/ErrorAlert';
 
 /**
  * Modal display wrapping the dimension and alt-text controls for image tags
@@ -56,9 +56,9 @@ export const ImageSettingsModal = ({
         </Button>
       )}
     >
-      <FeedbackAlert {...altText.errorProps}>
+      <ErrorAlert {...altText.errorProps} hideHeading>
         <FormattedMessage {...messages.altTextError} />
-      </FeedbackAlert>
+      </ErrorAlert>
       <Button
         onClick={returnToSelection}
         variant="link"

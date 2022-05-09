@@ -13,7 +13,7 @@ import Gallery from './Gallery';
 import FileInput from './FileInput';
 import FetchErrorAlert from '../ErrorAlerts/FetchErrorAlert';
 import UploadErrorAlert from '../ErrorAlerts/UploadErrorAlert';
-import FeedbackAlert from '../ErrorAlerts/FeedbackAlert';
+import ErrorAlert from '../ErrorAlerts/ErrorAlert';
 
 export const SelectImageModal = ({
   isOpen,
@@ -51,9 +51,9 @@ export const SelectImageModal = ({
       <UploadErrorAlert />
 
       {/* User Feedback Alerts */}
-      <FeedbackAlert {...selectImageErrorProps}>
+      <ErrorAlert {...selectImageErrorProps} hideHeading>
         <FormattedMessage {...messages.selectImageError} />
-      </FeedbackAlert>
+      </ErrorAlert>
 
       <Stack gap={3}>
         <SearchSort {...searchSortProps} />

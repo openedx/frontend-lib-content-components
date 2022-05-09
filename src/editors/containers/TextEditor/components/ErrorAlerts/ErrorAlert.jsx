@@ -25,6 +25,8 @@ export const hooks = {
 };
 
 export const ErrorAlert = ({
+  dismissError,
+  hideHeading,
   isError,
   children,
 }) => {
@@ -37,19 +39,31 @@ export const ErrorAlert = ({
       variant="danger"
       icon={Info}
       dismissible
-      onClose={dismissAlert}
+      onClose={() => {
+        dismissAlert();
+        dismissError();
+      }}
     >
-      <Alert.Heading>
-        <FormattedMessage
-          {...messages.errorTitle}
-        />
-      </Alert.Heading>
+      {!hideHeading
+        ? (
+          <Alert.Heading>
+            <FormattedMessage {...messages.errorTitle} />
+          </Alert.Heading>
+        )
+        : null}
       {children}
     </Alert>
   );
 };
 
+ErrorAlert.defaultProps = {
+  dismissError: null,
+  hideHeading: false,
+};
+
 ErrorAlert.propTypes = {
+  dismissError: PropTypes.func,
+  hideHeading: PropTypes.bool,
   isError: PropTypes.bool.isRequired,
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
