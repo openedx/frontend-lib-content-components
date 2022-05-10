@@ -5,7 +5,6 @@ import { selectors } from '../../data/redux';
 
 import * as appHooks from '../../hooks';
 import * as hooks from './hooks';
-
 import analyticsEvt from '../../data/constants/analyticsEvt';
 
 jest.mock('../../data/redux', () => ({

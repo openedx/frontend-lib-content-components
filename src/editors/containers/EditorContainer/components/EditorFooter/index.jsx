@@ -21,13 +21,13 @@ export const EditorFooter = ({
   // injected
   intl,
 }) => (
-
   <div className="editor-footer" style={{ position: 'sticky', bottom: 0 }}>
     {saveFailed && (
       <Toast show onClose={nullMethod}>
         <FormattedMessage {...messages.contentSaveFailed} />
       </Toast>
     )}
+    
     <ModalDialog.Footer className="border-top-0">
       <ActionRow>
         <ActionRow.Spacer />

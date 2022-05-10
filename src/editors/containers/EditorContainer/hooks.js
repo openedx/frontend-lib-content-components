@@ -3,7 +3,6 @@ import { useSelector } from 'react-redux';
 import { RequestKeys } from '../../data/constants/requests';
 import { selectors } from '../../data/redux';
 import * as appHooks from '../../hooks';
-
 import analyticsEvt from '../../data/constants/analyticsEvt';
 
 export const {
@@ -11,7 +10,6 @@ export const {
   nullMethod,
   saveBlock,
 } = appHooks;
-
 
 export const handleSaveClicked = ({ getContent, dispatch }) => {
   const destination = useSelector(selectors.app.returnUrl);

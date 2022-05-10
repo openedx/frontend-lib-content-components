@@ -16,7 +16,6 @@ export const buttons = StrictDict({
     left: 'alignleft',
     right: 'alignright',
   }),
-
   foreColor: 'forecolor',
   backColor: 'backcolor',
   bold: 'bold',
@@ -37,7 +36,6 @@ export const buttons = StrictDict({
   italic: 'italic',
   link: 'link',
   unlink: 'unlink',
-
   numlist: 'numlist',
   outdent: 'outdent',
   redo: 'redo',

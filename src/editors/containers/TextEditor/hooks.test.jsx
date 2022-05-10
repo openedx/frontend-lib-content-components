@@ -54,7 +54,6 @@ describe('TextEditor hooks', () => {
     beforeEach(() => { state.mock(); });
     afterEach(() => { state.restore(); });
 
-
     describe('setupCustomBehavior', () => {
       test('It calls addButton in the editor, but openModal is not called', () => {
         const addButton = jest.fn();
@@ -65,7 +64,6 @@ describe('TextEditor hooks', () => {
         };
         const mockOpenModalWithImage = args => ({ openModalWithSelectedImage: args });
         const expectedSettingsAction = mockOpenModalWithImage({ editor, setImage, openModal });
-
         const openCodeEditor = expect.any(Function);
         jest.spyOn(module, moduleKeys.openModalWithSelectedImage)
           .mockImplementationOnce(mockOpenModalWithImage);

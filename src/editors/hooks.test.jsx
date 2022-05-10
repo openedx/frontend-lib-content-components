@@ -1,13 +1,11 @@
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
-
 import { sendTrackEvent } from '@edx/frontend-platform/analytics';
 import analyticsEvt from './data/constants/analyticsEvt';
 
 import { keyStore } from './utils';
 import { thunkActions } from './data/redux';
-
 import * as hooks from './hooks';
 
 jest.mock('react', () => ({

@@ -16,7 +16,6 @@ export const state = StrictDict({
   refReady: (val) => useState(val),
 });
 
-
 export const setupCustomBehavior = ({ openModal, setImage }) => (editor) => {
   // image upload button
   editor.ui.registry.addButton(tinyMCE.buttons.imageUploadButton, {

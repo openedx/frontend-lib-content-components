@@ -1,5 +1,4 @@
 import { IconButton } from '@edx/paragon';
-
 import { shallow } from 'enzyme';
 import { useDispatch } from 'react-redux';
 

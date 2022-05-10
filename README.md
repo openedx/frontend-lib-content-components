@@ -1,7 +1,6 @@
 # frontend-lib-content-components
 A library of high-level components for content handling (viewing, editing, etc. of HTML, video, problems, etc.), to be shared by multiple MFEs.
 
-
 # How to develop this package
 There are to distinct way to observe your changes. One can either either require your MFE to pull in its javascript from a local version of this package, or simply run the gallery view.
 
@@ -16,4 +15,11 @@ $ cd www
 $ npm start
 
 and now the gallery will be live at http://localhost:8080/index.html. use the toggle at the top to switch between availible editors.
+
+# Creating Your own editor
+If you wish to make your own editor, to being coding the editor, simply run the command 
+
+$ npm run-script addXblock <name of xblock>
+
+from the frontend-lib-content-components source directory. It will create an editor you can then veiw at src/editors/containers. It will also configure the editor to be viewable in the gallery view. Adding the editor to be used in studio will require the following steps: 
 

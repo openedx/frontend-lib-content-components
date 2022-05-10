@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 import { Icon, ModalDialog, IconButton } from '@edx/paragon';
 import { Close } from '@edx/paragon/icons';
 
-
 import EditorFooter from './components/EditorFooter';
 import TitleHeader from './components/TitleHeader';
 import * as hooks from './hooks';
