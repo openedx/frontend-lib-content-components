@@ -42,7 +42,6 @@ describe('EditorContainer hooks', () => {
     });
     describe('handleSaveClicked', () => {
       it('returns callback to saveBlock with dispatch and content from getContent', () => {
-
         const getContent = () => 'myTestContentValue';
         const output = hooks.handleSaveClicked({
           getContent,

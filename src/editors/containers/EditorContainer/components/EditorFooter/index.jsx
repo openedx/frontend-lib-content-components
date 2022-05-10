@@ -27,7 +27,7 @@ export const EditorFooter = ({
         <FormattedMessage {...messages.contentSaveFailed} />
       </Toast>
     )}
-    
+
     <ModalDialog.Footer className="border-top-0">
       <ActionRow>
         <ActionRow.Spacer />

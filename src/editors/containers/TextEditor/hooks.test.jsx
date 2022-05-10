@@ -84,15 +84,11 @@ describe('TextEditor hooks', () => {
       };
       const evt = 'fakeEvent';
       const editor = 'myEditor';
-      const addImageUploadBehavior = args => ({ addImageUploadBehvaior: args });
-
       const setupCustomBehavior = args => ({ setupCustomBehavior: args });
       beforeEach(() => {
         props.setEditorRef = jest.fn();
         props.openModal = jest.fn();
         props.initializeEditor = jest.fn();
-        jest.spyOn(module, moduleKeys.addImageUploadBehavior)
-          .mockImplementationOnce(addImageUploadBehavior);
         jest.spyOn(module, moduleKeys.setupCustomBehavior)
           .mockImplementationOnce(setupCustomBehavior);
         output = module.editorConfig(props);

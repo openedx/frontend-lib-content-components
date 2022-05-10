@@ -4,6 +4,8 @@
  * To use run npm run-script addXblock <your>
  */
 
+/* eslint-disable no-unused-vars */
+
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -14,6 +16,7 @@ import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 import EditorContainer from './editors/containers/EditorContainer';
 import * as module from '.';
 import { actions, selectors } from './editors/data/redux';
+import { RequestKeys } from './editors/data/constants/requests';
 
 export const hooks = {
   getContent: () => ({
@@ -50,7 +53,9 @@ export const ExampleEditor = ({
         )
         : (
           <p>
-            Your Editor Goes here. You can get at the xblock data with the blockValue field. here is what is in your xblock:  {JSON.stringify(blockValue)}
+            Your Editor Goes here.
+            You can get at the xblock data with the blockValue field.
+            here is what is in your xblock:  {JSON.stringify(blockValue)}
           </p>
         )}
     </div>

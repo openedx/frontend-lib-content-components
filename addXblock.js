@@ -1,4 +1,5 @@
-console.log(process.argv);
+// A script to create a new xblock editor in this repo.
+/* eslint no-console: 0 */
 
 // xblock name is is the third argument after node and fedx-scripts
 const xblockName = process.argv[2];
@@ -25,10 +26,6 @@ const openFileToArray = (filename) => {
 };
 
 const WriteIntoFile = (path, target, addition) => {
-  console.log('==============');
-  console.log(path);
-  console.log('==============');
-
   const contentArray = openFileToArray(path);
 
   contentArray.every((value, index) => {
@@ -42,7 +39,6 @@ const WriteIntoFile = (path, target, addition) => {
     return true;
   });
   const newContent = contentArray.join('\n');
-  console.log(newContent);
   fs.writeFileSync(path, newContent, (err) => {
     if (err) { throw err; } else {
       console.log(`Editor is created successfully at ${filepath}`);
