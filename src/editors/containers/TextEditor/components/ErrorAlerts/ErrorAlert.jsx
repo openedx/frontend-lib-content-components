@@ -11,7 +11,7 @@ export const hooks = {
   state: {
     isDismissed: (val) => React.useState(val),
   },
-  dismissalHooks: ({ isError }) => {
+  dismissalHooks: ({ dismissError, isError }) => {
     const [isDismissed, setIsDismissed] = hooks.state.isDismissed(false);
     React.useEffect(() => {
       setIsDismissed(isDismissed && !isError);
@@ -19,7 +19,10 @@ export const hooks = {
     [isError]);
     return {
       isDismissed,
-      dismissAlert: () => setIsDismissed(true),
+      dismissAlert: () => {
+        setIsDismissed(true);
+        dismissError();
+      },
     };
   },
 };
@@ -30,7 +33,7 @@ export const ErrorAlert = ({
   isError,
   children,
 }) => {
-  const { isDismissed, dismissAlert } = hooks.dismissalHooks({ isError });
+  const { isDismissed, dismissAlert } = hooks.dismissalHooks({ dismissError, isError });
   if (!isError || isDismissed) {
     return null;
   }
@@ -39,10 +42,7 @@ export const ErrorAlert = ({
       variant="danger"
       icon={Info}
       dismissible
-      onClose={() => {
-        dismissAlert();
-        dismissError();
-      }}
+      onClose={dismissAlert}
     >
       {!hideHeading
         && (

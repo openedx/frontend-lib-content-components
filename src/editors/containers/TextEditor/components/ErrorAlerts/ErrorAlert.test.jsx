@@ -28,15 +28,20 @@ describe('ErrorAlert component', () => {
       beforeEach(() => { state.mock(); });
       afterEach(() => { state.restore(); });
       describe('dismissalHooks', () => {
+        const props = {
+          dismissError: jest.fn(),
+          isError: testValue,
+        };
         beforeEach(() => {
-          hook = module.hooks.dismissalHooks({ isError: testValue });
+          hook = module.hooks.dismissalHooks(props);
         });
         it('returns isDismissed value, initialized to false', () => {
           expect(state.stateVals.isDismissed).toEqual(hook.isDismissed);
         });
-        test('dismissAlert sets isDismissed to true', () => {
+        test('dismissAlert sets isDismissed to true and calls dismissError', () => {
           hook.dismissAlert();
           expect(state.setState.isDismissed).toHaveBeenCalledWith(true);
+          expect(props.dismissError).toHaveBeenCalled();
         });
         test('On Render, calls setIsDismissed', () => {
           expect(React.useEffect.mock.calls.length).toEqual(1);
@@ -53,6 +58,7 @@ describe('ErrorAlert component', () => {
       let props;
       beforeAll(() => {
         props = {
+          dismissError: jest.fn(),
           hideHeading: false,
           isError: false,
         };
