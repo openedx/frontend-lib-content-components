@@ -17,10 +17,10 @@ import messages from './messages';
  * @param {string} value - current alt-text value
  */
 export const AltTextControls = ({
-  errorProps,
   isDecorative,
   setIsDecorative,
   setValue,
+  validation,
   value,
   // inject
   intl,
@@ -33,18 +33,17 @@ export const AltTextControls = ({
       className="mt-4.5"
       disabled={isDecorative}
       floatingLabel={intl.formatMessage(messages.altTextFloatingLabel)}
-      isInvalid={errorProps.showSubmissionError}
+      isInvalid={validation.show}
       onChange={hooks.onInputChange(setValue)}
       type="input"
       value={value}
     />
-    {errorProps.showSubmissionError
-      ? (
+    {validation.show
+      && (
         <Form.Control.Feedback type="invalid">
           <FormattedMessage {...messages.altTextLocalFeedback} />
         </Form.Control.Feedback>
-      )
-      : null}
+      )}
     <Form.Checkbox
       checked={isDecorative}
       className="mt-4.5 decorative-control-label"
@@ -57,12 +56,15 @@ export const AltTextControls = ({
   </Form.Group>
 );
 AltTextControls.propTypes = {
-  errorProps: PropTypes.shape({
-    showSubmissionError: PropTypes.bool,
+  error: PropTypes.shape({
+    show: PropTypes.bool,
   }).isRequired,
   isDecorative: PropTypes.bool.isRequired,
   setValue: PropTypes.func.isRequired,
   setIsDecorative: PropTypes.func.isRequired,
+  validation: PropTypes.shape({
+    show: PropTypes.bool,
+  }).isRequired,
   value: PropTypes.string.isRequired,
   // inject
   intl: intlShape.isRequired,

@@ -8,13 +8,18 @@ exports[`ImageSettingsModal render snapshot 1`] = `
       onClick={
         Object {
           "hooks.onSaveClick": Object {
-            "altText": "alternative Taxes",
-            "altTextError": undefined,
+            "altText": Object {
+              "error": Object {
+                "dismiss": [MockFunction],
+                "show": "sHoW",
+              },
+              "isDecorative": false,
+              "value": "alternative Taxes",
+            },
             "dimensions": Object {
               "height": 13,
               "width": 12,
             },
-            "dimensionsError": undefined,
             "isDecorative": false,
             "saveToEditor": [MockFunction props.saveToEditor],
           },
@@ -34,8 +39,9 @@ exports[`ImageSettingsModal render snapshot 1`] = `
   title="Image Settings"
 >
   <ErrorAlert
-    dismissError={null}
+    dismissError={[MockFunction]}
     hideHeading={true}
+    isError="sHoW"
   >
     <FormattedMessage
       defaultMessage="Enter alt text or specify that the image is decorative only."
@@ -112,6 +118,12 @@ exports[`ImageSettingsModal render snapshot 1`] = `
         }
       />
       <AltTextControls
+        error={
+          Object {
+            "dismiss": [MockFunction],
+            "show": "sHoW",
+          }
+        }
         isDecorative={false}
         value="alternative Taxes"
       />

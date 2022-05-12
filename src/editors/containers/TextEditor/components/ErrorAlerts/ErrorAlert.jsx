@@ -45,12 +45,11 @@ export const ErrorAlert = ({
       }}
     >
       {!hideHeading
-        ? (
+        && (
           <Alert.Heading>
             <FormattedMessage {...messages.errorTitle} />
           </Alert.Heading>
-        )
-        : null}
+        )}
       {children}
     </Alert>
   );

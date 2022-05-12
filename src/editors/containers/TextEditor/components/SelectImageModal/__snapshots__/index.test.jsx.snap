@@ -33,8 +33,9 @@ exports[`SelectImageModal component snapshot 1`] = `
   <FetchErrorAlert />
   <UploadErrorAlert />
   <ErrorAlert
-    dismissError={null}
+    dismissError={[MockFunction]}
     hideHeading={true}
+    isError="ShoWERror"
   >
     <FormattedMessage
       defaultMessage="Select an image to continue."

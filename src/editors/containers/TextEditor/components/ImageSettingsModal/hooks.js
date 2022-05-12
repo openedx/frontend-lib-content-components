@@ -177,13 +177,14 @@ export const dimensionHooks = () => {
  *     @param {string} - new alt text
  *   {bool} isDecorative - is the image decorative?
  *   {func} setIsDecorative - set isDecorative field
- *     @param {bool} isDecorative
- *   {obj} errorProps - props for user feedback error
- *     {bool} isError - true if isDecorative is false and value is empty
- *     {func} showError - sets isError to true
- *     {func} dismissError - sets isError to false
- *     {bool} showSubmissionError - true if alt-text fields are ready to save
- *     {func} setShowSubmissionError - sets showSubmissionError
+ *   {obj} error - error at top of page
+ *     {bool} show - is error being displayed?
+ *     {func} set - set show to true
+ *     {func} dismiss - set show to false
+ *   {obj} validation - local alt text error
+ *     {bool} show - is validation error being displayed?
+ *     {func} set - set validation to true
+ *     {func} dismiss - set validation to false
  */
 export const altTextHooks = (savedText) => {
   const [value, setValue] = module.state.altText(savedText || '');
@@ -191,9 +192,11 @@ export const altTextHooks = (savedText) => {
   const [showDismissibleError, setShowDismissibleError] = module.state.showDismissibleError(false);
   const [showSubmissionError, setShowSubmissionError] = module.state.showSubmissionError(false);
 
-  const validateAltText = () => {
-    if (showSubmissionError && (!isDecorative && value === '')) {
-      setShowSubmissionError(false);
+  const validateAltText = (newVal, newDecorative) => {
+    if (showSubmissionError) {
+      if (newVal || newDecorative) {
+        setShowSubmissionError(false);
+      }
     }
   };
 
@@ -201,19 +204,22 @@ export const altTextHooks = (savedText) => {
     value,
     setValue: (val) => {
       setValue(val);
-      validateAltText();
+      validateAltText(val, null);
     },
     isDecorative,
-    setIsDecorative: (val) => {
-      setIsDecorative(val);
-      validateAltText();
+    setIsDecorative: (decorative) => {
+      setIsDecorative(decorative);
+      validateAltText(null, decorative);
     },
-    errorProps: {
-      isError: showDismissibleError,
-      showError: () => setShowDismissibleError(true),
-      dismissError: () => setShowDismissibleError(false),
-      showSubmissionError,
-      setShowSubmissionError,
+    error: {
+      show: showDismissibleError,
+      set: () => setShowDismissibleError(true),
+      dismiss: () => setShowDismissibleError(false),
+    },
+    validation: {
+      show: showSubmissionError,
+      set: () => setShowSubmissionError(true),
+      dismiss: () => setShowSubmissionError(false),
     },
   };
 };
@@ -254,36 +260,31 @@ export const checkFormValidation = ({
 };
 
 /**
- * onSave({ altText, altTextError, dimensions, isDecorative, saveToEditor })
+ * onSave({ altText, dimensions, isDecorative, saveToEditor })
  * Handle saving the image context to the text editor
  * @param {string} altText - image alt text
  * @param {object} dimension - image dimensions ({ width, height })
  * @param {bool} isDecorative - is the image decorative?
  * @param {func} saveToEditor - save method for submitting image settings.
- * @param {object} altTextError - error handling for alt-text
- *   {func} showError - set isError to true
- *   {func} dismissError - set isError to false
- *   {func} setShowSubmissionError - set showSubmissionError
  */
 export const onSaveClick = ({
   altText,
-  altTextError,
   dimensions,
   isDecorative,
   saveToEditor,
 }) => () => {
   if (module.checkFormValidation({
-    altText,
+    altText: altText.value,
     isDecorative,
     onAltTextFail: () => {
-      altTextError.showError();
-      altTextError.setShowSubmissionError(true);
+      altText.error.set();
+      altText.validation.set();
     },
   })) {
-    altTextError.dismissError();
-    altTextError.setShowSubmissionError(false);
+    altText.error.dismiss();
+    altText.validation.dismiss();
     saveToEditor({
-      altText,
+      altText: altText.value,
       dimensions,
       isDecorative,
     });

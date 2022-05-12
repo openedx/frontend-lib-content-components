@@ -17,7 +17,7 @@ exports[`AltTextControls render snapshot: isDecorative=true errorProps.showSubmi
     className="mt-4.5"
     disabled={true}
     floatingLabel="Alt Text"
-    isInvalid={true}
+    isInvalid={false}
     onChange={
       Object {
         "hooks.onInputChange": [MockFunction props.setValue],
@@ -26,15 +26,6 @@ exports[`AltTextControls render snapshot: isDecorative=true errorProps.showSubmi
     type="input"
     value="props.value"
   />
-  <Form.Control.Feedback
-    type="invalid"
-  >
-    <FormattedMessage
-      defaultMessage="Enter alt text"
-      description="Message feedback for user below the alt text field."
-      id="authoring.texteditor.imagesettingsmodal.error.altTextLocalFeedback"
-    />
-  </Form.Control.Feedback>
   <Form.Checkbox
     checked={true}
     className="mt-4.5 decorative-control-label"

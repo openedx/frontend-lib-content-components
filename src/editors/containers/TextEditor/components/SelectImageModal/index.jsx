@@ -23,11 +23,11 @@ export const SelectImageModal = ({
   intl,
 }) => {
   const {
+    error,
     fileInput,
     galleryProps,
     searchSortProps,
     selectBtnProps,
-    selectImageErrorProps,
   } = hooks.imgHooks({ setSelection });
   return (
     <BaseModal
@@ -51,7 +51,11 @@ export const SelectImageModal = ({
       <UploadErrorAlert />
 
       {/* User Feedback Alerts */}
-      <ErrorAlert {...selectImageErrorProps} hideHeading>
+      <ErrorAlert
+        dismissError={error.dismiss}
+        hideHeading
+        isError={error.show}
+      >
         <FormattedMessage {...messages.selectImageError} />
       </ErrorAlert>
 

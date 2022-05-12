@@ -63,7 +63,7 @@ describe('SelectImageModal hooks', () => {
   describe('state hooks', () => {
     state.testGetter(state.keys.highlighted);
     state.testGetter(state.keys.images);
-    state.testGetter(state.keys.isSelectImageError);
+    state.testGetter(state.keys.showSelectImageError);
     state.testGetter(state.keys.searchString);
     state.testGetter(state.keys.sortBy);
   });
@@ -185,13 +185,13 @@ describe('SelectImageModal hooks', () => {
           hook.selectBtnProps.onClick();
           expect(props.setSelection).toHaveBeenCalledWith(testValue);
         });
-        test('on click, sets isSelectImageError to true if nothing is highlighted', () => {
+        test('on click, sets showSelectImageError to true if nothing is highlighted', () => {
           state.mockVal(state.keys.images, { });
           state.mockVal(state.keys.highlighted, null);
           load();
           hook.selectBtnProps.onClick();
           expect(props.setSelection).not.toHaveBeenCalled();
-          expect(state.setState.isSelectImageError).toHaveBeenCalledWith(true);
+          expect(state.setState.showSelectImageError).toHaveBeenCalledWith(true);
         });
       });
       describe('galleryProps', () => {
@@ -210,15 +210,31 @@ describe('SelectImageModal hooks', () => {
           }));
         });
       });
-      describe('selectImageErrorProps', () => {
-        it('returns selectImageError value, initialized to false', () => {
-          expect(hook.selectImageErrorProps.isError).toEqual(state.stateVals.isSelectImageError);
-          expect(state.stateVals.isSelectImageError).toEqual(false);
+      describe('error', () => {
+        test('show is initialized to false and returns properly', () => {
+          const show = 'sHOWSelectiMaGEeRROr';
+          expect(hook.error.show).toEqual(false);
+          state.mockVal(state.keys.showSelectImageError, show);
+          hook = hooks.imgListHooks(props);
+          expect(hook.error.show).toEqual(show);
         });
-        test('dismissError sets selectImageError to false', () => {
-          hook.selectImageErrorProps.dismissError();
-          expect(state.setState.isSelectImageError).toHaveBeenCalledWith(false);
+        test('set sets showSelectImageError to true', () => {
+          hook.error.set();
+          expect(state.setState.showSelectImageError).toHaveBeenCalledWith(true);
         });
+        test('dismiss sets showSelectImageError to false', () => {
+          hook.error.dismiss();
+          expect(state.setState.showSelectImageError).toHaveBeenCalledWith(false);
+        });
+        // TODO
+        // it('returns selectImageError value, initialized to false', () => {
+        //   expect(hook.selectImageErrorProps.isError).toEqual(state.stateVals.isSelectImageError);
+        //   expect(state.stateVals.isSelectImageError).toEqual(false);
+        // });
+        // test('dismissError sets selectImageError to false', () => {
+        //   hook.selectImageErrorProps.dismissError();
+        //   expect(state.setState.isSelectImageError).toHaveBeenCalledWith(false);
+        // });
       });
     });
   });

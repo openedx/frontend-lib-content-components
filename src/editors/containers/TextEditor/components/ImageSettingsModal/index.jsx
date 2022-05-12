@@ -35,12 +35,10 @@ export const ImageSettingsModal = ({
   const dimensions = hooks.dimensions();
   const altText = hooks.altText();
   const onSaveClick = hooks.onSaveClick({
-    saveToEditor,
+    altText,
     dimensions: dimensions.value,
-    altText: altText.value,
     isDecorative: altText.isDecorative,
-    dimensionsError: dimensions.errorProps,
-    altTextError: altText.errorProps,
+    saveToEditor,
   });
   return (
     <BaseModal
@@ -56,7 +54,11 @@ export const ImageSettingsModal = ({
         </Button>
       )}
     >
-      <ErrorAlert {...altText.errorProps} hideHeading>
+      <ErrorAlert
+        dismissError={altText.error.dismiss}
+        hideHeading
+        isError={altText.error.show}
+      >
         <FormattedMessage {...messages.altTextError} />
       </ErrorAlert>
       <Button
