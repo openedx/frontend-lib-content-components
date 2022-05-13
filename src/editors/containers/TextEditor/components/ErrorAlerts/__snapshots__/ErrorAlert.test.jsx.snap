@@ -8,11 +8,9 @@ exports[`ErrorAlert component Component Snapshots snapshot: Does not load headin
   onClose={[MockFunction dismissAlert]}
   variant="danger"
 >
-   
   <p>
      An Error Message 
   </p>
-   
 </Alert>
 `;
 
@@ -29,10 +27,8 @@ exports[`ErrorAlert component Component Snapshots snapshot: Loads children and c
       id="authoring.texteditor.selectimagemodal.error.errorTitle"
     />
   </Alert.Heading>
-   
   <p>
      An Error Message 
   </p>
-   
 </Alert>
 `;

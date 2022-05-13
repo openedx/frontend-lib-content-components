@@ -56,6 +56,7 @@ describe('ErrorAlert component', () => {
   describe('Component', () => {
     describe('Snapshots', () => {
       let props;
+      const msg = <p> An Error Message </p>;
       beforeAll(() => {
         props = {
           dismissError: jest.fn(),
@@ -68,14 +69,14 @@ describe('ErrorAlert component', () => {
       afterAll(() => {
         jest.clearAllMocks();
       });
-      test('snapshot:  is Null when no error (ErrorAlert)', () => {
+      test('snapshot: is Null when no error (ErrorAlert)', () => {
         expect(shallow(<ErrorAlert {...props}> <p> An Error Message </p> </ErrorAlert>)).toMatchSnapshot();
       });
       test('snapshot: Loads children and component when error (ErrorAlert)', () => {
-        expect(shallow(<ErrorAlert {...props} isError hideHeading={false}> <p> An Error Message </p> </ErrorAlert>)).toMatchSnapshot();
+        expect(shallow(<ErrorAlert {...props} isError hideHeading={false}>{msg}</ErrorAlert>)).toMatchSnapshot();
       });
       test('snapshot: Does not load heading when hideHeading is true', () => {
-        expect(shallow(<ErrorAlert {...props} isError hideHeading={true}> <p> An Error Message </p> </ErrorAlert>)).toMatchSnapshot();
+        expect(shallow(<ErrorAlert {...props} isError hideHeading>{msg}</ErrorAlert>)).toMatchSnapshot();
       });
     });
   });
