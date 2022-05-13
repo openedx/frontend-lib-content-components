@@ -4,7 +4,7 @@ Synopsis
 --------
 
 We have created a framework for creating improved editor experiences for existing xblocks. We call these new editors V2 Content Editors.
-V2 Content Editors replace existing xblock editing experiences using redirection. 
+V2 Content Editors replace existing xblock editing experiences using redirection.
 The V2 Editor framework allows for the easy creation and configuration of new editors through automated boilerplate generation, simple networking and state abstractions, and premade components for basic editing views.
 
 Decisions
@@ -12,7 +12,7 @@ Decisions
 
 I. All V2 content editors shall live in this repository. This choice was made as the existing xblock framework is not amenable to running modern React applications for studio views, and cannot be upgraded to do so without herculanean effort.
 
-II. These editors will be served to the user as if an overlay on the existing editing experience for a particular xblock.
+II. These editors will be served to the user as if an overlay on the existing editing experience for a particular xblock. This shall occur by this library's editor comoponent being served from a learning context MFE (Library or Course Authoring).
 
 III. The Editor component is loaded into a learning context authoring tool (eg. Course or Library Authoring) from this JS library. This component then serves the correct editor type based on the xblock id it is provided.
 
@@ -23,7 +23,7 @@ V. The following process was implemented to inject this flow into Studio.
      For entering an editor page: Users click on the "edit xblock" button, are redirected to the course authoring MFE, where they are presented with the relevant editor.
 
     .. image:: https://user-images.githubusercontent.com/49422820/166940630-51dfc25e-c760-4118-b4dd-ae1fa7fa73b9.png
-    
+
      For saving content: Once inside the editor, clicking save saves the content to the xblock api and returns the user to the course authoring context.
 
     .. image:: https://user-images.githubusercontent.com/49422820/166940624-068e8446-0c86-4c24-a2dd-3eb474984f08.png
