@@ -53,14 +53,14 @@ const tag = 'ADDED_EDITORS';
 WriteIntoFile(
   'src/editors/data/constants/app.js',
   tag,
-  ` ${xblockName}: '${xblockName},`,
+  ` ${xblockName}: '${xblockName}',`,
 );
 
 const importTag = 'ADDED_EDITOR_IMPORTS';
 WriteIntoFile(
   'src/editors/supportedEditors.js',
   importTag,
-  `import ${xblockName} from './containers/${xblockName}Editor'`,
+  `import ${xblockName}Editor from './containers/${xblockName}Editor'`,
 );
 
 const useTag = 'ADDED_EDITORS';

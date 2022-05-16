@@ -1,3 +1,5 @@
+/* eslint-disable import/extensions */
+/* eslint-disable import/no-unresolved */
 /**
  * This is an example component for an xblock Editor
  * It uses pre-existing components to handle the saving of a the result of a function into the xblock's data.
@@ -13,10 +15,10 @@ import PropTypes from 'prop-types';
 import { Spinner } from '@edx/paragon';
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 
-import EditorContainer from './editors/containers/EditorContainer';
+import EditorContainer from '../EditorContainer';
 import * as module from '.';
-import { actions, selectors } from './editors/data/redux';
-import { RequestKeys } from './editors/data/constants/requests';
+import { actions, selectors } from '../../data/redux';
+import { RequestKeys } from '../../data/constants/requests';
 
 export const hooks = {
   getContent: () => ({
@@ -24,7 +26,7 @@ export const hooks = {
   }),
 };
 
-export const ExampleEditor = ({
+export const thumbEditor = ({
   onClose,
   // redux
   blockValue,
@@ -61,11 +63,11 @@ export const ExampleEditor = ({
     </div>
   </EditorContainer>
 );
-ExampleEditor.defaultProps = {
+thumbEditor.defaultProps = {
   blockValue: null,
   lmsEndpointUrl: null,
 };
-ExampleEditor.propTypes = {
+thumbEditor.propTypes = {
   onClose: PropTypes.func.isRequired,
   // redux
   blockValue: PropTypes.shape({
@@ -90,4 +92,4 @@ export const mapDispatchToProps = {
   initializeEditor: actions.app.initializeEditor,
 };
 
-export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(ExampleEditor));
+export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(thumbEditor));

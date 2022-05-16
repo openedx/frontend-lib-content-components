@@ -26,7 +26,7 @@ export const EditorGallery = () => {
           onChange={handleChange}
           value={blockType}
         >
-          { blockTypes.map((e) => (
+          { Object.values(blockTypes).map((e) => (
             <Form.Radio value={e}> {e} </Form.Radio>
           ))}
 
