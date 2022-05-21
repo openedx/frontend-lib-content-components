@@ -20,11 +20,13 @@ export const setupCustomBehavior = ({ openModal, setImage }) => (editor) => {
   // image upload button
   editor.ui.registry.addButton(tinyMCE.buttons.imageUploadButton, {
     icon: 'image',
+    tooltip: 'Add Image',
     onAction: openModal,
   });
   // editing an existing image
   editor.ui.registry.addButton(tinyMCE.buttons.editImageSettings, {
     icon: 'image',
+    tooltip: 'Edit Image Settings',
     onAction: module.openModalWithSelectedImage({ editor, setImage, openModal }),
   });
   // overriding the code plugin's icon with 'HTML' text
@@ -33,6 +35,19 @@ export const setupCustomBehavior = ({ openModal, setImage }) => (editor) => {
     text: 'HTML',
     tooltip: 'Source code',
     onAction: openCodeEditor,
+  });
+  // add a custom simple inline code block formatter.
+  const toggleCodeFormatting = () => editor.formatter.toggle('code');
+  editor.ui.registry.addButton(tinyMCE.buttons.codeBlock, {
+    icon: 'sourcecode',
+    tooltip: 'Code Block',
+    onAction: toggleCodeFormatting,
+  });
+  const toggleBlockQuoteFormatting = () => editor.formatter.toggle('blockquote');
+  editor.ui.registry.addButton(tinyMCE.buttons.blockQuote, {
+    icon: 'quote',
+    tooltip: 'Block Quote',
+    onAction: toggleBlockQuoteFormatting,
   });
 };
 
@@ -57,6 +72,7 @@ export const editorConfig = ({
     contextmenu: 'link table',
     ...pluginConfig.config,
     valid_elements: '*[*]',
+    formats: { custom_code_block: { block: 'code', attributes: { title: 'Code Block' }, styles: { background: '#292929' } } },
   },
 });
 
