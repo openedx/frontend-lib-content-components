@@ -51,12 +51,17 @@ export const setupCustomBehavior = ({ openModal, setImage }) => (editor) => {
   });
 };
 
+// imagetools_cors_hosts needs a protocol-sanatized url
+export const removeProtocolFromUrl = (url) => url.replace(/^https?:\/\//, '');
+
 export const editorConfig = ({
   setEditorRef,
   blockValue,
   openModal,
   initializeEditor,
   setSelection,
+  lmsEndpointUrl,
+  studioEndpointUrl,
 }) => ({
   onInit: (evt, editor) => {
     setEditorRef(editor);
@@ -72,7 +77,7 @@ export const editorConfig = ({
     contextmenu: 'link table',
     ...pluginConfig.config,
     valid_elements: '*[*]',
-    formats: { custom_code_block: { block: 'code', attributes: { title: 'Code Block' }, styles: { background: '#292929' } } },
+    imagetools_cors_hosts: [removeProtocolFromUrl(lmsEndpointUrl), removeProtocolFromUrl(studioEndpointUrl)],
   },
 });
 

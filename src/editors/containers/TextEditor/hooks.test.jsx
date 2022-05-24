@@ -84,7 +84,8 @@ describe('TextEditor hooks', () => {
     describe('editorConfig', () => {
       const props = {
         blockValue: null,
-        // lmsEndpointUrl: 'sOmEuRl.cOm',
+        lmsEndpointUrl: 'sOmEuRl.cOm',
+        studioEndpointUrl: 'sOmEoThEruRl.cOm',
       };
       const evt = 'fakeEvent';
       const editor = 'myEditor';
