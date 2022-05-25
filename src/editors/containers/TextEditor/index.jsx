@@ -56,7 +56,7 @@ export const TextEditor = ({
       getContent={hooks.getContent({ editorRef })}
       onClose={onClose}
     >
-      <div className="editor-body h-75 overflow-auto">
+      <div className="editor-body overflow-auto">
         <ImageUploadModal
           isOpen={isOpen}
           close={closeModal}

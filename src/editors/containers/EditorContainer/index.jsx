@@ -18,7 +18,10 @@ export const EditorContainer = ({
   const isInitialized = hooks.isInitialized();
   const handleCancelClicked = hooks.handleCancelClicked({ onClose });
   return (
-    <div>
+    <div style={{
+      display: 'grid',
+      gridTemplateRows: 'auto 1fr auto',
+    }}>
       <ModalDialog.Header>
         <ModalDialog.Title>
           <TitleHeader isInitialized={isInitialized} />
