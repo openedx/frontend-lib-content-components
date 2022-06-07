@@ -22,7 +22,7 @@ export const Editor = ({
     data: {
       blockId,
       blockType,
-      courseId,
+      learningContextId: courseId,
       lmsEndpointUrl,
       studioEndpointUrl,
     },

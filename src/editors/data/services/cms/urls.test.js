@@ -9,7 +9,7 @@ import {
 describe('cms url methods', () => {
   const studioEndpointUrl = 'urLgoeStOstudiO';
   const blockId = 'blOckIDTeST123';
-  const courseId = 'coUrseiD321';
+  const learningContextId = 'learningContextId321';
   describe('unit', () => {
     const unitUrl = {
       data: {
@@ -38,15 +38,15 @@ describe('cms url methods', () => {
     });
   });
   describe('courseAssets', () => {
-    it('returns url with studioEndpointUrl and courseId', () => {
-      expect(courseAssets({ studioEndpointUrl, courseId }))
-        .toEqual(`${studioEndpointUrl}/assets/${courseId}/`);
+    it('returns url with studioEndpointUrl and learningContextId', () => {
+      expect(courseAssets({ studioEndpointUrl, learningContextId }))
+        .toEqual(`${studioEndpointUrl}/assets/${learningContextId}/`);
     });
   });
   describe('courseImages', () => {
-    it('returns url with studioEndpointUrl, courseId and courseAssets query', () => {
-      expect(courseImages({ studioEndpointUrl, courseId }))
-        .toEqual(`${courseAssets({ studioEndpointUrl, courseId })}?sort=uploadDate&direction=desc&asset_type=Images`);
+    it('returns url with studioEndpointUrl, learningContextId and courseAssets query', () => {
+      expect(courseImages({ studioEndpointUrl, learningContextId }))
+        .toEqual(`${courseAssets({ studioEndpointUrl, learningContextId })}?sort=uploadDate&direction=desc&asset_type=Images`);
     });
   });
 });
