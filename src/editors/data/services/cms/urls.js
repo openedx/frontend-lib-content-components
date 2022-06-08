@@ -8,8 +8,10 @@ export const unit = ({ studioEndpointUrl, unitUrl }) => (
 
 export const returnUrl = ({ studioEndpointUrl, unitUrl, learningContextId }) => {
   if (learningContextId && learningContextId.includes('library-v1')) {
+    // when the learning context is a v1 library, return to the library page
     return libraryV1({ studioEndpointUrl, learningContextId });
   }
+  // when the learning context is a course, return to the unit page
   return unitUrl ? unit({ studioEndpointUrl, unitUrl }) : '';
 };
 
