@@ -6,7 +6,7 @@ import store from './data/store';
 import Editor from './Editor';
 
 export const EditorPage = ({
-  learningContextId,
+  courseId,
   blockType,
   blockId,
   lmsEndpointUrl,
@@ -17,7 +17,7 @@ export const EditorPage = ({
     <Editor
       {...{
         onClose,
-        learningContextId,
+        learningContextId: courseId,
         blockType,
         blockId,
         lmsEndpointUrl,
@@ -28,14 +28,14 @@ export const EditorPage = ({
 );
 EditorPage.defaultProps = {
   onClose: null,
-  learningContextId: null,
+  courseId: null,
   blockId: null,
   lmsEndpointUrl: null,
   studioEndpointUrl: null,
 };
 
 EditorPage.propTypes = {
-  learningContextId: PropTypes.string,
+  courseId: PropTypes.string,
   blockType: PropTypes.string.isRequired,
   blockId: PropTypes.string,
   lmsEndpointUrl: PropTypes.string,
