@@ -50,4 +50,5 @@ export default StrictDict({
     min_height: 500,
     toolbar_sticky: true,
     relative_urls: true,
+  },
 });
