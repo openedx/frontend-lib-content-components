@@ -1,9 +1,9 @@
 import React from 'react';
 
-import { AnswerWidget } from './AnswerWidget';
-import { SettingsWidget } from './SettingsWidget';
-import { QuestionWidget } from './QuestionWidget';
-import { EditorContainer } from '../../../../containers/EditorContainer'
+import AnswerWidget from './AnswerWidget';
+import SettingsWidget from './SettingsWidget';
+import QuestionWidget from './QuestionWidget';
+import { EditorContainer } from '../../../EditorContainer';
 
 export default function EditProblemView() {
   return (
