@@ -9,7 +9,12 @@ import EditProblemView from './components/EditProblemView';
 
 import SelectTypeModal from './components/SelectTypeModal';
 
-function ProblemEditor({
+
+export const hooks = {
+
+}
+
+export const  ProblemEditor = ({
   onClose,
   // Redux
   blockValue,
@@ -21,8 +26,9 @@ function ProblemEditor({
   hasEntry,
   // inject
   intl,
-}) {
+}) => {
   // TODO: This layer will hold onto the navigation between steps
+  const [selected, setSelected] = React.useState(problemType);
 
   return (
     <div>
@@ -33,7 +39,7 @@ function ProblemEditor({
       </div>
       <div>
         {hasEntry ? (
-          <EditProblemView />
+          <EditProblemView setSelected={setSelected} />
         )
           : (
             <SelectTypeModal />

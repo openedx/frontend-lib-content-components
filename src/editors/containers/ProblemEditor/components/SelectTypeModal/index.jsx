@@ -1,42 +1,29 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import EditorFooter from '../../../EditorContainer/components/EditorFooter';
 
-const SelectTypeModal = ({
-  // Redux
-  problemType,
+import ProblemTypeSelect from './content/ProblemTypeSelect';
+import Preview from './content/Preview';
+import SelectTypeWrapper from './SelectTypeWrapper'
+
+export const SelectTypeModal = ({
+  onClose,
 }) => {
+  const { selected, setSelected } = hooks.state.selected(null);
 
-  const [selected, setSelected] = React.useState(problemType);
-
-  return
-  (
+  return (
     <div>
-      <ProblemTypeSelect />
+      <SelectTypeWrapper selected={selected}>
+      <ProblemTypeSelect setSelected={setSelected} />
       <Preview
-        problemType={problemType}
+        problemType={selected}
       />
-      <SelectTypeFooter />
+      </SelectTypeWrapper>
     </div>
   );
 };
 
-(
-
-  <div>
-    <ProblemTypeSelect />
-    <Preview
-      problemType={problemType}
-    />
-    <SelectTypeFooter />
-  </div>
-);
-
-SelectTypeModal.defaultProps = {
-  problemType: null,
-};
 SelectTypeModal.propTypes = {
-  problemType: PropTypes.string,
+  onClose: PropTypes.func.isRequired,
 };
 
 export default SelectTypeModal;
