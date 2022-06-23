@@ -1,23 +1,32 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import problemTypes from '../../../data/constants';
+import { Form } from '@edx/paragon';
+import ProblemTypes from '../../../data/constants/ProblemTypes';
 
+
+//TODO: problemtype
 const ProblemTypeSelect = ({
   // redux
-  selected,
+  setSelected,
 }) => {
-  const [value, setValue] = useState('green');
-  const handleChange = e => setValue(e.target.value);
+  const handleChange = e => setSelected(e.target.value);
   return (
     <Form.Group>
-      <Form.Label>Which Color?</Form.Label>
       <Form.RadioSet
-        name="colors"
+        name="problemtype"
         onChange={handleChange}
-        value={value}
       >
-
+        <Form.Radio value={ProblemTypes.SINGLESELECT}>{ProblemTypes.SINGLESELECT.title}</Form.Radio>
+        <Form.Radio value={ProblemTypes.MULTISELECT}>{ProblemTypes.MULTISELECT.title}</Form.Radio>
+        <Form.Radio value={ProblemTypes.DROPDOWN}>{ProblemTypes.DROPDOWN.title}</Form.Radio>
+        <Form.Radio value={ProblemTypes.NUMERIC}>{ProblemTypes.NUMERIC.title}</Form.Radio>
+        <Form.Radio value={ProblemTypes.TEXTINPUT}>{ProblemTypes.TEXTINPUT.title}</Form.Radio>
       </Form.RadioSet>
     </Form.Group>
   );
 };
+ProblemTypeSelect.propTypes = {
+  setSelected: PropTypes.func.isRequired,
+};
+
+export default ProblemTypeSelect;
