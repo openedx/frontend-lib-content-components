@@ -81,7 +81,6 @@ export const isRaw = createSelector(
   },
 );
 
-
 export default {
   ...simpleSelectors,
   isInitialized,
