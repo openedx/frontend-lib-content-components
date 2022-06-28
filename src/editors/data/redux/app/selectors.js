@@ -68,7 +68,8 @@ export const analytics = createSelector(
   ),
 );
 
-export const isRaw = createSelector([module.simpleSelectors.studioView],
+export const isRaw = createSelector(
+  [module.simpleSelectors.studioView],
   (studioView) => {
     if (!studioView || !studioView.data || !studioView.data.html) {
       return null;
@@ -77,7 +78,8 @@ export const isRaw = createSelector([module.simpleSelectors.studioView],
       return true;
     }
     return false;
-  });
+  },
+);
 
 export const rawText = createSelector(
   [module.simpleSelectors.blockValue],
@@ -89,7 +91,7 @@ export const rawText = createSelector(
       return null;
     }
     return blockValue.data.data;
-  }
+  },
 );
 
 export default {
