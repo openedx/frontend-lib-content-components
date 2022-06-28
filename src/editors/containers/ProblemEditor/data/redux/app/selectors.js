@@ -7,12 +7,12 @@ import { initialState } from './reducers';
 
 const stateKeys = keyStore(initialState);
 
-export const video = (state) => state.video;
+
+export const problemState = (state) => state;
 
 export const simpleSelectors = [
-  stateKeys.problemType,
-  // ...
-].reduce((obj, key) => ({ ...obj, [key]: state => state.problemSettings[key] }), {});
+  ...stateKeys,
+].reduce((obj, key) => ({ ...obj, [key]: state => state[key] }), {});
 
 export default {
   ...simpleSelectors,

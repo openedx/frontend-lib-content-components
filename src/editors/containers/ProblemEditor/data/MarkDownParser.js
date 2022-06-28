@@ -1,6 +1,10 @@
 import { groupFeedbackWordMapping } from './MarkDownParser';
 import * as markdown from './tests/testHelpers/markdown';
 
+ /*
+  *TODO: Some function which takes in OLX or Markdown, and Converts it into
+  * the expecteded react state specicfied in /reducers/index.js, at least as far as the problem goes.
+  */
 /*
 
 TODO: We want to remove the "window" method of retrieivng data for these parsers.

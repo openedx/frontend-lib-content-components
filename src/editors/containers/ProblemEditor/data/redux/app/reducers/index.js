@@ -6,11 +6,19 @@ const initialState = {
   rawOLX: '',
   problemType: null,
   question: '',
-  answers: [],
+  answers: [
+    {
+      id: '',
+      content: '',
+      correct: false,
+      selectedFeedback: '',
+      unselectedFeedback: '',
+      answer: '',
+    },
+  ],
   settings: keyStore({
-    typeAndScoring: {
+    scoring: {
       advanced: false,
-      type: '',
       scoring: {
         wieght: 0,
         attempts: {
@@ -19,12 +27,15 @@ const initialState = {
         },
       },
     },
-    hintsAndFeedback: {
-      advanced: false,
-      hints: [],
-      generalFeedback: [],
-      groupedOptionFeedback: [],
+    hints: [],
+    randomization: '',
+    timeBetween: 0,
+    MatLabApiKey: '',
+    showAnswer: {
+      on: '', // one of [OnAnswered, OnDueDate, AfterDueDate]
+      afterAtempts: 1,
     },
+    showResetButton: false,
   }),
 };
 
@@ -39,31 +50,7 @@ const problem = createSlice({
     }),
     load: (state, { payload }) => ({
       ...state,
-      rawMarkdown: payload.data.Markdown,
-      problemType: payload.data.problemType,
-      question:  dataparser.getEditorData(payload.data.markdown),
-      answers: dataparser.getAnswers(payload.data.markdown, payload.data.problemType),
-      settings: keyStore({
-        typeAndScoring:{
-          advanced: false,
-          type: '',
-          scoring: {
-            wieght: 0,
-            attempts: {
-              unlimited: true,
-              number: 0,
-            },
-          },
-        },
-        hintsAndFeedback:{
-
-
-        },
-
-
-      });
-
-
+      ...payload,
     }),
   },
 });
