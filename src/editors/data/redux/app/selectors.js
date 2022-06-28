@@ -81,18 +81,6 @@ export const isRaw = createSelector(
   },
 );
 
-export const rawText = createSelector(
-  [module.simpleSelectors.blockValue],
-  (blockValue) => {
-    if (blockValue === null) {
-      return null;
-    }
-    if (blockValue.data === null) {
-      return null;
-    }
-    return blockValue.data.data;
-  },
-);
 
 export default {
   ...simpleSelectors,
@@ -101,5 +89,4 @@ export default {
   displayTitle,
   analytics,
   isRaw,
-  rawText,
 };

@@ -47,9 +47,14 @@ describe('app thunkActions', () => {
     it('dispatches fetchStudioView action', () => {
       expect(dispatchedAction.fetchStudioView).not.toEqual(undefined);
     });
-    it('dispatches actions.app.setBlockValue on success', () => {
+    it('dispatches actions.app.setStudioViewe on success', () => {
       dispatch.mockClear();
       dispatchedAction.fetchStudioView.onSuccess(testValue);
+      expect(dispatch).toHaveBeenCalledWith(actions.app.setStudioView(testValue));
+    });
+    it('dispatches setStudioView on failure', () => {
+      dispatch.mockClear();
+      dispatchedAction.fetchStudioView.onFailure(testValue);
       expect(dispatch).toHaveBeenCalledWith(actions.app.setStudioView(testValue));
     });
   });

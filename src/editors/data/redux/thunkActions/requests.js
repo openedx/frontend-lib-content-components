@@ -51,7 +51,7 @@ export const fetchBlock = ({ ...rest }) => (dispatch, getState) => {
 };
 
 /**
- * Tracked fetchByBlockId api method.
+ * Tracked fetchStudioView api method.
  * Tracked to the `fetchBlock` request key.
  * @param {[func]} onSuccess - onSuccess method ((response) => { ... })
  * @param {[func]} onFailure - onFailure method ((error) => { ... })

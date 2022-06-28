@@ -13,7 +13,7 @@ export const fetchBlock = () => (dispatch) => {
 export const fetchStudioView = () => (dispatch) => {
   dispatch(requests.fetchStudioView({
     onSuccess: (response) => dispatch(actions.app.setStudioView(response)),
-    onFailure: (e) => console.log({ fetchFailure: e }),
+    onFailure: (e) => dispatch(actions.app.setStudioView(e)),
   }));
 };
 
