@@ -65,7 +65,6 @@ describe('cms url methods', () => {
     });
   });
 
-
   describe('courseAssets', () => {
     it('returns url with studioEndpointUrl and learningContextId', () => {
       expect(courseAssets({ studioEndpointUrl, learningContextId }))
