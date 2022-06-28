@@ -39,18 +39,6 @@ export const isInitialized = createSelector(
   (unitUrl, blockValue) => !!(unitUrl && blockValue),
 );
 
-export const isRaw = createSelector([module.simpleSelectors.studioView],
-  (studioView) => {
-    if (studioView === null) {
-      return null;
-    }
-    console.log(studioView.data.html);
-    if (studioView.data.html.includes('data-editor="raw"')) {
-      return true;
-    }
-    return false;
-  });
-
 export const displayTitle = createSelector(
   [
     module.simpleSelectors.blockType,
@@ -68,6 +56,7 @@ export const displayTitle = createSelector(
       : blockType[0].toUpperCase() + blockType.substring(1);
   },
 );
+
 export const analytics = createSelector(
   [
     module.simpleSelectors.blockId,
@@ -79,6 +68,30 @@ export const analytics = createSelector(
   ),
 );
 
+export const isRaw = createSelector([module.simpleSelectors.studioView],
+  (studioView) => {
+    if (!studioView || !studioView.data || !studioView.data.html) {
+      return null;
+    }
+    if (studioView.data.html.includes('data-editor="raw"')) {
+      return true;
+    }
+    return false;
+  });
+
+export const rawText = createSelector(
+  [module.simpleSelectors.blockValue],
+  (blockValue) => {
+    if (blockValue === null) {
+      return null;
+    }
+    if (blockValue.data === null) {
+      return null;
+    }
+    return blockValue.data.data;
+  }
+);
+
 export default {
   ...simpleSelectors,
   isInitialized,
@@ -86,4 +99,5 @@ export default {
   displayTitle,
   analytics,
   isRaw,
+  rawText,
 };

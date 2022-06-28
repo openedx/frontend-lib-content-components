@@ -128,10 +128,10 @@ export const fetchImages = ({ ...rest }) => (dispatch, getState) => {
 };
 
 export default StrictDict({
-  uploadImage,
-  fetchImages,
-  fetchUnit,
   fetchBlock,
-  saveBlock,
+  fetchImages,
   fetchStudioView,
+  fetchUnit,
+  saveBlock,
+  uploadImage,
 });

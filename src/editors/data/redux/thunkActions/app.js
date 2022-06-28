@@ -41,6 +41,7 @@ export const initialize = (data) => (dispatch) => {
  * @param {func} onSuccess
  */
 export const saveBlock = ({ content, returnToUnit }) => (dispatch) => {
+  console.log('test saveBlock', content)
   dispatch(actions.app.setBlockContent(content));
   dispatch(requests.saveBlock({
     content,

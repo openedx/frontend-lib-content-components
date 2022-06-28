@@ -31,6 +31,7 @@ import { RequestKeys } from '../../data/constants/requests';
 
 import EditorContainer from '../EditorContainer';
 import ImageUploadModal from './components/ImageUploadModal';
+import RawEditor from './components/RawEditor';
 import * as hooks from './hooks';
 import messages from './messages';
 
@@ -57,7 +58,7 @@ export const TextEditor = ({
 
   return (
     <EditorContainer
-      getContent={hooks.getContent({ editorRef })}
+      getContent={hooks.getContent({ editorRef, isRaw })}
       onClose={onClose}
     >
       <div className="editor-body h-75 overflow-auto">
@@ -82,8 +83,12 @@ export const TextEditor = ({
               />
             </div>
           )
-          : (
-            <Editor
+          : isRaw 
+            ? <RawEditor 
+              editorRef={editorRef}
+              text={blockValue.data.data}
+            />
+            : <Editor
               {...hooks.editorConfig({
                 setEditorRef,
                 blockValue,
@@ -95,7 +100,7 @@ export const TextEditor = ({
                 clearSelection: imageSelection.clearSelection,
               })}
             />
-          )}
+          }
       </div>
 
     </EditorContainer>
