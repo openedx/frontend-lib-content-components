@@ -54,7 +54,30 @@ export const TextEditor = ({
 
   if (!refReady) { return null; }
 
-  console.log(`This is a Raw Editor: ${isRaw}`);
+  const selectEditor = () => {
+    if (isRaw) {
+      return (
+        <RawEditor
+          editorRef={editorRef}
+          text={blockValue.data.data}
+        />
+      );
+    }
+    return (
+      <Editor
+        {...hooks.editorConfig({
+          setEditorRef,
+          blockValue,
+          openModal,
+          initializeEditor,
+          lmsEndpointUrl,
+          studioEndpointUrl,
+          setSelection: imageSelection.setSelection,
+          clearSelection: imageSelection.clearSelection,
+        })}
+      />
+    );
+  };
 
   return (
     <EditorContainer
@@ -82,25 +105,7 @@ export const TextEditor = ({
                 screenreadertext={intl.formatMessage(messages.spinnerScreenReaderText)}
               />
             </div>
-          )
-          : isRaw 
-            ? <RawEditor 
-              editorRef={editorRef}
-              text={blockValue.data.data}
-            />
-            : <Editor
-              {...hooks.editorConfig({
-                setEditorRef,
-                blockValue,
-                openModal,
-                initializeEditor,
-                lmsEndpointUrl,
-                studioEndpointUrl,
-                setSelection: imageSelection.setSelection,
-                clearSelection: imageSelection.clearSelection,
-              })}
-            />
-          }
+          ) : (selectEditor())}
       </div>
 
     </EditorContainer>
@@ -110,6 +115,7 @@ TextEditor.defaultProps = {
   blockValue: null,
   lmsEndpointUrl: null,
   studioEndpointUrl: null,
+  isRaw: null,
 };
 TextEditor.propTypes = {
   onClose: PropTypes.func.isRequired,
@@ -122,6 +128,7 @@ TextEditor.propTypes = {
   blockFailed: PropTypes.bool.isRequired,
   blockFinished: PropTypes.bool.isRequired,
   initializeEditor: PropTypes.func.isRequired,
+  isRaw: PropTypes.bool,
   // inject
   intl: intlShape.isRequired,
 };
