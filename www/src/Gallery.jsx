@@ -37,7 +37,13 @@ export const EditorGallery = () => {
             ))}
           </Form.RadioSet>
         </Form.Group>
-        <Form.Group style={{ display: blockType === 'html' ? 'block' : 'none' }}>
+        <Form.Group
+          style={{
+            display: blockType === 'html' || blockType === 'problem'
+              ? 'block'
+              : 'none',
+          }}
+        >
           <Form.RadioSet
             name="raw"
             onChange={handleRawChange}
