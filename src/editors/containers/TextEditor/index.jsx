@@ -36,8 +36,8 @@ import * as hooks from './hooks';
 import messages from './messages';
 
 export const TextEditor = ({
-  onClose,
   mockRaw,
+  onClose,
   // redux
   isRaw,
   blockValue,
@@ -54,7 +54,6 @@ export const TextEditor = ({
   const imageSelection = hooks.selectedImage(null);
 
   if (!refReady) { return null; }
-  console.log('test TextEditor', isRaw, mockRaw)
 
   const selectEditor = () => {
     if (isRaw || mockRaw) {
@@ -115,11 +114,13 @@ export const TextEditor = ({
 };
 TextEditor.defaultProps = {
   blockValue: null,
-  lmsEndpointUrl: null,
-  studioEndpointUrl: null,
   isRaw: null,
+  lmsEndpointUrl: null,
+  mockRaw: false,
+  studioEndpointUrl: null,
 };
 TextEditor.propTypes = {
+  mockRaw: PropTypes.bool,
   onClose: PropTypes.func.isRequired,
   // redux
   blockValue: PropTypes.shape({

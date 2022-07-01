@@ -29,18 +29,20 @@ export const EditorPage = ({
   </Provider>
 );
 EditorPage.defaultProps = {
-  onClose: null,
-  courseId: null,
   blockId: null,
+  courseId: null,
   lmsEndpointUrl: null,
+  mockRaw: false,
+  onClose: null,
   studioEndpointUrl: null,
 };
 
 EditorPage.propTypes = {
-  courseId: PropTypes.string,
-  blockType: PropTypes.string.isRequired,
   blockId: PropTypes.string,
+  blockType: PropTypes.string.isRequired,
+  courseId: PropTypes.string,
   lmsEndpointUrl: PropTypes.string,
+  mockRaw: PropTypes.bool,
   onClose: PropTypes.func,
   studioEndpointUrl: PropTypes.string,
 };

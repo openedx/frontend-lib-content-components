@@ -21,8 +21,8 @@ export const EditorGallery = () => {
   const lmsEndpointUrl = 'https://courses.edx.org'; // this is hardcoded because that is where the image data is from.
 
   const handleBlockChange = (e) => setBlockType(e.target.value);
-  const handleRawChange = (e) => setMockRaw(e.target.value === "true");
-  console.log('test Gallery', mockRaw)
+  const handleRawChange = (e) => setMockRaw(e.target.value === 'true');
+
   return (
     <div className="gallery">
       <div style={{ display: 'flex' }}>

@@ -28,7 +28,6 @@ export const Editor = ({
       studioEndpointUrl,
     },
   });
-  console.log('test Editor', mockRaw)
 
   const EditorComponent = supportedEditors[blockType];
   return (
@@ -46,18 +45,20 @@ export const Editor = ({
   );
 };
 Editor.defaultProps = {
-  learningContextId: null,
   blockId: null,
+  learningContextId: null,
   lmsEndpointUrl: null,
-  studioEndpointUrl: null,
+  mockRaw: false,
   onClose: null,
+  studioEndpointUrl: null,
 };
 
 Editor.propTypes = {
-  learningContextId: PropTypes.string,
-  blockType: PropTypes.string.isRequired,
   blockId: PropTypes.string,
+  blockType: PropTypes.string.isRequired,
+  learningContextId: PropTypes.string,
   lmsEndpointUrl: PropTypes.string,
+  mockRaw: PropTypes.bool,
   onClose: PropTypes.func,
   studioEndpointUrl: PropTypes.string,
 };
