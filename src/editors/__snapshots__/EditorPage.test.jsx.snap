@@ -17,6 +17,7 @@ exports[`Editor Page snapshots props besides blockType default to null 1`] = `
     blockType="html"
     learningContextId={null}
     lmsEndpointUrl={null}
+    mockRaw={false}
     onClose={null}
     studioEndpointUrl={null}
   />
@@ -40,6 +41,7 @@ exports[`Editor Page snapshots rendering correctly with expected Input 1`] = `
     blockType="html"
     learningContextId="course-v1:edX+DemoX+Demo_Course"
     lmsEndpointUrl="evenfakerurl.com"
+    mockRaw={false}
     onClose={[MockFunction props.onClose]}
     studioEndpointUrl="fakeurl.com"
   />
