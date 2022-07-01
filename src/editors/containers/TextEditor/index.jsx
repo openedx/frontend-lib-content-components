@@ -37,6 +37,7 @@ import messages from './messages';
 
 export const TextEditor = ({
   onClose,
+  mockRaw,
   // redux
   isRaw,
   blockValue,
@@ -53,9 +54,10 @@ export const TextEditor = ({
   const imageSelection = hooks.selectedImage(null);
 
   if (!refReady) { return null; }
+  console.log('test TextEditor', isRaw, mockRaw)
 
   const selectEditor = () => {
-    if (isRaw) {
+    if (isRaw || mockRaw) {
       return (
         <RawEditor
           editorRef={editorRef}

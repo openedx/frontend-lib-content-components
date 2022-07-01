@@ -12,6 +12,7 @@ export const EditorPage = ({
   lmsEndpointUrl,
   studioEndpointUrl,
   onClose,
+  mockRaw,
 }) => (
   <Provider store={store}>
     <Editor
@@ -22,6 +23,7 @@ export const EditorPage = ({
         blockId,
         lmsEndpointUrl,
         studioEndpointUrl,
+        mockRaw,
       }}
     />
   </Provider>

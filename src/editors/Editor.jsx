@@ -15,6 +15,7 @@ export const Editor = ({
   lmsEndpointUrl,
   studioEndpointUrl,
   onClose,
+  mockRaw,
 }) => {
   const dispatch = useDispatch();
   hooks.initializeApp({
@@ -27,6 +28,7 @@ export const Editor = ({
       studioEndpointUrl,
     },
   });
+  console.log('test Editor', mockRaw)
 
   const EditorComponent = supportedEditors[blockType];
   return (
@@ -37,7 +39,7 @@ export const Editor = ({
         aria-label={blockType}
       >
         {(EditorComponent !== undefined)
-          ? <EditorComponent onClose={onClose} />
+          ? <EditorComponent onClose={onClose} mockRaw={mockRaw} />
           : <FormattedMessage {...messages.couldNotFindEditor} />}
       </div>
     </div>
