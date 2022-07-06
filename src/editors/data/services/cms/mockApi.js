@@ -15,9 +15,10 @@ export const fetchBlockById = ({ blockId, studioEndpointUrl }) => mockPromise({
 
 // TODO: update to return block data appropriate per block ID, which will equal block type
 // eslint-disable-next-line
-export const fetchStudioView = ({ blockId, studioEndpointUrl, mockRaw }) => mockPromise({
+export const fetchStudioView = ({ blockId, studioEndpointUrl }) => mockPromise({
   data: {
-    html: mockRaw ? 'data-editor="raw"' : '',
+    // The following is sent for 'raw' editors.
+    // html: 'data-editor="raw"',
     data: '<p>Test prompt content</p>',
     display_name: 'My Text Prompt',
   },
