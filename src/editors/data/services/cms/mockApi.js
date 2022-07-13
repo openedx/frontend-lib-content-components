@@ -18,7 +18,7 @@ export const fetchBlockById = ({ blockId, studioEndpointUrl }) => mockPromise({
 export const fetchStudioView = ({ blockId, studioEndpointUrl }) => mockPromise({
   data: {
     // The following is sent for 'raw' editors.
-    // html: 'data-editor="raw"',
+    html: blockId.includes('mockRaw') ? 'data-editor="raw"' : '',
     data: '<p>Test prompt content</p>',
     display_name: 'My Text Prompt',
   },

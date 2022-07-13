@@ -12,7 +12,6 @@ export const EditorPage = ({
   lmsEndpointUrl,
   studioEndpointUrl,
   onClose,
-  mockRaw,
 }) => (
   <Provider store={store}>
     <Editor
@@ -23,7 +22,6 @@ export const EditorPage = ({
         blockId,
         lmsEndpointUrl,
         studioEndpointUrl,
-        mockRaw,
       }}
     />
   </Provider>
@@ -32,7 +30,6 @@ EditorPage.defaultProps = {
   blockId: null,
   courseId: null,
   lmsEndpointUrl: null,
-  mockRaw: false,
   onClose: null,
   studioEndpointUrl: null,
 };
@@ -42,7 +39,6 @@ EditorPage.propTypes = {
   blockType: PropTypes.string.isRequired,
   courseId: PropTypes.string,
   lmsEndpointUrl: PropTypes.string,
-  mockRaw: PropTypes.bool,
   onClose: PropTypes.func,
   studioEndpointUrl: PropTypes.string,
 };

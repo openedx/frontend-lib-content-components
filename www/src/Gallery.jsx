@@ -14,7 +14,7 @@ export const EditorGallery = () => {
 
   const blockIds = Object.keys(blockTypes).reduce((obj, blockTypeKey) => {
     const type = blockTypes[blockTypeKey];
-    return { ...obj, [type]: mockBlockIdByType(type) };
+    return { ...obj, [type]: [mockBlockIdByType(type), (mockRaw ? '-mockRaw' : '')].join('') };
   }, {});
   const courseId = 'library-v1:EDX+apmjoemaonmeonaoenan';
   const studioEndpointUrl = 'fake-studio-endpoint-url';
@@ -62,7 +62,6 @@ export const EditorGallery = () => {
           studioEndpointUrl,
           lmsEndpointUrl,
           onClose: () => setBlockType(null),
-          mockRaw,
         }}
       />
     </div>

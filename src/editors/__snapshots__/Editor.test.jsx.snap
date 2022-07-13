@@ -28,7 +28,6 @@ exports[`Editor render snapshot: renders correct editor given blockType (html ->
     role="dialog"
   >
     <TextEditor
-      mockRaw={false}
       onClose={[MockFunction props.onClose]}
     />
   </div>

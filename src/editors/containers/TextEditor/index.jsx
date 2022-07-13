@@ -36,7 +36,6 @@ import * as hooks from './hooks';
 import messages from './messages';
 
 export const TextEditor = ({
-  mockRaw,
   onClose,
   // redux
   isRaw,
@@ -56,7 +55,7 @@ export const TextEditor = ({
   if (!refReady) { return null; }
 
   const selectEditor = () => {
-    if (isRaw || mockRaw) {
+    if (isRaw) {
       return (
         <RawEditor
           editorRef={editorRef}
@@ -116,11 +115,9 @@ TextEditor.defaultProps = {
   blockValue: null,
   isRaw: null,
   lmsEndpointUrl: null,
-  mockRaw: false,
   studioEndpointUrl: null,
 };
 TextEditor.propTypes = {
-  mockRaw: PropTypes.bool,
   onClose: PropTypes.func.isRequired,
   // redux
   blockValue: PropTypes.shape({
