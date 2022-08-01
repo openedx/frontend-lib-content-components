@@ -13,8 +13,8 @@ export const propsString = (props) => Object.keys(props)
 export const imgProps = ({ settings, selection }) => ({
   src: selection.externalUrl,
   alt: settings.isDecorative ? '' : settings.altText,
-  width: settings.dimensions.width,
-  height: settings.dimensions.height,
+  width: settings.isPercentage ? settings.dimensions.width.toString()+'%' : settings.dimensions.width,
+  height: settings.isPercentage ? settings.dimensions.height.toString()+'%' : settings.dimensions.height,
 });
 
 export const hooks = {

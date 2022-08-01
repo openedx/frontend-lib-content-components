@@ -36,8 +36,9 @@ export const ImageSettingsModal = ({
   const altText = hooks.altText();
   const onSaveClick = hooks.onSaveClick({
     altText,
-    dimensions: dimensions.value,
+    dimensions,
     isDecorative: altText.isDecorative,
+    isPercentage: dimensions.isPercentage,
     saveToEditor,
   });
   return (
@@ -60,6 +61,13 @@ export const ImageSettingsModal = ({
         isError={altText.error.show}
       >
         <FormattedMessage {...messages.altTextError} />
+      </ErrorAlert>
+      <ErrorAlert
+        dismissError={dimensions.error.dismiss}
+        hideHeading
+        isError={dimensions.error.show}
+      >
+        <FormattedMessage {...messages.dimensionError} />
       </ErrorAlert>
       <Button
         onClick={returnToSelection}
