@@ -56,6 +56,10 @@ export const fetchImages = ({ setImages }) => (dispatch) => {
 };
 
 export const uploadImage = ({ file, setSelection }) => (dispatch) => {
+  console.log(file)
+  if (file.size > 10000000) {
+    console.log('image is too big')
+  }
   dispatch(requests.uploadImage({
     image: file,
     onSuccess: (response) => setSelection(camelizeKeys(response.data.asset)),

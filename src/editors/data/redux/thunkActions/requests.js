@@ -105,6 +105,7 @@ export const saveBlock = ({ content, ...rest }) => (dispatch, getState) => {
   }));
 };
 export const uploadImage = ({ image, ...rest }) => (dispatch, getState) => {
+  console.log("uploading image", image)
   dispatch(module.networkRequest({
     requestKey: RequestKeys.uploadImage,
     promise: api.uploadImage({

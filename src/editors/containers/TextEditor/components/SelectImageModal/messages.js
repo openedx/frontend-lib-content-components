@@ -6,7 +6,7 @@ export const messages = {
   },
   uploadButtonLabel: {
     id: 'authoring.texteditor.selectimagemodal.upload.label',
-    defaultMessage: 'Upload a new image',
+    defaultMessage: 'Upload a new image (10 MB max)',
     description: 'Label for upload button',
   },
   titleLabel: {
@@ -72,7 +72,7 @@ export const messages = {
   },
   uploadImageError: {
     id: 'authoring.texteditor.selectimagemodal.error.uploadImageError',
-    defaultMessage: 'Failed to Upload Image. Please Try again.',
+    defaultMessage: 'Failed to upload image. Please try again.',
     description: 'Message presented to user when image fails to upload',
   },
   fetchImagesError: {
