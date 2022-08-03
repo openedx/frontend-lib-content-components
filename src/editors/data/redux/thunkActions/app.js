@@ -1,27 +1,33 @@
-import { StrictDict, camelizeKeys } from '../../../utils';
-import { actions } from '..';
-import * as requests from './requests';
-import * as module from './app';
+import { StrictDict, camelizeKeys } from "../../../utils";
+import { actions } from "..";
+import * as requests from "./requests";
+import * as module from "./app";
 
 export const fetchBlock = () => (dispatch) => {
-  dispatch(requests.fetchBlock({
-    onSuccess: (response) => dispatch(actions.app.setBlockValue(response)),
-    onFailure: (e) => console.log({ fetchFailure: e }),
-  }));
+  dispatch(
+    requests.fetchBlock({
+      onSuccess: (response) => dispatch(actions.app.setBlockValue(response)),
+      onFailure: (e) => console.log({ fetchFailure: e }),
+    })
+  );
 };
 
 export const fetchStudioView = () => (dispatch) => {
-  dispatch(requests.fetchStudioView({
-    onSuccess: (response) => dispatch(actions.app.setStudioView(response)),
-    onFailure: (e) => dispatch(actions.app.setStudioView(e)),
-  }));
+  dispatch(
+    requests.fetchStudioView({
+      onSuccess: (response) => dispatch(actions.app.setStudioView(response)),
+      onFailure: (e) => dispatch(actions.app.setStudioView(e)),
+    })
+  );
 };
 
 export const fetchUnit = () => (dispatch) => {
-  dispatch(requests.fetchUnit({
-    onSuccess: (response) => dispatch(actions.app.setUnitUrl(response)),
-    onFailure: (e) => dispatch(actions.app.setUnitUrl(e)),
-  }));
+  dispatch(
+    requests.fetchUnit({
+      onSuccess: (response) => dispatch(actions.app.setUnitUrl(response)),
+      onFailure: (e) => dispatch(actions.app.setUnitUrl(e)),
+    })
+  );
 };
 
 /**
@@ -42,13 +48,15 @@ export const initialize = (data) => (dispatch) => {
  */
 export const saveBlock = ({ content, returnToUnit }) => (dispatch) => {
   dispatch(actions.app.setBlockContent(content));
-  dispatch(requests.saveBlock({
-    content,
-    onSuccess: (response) => {
-      dispatch(actions.app.setSaveResponse(response));
-      returnToUnit();
-    },
-  }));
+  dispatch(
+    requests.saveBlock({
+      content,
+      onSuccess: (response) => {
+        dispatch(actions.app.setSaveResponse(response));
+        returnToUnit();
+      },
+    })
+  );
 };
 
 export const fetchImages = ({ setImages }) => (dispatch) => {
@@ -56,14 +64,12 @@ export const fetchImages = ({ setImages }) => (dispatch) => {
 };
 
 export const uploadImage = ({ file, setSelection }) => (dispatch) => {
-  console.log(file)
-  if (file.size > 10000000) {
-    console.log('image is too big')
-  }
-  dispatch(requests.uploadImage({
-    image: file,
-    onSuccess: (response) => setSelection(camelizeKeys(response.data.asset)),
-  }));
+  dispatch(
+    requests.uploadImage({
+      image: file,
+      onSuccess: (response) => setSelection(camelizeKeys(response.data.asset)),
+    })
+  );
 };
 
 export const fetchVideos = ({ onSuccess }) => (dispatch) => {

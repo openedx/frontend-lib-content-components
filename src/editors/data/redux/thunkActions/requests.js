@@ -1,10 +1,10 @@
-import { StrictDict } from '../../../utils';
+import { StrictDict } from "../../../utils";
 
-import { RequestKeys } from '../../constants/requests';
-import { actions, selectors } from '..';
-import api, { loadImages } from '../../services/cms/api';
+import { RequestKeys } from "../../constants/requests";
+import { actions, selectors } from "..";
+import api, { loadImages } from "../../services/cms/api";
 
-import * as module from './requests';
+import * as module from "./requests";
 
 /**
  * Wrapper around a network request promise, that sends actions to the redux store to
@@ -23,14 +23,22 @@ export const networkRequest = ({
   onSuccess,
   onFailure,
 }) => (dispatch) => {
+  console.log("pending");
   dispatch(actions.requests.startRequest(requestKey));
-  return promise.then((response) => {
-    if (onSuccess) { onSuccess(response); }
-    dispatch(actions.requests.completeRequest({ requestKey, response }));
-  }).catch((error) => {
-    if (onFailure) { onFailure(error); }
-    dispatch(actions.requests.failRequest({ requestKey, error }));
-  });
+  return promise
+    .then((response) => {
+      if (onSuccess) {
+        onSuccess(response);
+      }
+      console.log("complete");
+      dispatch(actions.requests.completeRequest({ requestKey, response }));
+    })
+    .catch((error) => {
+      if (onFailure) {
+        onFailure(error);
+      }
+      dispatch(actions.requests.failRequest({ requestKey, error }));
+    });
 };
 
 /**
@@ -40,14 +48,16 @@ export const networkRequest = ({
  * @param {[func]} onFailure - onFailure method ((error) => { ... })
  */
 export const fetchBlock = ({ ...rest }) => (dispatch, getState) => {
-  dispatch(module.networkRequest({
-    requestKey: RequestKeys.fetchBlock,
-    promise: api.fetchBlockById({
-      studioEndpointUrl: selectors.app.studioEndpointUrl(getState()),
-      blockId: selectors.app.blockId(getState()),
-    }),
-    ...rest,
-  }));
+  dispatch(
+    module.networkRequest({
+      requestKey: RequestKeys.fetchBlock,
+      promise: api.fetchBlockById({
+        studioEndpointUrl: selectors.app.studioEndpointUrl(getState()),
+        blockId: selectors.app.blockId(getState()),
+      }),
+      ...rest,
+    })
+  );
 };
 
 /**
@@ -57,14 +67,16 @@ export const fetchBlock = ({ ...rest }) => (dispatch, getState) => {
  * @param {[func]} onFailure - onFailure method ((error) => { ... })
  */
 export const fetchStudioView = ({ ...rest }) => (dispatch, getState) => {
-  dispatch(module.networkRequest({
-    requestKey: RequestKeys.fetchStudioView,
-    promise: api.fetchStudioView({
-      studioEndpointUrl: selectors.app.studioEndpointUrl(getState()),
-      blockId: selectors.app.blockId(getState()),
-    }),
-    ...rest,
-  }));
+  dispatch(
+    module.networkRequest({
+      requestKey: RequestKeys.fetchStudioView,
+      promise: api.fetchStudioView({
+        studioEndpointUrl: selectors.app.studioEndpointUrl(getState()),
+        blockId: selectors.app.blockId(getState()),
+      }),
+      ...rest,
+    })
+  );
 };
 
 /**
@@ -74,14 +86,16 @@ export const fetchStudioView = ({ ...rest }) => (dispatch, getState) => {
  * @param {[func]} onFailure - onFailure method ((error) => { ... })
  */
 export const fetchUnit = ({ ...rest }) => (dispatch, getState) => {
-  dispatch(module.networkRequest({
-    requestKey: RequestKeys.fetchUnit,
-    promise: api.fetchByUnitId({
-      studioEndpointUrl: selectors.app.studioEndpointUrl(getState()),
-      blockId: selectors.app.blockId(getState()),
-    }),
-    ...rest,
-  }));
+  dispatch(
+    module.networkRequest({
+      requestKey: RequestKeys.fetchUnit,
+      promise: api.fetchByUnitId({
+        studioEndpointUrl: selectors.app.studioEndpointUrl(getState()),
+        blockId: selectors.app.blockId(getState()),
+      }),
+      ...rest,
+    })
+  );
 };
 
 /**
@@ -91,41 +105,49 @@ export const fetchUnit = ({ ...rest }) => (dispatch, getState) => {
  * @param {[func]} onFailure - onFailure method ((error) => { ... })
  */
 export const saveBlock = ({ content, ...rest }) => (dispatch, getState) => {
-  dispatch(module.networkRequest({
-    requestKey: RequestKeys.saveBlock,
-    promise: api.saveBlock({
-      blockId: selectors.app.blockId(getState()),
-      blockType: selectors.app.blockType(getState()),
-      learningContextId: selectors.app.learningContextId(getState()),
-      content,
-      studioEndpointUrl: selectors.app.studioEndpointUrl(getState()),
-      title: selectors.app.blockTitle(getState()),
-    }),
-    ...rest,
-  }));
+  dispatch(
+    module.networkRequest({
+      requestKey: RequestKeys.saveBlock,
+      promise: api.saveBlock({
+        blockId: selectors.app.blockId(getState()),
+        blockType: selectors.app.blockType(getState()),
+        learningContextId: selectors.app.learningContextId(getState()),
+        content,
+        studioEndpointUrl: selectors.app.studioEndpointUrl(getState()),
+        title: selectors.app.blockTitle(getState()),
+      }),
+      ...rest,
+    })
+  );
 };
 export const uploadImage = ({ image, ...rest }) => (dispatch, getState) => {
-  console.log("uploading image", image)
-  dispatch(module.networkRequest({
-    requestKey: RequestKeys.uploadImage,
-    promise: api.uploadImage({
-      learningContextId: selectors.app.learningContextId(getState()),
-      image,
-      studioEndpointUrl: selectors.app.studioEndpointUrl(getState()),
-    }),
-    ...rest,
-  }));
+  console.log("upload image");
+  dispatch(
+    module.networkRequest({
+      requestKey: RequestKeys.uploadImage,
+      promise: api.uploadImage({
+        learningContextId: selectors.app.learningContextId(getState()),
+        image,
+        studioEndpointUrl: selectors.app.studioEndpointUrl(getState()),
+      }),
+      ...rest,
+    })
+  );
 };
 
 export const fetchImages = ({ ...rest }) => (dispatch, getState) => {
-  dispatch(module.networkRequest({
-    requestKey: RequestKeys.fetchImages,
-    promise: api.fetchImages({
-      studioEndpointUrl: selectors.app.studioEndpointUrl(getState()),
-      learningContextId: selectors.app.learningContextId(getState()),
-    }).then((response) => loadImages(response.data.assets)),
-    ...rest,
-  }));
+  dispatch(
+    module.networkRequest({
+      requestKey: RequestKeys.fetchImages,
+      promise: api
+        .fetchImages({
+          studioEndpointUrl: selectors.app.studioEndpointUrl(getState()),
+          learningContextId: selectors.app.learningContextId(getState()),
+        })
+        .then((response) => loadImages(response.data.assets)),
+      ...rest,
+    })
+  );
 };
 
 export default StrictDict({
