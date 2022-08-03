@@ -62,13 +62,6 @@ export const ImageSettingsModal = ({
       >
         <FormattedMessage {...messages.altTextError} />
       </ErrorAlert>
-      <ErrorAlert
-        dismissError={dimensions.error.dismiss}
-        hideHeading
-        isError={dimensions.error.show}
-      >
-        <FormattedMessage {...messages.dimensionError} />
-      </ErrorAlert>
       <Button
         onClick={returnToSelection}
         variant="link"

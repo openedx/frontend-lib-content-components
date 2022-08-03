@@ -26,14 +26,11 @@ import messages from './messages';
  */
 export const DimensionControls = ({
   isLocked,
-  isPercentage,
   lock,
   setHeight,
-  setIsPercentage,
   setWidth,
   unlock,
   updateDimensions,
-  validation,
   value,
   // inject
   intl,
@@ -42,30 +39,17 @@ export const DimensionControls = ({
     <Form.Label as="h4">
       <FormattedMessage {...messages.imageDimensionsLabel} />
     </Form.Label>
-    <Form.Checkbox
-      checked={isPercentage}
-      className="mt-4.5 decorative-control-label"
-      onChange={hooks.onCheckboxChange(setIsPercentage)}
-    >
-      <Form.Label>
-        <FormattedMessage {...messages.decorativeDimensionCheckboxLabel} />
-      </Form.Label>
-    </Form.Checkbox>
     <div className="mt-4.5">
       <Form.Control
         className="dimension-input"
-        type="number"
         value={value.width}
-        min={1}
         onChange={hooks.onInputChange(setWidth)}
         onBlur={updateDimensions}
         floatingLabel={intl.formatMessage(messages.widthFloatingLabel)}
       />
       <Form.Control
         className="dimension-input"
-        type="number"
         value={value.height}
-        min={1}
         onChange={hooks.onInputChange(setHeight)}
         onBlur={updateDimensions}
         floatingLabel={intl.formatMessage(messages.heightFloatingLabel)}
@@ -82,12 +66,6 @@ export const DimensionControls = ({
         onClick={isLocked ? unlock : lock}
       />
     </div>
-    {validation.show
-      && (
-        <Form.Control.Feedback type="invalid">
-          <FormattedMessage {...messages.dimensionLocalFeedback} />
-        </Form.Control.Feedback>
-      )}
   </Form.Group>
 ));
 DimensionControls.defaultProps = {
@@ -98,8 +76,8 @@ DimensionControls.defaultProps = {
 };
 DimensionControls.propTypes = ({
   value: PropTypes.shape({
-    height: PropTypes.number,
-    width: PropTypes.number,
+    height: PropTypes.string,
+    width: PropTypes.string,
   }),
   setHeight: PropTypes.func.isRequired,
   setWidth: PropTypes.func.isRequired,

@@ -13,7 +13,6 @@ export const state = {
   showDimensionSubmissionError: (val) => React.useState(val),
   isDecorative: (val) => React.useState(val),
   isLocked: (val) => React.useState(val),
-  isPercentage: (val) => React.useState(val),
   local: (val) => React.useState(val),
   lockDims: (val) => React.useState(val),
   lockInitialized: (val) => React.useState(val),
@@ -46,7 +45,6 @@ export const getValidDimensions = ({
   dimensions,
   local,
   isLocked,
-  isPercentage,
   lockDims,
 }) => {
   if (!isLocked || checkEqual(local, dimensions)) {
@@ -135,21 +133,10 @@ export const dimensionLockHooks = () => {
  *     {bool} isWidthValid - true if width field is ready to save
  *     {func} setWidthValid - sets isWidthValid to true
  *     {func} setWidthNotValid - sets isWidthValid to false
- *   {bool} isPercentage - are the image dimensions percentages?
- *   {func} setIsPercentage - set isPercentage field
- *   {obj} error - error at top of page
- *     {bool} show - is error being displayed?
- *     {func} set - set show to true
- *     {func} dismiss - set show to false
- *   {obj} validation - local alt text error
- *     {bool} show - is validation error being displayed?
- *     {func} set - set validation to true
- *     {func} dismiss - set validation to false
  */
 export const dimensionHooks = () => {
   const [dimensions, setDimensions] = module.state.dimensions(null);
   const [local, setLocal] = module.state.local(null);
-  const [isPercentage, setIsPercentage] = module.state.isPercentage(false);
   const [showDimensionDismissibleError, setShowDimensionDismissibleError] = module.state.showDimensionDismissibleError(false);
   const [showDimensionSubmissionError, setShowDimensionSubmissionError] = module.state.showDimensionSubmissionError(false);
 
@@ -173,38 +160,36 @@ export const dimensionHooks = () => {
     unlock,
   } = module.dimensionLockHooks({ dimensions });
 
+
+
   return {
     onImgLoad: (selection) => ({ target: img }) => {
       const imageDims = { height: img.naturalHeight, width: img.naturalWidth };
       setAll(selection.height ? selection : imageDims);
       initializeLock(imageDims);
     },
-    isPercentage,
-    setIsPercentage: (percentage) => {
-      setIsPercentage(percentage);
-      validateDimension(percentage);
-    },
-    error: {
-      show: showDimensionDismissibleError,
-      set: () => setShowDimensionDismissibleError(true),
-      dismiss: () => setShowDimensionDismissibleError(false),
-    },
-    validation: {
-      show: showDimensionSubmissionError,
-      set: () => setShowDimensionSubmissionError(true),
-      dismiss: () => setShowDimensionSubmissionError(false),
-    },
     isLocked,
     lock,
     unlock,
     value: local,
-    setHeight: (height) => setLocal({ ...local, height: parseInt(height, 10) }),
-    setWidth: (width) => setLocal({ ...local, width: parseInt(width, 10) }),
+    setHeight: (height) => {
+      if (height.includes('%')) {
+        setLocal({ ...local, height: height })
+      } else {
+        setLocal({ ...local, height: parseInt(height, 10) })
+      }
+    },
+    setWidth: (width) => {
+      if (width.includes('%')) {
+        setLocal({ ...local, width: width })
+      } else {
+        setLocal({ ...local, width: parseInt(width, 10) })
+      }
+    },
     updateDimensions: () => setAll(module.getValidDimensions({
       dimensions,
       local,
       isLocked,
-      isPercentage,
       lockDims,
     })),
   };
@@ -287,23 +272,16 @@ export const onCheckboxChange = (handleValue) => (e) => handleValue(e.target.che
  * Handle saving the image context to the text editor
  * @param {string} altText - image alt text
  * @param {bool} isDecorative - is the image decorative?
- * @param {bool} isPercentage - are the image dimensions percent values?
  * @param {func} onAltTextFail - called if alt text validation fails
  */
 export const checkFormValidation = ({
   altText,
   dimensions,
   isDecorative,
-  isPercentage,
   onAltTextFail,
-  onDimensionFail,
 }) => {
   if (!isDecorative && altText === '') {
     onAltTextFail();
-    return false;
-  }
-  if(isPercentage && (dimensions.height > 100 || dimensions.width > 100)) {
-    onDimensionFail();
     return false;
   }
   return true;
@@ -321,33 +299,23 @@ export const onSaveClick = ({
   altText,
   dimensions,
   isDecorative,
-  isPercentage,
   saveToEditor,
 }) => () => {
-  console.log(dimensions)
   if (module.checkFormValidation({
     altText: altText.value,
     dimensions: dimensions.value,
     isDecorative,
-    isPercentage,
     onAltTextFail: () => {
       altText.error.set();
       altText.validation.set();
     },
-    onDimensionFail: () => {
-      dimensions.error.set();
-      dimensions.validation.set();
-    }
   })) {
     altText.error.dismiss();
     altText.validation.dismiss();
-    dimensions.error.dismiss();
-    dimensions.validation.dismiss();
     saveToEditor({
       altText: altText.value,
       dimensions: dimensions.value,
       isDecorative,
-      isPercentage,
     });
   }
 };
