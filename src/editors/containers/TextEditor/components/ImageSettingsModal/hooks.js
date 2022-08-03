@@ -9,8 +9,6 @@ export const state = {
   dimensions: (val) => React.useState(val),
   showAltTextDismissibleError: (val) => React.useState(val),
   showAltTextSubmissionError: (val) => React.useState(val),
-  showDimensionDismissibleError: (val) => React.useState(val),
-  showDimensionSubmissionError: (val) => React.useState(val),
   isDecorative: (val) => React.useState(val),
   isLocked: (val) => React.useState(val),
   local: (val) => React.useState(val),
@@ -137,16 +135,6 @@ export const dimensionLockHooks = () => {
 export const dimensionHooks = () => {
   const [dimensions, setDimensions] = module.state.dimensions(null);
   const [local, setLocal] = module.state.local(null);
-  const [showDimensionDismissibleError, setShowDimensionDismissibleError] = module.state.showDimensionDismissibleError(false);
-  const [showDimensionSubmissionError, setShowDimensionSubmissionError] = module.state.showDimensionSubmissionError(false);
-
-  const validateDimension = (newDimension) => {
-    if (showDimensionSubmissionError) {
-      if (newDimension) {
-        setShowDimensionSubmissionError(false);
-      }
-    }
-  };
 
   const setAll = ({ height, width }) => {
     setDimensions({ height, width });
@@ -160,8 +148,6 @@ export const dimensionHooks = () => {
     unlock,
   } = module.dimensionLockHooks({ dimensions });
 
-
-
   return {
     onImgLoad: (selection) => ({ target: img }) => {
       const imageDims = { height: img.naturalHeight, width: img.naturalWidth };
@@ -174,16 +160,16 @@ export const dimensionHooks = () => {
     value: local,
     setHeight: (height) => {
       if (height.includes('%')) {
-        setLocal({ ...local, height: height })
+        setLocal({ ...local, height });
       } else {
-        setLocal({ ...local, height: parseInt(height, 10) })
+        setLocal({ ...local, height: parseInt(height, 10) });
       }
     },
     setWidth: (width) => {
       if (width.includes('%')) {
-        setLocal({ ...local, width: width })
+        setLocal({ ...local, width });
       } else {
-        setLocal({ ...local, width: parseInt(width, 10) })
+        setLocal({ ...local, width: parseInt(width, 10) });
       }
     },
     updateDimensions: () => setAll(module.getValidDimensions({
@@ -276,7 +262,6 @@ export const onCheckboxChange = (handleValue) => (e) => handleValue(e.target.che
  */
 export const checkFormValidation = ({
   altText,
-  dimensions,
   isDecorative,
   onAltTextFail,
 }) => {
