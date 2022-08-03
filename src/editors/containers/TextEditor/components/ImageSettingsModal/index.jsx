@@ -36,9 +36,8 @@ export const ImageSettingsModal = ({
   const altText = hooks.altText();
   const onSaveClick = hooks.onSaveClick({
     altText,
-    dimensions,
+    dimensions: dimensions.value,
     isDecorative: altText.isDecorative,
-    isPercentage: dimensions.isPercentage,
     saveToEditor,
   });
   return (

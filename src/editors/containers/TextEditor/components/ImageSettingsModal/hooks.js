@@ -288,7 +288,6 @@ export const onSaveClick = ({
 }) => () => {
   if (module.checkFormValidation({
     altText: altText.value,
-    dimensions: dimensions.value,
     isDecorative,
     onAltTextFail: () => {
       altText.error.set();
@@ -299,7 +298,7 @@ export const onSaveClick = ({
     altText.validation.dismiss();
     saveToEditor({
       altText: altText.value,
-      dimensions: dimensions.value,
+      dimensions,
       isDecorative,
     });
   }
