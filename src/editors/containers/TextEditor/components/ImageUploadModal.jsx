@@ -1,30 +1,31 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
-import tinyMCEKeys from '../../../data/constants/tinyMCE';
-import ImageSettingsModal from './ImageSettingsModal';
-import SelectImageModal from './SelectImageModal';
-import * as module from './ImageUploadModal';
+import tinyMCEKeys from "../../../data/constants/tinyMCE";
+import ImageSettingsModal from "./ImageSettingsModal";
+import SelectImageModal from "./SelectImageModal";
+import * as module from "./ImageUploadModal";
 
-export const propsString = (props) => Object.keys(props)
-  .map(key => `${key}="${props[key]}"`)
-  .join(' ');
+export const propsString = (props) =>
+  Object.keys(props)
+    .map((key) => `${key}="${props[key]}"`)
+    .join(" ");
 
 export const imgProps = ({ settings, selection }) => ({
   src: selection.externalUrl,
-  alt: settings.isDecorative ? '' : settings.altText,
+  alt: settings.isDecorative ? "" : settings.altText,
   width: settings.dimensions.width,
   height: settings.dimensions.height,
 });
 
 export const hooks = {
-  createSaveCallback: ({
-    close, editorRef, setSelection, selection,
-  }) => (settings) => {
+  createSaveCallback: ({ close, editorRef, setSelection, selection }) => (
+    settings
+  ) => {
     editorRef.current.execCommand(
       tinyMCEKeys.commands.insertContent,
       false,
-      module.hooks.imgTag({ settings, selection }),
+      module.hooks.imgTag({ settings, selection })
     );
     setSelection(null);
     close();
@@ -67,7 +68,7 @@ export const ImageUploadModal = ({
     );
   }
   return (
-    <SelectImageModal {...{ isOpen, close, setSelection }} />
+    <SelectImageModal {...{ isOpen, close, setSelection, clearSelection }} />
   );
 };
 
