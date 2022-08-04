@@ -47,14 +47,13 @@ export const networkRequest = ({
  */
 export const fetchBlock = ({ ...rest }) => (dispatch, getState) => {
   dispatch(module.networkRequest({
-      requestKey: RequestKeys.fetchBlock,
-      promise: api.fetchBlockById({
-        studioEndpointUrl: selectors.app.studioEndpointUrl(getState()),
-        blockId: selectors.app.blockId(getState()),
-      }),
-      ...rest,
-    })
-  );
+    requestKey: RequestKeys.fetchBlock,
+    promise: api.fetchBlockById({
+      studioEndpointUrl: selectors.app.studioEndpointUrl(getState()),
+      blockId: selectors.app.blockId(getState()),
+    }),
+    ...rest,
+  }));
 };
 
 /**
@@ -65,14 +64,13 @@ export const fetchBlock = ({ ...rest }) => (dispatch, getState) => {
  */
 export const fetchStudioView = ({ ...rest }) => (dispatch, getState) => {
   dispatch(module.networkRequest({
-      requestKey: RequestKeys.fetchStudioView,
-      promise: api.fetchStudioView({
-        studioEndpointUrl: selectors.app.studioEndpointUrl(getState()),
-        blockId: selectors.app.blockId(getState()),
-      }),
-      ...rest,
-    })
-  );
+    requestKey: RequestKeys.fetchStudioView,
+    promise: api.fetchStudioView({
+      studioEndpointUrl: selectors.app.studioEndpointUrl(getState()),
+      blockId: selectors.app.blockId(getState()),
+    }),
+    ...rest,
+  }));
 };
 
 /**
@@ -83,14 +81,13 @@ export const fetchStudioView = ({ ...rest }) => (dispatch, getState) => {
  */
 export const fetchUnit = ({ ...rest }) => (dispatch, getState) => {
   dispatch(module.networkRequest({
-      requestKey: RequestKeys.fetchUnit,
-      promise: api.fetchByUnitId({
-        studioEndpointUrl: selectors.app.studioEndpointUrl(getState()),
-        blockId: selectors.app.blockId(getState()),
-      }),
-      ...rest,
-    })
-  );
+    requestKey: RequestKeys.fetchUnit,
+    promise: api.fetchByUnitId({
+      studioEndpointUrl: selectors.app.studioEndpointUrl(getState()),
+      blockId: selectors.app.blockId(getState()),
+    }),
+    ...rest,
+  }));
 };
 
 /**
@@ -101,44 +98,41 @@ export const fetchUnit = ({ ...rest }) => (dispatch, getState) => {
  */
 export const saveBlock = ({ content, ...rest }) => (dispatch, getState) => {
   dispatch(module.networkRequest({
-      requestKey: RequestKeys.saveBlock,
-      promise: api.saveBlock({
-        blockId: selectors.app.blockId(getState()),
-        blockType: selectors.app.blockType(getState()),
-        learningContextId: selectors.app.learningContextId(getState()),
-        content,
-        studioEndpointUrl: selectors.app.studioEndpointUrl(getState()),
-        title: selectors.app.blockTitle(getState()),
-      }),
-      ...rest,
-    })
-  );
+    requestKey: RequestKeys.saveBlock,
+    promise: api.saveBlock({
+      blockId: selectors.app.blockId(getState()),
+      blockType: selectors.app.blockType(getState()),
+      learningContextId: selectors.app.learningContextId(getState()),
+      content,
+      studioEndpointUrl: selectors.app.studioEndpointUrl(getState()),
+      title: selectors.app.blockTitle(getState()),
+    }),
+    ...rest,
+  }));
 };
 export const uploadImage = ({ image, ...rest }) => (dispatch, getState) => {
   dispatch(module.networkRequest({
-      requestKey: RequestKeys.uploadImage,
-      promise: api.uploadImage({
-        learningContextId: selectors.app.learningContextId(getState()),
-        image,
-        studioEndpointUrl: selectors.app.studioEndpointUrl(getState()),
-      }),
-      ...rest,
-    })
-  );
+    requestKey: RequestKeys.uploadImage,
+    promise: api.uploadImage({
+      learningContextId: selectors.app.learningContextId(getState()),
+      image,
+      studioEndpointUrl: selectors.app.studioEndpointUrl(getState()),
+    }),
+    ...rest,
+  }));
 };
 
 export const fetchImages = ({ ...rest }) => (dispatch, getState) => {
   dispatch(module.networkRequest({
-      requestKey: RequestKeys.fetchImages,
-      promise: api
-        .fetchImages({
-          studioEndpointUrl: selectors.app.studioEndpointUrl(getState()),
-          learningContextId: selectors.app.learningContextId(getState()),
-        })
-        .then((response) => loadImages(response.data.assets)),
-      ...rest,
-    })
-  );
+    requestKey: RequestKeys.fetchImages,
+    promise: api
+      .fetchImages({
+        studioEndpointUrl: selectors.app.studioEndpointUrl(getState()),
+        learningContextId: selectors.app.learningContextId(getState()),
+      })
+      .then((response) => loadImages(response.data.assets)),
+    ...rest,
+  }));
 };
 
 export default StrictDict({

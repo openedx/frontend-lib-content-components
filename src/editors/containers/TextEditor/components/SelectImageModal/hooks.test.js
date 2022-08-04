@@ -55,7 +55,7 @@ const state = new MockUseState(hooks);
 const hookKeys = keyStore(hooks);
 let hook;
 const testValue = 'testVALUEVALIDIMAGE';
-const testValueInvalidImage = {value:'testVALUEVALIDIMAGE', size: 90000000}
+const testValueInvalidImage = {;value:'testVALUEVALIDIMAGE', size: 90000000 };
 
 describe('SelectImageModal hooks', () => {
   beforeEach(() => {
@@ -242,7 +242,7 @@ describe('SelectImageModal hooks', () => {
   describe('fileInputHooks', () => {
     const setSelection = jest.fn();
     const clearSelection = jest.fn();
-    const imgList = {inputError: {show:true, dismiss:jest.fn(), set:jest.fn()}}
+    const imgList = { inputError: { show: true, dismiss: jest.fn(), set: jest.fn() } }
     beforeEach(() => {
       hook = hooks.fileInputHooks({ setSelection, clearSelection, imgList });
     });
@@ -259,15 +259,17 @@ describe('SelectImageModal hooks', () => {
     describe('addFile (uploadImage args)', () => {
       const eventSuccess = { target: { files: [testValue] } };
       const eventFailure = { target: { files: [testValueInvalidImage] } };
-      it ('image fails to upload', () => {
+      it('image fails to upload', () => {
         const spies = {};
         const onSizeFail = jest.fn();
         const checkValidFileSize = false;
         spies.checkValidFileSize = jest.spyOn(hooks, hookKeys.checkValidFileSize)
           .mockReturnValueOnce(checkValidFileSize);
         hook.addFile(eventFailure);
-        expect(spies.checkValidFileSize).toHaveBeenCalledWith({selectedFile:testValueInvalidImage, clearSelection, onSizeFail: () => {onSizeFail}});
-      })
+        expect(spies.checkValidFileSize).toHaveBeenCalledWith({
+          selectedFile:testValueInvalidImage, clearSelection, onSizeFail: () => {onSizeFail}
+        });
+      });
       it('dispatches uploadImage thunkAction with the first target file and setSelection', () => {
         hook.addFile(eventSuccess);
         expect(dispatch).toHaveBeenCalledWith(thunkActions.app.uploadImage({
@@ -298,11 +300,10 @@ describe('SelectImageModal hooks', () => {
       hook = hooks.imgHooks({ setSelection, clearSelection });
     });
     it('forwards fileInputHooks as fileInput, called with uploadImage prop', () => {
-      const imgList = imgListHooks
       expect(hook.fileInput).toEqual(fileInputHooks);
       expect(spies.file.mock.calls.length).toEqual(1);
       expect(spies.file).toHaveBeenCalledWith({
-        setSelection, clearSelection, imgList,
+        setSelection, clearSelection, imgList:imgListHooks,
       });
     });
     it('initializes imgListHooks with setSelection and searchAndSortHooks', () => {
@@ -313,11 +314,9 @@ describe('SelectImageModal hooks', () => {
       });
     });
     it('forwards searchAndSortHooks as searchSortProps', () => {
-      const imgList = imgListHooks
       expect(hook.searchSortProps).toEqual(searchAndSortHooks);
       expect(spies.file.mock.calls.length).toEqual(1);
-      expect(spies.file).toHaveBeenCalledWith({ setSelection, clearSelection, imgList,
-       });
+      expect(spies.file).toHaveBeenCalledWith({ setSelection, clearSelection, imgList:imgListHooks });
     });
     it('forwards galleryProps and selectBtnProps from the image list hooks', () => {
       expect(hook.galleryProps).toEqual(imgListHooks.galleryProps);

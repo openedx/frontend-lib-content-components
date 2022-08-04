@@ -5,26 +5,23 @@ import * as module from './app';
 
 export const fetchBlock = () => (dispatch) => {
   dispatch(requests.fetchBlock({
-      onSuccess: (response) => dispatch(actions.app.setBlockValue(response)),
-      onFailure: (e) => console.log({ fetchFailure: e }),
-    })
-  );
+    onSuccess: (response) => dispatch(actions.app.setBlockValue(response)),
+    onFailure: (e) => console.log({ fetchFailure: e }),
+  }));
 };
 
 export const fetchStudioView = () => (dispatch) => {
   dispatch(requests.fetchStudioView({
-      onSuccess: (response) => dispatch(actions.app.setStudioView(response)),
-      onFailure: (e) => dispatch(actions.app.setStudioView(e)),
-    })
-  );
+    onSuccess: (response) => dispatch(actions.app.setStudioView(response)),
+    onFailure: (e) => dispatch(actions.app.setStudioView(e)),
+  }));
 };
 
 export const fetchUnit = () => (dispatch) => {
   dispatch(requests.fetchUnit({
-      onSuccess: (response) => dispatch(actions.app.setUnitUrl(response)),
-      onFailure: (e) => dispatch(actions.app.setUnitUrl(e)),
-    })
-  );
+    onSuccess: (response) => dispatch(actions.app.setUnitUrl(response)),
+    onFailure: (e) => dispatch(actions.app.setUnitUrl(e)),
+  }));
 };
 
 /**
@@ -46,13 +43,12 @@ export const initialize = (data) => (dispatch) => {
 export const saveBlock = ({ content, returnToUnit }) => (dispatch) => {
   dispatch(actions.app.setBlockContent(content));
   dispatch(requests.saveBlock({
-      content,
-      onSuccess: (response) => {
-        dispatch(actions.app.setSaveResponse(response));
-        returnToUnit();
-      },
-    })
-  );
+    content,
+    onSuccess: (response) => {
+      dispatch(actions.app.setSaveResponse(response));
+      returnToUnit();
+    },
+  }));
 };
 
 export const fetchImages = ({ setImages }) => (dispatch) => {
@@ -61,10 +57,9 @@ export const fetchImages = ({ setImages }) => (dispatch) => {
 
 export const uploadImage = ({ file, setSelection }) => (dispatch) => {
   dispatch(requests.uploadImage({
-      image: file,
-      onSuccess: (response) => setSelection(camelizeKeys(response.data.asset)),
-    })
-  );
+    image: file,
+    onSuccess: (response) => setSelection(camelizeKeys(response.data.asset)),
+  }));
 };
 
 export const fetchVideos = ({ onSuccess }) => (dispatch) => {
