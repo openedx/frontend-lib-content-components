@@ -84,7 +84,7 @@ export const messages = {
   fileSizeError: {
     id: "authoring.texteditor.selectimagemodal.error.fileSizeError",
     defaultMessage:
-      "Selected image exceed the maximum file size, 10 MB. Please resize image and try again.",
+      "Images must be 10 MB or less. Please resize image and try again.",
     description:
       " Message presented to user when file size of image is larger than 10 MB",
   },

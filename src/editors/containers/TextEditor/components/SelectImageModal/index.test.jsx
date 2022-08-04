@@ -15,11 +15,17 @@ jest.mock('./Gallery', () => 'Gallery');
 jest.mock('./SearchSort', () => 'SearchSort');
 jest.mock('../ErrorAlerts/FetchErrorAlert', () => 'FetchErrorAlert');
 jest.mock('../ErrorAlerts/UploadErrorAlert', () => 'UploadErrorAlert');
+jest.mock('../ErrorAlerts/ErrorAlert', () => 'ErrorAlert');
 
 jest.mock('./hooks', () => ({
   imgHooks: jest.fn(() => ({
-    error: {
-      show: 'ShoWERror',
+    galleryError: {
+      show: 'ShoWERror gAlLery',
+      set: jest.fn(),
+      dismiss: jest.fn(),
+    },
+    inputError: {
+      show: 'ShoWERror inPUT',
       set: jest.fn(),
       dismiss: jest.fn(),
     },

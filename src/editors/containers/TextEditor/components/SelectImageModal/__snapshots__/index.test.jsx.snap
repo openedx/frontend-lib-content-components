@@ -21,7 +21,7 @@ exports[`SelectImageModal component snapshot 1`] = `
       variant="link"
     >
       <FormattedMessage
-        defaultMessage="Upload a new image"
+        defaultMessage="Upload a new image (10 MB max)"
         description="Label for upload button"
         id="authoring.texteditor.selectimagemodal.upload.label"
       />
@@ -35,7 +35,18 @@ exports[`SelectImageModal component snapshot 1`] = `
   <ErrorAlert
     dismissError={[MockFunction]}
     hideHeading={true}
-    isError="ShoWERror"
+    isError="ShoWERror inPUT"
+  >
+    <FormattedMessage
+      defaultMessage="Images must be 10 MB or less. Please resize image and try again."
+      description=" Message presented to user when file size of image is larger than 10 MB"
+      id="authoring.texteditor.selectimagemodal.error.fileSizeError"
+    />
+  </ErrorAlert>
+  <ErrorAlert
+    dismissError={[MockFunction]}
+    hideHeading={true}
+    isError="ShoWERror gAlLery"
   >
     <FormattedMessage
       defaultMessage="Select an image to continue."
