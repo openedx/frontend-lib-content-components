@@ -110,12 +110,11 @@ export const fileInputHooks = ({ setSelection, clearSelection, imgList }) => {
   const click = () => ref.current.click();
   const addFile = (e) => {
     const selectedFile = e.target.files[0];
-    if (
+    if (selectedFile &&
       module.checkValidFileSize({
         selectedFile,
         clearSelection,
         onSizeFail: () => {
-          console.log(imgList);
           imgList.inputError.set();
         },
       })

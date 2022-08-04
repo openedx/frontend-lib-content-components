@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from 'react-redux';
 import PropTypes from "prop-types";
 
 import { Button, Stack, Spinner } from "@edx/paragon";
@@ -30,7 +31,6 @@ export const SelectImageModal = ({
   intl,
   // redux
   inputIsLoading,
-  inputIsLoaded,
 }) => {
   const {
     galleryError,
@@ -78,15 +78,15 @@ export const SelectImageModal = ({
       </ErrorAlert>
       <Stack gap={3}>
         <SearchSort {...searchSortProps} />
-        <Gallery {...galleryProps} />
-        <FileInput fileInput={fileInput} />
-        {!inputIsLoading ? null : (
+        {!inputIsLoading ?
+          <Gallery {...galleryProps} /> : (
           <Spinner
-            animation="border"
-            className="mie-3"
-            screenReaderText={intl.formatMessage(messages.loading)}
+          animation="border"
+          className="mie-3"
+          screenReaderText={intl.formatMessage(messages.loading)}
           />
         )}
+        <FileInput fileInput={fileInput} />
       </Stack>
     </BaseModal>
   );
@@ -101,11 +101,10 @@ SelectImageModal.propTypes = {
 };
 
 const requestKey = RequestKeys.uploadImage;
-export const maptStateToProps = (state) => ({
+export const mapStateToProps = (state) => ({
   inputIsLoading: selectors.requests.isPending(state, { requestKey }),
-  inputIsLoaded: selectors.requests.isComplete(state, { requestKey }),
 });
 
 export const mapDispatchToProps = {};
 
-export default injectIntl(SelectImageModal);
+export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(SelectImageModal));
