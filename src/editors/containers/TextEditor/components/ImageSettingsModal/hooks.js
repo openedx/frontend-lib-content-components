@@ -160,7 +160,7 @@ export const dimensionHooks = () => {
     value: local,
     setHeight: (height) => {
       if (height.match(/[0-9]+[%]{1}/)) {
-        const heightPercent = height.match(/[0-9]+[%]{1}/)[0]
+        const heightPercent = height.match(/[0-9]+[%]{1}/)[0];
         setLocal({ ...local, height: heightPercent });
       } else if (height.match(/[0-9]/)) {
         setLocal({ ...local, height: parseInt(height, 10) });
@@ -168,8 +168,7 @@ export const dimensionHooks = () => {
     },
     setWidth: (width) => {
       if (width.match(/[0-9]+[%]{1}/)) {
-        console.log(width.match(/[0-9]+[%]{1}/))
-        const widthPercent = width.match(/[0-9]+[%]{1}/)[0]
+        const widthPercent = width.match(/[0-9]+[%]{1}/)[0];
         setLocal({ ...local, width: widthPercent });
       } else if (width.match(/[0-9]/)) {
         setLocal({ ...local, width: parseInt(width, 10) });
