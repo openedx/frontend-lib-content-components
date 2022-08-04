@@ -1,10 +1,10 @@
-import { StrictDict } from "../../../utils";
+import { StrictDict } from '../../../utils';
 
-import { RequestKeys } from "../../constants/requests";
-import { actions, selectors } from "..";
-import api, { loadImages } from "../../services/cms/api";
+import { RequestKeys } from '../../constants/requests';
+import { actions, selectors } from '..';
+import api, { loadImages } from '../../services/cms/api';
 
-import * as module from "./requests";
+import * as module from './requests';
 
 /**
  * Wrapper around a network request promise, that sends actions to the redux store to
@@ -23,14 +23,12 @@ export const networkRequest = ({
   onSuccess,
   onFailure,
 }) => (dispatch) => {
-  console.log("pending");
   dispatch(actions.requests.startRequest(requestKey));
   return promise
     .then((response) => {
       if (onSuccess) {
         onSuccess(response);
       }
-      console.log("complete");
       dispatch(actions.requests.completeRequest({ requestKey, response }));
     })
     .catch((error) => {
@@ -48,8 +46,7 @@ export const networkRequest = ({
  * @param {[func]} onFailure - onFailure method ((error) => { ... })
  */
 export const fetchBlock = ({ ...rest }) => (dispatch, getState) => {
-  dispatch(
-    module.networkRequest({
+  dispatch(module.networkRequest({
       requestKey: RequestKeys.fetchBlock,
       promise: api.fetchBlockById({
         studioEndpointUrl: selectors.app.studioEndpointUrl(getState()),
@@ -67,8 +64,7 @@ export const fetchBlock = ({ ...rest }) => (dispatch, getState) => {
  * @param {[func]} onFailure - onFailure method ((error) => { ... })
  */
 export const fetchStudioView = ({ ...rest }) => (dispatch, getState) => {
-  dispatch(
-    module.networkRequest({
+  dispatch(module.networkRequest({
       requestKey: RequestKeys.fetchStudioView,
       promise: api.fetchStudioView({
         studioEndpointUrl: selectors.app.studioEndpointUrl(getState()),
@@ -86,8 +82,7 @@ export const fetchStudioView = ({ ...rest }) => (dispatch, getState) => {
  * @param {[func]} onFailure - onFailure method ((error) => { ... })
  */
 export const fetchUnit = ({ ...rest }) => (dispatch, getState) => {
-  dispatch(
-    module.networkRequest({
+  dispatch(module.networkRequest({
       requestKey: RequestKeys.fetchUnit,
       promise: api.fetchByUnitId({
         studioEndpointUrl: selectors.app.studioEndpointUrl(getState()),
@@ -105,8 +100,7 @@ export const fetchUnit = ({ ...rest }) => (dispatch, getState) => {
  * @param {[func]} onFailure - onFailure method ((error) => { ... })
  */
 export const saveBlock = ({ content, ...rest }) => (dispatch, getState) => {
-  dispatch(
-    module.networkRequest({
+  dispatch(module.networkRequest({
       requestKey: RequestKeys.saveBlock,
       promise: api.saveBlock({
         blockId: selectors.app.blockId(getState()),
@@ -121,9 +115,7 @@ export const saveBlock = ({ content, ...rest }) => (dispatch, getState) => {
   );
 };
 export const uploadImage = ({ image, ...rest }) => (dispatch, getState) => {
-  console.log("upload image");
-  dispatch(
-    module.networkRequest({
+  dispatch(module.networkRequest({
       requestKey: RequestKeys.uploadImage,
       promise: api.uploadImage({
         learningContextId: selectors.app.learningContextId(getState()),
@@ -136,8 +128,7 @@ export const uploadImage = ({ image, ...rest }) => (dispatch, getState) => {
 };
 
 export const fetchImages = ({ ...rest }) => (dispatch, getState) => {
-  dispatch(
-    module.networkRequest({
+  dispatch(module.networkRequest({
       requestKey: RequestKeys.fetchImages,
       promise: api
         .fetchImages({

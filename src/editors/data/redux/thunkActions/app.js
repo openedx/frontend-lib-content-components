@@ -1,11 +1,10 @@
-import { StrictDict, camelizeKeys } from "../../../utils";
-import { actions } from "..";
-import * as requests from "./requests";
-import * as module from "./app";
+import { StrictDict, camelizeKeys } from '../../../utils';
+import { actions } from '..';
+import * as requests from './requests';
+import * as module from './app';
 
 export const fetchBlock = () => (dispatch) => {
-  dispatch(
-    requests.fetchBlock({
+  dispatch(requests.fetchBlock({
       onSuccess: (response) => dispatch(actions.app.setBlockValue(response)),
       onFailure: (e) => console.log({ fetchFailure: e }),
     })
@@ -13,8 +12,7 @@ export const fetchBlock = () => (dispatch) => {
 };
 
 export const fetchStudioView = () => (dispatch) => {
-  dispatch(
-    requests.fetchStudioView({
+  dispatch(requests.fetchStudioView({
       onSuccess: (response) => dispatch(actions.app.setStudioView(response)),
       onFailure: (e) => dispatch(actions.app.setStudioView(e)),
     })
@@ -22,8 +20,7 @@ export const fetchStudioView = () => (dispatch) => {
 };
 
 export const fetchUnit = () => (dispatch) => {
-  dispatch(
-    requests.fetchUnit({
+  dispatch(requests.fetchUnit({
       onSuccess: (response) => dispatch(actions.app.setUnitUrl(response)),
       onFailure: (e) => dispatch(actions.app.setUnitUrl(e)),
     })
@@ -48,8 +45,7 @@ export const initialize = (data) => (dispatch) => {
  */
 export const saveBlock = ({ content, returnToUnit }) => (dispatch) => {
   dispatch(actions.app.setBlockContent(content));
-  dispatch(
-    requests.saveBlock({
+  dispatch(requests.saveBlock({
       content,
       onSuccess: (response) => {
         dispatch(actions.app.setSaveResponse(response));
@@ -64,8 +60,7 @@ export const fetchImages = ({ setImages }) => (dispatch) => {
 };
 
 export const uploadImage = ({ file, setSelection }) => (dispatch) => {
-  dispatch(
-    requests.uploadImage({
+  dispatch(requests.uploadImage({
       image: file,
       onSuccess: (response) => setSelection(camelizeKeys(response.data.asset)),
     })

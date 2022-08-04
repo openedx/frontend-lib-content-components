@@ -1,9 +1,9 @@
-import React from "react";
-import { useDispatch } from "react-redux";
+import React from 'react';
+import { useDispatch } from 'react-redux';
 
-import { thunkActions } from "../../../../data/redux";
-import * as module from "./hooks";
-import { sortFunctions, sortKeys } from "./utils";
+import { thunkActions } from '../../../../data/redux';
+import * as module from './hooks';
+import { sortFunctions, sortKeys } from './utils';
 
 export const state = {
   highlighted: (val) => React.useState(val),
@@ -15,31 +15,26 @@ export const state = {
 };
 
 export const searchAndSortHooks = () => {
-  const [searchString, setSearchString] = module.state.searchString("");
+  const [searchString, setSearchString] = module.state.searchString('');
   const [sortBy, setSortBy] = module.state.sortBy(sortKeys.dateNewest);
   return {
     searchString,
     onSearchChange: (e) => setSearchString(e.target.value),
-    clearSearchString: () => setSearchString(""),
+    clearSearchString: () => setSearchString(''),
     sortBy,
     onSortClick: (key) => () => setSortBy(key),
   };
 };
 
-export const filteredList = ({ searchString, imageList }) =>
-  imageList.filter(({ displayName }) =>
-    displayName.toLowerCase().includes(searchString.toLowerCase())
-  );
+export const filteredList = ({ searchString, imageList }) => (
+  imageList.filter(({ displayName }) =>displayName.toLowerCase().includes(searchString.toLowerCase()))
+);
 
 export const displayList = ({ sortBy, searchString, images }) =>
-  module
-    .filteredList({
+  module.filteredList({
       searchString,
       imageList: Object.values(images),
-    })
-    .sort(
-      sortFunctions[sortBy in sortKeys ? sortKeys[sortBy] : sortKeys.dateNewest]
-    );
+    }).sort(sortFunctions[sortBy in sortKeys ? sortKeys[sortBy] : sortKeys.dateNewest]);
 
 export const imgListHooks = ({ searchSortProps, setSelection }) => {
   const dispatch = useDispatch();
@@ -49,9 +44,7 @@ export const imgListHooks = ({ searchSortProps, setSelection }) => {
     showSelectImageError,
     setShowSelectImageError,
   ] = module.state.showSelectImageError(false);
-  const [showSizeError, setShowSizeError] = module.state.showSelectImageError(
-    false
-  );
+  const [showSizeError, setShowSizeError] = module.state.showSelectImageError(false);
   const list = module.displayList({ ...searchSortProps, images });
 
   React.useEffect(() => {
@@ -97,7 +90,7 @@ export const checkValidFileSize = ({
 }) => {
   const fileSize = (selectedFile.size / 1000000).toFixed(4);
   if (fileSize > 10) {
-    clearSelection;
+    clearSelection();
     onSizeFail();
     return false;
   }
@@ -110,8 +103,7 @@ export const fileInputHooks = ({ setSelection, clearSelection, imgList }) => {
   const click = () => ref.current.click();
   const addFile = (e) => {
     const selectedFile = e.target.files[0];
-    if (selectedFile &&
-      module.checkValidFileSize({
+    if (selectedFile && module.checkValidFileSize({
         selectedFile,
         clearSelection,
         onSizeFail: () => {
@@ -123,7 +115,7 @@ export const fileInputHooks = ({ setSelection, clearSelection, imgList }) => {
         thunkActions.app.uploadImage({
           file: selectedFile,
           setSelection,
-        })
+        }),
       );
     }
   };
@@ -143,7 +135,12 @@ export const imgHooks = ({ setSelection, clearSelection }) => {
     clearSelection,
     imgList,
   });
-  const { galleryError, galleryProps, inputError, selectBtnProps } = imgList;
+  const {
+    galleryError,
+    galleryProps,
+    inputError,
+    selectBtnProps,
+  } = imgList;
 
   return {
     galleryError,
