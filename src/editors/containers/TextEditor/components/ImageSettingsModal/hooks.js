@@ -159,16 +159,19 @@ export const dimensionHooks = () => {
     unlock,
     value: local,
     setHeight: (height) => {
-      if (height.includes('%')) {
-        setLocal({ ...local, height });
-      } else {
+      if (height.match(/[0-9]+[%]{1}/)) {
+        const heightPercent = height.match(/[0-9]+[%]{1}/)[0]
+        setLocal({ ...local, height: heightPercent });
+      } else if (height.match(/[0-9]/)) {
         setLocal({ ...local, height: parseInt(height, 10) });
       }
     },
     setWidth: (width) => {
-      if (width.includes('%')) {
-        setLocal({ ...local, width });
-      } else {
+      if (width.match(/[0-9]+[%]{1}/)) {
+        console.log(width.match(/[0-9]+[%]{1}/))
+        const widthPercent = width.match(/[0-9]+[%]{1}/)[0]
+        setLocal({ ...local, width: widthPercent });
+      } else if (width.match(/[0-9]/)) {
         setLocal({ ...local, width: parseInt(width, 10) });
       }
     },
