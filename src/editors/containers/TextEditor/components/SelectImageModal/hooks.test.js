@@ -67,6 +67,7 @@ describe('SelectImageModal hooks', () => {
     state.testGetter(state.keys.showSelectImageError);
     state.testGetter(state.keys.searchString);
     state.testGetter(state.keys.sortBy);
+    state.testGetter(state.keys.showSizeError);
   });
 
   describe('using state', () => {
@@ -123,6 +124,7 @@ describe('SelectImageModal hooks', () => {
         images: { p1: 'data1', p2: 'data2', p3: 'other distinct data' },
         sortBy: sortKeys.dateNewest,
         searchString: 'test search string',
+
       };
       const load = (loadProps = {}) => {
         jest.spyOn(hooks, hookKeys.filteredList).mockImplementationOnce(
@@ -211,7 +213,7 @@ describe('SelectImageModal hooks', () => {
           }));
         });
       });
-      describe('error', () => {
+      describe('galleryError', () => {
         test('show is initialized to false and returns properly', () => {
           const show = 'sHOWSelectiMaGEeRROr';
           expect(hook.galleryError.show).toEqual(false);
@@ -238,6 +240,22 @@ describe('SelectImageModal hooks', () => {
         // });
       });
     });
+  });
+  describe('checkValidFileSize', () => {
+    const selectedFileFail = testValueInvalidImage;
+    const selectedFileSuccess = { value: testValue, size: 2000 }
+    const clearSelection = jest.fn();
+    const onSizeFail = jest.fn();
+    it('returns false for valid file size ', () => {
+      hook = hooks.checkValidFileSize({ selectedFile: selectedFileFail, clearSelection, onSizeFail});
+      expect(clearSelection).toHaveBeenCalled();
+      expect(onSizeFail).toHaveBeenCalled();
+      expect(hook).toEqual(false);
+    });
+    it('returns true for valid file size', () => {
+      hook = hooks.checkValidFileSize({ selectedFile: selectedFileSuccess, clearSelection, onSizeFail});
+      expect(hook).toEqual(true);
+    })
   });
   describe('fileInputHooks', () => {
     const setSelection = jest.fn();

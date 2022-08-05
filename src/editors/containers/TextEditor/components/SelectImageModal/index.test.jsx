@@ -69,7 +69,7 @@ describe('SelectImageModal', () => {
       expect(el).toMatchSnapshot();
     });
     test('snapshot: uploaded image not loaded, show spinner', () => {
-      expect(shallow(<SelectImageModal {...props} isLoaded={false} />)).toMatchSnapshot();
+      expect(shallow(<SelectImageModal {...props} isLoaded={true} />)).toMatchSnapshot();
     });
     it('provides confirm action, forwarding selectBtnProps from imgHooks', () => {
       expect(el.find(BaseModal).props().confirmAction.props).toEqual(
