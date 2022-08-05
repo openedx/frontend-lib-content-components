@@ -55,7 +55,7 @@ const state = new MockUseState(hooks);
 const hookKeys = keyStore(hooks);
 let hook;
 const testValue = 'testVALUEVALIDIMAGE';
-const testValueInvalidImage = {;value:'testVALUEVALIDIMAGE', size: 90000000 };
+const testValueInvalidImage = { value:'testVALUEVALIDIMAGE', size: 90000000 };
 
 describe('SelectImageModal hooks', () => {
   beforeEach(() => {
@@ -243,6 +243,7 @@ describe('SelectImageModal hooks', () => {
     const setSelection = jest.fn();
     const clearSelection = jest.fn();
     const imgList = { inputError: { show: true, dismiss: jest.fn(), set: jest.fn() } }
+    const spies = {};
     beforeEach(() => {
       hook = hooks.fileInputHooks({ setSelection, clearSelection, imgList });
     });
@@ -257,21 +258,24 @@ describe('SelectImageModal hooks', () => {
       expect(click).toHaveBeenCalled();
     });
     describe('addFile (uploadImage args)', () => {
-      const eventSuccess = { target: { files: [testValue] } };
+      const eventSuccess = { target: { files: [{value: testValue, size: 2000}] } };
       const eventFailure = { target: { files: [testValueInvalidImage] } };
       it('image fails to upload', () => {
-        const spies = {};
         const onSizeFail = jest.fn();
         const checkValidFileSize = false;
         spies.checkValidFileSize = jest.spyOn(hooks, hookKeys.checkValidFileSize)
           .mockReturnValueOnce(checkValidFileSize);
         hook.addFile(eventFailure);
-        expect(spies.checkValidFileSize).toHaveBeenCalledWith({
-          selectedFile:testValueInvalidImage, clearSelection, onSizeFail: () => {onSizeFail}
-        });
+        expect(spies.checkValidFileSize.mock.calls.length).toEqual(1);
+        expect(spies.checkValidFileSize).toHaveReturnedWith(false);
       });
       it('dispatches uploadImage thunkAction with the first target file and setSelection', () => {
+        const checkValidFileSize = true;
+        spies.checkValidFileSize = jest.spyOn(hooks, hookKeys.checkValidFileSize)
+          .mockReturnValueOnce(checkValidFileSize);
         hook.addFile(eventSuccess);
+        expect(spies.checkValidFileSize.mock.calls.length).toEqual(1);
+        expect(spies.checkValidFileSize).toHaveReturnedWith(true);
         expect(dispatch).toHaveBeenCalledWith(thunkActions.app.uploadImage({
           file: testValue,
           setSelection,
