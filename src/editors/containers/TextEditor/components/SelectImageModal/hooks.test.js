@@ -320,7 +320,7 @@ describe('SelectImageModal hooks', () => {
       expect(hook.searchSortProps).toEqual(searchAndSortHooks);
       expect(spies.file.mock.calls.length).toEqual(1);
       expect(spies.file).toHaveBeenCalledWith({
-        setSelection, clearSelection, imgList: imgListHooks
+        setSelection, clearSelection, imgList: imgListHooks,
       });
     });
     it('forwards galleryProps and selectBtnProps from the image list hooks', () => {
