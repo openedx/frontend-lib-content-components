@@ -243,19 +243,19 @@ describe('SelectImageModal hooks', () => {
   });
   describe('checkValidFileSize', () => {
     const selectedFileFail = testValueInvalidImage;
-    const selectedFileSuccess = { value: testValue, size: 2000 }
+    const selectedFileSuccess = { value: testValue, size: 2000 };
     const clearSelection = jest.fn();
     const onSizeFail = jest.fn();
     it('returns false for valid file size ', () => {
-      hook = hooks.checkValidFileSize({ selectedFile: selectedFileFail, clearSelection, onSizeFail});
+      hook = hooks.checkValidFileSize({ selectedFile: selectedFileFail, clearSelection, onSizeFail });
       expect(clearSelection).toHaveBeenCalled();
       expect(onSizeFail).toHaveBeenCalled();
       expect(hook).toEqual(false);
     });
     it('returns true for valid file size', () => {
-      hook = hooks.checkValidFileSize({ selectedFile: selectedFileSuccess, clearSelection, onSizeFail});
+      hook = hooks.checkValidFileSize({ selectedFile: selectedFileSuccess, clearSelection, onSizeFail });
       expect(hook).toEqual(true);
-    })
+    });
   });
   describe('fileInputHooks', () => {
     const setSelection = jest.fn();

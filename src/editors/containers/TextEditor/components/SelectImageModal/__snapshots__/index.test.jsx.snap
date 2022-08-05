@@ -136,8 +136,10 @@ exports[`SelectImageModal component snapshot: uploaded image not loaded, show sp
     <SearchSort
       search="sortProps"
     />
-    <Gallery
-      gallery="props"
+    <Spinner
+      animation="border"
+      className="mie-3"
+      screenReaderText="loading..."
     />
     <FileInput
       fileInput={
