@@ -6,8 +6,9 @@ import ImageSettingsModal from './ImageSettingsModal';
 import SelectImageModal from './SelectImageModal';
 import * as module from './ImageUploadModal';
 
-export const propsString = (props) =>
-  Object.keys(props).map((key) => `${key}="${props[key]}"`).join(' ');
+export const propsString = (props) => (
+  Object.keys(props).map((key) => `${key}="${props[key]}"`).join(' ')
+);
 
 export const imgProps = ({ settings, selection }) => ({
   src: selection.externalUrl,

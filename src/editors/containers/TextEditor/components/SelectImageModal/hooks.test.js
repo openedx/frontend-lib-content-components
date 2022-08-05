@@ -55,7 +55,7 @@ const state = new MockUseState(hooks);
 const hookKeys = keyStore(hooks);
 let hook;
 const testValue = 'testVALUEVALIDIMAGE';
-const testValueInvalidImage = { value:'testVALUEVALIDIMAGE', size: 90000000 };
+const testValueInvalidImage = { value: 'testVALUEVALIDIMAGE', size: 90000000 };
 
 describe('SelectImageModal hooks', () => {
   beforeEach(() => {
@@ -242,7 +242,7 @@ describe('SelectImageModal hooks', () => {
   describe('fileInputHooks', () => {
     const setSelection = jest.fn();
     const clearSelection = jest.fn();
-    const imgList = { inputError: { show: true, dismiss: jest.fn(), set: jest.fn() } }
+    const imgList = { inputError: { show: true, dismiss: jest.fn(), set: jest.fn() } };
     const spies = {};
     beforeEach(() => {
       hook = hooks.fileInputHooks({ setSelection, clearSelection, imgList });
@@ -258,10 +258,9 @@ describe('SelectImageModal hooks', () => {
       expect(click).toHaveBeenCalled();
     });
     describe('addFile (uploadImage args)', () => {
-      const eventSuccess = { target: { files: [{value: testValue, size: 2000}] } };
+      const eventSuccess = { target: { files: [{ value: testValue, size: 2000 }] } };
       const eventFailure = { target: { files: [testValueInvalidImage] } };
       it('image fails to upload', () => {
-        const onSizeFail = jest.fn();
         const checkValidFileSize = false;
         spies.checkValidFileSize = jest.spyOn(hooks, hookKeys.checkValidFileSize)
           .mockReturnValueOnce(checkValidFileSize);
@@ -307,7 +306,7 @@ describe('SelectImageModal hooks', () => {
       expect(hook.fileInput).toEqual(fileInputHooks);
       expect(spies.file.mock.calls.length).toEqual(1);
       expect(spies.file).toHaveBeenCalledWith({
-        setSelection, clearSelection, imgList:imgListHooks,
+        setSelection, clearSelection, imgList: imgListHooks,
       });
     });
     it('initializes imgListHooks with setSelection and searchAndSortHooks', () => {
@@ -320,7 +319,9 @@ describe('SelectImageModal hooks', () => {
     it('forwards searchAndSortHooks as searchSortProps', () => {
       expect(hook.searchSortProps).toEqual(searchAndSortHooks);
       expect(spies.file.mock.calls.length).toEqual(1);
-      expect(spies.file).toHaveBeenCalledWith({ setSelection, clearSelection, imgList:imgListHooks });
+      expect(spies.file).toHaveBeenCalledWith({
+        setSelection, clearSelection, imgList: imgListHooks
+      });
     });
     it('forwards galleryProps and selectBtnProps from the image list hooks', () => {
       expect(hook.galleryProps).toEqual(imgListHooks.galleryProps);
