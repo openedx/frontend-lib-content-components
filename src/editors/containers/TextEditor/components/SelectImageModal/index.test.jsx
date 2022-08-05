@@ -70,7 +70,7 @@ describe('SelectImageModal', () => {
     });
     test('snapshot: uploaded image not loaded, show spinner', () => {
       props.inputIsLoading = true;
-      expect(shallow(<SelectImageModal { ...props } />)).toMatchSnapshot();
+      expect(shallow(<SelectImageModal {...props} />)).toMatchSnapshot();
       props.inputIsLoading = false;
     });
     it('provides confirm action, forwarding selectBtnProps from imgHooks', () => {
