@@ -2,12 +2,14 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import { formatMessage } from '../../../../../testUtils';
+import { RequestKeys } from '../../../../data/constants/requests';
+import { selectors } from '../../../../data/redux';
 import BaseModal from '../BaseModal';
 import FileInput from './FileInput';
 import Gallery from './Gallery';
 import SearchSort from './SearchSort';
 import hooks from './hooks';
-import { SelectImageModal } from '.';
+import { SelectImageModal, mapStateToProps, mapDispatchToProps } from '.';
 
 jest.mock('../BaseModal', () => 'BaseModal');
 jest.mock('./FileInput', () => 'FileInput');
@@ -40,13 +42,23 @@ jest.mock('./hooks', () => ({
   })),
 }));
 
+jest.mock('../../../../data/redux', () => ({
+  selectors: {
+    requests: {
+      isPending: (state, { requestKey }) => ({ isPending: { state, requestKey } }),
+    },
+  },
+}));
+
 describe('SelectImageModal', () => {
   describe('component', () => {
     const props = {
       isOpen: true,
       close: jest.fn().mockName('props.close'),
       setSelection: jest.fn().mockName('props.setSelection'),
+      clearSelection: jest.fn().mockName('props.clearSelection'),
       intl: { formatMessage },
+      inputIsLoading: false,
     };
     let el;
     const imgHooks = hooks.imgHooks();
@@ -55,6 +67,9 @@ describe('SelectImageModal', () => {
     });
     test('snapshot', () => {
       expect(el).toMatchSnapshot();
+    });
+    test('snapshot: uploaded image not loaded, show spinner', () => {
+      expect(shallow(<SelectImageModal {...props} isLoaded={false} />)).toMatchSnapshot();
     });
     it('provides confirm action, forwarding selectBtnProps from imgHooks', () => {
       expect(el.find(BaseModal).props().confirmAction.props).toEqual(
@@ -74,6 +89,19 @@ describe('SelectImageModal', () => {
     });
     it('provides a FileInput component with fileInput props from imgHooks', () => {
       expect(el.find(FileInput).props()).toMatchObject({ fileInput: imgHooks.fileInput });
+    });
+  });
+  describe('mapStateToProps', () => {
+    const testState = { some: 'testState' };
+    test('loads inputIsLoading from requests.isPending selector for uploadImage request', () => {
+      expect(mapStateToProps(testState).inputIsLoading).toEqual(
+        selectors.requests.isPending(testState, { requestKey: RequestKeys.uploadImage }),
+      );
+    });
+  });
+  describe('mapDispatchToProps', () => {
+    test('is empty', () => {
+      expect(mapDispatchToProps).toEqual({});
     });
   });
 });
