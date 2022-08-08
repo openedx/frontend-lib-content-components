@@ -278,7 +278,7 @@ describe('SelectImageModal hooks', () => {
     describe('addFile (uploadImage args)', () => {
       const eventSuccess = { target: { files: [{ value: testValue, size: 2000 }] } };
       const eventFailure = { target: { files: [testValueInvalidImage] } };
-      it('image fails to upload', () => {
+      it('image fails to upload if file size is greater than 1000000', () => {
         const checkValidFileSize = false;
         spies.checkValidFileSize = jest.spyOn(hooks, hookKeys.checkValidFileSize)
           .mockReturnValueOnce(checkValidFileSize);

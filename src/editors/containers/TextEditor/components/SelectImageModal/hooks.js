@@ -88,8 +88,8 @@ export const checkValidFileSize = ({
   clearSelection,
   onSizeFail,
 }) => {
-  const fileSize = (selectedFile.size / 1000000).toFixed(4);
-  if (fileSize > 10) {
+  // Check if the file size is greater than 10 MB, upload size limit
+  if (selectedFile.size > 1000000) {
     clearSelection();
     onSizeFail();
     return false;
