@@ -136,14 +136,14 @@ export const dimensionHooks = (altTextHook) => {
   const [dimensions, setDimensions] = module.state.dimensions(null);
   const [local, setLocal] = module.state.local(null);
   const setAll = ({ height, width, altText }) => {
-    if (altText == '' || altText) {
-      if (altText == '') {
+    if (altText === '' || altText) {
+      if (altText === '') {
         altTextHook.setIsDecorative(true);
       }
       altTextHook.setValue(altText);
     }
     setDimensions({ height, width });
-    setLocal({ height, width,  });
+    setLocal({ height, width });
   };
   const {
     initializeLock,
