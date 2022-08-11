@@ -69,7 +69,7 @@ export const editorConfig = ({
   },
   initialValue: blockValue ? blockValue.data.data : '',
   init: {
-
+    content_style: "@import url('https://fonts.googleapis.com/css2?family=Open+Sans'); body { color: #313131; font-family: 'Open Sans'; font-size: 16px;",
     setup: module.setupCustomBehavior({ openModal, setImage: setSelection }),
     plugins: pluginConfig.plugins,
     imagetools_toolbar: pluginConfig.imageToolbar,
