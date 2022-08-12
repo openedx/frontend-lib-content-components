@@ -4,7 +4,7 @@ import {
 
 import { StrictDict } from '../../utils';
 import tinyMCE from '../../data/constants/tinyMCE';
-import { styles } from '../../data/constants/tinyMCEStyles';
+import tinyMCEStyles from '../../data/constants/tinyMCEStyles';
 import pluginConfig from './pluginConfig';
 import * as appHooks from '../../hooks';
 import * as module from './hooks';
@@ -76,7 +76,7 @@ export const editorConfig = ({
   initialValue: blockValue ? blockValue.data.data : '',
   init: {
     ...pluginConfig.config,
-    content_style: styles,
+    content_style: tinyMCEStyles,
     contextmenu: 'link table',
     imagetools_cors_hosts: [removeProtocolFromUrl(lmsEndpointUrl), removeProtocolFromUrl(studioEndpointUrl)],
     imagetools_toolbar: pluginConfig.imageToolbar,
