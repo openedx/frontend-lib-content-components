@@ -50,6 +50,6 @@ export default StrictDict({
     min_height: 500,
     toolbar_sticky: true,
     relative_urls: true,
-    document_base_url : 'http://localhost:18000',
+    document_base_url: 'http://localhost:18000',
   },
 });
