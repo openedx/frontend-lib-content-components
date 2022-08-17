@@ -49,7 +49,6 @@ export default StrictDict({
     menubar: false,
     min_height: 500,
     toolbar_sticky: true,
-    relative_urls: true,
-    document_base_url: 'http://localhost:18000',
+    relative_urls: false,
   },
 });
