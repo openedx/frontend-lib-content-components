@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Alert } from '@edx/paragon';
 
+import CodeEditor from './CodeEditor'
 export const RawEditor = ({
   editorRef,
   text,
@@ -10,13 +11,10 @@ export const RawEditor = ({
     <Alert variant="danger">
       You are using the raw HTML editor.
     </Alert>
-    <textarea
-      className="form-control"
-      ref={editorRef}
-      rows="12"
-    >
-      { text }
-    </textarea>
+    <CodeEditor
+    innerRef = {editorRef}
+    value = {text}
+    />
   </div>
 );
 RawEditor.defaultProps = {

@@ -12,30 +12,31 @@ import * as module from './hooks';
 export const { nullMethod, navigateCallback, navigateTo } = appHooks;
 
 export const state = StrictDict({
-  isModalOpen: (val) => useState(val),
+  isImageModalOpen: (val) => useState(val),
+  isSourceCodeModalOpen: (val) => useState(val),
   imageSelection: (val) => useState(val),
   refReady: (val) => useState(val),
 });
 
-export const setupCustomBehavior = ({ openModal, setImage }) => (editor) => {
+export const setupCustomBehavior = ({openImgModal,
+  openSourceCodeModal, setImage }) => (editor) => {
   // image upload button
   editor.ui.registry.addButton(tinyMCE.buttons.imageUploadButton, {
     icon: 'image',
     tooltip: 'Add Image',
-    onAction: openModal,
+    onAction: openImgModal,
   });
   // editing an existing image
   editor.ui.registry.addButton(tinyMCE.buttons.editImageSettings, {
     icon: 'image',
     tooltip: 'Edit Image Settings',
-    onAction: module.openModalWithSelectedImage({ editor, setImage, openModal }),
+    onAction: module.openModalWithSelectedImage({ editor, setImage, openModal: openImgModal }),
   });
   // overriding the code plugin's icon with 'HTML' text
-  const openCodeEditor = () => editor.execCommand('mceCodeEditor');
   editor.ui.registry.addButton(tinyMCE.buttons.code, {
     text: 'HTML',
     tooltip: 'Source code',
-    onAction: openCodeEditor,
+    onAction: openSourceCodeModal,
   });
   // add a custom simple inline code block formatter.
   const setupCodeFormatting = (api) => {
@@ -64,7 +65,8 @@ export const editorConfig = ({
   blockValue,
   initializeEditor,
   lmsEndpointUrl,
-  openModal,
+  openImgModal,
+  openSourceCodeModal,
   setEditorRef,
   setSelection,
   studioEndpointUrl,
@@ -83,19 +85,31 @@ export const editorConfig = ({
     imagetools_cors_hosts: [removeProtocolFromUrl(lmsEndpointUrl), removeProtocolFromUrl(studioEndpointUrl)],
     imagetools_toolbar: pluginConfig.imageToolbar,
     plugins: pluginConfig.plugins,
-    setup: module.setupCustomBehavior({ openModal, setImage: setSelection }),
+    setup: module.setupCustomBehavior({
+      openImgModal,
+      openSourceCodeModal,
+      setImage: setSelection }),
     toolbar: pluginConfig.toolbar,
     valid_children: '+body[style]',
     valid_elements: '*[*]',
   },
 });
 
-export const modalToggle = () => {
-  const [isOpen, setIsOpen] = module.state.isModalOpen(false);
+export const imgModalToggle = () => {
+  const [isImgOpen, setIsOpen] = module.state.isImageModalOpen(false);
   return {
-    isOpen,
-    openModal: () => setIsOpen(true),
-    closeModal: () => setIsOpen(false),
+    isImgOpen,
+    openImgModal: () => setIsOpen(true),
+    closeImgModal: () => setIsOpen(false),
+  };
+};
+
+export const sourceCodeModalToggle = () => {
+  const [isSourceCodeOpen, setIsOpen] = module.state.isSourceCodeModalOpen(false);
+  return {
+    isSourceCodeOpen,
+    openSourceCodeModal: () => setIsOpen(true),
+    closeSourceCodeModal: () => setIsOpen(false),
   };
 };
 
@@ -122,7 +136,8 @@ export const prepareEditorRef = () => {
 
 export const getContent = ({ editorRef, isRaw }) => () => {
   if (isRaw && editorRef && editorRef.current) {
-    return editorRef.current.value;
+    console.log(editorRef.current.state.doc.toString());
+    return editorRef.current.state.doc.toString();
   }
   return editorRef.current?.getContent();
 };
