@@ -69,6 +69,15 @@ exports[`ImageSettingsModal render snapshot 1`] = `
     >
       <Image
         className="img-settings-thumbnail"
+        onError={
+          Object {
+            "hooks.dimensions.onImgLoad.callback": Object {
+              "selection": Object {
+                "selected": "image data",
+              },
+            },
+          }
+        }
         onLoad={
           Object {
             "hooks.dimensions.onImgLoad.callback": Object {
@@ -95,8 +104,23 @@ exports[`ImageSettingsModal render snapshot 1`] = `
                   "selected": "image data",
                 },
               ],
+              Array [
+                Object {
+                  "selected": "image data",
+                },
+              ],
             ],
             "results": Array [
+              Object {
+                "type": "return",
+                "value": Object {
+                  "hooks.dimensions.onImgLoad.callback": Object {
+                    "selection": Object {
+                      "selected": "image data",
+                    },
+                  },
+                },
+              },
               Object {
                 "type": "return",
                 "value": Object {
