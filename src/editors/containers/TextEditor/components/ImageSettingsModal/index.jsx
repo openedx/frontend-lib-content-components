@@ -40,7 +40,6 @@ export const ImageSettingsModal = ({
     isDecorative: altText.isDecorative,
     saveToEditor,
   });
-  console.log('test', dimensions)
   return (
     <BaseModal
       title={intl.formatMessage(messages.titleLabel)}
