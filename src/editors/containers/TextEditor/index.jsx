@@ -36,7 +36,6 @@ import RawEditor from './components/RawEditor';
 import * as hooks from './hooks';
 import messages from './messages';
 
-
 export const TextEditor = ({
   onClose,
   // redux

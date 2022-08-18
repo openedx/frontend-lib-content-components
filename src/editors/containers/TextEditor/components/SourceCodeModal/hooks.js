@@ -7,7 +7,6 @@ export const getSaveBtnProps = ({ editorRef, ref, close }) => ({
       editorRef.current.setContent(content);
       close();
     }
-    console.log('Broken Saving');
   },
 });
 
@@ -20,4 +19,4 @@ export const preprareSourceCodeModal = ({ editorRef, close }) => {
 
 export default {
   preprareSourceCodeModal,
-}
+};

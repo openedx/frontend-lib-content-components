@@ -18,8 +18,10 @@ export const state = StrictDict({
   refReady: (val) => useState(val),
 });
 
-export const setupCustomBehavior = ({openImgModal,
-  openSourceCodeModal, setImage }) => (editor) => {
+export const setupCustomBehavior = ({
+  openImgModal,
+  openSourceCodeModal, setImage,
+}) => (editor) => {
   // image upload button
   editor.ui.registry.addButton(tinyMCE.buttons.imageUploadButton, {
     icon: 'image',
@@ -30,7 +32,7 @@ export const setupCustomBehavior = ({openImgModal,
   editor.ui.registry.addButton(tinyMCE.buttons.editImageSettings, {
     icon: 'image',
     tooltip: 'Edit Image Settings',
-    onAction: module.openModalWithSelectedImage({ editor, setImage, openModal: openImgModal }),
+    onAction: module.openModalWithSelectedImage({ editor, setImage, openImgModal }),
   });
   // overriding the code plugin's icon with 'HTML' text
   editor.ui.registry.addButton(tinyMCE.buttons.code, {
@@ -88,7 +90,8 @@ export const editorConfig = ({
     setup: module.setupCustomBehavior({
       openImgModal,
       openSourceCodeModal,
-      setImage: setSelection }),
+      setImage: setSelection,
+    }),
     toolbar: pluginConfig.toolbar,
     valid_children: '+body[style]',
     valid_elements: '*[*]',
@@ -113,7 +116,7 @@ export const sourceCodeModalToggle = () => {
   };
 };
 
-export const openModalWithSelectedImage = ({ editor, setImage, openModal }) => () => {
+export const openModalWithSelectedImage = ({ editor, setImage, openImgModal }) => () => {
   const imgHTML = editor.selection.getNode();
   setImage({
     externalUrl: imgHTML.src,
@@ -121,7 +124,7 @@ export const openModalWithSelectedImage = ({ editor, setImage, openModal }) => (
     width: imgHTML.width,
     height: imgHTML.height,
   });
-  openModal();
+  openImgModal();
 };
 
 export const prepareEditorRef = () => {
@@ -136,7 +139,6 @@ export const prepareEditorRef = () => {
 
 export const getContent = ({ editorRef, isRaw }) => () => {
   if (isRaw && editorRef && editorRef.current) {
-    console.log(editorRef.current.state.doc.toString());
     return editorRef.current.state.doc.toString();
   }
   return editorRef.current?.getContent();
