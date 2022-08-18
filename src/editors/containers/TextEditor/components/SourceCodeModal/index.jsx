@@ -47,8 +47,6 @@ export const SourceCodeModal = ({
 SourceCodeModal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   close: PropTypes.func.isRequired,
-  setSelection: PropTypes.func.isRequired,
-  clearSelection: PropTypes.func.isRequired,
   editorRef: PropTypes.oneOfType([
     PropTypes.func,
     PropTypes.shape({ current: PropTypes.any }),

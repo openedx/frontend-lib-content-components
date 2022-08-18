@@ -1,4 +1,5 @@
 import { useRef } from 'react';
+import * as module from './hooks';
 
 export const getSaveBtnProps = ({ editorRef, ref, close }) => ({
   onClick: () => {
@@ -12,7 +13,7 @@ export const getSaveBtnProps = ({ editorRef, ref, close }) => ({
 
 export const preprareSourceCodeModal = ({ editorRef, close }) => {
   const ref = useRef();
-  const saveBtnProps = getSaveBtnProps({ editorRef, ref, close });
+  const saveBtnProps = module.getSaveBtnProps({ editorRef, ref, close });
   const value = editorRef.current?.getContent();
   return { saveBtnProps, value, ref };
 };
