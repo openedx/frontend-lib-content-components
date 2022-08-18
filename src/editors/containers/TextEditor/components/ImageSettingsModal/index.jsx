@@ -40,6 +40,7 @@ export const ImageSettingsModal = ({
     isDecorative: altText.isDecorative,
     saveToEditor,
   });
+  console.log('test', dimensions)
   return (
     <BaseModal
       title={intl.formatMessage(messages.titleLabel)}
@@ -74,6 +75,7 @@ export const ImageSettingsModal = ({
         <div className="img-settings-thumbnail-container">
           <Image
             className="img-settings-thumbnail"
+            onError={dimensions.onImgLoad(selection)}
             onLoad={dimensions.onImgLoad(selection)}
             src={selection.externalUrl}
           />
