@@ -39,7 +39,7 @@ describe('SourceCodeModal hooks', () => {
     expect(mockClose).toHaveBeenCalled();
   });
 
-  test('preprareSourceCodeModal', () => {
+  test('prepareSourceCodeModal', () => {
     const props = {
       close: mockClose,
       editorRef: mockEditorRef,
@@ -52,7 +52,7 @@ describe('SourceCodeModal hooks', () => {
       () => mockButton,
     );
 
-    const result = module.preprareSourceCodeModal(props);
+    const result = module.prepareSourceCodeModal(props);
     expect(spyRef).toHaveBeenCalled();
     expect(spyButtons).toHaveBeenCalled();
     expect(result).toStrictEqual({ saveBtnProps: mockButton, value: mockEditorRef.current.getContent(), ref: mockRef });

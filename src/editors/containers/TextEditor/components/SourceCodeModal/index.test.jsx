@@ -6,7 +6,7 @@ import { formatMessage } from '../../../../../testUtils';
 import { SourceCodeModal } from '.';
 
 jest.mock('./hooks', () => ({
-  preprareSourceCodeModal: jest.fn(() => {
+  prepareSourceCodeModal: jest.fn(() => {
 
   }),
 }));
@@ -26,7 +26,7 @@ describe('SourceCodeModal', () => {
     const mocksaveBtnProps = 'SoMevAlue';
     const mockvalue = 'mOckHtMl';
     const mockref = 'moCKrEf';
-    hooks.preprareSourceCodeModal.mockReturnValueOnce({
+    hooks.prepareSourceCodeModal.mockReturnValueOnce({
       saveBtnProps: mocksaveBtnProps,
       value: mockvalue,
       ref: mockref,

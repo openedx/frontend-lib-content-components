@@ -11,13 +11,17 @@ export const getSaveBtnProps = ({ editorRef, ref, close }) => ({
   },
 });
 
-export const preprareSourceCodeModal = ({ editorRef, close }) => {
+export const prepareSourceCodeModal = ({ editorRef, close }) => {
   const ref = useRef();
   const saveBtnProps = module.getSaveBtnProps({ editorRef, ref, close });
-  const value = editorRef.current?.getContent();
-  return { saveBtnProps, value, ref };
+
+  if (editorRef && editorRef.current && typeof editorRef.current.getContent === 'function') {
+    const value = editorRef?.current?.getContent();
+    return { saveBtnProps, value, ref };
+  }
+  return { saveBtnProps, value: null, ref };
 };
 
 export default {
-  preprareSourceCodeModal,
+  prepareSourceCodeModal,
 };

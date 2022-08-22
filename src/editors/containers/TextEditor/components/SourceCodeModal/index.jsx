@@ -21,10 +21,11 @@ export const SourceCodeModal = ({
   // injected
   intl,
 }) => {
-  const { saveBtnProps, value, ref } = hooks.preprareSourceCodeModal({ editorRef, close });
+  const { saveBtnProps, value, ref } = hooks.prepareSourceCodeModal({ editorRef, close });
   return (
     <BaseModal
       close={close}
+      size="xl"
       confirmAction={(
         <Button {...saveBtnProps} variant="primary">
           <FormattedMessage {...messages.saveButtonLabel} />

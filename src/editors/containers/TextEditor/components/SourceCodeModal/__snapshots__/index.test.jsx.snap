@@ -25,6 +25,7 @@ exports[`SourceCodeModal renders as expected with default behavior 1`] = `
   }
   footerAction={null}
   isOpen={false}
+  size="xl"
   title="Add an image"
 >
   <div
