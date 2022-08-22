@@ -139,7 +139,7 @@ describe('SelectImageModal hooks', () => {
         images: {
           sOmEuiMAgeURl: {
             displayName: 'sOmEuiMAge',
-            staTICUrl: '/assets/sOmEuiMAge'
+            staTICUrl: '/assets/sOmEuiMAge',
           },
         },
       };

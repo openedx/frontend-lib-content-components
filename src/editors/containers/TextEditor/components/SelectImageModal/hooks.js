@@ -29,12 +29,11 @@ export const filteredList = ({ searchString, imageList }) => (
   imageList.filter(({ displayName }) => displayName.toLowerCase().includes(searchString.toLowerCase()))
 );
 
-export const displayList = ({ sortBy, searchString, images }) => {
-  return (
+export const displayList = ({ sortBy, searchString, images }) => (
   module.filteredList({
     searchString,
     imageList: Object.values(images),
-  }).sort(sortFunctions[sortBy in sortKeys ? sortKeys[sortBy] : sortKeys.dateNewest]))};
+  }).sort(sortFunctions[sortBy in sortKeys ? sortKeys[sortBy] : sortKeys.dateNewest]));
 
 export const imgListHooks = ({ searchSortProps, setSelection, images }) => {
   const [highlighted, setHighlighted] = module.state.highlighted(null);
