@@ -45,12 +45,15 @@ export const TextEditor = ({
   blockFailed,
   blockFinished,
   initializeEditor,
+  images,
+  imagesFinished,
   // inject
   intl,
 }) => {
   const { editorRef, refReady, setEditorRef } = hooks.prepareEditorRef();
   const { isOpen, openModal, closeModal } = hooks.modalToggle();
   const imageSelection = hooks.selectedImage(null);
+  hooks.fetchImageAssets(blockFinished);
 
   if (!refReady) { return null; }
 
@@ -72,6 +75,7 @@ export const TextEditor = ({
           initializeEditor,
           lmsEndpointUrl,
           studioEndpointUrl,
+          images,
           setSelection: imageSelection.setSelection,
           clearSelection: imageSelection.clearSelection,
         })}
@@ -89,6 +93,7 @@ export const TextEditor = ({
           isOpen={isOpen}
           close={closeModal}
           editorRef={editorRef}
+          images={images}
           {...imageSelection}
         />
 
@@ -96,7 +101,7 @@ export const TextEditor = ({
           <FormattedMessage {...messages.couldNotLoadTextContext} />
         </Toast>
 
-        {(!blockFinished)
+        {(!imagesFinished)
           ? (
             <div className="text-center p-6">
               <Spinner
@@ -116,6 +121,8 @@ TextEditor.defaultProps = {
   isRaw: null,
   lmsEndpointUrl: null,
   studioEndpointUrl: null,
+  images: null,
+  imagesFinished: null,
 };
 TextEditor.propTypes = {
   onClose: PropTypes.func.isRequired,
@@ -129,6 +136,8 @@ TextEditor.propTypes = {
   blockFinished: PropTypes.bool.isRequired,
   initializeEditor: PropTypes.func.isRequired,
   isRaw: PropTypes.bool,
+  imagesFinished: PropTypes.bool,
+  images: PropTypes.shape({}),
   // inject
   intl: intlShape.isRequired,
 };
@@ -140,6 +149,8 @@ export const mapStateToProps = (state) => ({
   blockFailed: selectors.requests.isFailed(state, { requestKey: RequestKeys.fetchBlock }),
   blockFinished: selectors.requests.isFinished(state, { requestKey: RequestKeys.fetchBlock }),
   isRaw: selectors.app.isRaw(state),
+  imagesFinished: selectors.requests.isFinished(state, { requestKey: RequestKeys.fetchImages }),
+  images: selectors.app.images(state),
 });
 
 export const mapDispatchToProps = {

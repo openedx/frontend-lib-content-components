@@ -1,7 +1,9 @@
 import {
   useRef, useEffect, useCallback, useState,
 } from 'react';
+import { useDispatch } from 'react-redux';
 
+import { thunkActions } from '../../data/redux';
 import { StrictDict } from '../../utils';
 import tinyMCE from '../../data/constants/tinyMCE';
 import tinyMCEStyles from '../../data/constants/tinyMCEStyles';
@@ -57,6 +59,29 @@ export const setupCustomBehavior = ({ openModal, setImage }) => (editor) => {
   });
 };
 
+export const checkRelativeUrl = (imageUrls) => (editor) => {
+  editor.on('ExecCommand', (e) => {
+    if (e.command === 'mceFocus') {
+      const content = editor.getContent();
+      const imageSrcs = content.split('img src="');
+      imageSrcs.forEach(src => {
+        if (src.startsWith('/static/') && imageUrls.length > 0) {
+          const imgName = src.substring(8, src.indexOf('"'));
+          let staticFullUrl;
+          imageUrls.forEach((url) => {
+            if (url.includes(imgName)) {
+              staticFullUrl = url;
+            }
+          });
+          const currentSrc = src.substring(0, src.indexOf('"'));
+          const updatedContent = content.replace(currentSrc, staticFullUrl);
+          editor.setContent(updatedContent);
+        }
+      });
+    }
+  });
+};
+
 // imagetools_cors_hosts needs a protocol-sanatized url
 export const removeProtocolFromUrl = (url) => url.replace(/^https?:\/\//, '');
 
@@ -68,6 +93,7 @@ export const editorConfig = ({
   setEditorRef,
   setSelection,
   studioEndpointUrl,
+  images,
 }) => ({
   onInit: (evt, editor) => {
     setEditorRef(editor);
@@ -81,6 +107,7 @@ export const editorConfig = ({
     content_style: tinyMCEStyles,
     contextmenu: 'link table',
     document_base_url: lmsEndpointUrl,
+    init_instance_callback: module.checkRelativeUrl(module.fetchImageUrls(images)),
     imagetools_cors_hosts: [removeProtocolFromUrl(lmsEndpointUrl), removeProtocolFromUrl(studioEndpointUrl)],
     imagetools_toolbar: pluginConfig.imageToolbar,
     plugins: pluginConfig.plugins,
@@ -126,6 +153,24 @@ export const getContent = ({ editorRef, isRaw }) => () => {
     return editorRef.current.value;
   }
   return editorRef.current?.getContent();
+};
+
+export const fetchImageAssets = (blockFinished) => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (blockFinished) {
+      dispatch(thunkActions.app.fetchImages());
+    }
+  }, []);
+};
+
+export const fetchImageUrls = (images) => {
+  const imageUrls = [];
+  const imgsArray = Object.values(images);
+  imgsArray.forEach(image => {
+    imageUrls.push(image.staticFullUrl);
+  });
+  return imageUrls;
 };
 
 export const selectedImage = (val) => {

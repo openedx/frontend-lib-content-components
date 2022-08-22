@@ -51,8 +51,10 @@ export const saveBlock = ({ content, returnToUnit }) => (dispatch) => {
   }));
 };
 
-export const fetchImages = ({ setImages }) => (dispatch) => {
-  dispatch(requests.fetchImages({ onSuccess: setImages }));
+export const fetchImages = () => (dispatch) => {
+  dispatch(requests.fetchImages({
+    onSuccess: (response) => dispatch(actions.app.setImages(response)),
+  }));
 };
 
 export const uploadImage = ({ file, setSelection }) => (dispatch) => {

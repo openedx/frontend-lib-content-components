@@ -45,6 +45,7 @@ const app = createSlice({
     setBlockTitle: (state, { payload }) => ({ ...state, blockTitle: payload }),
     setSaveResponse: (state, { payload }) => ({ ...state, saveResponse: payload }),
     initializeEditor: (state) => ({ ...state, editorInitialized: true }),
+    setImages: (state, { payload }) => ({ ...state, images: payload }),
   },
 });
 
