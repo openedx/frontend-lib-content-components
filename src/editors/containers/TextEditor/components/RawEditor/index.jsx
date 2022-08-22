@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Alert } from '@edx/paragon';
 
-import CodeEditor from './CodeEditor';
+import CodeEditor from '../CodeEditor';
 
 export const RawEditor = ({
   editorRef,
