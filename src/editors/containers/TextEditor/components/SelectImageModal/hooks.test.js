@@ -155,8 +155,6 @@ describe('SelectImageModal hooks', () => {
         test('on click, if sets selection to the image with the same id', () => {
           const highlighted = 'sOmEuiMAgeURl';
           const highlightedValue = { displayName: 'sOmEuiMAge', staTICUrl: '/assets/sOmEuiMAge' };
-          // state.mockVal(props.images, { [highlighted]: testValue });
-          // props.images = {...props.images, [highlighted]: testValue};
           state.mockVal(state.keys.highlighted, highlighted);
           load();
           expect(props.setSelection).not.toHaveBeenCalled();

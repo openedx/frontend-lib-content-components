@@ -68,7 +68,6 @@ export const imgListHooks = ({ searchSortProps, setSelection, images }) => {
     selectBtnProps: {
       onClick: () => {
         if (highlighted) {
-          console.log(images[highlighted]);
           setSelection(images[highlighted]);
         } else {
           setShowSelectImageError(true);
