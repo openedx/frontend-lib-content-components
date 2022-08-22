@@ -17,16 +17,16 @@ exports[`SourceCodeModal renders as expected with default behavior 1`] = `
       variant="primary"
     >
       <FormattedMessage
-        defaultMessage="Next"
-        description="Label for Next button"
-        id="authoring.texteditor.selectimagemodal.next.label"
+        defaultMessage="Save"
+        description="Label for Save button for the source code editor"
+        id="authoring.texteditor.sourcecodemodal.next.label"
       />
     </Button>
   }
   footerAction={null}
   isOpen={false}
   size="xl"
-  title="Add an image"
+  title="Edit Source Code"
 >
   <div
     style={

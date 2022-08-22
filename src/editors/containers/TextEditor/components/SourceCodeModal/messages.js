@@ -1,18 +1,13 @@
 export const messages = {
   saveButtonLabel: {
-    id: 'authoring.texteditor.selectimagemodal.next.label',
-    defaultMessage: 'Next',
-    description: 'Label for Next button',
-  },
-  uploadButtonLabel: {
-    id: 'authoring.texteditor.selectimagemodal.upload.label',
-    defaultMessage: 'Upload a new image (10 MB max)',
-    description: 'Label for upload button',
+    id: 'authoring.texteditor.sourcecodemodal.next.label',
+    defaultMessage: 'Save',
+    description: 'Label for Save button for the source code editor',
   },
   titleLabel: {
-    id: 'authoring.texteditor.selectimagemodal.title.label',
-    defaultMessage: 'Add an image',
-    description: 'Title for the select image modal',
+    id: 'authoring.texteditor.sourcecodemodal.title.label',
+    defaultMessage: 'Edit Source Code',
+    description: 'Title for the source code editor',
   },
 };
 export default messages;
