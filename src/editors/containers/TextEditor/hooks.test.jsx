@@ -90,6 +90,7 @@ describe('TextEditor hooks', () => {
         blockValue: null,
         lmsEndpointUrl: 'sOmEuRl.cOm',
         studioEndpointUrl: 'sOmEoThEruRl.cOm',
+        images: { sOmEuiMAge: { staTICUrl: '/assets/sOmEuiMAge' } },
       };
       const evt = 'fakeEvent';
       const editor = 'myEditor';

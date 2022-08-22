@@ -63,6 +63,7 @@ jest.mock('../../data/redux', () => ({
       lmsEndpointUrl: jest.fn(state => ({ lmsEndpointUrl: state })),
       studioEndpointUrl: jest.fn(state => ({ studioEndpointUrl: state })),
       isRaw: jest.fn(state => ({ isRaw: state })),
+      images: jest.fn(state => ({ images: state })),
     },
     requests: {
       isFailed: jest.fn((state, params) => ({ isFailed: { state, params } })),
@@ -82,6 +83,7 @@ describe('TextEditor', () => {
     blockFinished: true,
     initializeEditor: jest.fn().mockName('args.intializeEditor'),
     isRaw: false,
+    images: { sOmEuiMAge: { staTICUrl: '/assets/sOmEuiMAge' } },
     // inject
     intl: { formatMessage },
   };
@@ -116,15 +118,20 @@ describe('TextEditor', () => {
         mapStateToProps(testState).lmsEndpointUrl,
       ).toEqual(selectors.app.lmsEndpointUrl(testState));
     });
+    test('images from app.images', () => {
+      expect(
+        mapStateToProps(testState).images,
+      ).toEqual(selectors.app.images(testState));
+    });
     test('blockFailed from requests.isFailed', () => {
       expect(
         mapStateToProps(testState).blockFailed,
       ).toEqual(selectors.requests.isFailed(testState, { requestKey: RequestKeys.fetchBlock }));
     });
-    test('blockFinished from requests.isFinished', () => {
+    test('imagesFinished from requests.isFinished', () => {
       expect(
-        mapStateToProps(testState).blockFinished,
-      ).toEqual(selectors.requests.isFinished(testState, { requestKey: RequestKeys.fetchBlock }));
+        mapStateToProps(testState).imagesFinished,
+      ).toEqual(selectors.requests.isFinished(testState, { requestKey: RequestKeys.fetchImages }));
     });
   });
   describe('mapDispatchToProps', () => {

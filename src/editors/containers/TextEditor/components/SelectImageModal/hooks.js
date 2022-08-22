@@ -7,7 +7,6 @@ import { sortFunctions, sortKeys } from './utils';
 
 export const state = {
   highlighted: (val) => React.useState(val),
-  images: (val) => React.useState(val),
   showSelectImageError: (val) => React.useState(val),
   searchString: (val) => React.useState(val),
   sortBy: (val) => React.useState(val),
@@ -30,15 +29,14 @@ export const filteredList = ({ searchString, imageList }) => (
   imageList.filter(({ displayName }) => displayName.toLowerCase().includes(searchString.toLowerCase()))
 );
 
-export const displayList = ({ sortBy, searchString, images }) => (
+export const displayList = ({ sortBy, searchString, images }) => {
+  return (
   module.filteredList({
     searchString,
     imageList: Object.values(images),
-  }).sort(sortFunctions[sortBy in sortKeys ? sortKeys[sortBy] : sortKeys.dateNewest]));
+  }).sort(sortFunctions[sortBy in sortKeys ? sortKeys[sortBy] : sortKeys.dateNewest]))};
 
-export const imgListHooks = ({ searchSortProps, setSelection }) => {
-  const dispatch = useDispatch();
-  const [images, setImages] = module.state.images({});
+export const imgListHooks = ({ searchSortProps, setSelection, images }) => {
   const [highlighted, setHighlighted] = module.state.highlighted(null);
   const [
     showSelectImageError,
@@ -46,10 +44,6 @@ export const imgListHooks = ({ searchSortProps, setSelection }) => {
   ] = module.state.showSelectImageError(false);
   const [showSizeError, setShowSizeError] = module.state.showSelectImageError(false);
   const list = module.displayList({ ...searchSortProps, images });
-
-  React.useEffect(() => {
-    dispatch(thunkActions.app.fetchImages({ setImages }));
-  }, []);
 
   return {
     galleryError: {
@@ -74,6 +68,7 @@ export const imgListHooks = ({ searchSortProps, setSelection }) => {
     selectBtnProps: {
       onClick: () => {
         if (highlighted) {
+          console.log(images[highlighted]);
           setSelection(images[highlighted]);
         } else {
           setShowSelectImageError(true);
@@ -126,9 +121,9 @@ export const fileInputHooks = ({ setSelection, clearSelection, imgList }) => {
   };
 };
 
-export const imgHooks = ({ setSelection, clearSelection }) => {
+export const imgHooks = ({ setSelection, clearSelection, images }) => {
   const searchSortProps = module.searchAndSortHooks();
-  const imgList = module.imgListHooks({ setSelection, searchSortProps });
+  const imgList = module.imgListHooks({ setSelection, searchSortProps, images });
   const fileInput = module.fileInputHooks({
     setSelection,
     clearSelection,

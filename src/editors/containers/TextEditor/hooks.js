@@ -1,9 +1,7 @@
 import {
   useRef, useEffect, useCallback, useState,
 } from 'react';
-import { useDispatch } from 'react-redux';
 
-import { thunkActions } from '../../data/redux';
 import { StrictDict } from '../../utils';
 import tinyMCE from '../../data/constants/tinyMCE';
 import tinyMCEStyles from '../../data/constants/tinyMCEStyles';
@@ -153,15 +151,6 @@ export const getContent = ({ editorRef, isRaw }) => () => {
     return editorRef.current.value;
   }
   return editorRef.current?.getContent();
-};
-
-export const fetchImageAssets = (blockFinished) => {
-  const dispatch = useDispatch();
-  useEffect(() => {
-    if (blockFinished) {
-      dispatch(thunkActions.app.fetchImages());
-    }
-  }, []);
 };
 
 export const fetchImageUrls = (images) => {

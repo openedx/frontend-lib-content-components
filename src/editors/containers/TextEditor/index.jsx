@@ -43,7 +43,6 @@ export const TextEditor = ({
   lmsEndpointUrl,
   studioEndpointUrl,
   blockFailed,
-  blockFinished,
   initializeEditor,
   images,
   imagesFinished,
@@ -53,7 +52,6 @@ export const TextEditor = ({
   const { editorRef, refReady, setEditorRef } = hooks.prepareEditorRef();
   const { isOpen, openModal, closeModal } = hooks.modalToggle();
   const imageSelection = hooks.selectedImage(null);
-  hooks.fetchImageAssets(blockFinished);
 
   if (!refReady) { return null; }
 
@@ -133,7 +131,6 @@ TextEditor.propTypes = {
   lmsEndpointUrl: PropTypes.string,
   studioEndpointUrl: PropTypes.string,
   blockFailed: PropTypes.bool.isRequired,
-  blockFinished: PropTypes.bool.isRequired,
   initializeEditor: PropTypes.func.isRequired,
   isRaw: PropTypes.bool,
   imagesFinished: PropTypes.bool,
@@ -147,7 +144,6 @@ export const mapStateToProps = (state) => ({
   lmsEndpointUrl: selectors.app.lmsEndpointUrl(state),
   studioEndpointUrl: selectors.app.studioEndpointUrl(state),
   blockFailed: selectors.requests.isFailed(state, { requestKey: RequestKeys.fetchBlock }),
-  blockFinished: selectors.requests.isFinished(state, { requestKey: RequestKeys.fetchBlock }),
   isRaw: selectors.app.isRaw(state),
   imagesFinished: selectors.requests.isFinished(state, { requestKey: RequestKeys.fetchImages }),
   images: selectors.app.images(state),
