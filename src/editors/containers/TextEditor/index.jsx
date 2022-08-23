@@ -52,7 +52,7 @@ export const TextEditor = ({
 }) => {
   const { editorRef, refReady, setEditorRef } = hooks.prepareEditorRef();
   const { isImgOpen, openImgModal, closeImgModal } = hooks.imgModalToggle();
-  const { isSourceCodeOpen, openSourceCodeModal, closeSourceCodeModal } = hooks.sourceCodeModalToggle();
+  const { isSourceCodeOpen, openSourceCodeModal, closeSourceCodeModal } = hooks.sourceCodeModalToggle(editorRef);
   const imageSelection = hooks.selectedImage(null);
 
   if (!refReady) { return null; }

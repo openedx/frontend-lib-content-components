@@ -133,12 +133,15 @@ export const imgModalToggle = () => {
   };
 };
 
-export const sourceCodeModalToggle = () => {
+export const sourceCodeModalToggle = (editorRef) => {
   const [isSourceCodeOpen, setIsOpen] = module.state.isSourceCodeModalOpen(false);
   return {
     isSourceCodeOpen,
     openSourceCodeModal: () => setIsOpen(true),
-    closeSourceCodeModal: () => setIsOpen(false),
+    closeSourceCodeModal: () => {
+      setIsOpen(false);
+      editorRef.current.focus()
+    },
   };
 };
 

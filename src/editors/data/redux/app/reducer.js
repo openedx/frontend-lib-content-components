@@ -8,7 +8,6 @@ const initialState = {
   blockContent: null,
   studioView: null,
   saveResponse: null,
-
   blockId: null,
   blockTitle: null,
   blockType: null,
@@ -16,6 +15,7 @@ const initialState = {
   editorInitialized: false,
   studioEndpointUrl: null,
   lmsEndpointUrl: null,
+  images: {},
 };
 
 // eslint-disable-next-line no-unused-vars
