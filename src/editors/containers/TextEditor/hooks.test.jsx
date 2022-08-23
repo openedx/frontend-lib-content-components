@@ -160,9 +160,10 @@ describe('TextEditor hooks', () => {
     });
 
     describe('sourceCodeModalToggle', () => {
+      const editorRef = { current: { focus: jest.fn() } };
       const hookKey = state.keys.isSourceCodeModalOpen;
       beforeEach(() => {
-        hook = module.sourceCodeModalToggle();
+        hook = module.sourceCodeModalToggle(editorRef);
       });
       test('isOpen: state value', () => {
         expect(hook.isSourceCodeOpen).toEqual(state.stateVals[hookKey]);
