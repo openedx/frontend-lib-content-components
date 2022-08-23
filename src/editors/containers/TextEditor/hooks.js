@@ -140,7 +140,7 @@ export const sourceCodeModalToggle = (editorRef) => {
     openSourceCodeModal: () => setIsOpen(true),
     closeSourceCodeModal: () => {
       setIsOpen(false);
-      editorRef.current.focus()
+      editorRef.current.focus();
     },
   };
 };
