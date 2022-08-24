@@ -87,9 +87,9 @@ describe('TextEditor', () => {
     lmsEndpointUrl: 'sOmEvaLue.cOm',
     studioEndpointUrl: 'sOmEoThERvaLue.cOm',
     blockFailed: false,
-    blockFinished: true,
     initializeEditor: jest.fn().mockName('args.intializeEditor'),
     isRaw: false,
+    imagesFinished: true,
     images: { sOmEuiMAge: { staTICUrl: '/assets/sOmEuiMAge' } },
     // inject
     intl: { formatMessage },

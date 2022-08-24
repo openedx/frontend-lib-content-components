@@ -154,11 +154,6 @@ describe('TextEditor hooks', () => {
           }),
         );
       });
-      // it('calls checkRelativeUrl on callback', () => {
-      //   expect(output.init.init_instance_callback).toEqual(
-      //     checkRelativeUrl(fetchImageUrls(props.images))
-      //   )
-      // });
     });
 
     describe('imgModalToggle', () => {
