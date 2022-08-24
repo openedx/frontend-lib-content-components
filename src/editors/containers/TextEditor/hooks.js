@@ -60,25 +60,30 @@ export const setupCustomBehavior = ({
   });
 };
 
+export const replaceStaticwithAsset = (editor, imageUrls) => {
+  const content = editor.getContent()
+  const imageSrcs = content.split('img src="');
+  imageSrcs.forEach(src => {
+    if (src.startsWith('/static/') && imageUrls.length > 0) {
+      const imgName = src.substring(8, src.indexOf('"'));
+      let staticFullUrl;
+      imageUrls.forEach((url) => {
+        if (url.includes(imgName)) {
+          staticFullUrl = url;
+        }
+      });
+      const currentSrc = src.substring(0, src.indexOf('"'));
+      const updatedContent = content.replace(currentSrc, staticFullUrl);
+      editor.setContent(updatedContent);
+    }
+  });
+
+}
+
 export const checkRelativeUrl = (imageUrls) => (editor) => {
   editor.on('ExecCommand', (e) => {
     if (e.command === 'mceFocus') {
-      const content = editor.getContent();
-      const imageSrcs = content.split('img src="');
-      imageSrcs.forEach(src => {
-        if (src.startsWith('/static/') && imageUrls.length > 0) {
-          const imgName = src.substring(8, src.indexOf('"'));
-          let staticFullUrl;
-          imageUrls.forEach((url) => {
-            if (url.includes(imgName)) {
-              staticFullUrl = url;
-            }
-          });
-          const currentSrc = src.substring(0, src.indexOf('"'));
-          const updatedContent = content.replace(currentSrc, staticFullUrl);
-          editor.setContent(updatedContent);
-        }
-      });
+      module.replaceStaticwithAsset(editor, imageUrls)
     }
   });
 };

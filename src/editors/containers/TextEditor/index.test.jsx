@@ -109,7 +109,7 @@ describe('TextEditor', () => {
       expect(shallow(<TextEditor {...props} />)).toMatchSnapshot();
     });
     test('not yet loaded, Spinner appears', () => {
-      expect(shallow(<TextEditor {...props} blockFinished={false} />)).toMatchSnapshot();
+      expect(shallow(<TextEditor {...props} imagesFinished={false} />)).toMatchSnapshot();
     });
     test('loaded, raw editor', () => {
       expect(shallow(<TextEditor {...props} isRaw />)).toMatchSnapshot();

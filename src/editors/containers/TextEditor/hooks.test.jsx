@@ -86,6 +86,21 @@ describe('TextEditor hooks', () => {
       });
     });
 
+    describe('replaceStaticwithAsset', () => {
+      const editor = { getContent: jest.fn(() => '<img src="/static/soMEImagEURl1.jpeg"/>'), setContent: jest.fn() };
+      const imageUrls = ['soMEImagEURl1.jpeg'];
+      module.replaceStaticwithAsset(editor, imageUrls);
+      expect(editor.getContent).toHaveBeenCalled()
+      expect(editor.setContent).toHaveBeenCalled()
+    })
+
+    describe('checkRelativeUrl', () => {
+      const editor = { on: jest.fn() }
+      const imageUrls = ['soMEImagEURl1'];
+      module.checkRelativeUrl(imageUrls)(editor);
+      expect(editor.on).toHaveBeenCalled();
+    });
+
     describe('editorConfig', () => {
       const props = {
         blockValue: null,
@@ -139,6 +154,11 @@ describe('TextEditor hooks', () => {
           }),
         );
       });
+      // it('calls checkRelativeUrl on callback', () => {
+      //   expect(output.init.init_instance_callback).toEqual(
+      //     checkRelativeUrl(fetchImageUrls(props.images))
+      //   )
+      // });
     });
 
     describe('imgModalToggle', () => {
