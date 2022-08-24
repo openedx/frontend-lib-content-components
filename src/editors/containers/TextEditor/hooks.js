@@ -61,7 +61,7 @@ export const setupCustomBehavior = ({
 };
 
 export const replaceStaticwithAsset = (editor, imageUrls) => {
-  const content = editor.getContent()
+  const content = editor.getContent();
   const imageSrcs = content.split('img src="');
   imageSrcs.forEach(src => {
     if (src.startsWith('/static/') && imageUrls.length > 0) {
@@ -77,13 +77,12 @@ export const replaceStaticwithAsset = (editor, imageUrls) => {
       editor.setContent(updatedContent);
     }
   });
-
-}
+};
 
 export const checkRelativeUrl = (imageUrls) => (editor) => {
   editor.on('ExecCommand', (e) => {
     if (e.command === 'mceFocus') {
-      module.replaceStaticwithAsset(editor, imageUrls)
+      module.replaceStaticwithAsset(editor, imageUrls);
     }
   });
 };
