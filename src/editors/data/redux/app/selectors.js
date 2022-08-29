@@ -82,6 +82,19 @@ export const isRaw = createSelector(
   },
 );
 
+export const isLibrary = createSelector(
+  [module.simpleSelectors.blockId],
+  (blockId) => {
+    if (!blockId) {
+      return null;
+    }
+    if (blockId.startsWith('lib')) {
+      return true;
+    }
+    return false;
+  },
+);
+
 export default {
   ...simpleSelectors,
   isInitialized,
@@ -89,4 +102,5 @@ export default {
   displayTitle,
   analytics,
   isRaw,
+  isLibrary,
 };
