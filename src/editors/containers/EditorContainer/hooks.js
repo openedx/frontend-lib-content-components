@@ -51,8 +51,8 @@ export const handleSaveClicked = ({ getContent, dispatch }) => {
   return () => saveBlock({
     content: setAssetToStaticUrl(images, getContent),
     destination,
-    analytics,
     dispatch,
+    validateEntry,
   });
 };
 export const handleCancelClicked = ({ onClose }) => {

@@ -16,21 +16,31 @@ export const hooks = {
 };
 
 const VideoEditorModal = ({
-  isOpen,
   close,
+  error,
+  isOpen,
 }) => {
   const dispatch = useDispatch();
   module.hooks.initialize(dispatch);
   return (
-    <VideoSettingsModal {...{ isOpen, close }} />
+    <VideoSettingsModal {...{ close, error, isOpen }} />
   );
   // TODO: add logic to show SelectVideoModal if no selection
 };
 
 VideoEditorModal.defaultProps = {
+  error: {
+    duration: null,
+    handout: null,
+    license: null,
+    thumbnail: null,
+    transcripts: null,
+    videoSource: null,
+  },
 };
 VideoEditorModal.propTypes = {
-  isOpen: PropTypes.bool.isRequired,
   close: PropTypes.func.isRequired,
+  error: PropTypes.object,
+  isOpen: PropTypes.bool.isRequired,
 };
 export default VideoEditorModal;
