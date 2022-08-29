@@ -121,9 +121,9 @@ describe('TextEditor', () => {
     });
     test('ImageUploadModal is not rendered', () => {
       expect(shallow(<TextEditor {...props} isLibrary />)).toMatchSnapshot();
-
-    })
+    });
   });
+
   describe('mapStateToProps', () => {
     const testState = { A: 'pple', B: 'anana', C: 'ucumber' };
     test('blockValue from app.blockValue', () => {
