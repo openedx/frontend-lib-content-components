@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 import { StrictDict } from '../../utils';
 import * as module from './hooks';
@@ -31,36 +31,40 @@ export const errors = () => {
     },
     validateEntry: () => {
       let validated = true;
-      if (!module.validateDuration({setDurationError})) validated = false;
-      if (!module.validateHandout({setHandoutError})) validated = false;
-      if (!module.validateLicense({setLicenseError})) validated = false;
-      if (!module.validateThumbnail({setThumbnailError})) validated = false;
-      if (!module.validateTranscripts({setTranscriptsError})) validated = false;
-      if (!module.validateVideoSource({setVideoSourceError})) validated = false;
+      if (!module.validateDuration({ setDurationError })) { validated = false; }
+      if (!module.validateHandout({ setHandoutError })) { validated = false; }
+      if (!module.validateLicense({ setLicenseError })) { validated = false; }
+      if (!module.validateThumbnail({ setThumbnailError })) { validated = false; }
+      if (!module.validateTranscripts({ setTranscriptsError })) { validated = false; }
+      if (!module.validateVideoSource({ setVideoSourceError })) { validated = false; }
       return validated;
     },
   };
 };
 
-export const validateDuration = ({setDurationError}) => {
-  console.log('validate duration')
-};
-export const validateHandout = ({setHandoutError}) => {
-  console.log('validate handout');
-};
-export const validateLicense = ({setLicenseError}) => {
-  console.log('validate license');
-};
-export const validateThumbnail = ({setThumbnailError}) => {
-  console.log('alidate thumbnail');
-};
-export const validateTranscripts = ({setTranscriptsError}) => {
-  setTranscriptsError('testing transcript error')
-  console.log('test setTranscript')
+export const validateDuration = ({ setDurationError }) => {
+  setDurationError('sample error');
   return false;
 };
-export const validateVideoSource = ({setVideoSourceError}) => {
-  console.log('validate video source');
+export const validateHandout = ({ setHandoutError }) => {
+  setHandoutError('sample error');
+  return false;
+};
+export const validateLicense = ({ setLicenseError }) => {
+  setLicenseError('sample error');
+  return false;
+};
+export const validateThumbnail = ({ setThumbnailError }) => {
+  setThumbnailError('sample error');
+  return false;
+};
+export const validateTranscripts = ({ setTranscriptsError }) => {
+  setTranscriptsError('testing transcript error');
+  return false;
+};
+export const validateVideoSource = ({ setVideoSourceError }) => {
+  setVideoSourceError('sample error');
+  return false;
 };
 
 export default {

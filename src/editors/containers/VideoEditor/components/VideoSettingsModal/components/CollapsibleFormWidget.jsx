@@ -1,7 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Alert, Collapsible, Icon, IconButton } from '@edx/paragon';
+import {
+  Alert,
+  Collapsible,
+  Icon,
+  IconButton
+} from '@edx/paragon';
 import { ExpandLess, ExpandMore, Info } from '@edx/paragon/icons';
 
 import { FormattedMessage } from '@edx/frontend-platform/i18n';

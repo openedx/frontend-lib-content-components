@@ -27,7 +27,7 @@ export const TranscriptWidget = ({
   } = values;
 
   // TODO: replace the following sample subtitle input with one managed by hook logic
-  const sampleSubtitle = <div>{transcripts.formValue.english}</div>
+  const sampleSubtitle = <div>{transcripts.formValue.english}</div>;
 
   return (
     <CollapsibleFormWidget

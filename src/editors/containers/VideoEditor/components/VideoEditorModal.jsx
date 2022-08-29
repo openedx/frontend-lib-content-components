@@ -40,7 +40,7 @@ VideoEditorModal.defaultProps = {
 };
 VideoEditorModal.propTypes = {
   close: PropTypes.func.isRequired,
-  error: PropTypes.object,
+  error: PropTypes.node,
   isOpen: PropTypes.bool.isRequired,
 };
 export default VideoEditorModal;
