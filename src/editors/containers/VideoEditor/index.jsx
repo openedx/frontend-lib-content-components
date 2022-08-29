@@ -20,11 +20,11 @@ export default function VideoEditor({
       validateEntry={validateEntry}
     >
       <div className="video-editor">
-        <VideoEditorModal {...{error}} />
+        <VideoEditorModal {...{ error }} />
       </div>
     </EditorContainer>
   );
-};
+}
 
 VideoEditor.defaultProps = {
   onClose: null,

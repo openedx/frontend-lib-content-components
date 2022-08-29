@@ -35,7 +35,6 @@ export const saveBlock = ({
   dispatch,
   validateEntry,
 }) => {
-  console.log('test validateEntry', validateEntry())
   let attemptSave = false;
   if (validateEntry) {
     if (validateEntry()) {

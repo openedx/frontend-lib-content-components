@@ -29,7 +29,7 @@ export const VideoSettingsModal = ({
       {/* <VideoPreview /> */}
     </div>
     <div className="video-controls col col-8">
-      <ErrorSummary {...{error}} />
+      <ErrorSummary {...{ error }} />
       <h3>Settings</h3>
       <VideoSourceWidget error={error.videoSource} />
       <ThumbnailWidget error={error.thumbnail} />
@@ -41,7 +41,7 @@ export const VideoSettingsModal = ({
   </div>
 );
 
-VideoSettingsModal.defaultPropts = {
+VideoSettingsModal.defaultProps = {
   error: {
     duration: null,
     handout: null,
@@ -52,7 +52,7 @@ VideoSettingsModal.defaultPropts = {
   },
 };
 VideoSettingsModal.propTypes = {
-  error: PropTypes.object,
+  error: PropTypes.node,
 };
 
 export default VideoSettingsModal;
