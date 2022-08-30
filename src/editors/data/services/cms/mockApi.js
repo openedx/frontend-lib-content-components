@@ -1,17 +1,48 @@
 /* istanbul ignore file */
-
 import * as urls from './urls';
 
 const mockPromise = (returnValue) => new Promise(resolve => resolve(returnValue));
 
 // TODO: update to return block data appropriate per block ID, which will equal block type
 // eslint-disable-next-line
-export const fetchBlockById = ({ blockId, studioEndpointUrl }) => mockPromise({
-  data: {
-    data: '<p>Test prompt content</p>',
-    display_name: 'My Text Prompt',
-  },
-});
+export const fetchBlockById = ({ blockId, studioEndpointUrl }) => {
+  let data = {};
+  if (blockId === "html-block-id"){
+    data = {
+      data: '<p>Test prompt content</p>',
+      display_name: 'My Text Prompt',
+    }
+  }
+  else if (blockId === "problem-block-id"){
+    data = {
+      data: `<problem>
+      <optionresponse>
+          <p>You can use this template as a guide to the simple editor markdown and OLX markup to use for dropdown problems. Edit this component to replace this template with your own assessment.</p>
+          <label>Add the question text, or prompt, here. This text is required.</label>
+          <description>You can add an optional tip or note related to the prompt like this. </description>
+          <optioninput>
+              <option correct="False">an incorrect answer</option>
+              <option correct="True">the correct answer</option>
+              <option correct="False">an incorrect answer</option>
+          </optioninput>
+      </optionresponse>
+  </problem>
+
+  `,
+      display_name: 'Dropdown',
+      metadata : {
+        markdown: `You can use this template as a guide to the simple editor markdown and OLX markup to use for dropdown problems. Edit this component to replace this template with your own assessment.
+        >>Add the question text, or prompt, here. This text is required.||You can add an optional tip or note related to the prompt like this. <<
+        [[
+        an incorrect answer
+        (the correct answer)
+        an incorrect answer
+        ]]`
+      }
+    }
+  }
+  return mockPromise({data: {...data},});
+};
 
 // TODO: update to return block data appropriate per block ID, which will equal block type
 // eslint-disable-next-line
@@ -129,3 +160,49 @@ export const uploadImage = ({
     msg: 'Upload completed',
   },
 });
+
+// TODO: update to return block data appropriate per block ID, which will equal block type
+// eslint-disable-next-line
+export const fetchStudioView = ({ blockId, studioEndpointUrl }) => {
+  let data = {};
+  if (blockId === "html-block-id"){
+    data = {
+      data: '<p>Test prompt content</p>',
+      display_name: 'My Text Prompt',
+    }
+  }
+  else if (blockId === "problem-block-id"){
+    data = {
+      data: `<problem>
+      <optionresponse>
+          <p>You can use this template as a guide to the simple editor markdown and OLX markup to use for dropdown problems. Edit this component to replace this template with your own assessment.</p>
+          <label>Add the question text, or prompt, here. This text is required.</label>
+          <description>You can add an optional tip or note related to the prompt like this. </description>
+          <optioninput>
+              <option correct="False">an incorrect answer</option>
+              <option correct="True">the correct answer</option>
+              <option correct="False">an incorrect answer</option>
+          </optioninput>
+      </optionresponse>
+  </problem>`,
+      display_name: 'Dropdown',
+      metadata : {
+        markdown: `You can use this template as a guide to the simple editor markdown and OLX markup to use for dropdown problems. Edit this component to replace this template with your own assessment.
+        >>Add the question text, or prompt, here. This text is required.||You can add an optional tip or note related to the prompt like this. <<
+        [[
+        an incorrect answer
+        (the correct answer)
+        an incorrect answer
+        ]]`,
+      }
+    }
+  }
+
+  return mockPromise({
+    data: {
+      // The following is sent for 'raw' editors.
+      html: blockId.includes('mockRaw') ? 'data-editor="raw"' : '',
+      ...data,
+    },
+  });
+};

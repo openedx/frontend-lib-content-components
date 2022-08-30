@@ -1,22 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { StrictDict } from '../../../../../../utils';
-import keyStore from '../../../../../../utils/keyStore';
+import { StrictDict } from '../../../utils';
 
 const initialState = {
   rawOLX: '',
-  problemType: null,
+  problemType: 'SINGLESELECT',
   question: '',
-  answers: [
-    {
-      id: '',
-      content: '',
-      correct: false,
-      selectedFeedback: '',
-      unselectedFeedback: '',
-      answer: '',
-    },
-  ],
-  settings: keyStore({
+  answers: [],
+  groupFeedbackList: [],
+  settings:{
     scoring: {
       advanced: false,
       scoring: {
@@ -36,7 +27,7 @@ const initialState = {
       afterAtempts: 1,
     },
     showResetButton: false,
-  }),
+  },
 };
 
 // eslint-disable-next-line no-unused-vars
@@ -49,6 +40,10 @@ const problem = createSlice({
       ...payload,
     }),
     load: (state, { payload }) => ({
+      ...state,
+      ...payload,
+    }),
+    onSelect: (state, { payload }) => ({
       ...state,
       ...payload,
     }),

@@ -5,7 +5,7 @@ import { Icon, ModalDialog, IconButton } from '@edx/paragon';
 import { Close } from '@edx/paragon/icons';
 import SelectTypeFooter from './SelectTypeFooter';
 
-import hooks from '../../../../EditorContainer/hooks';
+import * as hooks from '../../../../EditorContainer/hooks';
 
 export const SelectTypeWrapper = ({
   selected,
