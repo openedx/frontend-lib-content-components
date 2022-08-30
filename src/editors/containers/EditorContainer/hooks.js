@@ -11,11 +11,40 @@ export const {
   saveBlock,
 } = appHooks;
 
+export const setAssetToStaticUrl = (images, getContent) => {
+  let content = getContent();
+  const imageUrls = [];
+  const imgsArray = Object.values(images);
+  imgsArray.forEach(image => {
+    imageUrls.push({ portableUrl: image.portableUrl, displayName: image.displayName });
+  });
+  const imageSrcs = content.split('src="');
+  imageSrcs.forEach(src => {
+    if (src.startsWith('/asset') && imageUrls.length > 0) {
+      const nameFromEditorSrc = src.substring(src.lastIndexOf('@') + 1, src.indexOf('"'));
+      const nameFromStudioSrc = nameFromEditorSrc.substring(nameFromEditorSrc.indexOf('/') + 1);
+      let portableUrl;
+      imageUrls.forEach((url) => {
+        if (url.displayName === nameFromEditorSrc || url.displayName === nameFromStudioSrc) {
+          portableUrl = url.portableUrl;
+        }
+      });
+      if (portableUrl) {
+        const currentSrc = src.substring(0, src.indexOf('"'));
+        const updatedContent = content.replace(currentSrc, portableUrl);
+        content = updatedContent;
+      }
+    }
+  });
+  return content;
+};
+
 export const handleSaveClicked = ({ getContent, dispatch }) => {
   const destination = useSelector(selectors.app.returnUrl);
   const analytics = useSelector(selectors.app.analytics);
+  const images = useSelector(selectors.app.images);
   return () => saveBlock({
-    content: getContent(),
+    content: setAssetToStaticUrl(images, getContent),
     destination,
     analytics,
     dispatch,

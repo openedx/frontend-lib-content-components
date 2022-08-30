@@ -88,7 +88,7 @@ describe('TextEditor hooks', () => {
 
     describe('replaceStaticwithAsset', () => {
       const editor = { getContent: jest.fn(() => '<img src="/static/soMEImagEURl1.jpeg"/>'), setContent: jest.fn() };
-      const imageUrls = ['soMEImagEURl1.jpeg'];
+      const imageUrls = [{ staticFullUrl: '/assets/soMEImagEURl1.jpeg', displayName: 'soMEImagEURl1.jpeg' }];
       module.replaceStaticwithAsset(editor, imageUrls);
       expect(editor.getContent).toHaveBeenCalled();
       expect(editor.setContent).toHaveBeenCalled();
