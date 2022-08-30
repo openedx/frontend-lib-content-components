@@ -142,21 +142,21 @@ describe('app selectors unit tests', () => {
   });
 
   describe('isLibrary', () => {
-    const blockIdLib = 'lib-block-v1';
-    const blockIdBlock = 'block-v1';
+    const learningContextIdLibrary = 'library-v1:name';
+    const learningContextIdCourse = 'course-v1:name';
     it('is memoized based on studioView', () => {
       expect(selectors.isLibrary.preSelectors).toEqual([
-        simpleSelectors.blockId,
+        simpleSelectors.learningContextId,
       ]);
     });
     it('returns null if blockId is null', () => {
       expect(selectors.isLibrary.cb(null)).toEqual(null);
     });
     it('returns true if blockId starts with lib', () => {
-      expect(selectors.isLibrary.cb(blockIdLib)).toEqual(true);
+      expect(selectors.isLibrary.cb(learningContextIdLibrary)).toEqual(true);
     });
     it('returns false if the blockId does not start with lib', () => {
-      expect(selectors.isLibrary.cb(blockIdBlock)).toEqual(false);
+      expect(selectors.isLibrary.cb(learningContextIdCourse)).toEqual(false);
     });
   });
 });
