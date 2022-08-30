@@ -11,7 +11,7 @@ const stateKeys = keyStore(initialState);
 export const problemState = (state) => state;
 
 export const simpleSelectors = [
-  ...stateKeys,
+  ...Object.keys(stateKeys)
 ].reduce((obj, key) => ({ ...obj, [key]: state => state[key] }), {});
 
 export default {
