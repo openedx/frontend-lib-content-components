@@ -88,7 +88,7 @@ export const isLibrary = createSelector(
     if (!learningContextId) {
       return null;
     }
-    if (learningContextId && learningContextId.startsWith('library-v1'))  {
+    if (learningContextId && learningContextId.startsWith('library-v1')) {
       return true;
     }
     return false;
