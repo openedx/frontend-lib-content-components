@@ -1,5 +1,6 @@
 import React from 'react';
-import ProblemTypes from '../../../data/constants/ProblemTypes';
+import { ProblemTypes } from '../../../../../data/constants/problem';
+import AnswersContainer from './AnswersContainer';
 
 
 // This widget should be connected, grab all answers from store, update them as needed.
@@ -15,7 +16,7 @@ const AnswerWidget = ({
           Answers
         </h1>
         <h3>
-          {problemStaticData.answerDescription}
+          {problemStaticData.description}
         </h3>
       </div>
       <AnswersContainer/>
@@ -23,4 +24,4 @@ const AnswerWidget = ({
   );
 }
 
-export default  AnswerWidget
+export default AnswerWidget

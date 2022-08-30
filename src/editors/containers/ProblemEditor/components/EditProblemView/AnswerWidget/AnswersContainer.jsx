@@ -1,6 +1,8 @@
 import React from 'react';
-import ProblemTypes from '../../../data/constants/ProblemTypes';
+import { ProblemTypes } from '../../../../../data/constants/problem';
 import {Button} from '@edx/paragon';
+import { useSelector } from 'react-redux';
+import { selectors } from '../../../../../data/redux';
 
 export const hooks = {
     displayAnswers: ({problemType, answers})=>{
@@ -14,10 +16,9 @@ export const hooks = {
 }
 export const AnswersContainer = ({
   //Redux
-  problemType,
   answers
 }) => {
-
+  const problemType = useSelector(selectors.problem.problemType);
   const problemStaticData = ProblemTypes[problemType];
   return (
     <div>
@@ -29,4 +30,4 @@ export const AnswersContainer = ({
   );
 }
 
-export default
+export default AnswersContainer;

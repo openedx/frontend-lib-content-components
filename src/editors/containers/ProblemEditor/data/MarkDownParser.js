@@ -1,24 +1,15 @@
-import { groupFeedbackWordMapping } from './MarkDownParser';
-import * as markdown from './tests/testHelpers/markdown';
-
- /*
-  *TODO: Some function which takes in OLX or Markdown, and Converts it into
-  * the expecteded react state specicfied in /reducers/index.js, at least as far as the problem goes.
-  */
 /*
+This is the direct motivation code taken from:
+https://github.com/open-craft/capa-visual-editor/
 
-TODO: We want to remove the "window" method of retrieivng data for these parsers.
-
-TODO: We need to add "Feedback" to the parsing.
-
+Changes have been made to adapt the parser with respect to our use case.
 */
 
-window.LXCData = window.LXCData || {};
-window.LXCData.markdown = process.env.NODE_ENV === 'development' ? markdown.textInputWithHintsAndFeedback : window.LXCData.markdown;
+import { ProblemTypeKeys } from "../../../data/constants/problem";
 
-function getHints(testMarkdown) {
-  const isEnvTest = process.env.NODE_ENV === 'test';
-  const markdown = isEnvTest ? testMarkdown : window.LXCData.markdown;
+const groupFeedbackWordMapping = [...Array(26)].map((val, i) => String.fromCharCode(i + 65));
+
+function getHints(markdown) {
   if (!markdown || !markdown.trim()) {
     return [];
   }
@@ -38,7 +29,7 @@ function getHints(testMarkdown) {
     const hint = getHint(row);
     if (hint.length) {
       hints.push({
-        id: isEnvTest ? hints.length : Math.random(),
+        id: Number(d),
         value: hint,
       });
     }
@@ -46,20 +37,16 @@ function getHints(testMarkdown) {
   return hints;
 }
 
-function getShortAnswerOptions(testMarkdown) {
-  const textOption = { id: 1, value: 'text', label: 'text' };
-  const numberOption = { id: 2, value: 'number', label: 'number' };
-  const typeOptions = [
-    textOption,
-    numberOption,
-  ];
-  if (process.env.NODE_ENV !== 'test' && (!window.LXCData.markdown || !window.LXCData.markdown.trim())) {
+function getShortAnswerOptions(markdown) {
+// TODO: Include tolerence for number it fails for now.
+let problemType = ProblemTypeKeys.TEXTINPUT;
+  if ((!markdown || !markdown.trim())) {
     return {
-      typeOptions,
       shortAnswersList: [],
+      problemType,
     };
   }
-  const markdownListData = process.env.NODE_ENV === 'test' ? testMarkdown : window.LXCData.markdown.split('\n');
+  const markdownListData = markdown.split('\n');
   const shortAnswersList = [];
   let gotAnswer = false;
   for (const i in markdownListData) {
@@ -95,34 +82,33 @@ function getShortAnswerOptions(testMarkdown) {
       }
       correct = false;
     }
-    const currentType = !isNaN(answer) ? numberOption : textOption;
     if (answer) {
+      problemType = isFinite(answer) ? ProblemTypeKeys.NUMERIC : ProblemTypeKeys.TEXTINPUT;
       shortAnswersList.push({
-        id: shortAnswersList.length,
+        id: Number(i),
         value: answer,
-        currentType,
         feedback,
         correct,
       });
     }
   }
   return {
-    typeOptions,
     shortAnswersList,
+    problemType,
   };
 }
 
-function getMultipleChoiceOptions(testMarkdown) {
+function getMultipleChoiceOptions(markdown) {
   const multipleChoiceOptions = [];
   const data = {
     multiSelectAnswersList: multipleChoiceOptions,
+    problemType: ProblemTypeKeys.MULTISELECT,
     groupFeedbackList: [],
   };
-  const isEnvTest = process.env.NODE_ENV === 'test';
-  if (!isEnvTest && (!window.LXCData.markdown || !window.LXCData.markdown.trim())) {
+  if (!markdown || !markdown.trim()) {
     return data;
   }
-  const markdownListData = isEnvTest ? testMarkdown : window.LXCData.markdown.split('\n');
+  const markdownListData = markdown.split('\n');
   let feedback = '';
   for (const d in markdownListData) {
     const row = markdownListData[d];
@@ -152,7 +138,7 @@ function getMultipleChoiceOptions(testMarkdown) {
         }
       }
       multipleChoiceOptions.push({
-        id: isEnvTest ? multipleChoiceOptions.length : Math.random(),
+        id: Number(d),
         title,
         correct: !row.startsWith('[ ]'),
         selectedFeedback,
@@ -177,7 +163,7 @@ function getMultipleChoiceOptions(testMarkdown) {
 
         if (groupChoices.length && feedback) {
           data.groupFeedbackList.push({
-            id: isEnvTest ? data.groupFeedbackList.length : Math.random(),
+            id: Number(i),
             answers: groupChoices,
             feedback,
           });
@@ -188,24 +174,11 @@ function getMultipleChoiceOptions(testMarkdown) {
   return data;
 }
 
-function getSingleChoiceOptions(testMarkdown) {
-  const markdown = process.env.NODE_ENV === 'test' ? testMarkdown : window.LXCData.markdown;
+function getSingleChoiceOptions(markdown) {
   if (!markdown || !markdown.trim()) {
     return {
       singleSelectAnswersList: [],
-      selectedType: {
-        value: 'radio',
-        label: 'Radio button',
-      },
-      accessibleTypes: [{
-        value: 'radio',
-        label: 'Radio button',
-      },
-      {
-        value: 'select',
-        label: 'Select list',
-      },
-      ],
+      problemType: ProblemTypeKeys.DROPDOWN,
     };
   }
 
@@ -280,27 +253,12 @@ function getSingleChoiceOptions(testMarkdown) {
 
   return {
     singleSelectAnswersList: singleChoiceOptions,
-    selectedType: dropDownMode ? {
-      value: 'select',
-      label: 'Select list',
-    } : {
-      value: 'radio',
-      label: 'Radio button',
-    },
-    accessibleTypes: [{
-      value: 'radio',
-      label: 'Radio button',
-    },
-    {
-      value: 'select',
-      label: 'Select list',
-    },
-    ],
+    problemType: dropDownMode ? ProblemTypeKeys.DROPDOWN : ProblemTypeKeys.SINGLESELECT,
   };
 }
 
-function getEditorData(testMarkdown) {
-  const markdown = process.env.NODE_ENV === 'test' ? testMarkdown : window.LXCData.markdown;
+function getEditorData(markdown) {
+  // TODO: Prase heading in this function.
   if (!markdown || !markdown.trim()) {
     return '';
   }
@@ -323,6 +281,37 @@ function getEditorData(testMarkdown) {
   return description;
 }
 
+function parseMarkdown(markdown) {
+  if (!markdown || !markdown.trim()) {
+    return {};
+  }
+  let answers = {};
+  let problemType = '';
+  const question = getEditorData(markdown);
+  const hints = getHints(markdown);
+  let data = {question, hints};
+  let parsedData = getSingleChoiceOptions(markdown);
+  if (parsedData.singleSelectAnswersList.length !== 0){
+    answers = parsedData.singleSelectAnswersList;
+    problemType = parsedData.problemType;
+    data = {...data, answers, problemType};
+  }
+  parsedData = getMultipleChoiceOptions(markdown);
+  if (parsedData.multiSelectAnswersList.length !== 0){
+    answers = parsedData.multiSelectAnswersList;
+    problemType = parsedData.problemType;
+    const groupFeedbackList = parsedData.groupFeedbackList;
+    data = {...data, answers, problemType, groupFeedbackList};
+  }
+  parsedData = getShortAnswerOptions(markdown);
+  if (parsedData.shortAnswersList.length !== 0){
+    answers = parsedData.shortAnswersList;
+    problemType = parsedData.problemType;
+    data = {...data, answers, problemType};
+  }
+  return data;
+}
+
 function getScorringSettings() {
   return {
     selectedAttemptsOption: window.LXCData.max_attempts,
@@ -337,4 +326,5 @@ export {
   getHints,
   getScorringSettings,
   getShortAnswerOptions,
+  parseMarkdown,
 };
