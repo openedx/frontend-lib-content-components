@@ -4,66 +4,78 @@ import { StrictDict } from '../../utils';
 import * as module from './hooks';
 
 export const state = StrictDict({
-  durationError: (val) => useState(val),
-  handoutError: (val) => useState(val),
-  licenseError: (val) => useState(val),
-  thumbnailError: (val) => useState(val),
-  transcriptsError: (val) => useState(val),
-  videoSourceError: (val) => useState(val),
+  durationErrors: (val) => useState(val),
+  handoutErrors: (val) => useState(val),
+  licenseErrors: (val) => useState(val),
+  thumbnailErrors: (val) => useState(val),
+  transcriptsErrors: (val) => useState(val),
+  videoSourceErrors: (val) => useState(val),
 });
 
 export const errors = () => {
-  const [durationError, setDurationError] = module.state.durationError(null);
-  const [handoutError, setHandoutError] = module.state.handoutError(null);
-  const [licenseError, setLicenseError] = module.state.licenseError(null);
-  const [thumbnailError, setThumbnailError] = module.state.thumbnailError(null);
-  const [transcriptsError, setTranscriptsError] = module.state.transcriptsError(null);
-  const [videoSourceError, setVideoSourceError] = module.state.videoSourceError(null);
+  const [durationErrors, setDurationErrors] = module.state.durationErrors({});
+  const [handoutErrors, setHandoutErrors] = module.state.handoutErrors({});
+  const [licenseErrors, setLicenseErrors] = module.state.licenseErrors({});
+  const [thumbnailErrors, setThumbnailErrors] = module.state.thumbnailErrors({});
+  const [transcriptsErrors, setTranscriptsErrors] = module.state.transcriptsErrors({});
+  const [videoSourceErrors, setVideoSourceErrors] = module.state.videoSourceErrors({});
 
   return {
     error: {
-      duration: durationError,
-      handout: handoutError,
-      license: licenseError,
-      thumbnail: thumbnailError,
-      transcripts: transcriptsError,
-      videoSource: videoSourceError,
+      duration: durationErrors,
+      handout: handoutErrors,
+      license: licenseErrors,
+      thumbnail: thumbnailErrors,
+      transcripts: transcriptsErrors,
+      videoSource: videoSourceErrors,
     },
     validateEntry: () => {
       let validated = true;
-      if (!module.validateDuration({ setDurationError })) { validated = false; }
-      if (!module.validateHandout({ setHandoutError })) { validated = false; }
-      if (!module.validateLicense({ setLicenseError })) { validated = false; }
-      if (!module.validateThumbnail({ setThumbnailError })) { validated = false; }
-      if (!module.validateTranscripts({ setTranscriptsError })) { validated = false; }
-      if (!module.validateVideoSource({ setVideoSourceError })) { validated = false; }
+      if (!module.validateDuration({ setDurationErrors })) { validated = false; }
+      if (!module.validateHandout({ setHandoutErrors })) { validated = false; }
+      if (!module.validateLicense({ setLicenseErrors })) { validated = false; }
+      if (!module.validateThumbnail({ setThumbnailErrors })) { validated = false; }
+      if (!module.validateTranscripts({ setTranscriptsErrors })) { validated = false; }
+      if (!module.validateVideoSource({ setVideoSourceErrors })) { validated = false; }
       return validated;
     },
   };
 };
 
-export const validateDuration = ({ setDurationError }) => {
-  setDurationError('sample error');
+export const validateDuration = ({ setDurationErrors }) => {
+  setDurationErrors({
+    fieldName: 'sample error message',
+  });
   return false;
 };
-export const validateHandout = ({ setHandoutError }) => {
-  setHandoutError('sample error');
+export const validateHandout = ({ setHandoutErrors }) => {
+  setHandoutErrors({
+    fieldName: 'sample error message',
+  });
   return false;
 };
-export const validateLicense = ({ setLicenseError }) => {
-  setLicenseError('sample error');
+export const validateLicense = ({ setLicenseErrors }) => {
+  setLicenseErrors({
+    fieldName: 'sample error message',
+  });
   return false;
 };
-export const validateThumbnail = ({ setThumbnailError }) => {
-  setThumbnailError('sample error');
+export const validateThumbnail = ({ setThumbnailErrors }) => {
+  setThumbnailErrors({
+    fieldName: 'sample error message',
+  });
   return false;
 };
-export const validateTranscripts = ({ setTranscriptsError }) => {
-  setTranscriptsError('testing transcript error');
+export const validateTranscripts = ({ setTranscriptsErrors }) => {
+  setTranscriptsErrors({
+    fieldName: 'sample error message',
+  });
   return false;
 };
-export const validateVideoSource = ({ setVideoSourceError }) => {
-  setVideoSourceError('sample error');
+export const validateVideoSource = ({ setVideoSourceErrors }) => {
+  setVideoSourceErrors({
+    fieldName: 'sample error message',
+  });
   return false;
 };
 
