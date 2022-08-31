@@ -4,28 +4,29 @@ import AnswerWidget from './AnswerWidget';
 import SettingsWidget from './SettingsWidget';
 import QuestionWidget from './QuestionWidget';
 import { EditorContainer } from '../../../EditorContainer';
+import { selectors } from '../../../../data/redux';
+import { useSelector } from 'react-redux';
 
 export const hooks = {
   captureMarkdownAndSettings: () => {
-    const currentstate = useSelector(selectors.problem.problemState);
+    const problemType = useSelector(selectors.problem.problemType);
     return {
-      /*Some State based off the xblock API needs*/
-
+      problemType
     }
-
   }
 }
 
 export default function EditProblemView() {
+  const problemType = useSelector(selectors.problem.problemType)
   return (
     <div>
-      <EditorContainer getContent={hooks.get}>
+      <EditorContainer getContent={() => ({})}>
         <div>
           <h1>
             Edit Problem View
           </h1>
         </div>
-        <AnswerWidget />
+        <AnswerWidget problemType={problemType} />
         <SettingsWidget />
         <QuestionWidget />
       </EditorContainer>

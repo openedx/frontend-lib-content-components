@@ -1,5 +1,5 @@
 import React from 'react';
-import ProblemTypes from '../../../data/constants/ProblemTypes';
+import ProblemTypes from '../../../../../data/constants/problem';
 import {Button} from '@edx/paragon';
 
 export const hooks = {
@@ -29,4 +29,4 @@ export const AnswersContainer = ({
   );
 }
 
-export default
+export default AnswersContainer;

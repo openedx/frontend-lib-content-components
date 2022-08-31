@@ -40,7 +40,6 @@ export const SelectTypeFooter = ({
   </div>
 );
 
-debugger;
 SelectTypeFooter.defaultProps = {
   selected: null,
 };

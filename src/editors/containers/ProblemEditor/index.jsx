@@ -5,15 +5,13 @@ import { Spinner } from '@edx/paragon';
 import { FormattedMessage, injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 import SelectTypeModal from './components/SelectTypeModal';
 import EditProblemView from './components/EditProblemView';
-import { selectors } from '../../data/redux/app';
+import { selectors } from '../../data/redux';
 import { RequestKeys } from '../../data/constants/requests';
-import { actions, loopHooks } from 'react-table';
 import { thunkActions } from '../../data/redux';
 
 // eslint-disable-next-line react/prop-types
-debugger;
 export const hooks = {
-  initializeProblemEditor: ({dispatch,blockFinished,studioViewFinished}) => useEffect(
+  initializeProblemEditor: ({dispatch,blockFinished,studioViewFinished}) => React.useEffect(
     () => {dispatch(thunkActions.problem.initialize)},
     [blockFinished,studioViewFinished],
   ),

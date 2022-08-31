@@ -4,7 +4,7 @@ import keyStore from '../../../utils/keyStore';
 
 const initialState = {
   rawOLX: '',
-  problemType: null,
+  problemType: 'SINGLESELECT',
   question: '',
   answers: [
     {

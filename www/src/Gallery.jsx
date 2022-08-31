@@ -9,7 +9,6 @@ import { blockTypes } from '@edx/frontend-lib-content-components/editors/data/co
 import { mockBlockIdByType } from '@edx/frontend-lib-content-components/editors/data/constants/mockData';
 
 export const EditorGallery = () => {
-  debugger;
   const [blockType, setBlockType] = React.useState('html');
   const blockIds = Object.keys(blockTypes).reduce((obj, blockTypeKey) => {
     const type = blockTypes[blockTypeKey];
@@ -18,6 +17,7 @@ export const EditorGallery = () => {
   const courseId = 'library-v1:EDX+apmjoemaonmeonaoenan';
   const studioEndpointUrl = 'fake-studio-endpoint-url';
   const lmsEndpointUrl = 'https://courses.edx.org'; // this is hardcoded because that is where the image data is from.
+  const problemType = 'SINGLESELECT'
   const handleChange = (e) => setBlockType(e.target.value);
   return (
     <div className="gallery">

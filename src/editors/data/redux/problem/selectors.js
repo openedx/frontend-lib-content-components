@@ -1,18 +1,15 @@
-// import { createSelector } from 'reselect';
-
-import keyStore from '../../../utils/keyStore';
-
-import { initialState } from './reducer';
-// import * as module from './selectors';
-
-const stateKeys = keyStore(initialState);
+import { createSelector } from 'reselect';
+import * as module from './selectors';
 
 
-export const problemState = (state) => state;
+export const problemState = (state) => state.problem;
+const mkSimpleSelector = (cb) => createSelector([module.problemState], cb);
+export const simpleSelectors = {
+  problemType: mkSimpleSelector(problemData => problemData.problemType),
+  answers: mkSimpleSelector(problemData => problemData.answers),
+  settings: mkSimpleSelector(problemData => problemData.settings),
+}
 
-export const simpleSelectors = [
-  ...Object.keys(stateKeys)
-].reduce((obj, key) => ({ ...obj, [key]: state => state[key] }), {});
 
 export default {
   ...simpleSelectors,

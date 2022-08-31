@@ -5,7 +5,6 @@ const ProblemTypes = StrictDict({
     title: 'Single Select Problem',
     preview: ('<div />'),
     description: 'Specify one correct answer from a list of possible options',
-    answerDescription: 'Answer Description',
     helpLink: 'something.com',
   },
   MULTISELECT: {

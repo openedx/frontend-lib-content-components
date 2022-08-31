@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import ProblemTypes from '../../constants/problem'
 
 export const videoDataProps = {
   videoSource: PropTypes.string,
@@ -26,7 +27,7 @@ export const videoDataProps = {
 
 export const problemDataProps = {
   rawOLX: PropTypes.string,
-  problemType: null,
+  problemType: PropTypes.instanceOf(ProblemTypes),
   question: PropTypes.string,
   answers: PropTypes.arrayOf(
     PropTypes.shape({
