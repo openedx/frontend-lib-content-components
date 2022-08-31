@@ -30,12 +30,12 @@ const VideoEditorModal = ({
 
 VideoEditorModal.defaultProps = {
   error: {
-    duration: null,
-    handout: null,
-    license: null,
-    thumbnail: null,
-    transcripts: null,
-    videoSource: null,
+    duration: {},
+    handout: {},
+    license: {},
+    thumbnail: {},
+    transcripts: {},
+    videoSource: {},
   },
 };
 VideoEditorModal.propTypes = {

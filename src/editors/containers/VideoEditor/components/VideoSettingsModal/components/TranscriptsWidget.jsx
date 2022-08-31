@@ -31,7 +31,7 @@ export const TranscriptWidget = ({
 
   return (
     <CollapsibleFormWidget
-      error={error}
+      isError={Object.keys(error).length !== 0}
       subtitle={sampleSubtitle}
       title="Transcript"
     >
@@ -44,10 +44,10 @@ export const TranscriptWidget = ({
 };
 
 TranscriptWidget.defaultProps = {
-  error: null,
+  error: {},
 };
 TranscriptWidget.propTypes = {
-  error: PropTypes.string,
+  error: PropTypes.node,
 };
 
 export default TranscriptWidget;
