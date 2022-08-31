@@ -12,6 +12,11 @@ export const {
 } = appHooks;
 
 export const setAssetToStaticUrl = (images, getContent) => {
+  /* For assets to remain usable across course instances, we convert their url to be course-agnostic.
+   * For example, /assets/course/<asset hash>/filename gets converted to /static/filename. This is
+   * important for rerunning courses and importing/exporting course as the /static/ part of the url
+   * allows the asset to be mapped to the new course run.
+  */
   let content = getContent();
   const imageUrls = [];
   const imgsArray = Object.values(images);
