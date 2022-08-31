@@ -129,3 +129,14 @@ export const uploadImage = ({
     msg: 'Upload completed',
   },
 });
+
+// TODO: update to return block data appropriate per block ID, which will equal block type
+// eslint-disable-next-line
+export const fetchStudioView = ({ blockId, studioEndpointUrl }) => mockPromise({
+    data: {
+      // The following is sent for 'raw' editors.
+      html: blockId.includes('mockRaw') ? 'data-editor="raw"' : '',
+      data: '<p>Test prompt content</p>',
+      display_name: 'My Text Prompt',
+    },
+});
