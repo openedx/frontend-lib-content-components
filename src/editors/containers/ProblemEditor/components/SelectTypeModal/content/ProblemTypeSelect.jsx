@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Form } from '@edx/paragon';
-import ProblemTypes from '../../../data/constants/ProblemTypes';
+import ProblemTypes from '../../../../../data/constants/problem';
 
 
 //TODO: problemtype

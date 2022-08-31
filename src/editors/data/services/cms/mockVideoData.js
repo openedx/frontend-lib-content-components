@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import LicenseTypes from '../../constants/licenses';
+import ProblemTypes from '../../constants/problem';
 
 export const videoDataProps = {
   videoSource: PropTypes.string,
@@ -49,5 +50,43 @@ export const singleVideoData = {
     noncommercial: false,
     noDerivatives: false,
     shareAlike: false,
+  },
+};
+
+
+export const demoProblemData = {
+  rawOLX: '<Problem>',
+  problemType: ProblemTypes.SINGLESELECT,
+  question: '',
+  answers: [
+    {
+      id: Math.random(),
+      content: 'First Option',
+      correct: true,
+      selectedFeedback: 'Do better!',
+      unselectedFeedback: 'Really',
+      answer: 'First',
+    },
+  ],
+  settings: {
+    scoring: {
+      advanced: false,
+      scoring: {
+        wieght: 0,
+        attempts: {
+          unlimited: true,
+          number: 0,
+        },
+      },
+    },
+    hints: ["This is hint"],
+    randomization: '',
+    timeBetween: 0,
+    MatLabApiKey: '',
+    showAnswer: {
+      on: 'OnAnswered', // one of [OnAnswered, OnDueDate, AfterDueDate]
+      afterAtempts: 1,
+    },
+    showResetButton: false,
   },
 };

@@ -31,6 +31,7 @@ export const fetchUnit = () => (dispatch) => {
  * @param {string} blockType
  */
 export const initialize = (data) => (dispatch) => {
+  debugger;
   dispatch(actions.app.initialize(data));
   dispatch(module.fetchBlock());
   dispatch(module.fetchUnit());

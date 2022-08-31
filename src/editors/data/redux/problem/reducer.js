@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { StrictDict } from '../../../../../../utils';
-import keyStore from '../../../../../../utils/keyStore';
+import { StrictDict } from '../../../utils';
+import keyStore from '../../../utils/keyStore';
 
 const initialState = {
   rawOLX: '',
@@ -49,6 +49,10 @@ const problem = createSlice({
       ...payload,
     }),
     load: (state, { payload }) => ({
+      ...state,
+      ...payload,
+    }),
+    onSelect: (state, { payload }) => ({
       ...state,
       ...payload,
     }),

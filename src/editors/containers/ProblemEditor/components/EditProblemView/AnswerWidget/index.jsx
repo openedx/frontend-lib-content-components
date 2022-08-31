@@ -1,5 +1,5 @@
 import React from 'react';
-import ProblemTypes from '../../../data/constants/ProblemTypes';
+import ProblemTypes from '../../../../../data/constants/problem';
 
 
 // This widget should be connected, grab all answers from store, update them as needed.

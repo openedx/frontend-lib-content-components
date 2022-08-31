@@ -1,8 +1,8 @@
 // import { createSelector } from 'reselect';
 
-import keyStore from '../../../../../utils/keyStore';
+import keyStore from '../../../utils/keyStore';
 
-import { initialState } from './reducers';
+import { initialState } from './reducer';
 // import * as module from './selectors';
 
 const stateKeys = keyStore(initialState);

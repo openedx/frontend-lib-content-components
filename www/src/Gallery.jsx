@@ -9,6 +9,7 @@ import { blockTypes } from '@edx/frontend-lib-content-components/editors/data/co
 import { mockBlockIdByType } from '@edx/frontend-lib-content-components/editors/data/constants/mockData';
 
 export const EditorGallery = () => {
+  debugger;
   const [blockType, setBlockType] = React.useState('html');
   const blockIds = Object.keys(blockTypes).reduce((obj, blockTypeKey) => {
     const type = blockTypes[blockTypeKey];

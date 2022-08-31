@@ -8,15 +8,16 @@ import EditProblemView from './components/EditProblemView';
 import { selectors } from '../../data/redux/app';
 import { RequestKeys } from '../../data/constants/requests';
 import { actions, loopHooks } from 'react-table';
+import { thunkActions } from '../../data/redux';
 
 // eslint-disable-next-line react/prop-types
-
+debugger;
 export const hooks = {
   initializeProblemEditor: ({dispatch,blockFinished,studioViewFinished}) => useEffect(
-    () => dispatch('NAME OF THUNK ACTION'),
+    () => {dispatch(thunkActions.problem.initialize)},
     [blockFinished,studioViewFinished],
   ),
-}
+};
 
 
 
@@ -65,7 +66,6 @@ export const mapStateToProps = (state) => ({
   problemType: selectors.problem.problemType(state),
 });
 
-export const mapDispatchToProps = {
-};
+export const mapDispatchToProps = {};
 
 export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(ProblemEditor));

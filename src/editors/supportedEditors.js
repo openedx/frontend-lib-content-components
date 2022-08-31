@@ -1,6 +1,6 @@
 import TextEditor from './containers/TextEditor';
 import VideoEditor from './containers/VideoEditor';
-import ProblemEditor from './containers/ProblemEditor/';
+import ProblemEditor from './containers/ProblemEditor/components/EditProblemView';
 
 // ADDED_EDITOR_IMPORTS GO HERE
 
