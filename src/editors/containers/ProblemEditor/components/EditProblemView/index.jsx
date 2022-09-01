@@ -16,20 +16,33 @@ export const hooks = {
   }
 }
 
-export default function EditProblemView() {
-  const problemType = useSelector(selectors.problem.problemType)
+export const EditProblemView = ({editorValue}) => {
+  const problemType = useSelector(selectors.problem.problemType);
+  const blockValue = useSelector(selectors.app.blockValue)
+  const markdown = blockValue.data.metadata.markdown ? blockValue.data.metadata.markdown : "No Markdown";
+  const olx = blockValue.data.data ? blockValue.data.data : "No OLX";
   return (
-    <div>
       <EditorContainer getContent={() => ({})}>
         <div>
           <h1>
-            Edit Problem View
+            Edit Problem View:
           </h1>
+          <pre>
+          <h3>OLX</h3>
+          <br/>
+          { olx }
+          </pre>
+          <pre>
+          <h3>Markdown</h3>
+          <br/>
+          { markdown }
+          </pre>
         </div>
         <AnswerWidget problemType={problemType} />
         <SettingsWidget />
         <QuestionWidget />
       </EditorContainer>
-    </div>
   );
-}
+};
+
+export default EditProblemView;

@@ -8,6 +8,7 @@ import EditProblemView from './components/EditProblemView';
 import { selectors } from '../../data/redux';
 import { RequestKeys } from '../../data/constants/requests';
 import { thunkActions } from '../../data/redux';
+import { useSelector } from 'react-redux';
 
 // eslint-disable-next-line react/prop-types
 export const hooks = {
