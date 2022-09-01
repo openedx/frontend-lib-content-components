@@ -12,7 +12,7 @@ export const state = StrictDict({
   videoSourceErrors: (val) => useState(val),
 });
 
-export const errors = () => {
+export const errorsHook = () => {
   const [durationErrors, setDurationErrors] = module.state.durationErrors({});
   const [handoutErrors, setHandoutErrors] = module.state.handoutErrors({});
   const [licenseErrors, setLicenseErrors] = module.state.licenseErrors({});
@@ -77,14 +77,4 @@ export const validateVideoSource = ({ setVideoSourceErrors }) => {
     fieldName: 'sample error message',
   });
   return false;
-};
-
-export default {
-  errors,
-  validateDuration,
-  validateHandout,
-  validateLicense,
-  validateThumbnail,
-  validateTranscripts,
-  validateVideoSource,
 };

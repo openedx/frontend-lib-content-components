@@ -11,7 +11,7 @@ export default function VideoEditor({
   const {
     error,
     validateEntry,
-  } = hooks.errors();
+  } = hooks.errorsHook();
 
   return (
     <EditorContainer
