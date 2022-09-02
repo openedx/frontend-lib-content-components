@@ -10,7 +10,6 @@ export const simpleSelectors = {
   settings: mkSimpleSelector(problemData => problemData.settings),
 }
 
-
 export default {
   ...simpleSelectors,
 };

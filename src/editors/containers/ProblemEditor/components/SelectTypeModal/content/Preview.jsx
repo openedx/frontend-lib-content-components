@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ProblemTypes from '../../../../../data/constants/problem';
+import { ProblemTypes } from '../../../../../data/constants/problem';
 
 const Preview = ({
   problemType,

@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import LicenseTypes from '../../constants/licenses';
-import ProblemTypes from '../../constants/problem';
+import { ProblemTypeKeys } from '../../constants/problem';
 
 export const videoDataProps = {
   videoSource: PropTypes.string,
@@ -56,7 +56,7 @@ export const singleVideoData = {
 
 export const demoProblemData = {
   rawOLX: '<Problem>',
-  problemType: ProblemTypes.SINGLESELECT,
+  problemType: ProblemTypeKeys.SINGLESELECT,
   question: '',
   answers: [
     {

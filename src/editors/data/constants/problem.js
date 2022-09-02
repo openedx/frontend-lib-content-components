@@ -8,7 +8,7 @@ export const ProblemTypeKeys = StrictDict({
   SINGLESELECT: 'SINGLESELECT',
 });
 
-const ProblemTypes = StrictDict({
+export const ProblemTypes = StrictDict({
   [ProblemTypeKeys.SINGLESELECT]: {
     title: 'Single Select Problem',
     preview: ('<div />'),
@@ -40,5 +40,3 @@ const ProblemTypes = StrictDict({
     helpLink: 'something.com',
   },
 });
-
-export default ProblemTypes;

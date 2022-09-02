@@ -1,5 +1,5 @@
 import React from 'react';
-import ProblemTypes from '../../../../../data/constants/problem';
+import { ProblemTypes } from '../../../../../data/constants/problem';
 import AnswersContainer from './AnswersContainer';
 
 

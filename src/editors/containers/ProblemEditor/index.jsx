@@ -5,19 +5,9 @@ import { Spinner } from '@edx/paragon';
 import { FormattedMessage, injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 import SelectTypeModal from './components/SelectTypeModal';
 import EditProblemView from './components/EditProblemView';
-import { selectors } from '../../data/redux';
+import { selectors, thunkActions } from '../../data/redux';
 import { RequestKeys } from '../../data/constants/requests';
-import { thunkActions } from '../../data/redux';
 import { useSelector } from 'react-redux';
-
-// eslint-disable-next-line react/prop-types
-export const hooks = {
-  initializeProblemEditor: ({dispatch,blockFinished,studioViewFinished}) => React.useEffect(
-    () => {dispatch(thunkActions.problem.initialize)},
-    [blockFinished,studioViewFinished],
-  ),
-};
-
 
 
 export const ProblemEditor = ({
@@ -26,11 +16,10 @@ export const ProblemEditor = ({
   problemType,
   blockFinished,
   studioViewFinished,
+  blockValue,
+  initializeProblemEditor
 }) => {
-
-  const dispatch = useDispatch();
-  hooks.initializeProblemEditor({dispatch,blockFinished,studioViewFinished})
-
+  React.useEffect(() => initializeProblemEditor(blockValue),[blockValue]);
   // TODO: INTL MSG, Add LOAD FAILED ERROR using BLOCKFAILED
   if (!blockFinished || !studioViewFinished ) {
     return (
@@ -57,14 +46,18 @@ ProblemEditor.propTypes = {
   blockFinished: PropTypes.bool.isRequired,
   studioViewFinished: PropTypes.bool.isRequired,
   problemType: PropTypes.string.isRequired,
+  initializeProblemEditor: PropTypes.func.isRequired
 };
 
 export const mapStateToProps = (state) => ({
   blockFinished: selectors.requests.isFinished(state, { requestKey: RequestKeys.fetchBlock }),
   studioViewFinished: selectors.requests.isFinished(state, { requestKey: RequestKeys.fetchStudioView }),
   problemType: selectors.problem.problemType(state),
+  blockValue: selectors.app.blockValue(state),
 });
 
-export const mapDispatchToProps = {};
+export const mapDispatchToProps = {
+  initializeProblemEditor: thunkActions.problem.initializeProblem,
+};
 
 export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(ProblemEditor));

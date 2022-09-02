@@ -8,14 +8,6 @@ import { selectors } from '../../../../data/redux';
 import { useSelector } from 'react-redux';
 import { getEditorData } from '../../data/MarkDownParser';
 
-export const hooks = {
-  captureMarkdownAndSettings: () => {
-    const problemType = useSelector(selectors.problem.problemType);
-    return {
-      problemType
-    }
-  }
-}
 
 export const EditProblemView = ({editorValue}) => {
   const problemType = useSelector(selectors.problem.problemType);
