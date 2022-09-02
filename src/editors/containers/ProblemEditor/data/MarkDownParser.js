@@ -1,3 +1,10 @@
+/*
+This is the direct motivation code taken from:
+https://github.com/open-craft/capa-visual-editor/
+
+Changes have been made to adapt the parser with respect to our use case.
+*/
+
 import { ProblemTypeKeys } from "../../../data/constants/problem";
 
 const groupFeedbackWordMapping = [...Array(26)].map((val, i) => String.fromCharCode(i + 65));
@@ -32,9 +39,11 @@ function getHints(markdown) {
 
 function getShortAnswerOptions(markdown) {
 // TODO: Include tolerence for number it fails for now.
+let problemType = ProblemTypeKeys.TEXTINPUT;
   if ((!markdown || !markdown.trim())) {
     return {
       shortAnswersList: [],
+      problemType,
     };
   }
   const markdownListData = markdown.split('\n');
@@ -73,12 +82,11 @@ function getShortAnswerOptions(markdown) {
       }
       correct = false;
     }
-    const problemType = isFinite(answer) ? ProblemTypeKeys.NUMERIC : ProblemTypeKeys.TEXTINPUT;
     if (answer) {
+      problemType = isFinite(answer) ? ProblemTypeKeys.NUMERIC : ProblemTypeKeys.TEXTINPUT;
       shortAnswersList.push({
         id: Math.random(),
         value: answer,
-        problemType,
         feedback,
         correct,
       });
@@ -86,6 +94,7 @@ function getShortAnswerOptions(markdown) {
   }
   return {
     shortAnswersList,
+    problemType,
   };
 }
 
@@ -272,6 +281,37 @@ function getEditorData(markdown) {
   return description;
 }
 
+function parseMarkdown(markdown) {
+  if (!markdown || !markdown.trim()) {
+    return {};
+  }
+  let answers = {};
+  let problemType = '';
+  const question = getEditorData(markdown);
+  const hints = getHints(markdown);
+  let data = {question, hints};
+  let parsedData = getSingleChoiceOptions(markdown);
+  if (parsedData.singleSelectAnswersList.length !== 0){
+    answers = parsedData.singleSelectAnswersList;
+    problemType = parsedData.problemType;
+    data = {...data, answers, problemType};
+  }
+  parsedData = getMultipleChoiceOptions(markdown);
+  if (parsedData.multiSelectAnswersList.length !== 0){
+    answers = parsedData.multiSelectAnswersList;
+    problemType = parsedData.problemType;
+    const groupFeedbackList = parsedData.groupFeedbackList;
+    data = {...data, answers, problemType, groupFeedbackList};
+  }
+  parsedData = getShortAnswerOptions(markdown);
+  if (parsedData.shortAnswersList.length !== 0){
+    answers = parsedData.shortAnswersList;
+    problemType = parsedData.problemType;
+    data = {...data, answers, problemType};
+  }
+  return data;
+}
+
 function getScorringSettings() {
   return {
     selectedAttemptsOption: window.LXCData.max_attempts,
@@ -286,4 +326,5 @@ export {
   getHints,
   getScorringSettings,
   getShortAnswerOptions,
+  parseMarkdown,
 };

@@ -1,15 +1,17 @@
-import { useSelector } from "react-redux";
-import { actions, selectors } from '..';
+import { actions } from '..';
+import { parseMarkdown } from '../../../containers/ProblemEditor/data/MarkDownParser';
 import { demoProblemData } from "../../services/cms/mockVideoData";
 
-export const initialize = () => (dispatch) => {
+export const initializeProblem = (blockValue) => (dispatch) => {
 
-    //const blockValue = useSelector(selectors.app.blockValue);
-    //NOTE: These are to-do methods.
-    //  getSettingsFromMetaData(blockValue.metadata)
-    //const data = {...MarkdownParser.getProblem(blockValue.metadata.markdown)}
-    //dispatch(actions.problem.initialize(data));
-    dispatch(actions.problem.load(demoProblemData));
+    if (blockValue === null){
+      return;
+    }
+    const problemData = blockValue.data;
+    const rawOLX = problemData.data;
+    const markdown = problemData.metadata.markdown;
+    const parsedData = parseMarkdown(markdown);
+    dispatch(actions.problem.load({...parsedData, rawOLX}));
   };
 
-export default { initialize };
+export default { initializeProblem };

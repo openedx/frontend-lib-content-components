@@ -6,16 +6,8 @@ const initialState = {
   rawOLX: '',
   problemType: 'SINGLESELECT',
   question: '',
-  answers: [
-    {
-      id: '',
-      content: '',
-      correct: false,
-      selectedFeedback: '',
-      unselectedFeedback: '',
-      answer: '',
-    },
-  ],
+  answers: [],
+  groupFeedbackList: [],
   settings: keyStore({
     scoring: {
       advanced: false,
