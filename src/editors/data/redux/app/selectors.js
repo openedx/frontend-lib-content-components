@@ -1,4 +1,9 @@
 import { createSelector } from 'reselect';
+import { getEditorData,
+         getSingleChoiceOptions,
+         getShortAnswerOptions,
+         getHints,
+         getMultipleChoiceOptions } from '../../../containers/ProblemEditor/data/MarkDownParser';
 
 import { blockTypes } from '../../constants/app';
 import * as urls from '../../services/cms/urls';
@@ -79,6 +84,32 @@ export const analytics = createSelector(
   ),
 );
 
+export const getParsedEditorData = createSelector(
+  [module.simpleSelectors.blockValue],
+  (blockValue) => {
+    let editorData = '';
+    let singleChoiceOption = '';
+    let multipleChoiceOption = '';
+    let shortAnswerOption = '';
+    let hints = '';
+    if (blockValue.data.metadata.markdown){
+      editorData = getEditorData(blockValue.data.metadata.markdown);
+      singleChoiceOption = getSingleChoiceOptions(blockValue.data.metadata.markdown);
+      multipleChoiceOption = getMultipleChoiceOptions(blockValue.data.metadata.markdown);
+      shortAnswerOption = getShortAnswerOptions(blockValue.data.metadata.markdown);
+      hints = getHints(blockValue.data.metadata.markdown);
+    }
+    return {
+      editorData,
+      singleChoiceOption,
+      multipleChoiceOption,
+      shortAnswerOption,
+      hints,
+    };
+  }
+)
+
+
 export default {
   ...simpleSelectors,
   isInitialized,
@@ -86,4 +117,5 @@ export default {
   displayTitle,
   analytics,
   isRaw,
+  getParsedEditorData,
 };

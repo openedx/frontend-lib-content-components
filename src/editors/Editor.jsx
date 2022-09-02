@@ -17,7 +17,6 @@ export const Editor = ({
   onClose,
 }) => {
   const dispatch = useDispatch();
-  debugger;
   hooks.initializeApp({
     dispatch,
     data: {
