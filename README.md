@@ -59,6 +59,7 @@ This guide presumes you have a functioning devstack.
 6. Go to [studio](http://localhost:18010) and edit a course or add the Xblock with the developing editor, it should redirect to `frontend-app-course-authoring`
    MFE and the editor should load.
 
+
 # Using the gallery view.
 
 The gallery view runs the editor components with mocked-out block data, and sometimes does not replicate all desired behaviors, but can be used for faster iteration on UI-related changes. To run the gallery view, from the root directory, run
