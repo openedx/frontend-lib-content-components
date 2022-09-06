@@ -1,8 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 import { Collapsible, Icon, IconButton } from '@edx/paragon';
 import { ExpandLess, ExpandMore, Info } from '@edx/paragon/icons';
+
+import messages from './messages';
 
 /**
  * Simple Wrapper for a Form Widget component in the Video Settings modal
@@ -16,6 +19,8 @@ export const CollapsibleFormWidget = ({
   isError,
   subtitle,
   title,
+  // injected
+  intl,
 }) => (
   <Collapsible.Advanced
     className="collapsible-card rounded mb-3 px-3 py-2"
@@ -33,13 +38,13 @@ export const CollapsibleFormWidget = ({
         </div>
         <div className="d-flex flex-row align-self-start">
           {isError && <Icon className="alert-icon" src={Info} />}
-          <IconButton alt="TODOformatted" src={ExpandMore} iconAs={Icon} variant="dark" />
+          <IconButton alt={intl.formatMessage(messages.expandAltText)} src={ExpandMore} iconAs={Icon} variant="dark" />
         </div>
       </Collapsible.Visible>
       <Collapsible.Visible whenOpen>
         <div className="d-flex flex-grow-1 w-75">{title}</div>
         <div className="align-self-start">
-          <IconButton alt="TODOformatted" src={ExpandLess} iconAs={Icon} variant="dark" />
+          <IconButton alt={intl.formatMessage(messages.collapseAltText)} src={ExpandLess} iconAs={Icon} variant="dark" />
         </div>
       </Collapsible.Visible>
     </Collapsible.Trigger>
@@ -58,6 +63,8 @@ CollapsibleFormWidget.propTypes = {
   isError: PropTypes.bool.isRequired,
   subtitle: PropTypes.node,
   title: PropTypes.node.isRequired,
+  // injected
+  intl: intlShape.isRequired,
 };
 
-export default CollapsibleFormWidget;
+export default injectIntl(CollapsibleFormWidget);

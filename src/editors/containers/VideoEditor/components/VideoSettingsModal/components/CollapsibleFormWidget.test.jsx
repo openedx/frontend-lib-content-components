@@ -1,6 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
+import { formatMessage } from '../../../../../../testUtils';
 import { CollapsibleFormWidget } from './CollapsibleFormWidget';
 
 describe('CollapsibleFormWidget', () => {
@@ -8,6 +9,8 @@ describe('CollapsibleFormWidget', () => {
     isError: false,
     subtitle: 'SuBTItle',
     title: 'tiTLE',
+    // inject
+    intl: { formatMessage },
   };
   describe('render', () => {
     const testContent = (<p>Some test string</p>);
