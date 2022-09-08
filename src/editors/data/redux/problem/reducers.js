@@ -39,6 +39,10 @@ const problem = createSlice({
       ...state,
       ...payload,
     }),
+    updateQuestion: (state, { payload }) => ({
+      ...state,
+      question: payload
+    }),
     load: (state, { payload }) => ({
       ...state,
       ...payload,

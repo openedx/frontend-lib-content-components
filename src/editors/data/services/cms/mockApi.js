@@ -136,8 +136,9 @@ export const normalizeContent = ({
   learningContextId,
   title,
 }) => {
+  let response = {};
   if (blockType === 'html') {
-    return {
+    response = {
       category: blockType,
       couseKey: learningContextId,
       data: content,
@@ -145,8 +146,18 @@ export const normalizeContent = ({
       id: blockId,
       metadata: { display_name: title },
     };
+  } else if (blockType === 'problem') {
+    response = {
+      category: blockType,
+      couseKey: learningContextId,
+      has_changes: true,
+      id: blockId,
+      metadata: { display_name: title, markdown: content },
+    };
+  } else {
+    throw new TypeError(`No Block in V2 Editors named /"${blockType}/", Cannot Save Content.`);
   }
-  throw new TypeError(`No Block in V2 Editors named /"${blockType}/", Cannot Save Content.`);
+  return {...response};
 };
 
 export const saveBlock = ({

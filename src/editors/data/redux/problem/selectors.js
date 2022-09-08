@@ -9,6 +9,7 @@ export const simpleSelectors = {
   answers: mkSimpleSelector(problemData => problemData.answers),
   settings: mkSimpleSelector(problemData => problemData.settings),
   question: mkSimpleSelector(problemData => problemData.question),
+  completeState: mkSimpleSelector(problemData => problemData),
 }
 
 export default {

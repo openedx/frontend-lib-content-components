@@ -7,7 +7,7 @@ Changes have been made to adapt the parser with respect to our use case.
 
 import { ProblemTypeKeys } from "../../../data/constants/problem";
 
-const groupFeedbackWordMapping = [...Array(26)].map((val, i) => String.fromCharCode(i + 65));
+export const indexToLetterMap = [...Array(26)].map((val, i) => String.fromCharCode(i + 65));
 
 function getHints(markdown) {
   if (!markdown || !markdown.trim()) {
@@ -38,64 +38,64 @@ function getHints(markdown) {
 }
 
 function getShortAnswerOptions(markdown) {
-// TODO: Include tolerence for number it fails for now.
-let problemType = ProblemTypeKeys.TEXTINPUT;
-  if ((!markdown || !markdown.trim())) {
+  // TODO: Include tolerence for number it fails for now.
+  let problemType = ProblemTypeKeys.TEXTINPUT;
+    if ((!markdown || !markdown.trim())) {
+      return {
+        shortAnswersList: [],
+        problemType,
+      };
+    }
+    const markdownListData = markdown.split('\n');
+    const shortAnswersList = [];
+    let gotAnswer = false;
+    for (const i in markdownListData) {
+      const row = markdownListData[i].trim();
+      const feedbackStart = row.indexOf('{{');
+      const feedbackEnd = row.indexOf('}}');
+      let feedback = '';
+      let answer = '';
+      let correct = true;
+      if (row.startsWith('=') && !gotAnswer) {
+        gotAnswer = true;
+        if (feedbackStart > -1) {
+          feedback = row.slice(feedbackStart + 2, feedbackEnd);
+          answer = row.slice(1, feedbackStart).trim();
+        } else {
+          answer = row.slice(1).trim();
+        }
+      } else if (row.startsWith('=') && gotAnswer) {
+        break;
+      } else if (gotAnswer && row.startsWith('or=')) { // the next correct answer
+        if (feedbackStart > -1) {
+          answer = row.slice(3, feedbackStart).trim();
+          feedback = row.slice(feedbackStart + 2, feedbackEnd);
+        } else {
+          answer = row.slice(3).trim();
+        }
+      } else if (gotAnswer && row.startsWith('not=')) { // the incorrect answer
+        if (feedbackStart > -1) {
+          answer = row.slice(4, feedbackStart).trim();
+          feedback = row.slice(feedbackStart + 2, feedbackEnd);
+        } else {
+          answer = row.slice(4).trim();
+        }
+        correct = false;
+      }
+      if (answer) {
+        problemType = isFinite(answer) ? ProblemTypeKeys.NUMERIC : ProblemTypeKeys.TEXTINPUT;
+        shortAnswersList.push({
+          id: indexToLetterMap[shortAnswersList.length],
+          title: answer,
+          feedback,
+          correct,
+        });
+      }
+    }
     return {
-      shortAnswersList: [],
+      shortAnswersList,
       problemType,
     };
-  }
-  const markdownListData = markdown.split('\n');
-  const shortAnswersList = [];
-  let gotAnswer = false;
-  for (const i in markdownListData) {
-    const row = markdownListData[i].trim();
-    const feedbackStart = row.indexOf('{{');
-    const feedbackEnd = row.indexOf('}}');
-    let feedback = '';
-    let answer = '';
-    let correct = true;
-    if (row.startsWith('=') && !gotAnswer) {
-      gotAnswer = true;
-      if (feedbackStart > -1) {
-        feedback = row.slice(feedbackStart + 2, feedbackEnd);
-        answer = row.slice(1, feedbackStart).trim();
-      } else {
-        answer = row.slice(1).trim();
-      }
-    } else if (row.startsWith('=') && gotAnswer) {
-      break;
-    } else if (gotAnswer && row.startsWith('or=')) { // the next correct answer
-      if (feedbackStart > -1) {
-        answer = row.slice(3, feedbackStart).trim();
-        feedback = row.slice(feedbackStart + 2, feedbackEnd);
-      } else {
-        answer = row.slice(3).trim();
-      }
-    } else if (gotAnswer && row.startsWith('not=')) { // the incorrect answer
-      if (feedbackStart > -1) {
-        answer = row.slice(4, feedbackStart).trim();
-        feedback = row.slice(feedbackStart + 2, feedbackEnd);
-      } else {
-        answer = row.slice(4).trim();
-      }
-      correct = false;
-    }
-    if (answer) {
-      problemType = isFinite(answer) ? ProblemTypeKeys.NUMERIC : ProblemTypeKeys.TEXTINPUT;
-      shortAnswersList.push({
-        id: Number(i),
-        value: answer,
-        feedback,
-        correct,
-      });
-    }
-  }
-  return {
-    shortAnswersList,
-    problemType,
-  };
 }
 
 function getMultipleChoiceOptions(markdown) {
@@ -138,7 +138,7 @@ function getMultipleChoiceOptions(markdown) {
         }
       }
       multipleChoiceOptions.push({
-        id: Number(d),
+        id: indexToLetterMap[multipleChoiceOptions.length],
         title,
         correct: !row.startsWith('[ ]'),
         selectedFeedback,
@@ -155,15 +155,15 @@ function getMultipleChoiceOptions(markdown) {
         const groupChoices = [];
         for (const i in group) {
           const letter = group[i];
-          if (multipleChoiceOptions[groupFeedbackWordMapping.indexOf(letter)]) {
-            groupChoices.push(multipleChoiceOptions[groupFeedbackWordMapping.indexOf(letter)].id);
+          if (multipleChoiceOptions[indexToLetterMap.indexOf(letter)]) {
+            groupChoices.push(multipleChoiceOptions[indexToLetterMap.indexOf(letter)].id);
           }
         }
         feedback = row.slice(groupEnd + 2, groupFeedbackEnd).trim();
 
         if (groupChoices.length && feedback) {
           data.groupFeedbackList.push({
-            id: Number(i),
+            id: groupChoices.length,
             answers: groupChoices,
             feedback,
           });
@@ -175,6 +175,7 @@ function getMultipleChoiceOptions(markdown) {
 }
 
 function getSingleChoiceOptions(markdown) {
+  // TODO: Build support for selected and unselected feedback
   if (!markdown || !markdown.trim()) {
     return {
       singleSelectAnswersList: [],
@@ -206,7 +207,7 @@ function getSingleChoiceOptions(markdown) {
         }
         const correct = true;
         singleChoiceOptions.push({
-          id: Number(d),
+          id: indexToLetterMap[singleChoiceOptions.length],
           title,
           correct,
           feedback,
@@ -226,7 +227,7 @@ function getSingleChoiceOptions(markdown) {
         }
         const correct = false;
         singleChoiceOptions.push({
-          id: Number(d),
+          id: indexToLetterMap[singleChoiceOptions.length],
           title,
           correct,
           feedback,
@@ -243,7 +244,7 @@ function getSingleChoiceOptions(markdown) {
       }
       const correct = !!row.startsWith('(x)');
       singleChoiceOptions.push({
-        id: Number(d),
+        id: indexToLetterMap[singleChoiceOptions.length],
         title,
         correct,
         feedback,

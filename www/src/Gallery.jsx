@@ -29,7 +29,7 @@ export const EditorGallery = () => {
 
   const dispatch = useDispatch();
   useEffect(() => {
-    thunkActions.app.initialize({blockId: blockIds[blockType], lmsEndpointUrl, studioEndpointUrl})(dispatch);
+    thunkActions.app.initialize({ blockId: blockIds[blockType], blockType, lmsEndpointUrl, studioEndpointUrl })(dispatch);
   }, [dispatch, blockType])
   return (
     <div className="gallery">
