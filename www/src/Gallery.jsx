@@ -7,9 +7,12 @@ import { EditorPage } from '@edx/frontend-lib-content-components';
 import { blockTypes } from '@edx/frontend-lib-content-components/editors/data/constants/app';
 // eslint-disable-next-line
 import { mockBlockIdByType } from '@edx/frontend-lib-content-components/editors/data/constants/mockData';
+import { useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+import { thunkActions } from '@edx/frontend-lib-content-components/editors/data/redux';
 
 export const EditorGallery = () => {
-  const [blockType, setBlockType] = React.useState('problem');
+  const [blockType, setBlockType] = React.useState('html');
   const blockIds = Object.keys(blockTypes).reduce((obj, blockTypeKey) => {
     const type = blockTypes[blockTypeKey];
     return { ...obj, [type]: mockBlockIdByType(type) };
@@ -18,6 +21,11 @@ export const EditorGallery = () => {
   const studioEndpointUrl = 'fake-studio-endpoint-url';
   const lmsEndpointUrl = 'https://courses.edx.org'; // this is hardcoded because that is where the image data is from.
   const handleChange = (e) => setBlockType(e.target.value);
+
+  const dispatch = useDispatch();
+  useEffect(() => {
+    thunkActions.app.initialize({blockId: blockIds[blockType], lmsEndpointUrl, studioEndpointUrl})(dispatch);
+  }, [dispatch, blockType])
   return (
     <div className="gallery">
       <Form.Group>

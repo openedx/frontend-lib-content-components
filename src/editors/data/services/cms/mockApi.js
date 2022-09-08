@@ -167,7 +167,6 @@ export const uploadImage = ({
 // eslint-disable-next-line
 export const fetchStudioView = ({ blockId, studioEndpointUrl }) => {
   let data = {};
-  debugger;
   if (blockId === "html-block-id"){
     data = {
       data: '<p>Test prompt content</p>',

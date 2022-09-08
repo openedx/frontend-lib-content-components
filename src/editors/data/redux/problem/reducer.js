@@ -8,7 +8,7 @@ const initialState = {
   question: '',
   answers: [],
   groupFeedbackList: [],
-  settings: keyStore({
+  settings:{
     scoring: {
       advanced: false,
       scoring: {
@@ -28,7 +28,7 @@ const initialState = {
       afterAtempts: 1,
     },
     showResetButton: false,
-  }),
+  },
 };
 
 // eslint-disable-next-line no-unused-vars
