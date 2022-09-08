@@ -6,39 +6,15 @@ import QuestionWidget from './QuestionWidget';
 import { EditorContainer } from '../../../EditorContainer';
 import { selectors } from '../../../../data/redux';
 import { useSelector } from 'react-redux';
-import { getEditorData } from '../../data/MarkDownParser';
+import { Editor } from '@tinymce/tinymce-react';
+import { ToggleButton, ToggleButtonGroup } from '@edx/paragon';
 
-
-export const EditProblemView = ({editorValue}) => {
+export const EditProblemView = () => {
   const problemType = useSelector(selectors.problem.problemType);
-  const blockValue = useSelector(selectors.app.blockValue)
-  const markdown = blockValue.data.metadata.markdown ? blockValue.data.metadata.markdown : "No Markdown";
-  const olx = blockValue.data.data ? blockValue.data.data : "No OLX";
-  const parsedData = useSelector(selectors.app.getParsedEditorData);
-  console.log(parsedData);
+  const question = useSelector(selectors.problem.question);
   return (
       <EditorContainer getContent={() => ({})}>
-        <div>
-          <h1>
-            Edit Problem View:
-          </h1>
-          <pre>
-          <h3>OLX</h3>
-          <br/>
-          { olx }
-          </pre>
-          <pre>
-          <h3>Markdown</h3>
-          <br/>
-          { markdown }
-          </pre>
-          <pre>
-          <h3>Parsed Markdown</h3>
-          <br/>
-          { parsedData.editorData }
-          <br/>
-          </pre>
-        </div>
+        <Editor initialValue={question}/>
         <AnswerWidget problemType={problemType} />
         <SettingsWidget />
         <QuestionWidget />
