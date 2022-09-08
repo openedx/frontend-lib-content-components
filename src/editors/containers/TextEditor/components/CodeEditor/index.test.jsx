@@ -4,6 +4,8 @@ import { shallow } from 'enzyme';
 import { EditorState } from '@codemirror/state';
 import { EditorView } from '@codemirror/view';
 import { html } from '@codemirror/lang-html';
+import { formatMessage } from '../../../../../testUtils';
+import alphanumericMap from './constants';
 import * as module from './index';
 
 jest.mock('@codemirror/view');
@@ -35,6 +37,43 @@ describe('CodeEditor', () => {
     beforeEach(() => {
       jest.clearAllMocks();
     });
+
+    describe('cleanHTML', () => {
+      const dirtyText = `&${Object.keys(alphanumericMap).join('; , &')};`;
+      const cleanText = `${Object.values(alphanumericMap).join(' , ')}`;
+
+      it('escapes alphanumerics and sets them to be literals', () => {
+        expect(module.hooks.cleanHTML({ initialText: dirtyText })).toEqual(cleanText);
+      });
+    });
+
+    describe('escapeHTMLSpecialChars', () => {
+      const cleanText = `${Object.values(alphanumericMap).join(' , ')}`;
+
+      const mockDispatch = jest.fn((args) => ({ mockDispatch: args }));
+      const mockSetAtribute = jest.fn((args) => ({ mockSetAtribute: args }));
+      const ref = {
+        current: {
+          dispatch: mockDispatch,
+          state: {
+            doc: {
+              toString: () => cleanText,
+            },
+          },
+        },
+      };
+      const btnRef = {
+        current: {
+          setAttribute: mockSetAtribute,
+        },
+      };
+      it('unescapes literals and sets them to be alphanumerics', () => {
+        module.hooks.escapeHTMLSpecialChars({ ref, btnRef });
+        expect(mockDispatch).toHaveBeenCalled();
+        expect(mockSetAtribute).toHaveBeenCalledWith('disabled', 'disabled');
+      });
+    });
+
     describe('createCodeMirrorDomNode', () => {
       const props = {
         ref: {
@@ -63,6 +102,7 @@ describe('CodeEditor', () => {
       let props;
       beforeAll(() => {
         props = {
+          intl: { formatMessage },
           innerRef: {
             current: 'sOmEvALUE',
           },
