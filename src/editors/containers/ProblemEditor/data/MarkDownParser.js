@@ -29,7 +29,7 @@ function getHints(markdown) {
     const hint = getHint(row);
     if (hint.length) {
       hints.push({
-        id: Math.random(),
+        id: Number(d),
         value: hint,
       });
     }
@@ -85,7 +85,7 @@ let problemType = ProblemTypeKeys.TEXTINPUT;
     if (answer) {
       problemType = isFinite(answer) ? ProblemTypeKeys.NUMERIC : ProblemTypeKeys.TEXTINPUT;
       shortAnswersList.push({
-        id: Math.random(),
+        id: Number(i),
         value: answer,
         feedback,
         correct,
@@ -138,7 +138,7 @@ function getMultipleChoiceOptions(markdown) {
         }
       }
       multipleChoiceOptions.push({
-        id: Math.random(),
+        id: Number(d),
         title,
         correct: !row.startsWith('[ ]'),
         selectedFeedback,
@@ -163,7 +163,7 @@ function getMultipleChoiceOptions(markdown) {
 
         if (groupChoices.length && feedback) {
           data.groupFeedbackList.push({
-            id: Math.random(),
+            id: Number(i),
             answers: groupChoices,
             feedback,
           });
