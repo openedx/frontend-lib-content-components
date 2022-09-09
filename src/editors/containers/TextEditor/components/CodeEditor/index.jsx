@@ -18,9 +18,19 @@ import './index.scss';
 
 export const hooks = {
 
+  state: {
+    showBtnEscapeHTML: (val) => React.useState(val),
+  },
+
+  prepareShowBtnEscapeHTML: () => {
+    const [visibility, setVisibility] = hooks.state.showBtnEscapeHTML(true);
+    const hide = () => setVisibility(false);
+    return { showBtnEscapeHTML: visibility, hideBtn: hide };
+  },
+
   createCodeMirrorDomNode: ({ ref, initialText, upstreamRef }) => {
     useEffect(() => {
-      const cleanText = module.hooks.cleanHTML({ initialText });
+      const cleanText = hooks.cleanHTML({ initialText });
       const state = EditorState.create({
         doc: cleanText,
         extensions: [basicSetup, html(), EditorView.lineWrapping],
@@ -40,7 +50,7 @@ export const hooks = {
     const translator = ($0, $1) => alphanumericMap[$1];
     return initialText.replace(translateRegex, translator);
   },
-  escapeHTMLSpecialChars: ({ ref, btnRef }) => {
+  escapeHTMLSpecialChars: ({ ref, hideBtn }) => {
     const text = ref.current.state.doc.toString(); let
       pos = 0;
     const changes = [];
@@ -54,7 +64,7 @@ export const hooks = {
       },
     );
     ref.current.dispatch({ changes });
-    btnRef.current.setAttribute('disabled', 'disabled');
+    hideBtn();
   },
 
 };
@@ -68,18 +78,21 @@ export const CodeEditor = ({
   const DOMref = useRef();
   const btnRef = useRef();
   module.hooks.createCodeMirrorDomNode({ ref: DOMref, initialText: value, upstreamRef: innerRef });
+  const { showBtnEscapeHTML, hideBtn } = module.hooks.prepareShowBtnEscapeHTML();
 
   return (
     <div>
       <div id="CodeMirror" ref={DOMref} />
-      <Button
-        variant="tertiary"
-        aria-label={intl.formatMessage(messages.escapeHTMLButtonLabel)}
-        ref={btnRef}
-        onClick={() => module.hooks.escapeHTMLSpecialChars({ ref: innerRef, btnRef })}
-      >
-        <FormattedMessage {...messages.escapeHTMLButtonLabel} />
-      </Button>
+      {showBtnEscapeHTML && (
+        <Button
+          variant="tertiary"
+          aria-label={intl.formatMessage(messages.escapeHTMLButtonLabel)}
+          ref={btnRef}
+          onClick={() => module.hooks.escapeHTMLSpecialChars({ ref: innerRef, hideBtn })}
+        >
+          <FormattedMessage {...messages.escapeHTMLButtonLabel} />
+        </Button>
+      )}
     </div>
   );
 };

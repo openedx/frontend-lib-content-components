@@ -4,7 +4,7 @@ import { shallow } from 'enzyme';
 import { EditorState } from '@codemirror/state';
 import { EditorView } from '@codemirror/view';
 import { html } from '@codemirror/lang-html';
-import { formatMessage } from '../../../../../testUtils';
+import { formatMessage, MockUseState } from '../../../../../testUtils';
 import alphanumericMap from './constants';
 import * as module from './index';
 
@@ -32,10 +32,25 @@ jest.mock('codemirror', () => ({
   basicSetup: 'bAsiCSetUp',
 }));
 
+const state = new MockUseState(module.hooks);
+
 describe('CodeEditor', () => {
   describe('Hooks', () => {
     beforeEach(() => {
       jest.clearAllMocks();
+    });
+    state.testGetter(state.keys.showBtnEscapeHTML);
+    describe('stateHooks', () => {
+      beforeEach(() => {
+        state.mock();
+      });
+      it('prepareShowBtnEscapeHTML', () => {
+        const hook = module.hooks.prepareShowBtnEscapeHTML();
+        expect(state.stateVals.showBtnEscapeHTML).toEqual(hook.showBtnEscapeHTML);
+        hook.hideBtn();
+        expect(state.setState.showBtnEscapeHTML).toHaveBeenCalledWith(false);
+      });
+      afterEach(() => { state.restore(); });
     });
 
     describe('cleanHTML', () => {
@@ -51,7 +66,7 @@ describe('CodeEditor', () => {
       const cleanText = `${Object.values(alphanumericMap).join(' , ')}`;
 
       const mockDispatch = jest.fn((args) => ({ mockDispatch: args }));
-      const mockSetAtribute = jest.fn((args) => ({ mockSetAtribute: args }));
+
       const ref = {
         current: {
           dispatch: mockDispatch,
@@ -62,15 +77,11 @@ describe('CodeEditor', () => {
           },
         },
       };
-      const btnRef = {
-        current: {
-          setAttribute: mockSetAtribute,
-        },
-      };
+      const mockHideBtn = jest.fn();
       it('unescapes literals and sets them to be alphanumerics', () => {
-        module.hooks.escapeHTMLSpecialChars({ ref, btnRef });
+        module.hooks.escapeHTMLSpecialChars({ ref, hideBtn: mockHideBtn });
         expect(mockDispatch).toHaveBeenCalled();
-        expect(mockSetAtribute).toHaveBeenCalledWith('disabled', 'disabled');
+        expect(mockHideBtn).toHaveBeenCalled();
       });
     });
 
@@ -99,6 +110,7 @@ describe('CodeEditor', () => {
   });
   describe('Component', () => {
     describe('Snapshots', () => {
+      const mockHideBtn = jest.fn().mockName('mockHidebtn');
       let props;
       beforeAll(() => {
         props = {
@@ -114,6 +126,7 @@ describe('CodeEditor', () => {
         jest.clearAllMocks();
       });
       test('Renders and calls Hooks ', () => {
+        jest.spyOn(module.hooks, 'prepareShowBtnEscapeHTML').mockImplementation(() => ({ showBtnEscapeHTML: true, hideBtn: mockHideBtn }));
         // Note: ref won't show up as it is not acutaly a DOM attribute.
         expect(shallow(<module.CodeEditor {...props} />)).toMatchSnapshot();
         expect(module.hooks.createCodeMirrorDomNode).toHaveBeenCalled();
