@@ -43,6 +43,7 @@ exports[`TranscriptWidget render snapshots: renders as expected with allowTransc
         <Form.Checkbox
           checked={true}
           className="mt-4.5 decorative-control-label"
+          onChange={[Function]}
         >
           <Form.Label>
             <FormattedMessage
@@ -73,6 +74,7 @@ exports[`TranscriptWidget render snapshots: renders as expected with allowTransc
       <Form.Checkbox
         checked={false}
         className="mt-4.5 decorative-control-label"
+        onChange={[Function]}
       >
         <Form.Label
           size="sm"
@@ -197,6 +199,7 @@ exports[`TranscriptWidget render snapshots: renders as expected with showTranscr
         <Form.Checkbox
           checked={false}
           className="mt-4.5 decorative-control-label"
+          onChange={[Function]}
         >
           <Form.Label>
             <FormattedMessage
@@ -227,6 +230,7 @@ exports[`TranscriptWidget render snapshots: renders as expected with showTranscr
       <Form.Checkbox
         checked={true}
         className="mt-4.5 decorative-control-label"
+        onChange={[Function]}
       >
         <Form.Label
           size="sm"
@@ -296,6 +300,7 @@ exports[`TranscriptWidget render snapshots: renders as expected with transcripts
         <Form.Checkbox
           checked={false}
           className="mt-4.5 decorative-control-label"
+          onChange={[Function]}
         >
           <Form.Label>
             <FormattedMessage
@@ -326,6 +331,7 @@ exports[`TranscriptWidget render snapshots: renders as expected with transcripts
       <Form.Checkbox
         checked={false}
         className="mt-4.5 decorative-control-label"
+        onChange={[Function]}
       >
         <Form.Label
           size="sm"

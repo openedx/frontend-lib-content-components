@@ -33,21 +33,8 @@ export const TranscriptWidget = ({
   transcripts,
   allowTranscriptDownloads,
   showTranscriptByDefault,
+  updateField,
 }) => {
-  // const dispatch = useDispatch();
-  // const values = widgetValues({
-  //   dispatch,
-  //   fields: {
-  //     [selectorKeys.transcripts]: objectWidget,
-  //     [selectorKeys.allowTranscriptDownloads]: genericWidget,
-  //     [selectorKeys.showTranscriptByDefault]: genericWidget,
-  //   },
-  // });
-  // const {
-  //   transcripts,
-  //   allowTranscriptDownloads: allowDownload,
-  //   showTranscriptByDefault: showByDefault,
-  // } = values;
   const languagesArr = hooks.transcriptLanguages(transcripts);
   const input = {
     error: {
@@ -61,7 +48,6 @@ export const TranscriptWidget = ({
       show: true,
     },
   };
-  console.log(actions.video);
 
   return (
     <CollapsibleFormWidget
@@ -88,10 +74,10 @@ export const TranscriptWidget = ({
           <Form.Group className="mt-4.5">
             <b>Transcript widget:</b>
             <div className="mb-1">
-              {/* TODO: onChange={hooks.onCheckboxChange(setAllowDownload)} */}
               <Form.Checkbox
                 checked={allowTranscriptDownloads}
                 className="mt-4.5 decorative-control-label"
+                onChange={(e) => updateField({ allowTranscriptDownloads: e.target.checked })}
               >
                 <Form.Label>
                   <FormattedMessage {...messages.allowDownloadCheckboxLabel} />
@@ -109,10 +95,10 @@ export const TranscriptWidget = ({
                 <Icon className="d-inline-block mx-3" src={Info} />
               </OverlayTrigger>
             </div>
-            {/* TODO: onChange={hooks.onCheckboxChange(showByDefault)} */}
             <Form.Checkbox
               checked={showTranscriptByDefault}
               className="mt-4.5 decorative-control-label"
+              onChange={(e) => updateField({ showTranscriptByDefault: e.target.checked })}
             >
               <Form.Label size="sm">
                 <FormattedMessage {...messages.showByDefaultCheckboxLabel} />
@@ -137,16 +123,14 @@ export const TranscriptWidget = ({
 
 TranscriptWidget.defaultProps = {
   error: {},
-  transcripts: null,
-  allowTranscriptDownloads: false,
-  showTranscriptByDefault: false,
 };
 TranscriptWidget.propTypes = {
   error: PropTypes.node,
   // redux
-  transcripts: PropTypes.shape({}),
-  allowTranscriptDownloads: PropTypes.bool,
-  showTranscriptByDefault: PropTypes.bool,
+  transcripts: PropTypes.shape({}).isRequired,
+  allowTranscriptDownloads: PropTypes.bool.isRequired,
+  showTranscriptByDefault: PropTypes.bool.isRequired,
+  updateField: PropTypes.func.isRequired,
 };
 export const mapStateToProps = (state) => ({
   transcripts: selectors.video.transcripts(state),
@@ -154,6 +138,8 @@ export const mapStateToProps = (state) => ({
   showTranscriptByDefault: selectors.video.showTranscriptByDefault(state),
 });
 
-export const mapDispatchToProps = { };
+export const mapDispatchToProps = (dispatch) => ({
+  updateField: (stateUpdate) => dispatch(actions.video.updateField(stateUpdate)),
+});
 
 export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(TranscriptWidget));
