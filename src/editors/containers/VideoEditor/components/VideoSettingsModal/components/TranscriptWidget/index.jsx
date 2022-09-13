@@ -1,21 +1,12 @@
 import React from 'react';
-import { useDispatch, connect } from 'react-redux';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { actions, selectors } from '../../../../../../data/redux';
-
-import { widgetValues, objectWidget, genericWidget, selectorKeys } from '../hooks';
-import * as hooks from './hooks'
 import {
   Form,
-  FormCheck,
-  FormControl,
-  FormGroup,
-  FormLabel,
   Button,
   Stack,
   Icon,
-  IconButton,
   OverlayTrigger,
   Tooltip,
 } from '@edx/paragon';
@@ -23,9 +14,12 @@ import { FileUpload, HelpOutline } from '@edx/paragon/icons';
 import {
   FormattedMessage,
   injectIntl,
-  intlShape,
 } from '@edx/frontend-platform/i18n';
+
+import { actions, selectors } from '../../../../../../data/redux';
+import * as hooks from './hooks';
 import messages from './messages';
+
 import CollapsibleFormWidget from '../CollapsibleFormWidget';
 
 /**
@@ -33,13 +27,10 @@ import CollapsibleFormWidget from '../CollapsibleFormWidget';
  */
 export const TranscriptWidget = ({
   error,
-  // injected
-  intl,
-  //redux
+  // redux
   transcripts,
   allowTranscriptDownloads,
   showTranscriptByDefault,
-  updateField
 }) => {
   // const dispatch = useDispatch();
   // const values = widgetValues({
@@ -55,7 +46,7 @@ export const TranscriptWidget = ({
   //   allowTranscriptDownloads: allowDownload,
   //   showTranscriptByDefault: showByDefault,
   // } = values;
-  const languagesArr = hooks.transcriptLanguages(transcripts)
+  const languagesArr = hooks.transcriptLanguages(transcripts);
   console.log(actions.video);
 
   return (
@@ -65,45 +56,43 @@ export const TranscriptWidget = ({
       title="Transcript"
     >
       <Stack gap={3}>
-        {transcripts ?
+        {transcripts ? (
           <Form.Group className="mt-4.5">
-              <b>Transcript widget:</b>
-              <div className="mb-1">
+            <b>Transcript widget:</b>
+            <div className="mb-1">
               {/* TODO: onChange={hooks.onCheckboxChange(setAllowDownload)} */}
-                <Form.Checkbox
-                  checked={allowTranscriptDownloads}
-                  className="mt-4.5 decorative-control-label"
-                  onChange={(event) => updateField({'allowTranscriptDownloads': event.target.value})}
-                >
-                  <Form.Label>
-                    <FormattedMessage {...messages.allowDownloadCheckboxLabel} />
-                  </Form.Label>
-                </Form.Checkbox>
-                <OverlayTrigger
-                  key='right'
-                  placement='right'
-                  overlay={
-                    <Tooltip>
-                      <FormattedMessage {...messages.tooltipMessage} />
-                    </Tooltip>
-                  }
-                >
-                  <Icon className="d-inline-block mx-3" src={HelpOutline} />
-                </OverlayTrigger>
-              </div>
-              {/* TODO: onChange={hooks.onCheckboxChange(showByDefault)} */}
               <Form.Checkbox
-                checked={showTranscriptByDefault}
+                checked={allowTranscriptDownloads}
                 className="mt-4.5 decorative-control-label"
-                onChange={(event) => updateField({'showTranscriptByDefault': event.target.value})}
               >
-                <Form.Label size="sm">
-                  <FormattedMessage {...messages.showByDefaultCheckboxLabel} />
+                <Form.Label>
+                  <FormattedMessage {...messages.allowDownloadCheckboxLabel} />
                 </Form.Label>
               </Form.Checkbox>
-            </Form.Group> : <FormattedMessage {...messages.addFirstTranscript} />
-        }
-        <Button iconBefore={FileUpload} onClick={()=>{console.log('adding file');}} variant="link">
+              <OverlayTrigger
+                key="right"
+                placement="right"
+                overlay={(
+                  <Tooltip>
+                    <FormattedMessage {...messages.tooltipMessage} />
+                  </Tooltip>
+                )}
+              >
+                <Icon className="d-inline-block mx-3" src={HelpOutline} />
+              </OverlayTrigger>
+            </div>
+            {/* TODO: onChange={hooks.onCheckboxChange(showByDefault)} */}
+            <Form.Checkbox
+              checked={showTranscriptByDefault}
+              className="mt-4.5 decorative-control-label"
+            >
+              <Form.Label size="sm">
+                <FormattedMessage {...messages.showByDefaultCheckboxLabel} />
+              </Form.Label>
+            </Form.Checkbox>
+          </Form.Group>
+        ) : <FormattedMessage {...messages.addFirstTranscript} />}
+        <Button iconBefore={FileUpload} onClick={() => { console.log('adding file'); }} variant="link">
           <FormattedMessage {...messages.uploadButtonLabel} />
         </Button>
       </Stack>
@@ -113,15 +102,13 @@ export const TranscriptWidget = ({
 
 TranscriptWidget.defaultProps = {
   error: {},
-  transcript: null,
+  transcripts: null,
   allowTranscriptDownloads: false,
   showTranscriptByDefault: false,
 };
 TranscriptWidget.propTypes = {
   error: PropTypes.node,
-  // injected
-  intl: intlShape.isRequired,
-  //redux
+  // redux
   transcripts: PropTypes.shape({}),
   allowTranscriptDownloads: PropTypes.bool,
   showTranscriptByDefault: PropTypes.bool,

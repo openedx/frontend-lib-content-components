@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import { formatMessage } from '../../../../../../../testUtils';
-import { TranscriptWidget, mapStateToProps, mapDispatchToProps } from '.';
+import { TranscriptWidget } from '.';
 
 describe('TranscriptWidget', () => {
   const props = {
@@ -11,7 +11,7 @@ describe('TranscriptWidget', () => {
     title: 'tiTLE',
     // inject
     intl: { formatMessage },
-    //redux
+    // redux
     transcripts: null,
     allowTranscriptDownloads: false,
     showTranscriptByDefault: false,
@@ -23,21 +23,18 @@ describe('TranscriptWidget', () => {
       ).toMatchSnapshot();
     });
     test('snapshots: renders as expected with transcripts', () => {
-      const transcripts = { english: 'sOMeUrl'}
       expect(
-        shallow(<TranscriptWidget {...props} transcripts/>),
+        shallow(<TranscriptWidget {...props} transcripts={{ english: 'sOMeUrl' }} />),
       ).toMatchSnapshot();
     });
     test('snapshots: renders as expected with allowTranscriptDownloads true', () => {
-      const transcripts = { english: 'sOMeUrl'}
       expect(
-        shallow(<TranscriptWidget {...props} allowTranscriptDownloads transcripts/>),
+        shallow(<TranscriptWidget {...props} allowTranscriptDownloads transcripts={{ english: 'sOMeUrl' }} />),
       ).toMatchSnapshot();
     });
     test('snapshots: renders as expected with showTranscriptByDefault true', () => {
-      const transcripts = { english: 'sOMeUrl'}
       expect(
-        shallow(<TranscriptWidget {...props} showTranscriptByDefault transcripts/>),
+        shallow(<TranscriptWidget {...props} showTranscriptByDefault transcripts={{ english: 'sOMeUrl' }} />),
       ).toMatchSnapshot();
     });
   });
