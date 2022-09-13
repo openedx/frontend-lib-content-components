@@ -29,6 +29,16 @@ export const messages = {
     defaultMessage: 'Only SRT file can be uploaded',
     description: 'Message presented to user when image fails to upload',
   },
+  uploadTranscriptError: {
+    id: 'authoring.videoeditor.transcript.error.uploadTranscriptError',
+    defaultMessage: 'Failed to upload transcript. Please try again.',
+    description: 'Message presented to user when transcript fails to upload',
+  },
+  fileSizeError: {
+    id: 'authoring.videoeditor.transcript.error.fileSizeError',
+    defaultMessage: 'Transcript file size exeeds the maximum. Please try again.',
+    description: 'Message presented to user when transcript file size is too large',
+  },
 };
 
 export default messages;

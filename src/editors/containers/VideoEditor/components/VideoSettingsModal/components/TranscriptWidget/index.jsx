@@ -9,8 +9,9 @@ import {
   Icon,
   OverlayTrigger,
   Tooltip,
+  Alert,
 } from '@edx/paragon';
-import { FileUpload, HelpOutline } from '@edx/paragon/icons';
+import { FileUpload, Info } from '@edx/paragon/icons';
 import {
   FormattedMessage,
   injectIntl,
@@ -20,6 +21,7 @@ import { actions, selectors } from '../../../../../../data/redux';
 import * as hooks from './hooks';
 import messages from './messages';
 
+import ErrorAlert from '../../../../../ErrorAlerts/ErrorAlert';
 import CollapsibleFormWidget from '../CollapsibleFormWidget';
 
 /**
@@ -47,6 +49,18 @@ export const TranscriptWidget = ({
   //   showTranscriptByDefault: showByDefault,
   // } = values;
   const languagesArr = hooks.transcriptLanguages(transcripts);
+  const input = {
+    error: {
+      dismiss: () => { console.log('dismiss'); },
+      show: true,
+    },
+  };
+  const upload = {
+    error: {
+      dismiss: () => { console.log('dismiss'); },
+      show: true,
+    },
+  };
   console.log(actions.video);
 
   return (
@@ -55,6 +69,20 @@ export const TranscriptWidget = ({
       subtitle={languagesArr}
       title="Transcript"
     >
+      <ErrorAlert
+        dismissError={upload.error.dismiss}
+        hideHeading
+        isError={upload.error.show}
+      >
+        <FormattedMessage {...messages.uploadTranscriptError} />
+      </ErrorAlert>
+      <ErrorAlert
+        dismissError={input.error.dismiss}
+        hideHeading
+        isError={input.error.show}
+      >
+        <FormattedMessage {...messages.fileSizeError} />
+      </ErrorAlert>
       <Stack gap={3}>
         {transcripts ? (
           <Form.Group className="mt-4.5">
@@ -78,7 +106,7 @@ export const TranscriptWidget = ({
                   </Tooltip>
                 )}
               >
-                <Icon className="d-inline-block mx-3" src={HelpOutline} />
+                <Icon className="d-inline-block mx-3" src={Info} />
               </OverlayTrigger>
             </div>
             {/* TODO: onChange={hooks.onCheckboxChange(showByDefault)} */}
@@ -91,7 +119,14 @@ export const TranscriptWidget = ({
               </Form.Label>
             </Form.Checkbox>
           </Form.Group>
-        ) : <FormattedMessage {...messages.addFirstTranscript} />}
+        ) : (
+          <>
+            <Alert variant="danger" icon={Info}>
+              Only SRT files can be uploaded. Please select a file ending in .srt to upload.
+            </Alert>
+            <FormattedMessage {...messages.addFirstTranscript} />
+          </>
+        )}
         <Button iconBefore={FileUpload} onClick={() => { console.log('adding file'); }} variant="link">
           <FormattedMessage {...messages.uploadButtonLabel} />
         </Button>

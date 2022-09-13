@@ -16,6 +16,7 @@ describe('TranscriptWidget', () => {
     allowTranscriptDownloads: false,
     showTranscriptByDefault: false,
   };
+
   describe('render', () => {
     test('snapshots: renders as expected with default props', () => {
       expect(

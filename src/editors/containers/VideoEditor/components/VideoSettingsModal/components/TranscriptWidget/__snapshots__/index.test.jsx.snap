@@ -6,6 +6,28 @@ exports[`TranscriptWidget render snapshots: renders as expected with allowTransc
   subtitle="english"
   title="Transcript"
 >
+  <ErrorAlert
+    dismissError={[Function]}
+    hideHeading={true}
+    isError={true}
+  >
+    <FormattedMessage
+      defaultMessage="Failed to upload transcript. Please try again."
+      description="Message presented to user when transcript fails to upload"
+      id="authoring.videoeditor.transcript.error.uploadTranscriptError"
+    />
+  </ErrorAlert>
+  <ErrorAlert
+    dismissError={[Function]}
+    hideHeading={true}
+    isError={true}
+  >
+    <FormattedMessage
+      defaultMessage="Transcript file size exeeds the maximum. Please try again."
+      description="Message presented to user when transcript file size is too large"
+      id="authoring.videoeditor.transcript.error.fileSizeError"
+    />
+  </ErrorAlert>
   <Stack
     gap={3}
   >
@@ -83,9 +105,36 @@ exports[`TranscriptWidget render snapshots: renders as expected with default pro
   subtitle="None"
   title="Transcript"
 >
+  <ErrorAlert
+    dismissError={[Function]}
+    hideHeading={true}
+    isError={true}
+  >
+    <FormattedMessage
+      defaultMessage="Failed to upload transcript. Please try again."
+      description="Message presented to user when transcript fails to upload"
+      id="authoring.videoeditor.transcript.error.uploadTranscriptError"
+    />
+  </ErrorAlert>
+  <ErrorAlert
+    dismissError={[Function]}
+    hideHeading={true}
+    isError={true}
+  >
+    <FormattedMessage
+      defaultMessage="Transcript file size exeeds the maximum. Please try again."
+      description="Message presented to user when transcript file size is too large"
+      id="authoring.videoeditor.transcript.error.fileSizeError"
+    />
+  </ErrorAlert>
   <Stack
     gap={3}
   >
+    <Alert
+      variant="danger"
+    >
+      Only SRT files can be uploaded. Please select a file ending in .srt to upload.
+    </Alert>
     <FormattedMessage
       defaultMessage="Add video transcripts for improved accessibility."
       description="Message for adding first transcript"
@@ -111,6 +160,28 @@ exports[`TranscriptWidget render snapshots: renders as expected with showTranscr
   subtitle="english"
   title="Transcript"
 >
+  <ErrorAlert
+    dismissError={[Function]}
+    hideHeading={true}
+    isError={true}
+  >
+    <FormattedMessage
+      defaultMessage="Failed to upload transcript. Please try again."
+      description="Message presented to user when transcript fails to upload"
+      id="authoring.videoeditor.transcript.error.uploadTranscriptError"
+    />
+  </ErrorAlert>
+  <ErrorAlert
+    dismissError={[Function]}
+    hideHeading={true}
+    isError={true}
+  >
+    <FormattedMessage
+      defaultMessage="Transcript file size exeeds the maximum. Please try again."
+      description="Message presented to user when transcript file size is too large"
+      id="authoring.videoeditor.transcript.error.fileSizeError"
+    />
+  </ErrorAlert>
   <Stack
     gap={3}
   >
@@ -188,6 +259,28 @@ exports[`TranscriptWidget render snapshots: renders as expected with transcripts
   subtitle="english"
   title="Transcript"
 >
+  <ErrorAlert
+    dismissError={[Function]}
+    hideHeading={true}
+    isError={true}
+  >
+    <FormattedMessage
+      defaultMessage="Failed to upload transcript. Please try again."
+      description="Message presented to user when transcript fails to upload"
+      id="authoring.videoeditor.transcript.error.uploadTranscriptError"
+    />
+  </ErrorAlert>
+  <ErrorAlert
+    dismissError={[Function]}
+    hideHeading={true}
+    isError={true}
+  >
+    <FormattedMessage
+      defaultMessage="Transcript file size exeeds the maximum. Please try again."
+      description="Message presented to user when transcript file size is too large"
+      id="authoring.videoeditor.transcript.error.fileSizeError"
+    />
+  </ErrorAlert>
   <Stack
     gap={3}
   >
