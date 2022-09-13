@@ -18,9 +18,9 @@ import BaseModal from '../BaseModal';
 import SearchSort from './SearchSort';
 import Gallery from './Gallery';
 import FileInput from './FileInput';
-import FetchErrorAlert from '../ErrorAlerts/FetchErrorAlert';
-import UploadErrorAlert from '../ErrorAlerts/UploadErrorAlert';
-import ErrorAlert from '../ErrorAlerts/ErrorAlert';
+import FetchErrorAlert from '../../../ErrorAlerts/FetchErrorAlert';
+import UploadErrorAlert from '../../../ErrorAlerts/UploadErrorAlert';
+import ErrorAlert from '../../../ErrorAlerts/ErrorAlert';
 
 export const SelectImageModal = ({
   isOpen,

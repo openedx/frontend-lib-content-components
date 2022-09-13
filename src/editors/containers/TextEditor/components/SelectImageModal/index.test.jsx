@@ -15,9 +15,9 @@ jest.mock('../BaseModal', () => 'BaseModal');
 jest.mock('./FileInput', () => 'FileInput');
 jest.mock('./Gallery', () => 'Gallery');
 jest.mock('./SearchSort', () => 'SearchSort');
-jest.mock('../ErrorAlerts/FetchErrorAlert', () => 'FetchErrorAlert');
-jest.mock('../ErrorAlerts/UploadErrorAlert', () => 'UploadErrorAlert');
-jest.mock('../ErrorAlerts/ErrorAlert', () => 'ErrorAlert');
+jest.mock('../../../ErrorAlerts/FetchErrorAlert', () => 'FetchErrorAlert');
+jest.mock('../../../ErrorAlerts/UploadErrorAlert', () => 'UploadErrorAlert');
+jest.mock('../../../ErrorAlerts/ErrorAlert', () => 'ErrorAlert');
 
 jest.mock('./hooks', () => ({
   imgHooks: jest.fn(() => ({
