@@ -21,7 +21,8 @@ import { actions, selectors } from '../../../../../../data/redux';
 import * as hooks from './hooks';
 import messages from './messages';
 
-import ErrorAlert from '../../../../../ErrorAlerts/ErrorAlert';
+import FileInput from '../../../../../../sharedComponents/FileInput';
+import ErrorAlert from '../../../../../../sharedComponents/ErrorAlerts/ErrorAlert';
 import CollapsibleFormWidget from '../CollapsibleFormWidget';
 
 /**
@@ -36,6 +37,7 @@ export const TranscriptWidget = ({
   updateField,
 }) => {
   const languagesArr = hooks.transcriptLanguages(transcripts);
+  const fileInput = hooks.fileInput();
   const input = {
     error: {
       dismiss: () => { console.log('dismiss'); },
@@ -113,7 +115,8 @@ export const TranscriptWidget = ({
             <FormattedMessage {...messages.addFirstTranscript} />
           </>
         )}
-        <Button iconBefore={FileUpload} onClick={() => { console.log('adding file'); }} variant="link">
+        <FileInput fileInput={fileInput} acceptedFiles=".srt" />
+        <Button iconBefore={FileUpload} onClick={fileInput.click} variant="link">
           <FormattedMessage {...messages.uploadButtonLabel} />
         </Button>
       </Stack>

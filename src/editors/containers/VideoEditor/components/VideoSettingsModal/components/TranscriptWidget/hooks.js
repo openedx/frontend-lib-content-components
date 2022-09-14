@@ -1,3 +1,5 @@
+import React from 'react';
+
 export const transcriptLanguages = (transcripts) => {
   const languages = [];
   if (transcripts) {
@@ -9,4 +11,19 @@ export const transcriptLanguages = (transcripts) => {
   return 'None';
 };
 
-export default { transcriptLanguages };
+export const fileInput = () => {
+  const ref = React.useRef();
+  const click = () => ref.current.click();
+  const addFile = (e) => {
+    const selectedFile = e.target.files[0];
+    console.log(selectedFile);
+  };
+
+  return {
+    click,
+    addFile,
+    ref,
+  };
+};
+
+export default { transcriptLanguages, fileInput };

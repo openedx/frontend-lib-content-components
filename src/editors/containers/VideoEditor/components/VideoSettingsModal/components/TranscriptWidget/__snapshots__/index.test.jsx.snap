@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`TranscriptWidget render snapshots: renders as expected with allowTranscriptDownloads true 1`] = `
+exports[`TranscriptWidget snapshots snapshots: renders as expected with allowTranscriptDownloads true 1`] = `
 <injectIntl(ShimmedIntlComponent)
   isError={false}
   subtitle="english"
@@ -87,6 +87,18 @@ exports[`TranscriptWidget render snapshots: renders as expected with allowTransc
         </Form.Label>
       </Form.Checkbox>
     </Form.Group>
+    <FileInput
+      acceptedFiles=".srt"
+      fileInput={
+        Object {
+          "addFile": [Function],
+          "click": [Function],
+          "ref": Object {
+            "current": undefined,
+          },
+        }
+      }
+    />
     <Button
       onClick={[Function]}
       variant="link"
@@ -101,7 +113,7 @@ exports[`TranscriptWidget render snapshots: renders as expected with allowTransc
 </injectIntl(ShimmedIntlComponent)>
 `;
 
-exports[`TranscriptWidget render snapshots: renders as expected with default props 1`] = `
+exports[`TranscriptWidget snapshots snapshots: renders as expected with default props 1`] = `
 <injectIntl(ShimmedIntlComponent)
   isError={false}
   subtitle="None"
@@ -142,6 +154,18 @@ exports[`TranscriptWidget render snapshots: renders as expected with default pro
       description="Message for adding first transcript"
       id="authoring.videoeditor.transcripts.upload.firstTranscriptMessage"
     />
+    <FileInput
+      acceptedFiles=".srt"
+      fileInput={
+        Object {
+          "addFile": [Function],
+          "click": [Function],
+          "ref": Object {
+            "current": undefined,
+          },
+        }
+      }
+    />
     <Button
       onClick={[Function]}
       variant="link"
@@ -156,7 +180,7 @@ exports[`TranscriptWidget render snapshots: renders as expected with default pro
 </injectIntl(ShimmedIntlComponent)>
 `;
 
-exports[`TranscriptWidget render snapshots: renders as expected with showTranscriptByDefault true 1`] = `
+exports[`TranscriptWidget snapshots snapshots: renders as expected with showTranscriptByDefault true 1`] = `
 <injectIntl(ShimmedIntlComponent)
   isError={false}
   subtitle="english"
@@ -243,6 +267,18 @@ exports[`TranscriptWidget render snapshots: renders as expected with showTranscr
         </Form.Label>
       </Form.Checkbox>
     </Form.Group>
+    <FileInput
+      acceptedFiles=".srt"
+      fileInput={
+        Object {
+          "addFile": [Function],
+          "click": [Function],
+          "ref": Object {
+            "current": undefined,
+          },
+        }
+      }
+    />
     <Button
       onClick={[Function]}
       variant="link"
@@ -257,7 +293,7 @@ exports[`TranscriptWidget render snapshots: renders as expected with showTranscr
 </injectIntl(ShimmedIntlComponent)>
 `;
 
-exports[`TranscriptWidget render snapshots: renders as expected with transcripts 1`] = `
+exports[`TranscriptWidget snapshots snapshots: renders as expected with transcripts 1`] = `
 <injectIntl(ShimmedIntlComponent)
   isError={false}
   subtitle="english"
@@ -344,6 +380,18 @@ exports[`TranscriptWidget render snapshots: renders as expected with transcripts
         </Form.Label>
       </Form.Checkbox>
     </Form.Group>
+    <FileInput
+      acceptedFiles=".srt"
+      fileInput={
+        Object {
+          "addFile": [Function],
+          "click": [Function],
+          "ref": Object {
+            "current": undefined,
+          },
+        }
+      }
+    />
     <Button
       onClick={[Function]}
       variant="link"

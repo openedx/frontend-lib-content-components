@@ -3,31 +3,36 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from '@edx/frontend-platform/i18n';
 
-import messages from '../TextEditor/components/SelectImageModal/messages';
 import ErrorAlert from './ErrorAlert';
 import { selectors } from '../../data/redux';
 import { RequestKeys } from '../../data/constants/requests';
 
-export const FetchErrorAlert = ({
+export const UploadErrorAlert = ({
+  message,
   // redux
-  isFetchError,
+  isUploadError,
   // inject
 }) => (
   <ErrorAlert
-    isError={isFetchError}
+    isError={isUploadError}
   >
     <FormattedMessage
-      {...messages.fetchImagesError}
+      {...message}
     />
   </ErrorAlert>
 );
 
-FetchErrorAlert.propTypes = {
+UploadErrorAlert.propTypes = {
+  message: PropTypes.shape({
+    id: PropTypes.string,
+    defaultMessage: PropTypes.string,
+    description: PropTypes.string,
+  }).isRequired,
   // redux
-  isFetchError: PropTypes.bool.isRequired,
+  isUploadError: PropTypes.bool.isRequired,
 };
 export const mapStateToProps = (state) => ({
-  isFetchError: selectors.requests.isFailed(state, { requestKey: RequestKeys.fetchImages }),
+  isUploadError: selectors.requests.isFailed(state, { requestKey: RequestKeys.uploadImage }),
 });
 export const mapDispatchToProps = {};
-export default connect(mapStateToProps, mapDispatchToProps)(FetchErrorAlert);
+export default connect(mapStateToProps, mapDispatchToProps)(UploadErrorAlert);
