@@ -33,7 +33,7 @@ export const singleVideoData = {
   allowVideoDownloads: true,
   thumbnail: 'my-thumbnail-file-url', // filename
   transcripts: {
-    english: 'my-transcript-url',
+    eng: { fileName: 'my-transcript-url' },
   },
   allowTranscriptDownloads: false,
   duration: {

@@ -1,9 +1,10 @@
-// import { createSelector } from 'reselect';
+import { createSelector } from 'reselect';
 
 import { keyStore } from '../../../utils';
+import { videoTranscriptLanguages } from '../../constants/video';
 
 import { initialState } from './reducer';
-// import * as module from './selectors';
+import * as module from './selectors';
 
 const stateKeys = keyStore(initialState);
 
@@ -23,6 +24,18 @@ export const simpleSelectors = [
   stateKeys.licenseDetails,
 ].reduce((obj, key) => ({ ...obj, [key]: state => state.video[key] }), {});
 
+export const openLanguages = createSelector(
+  [module.simpleSelectors.transcripts],
+  (transcripts) => {
+    const open = Object.entries(videoTranscriptLanguages).filter(
+      ([lang, value]) => !Object.keys(transcripts).includes(lang),
+    );
+    return open;
+  },
+
+);
+
 export default {
+  openLanguages,
   ...simpleSelectors,
 };

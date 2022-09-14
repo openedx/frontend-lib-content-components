@@ -25,6 +25,8 @@ import FileInput from '../../../../../../sharedComponents/FileInput';
 import ErrorAlert from '../../../../../../sharedComponents/ErrorAlerts/ErrorAlert';
 import CollapsibleFormWidget from '../CollapsibleFormWidget';
 
+import TranscriptListItem from './TranscriptListItem';
+
 /**
  * Collapsible Form widget controlling video transcripts
  */
@@ -50,7 +52,6 @@ export const TranscriptWidget = ({
       show: true,
     },
   };
-
   return (
     <CollapsibleFormWidget
       isError={Object.keys(error).length !== 0}
@@ -74,7 +75,15 @@ export const TranscriptWidget = ({
       <Stack gap={3}>
         {transcripts ? (
           <Form.Group className="mt-4.5">
-            <b>Transcript widget:</b>
+            { Object.entries(transcripts).map(([language, value]) => {
+              console.log(language, value, 'WHY!');
+              return (
+                <TranscriptListItem
+                  language={language}
+                  title={value.fileName}
+                />
+              );
+            })}
             <div className="mb-1">
               <Form.Checkbox
                 checked={allowTranscriptDownloads}
