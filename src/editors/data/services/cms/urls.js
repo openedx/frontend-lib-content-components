@@ -34,3 +34,12 @@ export const courseAssets = ({ studioEndpointUrl, learningContextId }) => (
 export const courseImages = ({ studioEndpointUrl, learningContextId }) => (
   `${courseAssets({ studioEndpointUrl, learningContextId })}?sort=uploadDate&direction=desc&asset_type=Images`
 );
+
+export const deleteVideoTranscripts = ({ studioEndpointUrl, blockId }) => {
+  `${block({ studioEndpointUrl, blockId })}/handler/studio_transcript/translation`
+}
+
+export const videoTranscripts = ({ studioEndpointUrl, action }) => {
+  console.log(`${studioEndpointUrl}/transcripts/${action}`);
+  `${studioEndpointUrl}/transcripts/${action}`
+}

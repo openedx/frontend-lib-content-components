@@ -1,6 +1,6 @@
 import { camelizeKeys } from '../../../utils';
 import * as urls from './urls';
-import { get, post } from './utils';
+import { get, post, deleteObject } from './utils';
 import * as module from './api';
 import * as mockApi from './mockApi';
 
@@ -26,6 +26,48 @@ export const apiMethods = {
     data.append('file', image);
     return post(
       urls.courseAssets({ studioEndpointUrl, learningContextId }),
+      data,
+    );
+  },
+  deleteTranscript: ({
+    studioEndpointUrl,
+    transcript,
+    blockId
+  }) => {
+    const data = new FormData();
+    data.append('file', transcript);
+    return deleteObject(
+      urls.deleteVideoTranscripts({ studioEndpointUrl, blockId }),
+      data,
+    );
+  },
+  uploadTranscript: ({
+    action,
+    blockId,
+    studioEndpointUrl,
+    transcript,
+    videoId,
+  }) => {
+    const data = new FormData();
+    data.append('transcript-file', transcript);
+    data.append('edx_video_id', videoId);
+    data.append('locator', blockId);
+    return post(
+      urls.videoTranscripts({ studioEndpointUrl, action }),
+      data,
+    );
+  },
+  downloadTranscript: ({
+    action,
+    blockId,
+    studioEndpointUrl,
+    transcript,
+    videoId,
+  }) => {
+    const data = new FormData();
+    data.append('locator', blockId);
+    return get(
+      urls.videoTranscripts({ studioEndpointUrl, action }),
       data,
     );
   },

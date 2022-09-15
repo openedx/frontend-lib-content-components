@@ -135,6 +135,44 @@ export const fetchImages = ({ ...rest }) => (dispatch, getState) => {
   }));
 };
 
+export const deleteTranscript = ({ transcript, ...rest }) => (dispatch, getState) => {
+  dispatch(module.networkRequest({
+    requestKey: RequestKeys.deleteTranscript,
+    promise: api.deleteTranscript({
+      blockId: selectors.app.blockId(getState()),
+      transcript,
+      studioEndpointUrl: selectors.app.studioEndpointUrl(getState()),
+    }),
+    ...rest,
+  }));
+};
+
+export const uploadTranscript = ({ transcript, videoId, ...rest }) => (dispatch, getState) => {
+  dispatch(module.networkRequest({
+    requestKey: RequestKeys.uploadTranscript,
+    promise: api.uploadTranscript({
+      blockId: selectors.app.blockId(getState()),
+      action: 'upload',
+      transcript,
+      videoId,
+      studioEndpointUrl: selectors.app.studioEndpointUrl(getState()),
+    }),
+    ...rest,
+  }));
+};
+
+export const downloadTranscript = ({  ...rest }) => (dispatch, getState) => {
+  dispatch(module.networkRequest({
+    requestKey: RequestKeys.uploadTranscript,
+    promise: api.uploadTranscript({
+      blockId: selectors.app.blockId(getState()),
+      action: 'download',
+      studioEndpointUrl: selectors.app.studioEndpointUrl(getState()),
+    }),
+    ...rest,
+  }));
+};
+
 export default StrictDict({
   fetchBlock,
   fetchImages,
@@ -142,4 +180,7 @@ export default StrictDict({
   fetchUnit,
   saveBlock,
   uploadImage,
+  deleteTranscript,
+  uploadTranscript,
+  downloadTranscript,
 });
