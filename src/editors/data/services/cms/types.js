@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import ProblemTypes from '../../constants/problem'
+import { ProblemTypes } from '../../constants/problem';
 
 export const videoDataProps = {
   videoSource: PropTypes.string,
@@ -24,20 +24,21 @@ export const videoDataProps = {
   }),
 };
 
+export const answerOptionProps = PropTypes.shape({
+  id: PropTypes.string,
+  title: PropTypes.string,
+  correct: PropTypes.bool,
+  feedback: PropTypes.string,
+  selectedFeedback: PropTypes.string,
+  unselectedFeedback: PropTypes.string,
+});
 
 export const problemDataProps = {
   rawOLX: PropTypes.string,
   problemType: PropTypes.instanceOf(ProblemTypes),
   question: PropTypes.string,
   answers: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string,
-      content: PropTypes.string,
-      correct: PropTypes.bool,
-      selectedFeedback: PropTypes.string,
-      unselectedFeedback: PropTypes.string,
-      answer: PropTypes.string,
-   }),
+    answerOptionProps,
   ),
   settings: PropTypes.shape({
     scoring: PropTypes.shape({
@@ -62,8 +63,8 @@ export const problemDataProps = {
   }),
 };
 
-
 export default {
   videoDataProps,
-  problemDataProps
+  problemDataProps,
+  answerOptionProps,
 };
