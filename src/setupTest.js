@@ -80,6 +80,7 @@ jest.mock('@edx/paragon', () => jest.requireActual('testUtils').mockNestedCompon
     Footer: 'Card.Footer',
     Body: 'Card.Body',
   },
+  Col: 'Col',
   Dropdown: {
     Item: 'Dropdown.Item',
     Menu: 'Dropdown.Menu',
@@ -111,6 +112,7 @@ jest.mock('@edx/paragon', () => jest.requireActual('testUtils').mockNestedCompon
     Row: 'Form.Row',
   },
   FullscreenModal: 'FullscreenModal',
+  Row: 'Row',
   Scrollable: 'Scrollable',
   SelectableBox: {
     Set: 'SelectableBox.Set',
