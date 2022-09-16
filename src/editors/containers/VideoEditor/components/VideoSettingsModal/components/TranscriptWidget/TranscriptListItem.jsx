@@ -19,12 +19,13 @@ export const TranscriptListItem = ({
   language,
   // redux
   // replaceTranscript,
-  // downloadTranscript,
-  // deleteTranscript,
+  downloadTranscript,
+  deleteTranscript,
   // intl
   intl,
 }) => {
-  const fileInput = hooks.fileInput();
+
+  const fileInput = hooks.fileInput({onAddFile: hooks.replaceFileCallback({language)});
 
   return (
     <Card>
@@ -43,16 +44,14 @@ export const TranscriptListItem = ({
             <Dropdown.Menu className="video_transcript Action Menu">
               <Dropdown.Item
                 key={`transcript-actions-${title}-replace`}
-                onClick={() => {
-                  fileInput.click();
-                }}
+                onClick={fileInput.click}
               >
                 Replace
               </Dropdown.Item>
-              <Dropdown.Item key={`transcript-actions-${title}-download`}>
+              <Dropdown.Item key={`transcript-actions-${title}-download`} onClick={downloadTranscript}>
                 Download
               </Dropdown.Item>
-              <Dropdown.Item key={`transcript-actions-${title}-delete`}>
+              <Dropdown.Item key={`transcript-actions-${title}-delete`}  onClick={deleteTranscript}>
                 Delete
               </Dropdown.Item>
             </Dropdown.Menu>
@@ -74,10 +73,11 @@ const mapStateToProps = () => {
 
 };
 
+
 const mapDispatchToProps = {
-  /*replaceTranscript: actions.app.video.replaceTranscript,
   downloadTranscript: actions.app.video.downloadTranscript,
-  deleteTranscript: actions.app.video.deleteTranscript, */
+  deleteTranscript: actions.app.video.deleteTranscript,
 };
+
 
 export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(TranscriptListItem));
