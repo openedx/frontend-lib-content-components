@@ -5,7 +5,6 @@ import { actions, selectors } from '..';
 import api, { loadImages } from '../../services/cms/api';
 
 import * as module from './requests';
-import { addTranscript } from './video';
 
 /**
  * Wrapper around a network request promise, that sends actions to the redux store to
@@ -136,12 +135,54 @@ export const fetchImages = ({ ...rest }) => (dispatch, getState) => {
   }));
 };
 
-
-export const deleteTranscript = ({fileName})
-
-addTranscript
-
-replaceTranscript
+export const replaceTranscript = (
+  fileName,
+  langauge,
+  file,
+  ...rest
+) => (
+  dispatch,
+  getState,
+) => {
+  dispatch(module.networkRequest({
+    requestKey: RequestKeys.replaceTranscript,
+    promise: api.video.replaceTranscript({
+      studioEndpointUrl: selectors.app.studioEndpointUrl(getState()),
+      blockId: selectors.app.blockId(getState()),
+      file,
+      fileName,
+      langauge
+    }),
+    ...rest,
+  }));
+};
+export const addTranscript = (langauge, fileName, file, ...rest) => (dispatch, getState) => {
+  dispatch(module.networkRequest({
+    requestKey: RequestKeys.addTranscript,
+    promise: api.video.addTranscript({
+      studioEndpointUrl: selectors.app.studioEndpointUrl(getState()),
+      blockId: selectors.app.blockId(getState()),
+      fileName,
+      langauge,
+      file,
+    }),
+    ...rest,
+  }));
+};
+export const deleteTranscript = (newFile, newFileName, langauge, oldFileName, ...rest) => (dispatch, getState) => {
+  dispatch(module.networkRequest({
+    requestKey: RequestKeys.deleteTranscript,
+    promise: api.video.addTranscript({
+      studioEndpointUrl: selectors.app.studioEndpointUrl(getState()),
+      blockId: selectors.app.blockId(getState()),
+      oldFileName,
+      newFileName,
+      langauge,
+      newFile,
+    }),
+    ...rest,
+  }));
+};
 
 export default StrictDict({
   fetchBlock,
@@ -150,4 +191,7 @@ export default StrictDict({
   fetchUnit,
   saveBlock,
   uploadImage,
+  deleteTranscript,
+  addTranscript,
+  replaceTranscript,
 });

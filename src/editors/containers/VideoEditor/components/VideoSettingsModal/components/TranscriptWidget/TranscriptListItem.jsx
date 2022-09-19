@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-
+import { connect, useDispatch, useSelector } from 'react-redux';
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 import {
   Card, Dropdown, Icon, IconButton,
@@ -18,14 +17,12 @@ export const TranscriptListItem = ({
   title,
   language,
   // redux
-  // replaceTranscript,
   downloadTranscript,
   deleteTranscript,
   // intl
   intl,
 }) => {
-
-  const fileInput = hooks.fileInput({onAddFile: hooks.replaceFileCallback({language)});
+  const fileInput = hooks.fileInput({ onAddFile: hooks.replaceFileCallback({ language, dispatch: useDispatch() }) });
 
   return (
     <Card>
@@ -51,7 +48,7 @@ export const TranscriptListItem = ({
               <Dropdown.Item key={`transcript-actions-${title}-download`} onClick={downloadTranscript}>
                 Download
               </Dropdown.Item>
-              <Dropdown.Item key={`transcript-actions-${title}-delete`}  onClick={deleteTranscript}>
+              <Dropdown.Item key={`transcript-actions-${title}-delete`} onClick={deleteTranscript}>
                 Delete
               </Dropdown.Item>
             </Dropdown.Menu>
@@ -73,11 +70,9 @@ const mapStateToProps = () => {
 
 };
 
-
 const mapDispatchToProps = {
-  downloadTranscript: actions.app.video.downloadTranscript,
-  deleteTranscript: actions.app.video.deleteTranscript,
+  downloadTranscript: actions.video.downloadTranscript,
+  deleteTranscript: actions.video.deleteTranscript,
 };
-
 
 export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(TranscriptListItem));

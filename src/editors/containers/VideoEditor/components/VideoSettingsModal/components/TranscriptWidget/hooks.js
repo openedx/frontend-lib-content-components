@@ -20,12 +20,12 @@ export const onSelectLanguage = ({ fileName }) => (e) => {
   dispatch(actions.video.updateField({ transcripts: newTranscripts }));
 };
 
-export const replaceFileCallback = ({ language }) => (e) => {
-  const dispatch = useDispatch();
+export const replaceFileCallback = ({ language, dispatch }) => (e) => {
   dispatch(actions.video.replaceTranscript({ newFile: e.target.files[0], newFileName: e.target.value, language }));
 };
 
 export const fileInput = ({ onAddFile }) => {
+  console.log('wotero', onAddFile);
   const ref = React.useRef();
   const click = () => ref.current.click();
   const addFile = (e) => {
@@ -38,4 +38,6 @@ export const fileInput = ({ onAddFile }) => {
   };
 };
 
-export default { transcriptLanguages, fileInput, onSelectLanguage };
+export default {
+  transcriptLanguages, fileInput, onSelectLanguage, replaceFileCallback,
+};

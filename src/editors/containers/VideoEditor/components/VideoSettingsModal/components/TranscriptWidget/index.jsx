@@ -39,7 +39,7 @@ export const TranscriptWidget = ({
   updateField,
 }) => {
   const languagesArr = hooks.transcriptLanguages(transcripts);
-  const fileInput = hooks.fileInput();
+  const fileInput = hooks.fileInput({ onAddFile: (e) => { console.log(e); } });
   const input = {
     error: {
       dismiss: () => { console.log('dismiss'); },
