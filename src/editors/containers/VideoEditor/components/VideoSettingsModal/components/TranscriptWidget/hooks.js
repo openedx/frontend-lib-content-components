@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { actions, selectors } from '../../../../../../data/redux'
-import { thunkActions } from '../../../../../../data/redux';
+import { thunkActions } from '../../../../../../data/redux';tems
 
 export const transcriptLanguages = (transcripts) => {
   const languages = [];
@@ -15,34 +15,23 @@ export const transcriptLanguages = (transcripts) => {
 };
 
 export const onSelectLanguage = ({ fileName }) => (e) => {
+  const currentTranscripts = useSelector(selectors.app.video.transcripts);
+  const newTranscripts = { [e.target.value]: { fileName }, ...currentTranscripts };
   const dispatch = useDispatch();
-  const currentTranscripts = useSelector(selectors.video.transcripts);
-  const currentTranscript = Object.keys(currentTranscripts).find(key => currentTranscripts[key] === { fileName });
-  const transcriptsWithoutReplaced = (({ currentTranscript, ...transcripts }) => transcripts)(currentTranscripts);
-  const newTranscripts = transcriptsWithoutReplaced[e.target.value] = { fileName };
   dispatch(actions.video.updateField({ transcripts: newTranscripts }));
 };
 
-export const fileInput = (inputType) => {
-  const dispatch = useDispatch()
+export const replaceFileCallback = ({ language }) => (e) => {
+  const dispatch = useDispatch();
+  dispatch(actions.video.replaceTranscript({ newFile: e.target.files[0], newFileName: e.target.value, language }));
+};
+
+export const fileInput = ({ onAddFile }) => {
   const ref = React.useRef();
   const click = () => ref.current.click();
   const addFile = (e) => {
-    const selectedFile = e.target.files[0];
-    if (inputType === 'replace') {
-      dispatch(
-        thunkActions.video.replaceTranscript({
-          file: selectedFile,
-        }),
-      );
-    }
-    dispatch(
-      thunkActions.video.uploadTranscript({
-        file: selectedFile,
-      }),
-    );
+    onAddFile(e);
   };
-
   return {
     click,
     addFile,
@@ -50,16 +39,4 @@ export const fileInput = (inputType) => {
   };
 };
 
-export const deleteTranscript = (transcript) => {
-  const dispatch = useDispatch();
-  dispatch(thunkActions.video.deleteTranscript({
-    file: transcript
-  }))
-}
-
-export const downloadTranscript = (transcript) => {
-  const dispatch = useDispatch();
-  dispatch(thunkActions.video.downloadTranscript())
-}
-
-export default { transcriptLanguages, fileInput, onSelectLanguage, deleteTranscript, downloadTranscript };
+export default { transcriptLanguages, fileInput, onSelectLanguage };

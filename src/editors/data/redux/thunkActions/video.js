@@ -41,7 +41,7 @@ export const replaceTranscript = ({ newFile, newFileName, language }) => (dispat
   const { transcripts } = selectors.video;
   const newTrancsripts = { ...transcripts, [language]: { newFileName } };
 
-  // To replace a transcript, first delete the old one, then add a new onSuccess
+};
 
   dispatch(requests.deleteTranscript({
     filename: transcripts[language],

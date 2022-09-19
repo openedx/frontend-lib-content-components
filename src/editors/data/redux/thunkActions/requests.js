@@ -5,6 +5,7 @@ import { actions, selectors } from '..';
 import api, { loadImages } from '../../services/cms/api';
 
 import * as module from './requests';
+import { addTranscript } from './video';
 
 /**
  * Wrapper around a network request promise, that sends actions to the redux store to

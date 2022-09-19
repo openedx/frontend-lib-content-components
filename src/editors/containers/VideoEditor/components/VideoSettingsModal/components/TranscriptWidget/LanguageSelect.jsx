@@ -17,7 +17,7 @@ export const LanguageSelect = ({
   openLanguages, // Only allow those languages not already associated with a transcript to be selected
 }) => (
   <Form.Group controlId={`selectLanguage-form-${title}`}>
-    {/* TODO: int8l floatingLabel */ console.log(language, 'swimmmmm')}
+    {/* TODO: int8l floatingLabel */}
     <Form.Control as="select" defaultValue={language} onChange={onSelect} floatingLabel="Language">
       <option value={language}>{videoTranscriptLanguages[language]}</option>
       {openLanguages.map(([lang, text]) => (<option value={lang}>{text}</option>))}
