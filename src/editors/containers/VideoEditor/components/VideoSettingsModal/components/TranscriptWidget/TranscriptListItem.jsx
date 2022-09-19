@@ -76,9 +76,7 @@ export const TranscriptListItem = ({
   );
 };
 
-const mapStateToProps = () => {
-
-};
+const mapStateToProps = () => ({});
 
 const mapDispatchToProps = {
   /*replaceTranscript: actions.app.video.replaceTranscript,

@@ -39,7 +39,6 @@ export const deleteVideoTranscripts = ({ studioEndpointUrl, blockId }) => {
   `${block({ studioEndpointUrl, blockId })}/handler/studio_transcript/translation`
 }
 
-export const videoTranscripts = ({ studioEndpointUrl, action }) => {
-  console.log(`${studioEndpointUrl}/transcripts/${action}`);
+export const videoTranscripts = ({ studioEndpointUrl, action }) => (
   `${studioEndpointUrl}/transcripts/${action}`
-}
+)

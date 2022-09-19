@@ -164,7 +164,7 @@ export const uploadTranscript = ({ transcript, videoId, ...rest }) => (dispatch,
 export const downloadTranscript = ({  ...rest }) => (dispatch, getState) => {
   dispatch(module.networkRequest({
     requestKey: RequestKeys.uploadTranscript,
-    promise: api.uploadTranscript({
+    promise: api.downloadTranscript({
       blockId: selectors.app.blockId(getState()),
       action: 'download',
       studioEndpointUrl: selectors.app.studioEndpointUrl(getState()),
