@@ -24,6 +24,10 @@ export const replaceFileCallback = ({ language, dispatch }) => (e) => {
   dispatch(actions.video.replaceTranscript({ newFile: e.target.files[0], newFileName: e.target.value, language }));
 };
 
+export const addFileCallback = ({ dispatch }) => (e) => {
+  dispatch(actions.video.addTranscript({ file: e.target.files[0], fileName: e.target.value }));
+};
+
 export const fileInput = ({ onAddFile }) => {
   console.log('wotero', onAddFile);
   const ref = React.useRef();

@@ -34,9 +34,9 @@ exports[`TranscriptWidget snapshots snapshots: renders as expected with allowTra
     <Form.Group
       className="mt-4.5"
     >
-      <b>
-        Transcript widget:
-      </b>
+      <injectIntl(ShimmedIntlComponent)
+        language="english"
+      />
       <div
         className="mb-1"
       >
@@ -214,9 +214,9 @@ exports[`TranscriptWidget snapshots snapshots: renders as expected with showTran
     <Form.Group
       className="mt-4.5"
     >
-      <b>
-        Transcript widget:
-      </b>
+      <injectIntl(ShimmedIntlComponent)
+        language="english"
+      />
       <div
         className="mb-1"
       >
@@ -327,9 +327,9 @@ exports[`TranscriptWidget snapshots snapshots: renders as expected with transcri
     <Form.Group
       className="mt-4.5"
     >
-      <b>
-        Transcript widget:
-      </b>
+      <injectIntl(ShimmedIntlComponent)
+        language="english"
+      />
       <div
         className="mb-1"
       >

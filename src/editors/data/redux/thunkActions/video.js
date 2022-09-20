@@ -13,12 +13,19 @@ export const saveVideoData = () => () => {
 
 // Transcript Thunks:
 
-export const deleteTranscript = ({ langauge, fileName }) => (dispatch) => {
+export const deleteTranscript = ({ language }) => (dispatch) => {
   dispatch(requests.deleteTranscript({
-    fileName,
-    langauge,
+    language,
     onSucess: () => dispatch(actions.video.deleteTranscript({ language })),
     onFailure: () => console.log('Delete Failed'),
+  }));
+};
+
+export const downloadTranscript = ({ language }) => (dispatch) => {
+  dispatch(requests.downloadTranscript({
+    language,
+    onSucess: () => dispatch(actions.video.downloadTranscript({ language })),
+    onFailure: () => console.log('Download Failed'),
   }));
 };
 
@@ -53,4 +60,5 @@ export default {
   deleteTranscript,
   addTranscript,
   replaceTranscript,
+  downloadTranscript,
 };

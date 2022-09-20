@@ -76,7 +76,6 @@ export const TranscriptWidget = ({
         {transcripts ? (
           <Form.Group className="mt-4.5">
             { Object.entries(transcripts).map(([language, value]) => {
-              console.log(language, value, 'WHY!');
               return (
                 <TranscriptListItem
                   language={language}
@@ -119,6 +118,7 @@ export const TranscriptWidget = ({
         ) : (
           <>
             <Alert variant="danger" icon={Info}>
+              {/* TODO: Int8l */}
               Only SRT files can be uploaded. Please select a file ending in .srt to upload.
             </Alert>
             <FormattedMessage {...messages.addFirstTranscript} />

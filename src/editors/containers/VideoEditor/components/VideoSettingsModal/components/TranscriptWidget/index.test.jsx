@@ -25,9 +25,7 @@ describe('TranscriptWidget', () => {
     error: {},
     subtitle: 'SuBTItle',
     title: 'tiTLE',
-    // inject
     intl: { formatMessage },
-    // redux
     transcripts: null,
     allowTranscriptDownloads: false,
     showTranscriptByDefault: false,

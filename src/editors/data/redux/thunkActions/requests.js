@@ -169,16 +169,28 @@ export const addTranscript = (langauge, fileName, file, ...rest) => (dispatch, g
     ...rest,
   }));
 };
-export const deleteTranscript = (newFile, newFileName, langauge, oldFileName, ...rest) => (dispatch, getState) => {
+
+export const deleteTranscript = (fileName, langauge, ...rest) => (dispatch, getState) => {
   dispatch(module.networkRequest({
     requestKey: RequestKeys.deleteTranscript,
-    promise: api.video.addTranscript({
+    promise: api.video.deleteTranscript({
       studioEndpointUrl: selectors.app.studioEndpointUrl(getState()),
       blockId: selectors.app.blockId(getState()),
-      oldFileName,
-      newFileName,
+      fileName,
       langauge,
-      newFile,
+    }),
+    ...rest,
+  }));
+};
+
+export const downloadTranscript = (fileName, langauge, ...rest) => (dispatch, getState) => {
+  dispatch(module.networkRequest({
+    requestKey: RequestKeys.downloadTranscript,
+    promise: api.video.downloadTranscript({
+      studioEndpointUrl: selectors.app.studioEndpointUrl(getState()),
+      blockId: selectors.app.blockId(getState()),
+      fileName,
+      langauge,
     }),
     ...rest,
   }));

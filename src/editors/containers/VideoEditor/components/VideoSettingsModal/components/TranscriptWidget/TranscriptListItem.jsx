@@ -45,10 +45,10 @@ export const TranscriptListItem = ({
               >
                 Replace
               </Dropdown.Item>
-              <Dropdown.Item key={`transcript-actions-${title}-download`} onClick={downloadTranscript}>
+              <Dropdown.Item key={`transcript-actions-${title}-download`} onClick={() => downloadTranscript({ language })}>
                 Download
               </Dropdown.Item>
-              <Dropdown.Item key={`transcript-actions-${title}-delete`} onClick={deleteTranscript}>
+              <Dropdown.Item key={`transcript-actions-${title}-delete`} onClick={() => deleteTranscript({ language })}>
                 Delete
               </Dropdown.Item>
             </Dropdown.Menu>
