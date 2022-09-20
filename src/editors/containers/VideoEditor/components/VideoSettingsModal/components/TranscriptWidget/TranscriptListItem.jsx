@@ -11,21 +11,21 @@ import { MoreVert } from '@edx/paragon/icons';
 
 import LanguageSelect from './LanguageSelect';
 import hooks from './hooks';
-import { actions } from '../../../../../../data/redux';
+import { thunkActions } from '../../../../../../data/redux';
 import FileInput from '../../../../../../sharedComponents/FileInput';
 
 export const TranscriptListItem = ({
   title,
   language,
-  // redux
-  // replaceTranscript,
-  downloadTranscript,
-  deleteTranscript,
+  downloadLink,
+  //redux,
+deleteTranscript,
   // intl
   intl,
 }) => {
 
-  const fileInput = hooks.fileInput({onAddFile: hooks.replaceFileCallback({language)});
+  const fileInput = hooks.fileInput({ onAddFile: hooks.replaceFileCallback(language) });
+  const downloadTranscript = 'hooks.downloadTranscript(language);'
 
   return (
     <Card>
@@ -48,10 +48,10 @@ export const TranscriptListItem = ({
               >
                 Replace
               </Dropdown.Item>
-              <Dropdown.Item key={`transcript-actions-${title}-download`} onClick={downloadTranscript}>
+              <Dropdown.Item key={`transcript-actions-${title}-download`} href={downloadLink}>
                 Download
               </Dropdown.Item>
-              <Dropdown.Item key={`transcript-actions-${title}-delete`}  onClick={deleteTranscript}>
+              <Dropdown.Item key={`transcript-actions-${title}-delete`}  onClick={deleteTranscript(language)}>
                 Delete
               </Dropdown.Item>
             </Dropdown.Menu>
@@ -72,10 +72,10 @@ export const TranscriptListItem = ({
 const mapStateToProps = () => ({});
 
 
-const mapDispatchToProps = {
-  downloadTranscript: actions.app.video.downloadTranscript,
-  deleteTranscript: actions.app.video.deleteTranscript,
-};
+const mapDispatchToProps = (dispatch) => ({
+  // downloadTranscript: (language) => dispatch(thunkActions.video.downloadTranscript({ language })),
+  deleteTranscript: (language) => dispatch(thunkActions.video.deleteTranscript({ language }))
+});
 
 
 export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(TranscriptListItem));

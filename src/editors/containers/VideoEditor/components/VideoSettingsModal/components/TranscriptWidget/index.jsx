@@ -39,7 +39,7 @@ export const TranscriptWidget = ({
   updateField,
 }) => {
   const languagesArr = hooks.transcriptLanguages(transcripts);
-  const fileInput = hooks.fileInput();
+  const fileInput = hooks.fileInput({ onAddFile: '' });
   const input = {
     error: {
       dismiss: () => { console.log('dismiss'); },
@@ -80,7 +80,8 @@ export const TranscriptWidget = ({
               return (
                 <TranscriptListItem
                   language={language}
-                  title={value.fileName}
+                  title={value.filename}
+                  downloadLink={value.downloadLink}
                 />
               );
             })}

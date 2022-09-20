@@ -31,43 +31,37 @@ export const apiMethods = {
   },
   deleteTranscript: ({
     studioEndpointUrl,
-    transcript,
-    blockId
+    language,
+    // learningContextId,
+    blockId,
+    videoId,
   }) => {
     const data = new FormData();
-    data.append('file', transcript);
+    data.append('lang', language);
+    data.append('edx_video_id', videoId);
+    // return deleteObject(
+    //   urls.deleteVideoTranscripts({ studioEndpointUrl, learningContextId, videoId, language }),
+    //   data,
+    // );
     return deleteObject(
-      urls.deleteVideoTranscripts({ studioEndpointUrl, blockId }),
+      urls.videoTranscripts({ studioEndpointUrl, blockId }),
       data,
     );
   },
   uploadTranscript: ({
-    action,
     blockId,
     studioEndpointUrl,
     transcript,
     videoId,
+    language,
   }) => {
     const data = new FormData();
-    data.append('transcript-file', transcript);
+    data.append('file', transcript);
     data.append('edx_video_id', videoId);
-    data.append('locator', blockId);
+    data.append('language_code', language);
+    data.append('new_language_code', language);
     return post(
-      urls.videoTranscripts({ studioEndpointUrl, action }),
-      data,
-    );
-  },
-  downloadTranscript: ({
-    action,
-    blockId,
-    studioEndpointUrl,
-    transcript,
-    videoId,
-  }) => {
-    const data = new FormData();
-    data.append('locator', blockId);
-    return get(
-      urls.videoTranscripts({ studioEndpointUrl, action }),
+      urls.videoTranscripts({ studioEndpointUrl, blockId }),
       data,
     );
   },

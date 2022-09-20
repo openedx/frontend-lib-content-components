@@ -1,7 +1,8 @@
 import { singleVideoData } from '../../services/cms/mockVideoData';
 import { StrictDict } from '../../../utils';
-import { actions, selectors } from '..';
+import { actions } from '..';
 import * as requests from './requests';
+import { downloadVideoTranscripts } from '../../services/cms/urls';
 
 export const loadVideoData = () => (dispatch) => {
   dispatch(actions.video.load(singleVideoData));
@@ -12,56 +13,55 @@ export const saveVideoData = () => () => {
   // dispatch(requests.saveBlock({ });
 };
 
-// Transcript Thunks:
-
-export const deleteTranscript = ({ language }) => (dispatch) => {
-  console.log('deleting transcript');
-  const { transcripts, videoSource } = selectors.video;
-  dispatch(requests.deleteTranscript({
-    filename: transcripts[language],
-    onSuccess: () => dispatch(actions.video.updateField(transcripts.delete(transcripts[language]))),
-    onFailure: () => console.log('Delete Failed'), // TODO: set Error
-  }));
-};
-export const uploadTranscript = ({ langauge, filename, file }) => (dispatch) => {
+export const uploadTranscript = ({ language, filename, file }) => (dispatch, getState) => {
   // TODO: Prevent the addition of dulicate keys by setting language here
-
-  const { transcripts, videoSource } = selectors.video;
-  const newTrancsripts = { ...transcripts, [langauge]: { filename } };
+  const state = getState();
+  const { transcripts, videoId } = state.video;
+  const { studioEndpointUrl, blockId } = state.app;
+  const downloadLink = downloadVideoTranscripts({ studioEndpointUrl, blockId, language });
   dispatch(requests.uploadTranscript({
+    language,
+    videoId,
     transcript: file,
-    videoId: videoSource,
-    onSuccess: () => dispatch(actions.video.updateField(newTrancsripts)),
+    onSuccess: () => dispatch(actions.video.updateField({
+      transcripts: {
+        ...transcripts,
+        [language]: { filename, downloadLink },
+      },
+    })),
     onFailure: (e) => console.log(e), // TODO: set Error
   }));
 };
 
-// fix spelling of language
-export const replaceTranscript = ({ newFile, newFileName, language }) => (dispatch) => {
-  const { transcripts } = selectors.video;
-  const newTrancsripts = { ...transcripts, [language]: { newFileName } };
-
+export const deleteTranscript = ({ language }) => (dispatch, getState) => {
+  const state = getState();
+  const { transcripts, videoId } = state.video;
+  dispatch(requests.deleteTranscript({
+    language,
+    videoId,
+    onSuccess: () => dispatch(actions.video.updateField(transcripts.delete(transcripts[language]))),
+    onFailure: () => console.log('Delete Failed'), // TODO: set Error
+  }));
 };
+
+export const replaceTranscript = ({ newFile, newFilename, language }) => (dispatch, getState) => {
+  const state = getState();
+  const { transcripts, videoId } = state.video;
+  const newTrancsripts = { ...transcripts, [language]: { newFilename } };
 
   dispatch(requests.deleteTranscript({
     filename: transcripts[language],
     onSuccess: () => {
       dispatch(actions.video.updateField(transcripts.delete(transcripts[language])));
       dispatch(requests.uploadTranscript({
-        newFileName,
-        newFile,
-        onSuccess: () => dispatch(actions.video.updateField(newTrancsripts)),
+        language,
+        videoId,
+        transcript: newFile,
+        onSuccess: () => dispatch(actions.video.updateField({ transcripts: newTrancsripts })),
         onFailure: () => console.log('add Transcript Failed'), // TODO: set Error
       }));
     },
     onFailure: () => console.log('Delete Failed'), // TODO: set Error
-  }));
-};
-
-export const downloadTranscript = () => (dispatch) => {
-  dispatch(requests.downloadTranscript({
-    onSuccess: () => console.log('Download succeeded'),
-    onFailure: () => console.log('Download Failed'), // TODO: set Error
   }));
 };
 
@@ -71,5 +71,4 @@ export default StrictDict({
   replaceTranscript,
   deleteTranscript,
   uploadTranscript,
-  downloadTranscript,
 });

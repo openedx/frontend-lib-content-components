@@ -5,7 +5,6 @@ import { actions, selectors } from '..';
 import api, { loadImages } from '../../services/cms/api';
 
 import * as module from './requests';
-import { addTranscript } from './video';
 
 /**
  * Wrapper around a network request promise, that sends actions to the redux store to
@@ -136,25 +135,13 @@ export const fetchImages = ({ ...rest }) => (dispatch, getState) => {
   }));
 };
 
-export const deleteTranscript = ({ transcript, ...rest }) => (dispatch, getState) => {
+export const deleteTranscript = ({ language, videoId, ...rest }) => (dispatch, getState) => {
   dispatch(module.networkRequest({
     requestKey: RequestKeys.deleteTranscript,
     promise: api.deleteTranscript({
+      // learningContextId: selectors.app.learningContextId(getState()),
       blockId: selectors.app.blockId(getState()),
-      transcript,
-      studioEndpointUrl: selectors.app.studioEndpointUrl(getState()),
-    }),
-    ...rest,
-  }));
-};
-
-export const uploadTranscript = ({ transcript, videoId, ...rest }) => (dispatch, getState) => {
-  dispatch(module.networkRequest({
-    requestKey: RequestKeys.uploadTranscript,
-    promise: api.uploadTranscript({
-      blockId: selectors.app.blockId(getState()),
-      action: 'upload',
-      transcript,
+      language,
       videoId,
       studioEndpointUrl: selectors.app.studioEndpointUrl(getState()),
     }),
@@ -162,12 +149,19 @@ export const uploadTranscript = ({ transcript, videoId, ...rest }) => (dispatch,
   }));
 };
 
-export const downloadTranscript = ({  ...rest }) => (dispatch, getState) => {
+export const uploadTranscript = ({
+  transcript,
+  videoId,
+  language,
+  ...rest
+}) => (dispatch, getState) => {
   dispatch(module.networkRequest({
     requestKey: RequestKeys.uploadTranscript,
-    promise: api.downloadTranscript({
+    promise: api.uploadTranscript({
       blockId: selectors.app.blockId(getState()),
-      action: 'download',
+      transcript,
+      videoId,
+      language,
       studioEndpointUrl: selectors.app.studioEndpointUrl(getState()),
     }),
     ...rest,
@@ -183,5 +177,4 @@ export default StrictDict({
   uploadImage,
   deleteTranscript,
   uploadTranscript,
-  downloadTranscript,
 });

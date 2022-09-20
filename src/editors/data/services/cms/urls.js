@@ -35,10 +35,10 @@ export const courseImages = ({ studioEndpointUrl, learningContextId }) => (
   `${courseAssets({ studioEndpointUrl, learningContextId })}?sort=uploadDate&direction=desc&asset_type=Images`
 );
 
-export const deleteVideoTranscripts = ({ studioEndpointUrl, blockId }) => {
-  `${block({ studioEndpointUrl, blockId })}/handler/studio_transcript/translation`
-}
+export const downloadVideoTranscripts = ({ studioEndpointUrl, blockId, language }) => (
+  `${block({ studioEndpointUrl, blockId })}/handler/studio_transcript/translation?language_code=${language}`
+);
 
-export const videoTranscripts = ({ studioEndpointUrl, action }) => (
-  `${studioEndpointUrl}/transcripts/${action}`
-)
+export const videoTranscripts = ({ studioEndpointUrl, blockId }) => (
+  `${block({ studioEndpointUrl, blockId })}/handler/studio_transcript/translation`
+);

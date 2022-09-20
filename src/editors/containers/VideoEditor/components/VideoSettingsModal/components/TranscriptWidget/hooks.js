@@ -1,7 +1,11 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { actions, selectors } from '../../../../../../data/redux'
-import { thunkActions } from '../../../../../../data/redux';tems
+import { actions, selectors, thunkActions } from '../../../../../../data/redux';
+import * as module from './hooks';
+
+export const state = {
+  showDownloadError: (val) => React.useState(val),
+};
 
 export const transcriptLanguages = (transcripts) => {
   const languages = [];
@@ -23,14 +27,25 @@ export const onSelectLanguage = ({ fileName }) => (e) => {
 
 export const replaceFileCallback = ({ language }) => (e) => {
   const dispatch = useDispatch();
-  dispatch(actions.video.replaceTranscript({ newFile: e.target.files[0], newFileName: e.target.value, language }));
+  const selectedFile = e.target.files[0];
+  dispatch(thunkActions.video.replaceTranscript({ newFile: selectedFile, newFilename: selectedFile.name, language }));
 };
 
 export const fileInput = ({ onAddFile }) => {
+  const dispatch = useDispatch();
   const ref = React.useRef();
   const click = () => ref.current.click();
   const addFile = (e) => {
-    onAddFile(e);
+    if (!onAddFile === '') {
+      onAddFile(e);
+    } else {
+      const selectedFile = e.target.files[0];
+      dispatch(thunkActions.video.uploadTranscript({
+        filename: selectedFile.name,
+        language: 'esp',
+        file: selectedFile,
+      }));
+    }
   };
   return {
     click,
@@ -39,4 +54,21 @@ export const fileInput = ({ onAddFile }) => {
   };
 };
 
-export default { transcriptLanguages, fileInput, onSelectLanguage };
+export const downloadTranscript = ({ language }) => {
+  const dispatch = useDispatch();
+  const [showDownloadError, setShowDownloadError] = module.state.showDownloadError(false);
+  dispatch(thunkActions.video.downloadTranscript({ language }));
+};
+export const deleteTranscript = ({ language }) => {
+  const dispatch = useDispatch();
+  dispatch(thunkActions.video.deleteTranscript({ language }));
+};
+
+export default {
+  transcriptLanguages,
+  fileInput,
+  onSelectLanguage,
+  replaceFileCallback,
+  downloadTranscript,
+  deleteTranscript,
+};

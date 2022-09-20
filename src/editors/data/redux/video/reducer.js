@@ -4,13 +4,14 @@ import { StrictDict } from '../../../utils';
 
 const initialState = {
   videoSource: '',
+  videoId: '',
   fallbackVideos: [
     '',
     '',
   ],
   allowVideoDownloads: false,
   thumbnail: null,
-  transcripts: {},
+  transcripts: null,
   allowTranscriptDownloads: false,
   duration: {
     startTime: '00:00:00',

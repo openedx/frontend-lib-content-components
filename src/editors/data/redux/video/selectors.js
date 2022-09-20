@@ -12,6 +12,7 @@ export const video = (state) => state.video;
 
 export const simpleSelectors = [
   stateKeys.videoSource,
+  stateKeys.videoId,
   stateKeys.fallbackVideos,
   stateKeys.allowVideoDownloads,
   stateKeys.thumbnail,
