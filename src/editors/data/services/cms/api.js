@@ -32,20 +32,13 @@ export const apiMethods = {
   deleteTranscript: ({
     studioEndpointUrl,
     language,
-    // learningContextId,
     blockId,
     videoId,
   }) => {
-    const data = new FormData();
-    data.append('lang', language);
-    data.append('edx_video_id', videoId);
-    // return deleteObject(
-    //   urls.deleteVideoTranscripts({ studioEndpointUrl, learningContextId, videoId, language }),
-    //   data,
-    // );
+    const deleteJSON = { data: { lang: language, edx_video_id: videoId } };
     return deleteObject(
       urls.videoTranscripts({ studioEndpointUrl, blockId }),
-      data,
+      deleteJSON,
     );
   },
   uploadTranscript: ({

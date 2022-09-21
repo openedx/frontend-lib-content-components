@@ -39,31 +39,33 @@ export const deleteTranscript = ({ language }) => (dispatch, getState) => {
   dispatch(requests.deleteTranscript({
     language,
     videoId,
-    onSuccess: () => dispatch(actions.video.updateField(transcripts.delete(transcripts[language]))),
+    onSuccess: () => {
+      const updateTranscripts = {};
+      Object.entries(transcripts).forEach((transcript) => {
+        if (transcript[0] !== language) {
+          updateTranscripts[transcript[0]] = transcript[1];
+        }
+      });
+      dispatch(actions.video.updateField({ transcripts: updateTranscripts }));
+    },
   }));
 };
 
 export const replaceTranscript = ({ newFile, newFilename, language }) => (dispatch, getState) => {
   const state = getState();
-  const { transcripts, videoId, openLanguages } = state.video;
+  const { transcripts, videoId } = state.video;
   dispatch(requests.deleteTranscript({
     language,
     videoId,
     onSuccess: () => {
-      dispatch(actions.video.updateField(transcripts.delete(transcripts[language])));
-      // thunkActions.uploadTranscript({ language, file: newFile, filename: newFilename })
-      console.log('inside update');
-      dispatch(requests.uploadTranscript({
-        language,
-        videoId,
-        transcript: newFile,
-        onSuccess: () => dispatch(actions.video.updateField({
-          transcripts: {
-            ...transcripts,
-            [language]: { newFilename, downloadLink },
-          },
-        })),
-      }));
+      const updateTranscripts = {};
+      Object.entries(transcripts).forEach((transcript) => {
+        if (transcript[0] !== language) {
+          updateTranscripts[transcript[0]] = transcript[1];
+        }
+      });
+      dispatch(actions.video.updateField({ transcripts: updateTranscripts }));
+      dispatch(uploadTranscript({ language, file: newFile, filename: newFilename }));
     },
   }));
 };
