@@ -1,10 +1,10 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { actions, selectors } from '../../../../../../data/redux';
 
 export const transcriptLanguages = (transcripts) => {
   const languages = [];
-  if (transcripts) {
+  if (Object.keys(transcripts).length > 0) {
     Object.keys(transcripts).forEach(transcript => {
       languages.push(transcript);
     });
@@ -13,10 +13,11 @@ export const transcriptLanguages = (transcripts) => {
   return 'None';
 };
 
-export const onSelectLanguage = ({ fileName }) => (e) => {
-  const currentTranscripts = useSelector(selectors.app.video.transcripts);
-  const newTranscripts = { [e.target.value]: { fileName }, ...currentTranscripts };
-  const dispatch = useDispatch();
+export const onSelectLanguage = ({
+  fileName, dispatch, transcripts, languageBeforeChange,
+}) => (e) => {
+  const { [languageBeforeChange]: removedProperty, ...trimmedTranscripts } = transcripts;
+  const newTranscripts = { [e.target.value]: { fileName }, ...trimmedTranscripts };
   dispatch(actions.video.updateField({ transcripts: newTranscripts }));
 };
 
@@ -29,7 +30,6 @@ export const addFileCallback = ({ dispatch }) => (e) => {
 };
 
 export const fileInput = ({ onAddFile }) => {
-  console.log('wotero', onAddFile);
   const ref = React.useRef();
   const click = () => ref.current.click();
   const addFile = (e) => {
@@ -43,5 +43,5 @@ export const fileInput = ({ onAddFile }) => {
 };
 
 export default {
-  transcriptLanguages, fileInput, onSelectLanguage, replaceFileCallback,
+  transcriptLanguages, fileInput, onSelectLanguage, replaceFileCallback, addFileCallback,
 };

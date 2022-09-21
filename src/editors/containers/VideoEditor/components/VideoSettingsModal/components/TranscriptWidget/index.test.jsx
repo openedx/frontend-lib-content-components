@@ -26,7 +26,7 @@ describe('TranscriptWidget', () => {
     subtitle: 'SuBTItle',
     title: 'tiTLE',
     intl: { formatMessage },
-    transcripts: null,
+    transcripts: {},
     allowTranscriptDownloads: false,
     showTranscriptByDefault: false,
     updateField: jest.fn().mockName('args.updateField'),

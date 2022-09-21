@@ -56,9 +56,7 @@ export const TranscriptListItem = ({
           </Dropdown>
     )}
       />
-
       <LanguageSelect
-        onSelect={hooks.onSelectLanguage}
         title={title}
         language={language}
       />

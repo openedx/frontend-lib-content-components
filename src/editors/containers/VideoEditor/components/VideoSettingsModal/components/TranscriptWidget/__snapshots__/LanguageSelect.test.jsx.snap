@@ -9,7 +9,7 @@ exports[`LanguageSelect snapshot transcript option 1`] = `
     as="select"
     defaultValue="kl"
     floatingLabel="Language"
-    onChange={[MockFunction props.OnSelect]}
+    onChange={[Function]}
   >
     <option
       value="kl"
@@ -39,7 +39,7 @@ exports[`LanguageSelect snapshots -- no transcripts no Open Languages, all shoul
     as="select"
     defaultValue="kl"
     floatingLabel="Language"
-    onChange={[MockFunction props.OnSelect]}
+    onChange={[Function]}
   >
     <option
       value="kl"
