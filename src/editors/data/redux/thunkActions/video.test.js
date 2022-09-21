@@ -18,8 +18,8 @@ describe('video thunkActions', () => {
     dispatch = jest.fn((action) => ({ dispatch: action }));
   });
   describe('deleteTranscript', () => {
+    const language = 'lAnG';
     beforeEach(() => {
-      const language = 'lAnG';
       thunkActions.deleteTranscript({ language })(dispatch);
       [[dispatchedAction]] = dispatch.mock.calls;
     });
@@ -28,8 +28,8 @@ describe('video thunkActions', () => {
     });
     it('dispatches actions.app.setBlockValue on success', () => {
       dispatch.mockClear();
-      dispatchedAction.fetchBlock.onSuccess(testValue);
-      expect(dispatch).toHaveBeenCalledWith(actions.video.deleteTranscript(testValue));
+      dispatchedAction.deleteTranscript.onSucess(testValue);
+      expect(dispatch).toHaveBeenCalledWith({ payload: { language }, type: 'video/deleteTranscript' });
     });
   });
 });
