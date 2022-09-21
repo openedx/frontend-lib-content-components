@@ -3,6 +3,7 @@ import { StrictDict } from '../../../utils';
 import { actions } from '..';
 import * as requests from './requests';
 import { downloadVideoTranscripts } from '../../services/cms/urls';
+// import * as thunkActions from './';
 
 export const loadVideoData = () => (dispatch) => {
   dispatch(actions.video.load(singleVideoData));
@@ -29,7 +30,6 @@ export const uploadTranscript = ({ language, filename, file }) => (dispatch, get
         [language]: { filename, downloadLink },
       },
     })),
-    onFailure: (e) => console.log(e), // TODO: set Error
   }));
 };
 
@@ -40,28 +40,31 @@ export const deleteTranscript = ({ language }) => (dispatch, getState) => {
     language,
     videoId,
     onSuccess: () => dispatch(actions.video.updateField(transcripts.delete(transcripts[language]))),
-    onFailure: () => console.log('Delete Failed'), // TODO: set Error
   }));
 };
 
 export const replaceTranscript = ({ newFile, newFilename, language }) => (dispatch, getState) => {
   const state = getState();
-  const { transcripts, videoId } = state.video;
-  const newTrancsripts = { ...transcripts, [language]: { newFilename } };
-
+  const { transcripts, videoId, openLanguages } = state.video;
   dispatch(requests.deleteTranscript({
-    filename: transcripts[language],
+    language,
+    videoId,
     onSuccess: () => {
       dispatch(actions.video.updateField(transcripts.delete(transcripts[language])));
+      // thunkActions.uploadTranscript({ language, file: newFile, filename: newFilename })
+      console.log('inside update');
       dispatch(requests.uploadTranscript({
         language,
         videoId,
         transcript: newFile,
-        onSuccess: () => dispatch(actions.video.updateField({ transcripts: newTrancsripts })),
-        onFailure: () => console.log('add Transcript Failed'), // TODO: set Error
+        onSuccess: () => dispatch(actions.video.updateField({
+          transcripts: {
+            ...transcripts,
+            [language]: { newFilename, downloadLink },
+          },
+        })),
       }));
     },
-    onFailure: () => console.log('Delete Failed'), // TODO: set Error
   }));
 };
 

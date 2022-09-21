@@ -39,6 +39,11 @@ export const messages = {
     defaultMessage: 'Transcript file size exeeds the maximum. Please try again.',
     description: 'Message presented to user when transcript file size is too large',
   },
+  deleteTranscriptError: {
+    id: 'authoring.videoeditor.transcript.error.deleteTranscriptError',
+    defaultMessage: 'Failed to delete transcript. Please try again.',
+    description: 'Message presented to user when transcript fails to delete',
+  },
 };
 
 export default messages;

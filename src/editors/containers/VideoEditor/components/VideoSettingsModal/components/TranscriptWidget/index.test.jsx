@@ -3,6 +3,8 @@ import { shallow } from 'enzyme';
 
 import { formatMessage } from '../../../../../../../testUtils';
 import { actions, selectors } from '../../../../../../data/redux';
+import { RequestKeys } from '../../../../../../data/constants/requests';
+
 import { TranscriptWidget, mapStateToProps, mapDispatchToProps } from '.';
 
 jest.mock('../../../../../../data/redux', () => ({
@@ -16,6 +18,9 @@ jest.mock('../../../../../../data/redux', () => ({
       transcripts: jest.fn(state => ({ transcripts: state })),
       allowTranscriptDownloads: jest.fn(state => ({ allowTranscriptDownloads: state })),
       showTranscriptByDefault: jest.fn(state => ({ showTranscriptByDefault: state })),
+    },
+    requests: {
+      isFailed: jest.fn(state => ({ isFailed: state })),
     },
   },
 }));
@@ -32,6 +37,8 @@ describe('TranscriptWidget', () => {
     allowTranscriptDownloads: false,
     showTranscriptByDefault: false,
     updateField: jest.fn().mockName('args.updateField'),
+    isUploadError: false,
+    isDeleteError: false,
   };
 
   describe('snapshots', () => {
@@ -55,6 +62,16 @@ describe('TranscriptWidget', () => {
         shallow(<TranscriptWidget {...props} showTranscriptByDefault transcripts={{ english: 'sOMeUrl' }} />),
       ).toMatchSnapshot();
     });
+    test('snapshot: renders ErrorAlert with upload error message', () => {
+      expect(
+        shallow(<TranscriptWidget {...props} isUploadError transcripts={{ english: 'sOMeUrl' }} />),
+      ).toMatchSnapshot();
+    });
+    test('snapshot: renders ErrorAlert with delete error message', () => {
+      expect(
+        shallow(<TranscriptWidget {...props} isDeleteError transcripts={{ english: 'sOMeUrl' }} />),
+      ).toMatchSnapshot();
+    });
   });
   describe('mapStateToProps', () => {
     const testState = { A: 'pple', B: 'anana', C: 'ucumber' };
@@ -72,6 +89,21 @@ describe('TranscriptWidget', () => {
       expect(
         mapStateToProps(testState).showTranscriptByDefault,
       ).toEqual(selectors.video.showTranscriptByDefault(testState));
+    });
+    test('showTranscriptByDefault from video.showTranscriptByDefault', () => {
+      expect(
+        mapStateToProps(testState).showTranscriptByDefault,
+      ).toEqual(selectors.video.showTranscriptByDefault(testState));
+    });
+    test('isUploadError from requests.isFinished', () => {
+      expect(
+        mapStateToProps(testState).isUploadError,
+      ).toEqual(selectors.requests.isFailed(testState, { requestKey: RequestKeys.uploadTranscript }));
+    });
+    test('isDeleteError from requests.isFinished', () => {
+      expect(
+        mapStateToProps(testState).isDeleteError,
+      ).toEqual(selectors.requests.isFailed(testState, { requestKey: RequestKeys.deleteTranscript }));
     });
   });
   describe('mapDispatchToProps', () => {

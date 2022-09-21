@@ -18,6 +18,7 @@ import {
 } from '@edx/frontend-platform/i18n';
 
 import { actions, selectors } from '../../../../../../data/redux';
+import { RequestKeys } from '../../../../../../data/constants/requests';
 import * as hooks from './hooks';
 import messages from './messages';
 
@@ -37,16 +38,12 @@ export const TranscriptWidget = ({
   allowTranscriptDownloads,
   showTranscriptByDefault,
   updateField,
+  isUploadError,
+  isDeleteError,
 }) => {
   const languagesArr = hooks.transcriptLanguages(transcripts);
   const fileInput = hooks.fileInput({ onAddFile: '' });
   const input = {
-    error: {
-      dismiss: () => { console.log('dismiss'); },
-      show: true,
-    },
-  };
-  const upload = {
     error: {
       dismiss: () => { console.log('dismiss'); },
       show: true,
@@ -59,11 +56,16 @@ export const TranscriptWidget = ({
       title="Transcript"
     >
       <ErrorAlert
-        dismissError={upload.error.dismiss}
         hideHeading
-        isError={upload.error.show}
+        isError={isUploadError}
       >
         <FormattedMessage {...messages.uploadTranscriptError} />
+      </ErrorAlert>
+      <ErrorAlert
+        hideHeading
+        isError={isDeleteError}
+      >
+        <FormattedMessage {...messages.deleteTranscriptError} />
       </ErrorAlert>
       <ErrorAlert
         dismissError={input.error.dismiss}
@@ -136,6 +138,7 @@ export const TranscriptWidget = ({
 
 TranscriptWidget.defaultProps = {
   error: {},
+
 };
 TranscriptWidget.propTypes = {
   error: PropTypes.node,
@@ -144,11 +147,15 @@ TranscriptWidget.propTypes = {
   allowTranscriptDownloads: PropTypes.bool.isRequired,
   showTranscriptByDefault: PropTypes.bool.isRequired,
   updateField: PropTypes.func.isRequired,
+  isUploadError: PropTypes.bool.isRequired,
+  isDeleteError: PropTypes.bool.isRequired,
 };
 export const mapStateToProps = (state) => ({
   transcripts: selectors.video.transcripts(state),
   allowTranscriptDownloads: selectors.video.allowTranscriptDownloads(state),
   showTranscriptByDefault: selectors.video.showTranscriptByDefault(state),
+  isUploadError: selectors.requests.isFailed(state, { requestKey: RequestKeys.uploadTranscript }),
+  isDeleteError: selectors.requests.isFailed(state, { requestKey: RequestKeys.deleteTranscript }),
 });
 
 export const mapDispatchToProps = (dispatch) => ({

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import { useDispatch, connect } from 'react-redux';
 
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 import {
@@ -18,14 +18,13 @@ export const TranscriptListItem = ({
   title,
   language,
   downloadLink,
-  //redux,
-deleteTranscript,
+  // redux,
+  // deleteTranscript,
   // intl
   intl,
 }) => {
-
-  const fileInput = hooks.fileInput({ onAddFile: hooks.replaceFileCallback(language) });
-  const downloadTranscript = 'hooks.downloadTranscript(language);'
+  const fileInput = hooks.fileInput({ onAddFile: hooks.replaceFileCallback({ language, dispatch: useDispatch() }) });
+  // const deleteTranscript = hooks.deleteTranscript({ language, dispatch: useDispatch() })
 
   return (
     <Card>
@@ -51,7 +50,7 @@ deleteTranscript,
               <Dropdown.Item key={`transcript-actions-${title}-download`} href={downloadLink}>
                 Download
               </Dropdown.Item>
-              <Dropdown.Item key={`transcript-actions-${title}-delete`}  onClick={deleteTranscript(language)}>
+              <Dropdown.Item key={`transcript-actions-${title}-delete`} onClick={() => console.log('deleting')}>
                 Delete
               </Dropdown.Item>
             </Dropdown.Menu>
@@ -71,11 +70,8 @@ deleteTranscript,
 
 const mapStateToProps = () => ({});
 
-
 const mapDispatchToProps = (dispatch) => ({
-  // downloadTranscript: (language) => dispatch(thunkActions.video.downloadTranscript({ language })),
-  deleteTranscript: (language) => dispatch(thunkActions.video.deleteTranscript({ language }))
+  // deleteTranscript: (language) => dispatch(thunkActions.video.deleteTranscript({ language })),
 });
-
 
 export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(TranscriptListItem));

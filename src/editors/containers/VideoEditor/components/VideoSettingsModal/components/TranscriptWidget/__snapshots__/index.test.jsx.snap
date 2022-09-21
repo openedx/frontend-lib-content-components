@@ -1,13 +1,137 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`TranscriptWidget snapshots snapshots: renders as expected with allowTranscriptDownloads true 1`] = `
+exports[`TranscriptWidget snapshots snapshot: renders ErrorAlert with delete error message 1`] = `
 <injectIntl(ShimmedIntlComponent)
   isError={false}
   subtitle="english"
   title="Transcript"
 >
   <ErrorAlert
+    dismissError={null}
+    hideHeading={true}
+    isError={false}
+  >
+    <FormattedMessage
+      defaultMessage="Failed to upload transcript. Please try again."
+      description="Message presented to user when transcript fails to upload"
+      id="authoring.videoeditor.transcript.error.uploadTranscriptError"
+    />
+  </ErrorAlert>
+  <ErrorAlert
+    dismissError={null}
+    hideHeading={true}
+    isError={true}
+  >
+    <FormattedMessage
+      defaultMessage="Failed to delete transcript. Please try again."
+      description="Message presented to user when transcript fails to delete"
+      id="authoring.videoeditor.transcript.error.deleteTranscriptError"
+    />
+  </ErrorAlert>
+  <ErrorAlert
     dismissError={[Function]}
+    hideHeading={true}
+    isError={true}
+  >
+    <FormattedMessage
+      defaultMessage="Transcript file size exeeds the maximum. Please try again."
+      description="Message presented to user when transcript file size is too large"
+      id="authoring.videoeditor.transcript.error.fileSizeError"
+    />
+  </ErrorAlert>
+  <Stack
+    gap={3}
+  >
+    <Form.Group
+      className="mt-4.5"
+    >
+      <injectIntl(ShimmedIntlComponent)
+        language="english"
+      />
+      <div
+        className="mb-1"
+      >
+        <Form.Checkbox
+          checked={false}
+          className="mt-4.5 decorative-control-label"
+          onChange={[Function]}
+        >
+          <Form.Label>
+            <FormattedMessage
+              defaultMessage="Allow transcript downloads"
+              description="Label for allow transcript downloads checkbox"
+              id="authoring.videoeditor.transcripts.allowDownloadCheckboxLabel"
+            />
+          </Form.Label>
+        </Form.Checkbox>
+        <Component
+          key="right"
+          overlay={
+            <UNDEFINED>
+              <FormattedMessage
+                defaultMessage="Learners will see a link to download the transcript below the video."
+                description="Message for show by default checkbox"
+                id="authoring.videoeditor.transcripts.upload.allowDownloadTooltipMessage"
+              />
+            </UNDEFINED>
+          }
+          placement="right"
+        >
+          <Icon
+            className="d-inline-block mx-3"
+          />
+        </Component>
+      </div>
+      <Form.Checkbox
+        checked={false}
+        className="mt-4.5 decorative-control-label"
+        onChange={[Function]}
+      >
+        <Form.Label
+          size="sm"
+        >
+          <FormattedMessage
+            defaultMessage="Show transcript in the video player by default"
+            description="Label for show by default checkbox"
+            id="authoring.videoeditor.transcripts.upload.showByDefaultCheckboxLabel"
+          />
+        </Form.Label>
+      </Form.Checkbox>
+    </Form.Group>
+    <FileInput
+      acceptedFiles=".srt"
+      fileInput={
+        Object {
+          "addFile": [Function],
+          "click": [Function],
+          "ref": Object {
+            "current": undefined,
+          },
+        }
+      }
+    />
+    <Button
+      onClick={[Function]}
+      variant="link"
+    >
+      <FormattedMessage
+        defaultMessage="Upload Transcript"
+        description="Label for upload button"
+        id="authoring.videoeditor.transcripts.upload.label"
+      />
+    </Button>
+  </Stack>
+</injectIntl(ShimmedIntlComponent)>
+`;
+
+exports[`TranscriptWidget snapshots snapshot: renders ErrorAlert with upload error message 1`] = `
+<injectIntl(ShimmedIntlComponent)
+  isError={false}
+  subtitle="english"
+  title="Transcript"
+>
+  <ErrorAlert
+    dismissError={null}
     hideHeading={true}
     isError={true}
   >
@@ -15,6 +139,141 @@ exports[`TranscriptWidget snapshots snapshots: renders as expected with allowTra
       defaultMessage="Failed to upload transcript. Please try again."
       description="Message presented to user when transcript fails to upload"
       id="authoring.videoeditor.transcript.error.uploadTranscriptError"
+    />
+  </ErrorAlert>
+  <ErrorAlert
+    dismissError={null}
+    hideHeading={true}
+    isError={false}
+  >
+    <FormattedMessage
+      defaultMessage="Failed to delete transcript. Please try again."
+      description="Message presented to user when transcript fails to delete"
+      id="authoring.videoeditor.transcript.error.deleteTranscriptError"
+    />
+  </ErrorAlert>
+  <ErrorAlert
+    dismissError={[Function]}
+    hideHeading={true}
+    isError={true}
+  >
+    <FormattedMessage
+      defaultMessage="Transcript file size exeeds the maximum. Please try again."
+      description="Message presented to user when transcript file size is too large"
+      id="authoring.videoeditor.transcript.error.fileSizeError"
+    />
+  </ErrorAlert>
+  <Stack
+    gap={3}
+  >
+    <Form.Group
+      className="mt-4.5"
+    >
+      <injectIntl(ShimmedIntlComponent)
+        language="english"
+      />
+      <div
+        className="mb-1"
+      >
+        <Form.Checkbox
+          checked={false}
+          className="mt-4.5 decorative-control-label"
+          onChange={[Function]}
+        >
+          <Form.Label>
+            <FormattedMessage
+              defaultMessage="Allow transcript downloads"
+              description="Label for allow transcript downloads checkbox"
+              id="authoring.videoeditor.transcripts.allowDownloadCheckboxLabel"
+            />
+          </Form.Label>
+        </Form.Checkbox>
+        <Component
+          key="right"
+          overlay={
+            <UNDEFINED>
+              <FormattedMessage
+                defaultMessage="Learners will see a link to download the transcript below the video."
+                description="Message for show by default checkbox"
+                id="authoring.videoeditor.transcripts.upload.allowDownloadTooltipMessage"
+              />
+            </UNDEFINED>
+          }
+          placement="right"
+        >
+          <Icon
+            className="d-inline-block mx-3"
+          />
+        </Component>
+      </div>
+      <Form.Checkbox
+        checked={false}
+        className="mt-4.5 decorative-control-label"
+        onChange={[Function]}
+      >
+        <Form.Label
+          size="sm"
+        >
+          <FormattedMessage
+            defaultMessage="Show transcript in the video player by default"
+            description="Label for show by default checkbox"
+            id="authoring.videoeditor.transcripts.upload.showByDefaultCheckboxLabel"
+          />
+        </Form.Label>
+      </Form.Checkbox>
+    </Form.Group>
+    <FileInput
+      acceptedFiles=".srt"
+      fileInput={
+        Object {
+          "addFile": [Function],
+          "click": [Function],
+          "ref": Object {
+            "current": undefined,
+          },
+        }
+      }
+    />
+    <Button
+      onClick={[Function]}
+      variant="link"
+    >
+      <FormattedMessage
+        defaultMessage="Upload Transcript"
+        description="Label for upload button"
+        id="authoring.videoeditor.transcripts.upload.label"
+      />
+    </Button>
+  </Stack>
+</injectIntl(ShimmedIntlComponent)>
+`;
+
+exports[`TranscriptWidget snapshots snapshots: renders as expected with allowTranscriptDownloads true 1`] = `
+<injectIntl(ShimmedIntlComponent)
+  isError={false}
+  subtitle="english"
+  title="Transcript"
+>
+  <ErrorAlert
+    dismissError={null}
+    hideHeading={true}
+    isError={false}
+  >
+    <FormattedMessage
+      defaultMessage="Failed to upload transcript. Please try again."
+      description="Message presented to user when transcript fails to upload"
+      id="authoring.videoeditor.transcript.error.uploadTranscriptError"
+    />
+  </ErrorAlert>
+  <ErrorAlert
+    dismissError={null}
+    hideHeading={true}
+    isError={false}
+  >
+    <FormattedMessage
+      defaultMessage="Failed to delete transcript. Please try again."
+      description="Message presented to user when transcript fails to delete"
+      id="authoring.videoeditor.transcript.error.deleteTranscriptError"
     />
   </ErrorAlert>
   <ErrorAlert
@@ -120,14 +379,25 @@ exports[`TranscriptWidget snapshots snapshots: renders as expected with default 
   title="Transcript"
 >
   <ErrorAlert
-    dismissError={[Function]}
+    dismissError={null}
     hideHeading={true}
-    isError={true}
+    isError={false}
   >
     <FormattedMessage
       defaultMessage="Failed to upload transcript. Please try again."
       description="Message presented to user when transcript fails to upload"
       id="authoring.videoeditor.transcript.error.uploadTranscriptError"
+    />
+  </ErrorAlert>
+  <ErrorAlert
+    dismissError={null}
+    hideHeading={true}
+    isError={false}
+  >
+    <FormattedMessage
+      defaultMessage="Failed to delete transcript. Please try again."
+      description="Message presented to user when transcript fails to delete"
+      id="authoring.videoeditor.transcript.error.deleteTranscriptError"
     />
   </ErrorAlert>
   <ErrorAlert
@@ -187,14 +457,25 @@ exports[`TranscriptWidget snapshots snapshots: renders as expected with showTran
   title="Transcript"
 >
   <ErrorAlert
-    dismissError={[Function]}
+    dismissError={null}
     hideHeading={true}
-    isError={true}
+    isError={false}
   >
     <FormattedMessage
       defaultMessage="Failed to upload transcript. Please try again."
       description="Message presented to user when transcript fails to upload"
       id="authoring.videoeditor.transcript.error.uploadTranscriptError"
+    />
+  </ErrorAlert>
+  <ErrorAlert
+    dismissError={null}
+    hideHeading={true}
+    isError={false}
+  >
+    <FormattedMessage
+      defaultMessage="Failed to delete transcript. Please try again."
+      description="Message presented to user when transcript fails to delete"
+      id="authoring.videoeditor.transcript.error.deleteTranscriptError"
     />
   </ErrorAlert>
   <ErrorAlert
@@ -300,14 +581,25 @@ exports[`TranscriptWidget snapshots snapshots: renders as expected with transcri
   title="Transcript"
 >
   <ErrorAlert
-    dismissError={[Function]}
+    dismissError={null}
     hideHeading={true}
-    isError={true}
+    isError={false}
   >
     <FormattedMessage
       defaultMessage="Failed to upload transcript. Please try again."
       description="Message presented to user when transcript fails to upload"
       id="authoring.videoeditor.transcript.error.uploadTranscriptError"
+    />
+  </ErrorAlert>
+  <ErrorAlert
+    dismissError={null}
+    hideHeading={true}
+    isError={false}
+  >
+    <FormattedMessage
+      defaultMessage="Failed to delete transcript. Please try again."
+      description="Message presented to user when transcript fails to delete"
+      id="authoring.videoeditor.transcript.error.deleteTranscriptError"
     />
   </ErrorAlert>
   <ErrorAlert

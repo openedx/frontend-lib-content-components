@@ -22,4 +22,12 @@ describe('cms service utils', () => {
       expect(utils.post(...args)).toEqual(post(...args));
     });
   });
+  // describe('deleteObject', () => {
+  //   it('forwards arguments to authenticatedHttpClient().post', () => {
+  //     const deleteObject = jest.fn((...args) => ({ deleteObject: args }));
+  //     getAuthenticatedHttpClient.mockReturnValue({ deleteObject });
+  //     const args = ['some', 'args', 'for', 'the', 'test'];
+  //     expect(utils.deleteObject(...args)).toEqual(deleteObject(...args));
+  //   });
+  // });
 });
