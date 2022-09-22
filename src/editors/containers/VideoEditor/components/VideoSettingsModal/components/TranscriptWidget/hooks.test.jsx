@@ -67,7 +67,7 @@ describe('VideoEditorTranscript hooks', () => {
     const mockEvent = { target: { files: [{ mockFile, name: mockFileName }] } };
     const mockDispatch = jest.fn();
 
-    const result = { newFile: { mockFile, name: mockFileName}, newFileName: mockFileName, language: lang1Code };
+    const result = { newFile: { mockFile, name: mockFileName }, newFileName: mockFileName, language: lang1Code };
 
     test('it dispatches the correct thunk', () => {
       const cb = module.replaceFileCallback({
@@ -84,8 +84,7 @@ describe('VideoEditorTranscript hooks', () => {
     const mockEvent = { target: { files: [{ mockFile, name: mockFileName }] } };
     const mockDispatch = jest.fn();
 
-    const result = { file: { mockFile, name: mockFileName}, fileName:mockFileName, language: null,
-    };
+    const result = { file: { mockFile, name: mockFileName }, fileName: mockFileName, language: null };
 
     test('it dispatches the correct thunk', () => {
       const cb = module.addFileCallback({
