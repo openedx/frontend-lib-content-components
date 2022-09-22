@@ -40,9 +40,10 @@ export const TranscriptWidget = ({
   updateField,
   isUploadError,
   isDeleteError,
+  openLanguages,
 }) => {
   const languagesArr = hooks.transcriptLanguages(transcripts);
-  const fileInput = hooks.fileInput({ onAddFile: '' });
+  const fileInput = hooks.fileInput({ onAddFile: '', openLanguages });
   const hasTranscripts = hooks.hasTranscripts(transcripts);
 
   return (
@@ -124,6 +125,7 @@ export const TranscriptWidget = ({
 
 TranscriptWidget.defaultProps = {
   error: {},
+  openLanguages: [],
 
 };
 TranscriptWidget.propTypes = {
@@ -135,11 +137,13 @@ TranscriptWidget.propTypes = {
   updateField: PropTypes.func.isRequired,
   isUploadError: PropTypes.bool.isRequired,
   isDeleteError: PropTypes.bool.isRequired,
+  openLanguages: PropTypes.arrayOf(PropTypes.string),
 };
 export const mapStateToProps = (state) => ({
   transcripts: selectors.video.transcripts(state),
   allowTranscriptDownloads: selectors.video.allowTranscriptDownloads(state),
   showTranscriptByDefault: selectors.video.showTranscriptByDefault(state),
+  openLanguages: selectors.video.openLanguages(state),
   isUploadError: selectors.requests.isFailed(state, { requestKey: RequestKeys.uploadTranscript }),
   isDeleteError: selectors.requests.isFailed(state, { requestKey: RequestKeys.deleteTranscript }),
 });

@@ -32,7 +32,7 @@ export const replaceFileCallback = ({ language, dispatch }) => (e) => {
   dispatch(thunkActions.video.replaceTranscript({ newFile: selectedFile, newFilename: selectedFile.name, language }));
 };
 
-export const fileInput = ({ onAddFile }) => {
+export const fileInput = ({ onAddFile, openLanguages }) => {
   const dispatch = useDispatch();
   const ref = React.useRef();
   const click = () => ref.current.click();
@@ -43,7 +43,7 @@ export const fileInput = ({ onAddFile }) => {
       const selectedFile = e.target.files[0];
       dispatch(thunkActions.video.uploadTranscript({
         filename: selectedFile.name,
-        language: 'esp',
+        language: openLanguages[0],
         file: selectedFile,
       }));
     }

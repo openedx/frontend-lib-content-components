@@ -18,8 +18,11 @@ export const TranscriptListItem = ({
   language,
   downloadLink,
 }) => {
-  const fileInput = hooks.fileInput({ onAddFile: hooks.replaceFileCallback({ language, dispatch: useDispatch() }) });
-  const deleteTranscript = hooks.deleteTranscript({ language, dispatch: useDispatch() });
+  const fileInput = hooks.fileInput({
+    onAddFile: hooks.replaceFileCallback({ language, dispatch: useDispatch() }),
+    openLanguages: '',
+  });
+  const deleteTranscript = 'hooks.deleteTranscript({ language, dispatch: useDispatch() })';
 
   return (
     <Card>
@@ -45,7 +48,7 @@ export const TranscriptListItem = ({
               <Dropdown.Item key={`transcript-actions-${title}-download`} href={downloadLink}>
                 Download
               </Dropdown.Item>
-              <Dropdown.Item key={`transcript-actions-${title}-delete`} onClick={() => deleteTranscript}>
+              <Dropdown.Item key={`transcript-actions-${title}-delete`} onClick={deleteTranscript}>
                 Delete
               </Dropdown.Item>
             </Dropdown.Menu>

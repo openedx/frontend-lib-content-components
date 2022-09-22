@@ -18,6 +18,7 @@ jest.mock('../../../../../../data/redux', () => ({
       transcripts: jest.fn(state => ({ transcripts: state })),
       allowTranscriptDownloads: jest.fn(state => ({ allowTranscriptDownloads: state })),
       showTranscriptByDefault: jest.fn(state => ({ showTranscriptByDefault: state })),
+      openLanguages: jest.fn(state => ({ openLanguages: state })),
     },
     requests: {
       isFailed: jest.fn(state => ({ isFailed: state })),
@@ -37,6 +38,7 @@ describe('TranscriptWidget', () => {
     allowTranscriptDownloads: false,
     showTranscriptByDefault: false,
     updateField: jest.fn().mockName('args.updateField'),
+    openLanguages: [],
     isUploadError: false,
     isDeleteError: false,
   };
@@ -94,6 +96,11 @@ describe('TranscriptWidget', () => {
       expect(
         mapStateToProps(testState).showTranscriptByDefault,
       ).toEqual(selectors.video.showTranscriptByDefault(testState));
+    });
+    test('openLanguages from video.openLanguages', () => {
+      expect(
+        mapStateToProps(testState).openLanguages,
+      ).toEqual(selectors.video.openLanguages(testState));
     });
     test('isUploadError from requests.isFinished', () => {
       expect(
