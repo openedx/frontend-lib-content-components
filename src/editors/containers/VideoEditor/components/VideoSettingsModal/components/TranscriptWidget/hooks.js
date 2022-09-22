@@ -13,6 +13,13 @@ export const transcriptLanguages = (transcripts) => {
   return 'None';
 };
 
+export const hasTranscripts = (transcripts) => {
+  if (transcripts && Object.keys(transcripts).length > 0) {
+    return true;
+  }
+  return false;
+};
+
 export const onSelectLanguage = ({ fileName }) => (e) => {
   const currentTranscripts = useSelector(selectors.video.transcripts);
   const newTranscripts = { [e.target.value]: { fileName }, ...currentTranscripts };
@@ -54,6 +61,7 @@ export const deleteTranscript = ({ language, dispatch }) => {
 
 export default {
   transcriptLanguages,
+  hasTranscripts,
   fileInput,
   onSelectLanguage,
   replaceFileCallback,

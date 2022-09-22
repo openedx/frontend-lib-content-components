@@ -370,16 +370,16 @@ exports[`TranscriptWidget snapshots snapshots: renders as expected with default 
   <Stack
     gap={3}
   >
-    <Alert
-      variant="danger"
-    >
-      Only SRT files can be uploaded. Please select a file ending in .srt to upload.
-    </Alert>
     <FormattedMessage
       defaultMessage="Add video transcripts for improved accessibility."
       description="Message for adding first transcript"
       id="authoring.videoeditor.transcripts.upload.firstTranscriptMessage"
     />
+    <Alert
+      variant="danger"
+    >
+      Only SRT files can be uploaded. Please select a file ending in .srt to upload.
+    </Alert>
     <FileInput
       acceptedFiles=".srt"
       fileInput={

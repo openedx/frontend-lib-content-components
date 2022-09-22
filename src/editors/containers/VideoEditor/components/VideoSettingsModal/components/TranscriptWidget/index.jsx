@@ -43,6 +43,7 @@ export const TranscriptWidget = ({
 }) => {
   const languagesArr = hooks.transcriptLanguages(transcripts);
   const fileInput = hooks.fileInput({ onAddFile: '' });
+  const hasTranscripts = hooks.hasTranscripts(transcripts);
 
   return (
     <CollapsibleFormWidget
@@ -63,7 +64,7 @@ export const TranscriptWidget = ({
         <FormattedMessage {...messages.deleteTranscriptError} />
       </ErrorAlert>
       <Stack gap={3}>
-        {(Object.keys(transcripts).length > 0) ? (
+        {hasTranscripts ? (
           <Form.Group className="mt-4.5">
             { Object.entries(transcripts).map(([language, value]) => (
               <TranscriptListItem
@@ -106,8 +107,8 @@ export const TranscriptWidget = ({
           </Form.Group>
         ) : (
           <>
-          <FormattedMessage {...messages.addFirstTranscript} />
-          <Alert variant="danger" >
+            <FormattedMessage {...messages.addFirstTranscript} />
+            <Alert variant="danger">
               Only SRT files can be uploaded. Please select a file ending in .srt to upload.
             </Alert>
           </>
