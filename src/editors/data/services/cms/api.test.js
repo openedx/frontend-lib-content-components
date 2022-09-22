@@ -165,7 +165,7 @@ describe('cms api', () => {
     const language = 'la';
     const videoId = 'sOmeVIDeoiD';
     describe('uploadTranscript', () => {
-      const transcript = { transcript: 'dAta'};
+      const transcript = { transcript: 'dAta' };
       it('should call post with urls.videoTranscripts and transcript data', () => {
         const mockFormdata = new FormData();
         mockFormdata.append('file', transcript);
