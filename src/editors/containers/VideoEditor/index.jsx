@@ -29,13 +29,16 @@ export const VideoEditor = ({
       </div>
     </EditorContainer>
   );
-}
+};
 
 VideoEditor.defaultProps = {
   onClose: null,
+  videoSettings: null,
 };
 VideoEditor.propTypes = {
   onClose: PropTypes.func,
+  // redux
+  videoSettings: PropTypes.shape({}),
 };
 
 export const mapStateToProps = (state) => ({

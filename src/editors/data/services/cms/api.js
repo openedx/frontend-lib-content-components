@@ -77,9 +77,9 @@ export const apiMethods = {
     }
     if (blockType === 'video') {
       const {
-        html5_sources,
-        edx_video_id,
-        youtube_id_1_0,
+        html5Sources,
+        edxVideoId,
+        youtubeId,
       } = module.processVideoIds({
         videoSource: content.videoSource,
         fallbackVideos: content.fallbackVideos,
@@ -92,11 +92,11 @@ export const apiMethods = {
         metadata: {
           display_name: title,
           download_video: content.allowVideoDownloads,
-          edx_video_id,
-          html5_sources,
-          youtube_id_1_0,
+          edx_video_id: edxVideoId,
+          html5_sources: html5Sources,
+          youtube_id_1_0: youtubeId,
           download_track: content.allowTranscriptDownloads,
-          track: "",  // TODO Downloadable Transcript URL. Backend expects a file name, for example: "something.srt"
+          track: '', // TODO Downloadable Transcript URL. Backend expects a file name, for example: "something.srt"
           show_captions: content.showTranscriptByDefault,
           handout: content.handout,
           start_time: content.duration.startTime,
@@ -135,25 +135,25 @@ export const loadImages = (rawImages) => camelizeKeys(rawImages).reduce(
   {},
 );
 
-export const processVideoIds = ({videoSource, fallbackVideos}) => {
-  let edx_video_id = "";
-  let youtube_id_1_0 = "";
-  let html5_sources = [];
+export const processVideoIds = ({ videoSource, fallbackVideos }) => {
+  let edxVideoId = '';
+  let youtubeId = '';
+  const html5Sources = [];
 
-  if (isEdxVideo(videoSource)) {
-    edx_video_id = videoSource;
-  } else if (getYoutubeId(videoSource)) {
-    youtube_id_1_0 = getYoutubeId(videoSource);
+  if (module.isEdxVideo(videoSource)) {
+    edxVideoId = videoSource;
+  } else if (module.getYoutubeId(videoSource)) {
+    youtubeId = module.getYoutubeId(videoSource);
   } else {
-    html5_sources.push(videoSource);
+    html5Sources.push(videoSource);
   }
 
-  fallbackVideos.forEach((src) => html5_sources.push(src));
+  fallbackVideos.forEach((src) => html5Sources.push(src));
 
   return {
-    html5_sources,
-    edx_video_id,
-    youtube_id_1_0,
+    edxVideoId,
+    html5Sources,
+    youtubeId,
   };
 };
 
@@ -163,12 +163,11 @@ export const isEdxVideo = (src) => {
 };
 
 export const getYoutubeId = (src) => {
-  const youtubeRegex = new RegExp(/^((?:https?:)?\/\/)?((?:www|m)\.)?((?:youtube\.com|youtu.be))(\/(?:[\w\-]+\?v=|embed\/|v\/)?)([\w\-]+)(\S+)?$/);
+  const youtubeRegex = new RegExp(/^((?:https?:)?\/\/)?((?:www|m)\.)?((?:youtube\.com|youtu.be))(\/(?:[\w-]+\?v=|embed\/|v\/)?)([\w-]+)(\S+)?$/);
   if (!src.match(youtubeRegex)) {
     return null;
-  } else {
-    return src.match(youtubeRegex)[5];
   }
+  return src.match(youtubeRegex)[5];
 };
 
 export const checkMockApi = (key) => {
