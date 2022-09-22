@@ -43,12 +43,7 @@ export const TranscriptWidget = ({
 }) => {
   const languagesArr = hooks.transcriptLanguages(transcripts);
   const fileInput = hooks.fileInput({ onAddFile: '' });
-  const input = {
-    error: {
-      dismiss: () => { console.log('dismiss'); },
-      show: true,
-    },
-  };
+
   return (
     <CollapsibleFormWidget
       isError={Object.keys(error).length !== 0}
@@ -67,26 +62,16 @@ export const TranscriptWidget = ({
       >
         <FormattedMessage {...messages.deleteTranscriptError} />
       </ErrorAlert>
-      <ErrorAlert
-        dismissError={input.error.dismiss}
-        hideHeading
-        isError={input.error.show}
-      >
-        <FormattedMessage {...messages.fileSizeError} />
-      </ErrorAlert>
       <Stack gap={3}>
-        {transcripts ? (
+        {(Object.keys(transcripts).length > 0) ? (
           <Form.Group className="mt-4.5">
-            { Object.entries(transcripts).map(([language, value]) => {
-              console.log(language, value, 'WHY!');
-              return (
-                <TranscriptListItem
-                  language={language}
-                  title={value.filename}
-                  downloadLink={value.downloadLink}
-                />
-              );
-            })}
+            { Object.entries(transcripts).map(([language, value]) => (
+              <TranscriptListItem
+                language={language}
+                title={value.filename}
+                downloadLink={value.downloadLink}
+              />
+            ))}
             <div className="mb-1">
               <Form.Checkbox
                 checked={allowTranscriptDownloads}
@@ -121,10 +106,10 @@ export const TranscriptWidget = ({
           </Form.Group>
         ) : (
           <>
-            <Alert variant="danger" icon={Info}>
+          <FormattedMessage {...messages.addFirstTranscript} />
+          <Alert variant="danger" >
               Only SRT files can be uploaded. Please select a file ending in .srt to upload.
             </Alert>
-            <FormattedMessage {...messages.addFirstTranscript} />
           </>
         )}
         <FileInput fileInput={fileInput} acceptedFiles=".srt" />

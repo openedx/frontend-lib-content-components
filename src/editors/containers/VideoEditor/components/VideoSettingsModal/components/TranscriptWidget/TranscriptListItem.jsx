@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, connect } from 'react-redux';
 
-import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
+import { injectIntl } from '@edx/frontend-platform/i18n';
 import {
   Card, Dropdown, Icon, IconButton,
 } from '@edx/paragon';
@@ -11,20 +11,15 @@ import { MoreVert } from '@edx/paragon/icons';
 
 import LanguageSelect from './LanguageSelect';
 import hooks from './hooks';
-import { thunkActions } from '../../../../../../data/redux';
 import FileInput from '../../../../../../sharedComponents/FileInput';
 
 export const TranscriptListItem = ({
   title,
   language,
   downloadLink,
-  // redux,
-  // deleteTranscript,
-  // intl
-  intl,
 }) => {
   const fileInput = hooks.fileInput({ onAddFile: hooks.replaceFileCallback({ language, dispatch: useDispatch() }) });
-  // const deleteTranscript = hooks.deleteTranscript({ language, dispatch: useDispatch() })
+  const deleteTranscript = hooks.deleteTranscript({ language, dispatch: useDispatch() });
 
   return (
     <Card>
@@ -50,7 +45,7 @@ export const TranscriptListItem = ({
               <Dropdown.Item key={`transcript-actions-${title}-download`} href={downloadLink}>
                 Download
               </Dropdown.Item>
-              <Dropdown.Item key={`transcript-actions-${title}-delete`} onClick={() => console.log('deleting')}>
+              <Dropdown.Item key={`transcript-actions-${title}-delete`} onClick={() => deleteTranscript}>
                 Delete
               </Dropdown.Item>
             </Dropdown.Menu>
@@ -68,10 +63,14 @@ export const TranscriptListItem = ({
   );
 };
 
+TranscriptListItem.propTypes = {
+  language: PropTypes.string.isRequired,
+  downloadLink: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+};
+
 const mapStateToProps = () => ({});
 
-const mapDispatchToProps = (dispatch) => ({
-  // deleteTranscript: (language) => dispatch(thunkActions.video.deleteTranscript({ language })),
-});
+const mapDispatchToProps = {};
 
 export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(TranscriptListItem));

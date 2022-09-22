@@ -28,17 +28,6 @@ exports[`TranscriptWidget snapshots snapshot: renders ErrorAlert with delete err
       id="authoring.videoeditor.transcript.error.deleteTranscriptError"
     />
   </ErrorAlert>
-  <ErrorAlert
-    dismissError={[Function]}
-    hideHeading={true}
-    isError={true}
-  >
-    <FormattedMessage
-      defaultMessage="Transcript file size exeeds the maximum. Please try again."
-      description="Message presented to user when transcript file size is too large"
-      id="authoring.videoeditor.transcript.error.fileSizeError"
-    />
-  </ErrorAlert>
   <Stack
     gap={3}
   >
@@ -150,17 +139,6 @@ exports[`TranscriptWidget snapshots snapshot: renders ErrorAlert with upload err
       defaultMessage="Failed to delete transcript. Please try again."
       description="Message presented to user when transcript fails to delete"
       id="authoring.videoeditor.transcript.error.deleteTranscriptError"
-    />
-  </ErrorAlert>
-  <ErrorAlert
-    dismissError={[Function]}
-    hideHeading={true}
-    isError={true}
-  >
-    <FormattedMessage
-      defaultMessage="Transcript file size exeeds the maximum. Please try again."
-      description="Message presented to user when transcript file size is too large"
-      id="authoring.videoeditor.transcript.error.fileSizeError"
     />
   </ErrorAlert>
   <Stack
@@ -276,17 +254,6 @@ exports[`TranscriptWidget snapshots snapshots: renders as expected with allowTra
       id="authoring.videoeditor.transcript.error.deleteTranscriptError"
     />
   </ErrorAlert>
-  <ErrorAlert
-    dismissError={[Function]}
-    hideHeading={true}
-    isError={true}
-  >
-    <FormattedMessage
-      defaultMessage="Transcript file size exeeds the maximum. Please try again."
-      description="Message presented to user when transcript file size is too large"
-      id="authoring.videoeditor.transcript.error.fileSizeError"
-    />
-  </ErrorAlert>
   <Stack
     gap={3}
   >
@@ -400,17 +367,6 @@ exports[`TranscriptWidget snapshots snapshots: renders as expected with default 
       id="authoring.videoeditor.transcript.error.deleteTranscriptError"
     />
   </ErrorAlert>
-  <ErrorAlert
-    dismissError={[Function]}
-    hideHeading={true}
-    isError={true}
-  >
-    <FormattedMessage
-      defaultMessage="Transcript file size exeeds the maximum. Please try again."
-      description="Message presented to user when transcript file size is too large"
-      id="authoring.videoeditor.transcript.error.fileSizeError"
-    />
-  </ErrorAlert>
   <Stack
     gap={3}
   >
@@ -476,17 +432,6 @@ exports[`TranscriptWidget snapshots snapshots: renders as expected with showTran
       defaultMessage="Failed to delete transcript. Please try again."
       description="Message presented to user when transcript fails to delete"
       id="authoring.videoeditor.transcript.error.deleteTranscriptError"
-    />
-  </ErrorAlert>
-  <ErrorAlert
-    dismissError={[Function]}
-    hideHeading={true}
-    isError={true}
-  >
-    <FormattedMessage
-      defaultMessage="Transcript file size exeeds the maximum. Please try again."
-      description="Message presented to user when transcript file size is too large"
-      id="authoring.videoeditor.transcript.error.fileSizeError"
     />
   </ErrorAlert>
   <Stack
@@ -600,17 +545,6 @@ exports[`TranscriptWidget snapshots snapshots: renders as expected with transcri
       defaultMessage="Failed to delete transcript. Please try again."
       description="Message presented to user when transcript fails to delete"
       id="authoring.videoeditor.transcript.error.deleteTranscriptError"
-    />
-  </ErrorAlert>
-  <ErrorAlert
-    dismissError={[Function]}
-    hideHeading={true}
-    isError={true}
-  >
-    <FormattedMessage
-      defaultMessage="Transcript file size exeeds the maximum. Please try again."
-      description="Message presented to user when transcript file size is too large"
-      id="authoring.videoeditor.transcript.error.fileSizeError"
     />
   </ErrorAlert>
   <Stack

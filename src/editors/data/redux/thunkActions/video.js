@@ -41,9 +41,9 @@ export const deleteTranscript = ({ language }) => (dispatch, getState) => {
     videoId,
     onSuccess: () => {
       const updateTranscripts = {};
-      Object.entries(transcripts).forEach((transcript) => {
-        if (transcript[0] !== language) {
-          updateTranscripts[transcript[0]] = transcript[1];
+      Object.keys(transcripts).forEach((key) => {
+        if (key !== language) {
+          updateTranscripts[key] = transcripts[key];
         }
       });
       dispatch(actions.video.updateField({ transcripts: updateTranscripts }));
@@ -59,9 +59,9 @@ export const replaceTranscript = ({ newFile, newFilename, language }) => (dispat
     videoId,
     onSuccess: () => {
       const updateTranscripts = {};
-      Object.entries(transcripts).forEach((transcript) => {
-        if (transcript[0] !== language) {
-          updateTranscripts[transcript[0]] = transcript[1];
+      Object.keys(transcripts).forEach((key) => {
+        if (key !== language) {
+          updateTranscripts[key] = transcripts[key];
         }
       });
       dispatch(actions.video.updateField({ transcripts: updateTranscripts }));

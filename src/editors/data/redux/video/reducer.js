@@ -11,7 +11,7 @@ const initialState = {
   ],
   allowVideoDownloads: false,
   thumbnail: null,
-  transcripts: null,
+  transcripts: {},
   allowTranscriptDownloads: false,
   duration: {
     startTime: '00:00:00',

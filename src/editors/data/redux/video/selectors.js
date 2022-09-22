@@ -28,8 +28,8 @@ export const simpleSelectors = [
 export const openLanguages = createSelector(
   [module.simpleSelectors.transcripts],
   (transcripts) => {
-    const open = Object.entries(videoTranscriptLanguages).filter(
-      ([lang, value]) => !Object.keys(transcripts).includes(lang),
+    const open = Object.keys(videoTranscriptLanguages).filter(
+      (lang) => !Object.keys(transcripts).includes(lang),
     );
     return open;
   },

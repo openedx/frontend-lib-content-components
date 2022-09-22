@@ -1,38 +1,31 @@
 import { actions } from '..';
-import * as requests from './requests';
+import { keyStore } from '../../../utils';
 import * as thunkActions from './video';
 
 jest.mock('./requests', () => ({
   deleteTranscript: (args) => ({ deleteTranscript: args }),
   uploadTranscript: (args) => ({ uploadTranscript: args }),
 }));
+const thunkActionsKeys = keyStore(thunkActions);
 
 const mockLanguage = 'la';
-const mockVideoId = 'soMEvIDEo';
 const mockFile = 'soMEtRANscRipT';
 const mockFilename = 'soMEtRANscRipT.srt';
 const mockDownloadLink = 'soMEeNDPoiNT/xblock/soMEBloCk/handler/studio_transcript/translation?language_code=la';
-const mockOnSuccess = jest.fn().mockName('onSuccess');
 
-const testState = { transcripts: { la: 'test VALUE', delete: jest.fn() }, videoId: 'soMEvIDEo' };
+const testState = { transcripts: { la: 'test VALUE' }, videoId: 'soMEvIDEo' };
 const testUpload = {
   transcripts: {
-    delete: jest.fn(),
     la: {
       filename: mockFilename,
       downloadLink: mockDownloadLink,
     },
   },
 };
-const testDelete = {
-  filename: mockFilename,
-  downloadLink: mockDownloadLink,
-};
 const testReplaceUpload = {
-  transcript: mockFile,
+  file: mockFile,
   language: mockLanguage,
-  onSuccess: mockOnSuccess,
-  videoId: mockVideoId,
+  filename: mockFilename,
 };
 
 describe('video thunkActions', () => {
@@ -54,21 +47,18 @@ describe('video thunkActions', () => {
     it('dispatches deleteTranscript action', () => {
       expect(dispatchedAction.deleteTranscript).not.toEqual(undefined);
     });
-    // test('passes language as transcript prop', () => {
-    //   expect(dispatchedAction.deleteTranscript.image).toEqual(testState);
-    // });
     it('dispatches actions.video.updateField on success', () => {
       dispatch.mockClear();
       dispatchedAction.deleteTranscript.onSuccess();
-      expect(dispatch).toHaveBeenCalledWith(actions.video.updateField(testState.transcripts.delete(testDelete)));
+      expect(dispatch).toHaveBeenCalledWith(actions.video.updateField({ transcripts: {} }));
     });
   });
   describe('uploadTranscript', () => {
     beforeEach(() => {
       thunkActions.uploadTranscript({
-        language: 'la',
-        filename: 'soMEiMage.jpeg',
-        file: 'soMEiMage',
+        language: mockLanguage,
+        filename: mockFilename,
+        file: mockFile,
       })(dispatch, getState);
       [[dispatchedAction]] = dispatch.mock.calls;
     });
@@ -82,12 +72,15 @@ describe('video thunkActions', () => {
     });
   });
   describe('replaceTranscript', () => {
+    const spies = {};
     beforeEach(() => {
+      spies.uploadTranscript = jest.spyOn(thunkActions, thunkActionsKeys.uploadTranscript)
+        .mockReturnValueOnce(testReplaceUpload);
       thunkActions.replaceTranscript({
         newFile: mockFile,
         newFilename: mockFilename,
         language: mockLanguage,
-      })(dispatch, getState);
+      })(dispatch, getState, spies.uploadTranscript);
       [[dispatchedAction]] = dispatch.mock.calls;
     });
     it('dispatches deleteTranscript action', () => {
@@ -97,8 +90,8 @@ describe('video thunkActions', () => {
       dispatch.mockClear();
       dispatchedAction.deleteTranscript.onSuccess();
       expect(dispatch).toHaveBeenCalledTimes(2);
-      expect(dispatch).toHaveBeenNthCalledWith(1, actions.video.updateField(testState.transcripts.delete(testDelete)));
-      expect(dispatch.mock.calls[1]).toBe([requests.uploadTranscript(testReplaceUpload)]);
+      expect(dispatch).toHaveBeenNthCalledWith(1, actions.video.updateField({ transcripts: {} }));
+      expect(dispatch).toHaveBeenNthCalledWith(2, expect.any(Function));
     });
   });
 });
