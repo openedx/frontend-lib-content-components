@@ -46,18 +46,39 @@ export const messages = {
   },
   replaceTranscript: {
     id: 'authoring.videoeditor.transcript.replaceTranscript',
-    defaultMessage: 'Delete',
+    defaultMessage: 'Replace',
     description: 'Message Presented To user for action to replace transcript',
   },
   downloadTranscript: {
     id: 'authoring.videoeditor.transcript.downloadTranscript',
-    defaultMessage: 'Delete',
+    defaultMessage: 'Download',
     description: 'Message Presented To user for action to download transcript',
   },
   languageSelectLabel: {
     id: 'authoring.videoeditor.transcripts.languageSelectLabel',
     defaultMessage: 'Languages',
     description: 'Label For Dropdown, which allows users to set the language associtated with a transcript',
+  },
+  cancelDeleteLabel: {
+    id: 'authoring.videoeditor.transcripts.cancelDeleteLabel',
+    defaultMessage: 'Cancel',
+    description: 'Label For Button, which allows users to stop the process of deleting a transcript',
+  },
+  confirmDeleteLabel: {
+    id: 'authoring.videoeditor.transcripts.confirmDeleteLabel',
+    defaultMessage: 'Delete',
+    description: 'Label For Button, which allows users to confirm the process of deleting a transcript',
+  },
+
+  deleteConfirmationMessage: {
+    id: 'authoring.videoeditor.transcripts.deleteConfirmationMessage',
+    defaultMessage: 'Are you sure you want to delete this transcript?',
+    description: 'Warning which allows users to select next step in the process of deleting a transcript',
+  },
+  deleteConfirmationTitle: {
+    id: 'authoring.videoeditor.transcripts.deleteConfirmationTitle',
+    defaultMessage: 'Delete This Transcript?',
+    description: 'Title for Warning which allows users to select next step in the process of deleting a transcript',
   },
 
 };

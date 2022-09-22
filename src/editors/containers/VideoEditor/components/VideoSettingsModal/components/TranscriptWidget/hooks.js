@@ -1,5 +1,10 @@
 import React from 'react';
 import { actions } from '../../../../../../data/redux';
+import * as module from './hooks';
+
+export const state = {
+  inDeleteConfirmation: (args) => React.useState(args),
+};
 
 export const transcriptLanguages = (transcripts) => {
   const languages = [];
@@ -41,6 +46,15 @@ export const fileInput = ({ onAddFile }) => {
   };
 };
 
+export const setUpDeleteConfirmation = () => {
+  const [inDeleteConfirmation, setInDeleteConfirmation] = module.state.inDeleteConfirmation(false);
+  return {
+    inDeleteConfirmation,
+    launchDeleteConfirmation: () => setInDeleteConfirmation(true),
+    cancelDelete: () => setInDeleteConfirmation(false),
+  };
+};
+
 export default {
-  transcriptLanguages, fileInput, onSelectLanguage, replaceFileCallback, addFileCallback,
+  transcriptLanguages, fileInput, onSelectLanguage, replaceFileCallback, addFileCallback, setUpDeleteConfirmation,
 };
