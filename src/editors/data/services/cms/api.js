@@ -68,11 +68,40 @@ export const apiMethods = {
     if (blockType === 'html') {
       return {
         category: blockType,
-        couseKey: learningContextId,
+        courseKey: learningContextId,
         data: content,
         has_changes: true,
         id: blockId,
         metadata: { display_name: title },
+      };
+    }
+    if (blockType === 'video') {
+      const {
+        html5_sources,
+        edx_video_id,
+        youtube_id_1_0,
+      } = module.processVideoIds({
+        videoSource: content.videoSource,
+        fallbackVideos: content.fallbackVideos,
+      });
+      return {
+        category: blockType,
+        courseKey: learningContextId,
+        display_name: title,
+        id: blockId,
+        metadata: {
+          display_name: title,
+          download_video: content.allowVideoDownloads,
+          edx_video_id,
+          html5_sources,
+          youtube_id_1_0,
+          download_track: content.allowTranscriptDownloads,
+          track: "",  // TODO Downloadable Transcript URL. Backend expects a file name, for example: "something.srt"
+          show_captions: content.showTranscriptByDefault,
+          handout: content.handout,
+          start_time: content.duration.startTime,
+          end_time: content.duration.stopTime,
+        },
       };
     }
     throw new TypeError(`No Block in V2 Editors named /"${blockType}/", Cannot Save Content.`);
@@ -105,6 +134,42 @@ export const loadImages = (rawImages) => camelizeKeys(rawImages).reduce(
   (obj, image) => ({ ...obj, [image.id]: module.loadImage(image) }),
   {},
 );
+
+export const processVideoIds = ({videoSource, fallbackVideos}) => {
+  let edx_video_id = "";
+  let youtube_id_1_0 = "";
+  let html5_sources = [];
+
+  if (isEdxVideo(videoSource)) {
+    edx_video_id = videoSource;
+  } else if (getYoutubeId(videoSource)) {
+    youtube_id_1_0 = getYoutubeId(videoSource);
+  } else {
+    html5_sources.push(videoSource);
+  }
+
+  fallbackVideos.forEach((src) => html5_sources.push(src));
+
+  return {
+    html5_sources,
+    edx_video_id,
+    youtube_id_1_0,
+  };
+};
+
+export const isEdxVideo = (src) => {
+  const uuid4Regex = new RegExp(/^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$/);
+  return src.match(uuid4Regex);
+};
+
+export const getYoutubeId = (src) => {
+  const youtubeRegex = new RegExp(/^((?:https?:)?\/\/)?((?:www|m)\.)?((?:youtube\.com|youtu.be))(\/(?:[\w\-]+\?v=|embed\/|v\/)?)([\w\-]+)(\S+)?$/);
+  if (!src.match(youtubeRegex)) {
+    return null;
+  } else {
+    return src.match(youtubeRegex)[5];
+  }
+};
 
 export const checkMockApi = (key) => {
   if (process.env.REACT_APP_DEVGALLERY) {
