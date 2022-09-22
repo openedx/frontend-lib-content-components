@@ -1,6 +1,7 @@
 import { singleVideoData } from '../../services/cms/mockVideoData';
-import { actions } from '..';
-import requests from './requests';
+import { actions, selectors } from '..';
+import * as requests from './requests';
+import { downloadVideoTranscripts } from '../../services/cms/urls';
 
 export const loadVideoData = () => (dispatch) => {
   dispatch(actions.video.load(singleVideoData));
@@ -13,33 +14,61 @@ export const saveVideoData = () => () => {
 
 // Transcript Thunks:
 
-export const uploadTranscript = () => {};
-
-export const deleteTranscript = ({ language }) => (dispatch) => {
-  console.log('deleteTranscript', language, dispatch );
-  dispatch(requests.deleteTranscript({
-    language,
-    onSucess: () => dispatch(actions.video.deleteTranscript({ language })),
+export const uploadTranscript = ({ language, filename, file }) => (dispatch, getState) => {
+  const state = getState();
+  const { transcripts, videoId } = state.video;
+  const { studioEndpointUrl, blockId } = state.app;
+  const downloadLink = downloadVideoTranscripts({ studioEndpointUrl, blockId, language });
+  let lang = language;
+  if (!language) {
+    [lang] = selectors.video.openLanguages(state);
+  }
+  dispatch(requests.uploadTranscript({
+    language: lang,
+    videoId,
+    transcript: file,
+    onSuccess: () => dispatch(actions.video.updateField({
+      transcripts: {
+        ...transcripts,
+        [lang]: { filename, downloadLink },
+      },
+    })),
   }));
 };
 
-export const downloadTranscript = ({ language }) => (dispatch) => {
-  dispatch(requests.downloadTranscript({
+export const deleteTranscript = ({ language }) => (dispatch, getState) => {
+  const state = getState();
+  const { transcripts, videoId } = state.video;
+  dispatch(requests.deleteTranscript({
     language,
-    onSucess: () => dispatch(actions.video.downloadTranscript({ language })),
+    videoId,
+    onSuccess: () => {
+      const updateTranscripts = {};
+      Object.keys(transcripts).forEach((key) => {
+        if (key !== language) {
+          updateTranscripts[key] = transcripts[key];
+        }
+      });
+      dispatch(actions.video.updateField({ transcripts: updateTranscripts }));
+    },
   }));
 };
 
 export const replaceTranscript = ({ newFile, newFilename, language }) => (dispatch, getState) => {
   const state = getState();
   const { transcripts, videoId } = state.video;
-
   dispatch(requests.deleteTranscript({
     language,
     videoId,
     onSuccess: () => {
-      dispatch(actions.video.updateField(transcripts.delete(transcripts[language])));
-      dispatch(uploadTranscript({ language, filename: newFilename, file: newFile }));
+      const updateTranscripts = {};
+      Object.keys(transcripts).forEach((key) => {
+        if (key !== language) {
+          updateTranscripts[key] = transcripts[key];
+        }
+      });
+      dispatch(actions.video.updateField({ transcripts: updateTranscripts }));
+      dispatch(uploadTranscript({ language, file: newFile, filename: newFilename }));
     },
   }));
 };
@@ -47,7 +76,7 @@ export const replaceTranscript = ({ newFile, newFilename, language }) => (dispat
 export default {
   loadVideoData,
   saveVideoData,
+  uploadTranscript,
   deleteTranscript,
   replaceTranscript,
-  downloadTranscript,
 };

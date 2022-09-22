@@ -44,6 +44,11 @@ export const messages = {
     defaultMessage: 'Delete',
     description: 'Message Presented To user for action to delete transcript',
   },
+  deleteTranscriptError: {
+    id: 'authoring.videoeditor.transcript.error.deleteTranscriptError',
+    defaultMessage: 'Failed to delete transcript. Please try again.',
+    description: 'Message presented to user when transcript fails to delete',
+  },
   replaceTranscript: {
     id: 'authoring.videoeditor.transcript.replaceTranscript',
     defaultMessage: 'Replace',
@@ -69,7 +74,6 @@ export const messages = {
     defaultMessage: 'Delete',
     description: 'Label For Button, which allows users to confirm the process of deleting a transcript',
   },
-
   deleteConfirmationMessage: {
     id: 'authoring.videoeditor.transcripts.deleteConfirmationMessage',
     defaultMessage: 'Are you sure you want to delete this transcript?',
@@ -80,7 +84,11 @@ export const messages = {
     defaultMessage: 'Delete This Transcript?',
     description: 'Title for Warning which allows users to select next step in the process of deleting a transcript',
   },
-
+  fileTypeWarning: {
+    id: 'authoring.videoeditor.transcripts.fileTypeWarning',
+    defaultMessage: 'Only SRT files can be uploaded. Please select a file ending in .srt to upload.',
+    description: 'Message warning users to only upload .srt files',
+  },
 };
 
 export default messages;

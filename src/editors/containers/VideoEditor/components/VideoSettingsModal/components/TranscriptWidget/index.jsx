@@ -1,5 +1,5 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import {
@@ -21,6 +21,8 @@ import { actions, selectors } from '../../../../../../data/redux';
 import * as hooks from './hooks';
 import messages from './messages';
 
+import { RequestKeys } from '../../../../../../data/constants/requests';
+
 import FileInput from '../../../../../../sharedComponents/FileInput';
 import ErrorAlert from '../../../../../../sharedComponents/ErrorAlerts/ErrorAlert';
 import CollapsibleFormWidget from '../CollapsibleFormWidget';
@@ -37,21 +39,13 @@ export const TranscriptWidget = ({
   allowTranscriptDownloads,
   showTranscriptByDefault,
   updateField,
+  isUploadError,
+  isDeleteError,
 }) => {
   const languagesArr = hooks.transcriptLanguages(transcripts);
-  const fileInput = hooks.fileInput({ onAddFile: (e) => { console.log(e); } });
-  const input = {
-    error: {
-      dismiss: () => { console.log('dismiss'); },
-      show: true,
-    },
-  };
-  const upload = {
-    error: {
-      dismiss: () => { console.log('dismiss'); },
-      show: true,
-    },
-  };
+  const fileInput = hooks.fileInput({ onAddFile: hooks.addFileCallback({ dispatch: useDispatch() }) });
+  const hasTranscripts = hooks.hasTranscripts(transcripts);
+
   return (
     <CollapsibleFormWidget
       isError={Object.keys(error).length !== 0}
@@ -59,26 +53,26 @@ export const TranscriptWidget = ({
       title="Transcript"
     >
       <ErrorAlert
-        dismissError={upload.error.dismiss}
         hideHeading
-        isError={upload.error.show}
+        isError={isUploadError}
       >
         <FormattedMessage {...messages.uploadTranscriptError} />
       </ErrorAlert>
       <ErrorAlert
-        dismissError={input.error.dismiss}
         hideHeading
-        isError={input.error.show}
+        isError={isDeleteError}
       >
-        <FormattedMessage {...messages.fileSizeError} />
+        <FormattedMessage {...messages.deleteTranscriptError} />
       </ErrorAlert>
       <Stack gap={3}>
-        {transcripts ? (
+        {hasTranscripts ? (
+
           <Form.Group className="mt-4.5">
             { Object.entries(transcripts).map(([language, value]) => (
               <TranscriptListItem
                 language={language}
                 title={value.fileName}
+                downloadLink={value.downloadLink}
               />
             ))}
             <div className="mb-1">
@@ -115,9 +109,8 @@ export const TranscriptWidget = ({
           </Form.Group>
         ) : (
           <>
-            <Alert variant="danger" icon={Info}>
-              {/* TODO: Int8l */}
-              Only SRT files can be uploaded. Please select a file ending in .srt to upload.
+            <Alert variant="danger">
+              <FormattedMessage {...messages.fileTypeWarning} />
             </Alert>
             <FormattedMessage {...messages.addFirstTranscript} />
           </>
@@ -141,11 +134,15 @@ TranscriptWidget.propTypes = {
   allowTranscriptDownloads: PropTypes.bool.isRequired,
   showTranscriptByDefault: PropTypes.bool.isRequired,
   updateField: PropTypes.func.isRequired,
+  isUploadError: PropTypes.bool.isRequired,
+  isDeleteError: PropTypes.bool.isRequired,
 };
 export const mapStateToProps = (state) => ({
   transcripts: selectors.video.transcripts(state),
   allowTranscriptDownloads: selectors.video.allowTranscriptDownloads(state),
   showTranscriptByDefault: selectors.video.showTranscriptByDefault(state),
+  isUploadError: selectors.requests.isFailed(state, { requestKey: RequestKeys.uploadTranscript }),
+  isDeleteError: selectors.requests.isFailed(state, { requestKey: RequestKeys.deleteTranscript }),
 });
 
 export const mapDispatchToProps = (dispatch) => ({

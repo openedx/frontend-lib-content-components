@@ -17,8 +17,8 @@ import messages from './messages';
 export const TranscriptListItem = ({
   title,
   language,
+  downloadLink,
   // redux
-  downloadTranscript,
   deleteTranscript,
 }) => {
   const fileInput = hooks.fileInput({ onAddFile: hooks.replaceFileCallback({ language, dispatch: useDispatch() }) });
@@ -64,7 +64,7 @@ export const TranscriptListItem = ({
                   >
                     <FormattedMessage {...messages.replaceTranscript} />
                   </Dropdown.Item>
-                  <Dropdown.Item key={`transcript-actions-${title}-download`} onClick={() => downloadTranscript({ language })}>
+                  <Dropdown.Item key={`transcript-actions-${title}-download`} href={downloadLink}>
                     <FormattedMessage {...messages.downloadTranscript} />
                   </Dropdown.Item>
                   <Dropdown.Item key={`transcript-actions-${title}-delete`} onClick={launchDeleteConfirmation}>
@@ -90,15 +90,14 @@ export const TranscriptListItem = ({
 TranscriptListItem.propTypes = {
   title: PropTypes.string.isRequired,
   language: PropTypes.string.isRequired,
+  downloadLink: PropTypes.string.isRequired,
   // redux
-  downloadTranscript: PropTypes.func.isRequired,
   deleteTranscript: PropTypes.func.isRequired,
 };
 
 export const mapStateToProps = () => ({});
 
 export const mapDispatchToProps = {
-  downloadTranscript: thunkActions.video.downloadTranscript,
   deleteTranscript: thunkActions.video.deleteTranscript,
 };
 

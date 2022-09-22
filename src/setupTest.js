@@ -75,6 +75,9 @@ jest.mock('@edx/paragon', () => jest.requireActual('testUtils').mockNestedCompon
   },
   Card: {
     Header: 'Card.Header',
+    Section: 'Card.Section',
+    Footer: 'Card.Footer',
+    Body: 'Card.Body',
   },
   Dropdown: {
     Item: 'Dropdown.Item',
@@ -104,9 +107,12 @@ jest.mock('@edx/paragon', () => jest.requireActual('testUtils').mockNestedCompon
   SelectableBox: {
     Set: 'SelectableBox.Set',
   },
+
   Spinner: 'Spinner',
   Stack: 'Stack',
   Toast: 'Toast',
+  Tooltip: 'ToolTip',
+  OverlayTrigger: 'OverLayTrigger',
 }));
 
 jest.mock('@edx/paragon/icons', () => ({

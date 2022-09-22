@@ -1,6 +1,6 @@
 import * as module from './hooks';
 
-import { actions } from '../../../../../../data/redux';
+import { actions, thunkActions } from '../../../../../../data/redux';
 import { keyStore } from '../../../../../../utils';
 
 import { MockUseState } from '../../../../../../../testUtils';
@@ -20,16 +20,20 @@ const transcripts = {
 };
 
 jest.mock('../../../../../../data/redux', () => ({
+  thunkActions: {
+    video: {
+      replaceTranscript: jest.fn(args => ({ replaceTranscript: args })).mockName('thunkActions.video.replaceTranscript'),
+      uploadTranscript: jest.fn(args => ({ uploadTranscript: args })).mockName('thunkActions.video.uploadTranscript'),
+    },
+  },
   actions: {
     video: {
       updateField: jest.fn(args => ({ updateField: args })).mockName('actions.video.updateField'),
-      replaceTranscript: jest.fn(args => ({ replaceTranscript: args })).mockName('actions.video.replaceTranscript'),
-      addTranscript: jest.fn(args => ({ addTranscript: args })).mockName('actions.video.replaceTranscript'),
     },
   },
 }));
 
-describe('TextEditor hooks', () => {
+describe('VideoEditorTranscript hooks', () => {
   describe('transcriptLanguages', () => {
     test('it returns none when given empty object', () => {
       expect(module.transcriptLanguages({})).toEqual('None');
@@ -60,35 +64,36 @@ describe('TextEditor hooks', () => {
   describe('replaceFileCallback', () => {
     const mockFile = 'sOmeEbytes';
     const mockFileName = 'one.srt';
-    const mockEvent = { target: { value: mockFileName, files: [mockFile] } };
+    const mockEvent = { target: { files: [{ mockFile, name: mockFileName }] } };
     const mockDispatch = jest.fn();
 
-    const result = { newFile: mockFile, newFileName: mockFileName, language: lang1Code };
+    const result = { newFile: { mockFile, name: mockFileName}, newFileName: mockFileName, language: lang1Code };
 
     test('it dispatches the correct thunk', () => {
       const cb = module.replaceFileCallback({
         dispatch: mockDispatch, language: lang1Code,
       });
       cb(mockEvent);
-      expect(actions.video.replaceTranscript).toHaveBeenCalledWith(result);
+      expect(thunkActions.video.replaceTranscript).toHaveBeenCalledWith(result);
       expect(mockDispatch).toHaveBeenCalledWith({ replaceTranscript: result });
     });
   });
   describe('addFileCallback', () => {
     const mockFile = 'sOmeEbytes';
     const mockFileName = 'one.srt';
-    const mockEvent = { target: { value: mockFileName, files: [mockFile] } };
+    const mockEvent = { target: { files: [{ mockFile, name: mockFileName }] } };
     const mockDispatch = jest.fn();
 
-    const result = { file: mockFile, fileName: mockFileName };
+    const result = { file: { mockFile, name: mockFileName}, fileName:mockFileName, language: null,
+    };
 
     test('it dispatches the correct thunk', () => {
       const cb = module.addFileCallback({
         dispatch: mockDispatch,
       });
       cb(mockEvent);
-      expect(actions.video.addTranscript).toHaveBeenCalledWith(result);
-      expect(mockDispatch).toHaveBeenCalledWith({ addTranscript: result });
+      expect(thunkActions.video.uploadTranscript).toHaveBeenCalledWith(result);
+      expect(mockDispatch).toHaveBeenCalledWith({ uploadTranscript: result });
     });
   });
 

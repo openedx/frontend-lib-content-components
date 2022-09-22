@@ -1,5 +1,5 @@
 import React from 'react';
-import { actions } from '../../../../../../data/redux';
+import { thunkActions, actions } from '../../../../../../data/redux';
 import * as module from './hooks';
 
 export const state = {
@@ -17,6 +17,13 @@ export const transcriptLanguages = (transcripts) => {
   return 'None';
 };
 
+export const hasTranscripts = (transcripts) => {
+  if (transcripts && Object.keys(transcripts).length > 0) {
+    return true;
+  }
+  return false;
+};
+
 export const onSelectLanguage = ({
   fileName, dispatch, transcripts, languageBeforeChange,
 }) => (e) => {
@@ -26,11 +33,19 @@ export const onSelectLanguage = ({
 };
 
 export const replaceFileCallback = ({ language, dispatch }) => (e) => {
-  dispatch(actions.video.replaceTranscript({ newFile: e.target.files[0], newFileName: e.target.value, language }));
+  dispatch(thunkActions.video.replaceTranscript({
+    newFile: e.target.files[0],
+    newFileName: e.target.files[0].name,
+    language,
+  }));
 };
 
 export const addFileCallback = ({ dispatch }) => (e) => {
-  dispatch(actions.video.addTranscript({ file: e.target.files[0], fileName: e.target.value }));
+  dispatch(thunkActions.video.uploadTranscript({
+    file: e.target.files[0],
+    fileName: e.target.files[0].name,
+    language: null,
+  }));
 };
 
 export const fileInput = ({ onAddFile }) => {

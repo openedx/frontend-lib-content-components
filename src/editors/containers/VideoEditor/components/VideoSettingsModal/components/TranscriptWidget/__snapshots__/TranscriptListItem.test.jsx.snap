@@ -25,7 +25,7 @@ exports[`TranscriptListItem Snapshots snapshots: renders as expected with defaul
             />
           </Dropdown.Item>
           <Dropdown.Item
-            onClick={[Function]}
+            href="sOmeLink"
           >
             <FormattedMessage
               defaultMessage="Download"
@@ -81,15 +81,15 @@ exports[`TranscriptListItem Snapshots snapshots: renders as expected with defaul
       />
     }
   />
-  <Component>
-    <Component>
+  <Card.Body>
+    <Card.Section>
       <FormattedMessage
         defaultMessage="Are you sure you want to delete this transcript?"
         description="Warning which allows users to select next step in the process of deleting a transcript"
         id="authoring.videoeditor.transcripts.deleteConfirmationMessage"
       />
-    </Component>
-    <Component>
+    </Card.Section>
+    <Card.Footer>
       <Button
         className="mb-2 mb-sm-0"
         onClick={[MockFunction cancelDelete]}
@@ -111,7 +111,7 @@ exports[`TranscriptListItem Snapshots snapshots: renders as expected with defaul
           id="authoring.videoeditor.transcripts.confirmDeleteLabel"
         />
       </Button>
-    </Component>
-  </Component>
+    </Card.Footer>
+  </Card.Body>
 </Card>
 `;

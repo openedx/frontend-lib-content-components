@@ -31,9 +31,9 @@ jest.mock('./hooks', () => ({
 
 describe('TranscriptListItem', () => {
   const props = {
+    downloadLink: 'sOmeLink',
     title: 'sOmeTiTLE',
     language: 'lAnG',
-    downloadTranscript: jest.fn().mockName('actions.video.downloadTranscript'),
     deleteTranscript: jest.fn().mockName('actions.video.deleteTranscript'),
   };
 
@@ -63,8 +63,7 @@ describe('TranscriptListItem', () => {
     });
   });
   describe('mapDispatchToProps', () => {
-    test('initializeEditor from actions.app.initializeEditor', () => {
-      expect(mapDispatchToProps.downloadTranscript).toEqual(thunkActions.video.downloadTranscript);
+    test('deleteTranscript from thunkActions.video.deleteTranscript', () => {
       expect(mapDispatchToProps.deleteTranscript).toEqual(thunkActions.video.deleteTranscript);
     });
   });

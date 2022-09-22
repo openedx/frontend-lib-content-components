@@ -135,62 +135,33 @@ export const fetchImages = ({ ...rest }) => (dispatch, getState) => {
   }));
 };
 
-export const replaceTranscript = (
-  fileName,
-  langauge,
-  file,
-  ...rest
-) => (
-  dispatch,
-  getState,
-) => {
-  dispatch(module.networkRequest({
-    requestKey: RequestKeys.replaceTranscript,
-    promise: api.video.replaceTranscript({
-      studioEndpointUrl: selectors.app.studioEndpointUrl(getState()),
-      blockId: selectors.app.blockId(getState()),
-      file,
-      fileName,
-      langauge,
-    }),
-    ...rest,
-  }));
-};
-export const addTranscript = (langauge, fileName, file, ...rest) => (dispatch, getState) => {
-  dispatch(module.networkRequest({
-    requestKey: RequestKeys.addTranscript,
-    promise: api.video.addTranscript({
-      studioEndpointUrl: selectors.app.studioEndpointUrl(getState()),
-      blockId: selectors.app.blockId(getState()),
-      fileName,
-      langauge,
-      file,
-    }),
-    ...rest,
-  }));
-};
-
-export const deleteTranscript = (fileName, langauge, ...rest) => (dispatch, getState) => {
+export const deleteTranscript = ({ language, videoId, ...rest }) => (dispatch, getState) => {
   dispatch(module.networkRequest({
     requestKey: RequestKeys.deleteTranscript,
-    promise: api.video.deleteTranscript({
-      studioEndpointUrl: selectors.app.studioEndpointUrl(getState()),
+    promise: api.deleteTranscript({
       blockId: selectors.app.blockId(getState()),
-      fileName,
-      langauge,
+      language,
+      videoId,
+      studioEndpointUrl: selectors.app.studioEndpointUrl(getState()),
     }),
     ...rest,
   }));
 };
 
-export const downloadTranscript = (fileName, langauge, ...rest) => (dispatch, getState) => {
+export const uploadTranscript = ({
+  transcript,
+  videoId,
+  language,
+  ...rest
+}) => (dispatch, getState) => {
   dispatch(module.networkRequest({
-    requestKey: RequestKeys.downloadTranscript,
-    promise: api.video.downloadTranscript({
-      studioEndpointUrl: selectors.app.studioEndpointUrl(getState()),
+    requestKey: RequestKeys.uploadTranscript,
+    promise: api.uploadTranscript({
       blockId: selectors.app.blockId(getState()),
-      fileName,
-      langauge,
+      transcript,
+      videoId,
+      language,
+      studioEndpointUrl: selectors.app.studioEndpointUrl(getState()),
     }),
     ...rest,
   }));
@@ -204,6 +175,5 @@ export default StrictDict({
   saveBlock,
   uploadImage,
   deleteTranscript,
-  addTranscript,
-  replaceTranscript,
+  uploadTranscript,
 });
