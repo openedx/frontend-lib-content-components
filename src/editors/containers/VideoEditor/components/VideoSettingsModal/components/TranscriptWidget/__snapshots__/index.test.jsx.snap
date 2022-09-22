@@ -3,7 +3,7 @@
 exports[`TranscriptWidget snapshots snapshots: renders as expected with allowTranscriptDownloads true 1`] = `
 <injectIntl(ShimmedIntlComponent)
   isError={false}
-  subtitle="english"
+  subtitle="en"
   title="Transcript"
 >
   <ErrorAlert
@@ -35,7 +35,7 @@ exports[`TranscriptWidget snapshots snapshots: renders as expected with allowTra
       className="mt-4.5"
     >
       <injectIntl(ShimmedIntlComponent)
-        language="english"
+        language="en"
       />
       <div
         className="mb-1"
@@ -226,7 +226,7 @@ exports[`TranscriptWidget snapshots snapshots: renders as expected with default 
 exports[`TranscriptWidget snapshots snapshots: renders as expected with showTranscriptByDefault true 1`] = `
 <injectIntl(ShimmedIntlComponent)
   isError={false}
-  subtitle="english"
+  subtitle="en"
   title="Transcript"
 >
   <ErrorAlert
@@ -258,7 +258,7 @@ exports[`TranscriptWidget snapshots snapshots: renders as expected with showTran
       className="mt-4.5"
     >
       <injectIntl(ShimmedIntlComponent)
-        language="english"
+        language="en"
       />
       <div
         className="mb-1"
@@ -339,7 +339,7 @@ exports[`TranscriptWidget snapshots snapshots: renders as expected with showTran
 exports[`TranscriptWidget snapshots snapshots: renders as expected with transcripts 1`] = `
 <injectIntl(ShimmedIntlComponent)
   isError={false}
-  subtitle="english"
+  subtitle="en"
   title="Transcript"
 >
   <ErrorAlert
@@ -371,7 +371,7 @@ exports[`TranscriptWidget snapshots snapshots: renders as expected with transcri
       className="mt-4.5"
     >
       <injectIntl(ShimmedIntlComponent)
-        language="english"
+        language="en"
       />
       <div
         className="mb-1"

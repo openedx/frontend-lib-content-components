@@ -16,6 +16,7 @@ export const saveVideoData = () => () => {
 export const uploadTranscript = () => {};
 
 export const deleteTranscript = ({ language }) => (dispatch) => {
+  console.log('deleteTranscript', language, dispatch );
   dispatch(requests.deleteTranscript({
     language,
     onSucess: () => dispatch(actions.video.deleteTranscript({ language })),

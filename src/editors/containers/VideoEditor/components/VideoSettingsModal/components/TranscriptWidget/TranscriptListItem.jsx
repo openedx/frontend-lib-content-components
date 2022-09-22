@@ -28,16 +28,19 @@ export const TranscriptListItem = ({
     <Card>
       { inDeleteConfirmation ? (
         <>
-          <Card.Header> <FormattedMessage {...messages.deleteConfirmationHeader} />
-          </Card.Header>
+          <Card.Header title={(<FormattedMessage {...messages.deleteConfirmationHeader} />)} />
           <Card.Body>
-            <FormattedMessage {...messages.deleteConfirmationMessage} />
-            <Button variant="tertiary" className="mb-2 mb-sm-0" onClick={cancelDelete}>
-              <FormattedMessage {...messages.cancelDeleteLabel} />
-            </Button>
-            <Button variant="danger" className="mb-2 mb-sm-0" onClick={deleteTranscript({ language })}>
-              <FormattedMessage {...messages.confirmDeleteLabel} />
-            </Button>
+            <Card.Section>
+              <FormattedMessage {...messages.deleteConfirmationMessage} />
+            </Card.Section>
+            <Card.Footer>
+              <Button variant="tertiary" className="mb-2 mb-sm-0" onClick={cancelDelete}>
+                <FormattedMessage {...messages.cancelDeleteLabel} />
+              </Button>
+              <Button variant="danger" className="mb-2 mb-sm-0" onClick={deleteTranscript({ language })}>
+                <FormattedMessage {...messages.confirmDeleteLabel} />
+              </Button>
+            </Card.Footer>
           </Card.Body>
         </>
       ) : (

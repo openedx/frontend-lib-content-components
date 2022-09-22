@@ -11,6 +11,13 @@ jest.mock('../../../../../../data/redux', () => ({
       updateField: jest.fn().mockName('actions.video.updateField'),
     },
   },
+  thunkActions: {
+    video: {
+      downloadTranscript: jest.fn().mockName('actions.video.downloadTranscript'),
+      deleteTranscript: jest.fn().mockName('actions.video.deleteTranscript'),
+    },
+  },
+
   selectors: {
     video: {
       transcripts: jest.fn(state => ({ transcripts: state })),

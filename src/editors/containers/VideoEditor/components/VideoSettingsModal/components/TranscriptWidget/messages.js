@@ -75,7 +75,7 @@ export const messages = {
     defaultMessage: 'Are you sure you want to delete this transcript?',
     description: 'Warning which allows users to select next step in the process of deleting a transcript',
   },
-  deleteConfirmationTitle: {
+  deleteConfirmationHeader: {
     id: 'authoring.videoeditor.transcripts.deleteConfirmationTitle',
     defaultMessage: 'Delete This Transcript?',
     description: 'Title for Warning which allows users to select next step in the process of deleting a transcript',

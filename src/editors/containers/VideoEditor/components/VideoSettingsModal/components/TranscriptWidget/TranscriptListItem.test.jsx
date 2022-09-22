@@ -2,7 +2,8 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import { TranscriptListItem, mapDispatchToProps } from './TranscriptListItem';
-import { actions } from '../../../../../../data/redux';
+import { thunkActions } from '../../../../../../data/redux';
+import hooks from './hooks';
 
 jest.mock('react-redux', () => {
   const dispatchFn = jest.fn().mockName('mockUseDispatch');
@@ -14,7 +15,7 @@ jest.mock('react-redux', () => {
 });
 
 jest.mock('../../../../../../data/redux', () => ({
-  actions: {
+  thunkActions: {
     video: {
       downloadTranscript: jest.fn().mockName('actions.video.downloadTranscript'),
       deleteTranscript: jest.fn().mockName('actions.video.deleteTranscript'),
@@ -25,6 +26,7 @@ jest.mock('../../../../../../data/redux', () => ({
 jest.mock('./hooks', () => ({
   fileInput: jest.fn((args) => ({ fileInput: args, click: jest.fn().mockName('mockInputClick') })),
   replaceFileCallback: jest.fn((args) => ({ replaceFileCallback: args })),
+  setUpDeleteConfirmation: jest.fn((args) => ({ setUpDeleteConfirmation: args })).mockName('setUpDeleteConfirmation'),
 }));
 
 describe('TranscriptListItem', () => {
@@ -36,7 +38,25 @@ describe('TranscriptListItem', () => {
   };
 
   describe('Snapshots', () => {
-    test('snapshots: renders as expected with default props', () => {
+    afterAll(() => {
+      jest.clearAllMocks();
+    });
+    test('snapshots: renders as expected with default props: dont show confirm delete', () => {
+      jest.spyOn(hooks, 'setUpDeleteConfirmation').mockImplementationOnce(() => ({
+        inDeleteConfirmation: false,
+        launchDeleteConfirmation: jest.fn().mockName('launchDeleteConfirmation'),
+        cancelDelete: jest.fn().mockName('cancelDelete'),
+      }));
+      expect(
+        shallow(<TranscriptListItem {...props} />),
+      ).toMatchSnapshot();
+    });
+    test('snapshots: renders as expected with default props: show confirm delete', () => {
+      jest.spyOn(hooks, 'setUpDeleteConfirmation').mockImplementationOnce(() => ({
+        inDeleteConfirmation: true,
+        launchDeleteConfirmation: jest.fn().mockName('launchDeleteConfirmation'),
+        cancelDelete: jest.fn().mockName('cancelDelete'),
+      }));
       expect(
         shallow(<TranscriptListItem {...props} />),
       ).toMatchSnapshot();
@@ -44,8 +64,8 @@ describe('TranscriptListItem', () => {
   });
   describe('mapDispatchToProps', () => {
     test('initializeEditor from actions.app.initializeEditor', () => {
-      expect(mapDispatchToProps.downloadTranscript).toEqual(actions.video.downloadTranscript);
-      expect(mapDispatchToProps.deleteTranscript).toEqual(actions.video.deleteTranscript);
+      expect(mapDispatchToProps.downloadTranscript).toEqual(thunkActions.video.downloadTranscript);
+      expect(mapDispatchToProps.deleteTranscript).toEqual(thunkActions.video.deleteTranscript);
     });
   });
 });

@@ -1,6 +1,9 @@
-import hooks from './hooks';
+import * as module from './hooks';
 
 import { actions } from '../../../../../../data/redux';
+import { keyStore } from '../../../../../../utils';
+
+import { MockUseState } from '../../../../../../../testUtils';
 
 const lang1Code = 'kl';
 const lang2Code = 'el';
@@ -29,10 +32,10 @@ jest.mock('../../../../../../data/redux', () => ({
 describe('TextEditor hooks', () => {
   describe('transcriptLanguages', () => {
     test('it returns none when given empty object', () => {
-      expect(hooks.transcriptLanguages({})).toEqual('None');
+      expect(module.transcriptLanguages({})).toEqual('None');
     });
     test('it creates a list based on transcript object', () => {
-      expect(hooks.transcriptLanguages(transcripts)).toEqual(`${lang1Code}, ${lang2Code}`);
+      expect(module.transcriptLanguages(transcripts)).toEqual(`${lang1Code}, ${lang2Code}`);
     });
   });
 
@@ -42,7 +45,7 @@ describe('TextEditor hooks', () => {
     const mockDispatch = jest.fn();
 
     test('it dispatches the correct thunk', () => {
-      const cb = hooks.onSelectLanguage({
+      const cb = module.onSelectLanguage({
         fileName: transcript1, dispatch: mockDispatch, transcripts, languageBeforeChange: lang1Code,
       });
       const newTranscripts = {
@@ -63,7 +66,7 @@ describe('TextEditor hooks', () => {
     const result = { newFile: mockFile, newFileName: mockFileName, language: lang1Code };
 
     test('it dispatches the correct thunk', () => {
-      const cb = hooks.replaceFileCallback({
+      const cb = module.replaceFileCallback({
         dispatch: mockDispatch, language: lang1Code,
       });
       cb(mockEvent);
@@ -80,12 +83,43 @@ describe('TextEditor hooks', () => {
     const result = { file: mockFile, fileName: mockFileName };
 
     test('it dispatches the correct thunk', () => {
-      const cb = hooks.addFileCallback({
+      const cb = module.addFileCallback({
         dispatch: mockDispatch,
       });
       cb(mockEvent);
       expect(actions.video.addTranscript).toHaveBeenCalledWith(result);
       expect(mockDispatch).toHaveBeenCalledWith({ addTranscript: result });
+    });
+  });
+
+  describe('state hooks', () => {
+    const state = new MockUseState(module);
+
+    beforeEach(() => {
+      jest.clearAllMocks();
+    });
+    describe('state hooks', () => {
+      state.testGetter(state.keys.inDeleteConfirmation);
+    });
+
+    describe('setUpDeleteConfirmation hook', () => {
+      beforeEach(() => {
+        state.mock();
+      });
+      afterEach(() => {
+        state.restore();
+      });
+      test('inDeleteConfirmation: state values', () => {
+        expect(module.setUpDeleteConfirmation().inDeleteConfirmation).toEqual(false);
+      });
+      test('inDeleteConfirmation setters: launch', () => {
+        module.setUpDeleteConfirmation().launchDeleteConfirmation();
+        expect(state.setState[state.keys.inDeleteConfirmation]).toHaveBeenCalledWith(true);
+      });
+      test('inDeleteConfirmation setters: cancel', () => {
+        module.setUpDeleteConfirmation().cancelDelete();
+        expect(state.setState[state.keys.inDeleteConfirmation]).toHaveBeenCalledWith(false);
+      });
     });
   });
 });
