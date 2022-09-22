@@ -1,17 +1,11 @@
-import * as reactRedux from 'react-redux';
 import hooks from './hooks';
 
 import { actions } from '../../../../../../data/redux';
 
-const lang1 = 'kLinGon';
 const lang1Code = 'kl';
-const lang2 = 'eLvIsh';
 const lang2Code = 'el';
-const lang3 = 'sImLisH';
-const lang3Code = 'sl';
 const transcript1 = 'fIlEnAme1.srt';
 const transcript2 = 'fIlenAME2.srt';
-const transcript3 = 'fIlenAmE3.nOtSrt';
 
 const transcripts = {
   [lang1Code]: {

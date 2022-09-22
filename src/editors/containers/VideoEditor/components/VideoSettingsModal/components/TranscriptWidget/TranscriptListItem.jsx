@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect, useDispatch, useSelector } from 'react-redux';
-import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
+import { connect, useDispatch } from 'react-redux';
+import { FormattedMessage, injectIntl } from '@edx/frontend-platform/i18n';
 import {
   Card, Dropdown, Icon, IconButton,
 } from '@edx/paragon';
@@ -12,6 +12,7 @@ import LanguageSelect from './LanguageSelect';
 import hooks from './hooks';
 import { actions } from '../../../../../../data/redux';
 import FileInput from '../../../../../../sharedComponents/FileInput';
+import messages from './messages';
 
 export const TranscriptListItem = ({
   title,
@@ -19,8 +20,6 @@ export const TranscriptListItem = ({
   // redux
   downloadTranscript,
   deleteTranscript,
-  // intl
-  intl,
 }) => {
   const fileInput = hooks.fileInput({ onAddFile: hooks.replaceFileCallback({ language, dispatch: useDispatch() }) });
 
@@ -43,13 +42,14 @@ export const TranscriptListItem = ({
                 key={`transcript-actions-${title}-replace`}
                 onClick={fileInput.click}
               >
-                Replace
+                <FormattedMessage defaultMessage={messages.replaceTranscript} />
+
               </Dropdown.Item>
               <Dropdown.Item key={`transcript-actions-${title}-download`} onClick={() => downloadTranscript({ language })}>
-                Download
+                <FormattedMessage defaultMessage={messages.downloadTranscript} />
               </Dropdown.Item>
               <Dropdown.Item key={`transcript-actions-${title}-delete`} onClick={() => deleteTranscript({ language })}>
-                Delete
+                <FormattedMessage defaultMessage={messages.deleteTranscript} />
               </Dropdown.Item>
             </Dropdown.Menu>
             <FileInput fileInput={fileInput} acceptedFiles=".srt" />
@@ -64,11 +64,19 @@ export const TranscriptListItem = ({
   );
 };
 
+TranscriptListItem.propTypes = {
+  title: PropTypes.string.isRequired,
+  language: PropTypes.string.isRequired,
+  // redux
+  downloadTranscript: PropTypes.func.isRequired,
+  deleteTranscript: PropTypes.func.isRequired,
+};
+
 const mapStateToProps = () => {
 
 };
 
-const mapDispatchToProps = {
+export const mapDispatchToProps = {
   downloadTranscript: actions.video.downloadTranscript,
   deleteTranscript: actions.video.deleteTranscript,
 };

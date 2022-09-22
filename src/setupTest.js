@@ -73,6 +73,9 @@ jest.mock('@edx/paragon', () => jest.requireActual('testUtils').mockNestedCompon
     Trigger: 'Trigger',
     Visible: 'Visible',
   },
+  Card: {
+    Header: 'Card.Header',
+  },
   Dropdown: {
     Item: 'Dropdown.Item',
     Menu: 'Dropdown.Menu',

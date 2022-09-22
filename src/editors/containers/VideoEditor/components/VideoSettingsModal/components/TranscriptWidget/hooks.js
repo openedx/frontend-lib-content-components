@@ -1,6 +1,5 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
-import { actions, selectors } from '../../../../../../data/redux';
+import { actions } from '../../../../../../data/redux';
 
 export const transcriptLanguages = (transcripts) => {
   const languages = [];

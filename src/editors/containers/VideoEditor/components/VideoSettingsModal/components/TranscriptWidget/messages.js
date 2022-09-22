@@ -39,6 +39,22 @@ export const messages = {
     defaultMessage: 'Transcript file size exeeds the maximum. Please try again.',
     description: 'Message presented to user when transcript file size is too large',
   },
+  deleteTranscript: {
+    id: 'authoring.videoeditor.transcript.deleteTranscript',
+    defaultMessage: 'Delete',
+    description: 'Message Presented To user for action to delete transcript',
+  },
+  replaceTranscript: {
+    id: 'authoring.videoeditor.transcript.replaceTranscript',
+    defaultMessage: 'Delete',
+    description: 'Message Presented To user for action to replace transcript',
+  },
+  downloadTranscript: {
+    id: 'authoring.videoeditor.transcript.downloadTranscript',
+    defaultMessage: 'Delete',
+    description: 'Message Presented To user for action to download transcript',
+  },
+
 };
 
 export default messages;

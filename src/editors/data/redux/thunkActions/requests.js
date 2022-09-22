@@ -151,7 +151,7 @@ export const replaceTranscript = (
       blockId: selectors.app.blockId(getState()),
       file,
       fileName,
-      langauge
+      langauge,
     }),
     ...rest,
   }));

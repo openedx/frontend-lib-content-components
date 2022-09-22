@@ -75,14 +75,12 @@ export const TranscriptWidget = ({
       <Stack gap={3}>
         {transcripts ? (
           <Form.Group className="mt-4.5">
-            { Object.entries(transcripts).map(([language, value]) => {
-              return (
-                <TranscriptListItem
-                  language={language}
-                  title={value.fileName}
-                />
-              );
-            })}
+            { Object.entries(transcripts).map(([language, value]) => (
+              <TranscriptListItem
+                language={language}
+                title={value.fileName}
+              />
+            ))}
             <div className="mb-1">
               <Form.Checkbox
                 checked={allowTranscriptDownloads}
