@@ -25,17 +25,17 @@ export const hasTranscripts = (transcripts) => {
 };
 
 export const onSelectLanguage = ({
-  fileName, dispatch, transcripts, languageBeforeChange,
+  filename, dispatch, transcripts, languageBeforeChange,
 }) => (e) => {
   const { [languageBeforeChange]: removedProperty, ...trimmedTranscripts } = transcripts;
-  const newTranscripts = { [e.target.value]: { fileName }, ...trimmedTranscripts };
+  const newTranscripts = { [e.target.value]: { filename }, ...trimmedTranscripts };
   dispatch(actions.video.updateField({ transcripts: newTranscripts }));
 };
 
 export const replaceFileCallback = ({ language, dispatch }) => (e) => {
   dispatch(thunkActions.video.replaceTranscript({
     newFile: e.target.files[0],
-    newFileName: e.target.files[0].name,
+    newFilename: e.target.files[0].name,
     language,
   }));
 };
@@ -43,7 +43,7 @@ export const replaceFileCallback = ({ language, dispatch }) => (e) => {
 export const addFileCallback = ({ dispatch }) => (e) => {
   dispatch(thunkActions.video.uploadTranscript({
     file: e.target.files[0],
-    fileName: e.target.files[0].name,
+    filename: e.target.files[0].name,
     language: null,
   }));
 };

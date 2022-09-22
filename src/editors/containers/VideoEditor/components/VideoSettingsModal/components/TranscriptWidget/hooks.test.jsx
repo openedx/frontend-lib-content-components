@@ -1,8 +1,6 @@
 import * as module from './hooks';
 
 import { actions, thunkActions } from '../../../../../../data/redux';
-import { keyStore } from '../../../../../../utils';
-
 import { MockUseState } from '../../../../../../../testUtils';
 
 const lang1Code = 'kl';
@@ -12,10 +10,10 @@ const transcript2 = 'fIlenAME2.srt';
 
 const transcripts = {
   [lang1Code]: {
-    fileName: transcript1,
+    filename: transcript1,
   },
   [lang2Code]: {
-    fileName: transcript2,
+    filename: transcript2,
   },
 };
 
@@ -50,10 +48,10 @@ describe('VideoEditorTranscript hooks', () => {
 
     test('it dispatches the correct thunk', () => {
       const cb = module.onSelectLanguage({
-        fileName: transcript1, dispatch: mockDispatch, transcripts, languageBeforeChange: lang1Code,
+        filename: transcript1, dispatch: mockDispatch, transcripts, languageBeforeChange: lang1Code,
       });
       const newTranscripts = {
-        transcripts: { [lang2Code]: { fileName: transcript2 }, [mockLangValue]: { fileName: transcript1 } },
+        transcripts: { [lang2Code]: { filename: transcript2 }, [mockLangValue]: { filename: transcript1 } },
       };
       cb(mockEvent);
       expect(actions.video.updateField).toHaveBeenCalledWith(newTranscripts);
@@ -67,7 +65,7 @@ describe('VideoEditorTranscript hooks', () => {
     const mockEvent = { target: { files: [{ mockFile, name: mockFileName }] } };
     const mockDispatch = jest.fn();
 
-    const result = { newFile: { mockFile, name: mockFileName }, newFileName: mockFileName, language: lang1Code };
+    const result = { newFile: { mockFile, name: mockFileName }, newFilename: mockFileName, language: lang1Code };
 
     test('it dispatches the correct thunk', () => {
       const cb = module.replaceFileCallback({
@@ -84,7 +82,7 @@ describe('VideoEditorTranscript hooks', () => {
     const mockEvent = { target: { files: [{ mockFile, name: mockFileName }] } };
     const mockDispatch = jest.fn();
 
-    const result = { file: { mockFile, name: mockFileName }, fileName: mockFileName, language: null };
+    const result = { file: { mockFile, name: mockFileName }, filename: mockFileName, language: null };
 
     test('it dispatches the correct thunk', () => {
       const cb = module.addFileCallback({

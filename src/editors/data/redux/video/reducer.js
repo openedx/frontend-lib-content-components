@@ -42,11 +42,11 @@ const video = createSlice({
       ...payload,
     }),
     addTranscript: (state, { payload }) => ({
-      transcripts: { [payload.language]: payload.fileName, ...state.transcripts },
+      transcripts: { [payload.language]: payload.filename, ...state.transcripts },
       ...state,
     }),
     replaceTranscript: (state, { payload }) => ({
-      transcripts: { [payload.language]: payload.newFileName, ...state.transcripts },
+      transcripts: { [payload.language]: payload.newFilename, ...state.transcripts },
       ...state,
     }),
     deleteTranscript: (state, { payload }) => {

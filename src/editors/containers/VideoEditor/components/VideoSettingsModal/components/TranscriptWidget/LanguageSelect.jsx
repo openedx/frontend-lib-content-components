@@ -22,7 +22,7 @@ export const LanguageSelect = ({
 
 }) => {
   const onLanguageChange = hooks.onSelectLanguage({
-    fileName: title, dispatch: useDispatch(), transcripts, languageBeforeChange: language,
+    filename: title, dispatch: useDispatch(), transcripts, languageBeforeChange: language,
   });
 
   return (

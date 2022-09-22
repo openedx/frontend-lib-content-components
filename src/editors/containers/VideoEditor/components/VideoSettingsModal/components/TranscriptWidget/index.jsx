@@ -71,7 +71,7 @@ export const TranscriptWidget = ({
             { Object.entries(transcripts).map(([language, value]) => (
               <TranscriptListItem
                 language={language}
-                title={value.fileName}
+                title={value.filename}
                 downloadLink={value.downloadLink}
               />
             ))}

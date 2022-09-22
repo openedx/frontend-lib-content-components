@@ -21,7 +21,7 @@ export const uploadTranscript = ({ language, filename, file }) => (dispatch, get
   const downloadLink = downloadVideoTranscripts({ studioEndpointUrl, blockId, language });
   let lang = language;
   if (!language) {
-    [lang] = selectors.video.openLanguages(state);
+    [[lang]] = selectors.video.openLanguages(state);
   }
   dispatch(requests.uploadTranscript({
     language: lang,
