@@ -5,10 +5,11 @@ import {
   Form,
 } from '@edx/paragon';
 import { connect, useDispatch } from 'react-redux';
-import { injectIntl } from '@edx/frontend-platform/i18n';
+import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 import hooks from './hooks';
 import { selectors } from '../../../../../../data/redux';
 import { videoTranscriptLanguages } from '../../../../../../data/constants/video';
+import messages from './messages';
 
 export const LanguageSelect = ({
   title, // For a unique id for the form control
@@ -16,6 +17,9 @@ export const LanguageSelect = ({
   // Redux
   openLanguages, // Only allow those languages not already associated with a transcript to be selected
   transcripts,
+  // intl
+  intl,
+
 }) => {
   const onLanguageChange = hooks.onSelectLanguage({
     fileName: title, dispatch: useDispatch(), transcripts, languageBeforeChange: language,
@@ -23,8 +27,7 @@ export const LanguageSelect = ({
 
   return (
     <Form.Group controlId={`selectLanguage-form-${title}`} className="mt-2 mx-2">
-      {/* TODO: int8l floatingLabel */}
-      <Form.Control as="select" defaultValue={language} onChange={(e) => onLanguageChange(e)} floatingLabel="Language">
+      <Form.Control as="select" defaultValue={language} onChange={(e) => onLanguageChange(e)} floatingLabel={intl.formatMessage(messages.languageSelectLabel)}>
         <option value={language}>{videoTranscriptLanguages[language]}</option>
         {Object.entries(videoTranscriptLanguages).map(([lang, text]) => {
           if (language === lang) { return (<></>); }
@@ -48,6 +51,7 @@ LanguageSelect.propTypes = {
   title: PropTypes.string.isRequired,
   language: PropTypes.string.isRequired,
   transcripts: PropTypes.objectOf(PropTypes.string).isRequired,
+  intl: intlShape.isRequired,
 };
 
 export const mapStateToProps = (state) => ({

@@ -54,6 +54,11 @@ export const messages = {
     defaultMessage: 'Delete',
     description: 'Message Presented To user for action to download transcript',
   },
+  languageSelectLabel: {
+    id: 'authoring.videoeditor.transcripts.languageSelectLabel',
+    defaultMessage: 'Languages',
+    description: 'Label For Dropdown, which allows users to set the language associtated with a transcript',
+  },
 
 };
 

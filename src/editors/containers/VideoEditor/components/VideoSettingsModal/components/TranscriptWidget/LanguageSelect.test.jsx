@@ -1,6 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import { LanguageSelect } from './LanguageSelect';
+import { formatMessage } from '../../../../../../../testUtils';
 
 const lang1 = 'kLinGon';
 const lang1Code = 'kl';
@@ -19,6 +20,7 @@ jest.mock('../../../../../../data/constants/video', () => ({
 
 describe('LanguageSelect', () => {
   const props = {
+    intl: { formatMessage },
     onSelect: jest.fn().mockName('props.OnSelect'),
     title: 'tITle',
     language: lang1Code,
