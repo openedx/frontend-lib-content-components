@@ -40,17 +40,17 @@ describe('TranscriptWidget', () => {
     });
     test('snapshots: renders as expected with transcripts', () => {
       expect(
-        shallow(<TranscriptWidget {...props} transcripts={{ english: 'sOMeUrl' }} />),
+        shallow(<TranscriptWidget {...props} transcripts={{ en: 'sOMeUrl' }} />),
       ).toMatchSnapshot();
     });
     test('snapshots: renders as expected with allowTranscriptDownloads true', () => {
       expect(
-        shallow(<TranscriptWidget {...props} allowTranscriptDownloads transcripts={{ english: 'sOMeUrl' }} />),
+        shallow(<TranscriptWidget {...props} allowTranscriptDownloads transcripts={{ en: 'sOMeUrl' }} />),
       ).toMatchSnapshot();
     });
     test('snapshots: renders as expected with showTranscriptByDefault true', () => {
       expect(
-        shallow(<TranscriptWidget {...props} showTranscriptByDefault transcripts={{ english: 'sOMeUrl' }} />),
+        shallow(<TranscriptWidget {...props} showTranscriptByDefault transcripts={{ en: 'sOMeUrl' }} />),
       ).toMatchSnapshot();
     });
   });
