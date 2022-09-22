@@ -44,8 +44,8 @@ describe('TranscriptListItem', () => {
   });
   describe('mapDispatchToProps', () => {
     test('initializeEditor from actions.app.initializeEditor', () => {
-      expect(mapDispatchToProps.downloadTranscrip).toEqual(actions.video.downloadTranscript);
-      expect(mapDispatchToProps.deleteTranscrip).toEqual(actions.video.deleteTranscript);
+      expect(mapDispatchToProps.downloadTranscript).toEqual(actions.video.downloadTranscript);
+      expect(mapDispatchToProps.deleteTranscript).toEqual(actions.video.deleteTranscript);
     });
   });
 });
