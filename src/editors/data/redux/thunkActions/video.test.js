@@ -14,14 +14,7 @@ const mockFilename = 'soMEtRANscRipT.srt';
 const mockDownloadLink = 'soMEeNDPoiNT/xblock/soMEBloCk/handler/studio_transcript/translation?language_code=la';
 
 const testState = { transcripts: { la: 'test VALUE' }, videoId: 'soMEvIDEo' };
-const testUpload = {
-  transcripts: {
-    la: {
-      filename: mockFilename,
-      downloadLink: mockDownloadLink,
-    },
-  },
-};
+const testUpload = { transcripts: { la: { filename: mockFilename } } };
 const testReplaceUpload = {
   file: mockFile,
   language: mockLanguage,
@@ -38,6 +31,12 @@ describe('video thunkActions', () => {
       app: { studioEndpointUrl: 'soMEeNDPoiNT', blockId: 'soMEBloCk' },
       video: testState,
     }));
+  });
+  describe('downloadTranscript', () => {
+    it('returns mockDownloadLink', () => {
+      const downloadTranscript = thunkActions.downloadTranscript({ language: mockLanguage })(getState);
+      expect(downloadTranscript).toEqual(mockDownloadLink);
+    });
   });
   describe('deleteTranscript', () => {
     beforeEach(() => {
@@ -56,7 +55,7 @@ describe('video thunkActions', () => {
   describe('uploadTranscript', () => {
     beforeEach(() => {
       thunkActions.uploadTranscript({
-        lang: mockLanguage,
+        language: mockLanguage,
         filename: mockFilename,
         file: mockFile,
       })(dispatch, getState);

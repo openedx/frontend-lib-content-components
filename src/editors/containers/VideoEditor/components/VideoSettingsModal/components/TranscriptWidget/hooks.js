@@ -43,7 +43,7 @@ export const replaceFileCallback = ({ language, dispatch }) => (file) => {
 
 export const addFileCallback = ({ dispatch }) => (file) => {
   dispatch(thunkActions.video.uploadTranscript({
-    file: file,
+    file,
     filename: file.name,
     language: null,
   }));
@@ -53,7 +53,7 @@ export const fileInput = ({ onAddFile }) => {
   const ref = React.useRef();
   const click = () => ref.current.click();
   const addFile = (e) => {
-    const file = e.target.files[0]
+    const file = e.target.files[0];
     if (file) {
       onAddFile(file);
     }

@@ -14,15 +14,19 @@ export const saveVideoData = () => () => {
 
 // Transcript Thunks:
 
+export const downloadTranscript = ({ language }) => (getState) => {
+  const state = getState();
+  const { studioEndpointUrl, blockId } = state.app;
+  return downloadVideoTranscripts({ studioEndpointUrl, blockId, language });
+};
+
 export const uploadTranscript = ({ language, filename, file }) => (dispatch, getState) => {
   const state = getState();
   const { transcripts, videoId } = state.video;
-  const { studioEndpointUrl, blockId } = state.app;
   let lang = language;
   if (!language) {
     [[lang]] = selectors.video.openLanguages(state);
   }
-  const downloadLink = downloadVideoTranscripts({ studioEndpointUrl, blockId, lang });
   dispatch(requests.uploadTranscript({
     language: lang,
     videoId,
@@ -30,7 +34,7 @@ export const uploadTranscript = ({ language, filename, file }) => (dispatch, get
     onSuccess: () => dispatch(actions.video.updateField({
       transcripts: {
         ...transcripts,
-        [lang]: { filename, downloadLink },
+        [lang]: { filename },
       },
     })),
   }));
@@ -79,4 +83,5 @@ export default {
   uploadTranscript,
   deleteTranscript,
   replaceTranscript,
+  downloadTranscript,
 };

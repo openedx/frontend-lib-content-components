@@ -17,12 +17,13 @@ import messages from './messages';
 export const TranscriptListItem = ({
   title,
   language,
-  downloadLink,
   // redux
   deleteTranscript,
+  downloadTranscript,
 }) => {
   const fileInput = hooks.fileInput({ onAddFile: hooks.replaceFileCallback({ language, dispatch: useDispatch() }) });
   const { inDeleteConfirmation, launchDeleteConfirmation, cancelDelete } = hooks.setUpDeleteConfirmation();
+  const downloadLink = downloadTranscript({ language });
 
   return (
     <div className="mb-2">
@@ -90,15 +91,16 @@ export const TranscriptListItem = ({
 TranscriptListItem.propTypes = {
   title: PropTypes.string.isRequired,
   language: PropTypes.string.isRequired,
-  downloadLink: PropTypes.string.isRequired,
   // redux
   deleteTranscript: PropTypes.func.isRequired,
+  downloadTranscript: PropTypes.func.isRequired,
 };
 
 export const mapStateToProps = () => ({});
 
 export const mapDispatchToProps = {
   deleteTranscript: thunkActions.video.deleteTranscript,
+  downloadTranscript: thunkActions.video.downloadTranscript,
 };
 
 export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(TranscriptListItem));

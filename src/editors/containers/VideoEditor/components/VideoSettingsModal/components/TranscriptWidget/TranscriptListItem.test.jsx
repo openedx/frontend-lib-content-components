@@ -34,7 +34,8 @@ describe('TranscriptListItem', () => {
     downloadLink: 'sOmeLink',
     title: 'sOmeTiTLE',
     language: 'lAnG',
-    deleteTranscript: jest.fn().mockName('actions.video.deleteTranscript'),
+    deleteTranscript: jest.fn().mockName('thunkActions.video.deleteTranscript'),
+    downloadTranscript: jest.fn().mockName('thunkActions.video.downloadTranscript'),
   };
 
   describe('Snapshots', () => {
@@ -65,6 +66,7 @@ describe('TranscriptListItem', () => {
   describe('mapDispatchToProps', () => {
     test('deleteTranscript from thunkActions.video.deleteTranscript', () => {
       expect(mapDispatchToProps.deleteTranscript).toEqual(thunkActions.video.deleteTranscript);
+      expect(mapDispatchToProps.downloadTranscript).toEqual(thunkActions.video.downloadTranscript);
     });
   });
 });

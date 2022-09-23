@@ -72,7 +72,6 @@ export const TranscriptWidget = ({
               <TranscriptListItem
                 language={language}
                 title={value.filename}
-                downloadLink={value.downloadLink}
               />
             ))}
             <div className="mb-1">
