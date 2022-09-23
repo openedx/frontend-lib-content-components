@@ -69,12 +69,12 @@ describe('TranscriptWidget', () => {
     });
     test('snapshot: renders ErrorAlert with upload error message', () => {
       expect(
-        shallow(<TranscriptWidget {...props} isUploadError transcripts={{ english: 'sOMeUrl' }} />),
+        shallow(<TranscriptWidget {...props} isUploadError transcripts={{ en: 'sOMeUrl' }} />),
       ).toMatchSnapshot();
     });
     test('snapshot: renders ErrorAlert with delete error message', () => {
       expect(
-        shallow(<TranscriptWidget {...props} isDeleteError transcripts={{ english: 'sOMeUrl' }} />),
+        shallow(<TranscriptWidget {...props} isDeleteError transcripts={{ en: 'sOMeUrl' }} />),
       ).toMatchSnapshot();
     });
   });

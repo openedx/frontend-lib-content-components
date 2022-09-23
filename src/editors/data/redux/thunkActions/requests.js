@@ -151,7 +151,7 @@ export const deleteTranscript = ({ language, videoId, ...rest }) => (dispatch, g
 export const uploadTranscript = ({
   transcript,
   videoId,
-  language,
+  lang,
   ...rest
 }) => (dispatch, getState) => {
   dispatch(module.networkRequest({
@@ -160,7 +160,7 @@ export const uploadTranscript = ({
       blockId: selectors.app.blockId(getState()),
       transcript,
       videoId,
-      language,
+      language: lang,
       studioEndpointUrl: selectors.app.studioEndpointUrl(getState()),
     }),
     ...rest,

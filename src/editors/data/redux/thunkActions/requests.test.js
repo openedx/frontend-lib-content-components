@@ -298,14 +298,14 @@ describe('requests thunkActions module', () => {
       });
     });
     describe('uploadTranscript', () => {
-      const language = 'SoME laNGUage CoNtent As String';
+      const lang = 'SoME laNGUage CoNtent As String';
       const videoId = 'SoME VidEOid CoNtent As String';
       const transcript = 'SoME tRANscRIPt CoNtent As String';
       testNetworkRequestAction({
         action: requests.uploadTranscript,
         args: {
           transcript,
-          language,
+          lang,
           videoId,
           ...fetchParams,
         },
@@ -317,7 +317,7 @@ describe('requests thunkActions module', () => {
             blockId: selectors.app.blockId(testState),
             transcript,
             videoId,
-            language,
+            language: lang,
             studioEndpointUrl: selectors.app.studioEndpointUrl(testState),
           }),
         },

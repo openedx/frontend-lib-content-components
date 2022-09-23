@@ -56,7 +56,7 @@ describe('video thunkActions', () => {
   describe('uploadTranscript', () => {
     beforeEach(() => {
       thunkActions.uploadTranscript({
-        language: mockLanguage,
+        lang: mockLanguage,
         filename: mockFilename,
         file: mockFile,
       })(dispatch, getState);

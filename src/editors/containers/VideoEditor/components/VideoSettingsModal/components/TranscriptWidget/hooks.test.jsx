@@ -3,6 +3,8 @@ import * as module from './hooks';
 import { actions, thunkActions } from '../../../../../../data/redux';
 import { MockUseState } from '../../../../../../../testUtils';
 
+const lang1 = 'Kalaallisut';
+const lang2 = 'Greek';
 const lang1Code = 'kl';
 const lang2Code = 'el';
 const transcript1 = 'fIlEnAme1.srt';
@@ -37,7 +39,7 @@ describe('VideoEditorTranscript hooks', () => {
       expect(module.transcriptLanguages({})).toEqual('None');
     });
     test('it creates a list based on transcript object', () => {
-      expect(module.transcriptLanguages(transcripts)).toEqual(`${lang1Code}, ${lang2Code}`);
+      expect(module.transcriptLanguages(transcripts)).toEqual(`${lang1}, ${lang2}`);
     });
   });
 
@@ -62,7 +64,7 @@ describe('VideoEditorTranscript hooks', () => {
   describe('replaceFileCallback', () => {
     const mockFile = 'sOmeEbytes';
     const mockFileName = 'one.srt';
-    const mockEvent = { target: { files: [{ mockFile, name: mockFileName }] } };
+    const mockEvent = { mockFile, name: mockFileName };
     const mockDispatch = jest.fn();
 
     const result = { newFile: { mockFile, name: mockFileName }, newFilename: mockFileName, language: lang1Code };
@@ -79,7 +81,7 @@ describe('VideoEditorTranscript hooks', () => {
   describe('addFileCallback', () => {
     const mockFile = 'sOmeEbytes';
     const mockFileName = 'one.srt';
-    const mockEvent = { target: { files: [{ mockFile, name: mockFileName }] } };
+    const mockEvent = { mockFile, name: mockFileName };
     const mockDispatch = jest.fn();
 
     const result = { file: { mockFile, name: mockFileName }, filename: mockFileName, language: null };

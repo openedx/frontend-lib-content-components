@@ -3,7 +3,7 @@
 exports[`TranscriptWidget snapshots snapshot: renders ErrorAlert with delete error message 1`] = `
 <injectIntl(ShimmedIntlComponent)
   isError={false}
-  subtitle="english"
+  subtitle="English"
   title="Transcript"
 >
   <ErrorAlert
@@ -35,7 +35,7 @@ exports[`TranscriptWidget snapshots snapshot: renders ErrorAlert with delete err
       className="mt-4.5"
     >
       <injectIntl(ShimmedIntlComponent)
-        language="english"
+        language="en"
       />
       <div
         className="mb-1"
@@ -116,7 +116,7 @@ exports[`TranscriptWidget snapshots snapshot: renders ErrorAlert with delete err
 exports[`TranscriptWidget snapshots snapshot: renders ErrorAlert with upload error message 1`] = `
 <injectIntl(ShimmedIntlComponent)
   isError={false}
-  subtitle="english"
+  subtitle="English"
   title="Transcript"
 >
   <ErrorAlert
@@ -148,7 +148,7 @@ exports[`TranscriptWidget snapshots snapshot: renders ErrorAlert with upload err
       className="mt-4.5"
     >
       <injectIntl(ShimmedIntlComponent)
-        language="english"
+        language="en"
       />
       <div
         className="mb-1"
@@ -229,7 +229,7 @@ exports[`TranscriptWidget snapshots snapshot: renders ErrorAlert with upload err
 exports[`TranscriptWidget snapshots snapshots: renders as expected with allowTranscriptDownloads true 1`] = `
 <injectIntl(ShimmedIntlComponent)
   isError={false}
-  subtitle="en"
+  subtitle="English"
   title="Transcript"
 >
   <ErrorAlert
@@ -413,7 +413,7 @@ exports[`TranscriptWidget snapshots snapshots: renders as expected with default 
 exports[`TranscriptWidget snapshots snapshots: renders as expected with showTranscriptByDefault true 1`] = `
 <injectIntl(ShimmedIntlComponent)
   isError={false}
-  subtitle="en"
+  subtitle="English"
   title="Transcript"
 >
   <ErrorAlert
@@ -526,7 +526,7 @@ exports[`TranscriptWidget snapshots snapshots: renders as expected with showTran
 exports[`TranscriptWidget snapshots snapshots: renders as expected with transcripts 1`] = `
 <injectIntl(ShimmedIntlComponent)
   isError={false}
-  subtitle="en"
+  subtitle="English"
   title="Transcript"
 >
   <ErrorAlert
