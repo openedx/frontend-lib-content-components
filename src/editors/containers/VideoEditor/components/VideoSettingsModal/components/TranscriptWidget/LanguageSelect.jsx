@@ -28,15 +28,13 @@ export const LanguageSelect = ({
   return (
     <Form.Group controlId={`selectLanguage-form-${title}`} className="mt-2 mx-2">
       <Form.Control as="select" defaultValue={language} onChange={(e) => onLanguageChange(e)} floatingLabel={intl.formatMessage(messages.languageSelectLabel)}>
-        <option value={language}>{videoTranscriptLanguages[language]}</option>
         {Object.entries(videoTranscriptLanguages).map(([lang, text]) => {
-          if (language === lang) { return (<></>); }
+          if (language === lang) { return (<option value={lang} selected>{text}</option>); }
           if (openLanguages.some(row => row.includes(lang))) {
             return (<option value={lang}>{text}</option>);
           }
           return (<option value={lang} disabled>{text}</option>);
         })}
-
       </Form.Control>
     </Form.Group>
   );

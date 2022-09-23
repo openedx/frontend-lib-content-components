@@ -12,6 +12,7 @@ exports[`LanguageSelect snapshot transcript option 1`] = `
     onChange={[Function]}
   >
     <option
+      selected={true}
       value="kl"
     >
       kLinGon
@@ -42,6 +43,7 @@ exports[`LanguageSelect snapshots -- no transcripts no Open Languages, all shoul
     onChange={[Function]}
   >
     <option
+      selected={true}
       value="kl"
     >
       kLinGon
