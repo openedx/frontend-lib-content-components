@@ -1,7 +1,34 @@
-import { actions } from '..';
+import { actions, selectors } from '..';
 import { keyStore } from '../../../utils';
 import * as thunkActions from './video';
 
+jest.mock('..', () => ({
+  actions: {
+    video: {
+      load: (args) => ({ load: args }),
+    },
+  },
+  selectors: {
+    app: {
+      blockValue: {
+        data: {
+          metadata: {
+            edx_video_id: (state) => ({ edxVideoId: state }),
+            youtube_id_1_0: (state) => ({ youtube_id_1_0: state }),
+            html5_sources: (state) => ({ html5Sources: state }),
+            download_video: (state) => ({ download_video: state }),
+            transcripts: (state) => ({ transcripts: state }),
+            download_track: (state) => ({ download_track: state }),
+            show_captions: (state) => ({ show_captions: state }),
+            start_time: (state) => ({ start_time: state }),
+            end_time: (state) => ({ end_time: state }),
+            handout: (state) => ({ handout: state }),
+          },
+        },
+      },
+    },
+  },
+}));
 jest.mock('./requests', () => ({
   deleteTranscript: (args) => ({ deleteTranscript: args }),
   uploadTranscript: (args) => ({ uploadTranscript: args }),
@@ -30,6 +57,139 @@ describe('video thunkActions', () => {
       app: { studioEndpointUrl: 'soMEeNDPoiNT', blockId: 'soMEBloCk' },
       video: testState,
     }));
+  });
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
+  describe('loadVideoData', () => {
+    it('dispatches actions.video.load', () => {
+      const fakeData = {
+        videoSource: 'viDeOsoURce',
+        fallbackVideos: [],
+        allowVideoDownloads: selectors.app.blockValue.data.metadata.download_video,
+        transcripts: selectors.app.blockValue.data.metadata.transcripts,
+        allowTranscriptDownloads: selectors.app.blockValue.data.metadata.download_track,
+        showTranscriptByDefault: selectors.app.blockValue.data.metadata.show_captions,
+        duration: {
+          startTime: selectors.app.blockValue.data.metadata.start_time,
+          stopTime: selectors.app.blockValue.data.metadata.end_time,
+          total: null,
+        },
+        handout: selectors.app.blockValue.data.metadata.handout,
+        licenseType: 'lIcensEtyPe',
+        licenseDetails: {
+          attribution: true,
+          noncommercial: true,
+          noDerivatives: true,
+          shareAlike: undefined,
+        },
+      };
+      jest.spyOn(thunkActions, videoKeys.determineVideoSource).mockReturnValue({
+        videoSource: fakeData.videoSource,
+        fallbackVideos: fakeData.fallbackVideos,
+      });
+      jest.spyOn(thunkActions, videoKeys.parseLicense).mockReturnValue([
+        fakeData.licenseType,
+        {
+          by: fakeData.licenseDetails.attribution,
+          nc: fakeData.licenseDetails.noncommercial,
+          nd: fakeData.licenseDetails.noDerivatives,
+        },
+      ]);
+      thunkActions.loadVideoData()(dispatch);
+      expect(dispatch).toHaveBeenCalledWith(actions.video.load(fakeData));
+    });
+  });
+  describe('determineVideoSource', () => {
+    const edxVideoId = 'EDxviDEoiD';
+    const youtubeId = 'yOuTuBEiD';
+    const html5Sources = ['htmLOne', 'hTMlTwo', 'htMLthrEE'];
+    describe('when there is an edx video id, youtube id and html5 sources', () => {
+      it('returns the edx video id for video source and html5 sources for fallback videos', () => {
+        expect(thunkActions.determineVideoSource({
+          edxVideoId,
+          youtubeId,
+          html5Sources,
+        })).toEqual({
+          videoSource: edxVideoId,
+          fallbackVideos: html5Sources,
+        });
+      });
+    });
+    describe('when there is no edx video id', () => {
+      it('returns the youtube id for video source and html5 sources for fallback videos', () => {
+        expect(thunkActions.determineVideoSource({
+          edxVideoId: '',
+          youtubeId,
+          html5Sources,
+        })).toEqual({
+          videoSource: youtubeId,
+          fallbackVideos: html5Sources,
+        });
+      });
+    });
+    describe('when there is no edx video id and no youtube id', () => {
+      it('returns the first html5 source for video source and the rest for fallback videos', () => {
+        expect(thunkActions.determineVideoSource({
+          edxVideoId: '',
+          youtubeId: '',
+          html5Sources,
+        })).toEqual({
+          videoSource: 'htmLOne',
+          fallbackVideos: ['hTMlTwo', 'htMLthrEE'],
+        });
+      });
+      it('returns the html5 source for video source and an empty array for fallback videos', () => {
+        expect(thunkActions.determineVideoSource({
+          edxVideoId: '',
+          youtubeId: '',
+          html5Sources: ['htmlOne'],
+        })).toEqual({
+          videoSource: 'htmlOne',
+          fallbackVideos: [],
+        });
+      });
+    });
+    describe('when there is no edx video id, no youtube id and no html5 sources', () => {
+      it('returns an empty string for video source and an empty array for fallback videos', () => {
+        expect(thunkActions.determineVideoSource({
+          edxVideoId: '',
+          youtubeId: '',
+          html5Sources: [],
+        })).toEqual({
+          videoSource: '',
+          fallbackVideos: [],
+        });
+      });
+    });
+  });
+  describe('parseLicense', () => {
+    let license;
+    it('returns all-rights-reserved when there is no license', () => {
+      expect(thunkActions.parseLicense(license)).toEqual([
+        'all-rights-reserved',
+        {},
+      ]);
+    });
+    it('returns expected values for a license with no options', () => {
+      license = 'sOmeLIcense';
+      expect(thunkActions.parseLicense(license)).toEqual([
+        license,
+        {},
+      ]);
+    });
+    it('returns expected type and options for creative commons', () => {
+      license = 'creative-commons: ver=4.0 BY NC ND';
+      expect(thunkActions.parseLicense(license)).toEqual([
+        'creative-commons',
+        {
+          by: true,
+          nc: true,
+          nd: true,
+        },
+        '4.0',
+      ]);
+    });
   });
   describe('deleteTranscript', () => {
     beforeEach(() => {
