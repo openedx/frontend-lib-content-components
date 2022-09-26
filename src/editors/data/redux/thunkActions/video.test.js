@@ -11,7 +11,6 @@ const thunkActionsKeys = keyStore(thunkActions);
 const mockLanguage = 'la';
 const mockFile = 'soMEtRANscRipT';
 const mockFilename = 'soMEtRANscRipT.srt';
-const mockDownloadLink = 'soMEeNDPoiNT/xblock/soMEBloCk/handler/studio_transcript/translation?language_code=la';
 
 const testState = { transcripts: { la: 'test VALUE' }, videoId: 'soMEvIDEo' };
 const testUpload = { transcripts: { la: { filename: mockFilename } } };

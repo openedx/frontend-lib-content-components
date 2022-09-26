@@ -86,7 +86,7 @@ describe('cms url methods', () => {
         .toEqual(`${block({ studioEndpointUrl, blockId })}/handler/studio_transcript/translation`);
     });
   });
-  describe('downloadVideoTranscripts', () => {
+  describe('downloadVideoTranscriptURL', () => {
     it('returns url with studioEndpointUrl, blockId and language query', () => {
       expect(downloadVideoTranscriptURL({ studioEndpointUrl, blockId, language }))
         .toEqual(`${videoTranscripts({ studioEndpointUrl, blockId })}?language_code=${language}`);
