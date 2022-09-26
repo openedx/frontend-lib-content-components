@@ -101,6 +101,7 @@ export const apiMethods = {
           handout: content.handout,
           start_time: content.duration.startTime,
           end_time: content.duration.stopTime,
+          license: module.processLicense(content.licenseType, content.licenseDetails),
         },
       };
     }
@@ -142,8 +143,8 @@ export const processVideoIds = ({ videoSource, fallbackVideos }) => {
 
   if (module.isEdxVideo(videoSource)) {
     edxVideoId = videoSource;
-  } else if (module.getYoutubeId(videoSource)) {
-    youtubeId = module.getYoutubeId(videoSource);
+  } else if (module.parseYoutubeId(videoSource)) {
+    youtubeId = module.parseYoutubeId(videoSource);
   } else {
     html5Sources.push(videoSource);
   }
@@ -159,15 +160,29 @@ export const processVideoIds = ({ videoSource, fallbackVideos }) => {
 
 export const isEdxVideo = (src) => {
   const uuid4Regex = new RegExp(/^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$/);
-  return src.match(uuid4Regex);
+  if (src.match(uuid4Regex)) {
+    return true;
+  }
+  return false;
 };
 
-export const getYoutubeId = (src) => {
+export const parseYoutubeId = (src) => {
   const youtubeRegex = new RegExp(/^((?:https?:)?\/\/)?((?:www|m)\.)?((?:youtube\.com|youtu.be))(\/(?:[\w-]+\?v=|embed\/|v\/)?)([\w-]+)(\S+)?$/);
   if (!src.match(youtubeRegex)) {
     return null;
   }
   return src.match(youtubeRegex)[5];
+};
+
+export const processLicense = (licenseType, licenseDetails) => {
+  if (licenseType === 'all-rights-reserved') {
+    return 'all-rights-reserved';
+  }
+  return 'creative-commons: ver=4.0 BY'.concat(
+    (licenseDetails.noncononcommercial ? ' NC' : null),
+    (licenseDetails.noDerivatives ? ' ND' : null),
+    (licenseDetails.shareAlike ? ' SA' : null),
+  );
 };
 
 export const checkMockApi = (key) => {
