@@ -9,6 +9,7 @@ const testState = {
 };
 
 jest.mock('../app/selectors', () => ({
+  simpleSelectors: {studioEndpointUrl: (state) => ({ studioEndpointUrl: state }), blockId: (state) => ({ blockId: state }),},
   studioEndpointUrl: (state) => ({ studioEndpointUrl: state }),
   blockId: (state) => ({ blockId: state }),
   blockType: (state) => ({ blockType: state }),
