@@ -179,9 +179,9 @@ export const processLicense = (licenseType, licenseDetails) => {
     return 'all-rights-reserved';
   }
   return 'creative-commons: ver=4.0 BY'.concat(
-    (licenseDetails.noncononcommercial ? ' NC' : null),
-    (licenseDetails.noDerivatives ? ' ND' : null),
-    (licenseDetails.shareAlike ? ' SA' : null),
+    (licenseDetails.noncommercial ? ' NC' : ''),
+    (licenseDetails.noDerivatives ? ' ND' : ''),
+    (licenseDetails.shareAlike ? ' SA' : ''),
   );
 };
 

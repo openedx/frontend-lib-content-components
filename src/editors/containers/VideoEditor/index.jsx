@@ -6,7 +6,7 @@ import { selectors } from '../../data/redux';
 
 import EditorContainer from '../EditorContainer';
 import VideoEditorModal from './components/VideoEditorModal';
-import * as hooks from './hooks';
+import { errorsHook } from './hooks';
 
 export const VideoEditor = ({
   onClose,
@@ -16,7 +16,7 @@ export const VideoEditor = ({
   const {
     error,
     validateEntry,
-  } = hooks.errorsHook();
+  } = errorsHook();
 
   return (
     <EditorContainer

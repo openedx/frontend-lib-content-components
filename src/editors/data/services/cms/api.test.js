@@ -107,11 +107,13 @@ describe('cms api', () => {
         const html5Sources = 'hTML5souRCES';
         const edxVideoId = 'eDXviDEOid';
         const youtubeId = 'yOUtUBeid';
+        const license = 'LiCEnsE';
         jest.spyOn(api, 'processVideoIds').mockReturnValue({
           html5Sources,
           edxVideoId,
           youtubeId,
         });
+        jest.spyOn(api, 'processLicense').mockReturnValue(license);
         expect(apiMethods.normalizeContent({
           blockId,
           blockType: 'video',
@@ -135,6 +137,7 @@ describe('cms api', () => {
             handout: content.handout,
             start_time: content.duration.startTime,
             end_time: content.duration.stopTime,
+            license,
           },
         });
         jest.restoreAllMocks();
