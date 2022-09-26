@@ -10,7 +10,7 @@ import { MoreVert } from '@edx/paragon/icons';
 
 import LanguageSelect from './LanguageSelect';
 import hooks from './hooks';
-import { thunkActions } from '../../../../../../data/redux';
+import { thunkActions, selectors } from '../../../../../../data/redux';
 import FileInput from '../../../../../../sharedComponents/FileInput';
 import messages from './messages';
 
@@ -19,11 +19,11 @@ export const TranscriptListItem = ({
   language,
   // redux
   deleteTranscript,
-  downloadTranscript,
+  getTranscriptDownloadUrl,
 }) => {
   const fileInput = hooks.fileInput({ onAddFile: hooks.replaceFileCallback({ language, dispatch: useDispatch() }) });
   const { inDeleteConfirmation, launchDeleteConfirmation, cancelDelete } = hooks.setUpDeleteConfirmation();
-  const downloadLink = downloadTranscript({ language });
+  const downloadLink = getTranscriptDownloadUrl({ language });
 
   return (
     <div className="mb-2">
@@ -93,10 +93,12 @@ TranscriptListItem.propTypes = {
   language: PropTypes.string.isRequired,
   // redux
   deleteTranscript: PropTypes.func.isRequired,
-  downloadTranscript: PropTypes.func.isRequired,
+  getTranscriptDownloadUrl: PropTypes.func.isRequired,
 };
 
-export const mapStateToProps = () => ({});
+export const mapStateToProps = (state) => ({
+  getTranscriptDownloadUrl: selectors.video.getTranscriptDownloadUrl(state),
+});
 
 export const mapDispatchToProps = {
   deleteTranscript: thunkActions.video.deleteTranscript,

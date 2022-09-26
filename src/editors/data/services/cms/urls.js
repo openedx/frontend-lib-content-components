@@ -39,6 +39,6 @@ export const videoTranscripts = ({ studioEndpointUrl, blockId }) => (
   `${block({ studioEndpointUrl, blockId })}/handler/studio_transcript/translation`
 );
 
-export const downloadVideoTranscripts = ({ studioEndpointUrl, blockId, language }) => (
+export const downloadVideoTranscriptURL = ({ studioEndpointUrl, blockId, language }) => (
   `${videoTranscripts({ studioEndpointUrl, blockId })}?language_code=${language}`
 );

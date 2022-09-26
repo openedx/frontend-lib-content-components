@@ -5,6 +5,8 @@ import { videoTranscriptLanguages } from '../../constants/video';
 
 import { initialState } from './reducer';
 import * as module from './selectors';
+import * as AppSelectors from '../app/selectors';
+import { downloadVideoTranscriptURL } from '../../services/cms/urls';
 
 const stateKeys = keyStore(initialState);
 
@@ -33,10 +35,19 @@ export const openLanguages = createSelector(
     );
     return open;
   },
+);
 
+export const getTranscriptDownloadUrl = createSelector(
+  [AppSelectors.simpleSelectors.studioEndpointUrl, AppSelectors.simpleSelectors.blockId],
+  (studioEndpointUrl, blockId) => ({ language }) => downloadVideoTranscriptURL({
+    studioEndpointUrl,
+    blockId,
+    language,
+  }),
 );
 
 export default {
   openLanguages,
+  getTranscriptDownloadUrl,
   ...simpleSelectors,
 };

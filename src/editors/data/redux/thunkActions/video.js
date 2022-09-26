@@ -1,7 +1,6 @@
 import { singleVideoData } from '../../services/cms/mockVideoData';
 import { actions, selectors } from '..';
 import * as requests from './requests';
-import { downloadVideoTranscripts } from '../../services/cms/urls';
 
 export const loadVideoData = () => (dispatch) => {
   dispatch(actions.video.load(singleVideoData));
@@ -13,12 +12,6 @@ export const saveVideoData = () => () => {
 };
 
 // Transcript Thunks:
-
-export const downloadTranscript = ({ language }) => (getState) => {
-  const state = getState();
-  const { studioEndpointUrl, blockId } = state.app;
-  return downloadVideoTranscripts({ studioEndpointUrl, blockId, language });
-};
 
 export const uploadTranscript = ({ language, filename, file }) => (dispatch, getState) => {
   const state = getState();
@@ -83,5 +76,4 @@ export default {
   uploadTranscript,
   deleteTranscript,
   replaceTranscript,
-  downloadTranscript,
 };
