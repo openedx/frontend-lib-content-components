@@ -32,12 +32,6 @@ describe('video thunkActions', () => {
       video: testState,
     }));
   });
-  describe('downloadTranscript', () => {
-    it('returns mockDownloadLink', () => {
-      const downloadTranscript = thunkActions.downloadTranscript({ language: mockLanguage })(getState);
-      expect(downloadTranscript).toEqual(mockDownloadLink);
-    });
-  });
   describe('deleteTranscript', () => {
     beforeEach(() => {
       thunkActions.deleteTranscript({ language: mockLanguage })(dispatch, getState);

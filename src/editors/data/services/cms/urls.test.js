@@ -7,7 +7,7 @@ import {
   blockStudioView,
   courseAssets,
   courseImages,
-  downloadVideoTranscripts,
+  downloadVideoTranscriptURL,
   videoTranscripts,
 } from './urls';
 
@@ -88,7 +88,7 @@ describe('cms url methods', () => {
   });
   describe('downloadVideoTranscripts', () => {
     it('returns url with studioEndpointUrl, blockId and language query', () => {
-      expect(downloadVideoTranscripts({ studioEndpointUrl, blockId, language }))
+      expect(downloadVideoTranscriptURL({ studioEndpointUrl, blockId, language }))
         .toEqual(`${videoTranscripts({ studioEndpointUrl, blockId })}?language_code=${language}`);
     });
   });

@@ -1,8 +1,8 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import { TranscriptListItem, mapDispatchToProps } from './TranscriptListItem';
-import { thunkActions } from '../../../../../../data/redux';
+import { TranscriptListItem, mapDispatchToProps, mapStateToProps } from './TranscriptListItem';
+import { thunkActions, selectors } from '../../../../../../data/redux';
 import hooks from './hooks';
 
 jest.mock('react-redux', () => {
@@ -17,8 +17,12 @@ jest.mock('react-redux', () => {
 jest.mock('../../../../../../data/redux', () => ({
   thunkActions: {
     video: {
-      downloadTranscript: jest.fn().mockName('actions.video.downloadTranscript'),
       deleteTranscript: jest.fn().mockName('actions.video.deleteTranscript'),
+    },
+  },
+  selectors: {
+    video: {
+      getTranscriptDownloadUrl: jest.fn(args => ({ getTranscriptDownloadUrl: args })).mockName('selectors.video.getTranscriptDownloadUrl'),
     },
   },
 }));
@@ -31,11 +35,10 @@ jest.mock('./hooks', () => ({
 
 describe('TranscriptListItem', () => {
   const props = {
-    downloadLink: 'sOmeLink',
+    getTranscriptDownloadUrl: jest.fn().mockName('selectors..video.getTranscriptDownloadUrl'),
     title: 'sOmeTiTLE',
     language: 'lAnG',
     deleteTranscript: jest.fn().mockName('thunkActions.video.deleteTranscript'),
-    downloadTranscript: jest.fn().mockName('thunkActions.video.downloadTranscript'),
   };
 
   describe('Snapshots', () => {
@@ -63,10 +66,17 @@ describe('TranscriptListItem', () => {
       ).toMatchSnapshot();
     });
   });
+  describe('mapStateToProps', () => {
+    const testState = { A: 'pple', B: 'anana', C: 'ucumber' };
+    test('getTranscriptDownloadUrl from video.getTranscriptDownloadUrl', () => {
+      expect(
+        mapStateToProps(testState).getTranscriptDownloadUrl,
+      ).toEqual(selectors.video.getTranscriptDownloadUrl(testState));
+    });
+  });
   describe('mapDispatchToProps', () => {
     test('deleteTranscript from thunkActions.video.deleteTranscript', () => {
       expect(mapDispatchToProps.deleteTranscript).toEqual(thunkActions.video.deleteTranscript);
-      expect(mapDispatchToProps.downloadTranscript).toEqual(thunkActions.video.downloadTranscript);
     });
   });
 });
