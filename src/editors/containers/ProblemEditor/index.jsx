@@ -1,14 +1,12 @@
 import React from 'react';
-import { connect, useDispatch } from 'react-redux';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Spinner } from '@edx/paragon';
-import { FormattedMessage, injectIntl, intlShape } from '@edx/frontend-platform/i18n';
+import { injectIntl } from '@edx/frontend-platform/i18n';
 import SelectTypeModal from './components/SelectTypeModal';
 import EditProblemView from './components/EditProblemView';
 import { selectors, thunkActions } from '../../data/redux';
 import { RequestKeys } from '../../data/constants/requests';
-import { useSelector } from 'react-redux';
-
 
 export const ProblemEditor = ({
   onClose,
@@ -17,11 +15,11 @@ export const ProblemEditor = ({
   blockFinished,
   studioViewFinished,
   blockValue,
-  initializeProblemEditor
+  initializeProblemEditor,
 }) => {
-  React.useEffect(() => initializeProblemEditor(blockValue),[blockValue]);
+  React.useEffect(() => initializeProblemEditor(blockValue), [blockValue]);
   // TODO: INTL MSG, Add LOAD FAILED ERROR using BLOCKFAILED
-  if (!blockFinished || !studioViewFinished ) {
+  if (!blockFinished || !studioViewFinished) {
     return (
       <div className="text-center p-6">
         <Spinner
@@ -32,7 +30,7 @@ export const ProblemEditor = ({
       </div>
     );
   }
-  //once data is loaded, init store
+  // once data is loaded, init store
 
   if (problemType === null) {
     return (<SelectTypeModal onClose={onClose} />);
@@ -46,7 +44,8 @@ ProblemEditor.propTypes = {
   blockFinished: PropTypes.bool.isRequired,
   studioViewFinished: PropTypes.bool.isRequired,
   problemType: PropTypes.string.isRequired,
-  initializeProblemEditor: PropTypes.func.isRequired
+  initializeProblemEditor: PropTypes.func.isRequired,
+  blockValue: PropTypes.objectOf(PropTypes.object).isRequired,
 };
 
 export const mapStateToProps = (state) => ({

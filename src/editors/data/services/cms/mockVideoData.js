@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
 import LicenseTypes from '../../constants/licenses';
-import { ProblemTypeKeys } from '../../constants/problem';
 
 export const videoDataProps = {
   videoSource: PropTypes.string,

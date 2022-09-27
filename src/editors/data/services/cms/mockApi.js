@@ -7,13 +7,12 @@ const mockPromise = (returnValue) => new Promise(resolve => resolve(returnValue)
 // eslint-disable-next-line
 export const fetchBlockById = ({ blockId, studioEndpointUrl }) => {
   let data = {};
-  if (blockId === "html-block-id"){
+  if (blockId === 'html-block-id') {
     data = {
       data: '<p>Test prompt content</p>',
       display_name: 'My Text Prompt',
-    }
-  }
-  else if (blockId === "problem-block-id"){
+    };
+  } else if (blockId === 'problem-block-id') {
     data = {
       data: `<problem>
       <optionresponse>
@@ -30,18 +29,18 @@ export const fetchBlockById = ({ blockId, studioEndpointUrl }) => {
 
   `,
       display_name: 'Dropdown',
-      metadata : {
+      metadata: {
         markdown: `You can use this template as a guide to the simple editor markdown and OLX markup to use for dropdown problems. Edit this component to replace this template with your own assessment.
         >>Add the question text, or prompt, here. This text is required.||You can add an optional tip or note related to the prompt like this. <<
         [[
         an incorrect answer
         (the correct answer)
         an incorrect answer
-        ]]`
-      }
-    }
+        ]]`,
+      },
+    };
   }
-  return mockPromise({data: {...data},});
+  return mockPromise({ data: { ...data } });
 };
 
 // TODO: update to return block data appropriate per block ID, which will equal block type
@@ -129,7 +128,7 @@ export const normalizeContent = ({
   } else {
     throw new TypeError(`No Block in V2 Editors named /"${blockType}/", Cannot Save Content.`);
   }
-  return {...response};
+  return { ...response };
 };
 
 export const saveBlock = ({
@@ -176,13 +175,12 @@ export const uploadImage = ({
 // eslint-disable-next-line
 export const fetchStudioView = ({ blockId, studioEndpointUrl }) => {
   let data = {};
-  if (blockId === "html-block-id"){
+  if (blockId === 'html-block-id') {
     data = {
       data: '<p>Test prompt content</p>',
       display_name: 'My Text Prompt',
-    }
-  }
-  else if (blockId === "problem-block-id"){
+    };
+  } else if (blockId === 'problem-block-id') {
     data = {
       data: `<problem>
       <optionresponse>
@@ -197,7 +195,7 @@ export const fetchStudioView = ({ blockId, studioEndpointUrl }) => {
       </optionresponse>
   </problem>`,
       display_name: 'Dropdown',
-      metadata : {
+      metadata: {
         markdown: `You can use this template as a guide to the simple editor markdown and OLX markup to use for dropdown problems. Edit this component to replace this template with your own assessment.
         >>Add the question text, or prompt, here. This text is required.||You can add an optional tip or note related to the prompt like this. <<
         [[
@@ -205,8 +203,8 @@ export const fetchStudioView = ({ blockId, studioEndpointUrl }) => {
         (the correct answer)
         an incorrect answer
         ]]`,
-      }
-    }
+      },
+    };
   }
 
   return mockPromise({

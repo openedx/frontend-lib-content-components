@@ -6,6 +6,7 @@ import * as module from './app';
 export const fetchBlock = () => (dispatch) => {
   dispatch(requests.fetchBlock({
     onSuccess: (response) => dispatch(actions.app.setBlockValue(response)),
+    // eslint-disable-next-line
     onFailure: (e) => console.log({ fetchFailure: e }),
   }));
 };
@@ -13,6 +14,7 @@ export const fetchBlock = () => (dispatch) => {
 export const fetchStudioView = () => (dispatch) => {
   dispatch(requests.fetchStudioView({
     onSuccess: (response) => dispatch(actions.app.setStudioView(response)),
+    // eslint-disable-next-line
     onFailure: (e) => console.log({ fetchFailure: e }),
   }));
 };

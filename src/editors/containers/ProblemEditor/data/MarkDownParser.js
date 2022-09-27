@@ -5,7 +5,7 @@ https://github.com/open-craft/capa-visual-editor/
 Changes have been made to adapt the parser with respect to our use case.
 */
 
-import { ProblemTypeKeys } from "../../../data/constants/problem";
+import { ProblemTypeKeys } from '../../../data/constants/problem';
 
 export const indexToLetterMap = [...Array(26)].map((val, i) => String.fromCharCode(i + 65));
 
@@ -40,62 +40,62 @@ function getHints(markdown) {
 function getShortAnswerOptions(markdown) {
   // TODO: Include tolerence for number it fails for now.
   let problemType = ProblemTypeKeys.TEXTINPUT;
-    if ((!markdown || !markdown.trim())) {
-      return {
-        shortAnswersList: [],
-        problemType,
-      };
-    }
-    const markdownListData = markdown.split('\n');
-    const shortAnswersList = [];
-    let gotAnswer = false;
-    for (const i in markdownListData) {
-      const row = markdownListData[i].trim();
-      const feedbackStart = row.indexOf('{{');
-      const feedbackEnd = row.indexOf('}}');
-      let feedback = '';
-      let answer = '';
-      let correct = true;
-      if (row.startsWith('=') && !gotAnswer) {
-        gotAnswer = true;
-        if (feedbackStart > -1) {
-          feedback = row.slice(feedbackStart + 2, feedbackEnd);
-          answer = row.slice(1, feedbackStart).trim();
-        } else {
-          answer = row.slice(1).trim();
-        }
-      } else if (row.startsWith('=') && gotAnswer) {
-        break;
-      } else if (gotAnswer && row.startsWith('or=')) { // the next correct answer
-        if (feedbackStart > -1) {
-          answer = row.slice(3, feedbackStart).trim();
-          feedback = row.slice(feedbackStart + 2, feedbackEnd);
-        } else {
-          answer = row.slice(3).trim();
-        }
-      } else if (gotAnswer && row.startsWith('not=')) { // the incorrect answer
-        if (feedbackStart > -1) {
-          answer = row.slice(4, feedbackStart).trim();
-          feedback = row.slice(feedbackStart + 2, feedbackEnd);
-        } else {
-          answer = row.slice(4).trim();
-        }
-        correct = false;
-      }
-      if (answer) {
-        problemType = isFinite(answer) ? ProblemTypeKeys.NUMERIC : ProblemTypeKeys.TEXTINPUT;
-        shortAnswersList.push({
-          id: indexToLetterMap[shortAnswersList.length],
-          title: answer,
-          feedback,
-          correct,
-        });
-      }
-    }
+  if ((!markdown || !markdown.trim())) {
     return {
-      shortAnswersList,
+      shortAnswersList: [],
       problemType,
     };
+  }
+  const markdownListData = markdown.split('\n');
+  const shortAnswersList = [];
+  let gotAnswer = false;
+  for (const i in markdownListData) {
+    const row = markdownListData[i].trim();
+    const feedbackStart = row.indexOf('{{');
+    const feedbackEnd = row.indexOf('}}');
+    let feedback = '';
+    let answer = '';
+    let correct = true;
+    if (row.startsWith('=') && !gotAnswer) {
+      gotAnswer = true;
+      if (feedbackStart > -1) {
+        feedback = row.slice(feedbackStart + 2, feedbackEnd);
+        answer = row.slice(1, feedbackStart).trim();
+      } else {
+        answer = row.slice(1).trim();
+      }
+    } else if (row.startsWith('=') && gotAnswer) {
+      break;
+    } else if (gotAnswer && row.startsWith('or=')) { // the next correct answer
+      if (feedbackStart > -1) {
+        answer = row.slice(3, feedbackStart).trim();
+        feedback = row.slice(feedbackStart + 2, feedbackEnd);
+      } else {
+        answer = row.slice(3).trim();
+      }
+    } else if (gotAnswer && row.startsWith('not=')) { // the incorrect answer
+      if (feedbackStart > -1) {
+        answer = row.slice(4, feedbackStart).trim();
+        feedback = row.slice(feedbackStart + 2, feedbackEnd);
+      } else {
+        answer = row.slice(4).trim();
+      }
+      correct = false;
+    }
+    if (answer) {
+      problemType = isFinite(answer) ? ProblemTypeKeys.NUMERIC : ProblemTypeKeys.TEXTINPUT;
+      shortAnswersList.push({
+        id: indexToLetterMap[shortAnswersList.length],
+        title: answer,
+        feedback,
+        correct,
+      });
+    }
+  }
+  return {
+    shortAnswersList,
+    problemType,
+  };
 }
 
 function getMultipleChoiceOptions(markdown) {
@@ -290,25 +290,27 @@ function parseMarkdown(markdown) {
   let problemType = '';
   const question = getEditorData(markdown);
   const hints = getHints(markdown);
-  let data = {question, hints};
+  let data = { question, hints };
   let parsedData = getSingleChoiceOptions(markdown);
-  if (parsedData.singleSelectAnswersList.length !== 0){
+  if (parsedData.singleSelectAnswersList.length !== 0) {
     answers = parsedData.singleSelectAnswersList;
     problemType = parsedData.problemType;
-    data = {...data, answers, problemType};
+    data = { ...data, answers, problemType };
   }
   parsedData = getMultipleChoiceOptions(markdown);
-  if (parsedData.multiSelectAnswersList.length !== 0){
+  if (parsedData.multiSelectAnswersList.length !== 0) {
     answers = parsedData.multiSelectAnswersList;
     problemType = parsedData.problemType;
-    const groupFeedbackList = parsedData.groupFeedbackList;
-    data = {...data, answers, problemType, groupFeedbackList};
+    const { groupFeedbackList } = parsedData;
+    data = {
+      ...data, answers, problemType, groupFeedbackList,
+    };
   }
   parsedData = getShortAnswerOptions(markdown);
-  if (parsedData.shortAnswersList.length !== 0){
+  if (parsedData.shortAnswersList.length !== 0) {
     answers = parsedData.shortAnswersList;
     problemType = parsedData.problemType;
-    data = {...data, answers, problemType};
+    data = { ...data, answers, problemType };
   }
   return data;
 }

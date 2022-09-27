@@ -3,7 +3,6 @@ import { shallow } from 'enzyme';
 import { formatMessage } from '../../../../../../testUtils';
 import { AnswerOption } from './AnswerOption';
 
-
 describe('AnswerOption', () => {
   const answerWithOnlyFeedback = {
     id: 'A',

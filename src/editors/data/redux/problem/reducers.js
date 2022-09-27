@@ -1,4 +1,4 @@
-import { has, isUndefined } from "lodash";
+import { has, isUndefined } from 'lodash-es';
 import { createSlice } from '@reduxjs/toolkit';
 import { indexToLetterMap } from '../../../containers/ProblemEditor/data/MarkDownParser';
 import { StrictDict } from '../../../utils';

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Form } from '@edx/paragon';
 import { ProblemTypes } from '../../../../../data/constants/problem';
 
-//TODO: problemtype
+// TODO: problemtype
 const ProblemTypeSelect = ({
   // redux
   setSelected,
