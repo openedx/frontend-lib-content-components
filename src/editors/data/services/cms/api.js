@@ -153,7 +153,7 @@ export const apiMethods = {
     } else {
       throw new TypeError(`No Block in V2 Editors named /"${blockType}/", Cannot Save Content.`);
     }
-    return {...response};
+    return { ...response };
   },
   saveBlock: ({
     blockId,

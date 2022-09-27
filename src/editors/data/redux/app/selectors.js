@@ -1,10 +1,4 @@
 import { createSelector } from 'reselect';
-import { getEditorData,
-         getSingleChoiceOptions,
-         getShortAnswerOptions,
-         getHints,
-         getMultipleChoiceOptions } from '../../../containers/ProblemEditor/data/MarkDownParser';
-
 import { blockTypes } from '../../constants/app';
 import * as urls from '../../services/cms/urls';
 import * as module from './selectors';

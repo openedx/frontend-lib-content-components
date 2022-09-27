@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import ProblemTypeSelect from './content/ProblemTypeSelect';
 import Preview from './content/Preview';
-import SelectTypeWrapper from './SelectTypeWrapper'
+import SelectTypeWrapper from './SelectTypeWrapper';
 
 export const SelectTypeModal = ({
   onClose,
@@ -13,10 +13,10 @@ export const SelectTypeModal = ({
   return (
     <div>
       <SelectTypeWrapper selected={selected}>
-      <ProblemTypeSelect setSelected={setSelected} />
-      <Preview
-        problemType={selected}
-      />
+        <ProblemTypeSelect setSelected={setSelected} />
+        <Preview
+          problemType={selected}
+        />
       </SelectTypeWrapper>
     </div>
   );
