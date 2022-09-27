@@ -33,7 +33,7 @@ export const singleVideoData = {
     'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
   ],
   allowVideoDownloads: true,
-  thumbnail: 'my-thumbnail-file-url', // filename
+  thumbnail: null, // filename
   transcripts: {
     en: { filename: 'my-transcript-url' },
   },
