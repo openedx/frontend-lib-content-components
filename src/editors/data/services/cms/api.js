@@ -178,7 +178,8 @@ export const processLicense = (licenseType, licenseDetails) => {
   if (licenseType === 'all-rights-reserved') {
     return 'all-rights-reserved';
   }
-  return 'creative-commons: ver=4.0 BY'.concat(
+  return 'creative-commons: ver=4.0'.concat(
+    (licenseDetails.attribution ? ' BY' : ''),
     (licenseDetails.noncommercial ? ' NC' : ''),
     (licenseDetails.noDerivatives ? ' ND' : ''),
     (licenseDetails.shareAlike ? ' SA' : ''),
