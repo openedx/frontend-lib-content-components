@@ -24,12 +24,20 @@ export const uploadTranscript = ({ language, filename, file }) => (dispatch, get
     language: lang,
     videoId,
     transcript: file,
-    onSuccess: () => dispatch(actions.video.updateField({
-      transcripts: {
-        ...transcripts,
-        [lang]: { filename },
-      },
-    })),
+    onSuccess: (response) => {
+      dispatch(actions.video.updateField({
+        transcripts: {
+          ...transcripts,
+          [lang]: { filename },
+        },
+      }));
+      if (selectors.video.videoId(state) === '') {
+        dispatch(actions.video.updateField({
+          videoId: response.edx_video_id,
+        }));
+      }
+    },
+
   }));
 };
 
