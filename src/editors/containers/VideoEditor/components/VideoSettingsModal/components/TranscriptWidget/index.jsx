@@ -1,7 +1,10 @@
 import React from 'react';
 import { connect, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
-
+import {
+  FormattedMessage,
+  injectIntl,
+} from '@edx/frontend-platform/i18n';
 import {
   Form,
   Button,
@@ -12,10 +15,7 @@ import {
   Alert,
 } from '@edx/paragon';
 import { FileUpload, Info } from '@edx/paragon/icons';
-import {
-  FormattedMessage,
-  injectIntl,
-} from '@edx/frontend-platform/i18n';
+
 
 import { actions, selectors } from '../../../../../../data/redux';
 import * as hooks from './hooks';
@@ -45,7 +45,6 @@ export const TranscriptWidget = ({
   const languagesArr = hooks.transcriptLanguages(transcripts);
   const fileInput = hooks.fileInput({ onAddFile: hooks.addFileCallback({ dispatch: useDispatch() }) });
   const hasTranscripts = hooks.hasTranscripts(transcripts);
-
   return (
     <CollapsibleFormWidget
       isError={Object.keys(error).length !== 0}
