@@ -17,7 +17,7 @@ import {
   intlShape,
 } from '@edx/frontend-platform/i18n';
 
-import hooks from '../hooks';
+import * as widgetHooks from '../hooks';
 import * as module from './hooks';
 import messages from './messages';
 import { actions } from '../../../../../../data/redux';
@@ -39,12 +39,12 @@ export const VideoSourceWidget = ({
     videoSource: source,
     fallbackVideos,
     allowVideoDownloads: allowDownload,
-  } = hooks.widgetValues({
+  } = widgetHooks.widgetValues({
     dispatch,
     fields: {
-      [hooks.selectorKeys.videoSource]: hooks.genericWidget,
-      [hooks.selectorKeys.fallbackVideos]: hooks.arrayWidget,
-      [hooks.selectorKeys.allowVideoDownloads]: hooks.genericWidget,
+      [widgetHooks.selectorKeys.videoSource]: widgetHooks.genericWidget,
+      [widgetHooks.selectorKeys.fallbackVideos]: widgetHooks.arrayWidget,
+      [widgetHooks.selectorKeys.allowVideoDownloads]: widgetHooks.genericWidget,
     },
   });
   const deleteFallbackVideo = module.deleteFallbackVideo({ fallbackVideos: fallbackVideos.formValue, dispatch });

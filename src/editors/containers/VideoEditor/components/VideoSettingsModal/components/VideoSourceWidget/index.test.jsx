@@ -20,6 +20,20 @@ jest.mock('../../../../../../data/redux', () => ({
   },
 }));
 
+jest.mock('../hooks', () => ({
+  selectorKeys: ['soMEkEy'],
+  widgetValues: jest.fn().mockReturnValue({
+    videoSource: { onChange: jest.fn(), onBlur: jest.fn(), local: '' },
+    fallbackVideos: {
+      formValue: ['somEUrL'],
+      onChange: jest.fn(),
+      onBlur: jest.fn(),
+      local: '',
+    },
+    allowVideoDownloads: { local: false, onCheckedChange: jest.fn() },
+  }),
+}));
+
 describe('VideoSourceWidget', () => {
   const props = {
     error: {},
