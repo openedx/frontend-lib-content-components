@@ -6,8 +6,11 @@ import { actions } from '../../../../../../data/redux';
 // };
 export const deleteFallbackVideo = ({ fallbackVideos, dispatch }) => (videoUrl) => {
   const updatedFallbackVideos = [];
+  let firstOccurence = true;
   fallbackVideos.forEach(item => {
-    if (item !== videoUrl) {
+    if (item === videoUrl && firstOccurence) {
+      firstOccurence = false;
+    } else {
       updatedFallbackVideos.push(item);
     }
   });

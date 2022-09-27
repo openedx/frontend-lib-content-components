@@ -48,7 +48,7 @@ export const VideoSourceWidget = ({
     },
   });
   const deleteFallbackVideo = module.deleteFallbackVideo({ fallbackVideos: fallbackVideos.formValue, dispatch });
-  console.log(fallbackVideos);
+
   return (
     <CollapsibleFormWidget
       title={intl.formatMessage(messages.titleLabel)}
