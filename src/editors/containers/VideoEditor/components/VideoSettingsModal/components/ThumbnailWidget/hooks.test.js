@@ -29,7 +29,7 @@ jest.mock('../../../../../../data/redux', () => ({
 }));
 
 let hook;
-let setThumbnailSrc = jest.fn();
+const setThumbnailSrc = jest.fn();
 const testValue = 'testVALUEVALIDIMAGE';
 
 describe('fileInput', () => {
