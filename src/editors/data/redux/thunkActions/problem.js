@@ -1,12 +1,13 @@
 import { isEmpty, get } from 'lodash-es';
 import { actions } from '..';
-import { parseMarkdown } from '../../../containers/ProblemEditor/data/MarkDownParser';
+import { OLXParser } from '../../../containers/ProblemEditor/data/OLXParser';
 
 export const initializeProblem = (blockValue) => (dispatch) => {
   const rawOLX = get(blockValue, 'data.data', {});
-  const parsedData = get(blockValue, 'data.metadata.markdown', {});
-  if (!isEmpty(parsedData) && !isEmpty(rawOLX)) {
-    dispatch(actions.problem.load({ ...parseMarkdown(parsedData), rawOLX }));
+  const olxParser = new OLXParser(rawOLX);
+  const data = olxParser.getParsedOLXData();
+  if (!isEmpty(rawOLX) && !isEmpty(data)) {
+    dispatch(actions.problem.load({ ...data, rawOLX }));
   }
 };
 

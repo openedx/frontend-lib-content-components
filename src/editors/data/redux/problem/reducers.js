@@ -1,6 +1,6 @@
 import { has, isUndefined } from 'lodash-es';
 import { createSlice } from '@reduxjs/toolkit';
-import { indexToLetterMap } from '../../../containers/ProblemEditor/data/MarkDownParser';
+import { indexToLetterMap } from '../../../containers/ProblemEditor/data/OLXParser';
 import { StrictDict } from '../../../utils';
 
 const nextAlphaId = (lastId) => String.fromCharCode(lastId.charCodeAt(0) + 1);
@@ -10,6 +10,7 @@ const initialState = {
   question: '',
   answers: [],
   groupFeedbackList: [],
+  additionalAttributes: {},
   settings: {
     scoring: {
       advanced: false,

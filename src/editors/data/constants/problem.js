@@ -40,3 +40,11 @@ export const ProblemTypes = StrictDict({
     helpLink: 'something.com',
   },
 });
+
+export const OLXProblemTypes = StrictDict({
+  TEXTINPUT: 'stringresponse',
+  NUMERIC: 'numericalresponse',
+  DROPDOWN: 'optionresponse',
+  MULTISELECT: 'choiceresponse',
+  SINGLESELECT: 'multiplechoiceresponse',
+});

@@ -40,9 +40,9 @@ export const fetchBlockById = ({ blockId, studioEndpointUrl }) => {
           <label>Add the question text, or prompt, here. This text is required.</label>
           <description>You can add an optional tip or note related to the prompt like this. </description>
           <optioninput>
-              <option correct="False">an incorrect answer</option>
-              <option correct="True">the correct answer</option>
-              <option correct="False">an incorrect answer</option>
+              <option correct="false">an incorrect answer</option>
+              <option correct="true">the correct answer</option>
+              <option correct="false">an incorrect answer</option>
           </optioninput>
       </optionresponse>
   </problem>`,
