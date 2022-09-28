@@ -16,7 +16,6 @@ import {
 } from '@edx/paragon';
 import { FileUpload, Info } from '@edx/paragon/icons';
 
-
 import { actions, selectors } from '../../../../../../data/redux';
 import * as hooks from './hooks';
 import messages from './messages';

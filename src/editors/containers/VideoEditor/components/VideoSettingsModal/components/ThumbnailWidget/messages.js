@@ -14,8 +14,13 @@ export const messages = {
     defaultMessage: 'Images must have an aspect ration of 16:9 (1280x720 px recommended)',
     description: 'Message for thumbnail aspectRequirements',
   },
+  thumbnailAltText: {
+    id: 'authoring.videoeditor.thumbnail.altText',
+    defaultMessage: 'Image used as thumbnail for video',
+    description: 'Alternative test for thumbnail',
+  },
   deleteThumbnail: {
-    id: 'authoring.videoeditor.transcript.deleteThumbnail',
+    id: 'authoring.videoeditor.thumbnail.deleteThumbnail',
     defaultMessage: 'Delete',
     description: 'Message presented to user for action to delete thumbnail',
   },

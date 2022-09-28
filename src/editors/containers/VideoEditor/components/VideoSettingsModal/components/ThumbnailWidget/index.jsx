@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import {
   FormattedMessage,
   injectIntl,
-  intl,
+  intlShape,
 } from '@edx/frontend-platform/i18n';
 import {
   Image,
@@ -14,6 +14,7 @@ import {
   Icon,
   IconButton,
   Tooltip,
+  Alert,
 } from '@edx/paragon';
 import { Delete, FileUpload } from '@edx/paragon/icons';
 
@@ -29,53 +30,56 @@ import FileInput from '../../../../../../sharedComponents/FileInput';
  * Collapsible Form widget controlling video thumbnail
  */
 export const ThumbnailWidget = ({
-  error,
-  // inject
+  // injected
   intl,
   // redux
   thumbnail,
   updateField,
 }) => {
-  const imgRef = React.useRef()
-  const fileInput = hooks.fileInput(imgRef);
-  // const deleteThumbnail = hooks.deleteThumbnail(imgRef);
+  const [thumbnailSrc, setThumbnailSrc] = React.useState(thumbnail);
+  const fileInput = hooks.fileInput({ setThumbnailSrc });
+
   return (
     <CollapsibleFormWidget title="Thumbnail">
-      {thumbnail ?
-        <>
-          <Image src={thumbnail} ref={imgRef} fluid altText='thumbnail for video'/>
+      {thumbnail ? (
+        <Stack direction="horizontal" gap={3}>
+          <Image src={thumbnailSrc} alt={intl.formatMessage(messages.thumbnailAltText)} />
           <OverlayTrigger
-              key="top"
-              placement="top"
-              overlay={(
-                <Tooltip>
-                  <FormattedMessage {...messages.deleteThumbnail} />
-                </Tooltip>
-              )}
-            >
-              <IconButton
-                className="d-inline-block"
-                iconAs={Icon}
-                src={Delete}
-                onClick={() => updateField({ thumbnail: null })}
-              />
-            </OverlayTrigger>
-        </> :
-        <Stack>
+            key="top"
+            placement="top"
+            overlay={(
+              <Tooltip>
+                <FormattedMessage {...messages.deleteThumbnail} />
+              </Tooltip>
+            )}
+          >
+            <IconButton
+              className="d-inline-block"
+              iconAs={Icon}
+              src={Delete}
+              onClick={() => updateField({ thumbnail: null })}
+            />
+          </OverlayTrigger>
+        </Stack>
+      ) : (
+        <Stack gap={3}>
           <FormattedMessage {...messages.addThumbnail} />
-          <FormattedMessage {...messages.aspectRequirements} />
+          <Alert variant="info">
+            <FormattedMessage {...messages.aspectRequirements} />
+          </Alert>
           <FileInput fileInput={fileInput} acceptedFiles={Object.values(acceptedImgKeys).join()} />
           <Button iconBefore={FileUpload} onClick={fileInput.click} variant="link">
             <FormattedMessage {...messages.uploadButtonLabel} />
           </Button>
         </Stack>
-      }
+      )}
     </CollapsibleFormWidget>
   );
 };
 
 ThumbnailWidget.propTypes = {
-  error: PropTypes.node,
+  // injected
+  intl: intlShape.isRequired,
   // redux
   thumbnail: PropTypes.string.isRequired,
   updateField: PropTypes.func.isRequired,
