@@ -5,5 +5,7 @@ export const acceptedImgKeys = StrictDict({
   jpg: '.jpg',
   jpeg: '.jpeg',
   png: '.png',
-  bmp: '.bmp,'
+  bmp: '.bmp',
 });
+
+export default { acceptedImgKeys };
