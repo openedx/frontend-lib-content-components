@@ -22,7 +22,6 @@ describe('Check Markdown Parser', () => {
   });
   test('Test Text with multiple correct and hints', () => {
     const markdown = new ReactStateParser(textInputWithHints.problem).getMarkdown();
-    // console.log(markdown);
     expect(markdown).toBe(textInputWithHints.markdown);
   });
   test('Test single select with hints', () => {
