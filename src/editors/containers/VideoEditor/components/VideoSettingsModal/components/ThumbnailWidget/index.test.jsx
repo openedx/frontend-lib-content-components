@@ -33,7 +33,7 @@ describe('ThumbnailWidget', () => {
         shallow(<ThumbnailWidget {...props} />),
       ).toMatchSnapshot();
     });
-    test('snapshots: renders as expected with transcripts', () => {
+    test('snapshots: renders as expected with a thumbnail provided', () => {
       expect(
         shallow(<ThumbnailWidget {...props} thumbnail="sOMeUrl" />),
       ).toMatchSnapshot();
