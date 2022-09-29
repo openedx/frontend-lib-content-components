@@ -1,4 +1,5 @@
 import { actions, selectors } from '..';
+import * as requests from './requests';
 import * as module from './video';
 
 export const loadVideoData = () => (dispatch) => {

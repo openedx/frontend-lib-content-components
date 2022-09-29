@@ -6,6 +6,7 @@ jest.mock('..', () => ({
   actions: {
     video: {
       load: (args) => ({ load: args }),
+      updateField: (args) => ({ updateField: args }),
     },
   },
   selectors: {
@@ -26,6 +27,9 @@ jest.mock('..', () => ({
           },
         },
       },
+    },
+    video: {
+      videoId: (state) => ({ videoId: state }),
     },
   },
 }));
@@ -58,10 +62,10 @@ describe('video thunkActions', () => {
       video: testState,
     }));
   });
-  afterEach(() => {
-    jest.restoreAllMocks();
-  });
   describe('loadVideoData', () => {
+    afterEach(() => {
+      jest.restoreAllMocks();
+    });
     it('dispatches actions.video.load', () => {
       const fakeData = {
         videoSource: 'viDeOsoURce',
@@ -84,11 +88,11 @@ describe('video thunkActions', () => {
           shareAlike: undefined,
         },
       };
-      jest.spyOn(thunkActions, videoKeys.determineVideoSource).mockReturnValue({
+      jest.spyOn(thunkActions, thunkActionsKeys.determineVideoSource).mockReturnValue({
         videoSource: fakeData.videoSource,
         fallbackVideos: fakeData.fallbackVideos,
       });
-      jest.spyOn(thunkActions, videoKeys.parseLicense).mockReturnValue([
+      jest.spyOn(thunkActions, thunkActionsKeys.parseLicense).mockReturnValue([
         fakeData.licenseType,
         {
           by: fakeData.licenseDetails.attribution,
