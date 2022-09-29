@@ -1,7 +1,12 @@
 export const messages = {
+  title: {
+    id: 'authoring.videoeditor.thumbnail.title',
+    defaultMessage: 'Thumbnail',
+    description: 'Title for thumbnail widget',
+  },
   uploadButtonLabel: {
     id: 'authoring.videoeditor.thumbnail.upload.label',
-    defaultMessage: 'Upload Transcript',
+    defaultMessage: 'Upload Thumbnail',
     description: 'Label for upload button',
   },
   addThumbnail: {

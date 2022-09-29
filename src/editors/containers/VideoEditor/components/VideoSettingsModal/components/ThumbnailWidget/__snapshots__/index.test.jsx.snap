@@ -1,5 +1,40 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`ThumbnailWidget snapshots snapshots: renders as expected with a thumbnail provided 1`] = `
+<injectIntl(ShimmedIntlComponent)
+  title="Thumbnail"
+>
+  <Stack
+    direction="horizontal"
+    gap={3}
+  >
+    <Image
+      alt="Image used as thumbnail for video"
+      src="sOMeUrl"
+    />
+    <OverLayTrigger
+      key="top"
+      overlay={
+        <ToolTip>
+          <FormattedMessage
+            defaultMessage="Delete"
+            description="Message presented to user for action to delete thumbnail"
+            id="authoring.videoeditor.thumbnail.deleteThumbnail"
+          />
+        </ToolTip>
+      }
+      placement="top"
+    >
+      <IconButton
+        className="d-inline-block"
+        iconAs="Icon"
+        onClick={[Function]}
+      />
+    </OverLayTrigger>
+  </Stack>
+</injectIntl(ShimmedIntlComponent)>
+`;
+
 exports[`ThumbnailWidget snapshots snapshots: renders as expected with default props 1`] = `
 <injectIntl(ShimmedIntlComponent)
   title="Thumbnail"
@@ -38,46 +73,11 @@ exports[`ThumbnailWidget snapshots snapshots: renders as expected with default p
       variant="link"
     >
       <FormattedMessage
-        defaultMessage="Upload Transcript"
+        defaultMessage="Upload Thumbnail"
         description="Label for upload button"
         id="authoring.videoeditor.thumbnail.upload.label"
       />
     </Button>
-  </Stack>
-</injectIntl(ShimmedIntlComponent)>
-`;
-
-exports[`ThumbnailWidget snapshots snapshots: renders as expected with transcripts 1`] = `
-<injectIntl(ShimmedIntlComponent)
-  title="Thumbnail"
->
-  <Stack
-    direction="horizontal"
-    gap={3}
-  >
-    <Image
-      alt="Image used as thumbnail for video"
-      src="sOMeUrl"
-    />
-    <OverLayTrigger
-      key="top"
-      overlay={
-        <ToolTip>
-          <FormattedMessage
-            defaultMessage="Delete"
-            description="Message presented to user for action to delete thumbnail"
-            id="authoring.videoeditor.thumbnail.deleteThumbnail"
-          />
-        </ToolTip>
-      }
-      placement="top"
-    >
-      <IconButton
-        className="d-inline-block"
-        iconAs="Icon"
-        onClick={[Function]}
-      />
-    </OverLayTrigger>
   </Stack>
 </injectIntl(ShimmedIntlComponent)>
 `;

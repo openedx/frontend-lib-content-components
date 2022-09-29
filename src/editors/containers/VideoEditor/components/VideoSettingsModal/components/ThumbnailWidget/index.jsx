@@ -40,7 +40,7 @@ export const ThumbnailWidget = ({
   const fileInput = hooks.fileInput({ setThumbnailSrc });
 
   return (
-    <CollapsibleFormWidget title="Thumbnail">
+    <CollapsibleFormWidget title={intl.formatMessage(messages.title)}>
       {thumbnail ? (
         <Stack direction="horizontal" gap={3}>
           <Image src={thumbnailSrc} alt={intl.formatMessage(messages.thumbnailAltText)} />
