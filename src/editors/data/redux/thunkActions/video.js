@@ -5,6 +5,7 @@ import * as module from './video';
 export const loadVideoData = () => (dispatch) => {
   const {
     videoSource,
+    videoId,
     fallbackVideos,
   } = module.determineVideoSource({
     edxVideoId: selectors.app.blockValue.data.metadata.edx_video_id,
@@ -17,6 +18,7 @@ export const loadVideoData = () => (dispatch) => {
 
   dispatch(actions.video.load({
     videoSource,
+    videoId,
     fallbackVideos,
     allowVideoDownloads: selectors.app.blockValue.data.metadata.download_video,
     transcripts: selectors.app.blockValue.data.metadata.transcripts,
@@ -47,11 +49,13 @@ export const determineVideoSource = ({
   // in that order.
   // if we are falling back to the first fallback url, remove it from the list of fallback urls for display
   const videoSource = edxVideoId || youtubeId || html5Sources[0] || '';
+  const videoId = edxVideoId || '';
   const fallbackVideos = (!edxVideoId && !youtubeId)
     ? html5Sources.slice(1)
     : html5Sources;
   return {
     videoSource,
+    videoId,
     fallbackVideos,
   };
 };

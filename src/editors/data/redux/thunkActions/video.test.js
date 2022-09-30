@@ -69,6 +69,7 @@ describe('video thunkActions', () => {
     it('dispatches actions.video.load', () => {
       const fakeData = {
         videoSource: 'viDeOsoURce',
+        videoId: 'vIDeoid',
         fallbackVideos: [],
         allowVideoDownloads: selectors.app.blockValue.data.metadata.download_video,
         transcripts: selectors.app.blockValue.data.metadata.transcripts,
@@ -90,6 +91,7 @@ describe('video thunkActions', () => {
       };
       jest.spyOn(thunkActions, thunkActionsKeys.determineVideoSource).mockReturnValue({
         videoSource: fakeData.videoSource,
+        videoId: fakeData.videoId,
         fallbackVideos: fakeData.fallbackVideos,
       });
       jest.spyOn(thunkActions, thunkActionsKeys.parseLicense).mockReturnValue([
@@ -116,6 +118,7 @@ describe('video thunkActions', () => {
           html5Sources,
         })).toEqual({
           videoSource: edxVideoId,
+          videoId: edxVideoId,
           fallbackVideos: html5Sources,
         });
       });
@@ -128,6 +131,7 @@ describe('video thunkActions', () => {
           html5Sources,
         })).toEqual({
           videoSource: youtubeId,
+          videoId: '',
           fallbackVideos: html5Sources,
         });
       });
@@ -140,6 +144,7 @@ describe('video thunkActions', () => {
           html5Sources,
         })).toEqual({
           videoSource: 'htmLOne',
+          videoId: '',
           fallbackVideos: ['hTMlTwo', 'htMLthrEE'],
         });
       });
@@ -150,6 +155,7 @@ describe('video thunkActions', () => {
           html5Sources: ['htmlOne'],
         })).toEqual({
           videoSource: 'htmlOne',
+          videoId: '',
           fallbackVideos: [],
         });
       });
@@ -162,6 +168,7 @@ describe('video thunkActions', () => {
           html5Sources: [],
         })).toEqual({
           videoSource: '',
+          videoId: '',
           fallbackVideos: [],
         });
       });
