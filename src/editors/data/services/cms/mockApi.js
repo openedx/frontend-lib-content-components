@@ -55,6 +55,14 @@ export const fetchBlockById = ({ blockId, studioEndpointUrl }) => {
         (the correct answer)
         an incorrect answer
         ]]`,
+        attempts_before_showanswer_button: 7,
+        matlab_api_key: "numerical_input_matlab_api_key",
+        max_attempts: 5,
+        rerandomize: "per_student",
+        show_reset_button: true,
+        showanswer: "after_attempts",
+        submission_wait_seconds: 15,
+        weight: 29,
       },
     };
   }
@@ -153,7 +161,9 @@ export const normalizeContent = ({
       couseKey: learningContextId,
       has_changes: true,
       id: blockId,
-      metadata: { display_name: title, markdown: content.markdown },
+      // TODO: fix merge issue
+      // metadata: { display_name: title, markdown: content.markdown },
+      metadata: { display_name: title,  ...content },
     };
   } else {
     throw new TypeError(`No Block in V2 Editors named /"${blockType}/", Cannot Save Content.`);
@@ -254,6 +264,14 @@ export const fetchStudioView = ({ blockId, studioEndpointUrl }) => {
         (the correct answer)
         an incorrect answer
         ]]`,
+        attempts_before_showanswer_button: 7,
+        matlab_api_key: "numerical_input_matlab_api_key",
+        max_attempts: 5,
+        rerandomize: "per_student",
+        show_reset_button: true,
+        showanswer: "after_attempts",
+        submission_wait_seconds: 15,
+        weight: 29,
       },
     };
   }

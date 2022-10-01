@@ -290,7 +290,7 @@ function parseMarkdown(markdown) {
   let problemType = '';
   const question = getEditorData(markdown);
   const hints = getHints(markdown);
-  let data = { question, hints };
+  let data = {question, settings: {hints}};
   let parsedData = getSingleChoiceOptions(markdown);
   if (parsedData.singleSelectAnswersList.length !== 0) {
     answers = parsedData.singleSelectAnswersList;

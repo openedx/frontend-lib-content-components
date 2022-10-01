@@ -118,7 +118,8 @@ export const apiMethods = {
         couseKey: learningContextId,
         has_changes: true,
         id: blockId,
-        metadata: { display_name: title, markdown: content.markdown },
+        // metadata: { display_name: title, markdown: content.markdown },
+        metadata: { display_name: title, ...content },
       };
     } else if (blockType === 'video') {
       const {

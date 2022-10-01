@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { ProblemTypes } from '../../constants/problem';
+import { ProblemTypes, RandomizationType, ShowAnswerTypes } from '../../constants/problem';
 
 export const videoDataProps = {
   videoSource: PropTypes.string,
@@ -45,7 +45,7 @@ export const problemDataProps = {
     scoring: PropTypes.shape({
       advanced: PropTypes.bool,
       scoring: PropTypes.shape({
-        wieght: PropTypes.number,
+        weight: PropTypes.number,
         attempts: PropTypes.shape({
           unlimited: PropTypes.bool,
           number: PropTypes.number,
@@ -53,11 +53,11 @@ export const problemDataProps = {
       }),
     }),
     hints: PropTypes.arrayOf(PropTypes.string),
-    randomization: '',
+    randomization: PropTypes.instanceOf(RandomizationType),
     timeBetween: PropTypes.number,
-    MatLabApiKey: PropTypes.string,
+    matLabApiKey: PropTypes.string,
     showAnswer: PropTypes.shape({
-      on: PropTypes.string, // one of [OnAnswered, OnDueDate, AfterDueDate]
+      on: PropTypes.instanceOf(ShowAnswerTypes),
       afterAtempts: PropTypes.number,
     }),
     showResetButton: PropTypes.bool,
