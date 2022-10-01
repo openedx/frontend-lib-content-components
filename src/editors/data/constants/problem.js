@@ -40,3 +40,95 @@ export const ProblemTypes = StrictDict({
     helpLink: 'something.com',
   },
 });
+
+export const ShowAnswerTypesKeys = StrictDict({
+  ALWAYS: 'always',
+  ANSWERED: 'answered',
+  ATTEMPTED: 'attempted',
+  CLOSED: 'closed',
+  FINISHED: 'finished',
+  CORRECT_OR_PAST_DUE: 'correct_or_past_due',
+  PAST_DUE: 'past_due',
+  NEVER: 'never',
+  AFTER_SOME_NUMBER_OF_ATTEMPTS: 'after_attempts',
+  AFTER_ALL_ATTEMPTS: 'after_all_attempts',
+  AFTER_ALL_ATTEMPTS_OR_CORRECT: 'after_all_attempts_or_correct',
+  ATTEMPTED_NO_PAST_DUE: 'attempted_no_past_due',
+});
+
+export const ShowAnswerTypes = StrictDict({
+  [ShowAnswerTypesKeys.ALWAYS]: {
+    id: 'authoring.problemeditor.settings.showanswertype.always',
+    defaultMessage: 'Always',
+  },
+  [ShowAnswerTypesKeys.ANSWERED]: {
+    id: 'authoring.problemeditor.settings.showanswertype.answered',
+    defaultMessage: 'Answered',
+  },
+  [ShowAnswerTypesKeys.ATTEMPTED]: {
+    id: 'authoring.problemeditor.settings.showanswertype.attempted',
+    defaultMessage: 'Attempted or Past Due',
+  },
+  [ShowAnswerTypesKeys.CLOSED]: {
+    id: 'authoring.problemeditor.settings.showanswertype.closed',
+    defaultMessage: 'Closed',
+  },
+  [ShowAnswerTypesKeys.FINISHED]: {
+    id: 'authoring.problemeditor.settings.showanswertype.finished',
+    defaultMessage: 'Finished',
+  },
+  [ShowAnswerTypesKeys.CORRECT_OR_PAST_DUE]: {
+    id: 'authoring.problemeditor.settings.showanswertype.correct_or_past_due',
+    defaultMessage: 'Correct or Past Due',
+  },
+  [ShowAnswerTypesKeys.PAST_DUE]: {
+    id: 'authoring.problemeditor.settings.showanswertype.past_due',
+    defaultMessage: 'Past Due',
+  },
+  [ShowAnswerTypesKeys.NEVER]: {
+    id: 'authoring.problemeditor.settings.showanswertype.never',
+    defaultMessage: 'Never',
+  },
+  [ShowAnswerTypesKeys.AFTER_SOME_NUMBER_OF_ATTEMPTS]: {
+    id: 'authoring.problemeditor.settings.showanswertype.after_attempts',
+    defaultMessage: 'After Some Number of Attempts',
+  },
+  [ShowAnswerTypesKeys.AFTER_ALL_ATTEMPTS]: {
+    id: 'authoring.problemeditor.settings.showanswertype.after_all_attempts',
+    defaultMessage: 'After All Attempts',
+  },
+  [ShowAnswerTypesKeys.AFTER_ALL_ATTEMPTS_OR_CORRECT]: {
+    id: 'authoring.problemeditor.settings.showanswertype.after_all_attempts_or_correct',
+    defaultMessage: 'After All Attempts or Correct',
+  },
+  [ShowAnswerTypesKeys.ATTEMPTED_NO_PAST_DUE]: {
+    id: 'authoring.problemeditor.settings.showanswertype.attempted_no_past_due',
+    defaultMessage: 'Attempted',
+  },
+});
+
+export const RandomizationTypeKeys = StrictDict({
+  ALWAYS: 'always',
+  ONRESET: 'onreset',
+  NEVER: 'never',
+  PER_STUDENT: 'per_student',
+});
+
+export const RandomizationType = StrictDict({
+  [RandomizationTypeKeys.ALWAYS]: {
+    id: 'authoring.problemeditor.settings.randomizationtype.always',
+    defaultMessage: 'Always',
+  },
+  [RandomizationTypeKeys.ONRESET]: {
+    id: 'authoring.problemeditor.settings.randomizationtype.onreset',
+    defaultMessage: 'On Reset',
+  },
+  [RandomizationTypeKeys.NEVER]: {
+    id: 'authoring.problemeditor.settings.randomizationtype.never',
+    defaultMessage: 'Never',
+  },
+  [RandomizationTypeKeys.PER_STUDENT]: {
+    id: 'authoring.problemeditor.settings.randomizationtype.perstudent',
+    defaultMessage: 'Per Student',
+  },
+});  

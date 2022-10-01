@@ -1,5 +1,7 @@
-import _ from 'lodash-es';
-import { ProblemTypeKeys } from '../../../data/constants/problem';
+import _ from "lodash";
+import { ProblemTypeKeys } from "../../../data/constants/problem";
+import { indexToLetterMap } from "./MarkDownParser";
+import { popuplateItem } from "./SettingsParser";
 
 export class ReactStateParser {
   constructor(problemState) {
@@ -133,31 +135,54 @@ export class ReactStateParser {
     }
     return feedbackString;
   }
-
-  getMarkdown() {
-    let answers = '';
-    switch (this.problemState.problemType) {
-      case ProblemTypeKeys.DROPDOWN:
-        answers = this.parseDropdown();
-        break;
-      case ProblemTypeKeys.MULTISELECT:
-        answers = this.parseCheckBox();
-        break;
-      case ProblemTypeKeys.SINGLESELECT:
-        answers = this.parseRadioButton();
-        break;
-      case ProblemTypeKeys.NUMERIC:
-      case ProblemTypeKeys.TEXTINPUT:
-        answers = this.parseInputAnswers();
-        break;
-      default:
-        break;
+  
+    getMarkdown() {
+        let answers = ''
+        switch (this.problemState.problemType) {
+            case ProblemTypeKeys.DROPDOWN:
+                answers = this.parseDropdown();
+                break;
+            case ProblemTypeKeys.MULTISELECT:
+                answers = this.parseCheckBox();
+                break;
+            case ProblemTypeKeys.SINGLESELECT:
+                answers = this.parseRadioButton();
+                break;
+            case ProblemTypeKeys.NUMERIC:
+            case ProblemTypeKeys.TEXTINPUT:
+                answers = this.parseInputAnswers();
+                break;
+            default:
+                break;
+        }
+        let markdown = `${this.parseQuestion()}${answers}${this.parseHints()}${this.parseGroupFeedback()}`;
+        return markdown;
     }
-    const markdown = `${this.parseQuestion()}${answers}${this.parseHints()}${this.parseGroupFeedback()}`;
-    return markdown;
-  }
 
-  splitLines(inputString) {
-    return inputString.trim().split('\n');
-  }
+    splitLines(inputString){
+        return inputString.trim().split("\n");
+    }
+
+    getSettings() {
+        let settings = {}
+        const stateSettings = this.problemState.settings
+
+        settings = popuplateItem(settings, 'matLabApiKey', 'matlab_api_key', stateSettings)
+        settings = popuplateItem(settings, 'number', 'max_attempts', stateSettings.scoring.attempts);
+        settings = popuplateItem(settings, 'weight', 'weight', stateSettings.scoring);
+        settings = popuplateItem(settings, 'randomization', 'rerandomize', stateSettings);
+        settings = popuplateItem(settings, 'on', 'showanswer', stateSettings.showAnswer);
+        settings = popuplateItem(settings, 'afterAttempts', 'attempts_before_showanswer_button', stateSettings.showAnswer);
+        settings = popuplateItem(settings, 'showResetButton', 'show_reset_button', stateSettings);
+        settings = popuplateItem(settings, 'timeBetween', 'submission_wait_seconds', stateSettings);
+
+        return settings;
+    }
+
+    getMetadata() {
+        let markdown = this.getMarkdown();
+        let settings = this.getSettings();
+        return { ...settings, markdown }
+
+    }
 }

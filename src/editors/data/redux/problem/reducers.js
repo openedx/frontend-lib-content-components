@@ -2,34 +2,31 @@ import { has, isUndefined } from 'lodash-es';
 import { createSlice } from '@reduxjs/toolkit';
 import { indexToLetterMap } from '../../../containers/ProblemEditor/data/OLXParser';
 import { StrictDict } from '../../../utils';
-import { ProblemTypeKeys } from '../../constants/problem';
+import { RandomizationTypeKeys, ProblemTypeKeys, ShowAnswerTypesKeys } from "../../constants/problem";
 
 const nextAlphaId = (lastId) => String.fromCharCode(lastId.charCodeAt(0) + 1);
 const initialState = {
   rawOLX: '',
-  problemType: 'SINGLESELECT',
+  problemType: ProblemTypeKeys.SINGLESELECT,
   question: '',
   answers: [],
   groupFeedbackList: [],
   additionalAttributes: {},
   settings: {
     scoring: {
-      advanced: false,
-      scoring: {
-        wieght: 0,
-        attempts: {
-          unlimited: true,
-          number: 0,
-        },
+      weight: 0,
+      attempts: {
+        unlimited: true,
+        number: 0,
       },
     },
     hints: [],
-    randomization: '',
+    randomization: RandomizationTypeKeys.NEVER,
     timeBetween: 0,
-    MatLabApiKey: '',
+    matLabApiKey: '',
     showAnswer: {
-      on: '', // one of [OnAnswered, OnDueDate, AfterDueDate]
-      afterAtempts: 1,
+      on: ShowAnswerTypesKeys.FINISHED,
+      afterAttempts: 0,
     },
     showResetButton: false,
   },
@@ -101,8 +98,21 @@ const problem = createSlice({
         newOption,
       ];
     },
-    load: (state, { payload }) => ({
+    updateSettings: (state, {payload}) => ({
       ...state,
+      settings: {
+        ...state.settings,
+        ...payload
+      }
+    }),
+    load: (state, { payload: { settings: {scoring, showAnswer, ...settings}, ...payload } }) => ({
+      ...state,
+      settings: {
+        ...state.settings,
+        scoring: { ...state.settings.scoring, ...scoring },
+        showAnswer: { ...state.settings.showAnswer, ...showAnswer },
+        ...settings
+      },
       ...payload,
     }),
     onSelect: (state, { payload }) => ({
