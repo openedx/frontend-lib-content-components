@@ -2,6 +2,7 @@ import { has, isUndefined } from "lodash";
 import { createSlice } from '@reduxjs/toolkit';
 import { indexToLetterMap } from '../../../containers/ProblemEditor/data/MarkDownParser';
 import { StrictDict } from '../../../utils';
+import { ShowAnswerTypes, RandomizationType } from "../../../data/constants/problem";
 
 const nextAlphaId = (lastId) => String.fromCharCode(lastId.charCodeAt(0) + 1);
 const initialState = {
@@ -12,22 +13,19 @@ const initialState = {
   groupFeedbackList: [],
   settings: {
     scoring: {
-      advanced: false,
-      scoring: {
-        wieght: 0,
-        attempts: {
-          unlimited: true,
-          number: 0,
-        },
+      weight: 0,
+      attempts: {
+        unlimited: true,
+        number: 0,
       },
     },
     hints: [],
-    randomization: '',
+    randomization: RandomizationType.NEVER.value,
     timeBetween: 0,
-    MatLabApiKey: '',
+    matLabApiKey: '',
     showAnswer: {
-      on: '', // one of [OnAnswered, OnDueDate, AfterDueDate]
-      afterAtempts: 1,
+      on: ShowAnswerTypes.FINISHED.value, // one of [OnAnswered, OnDueDate, AfterDueDate]
+      afterAttempts: 0,
     },
     showResetButton: false,
   },
@@ -100,8 +98,14 @@ const problem = createSlice({
         newOption,
       ];
     },
-    load: (state, { payload }) => ({
+    load: (state, { payload: { settings: {scoring, showAnswer, ...settings}, ...payload } }) => ({
       ...state,
+      settings: {
+        ...state.settings,
+        scoring: { ...state.settings.scoring, ...scoring },
+        showAnswer: { ...state.settings.showAnswer, ...showAnswer },
+        ...settings
+      },
       ...payload,
     }),
     onSelect: (state, { payload }) => ({

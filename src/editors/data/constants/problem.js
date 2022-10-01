@@ -40,3 +40,76 @@ export const ProblemTypes = StrictDict({
     helpLink: 'something.com',
   },
 });
+
+export const ShowAnswerTypes = StrictDict({
+  ALWAYS: {
+      name: 'Always',
+      value: 'always',
+  },
+  ANSWERED: {
+      name: 'Answered',
+      value: 'answered',
+  },
+  ATTEMPTED: {
+      name: 'Attempted or Past Due',
+      value: 'attempted',
+  },
+  CLOSED: {
+      name: 'Closed',
+      value: 'closed',
+  },
+  FINISHED: {
+      name: 'Finished',
+      value: 'finished',
+  },
+  CORRECT_OR_PAST_DUE: {
+      name: 'Correct or Past Due',
+      value: 'correct_or_past_due',
+  },
+  PAST_DUE: {
+      name: 'Past Due',
+      value: 'past_due',
+  },
+  NEVER: {
+      name: 'Never',
+      value: 'never',
+  },
+  AFTER_SOME_NUMBER_OF_ATTEMPTS: {
+      name: 'After Some Number of Attempts',
+      value: 'after_attempts',
+  },
+  AFTER_ALL_ATTEMPTS: {
+      name: 'After All Attempts',
+      value: 'after_all_attempts',
+  },
+  AFTER_ALL_ATTEMPTS_OR_CORRECT: {
+      name: 'After All Attempts or Correct',
+      value: 'after_all_attempts_or_correct',
+  },
+  ATTEMPTED_NO_PAST_DUE: {
+      name: 'Attempted',
+      value: 'attempted_no_past_due',
+  },
+});
+
+
+export const RandomizationType = StrictDict({
+  ALWAYS: {
+      name: 'Always',
+      value: 'always',
+  },
+  ONRESET: {
+      name: 'On Reset',
+      value: 'onreset',
+  },
+  NEVER: {
+      name: 'Never',
+      value: 'never',
+  },
+  PER_STUDENT: {
+      name: 'Per Student',
+      value: 'per_student',
+  },
+});
+
+  
