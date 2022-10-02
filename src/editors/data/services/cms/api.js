@@ -52,7 +52,7 @@ export const apiMethods = {
         couseKey: learningContextId,
         has_changes: true,
         id: blockId,
-        metadata: { display_name: title, markdown: content },
+        metadata: { display_name: title, ...content },
       };
     } else {
       throw new TypeError(`No Block in V2 Editors named /"${blockType}/", Cannot Save Content.`);

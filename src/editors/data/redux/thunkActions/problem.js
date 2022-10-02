@@ -8,8 +8,9 @@ export const initializeProblem = (blockValue) => (dispatch) => {
   const rawOLX = get(blockValue, 'data.data', {})
   const parsedData = get(blockValue, 'data.metadata.markdown', {})
   if (!isEmpty(parsedData) && !isEmpty(rawOLX)) {
-    const settings = parseSettings(get(blockValue, 'data.metadata', {}))
-    dispatch(actions.problem.load({ ...parseMarkdown(parsedData), rawOLX, settings }));
+    let { settings, ...mkdownPayload } = parseMarkdown(parsedData)
+    settings = { ...settings, ...parseSettings(get(blockValue, 'data.metadata', {})) }
+    dispatch(actions.problem.load({ ...mkdownPayload, rawOLX, settings }));
   }
 };
 

@@ -16,13 +16,13 @@ export const EditProblemView = ({
 }) => {
   const parseSate = (problemState) => () => {
       let reactParser = new ReactStateParser(problemState);
-      return reactParser.getMarkdown();
+      return reactParser.getMetadata();
   }
   return (
       <EditorContainer getContent={parseSate(problemState)}>
         <QuestionWidget />
         <AnswerWidget problemType={problemType} />
-        <SettingsWidget />
+        <SettingsWidget problemType={problemType} />
       </EditorContainer>
   );
 };

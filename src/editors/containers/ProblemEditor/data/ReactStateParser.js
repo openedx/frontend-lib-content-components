@@ -1,6 +1,7 @@
 import _ from "lodash";
 import { ProblemTypeKeys } from "../../../data/constants/problem";
 import { indexToLetterMap } from "./MarkDownParser";
+import { popuplateItem } from "./SettingsParser";
 
 
 export class ReactStateParser{
@@ -21,7 +22,7 @@ export class ReactStateParser{
 
     parseHints() {
         let hintString = '';
-        let hitnsList = this.problemState.hints;
+        let hitnsList = this.problemState.settings.hints;
         for (const hint in hitnsList){
             hintString += `||${hitnsList[hint].value}||\n`;
         }
@@ -162,5 +163,28 @@ export class ReactStateParser{
 
     splitLines(inputString){
         return inputString.trim().split("\n");
+    }
+
+    getSettings() {
+        let settings = {}
+        const stateSettings = this.problemState.settings
+
+        settings = popuplateItem(settings, 'matLabApiKey', 'matlab_api_key', stateSettings)
+        settings = popuplateItem(settings, 'number', 'max_attempts', stateSettings.scoring.attempts);
+        settings = popuplateItem(settings, 'weight', 'weight', stateSettings.scoring);
+        settings = popuplateItem(settings, 'randomization', 'rerandomize', stateSettings);
+        settings = popuplateItem(settings, 'on', 'showanswer', stateSettings.showAnswer);
+        settings = popuplateItem(settings, 'afterAttempts', 'attempts_before_showanswer_button', stateSettings.showAnswer);
+        settings = popuplateItem(settings, 'showResetButton', 'show_reset_button', stateSettings);
+        settings = popuplateItem(settings, 'timeBetween', 'submission_wait_seconds', stateSettings);
+
+        return settings;
+    }
+
+    getMetadata() {
+        markdown = this.getMarkdown();
+        settings = this.getSettings();
+        return { ...settings, markdown }
+
     }
 }
