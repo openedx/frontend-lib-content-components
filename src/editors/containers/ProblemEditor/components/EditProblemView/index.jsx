@@ -8,6 +8,7 @@ import { selectors } from '../../../../data/redux';
 import { ReactStateParser } from '../../data/ReactStateParser';
 import { injectIntl } from '@edx/frontend-platform/i18n';
 import { connect } from 'react-redux';
+import { Col, Container, Row } from '@edx/paragon';
 
 
 export const EditProblemView = ({
@@ -15,15 +16,23 @@ export const EditProblemView = ({
   problemState
 }) => {
   const parseSate = (problemState) => () => {
-      let reactParser = new ReactStateParser(problemState);
-      return reactParser.getMetadata();
+    let reactParser = new ReactStateParser(problemState);
+    return reactParser.getMetadata();
   }
   return (
-      <EditorContainer getContent={parseSate(problemState)}>
-        <QuestionWidget />
-        <AnswerWidget problemType={problemType} />
-        <SettingsWidget problemType={problemType} />
-      </EditorContainer>
+    <EditorContainer getContent={parseSate(problemState)}>
+      <Container fluid>
+        <Row>
+          <Col xs={9}>
+            <QuestionWidget />
+            <AnswerWidget problemType={problemType} />
+          </Col>
+          <Col xs={3}>
+            <SettingsWidget problemType={problemType} />
+          </Col>
+        </Row>
+      </Container>
+    </EditorContainer>
   );
 };
 

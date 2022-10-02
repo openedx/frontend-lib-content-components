@@ -98,6 +98,13 @@ const problem = createSlice({
         newOption,
       ];
     },
+    updateSettings: (state, {payload}) => ({
+      ...state,
+      settings: {
+        ...state.settings,
+        ...payload
+      }
+    }),
     load: (state, { payload: { settings: {scoring, showAnswer, ...settings}, ...payload } }) => ({
       ...state,
       settings: {

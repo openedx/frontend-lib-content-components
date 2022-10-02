@@ -21,7 +21,7 @@ const validateShowAnswerTypes = (value) => {
     return false;
 }
 
-const popuplateItem = (parentObject, itemName, statekey, metadata) => {
+export const popuplateItem = (parentObject, itemName, statekey, metadata) => {
     item = get(metadata, itemName, null);
     if (!isNil(item)) {
         parentObject = { ...parentObject, [statekey]: item };

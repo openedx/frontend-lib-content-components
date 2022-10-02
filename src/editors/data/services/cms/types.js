@@ -44,7 +44,7 @@ export const problemDataProps = {
     scoring: PropTypes.shape({
       advanced: PropTypes.bool,
       scoring: PropTypes.shape({
-        wieght: PropTypes.number,
+        weight: PropTypes.number,
         attempts: PropTypes.shape({
           unlimited: PropTypes.bool,
           number: PropTypes.number,
