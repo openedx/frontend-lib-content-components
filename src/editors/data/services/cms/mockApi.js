@@ -1,6 +1,7 @@
 /* istanbul ignore file */
 
 import * as urls from './urls';
+import { singleVideoData } from './mockVideoData';
 
 const mockPromise = (returnValue) => new Promise(resolve => resolve(returnValue));
 
@@ -10,6 +11,26 @@ export const fetchBlockById = ({ blockId, studioEndpointUrl }) => mockPromise({
   data: {
     data: '<p>Test prompt content</p>',
     display_name: 'My Text Prompt',
+    metadata: {
+      display_name: "Welcome!",
+      download_track: true,
+      download_video: true,
+      edx_video_id: "f36f06b5-92e5-47c7-bb26-bcf986799cb7",
+      html5_sources: [
+        "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+        "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+      ],
+      show_captions: true,
+      sub: "",
+      track: "",
+      transcripts: {
+        en: 'my-transcript-url'
+      },
+      xml_attributes: {
+        source: ''
+      },
+      youtube_id_1_0: "dQw4w9WgXcQ",
+    },
   },
 });
 
@@ -21,6 +42,26 @@ export const fetchStudioView = ({ blockId, studioEndpointUrl }) => mockPromise({
     html: blockId.includes('mockRaw') ? 'data-editor="raw"' : '',
     data: '<p>Test prompt content</p>',
     display_name: 'My Text Prompt',
+    metadata: {
+      display_name: "Welcome!",
+      download_track: true,
+      download_video: true,
+      edx_video_id: "f36f06b5-92e5-47c7-bb26-bcf986799cb7",
+      html5_sources: [
+        "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+        "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+      ],
+      show_captions: true,
+      sub: "",
+      track: "",
+      transcripts: {
+        en: 'my-transcript-url'
+      },
+      xml_attributes: {
+        source: ''
+      },
+      youtube_id_1_0: "dQw4w9WgXcQ",
+    },
   },
 });
 
