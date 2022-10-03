@@ -29,6 +29,24 @@ export const apiMethods = {
       data,
     );
   },
+  allowThumbnailUpload: ({
+    studioEndpointUrl,
+  }) => get(
+    urls.allowThumbnailUpload({ studioEndpointUrl }),
+  ),
+  uploadThumbnail: ({
+    studioEndpointUrl,
+    learningContextId,
+    videoId,
+    thumbnail,
+  }) => {
+    const data = new FormData();
+    data.append('file', thumbnail);
+    return post(
+      urls.thumbnailUpload({ studioEndpointUrl, learningContextId, videoId }),
+      data,
+    );
+  },
   deleteTranscript: ({
     studioEndpointUrl,
     language,
@@ -76,6 +94,7 @@ export const apiMethods = {
       };
     }
     if (blockType === 'video') {
+      console.log(content);
       const {
         html5Sources,
         edxVideoId,
@@ -148,7 +167,6 @@ export const processVideoIds = ({ videoSource, fallbackVideos }) => {
   } else {
     html5Sources.push(videoSource);
   }
-
   fallbackVideos.forEach((src) => html5Sources.push(src));
 
   return {

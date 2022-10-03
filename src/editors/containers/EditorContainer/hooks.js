@@ -47,10 +47,16 @@ export const setAssetToStaticUrl = (images, getContent) => {
 export const handleSaveClicked = ({ dispatch, getContent, validateEntry }) => {
   const destination = useSelector(selectors.app.returnUrl);
   const analytics = useSelector(selectors.app.analytics);
-  const images = useSelector(selectors.app.images);
+  const blockType = useSelector(selectors.app.blockType);
+  let content = getContent();
+  console.log(content);
+  if (blockType === 'html') {
+    const images = useSelector(selectors.app.images);
+    content = setAssetToStaticUrl(images, getContent);
+  }
   return () => saveBlock({
     analytics,
-    content: setAssetToStaticUrl(images, getContent),
+    content,
     destination,
     dispatch,
     validateEntry,

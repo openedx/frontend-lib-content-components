@@ -4,11 +4,28 @@ import * as requests from './requests';
 
 export const loadVideoData = () => (dispatch) => {
   dispatch(actions.video.load(singleVideoData));
+  dispatch(requests.allowThumbnailUpload({
+    onSuccess: (response) => dispatch(actions.video.updateField({
+      allowThumbnailUpload: response.data.allowThumbnailUpload,
+    })),
+  }));
 };
 
 export const saveVideoData = () => () => {
   // dispatch(actions.app.setBlockContent)
   // dispatch(requests.saveBlock({ });
+};
+
+export const uploadThumbnail = ({ thumbnail }) => (dispatch, getState) => {
+  const state = getState();
+  const { videoId } = state.video;
+  dispatch(requests.uploadThumbnail({
+    thumbnail,
+    videoId,
+    onSuccess: (response) => dispatch(actions.video.updateField({
+      thumbnail: response.image_url,
+    })),
+  }));
 };
 
 // Transcript Thunks:
@@ -81,6 +98,7 @@ export const replaceTranscript = ({ newFile, newFilename, language }) => (dispat
 export default {
   loadVideoData,
   saveVideoData,
+  uploadThumbnail,
   uploadTranscript,
   deleteTranscript,
   replaceTranscript,

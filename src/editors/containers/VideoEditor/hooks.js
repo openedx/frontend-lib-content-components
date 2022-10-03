@@ -1,5 +1,6 @@
 import { useState } from 'react';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { thunkActions, selectors } from '../../data/redux';
 import { StrictDict } from '../../utils';
 import * as module from './hooks';
 
@@ -31,12 +32,12 @@ export const errorsHook = () => {
     },
     validateEntry: () => {
       let validated = true;
-      if (!module.validateDuration({ setDurationErrors })) { validated = false; }
-      if (!module.validateHandout({ setHandoutErrors })) { validated = false; }
-      if (!module.validateLicense({ setLicenseErrors })) { validated = false; }
+      if (!module.validateDuration({ setDurationErrors })) { validated = true; }
+      if (!module.validateHandout({ setHandoutErrors })) { validated = true; }
+      if (!module.validateLicense({ setLicenseErrors })) { validated = true; }
       if (!module.validateThumbnail({ setThumbnailErrors })) { validated = false; }
-      if (!module.validateTranscripts({ setTranscriptsErrors })) { validated = false; }
-      if (!module.validateVideoSource({ setVideoSourceErrors })) { validated = false; }
+      if (!module.validateTranscripts({ setTranscriptsErrors })) { validated = true; }
+      if (!module.validateVideoSource({ setVideoSourceErrors })) { validated = true; }
       return validated;
     },
   };
@@ -77,4 +78,17 @@ export const validateVideoSource = ({ setVideoSourceErrors }) => {
     fieldName: 'sample error message',
   });
   return false;
+};
+
+export const getContent = () => {
+  const dispatch = useDispatch();
+  const currentThumbnail = useSelector(selectors.video.thumbnail);
+  const originalThumbnail = useSelector(selectors.video.originalThumbnail);
+  if (currentThumbnail !== originalThumbnail) {
+    dispatch(thunkActions.video.uploadThumbnail({
+      thumbnail: currentThumbnail,
+    }));
+  }
+  const videoSettings = useSelector(selectors.video.videoSettings);
+  return videoSettings;
 };

@@ -3,6 +3,8 @@ import { keyStore } from '../../../utils';
 import * as thunkActions from './video';
 
 jest.mock('./requests', () => ({
+  allowThumbnailUpload: (args) => ({ allowThumbnailUpload: args }),
+  uploadThumbnail: (args) => ({ uploadThumbnail: args }),
   deleteTranscript: (args) => ({ deleteTranscript: args }),
   uploadTranscript: (args) => ({ uploadTranscript: args }),
 }));
@@ -11,8 +13,11 @@ const thunkActionsKeys = keyStore(thunkActions);
 const mockLanguage = 'la';
 const mockFile = 'soMEtRANscRipT';
 const mockFilename = 'soMEtRANscRipT.srt';
+const mockThumbnail = 'sOMefILE';
+const mockThumbnailResponse = { image_url: 'soMEimAGEUrL' };
+const mockAllowThumbnailUpload = { data: { allowThumbnailUpload: 'soMEbOolEAn' } };
 
-const testState = { transcripts: { la: 'test VALUE' }, videoId: 'soMEvIDEo' };
+const testState = { thumbnail: 'soMEimAGEUrL', transcripts: { la: 'test VALUE' }, videoId: 'soMEvIDEo' };
 const testUpload = { transcripts: { la: { filename: mockFilename } } };
 const testReplaceUpload = {
   file: mockFile,
@@ -30,6 +35,38 @@ describe('video thunkActions', () => {
       app: { studioEndpointUrl: 'soMEeNDPoiNT', blockId: 'soMEBloCk' },
       video: testState,
     }));
+  });
+  describe('loadVideoData', () => {
+    let dispatchedLoad;
+    beforeEach(() => {
+      thunkActions.loadVideoData()(dispatch, getState);
+      [[dispatchedLoad], [dispatchedAction]] = dispatch.mock.calls;
+    });
+    it('dispatches allowThumbnailUpload action', () => {
+      expect(dispatchedLoad).not.toEqual(undefined);
+      expect(dispatchedAction.allowThumbnailUpload).not.toEqual(undefined);
+    });
+    it('dispatches actions.video.updateField on success', () => {
+      dispatch.mockClear();
+      dispatchedAction.allowThumbnailUpload.onSuccess(mockAllowThumbnailUpload);
+      expect(dispatch).toHaveBeenCalledWith(actions.video.updateField({
+        allowThumbnailUpload: mockAllowThumbnailUpload.data.allowThumbnailUpload,
+      }));
+    });
+  });
+  describe('uploadThumbnail', () => {
+    beforeEach(() => {
+      thunkActions.uploadThumbnail({ thumbnail: mockThumbnail })(dispatch, getState);
+      [[dispatchedAction]] = dispatch.mock.calls;
+    });
+    it('dispatches uploadThumbnail action', () => {
+      expect(dispatchedAction.uploadThumbnail).not.toEqual(undefined);
+    });
+    it('dispatches actions.video.updateField on success', () => {
+      dispatch.mockClear();
+      dispatchedAction.uploadThumbnail.onSuccess(mockThumbnailResponse);
+      expect(dispatch).toHaveBeenCalledWith(actions.video.updateField({ thumbnail: mockThumbnailResponse.image_url }));
+    });
   });
   describe('deleteTranscript', () => {
     beforeEach(() => {

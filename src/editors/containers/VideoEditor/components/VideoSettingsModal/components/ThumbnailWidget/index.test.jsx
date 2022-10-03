@@ -13,6 +13,7 @@ jest.mock('../../../../../../data/redux', () => ({
   },
   selectors: {
     video: {
+      allowThumbnailUpload: jest.fn(state => ({ allowThumbnailUpload: state })),
       thumbnail: jest.fn(state => ({ thumbnail: state })),
     },
   },
@@ -23,6 +24,7 @@ describe('ThumbnailWidget', () => {
     error: {},
     title: 'tiTLE',
     intl: { formatMessage },
+    allowThumbnailUpload: false,
     thumbnail: null,
     updateField: jest.fn().mockName('args.updateField'),
   };
@@ -38,9 +40,19 @@ describe('ThumbnailWidget', () => {
         shallow(<ThumbnailWidget {...props} thumbnail="sOMeUrl" />),
       ).toMatchSnapshot();
     });
+    test('snapshots: renders as expected with a thumbnail provided', () => {
+      expect(
+        shallow(<ThumbnailWidget {...props} thumbnail="sOMeUrl" allowThumbnailUpload />),
+      ).toMatchSnapshot();
+    });
   });
   describe('mapStateToProps', () => {
     const testState = { A: 'pple', B: 'anana', C: 'ucumber' };
+    test('allowThumbnailUpload from video.allowThumbnailUpload', () => {
+      expect(
+        mapStateToProps(testState).allowThumbnailUpload,
+      ).toEqual(selectors.video.allowThumbnailUpload(testState));
+    });
     test('thumbnail from video.thumbnail', () => {
       expect(
         mapStateToProps(testState).thumbnail,

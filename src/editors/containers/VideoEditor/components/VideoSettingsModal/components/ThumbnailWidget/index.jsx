@@ -33,33 +33,35 @@ export const ThumbnailWidget = ({
   // injected
   intl,
   // redux
+  allowThumbnailUpload,
   thumbnail,
   updateField,
 }) => {
   const [thumbnailSrc, setThumbnailSrc] = React.useState(thumbnail);
   const fileInput = hooks.fileInput({ setThumbnailSrc });
-
   return (
     <CollapsibleFormWidget title={intl.formatMessage(messages.title)}>
       {thumbnail ? (
         <Stack direction="horizontal" gap={3}>
           <Image src={thumbnailSrc} alt={intl.formatMessage(messages.thumbnailAltText)} />
-          <OverlayTrigger
-            key="top"
-            placement="top"
-            overlay={(
-              <Tooltip>
-                <FormattedMessage {...messages.deleteThumbnail} />
-              </Tooltip>
-            )}
-          >
-            <IconButton
-              className="d-inline-block"
-              iconAs={Icon}
-              src={Delete}
-              onClick={() => updateField({ thumbnail: null })}
-            />
-          </OverlayTrigger>
+          { allowThumbnailUpload ? (
+            <OverlayTrigger
+              key="top"
+              placement="top"
+              overlay={(
+                <Tooltip>
+                  <FormattedMessage {...messages.deleteThumbnail} />
+                </Tooltip>
+              )}
+            >
+              <IconButton
+                className="d-inline-block"
+                iconAs={Icon}
+                src={Delete}
+                onClick={() => updateField({ thumbnail: null })}
+              />
+            </OverlayTrigger>
+          ) : null }
         </Stack>
       ) : (
         <Stack gap={3}>
@@ -81,10 +83,12 @@ ThumbnailWidget.propTypes = {
   // injected
   intl: intlShape.isRequired,
   // redux
+  allowThumbnailUpload: PropTypes.bool.isRequired,
   thumbnail: PropTypes.string.isRequired,
   updateField: PropTypes.func.isRequired,
 };
 export const mapStateToProps = (state) => ({
+  allowThumbnailUpload: selectors.video.allowThumbnailUpload(state),
   thumbnail: selectors.video.thumbnail(state),
 });
 

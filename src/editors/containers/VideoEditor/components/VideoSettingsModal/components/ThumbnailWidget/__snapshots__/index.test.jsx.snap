@@ -12,6 +12,22 @@ exports[`ThumbnailWidget snapshots snapshots: renders as expected with a thumbna
       alt="Image used as thumbnail for video"
       src="sOMeUrl"
     />
+  </Stack>
+</injectIntl(ShimmedIntlComponent)>
+`;
+
+exports[`ThumbnailWidget snapshots snapshots: renders as expected with a thumbnail provided 2`] = `
+<injectIntl(ShimmedIntlComponent)
+  title="Thumbnail"
+>
+  <Stack
+    direction="horizontal"
+    gap={3}
+  >
+    <Image
+      alt="Image used as thumbnail for video"
+      src="sOMeUrl"
+    />
     <OverLayTrigger
       key="top"
       overlay={
