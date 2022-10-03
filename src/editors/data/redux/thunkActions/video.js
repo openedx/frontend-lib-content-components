@@ -2,34 +2,36 @@ import { actions, selectors } from '..';
 import * as requests from './requests';
 import * as module from './video';
 
-export const loadVideoData = () => (dispatch) => {
+export const loadVideoData = () => (dispatch, getState) => {
+  const state = getState();
+  const rawVideoData = state.app.blockValue.data.metadata ? state.app.blockValue.data.metadata : {};
   const {
     videoSource,
     videoId,
     fallbackVideos,
   } = module.determineVideoSource({
-    edxVideoId: selectors.app.blockValue.data.metadata.edx_video_id,
-    youtubeId: selectors.app.blockValue.data.metadata.youtube_id_1_0,
-    html5Sources: selectors.app.blockValue.data.metadata.html5_sources,
+    edxVideoId: rawVideoData.edx_video_id,
+    youtubeId: rawVideoData.youtube_id_1_0,
+    html5Sources: rawVideoData.html5_sources,
   });
 
   // we don't appear to want to parse license version
-  const [licenseType, licenseOptions] = module.parseLicense(selectors.app.blockValue.data.metadata.license);
+  const [licenseType, licenseOptions] = module.parseLicense(rawVideoData.license);
 
   dispatch(actions.video.load({
     videoSource,
     videoId,
     fallbackVideos,
-    allowVideoDownloads: selectors.app.blockValue.data.metadata.download_video,
-    transcripts: selectors.app.blockValue.data.metadata.transcripts,
-    allowTranscriptDownloads: selectors.app.blockValue.data.metadata.download_track,
-    showTranscriptByDefault: selectors.app.blockValue.data.metadata.show_captions,
-    duration: {
-      startTime: selectors.app.blockValue.data.metadata.start_time,
-      stopTime: selectors.app.blockValue.data.metadata.end_time,
+    allowVideoDownloads: rawVideoData.download_video,
+    transcripts: rawVideoData.transcripts,
+    allowTranscriptDownloads: rawVideoData.download_track,
+    showTranscriptByDefault: rawVideoData.show_captions,
+    duration: { // TODO duration is not always sent so they should be calculated.
+      startTime: rawVideoData.start_time,
+      stopTime: rawVideoData.end_time,
       total: null, // TODO can we get total duration? if not, probably dropping from widget
     },
-    handout: selectors.app.blockValue.data.metadata.handout,
+    handout: rawVideoData.handout,
     licenseType,
     licenseDetails: {
       attribution: licenseOptions.by,
