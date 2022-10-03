@@ -22,7 +22,7 @@ exports[`ThumbnailWidget snapshots snapshots: renders as expected with default p
       />
     </Alert>
     <FileInput
-      acceptedFiles=".gif,.jpg,.jpeg,.png,.bmp"
+      acceptedFiles=".gif,.jpg,.jpeg,.png,.bmp,.bmp2"
       fileInput={
         Object {
           "addFile": [Function],
@@ -38,7 +38,7 @@ exports[`ThumbnailWidget snapshots snapshots: renders as expected with default p
       variant="link"
     >
       <FormattedMessage
-        defaultMessage="Upload Transcript"
+        defaultMessage="Upload Thumbnail"
         description="Label for upload button"
         id="authoring.videoeditor.thumbnail.upload.label"
       />
@@ -55,10 +55,15 @@ exports[`ThumbnailWidget snapshots snapshots: renders as expected with transcrip
     direction="horizontal"
     gap={3}
   >
-    <Image
-      alt="Image used as thumbnail for video"
-      src="sOMeUrl"
-    />
+    <div
+      width="80%"
+    >
+      <Image
+        alt="Image used as thumbnail for video"
+        src="sOMeUrl"
+        thumbnail={true}
+      />
+    </div>
     <OverLayTrigger
       key="top"
       overlay={

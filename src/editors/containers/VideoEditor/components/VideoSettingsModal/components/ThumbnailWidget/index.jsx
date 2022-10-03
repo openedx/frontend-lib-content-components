@@ -19,7 +19,7 @@ import {
 import { Delete, FileUpload } from '@edx/paragon/icons';
 
 import { actions, selectors } from '../../../../../../data/redux';
-import { acceptedImgKeys } from './utils';
+import { acceptedImgKeys } from './constants';
 import * as hooks from './hooks';
 import messages from './messages';
 
@@ -36,14 +36,17 @@ export const ThumbnailWidget = ({
   thumbnail,
   updateField,
 }) => {
+  const imgRef = React.useRef();
   const [thumbnailSrc, setThumbnailSrc] = React.useState(thumbnail);
-  const fileInput = hooks.fileInput({ setThumbnailSrc });
+  const fileInput = hooks.fileInput({ setThumbnailSrc, imgRef });
 
   return (
     <CollapsibleFormWidget title="Thumbnail">
       {thumbnail ? (
         <Stack direction="horizontal" gap={3}>
-          <Image src={thumbnailSrc} alt={intl.formatMessage(messages.thumbnailAltText)} />
+          <div width="80%">
+            <Image ref={imgRef} src={thumbnailSrc} alt={intl.formatMessage(messages.thumbnailAltText)} thumbnail />
+          </div>
           <OverlayTrigger
             key="top"
             placement="top"
@@ -57,7 +60,7 @@ export const ThumbnailWidget = ({
               className="d-inline-block"
               iconAs={Icon}
               src={Delete}
-              onClick={() => updateField({ thumbnail: null })}
+              onClick={() => { updateField({ thumbnail: null }); setThumbnailSrc(null); }}
             />
           </OverlayTrigger>
         </Stack>
