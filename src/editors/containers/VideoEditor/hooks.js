@@ -32,12 +32,12 @@ export const errorsHook = () => {
     },
     validateEntry: () => {
       let validated = true;
-      if (!module.validateDuration({ setDurationErrors })) { validated = true; }
-      if (!module.validateHandout({ setHandoutErrors })) { validated = true; }
-      if (!module.validateLicense({ setLicenseErrors })) { validated = true; }
+      if (!module.validateDuration({ setDurationErrors })) { validated = false; }
+      if (!module.validateHandout({ setHandoutErrors })) { validated = false; }
+      if (!module.validateLicense({ setLicenseErrors })) { validated = false; }
       if (!module.validateThumbnail({ setThumbnailErrors })) { validated = false; }
-      if (!module.validateTranscripts({ setTranscriptsErrors })) { validated = true; }
-      if (!module.validateVideoSource({ setVideoSourceErrors })) { validated = true; }
+      if (!module.validateTranscripts({ setTranscriptsErrors })) { validated = false; }
+      if (!module.validateVideoSource({ setVideoSourceErrors })) { validated = false; }
       return validated;
     },
   };

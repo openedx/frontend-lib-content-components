@@ -94,7 +94,6 @@ export const apiMethods = {
       };
     }
     if (blockType === 'video') {
-      console.log(content);
       const {
         html5Sources,
         edxVideoId,
