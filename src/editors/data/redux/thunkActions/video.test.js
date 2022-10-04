@@ -43,6 +43,18 @@ const mockLanguage = 'la';
 const mockFile = 'soMEtRANscRipT';
 const mockFilename = 'soMEtRANscRipT.srt';
 
+const testMetadata = {
+  download_track: 'dOWNlOAdTraCK',
+  download_video: 'downLoaDViDEo',
+  edx_video_id: 'soMEvIDEo',
+  end_time: 'StOpTIMe',
+  handout: 'hANdoUT',
+  html5_sources: [],
+  license: 'liCENse',
+  show_captions: 'shOWcapTIONS',
+  start_time: 'stARtTiME',
+  transcripts: { la: 'test VALUE' },
+};
 const testState = { transcripts: { la: 'test VALUE' }, videoId: 'soMEvIDEo' };
 const testUpload = { transcripts: { la: { filename: mockFilename } } };
 const testReplaceUpload = {
@@ -58,7 +70,11 @@ describe('video thunkActions', () => {
   beforeEach(() => {
     dispatch = jest.fn((action) => ({ dispatch: action }));
     getState = jest.fn(() => ({
-      app: { studioEndpointUrl: 'soMEeNDPoiNT', blockId: 'soMEBloCk' },
+      app: {
+        blockId: 'soMEBloCk',
+        blockValue: { data: { metadata: { ...testMetadata } } },
+        studioEndpointUrl: 'soMEeNDPoiNT',
+      },
       video: testState,
     }));
   });
@@ -67,43 +83,43 @@ describe('video thunkActions', () => {
       jest.restoreAllMocks();
     });
     it('dispatches actions.video.load', () => {
-      const fakeData = {
-        videoSource: 'viDeOsoURce',
-        videoId: 'vIDeoid',
-        fallbackVideos: [],
-        allowVideoDownloads: selectors.app.blockValue.data.metadata.download_video,
-        transcripts: selectors.app.blockValue.data.metadata.transcripts,
-        allowTranscriptDownloads: selectors.app.blockValue.data.metadata.download_track,
-        showTranscriptByDefault: selectors.app.blockValue.data.metadata.show_captions,
+      jest.spyOn(thunkActions, thunkActionsKeys.determineVideoSource).mockReturnValue({
+        videoSource: 'videOsOurce',
+        videoId: 'videOiD',
+        fallbackVideos: 'fALLbACKvIDeos',
+      });
+      jest.spyOn(thunkActions, thunkActionsKeys.parseLicense).mockReturnValue([
+        'liCENSEtyPe',
+        {
+          by: true,
+          nc: true,
+          nd: true,
+          sa: false,
+        },
+      ]);
+      thunkActions.loadVideoData()(dispatch, getState);
+      expect(dispatch).toHaveBeenCalledWith(actions.video.load({
+        videoSource: 'videOsOurce',
+        videoId: 'videOiD',
+        fallbackVideos: 'fALLbACKvIDeos',
+        allowVideoDownloads: testMetadata.download_video,
+        transcripts: testMetadata.transcripts,
+        allowTranscriptDownloads: testMetadata.download_track,
+        showTranscriptByDefault: testMetadata.show_captions,
         duration: {
-          startTime: selectors.app.blockValue.data.metadata.start_time,
-          stopTime: selectors.app.blockValue.data.metadata.end_time,
+          startTime: testMetadata.start_time,
+          stopTime: testMetadata.end_time,
           total: null,
         },
-        handout: selectors.app.blockValue.data.metadata.handout,
-        licenseType: 'lIcensEtyPe',
+        handout: testMetadata.handout,
+        licenseType: 'liCENSEtyPe',
         licenseDetails: {
           attribution: true,
           noncommercial: true,
           noDerivatives: true,
-          shareAlike: undefined,
+          shareAlike: false,
         },
-      };
-      jest.spyOn(thunkActions, thunkActionsKeys.determineVideoSource).mockReturnValue({
-        videoSource: fakeData.videoSource,
-        videoId: fakeData.videoId,
-        fallbackVideos: fakeData.fallbackVideos,
-      });
-      jest.spyOn(thunkActions, thunkActionsKeys.parseLicense).mockReturnValue([
-        fakeData.licenseType,
-        {
-          by: fakeData.licenseDetails.attribution,
-          nc: fakeData.licenseDetails.noncommercial,
-          nd: fakeData.licenseDetails.noDerivatives,
-        },
-      ]);
-      thunkActions.loadVideoData()(dispatch);
-      expect(dispatch).toHaveBeenCalledWith(actions.video.load(fakeData));
+      }));
     });
   });
   describe('determineVideoSource', () => {
