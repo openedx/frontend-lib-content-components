@@ -9,6 +9,11 @@ jest.mock('..', () => ({
       updateField: (args) => ({ updateField: args }),
     },
   },
+  selectors: {
+    video: {
+      videoId: (state) => ({ videoId: state }),
+    },
+  },
 }));
 jest.mock('./requests', () => ({
   deleteTranscript: (args) => ({ deleteTranscript: args }),
