@@ -1,4 +1,4 @@
-import { actions, selectors } from '..';
+import { actions } from '..';
 import { keyStore } from '../../../utils';
 import * as thunkActions from './video';
 
@@ -7,29 +7,6 @@ jest.mock('..', () => ({
     video: {
       load: (args) => ({ load: args }),
       updateField: (args) => ({ updateField: args }),
-    },
-  },
-  selectors: {
-    app: {
-      blockValue: {
-        data: {
-          metadata: {
-            edx_video_id: (state) => ({ edxVideoId: state }),
-            youtube_id_1_0: (state) => ({ youtube_id_1_0: state }),
-            html5_sources: (state) => ({ html5Sources: state }),
-            download_video: (state) => ({ download_video: state }),
-            transcripts: (state) => ({ transcripts: state }),
-            download_track: (state) => ({ download_track: state }),
-            show_captions: (state) => ({ show_captions: state }),
-            start_time: (state) => ({ start_time: state }),
-            end_time: (state) => ({ end_time: state }),
-            handout: (state) => ({ handout: state }),
-          },
-        },
-      },
-    },
-    video: {
-      videoId: (state) => ({ videoId: state }),
     },
   },
 }));
