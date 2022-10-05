@@ -1,3 +1,5 @@
+import { dispatch } from 'react-redux';
+import { thunkActions } from '../../data/redux';
 import { MockUseState } from '../../../testUtils';
 
 import { keyStore } from '../../utils';
@@ -5,6 +7,26 @@ import * as module from './hooks';
 
 jest.mock('react', () => ({
   ...jest.requireActual('react'),
+  useRef: jest.fn(val => ({ current: val })),
+  useEffect: jest.fn(),
+  useCallback: (cb, prereqs) => ({ cb, prereqs }),
+}));
+
+jest.mock('react-redux', () => {
+  const dispatchFn = jest.fn();
+  return {
+    ...jest.requireActual('react-redux'),
+    dispatch: dispatchFn,
+    useDispatch: jest.fn(() => dispatchFn),
+  };
+});
+
+jest.mock('../../data/redux', () => ({
+  thunkActions: {
+    video: {
+      uploadThumbnail: jest.fn(),
+    },
+  },
 }));
 
 const state = new MockUseState(module);
@@ -67,6 +89,12 @@ describe('VideoEditorHooks', () => {
         jest.spyOn(module, moduleKeys.validateVideoSource).mockImplementationOnce(mockTrue);
         expect(hook.validateEntry()).toEqual(false);
       });
+    });
+  });
+  describe('fetchVideoContent', () => {
+    it('calls dispatch', () => {
+      hook = module.fetchVideoContent()({ dispatch });
+      expect(hook).toEqual(dispatch(thunkActions.video.uploadThumbnail()));
     });
   });
 });

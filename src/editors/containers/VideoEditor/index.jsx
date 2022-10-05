@@ -1,11 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { thunkActions } from '../../data/redux';
 
 import EditorContainer from '../EditorContainer';
 import VideoEditorModal from './components/VideoEditorModal';
-import { errorsHook } from './hooks';
+import { errorsHook, fetchVideoContent } from './hooks';
 
 export const VideoEditor = ({
   onClose,
@@ -14,9 +13,6 @@ export const VideoEditor = ({
     error,
     validateEntry,
   } = errorsHook();
-  const fetchVideoContent = () => ({ dispatch }) => (
-    dispatch(thunkActions.video.uploadThumbnail())
-  );
   return (
     <EditorContainer
       getContent={fetchVideoContent()}

@@ -11,9 +11,8 @@ jest.mock('./hooks', () => ({
   errorsHook: jest.fn(() => ({
     error: 'hooks.errorsHook.error',
     validateEntry: jest.fn().mockName('validateEntry'),
-
   })),
-  getContent: jest.fn(),
+  fetchVideoContent: jest.fn().mockName('fetchVideoContent'),
 }));
 
 jest.mock('../../data/redux', () => ({

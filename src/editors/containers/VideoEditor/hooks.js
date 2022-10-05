@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { thunkActions } from '../../data/redux';
 import { StrictDict } from '../../utils';
 import * as module from './hooks';
 
@@ -77,3 +78,7 @@ export const validateVideoSource = ({ setVideoSourceErrors }) => {
   });
   return false;
 };
+
+export const fetchVideoContent = () => ({ dispatch }) => (
+  dispatch(thunkActions.video.uploadThumbnail())
+);
