@@ -102,6 +102,7 @@ export const apiMethods = {
         videoSource: content.videoSource,
         fallbackVideos: content.fallbackVideos,
       });
+      // console.log(type);
       return {
         category: blockType,
         courseKey: learningContextId,

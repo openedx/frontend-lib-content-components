@@ -1,6 +1,4 @@
 import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { thunkActions, selectors } from '../../data/redux';
 import { StrictDict } from '../../utils';
 import * as module from './hooks';
 
@@ -78,17 +76,4 @@ export const validateVideoSource = ({ setVideoSourceErrors }) => {
     fieldName: 'sample error message',
   });
   return false;
-};
-
-export const getContent = () => {
-  const dispatch = useDispatch();
-  const currentThumbnail = useSelector(selectors.video.thumbnail);
-  const originalThumbnail = useSelector(selectors.video.originalThumbnail);
-  if (currentThumbnail !== originalThumbnail) {
-    dispatch(thunkActions.video.uploadThumbnail({
-      thumbnail: currentThumbnail,
-    }));
-  }
-  const videoSettings = useSelector(selectors.video.videoSettings);
-  return videoSettings;
 };

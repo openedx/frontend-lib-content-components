@@ -12,6 +12,7 @@ jest.mock('..', () => ({
   selectors: {
     video: {
       videoId: (state) => ({ videoId: state }),
+      videoSettings: (state) => ({ videoSettings: state }),
     },
   },
 }));
@@ -26,7 +27,6 @@ const thunkActionsKeys = keyStore(thunkActions);
 const mockLanguage = 'la';
 const mockFile = 'soMEtRANscRipT';
 const mockFilename = 'soMEtRANscRipT.srt';
-const mockThumbnail = 'sOMefILE';
 const mockThumbnailResponse = { image_url: 'soMEimAGEUrL' };
 const mockAllowThumbnailUpload = { data: { allowThumbnailUpload: 'soMEbOolEAn' } };
 
@@ -42,7 +42,12 @@ const testMetadata = {
   start_time: 'stARtTiME',
   transcripts: { la: 'test VALUE' },
 };
-const testState = { transcripts: { la: 'test VALUE' }, videoId: 'soMEvIDEo' };
+const testState = {
+  transcripts: { la: 'test VALUE' },
+  thumbnail: 'sOMefILE',
+  originalThumbnail: null,
+  videoId: 'soMEvIDEo',
+};
 const testUpload = { transcripts: { la: { filename: mockFilename } } };
 const testReplaceUpload = {
   file: mockFile,
@@ -223,7 +228,7 @@ describe('video thunkActions', () => {
   });
   describe('uploadThumbnail', () => {
     beforeEach(() => {
-      thunkActions.uploadThumbnail({ thumbnail: mockThumbnail })(dispatch, getState);
+      thunkActions.uploadThumbnail()(dispatch, getState);
       [[dispatchedAction]] = dispatch.mock.calls;
     });
     it('dispatches uploadThumbnail action', () => {

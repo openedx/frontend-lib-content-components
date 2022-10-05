@@ -2,14 +2,12 @@ import {
   useRef, useEffect, useCallback, useState,
 } from 'react';
 
-import { useSelector } from 'react-redux';
 import { StrictDict } from '../../utils';
 import tinyMCE from '../../data/constants/tinyMCE';
 import tinyMCEStyles from '../../data/constants/tinyMCEStyles';
 import pluginConfig from './pluginConfig';
 import * as appHooks from '../../hooks';
 import * as module from './hooks';
-import { selectors } from '../../data/redux';
 
 export const { nullMethod, navigateCallback, navigateTo } = appHooks;
 
@@ -175,13 +173,13 @@ export const prepareEditorRef = () => {
   return { editorRef, refReady, setEditorRef };
 };
 
-export const setAssetToStaticUrl = ({ editorvalue, images }) => {
+export const setAssetToStaticUrl = ({ editorValue, images }) => {
   /* For assets to remain usable across course instances, we convert their url to be course-agnostic.
    * For example, /assets/course/<asset hash>/filename gets converted to /static/filename. This is
    * important for rerunning courses and importing/exporting course as the /static/ part of the url
    * allows the asset to be mapped to the new course run.
   */
-  let content = editorvalue;
+  let content = editorValue;
   const imageUrls = [];
   const imgsArray = Object.values(images);
   imgsArray.forEach(image => {
@@ -212,7 +210,7 @@ export const getContent = ({ editorRef, isRaw, images }) => () => {
   const content = (isRaw && editorRef && editorRef.current
     ? editorRef.current.state.doc.toString()
     : editorRef.current?.getContent());
-  return setAssetToStaticUrl({ editorvalue: content, images });
+  return setAssetToStaticUrl({ editorValue: content, images });
 };
 
 export const fetchImageUrls = (images) => {

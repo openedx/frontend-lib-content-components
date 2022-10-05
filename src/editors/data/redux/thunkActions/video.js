@@ -140,16 +140,19 @@ export const saveVideoData = () => () => {
   // dispatch(requests.saveBlock({ });
 };
 
-export const uploadThumbnail = ({ thumbnail }) => (dispatch, getState) => {
+export const uploadThumbnail = () => (dispatch, getState) => {
   const state = getState();
-  const { videoId } = state.video;
-  dispatch(requests.uploadThumbnail({
-    thumbnail,
-    videoId,
-    onSuccess: (response) => dispatch(actions.video.updateField({
-      thumbnail: response.image_url,
-    })),
-  }));
+  const { originalThumbnail, thumbnail, videoId } = state.video;
+  if (thumbnail !== originalThumbnail) {
+    dispatch(requests.uploadThumbnail({
+      thumbnail,
+      videoId,
+      onSuccess: (response) => dispatch(actions.video.updateField({
+        thumbnail: response.image_url,
+      })),
+    }));
+  }
+  return selectors.video.videoSettings(state);
 };
 
 // Transcript Thunks:
