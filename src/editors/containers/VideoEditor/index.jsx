@@ -4,7 +4,8 @@ import PropTypes from 'prop-types';
 
 import EditorContainer from '../EditorContainer';
 import VideoEditorModal from './components/VideoEditorModal';
-import { errorsHook, getContent } from './hooks';
+import { errorsHook } from './hooks';
+import { useDispatch } from 'react-redux';
 
 export const VideoEditor = ({
   onClose,
@@ -13,10 +14,15 @@ export const VideoEditor = ({
     error,
     validateEntry,
   } = errorsHook();
-  // const videoSettings = getContent();
+
+  const getContent = () => ({dispatch}) => {
+    console.log('it was called', dispatch);
+    dispatch();
+  }
+
   return (
     <EditorContainer
-      getContent={() => getContent()}
+      getContent={getContent()}
       onClose={onClose}
       validateEntry={validateEntry}
     >
