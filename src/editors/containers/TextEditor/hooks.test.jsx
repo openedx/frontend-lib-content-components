@@ -261,7 +261,7 @@ describe('TextEditor hooks', () => {
           },
         },
       };
-      const images = {}
+      const images = {};
       test('returns correct ontent based on isRaw', () => {
         expect(module.getContent({ editorRef, isRaw: false, images })()).toEqual(visualContent);
         expect(module.getContent({ editorRef, isRaw: true, images })()).toEqual(rawContent);
