@@ -92,7 +92,7 @@ describe('VideoEditorHooks', () => {
     });
   });
   describe('fetchVideoContent', () => {
-    it('calls dispatch', () => {
+    it('equals dispatch(thunkActions.video.uploadThumbnail())', () => {
       hook = module.fetchVideoContent()({ dispatch });
       expect(hook).toEqual(dispatch(thunkActions.video.uploadThumbnail()));
     });
