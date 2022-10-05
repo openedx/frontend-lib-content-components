@@ -7,6 +7,7 @@ import { selectors } from '../../data/redux';
 import EditorContainer from '../EditorContainer';
 import VideoEditorModal from './components/VideoEditorModal';
 import { errorsHook } from './hooks';
+import { useDispatch } from 'react-redux';
 
 export const VideoEditor = ({
   onClose,
@@ -18,9 +19,14 @@ export const VideoEditor = ({
     validateEntry,
   } = errorsHook();
 
+  const getContent = () => ({dispatch}) => {
+    console.log('it was called', dispatch);
+    dispatch();
+  }
+
   return (
     <EditorContainer
-      getContent={() => videoSettings}
+      getContent={getContent()}
       onClose={onClose}
       validateEntry={validateEntry}
     >
