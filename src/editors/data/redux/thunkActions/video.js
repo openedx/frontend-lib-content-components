@@ -23,7 +23,7 @@ export const loadVideoData = () => (dispatch, getState) => {
     videoId,
     fallbackVideos,
     allowVideoDownloads: rawVideoData.download_video,
-    transcripts: rawVideoData.transcripts,
+    transcripts: rawVideoData.transcripts || {},
     allowTranscriptDownloads: rawVideoData.download_track,
     showTranscriptByDefault: rawVideoData.show_captions,
     duration: { // TODO duration is not always sent so they should be calculated.

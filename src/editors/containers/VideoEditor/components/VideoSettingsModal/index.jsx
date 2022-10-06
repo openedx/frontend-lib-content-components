@@ -20,39 +20,23 @@ export const hooks = {
   },
 };
 
-export const VideoSettingsModal = ({
-  error,
-}) => (
+export const VideoSettingsModal = () => (
   <div className="video-settings-modal row">
     <div className="video-preview col col-4">
       Video Preview goes here
       {/* <VideoPreview /> */}
     </div>
     <div className="video-controls col col-8">
-      <ErrorSummary {...{ error }} />
+      <ErrorSummary />
       <h3>Settings</h3>
-      <VideoSourceWidget error={error.videoSource} />
-      <ThumbnailWidget error={error.thumbnail} />
-      <TranscriptWidget error={error.transcripts} />
-      <DurationWidget error={error.duration} />
-      <HandoutWidget error={error.handout} />
-      <LicenseWidget error={error.license} />
+      <VideoSourceWidget />
+      <ThumbnailWidget />
+      <TranscriptWidget />
+      <DurationWidget />
+      <HandoutWidget />
+      <LicenseWidget />
     </div>
   </div>
 );
-
-VideoSettingsModal.defaultProps = {
-  error: {
-    duration: {},
-    handout: {},
-    license: {},
-    thumbnail: {},
-    transcripts: {},
-    videoSource: {},
-  },
-};
-VideoSettingsModal.propTypes = {
-  error: PropTypes.node,
-};
 
 export default VideoSettingsModal;

@@ -6,6 +6,7 @@ import { thunkActions } from '../../../data/redux';
 import VideoSettingsModal from './VideoSettingsModal';
 // import SelectVideoModal from './SelectVideoModal';
 import * as module from './VideoEditorModal';
+import { ErrorContext } from '../hooks';
 
 export const hooks = {
   initialize: (dispatch) => {
@@ -17,13 +18,12 @@ export const hooks = {
 
 const VideoEditorModal = ({
   close,
-  error,
   isOpen,
 }) => {
   const dispatch = useDispatch();
   module.hooks.initialize(dispatch);
   return (
-    <VideoSettingsModal {...{ close, error, isOpen }} />
+    <VideoSettingsModal {...{ close, isOpen }} />
   );
   // TODO: add logic to show SelectVideoModal if no selection
 };

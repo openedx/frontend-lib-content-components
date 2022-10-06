@@ -9,7 +9,7 @@ export const state = {
 
 export const transcriptLanguages = (transcripts) => {
   const languages = [];
-  if (Object.keys(transcripts).length > 0) {
+  if (transcripts && Object.keys(transcripts).length > 0) {
     Object.keys(transcripts).forEach(transcript => {
       languages.push(videoTranscriptLanguages[transcript]);
     });
