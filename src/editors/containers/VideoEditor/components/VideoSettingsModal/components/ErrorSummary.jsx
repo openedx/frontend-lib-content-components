@@ -8,10 +8,11 @@ import { ErrorContext } from '../../../hooks';
 
 export const ErrorSummary = () => {
   const error = React.useContext(ErrorContext);
+  const hasError = (errHook) => (Object.keys(errHook[0]).length !== 0);
   return (
     <Alert
       icon={Info}
-      show={!Object.values(error).every(val => Object.keys(val[0]).length === 0)}
+      show={Object.values(error).every(hasError)}
       variant="danger"
     >
       <Alert.Heading>
