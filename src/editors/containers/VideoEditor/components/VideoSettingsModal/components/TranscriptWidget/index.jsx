@@ -43,6 +43,7 @@ export const TranscriptWidget = ({
   isDeleteError,
 }) => {
   const [error, setError] = React.useContext(ErrorContext).transcripts;
+  const updateErrors = hooks.updateErrors({ isUploadError, isDeleteError })
   const languagesArr = hooks.transcriptLanguages(transcripts);
   const fileInput = hooks.fileInput({ onAddFile: hooks.addFileCallback({ dispatch: useDispatch() }) });
   const hasTranscripts = hooks.hasTranscripts(transcripts);
