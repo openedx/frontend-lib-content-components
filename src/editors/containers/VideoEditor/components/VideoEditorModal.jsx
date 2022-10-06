@@ -6,7 +6,6 @@ import { thunkActions } from '../../../data/redux';
 import VideoSettingsModal from './VideoSettingsModal';
 // import SelectVideoModal from './SelectVideoModal';
 import * as module from './VideoEditorModal';
-import { ErrorContext } from '../hooks';
 
 export const hooks = {
   initialize: (dispatch) => {
@@ -29,18 +28,9 @@ const VideoEditorModal = ({
 };
 
 VideoEditorModal.defaultProps = {
-  error: {
-    duration: {},
-    handout: {},
-    license: {},
-    thumbnail: {},
-    transcripts: {},
-    videoSource: {},
-  },
 };
 VideoEditorModal.propTypes = {
   close: PropTypes.func.isRequired,
-  error: PropTypes.node,
   isOpen: PropTypes.bool.isRequired,
 };
 export default VideoEditorModal;

@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import { thunkActions } from '../../../../data/redux';
 // import VideoPreview from './components/VideoPreview';

@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { FormattedMessage } from '@edx/frontend-platform/i18n';
 
 import { Alert } from '@edx/paragon';
@@ -9,7 +8,6 @@ import { ErrorContext } from '../../../hooks';
 
 export const ErrorSummary = () => {
   const error = React.useContext(ErrorContext);
-  console.log('testerr', error)
   return (
     <Alert
       icon={Info}
@@ -24,20 +22,6 @@ export const ErrorSummary = () => {
       </p>
     </Alert>
   );
-};
-
-ErrorSummary.defaultProps = {
-  error: {
-    duration: {},
-    handout: {},
-    license: {},
-    thumbnail: {},
-    transcripts: {},
-    videoSource: {},
-  },
-};
-ErrorSummary.propTypes = {
-  error: PropTypes.node,
 };
 
 export default ErrorSummary;

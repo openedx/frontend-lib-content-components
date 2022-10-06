@@ -18,14 +18,12 @@ export const VideoEditor = ({
     validateEntry,
   } = errorsHook();
 
-  console.log('test', error)
-
   return (
     <ErrorContext.Provider value={error}>
       <EditorContainer
         getContent={() => videoSettings}
         onClose={onClose}
-        validateEntry={validateEntry({ ...videoSettings })}
+        validateEntry={validateEntry}
       >
         <div className="video-editor">
           <VideoEditorModal />
