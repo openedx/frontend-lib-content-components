@@ -50,11 +50,11 @@ export const determineVideoSource = ({
   // videoSource should be the edx_video_id (if present), or the youtube url (if present), or the first fallback url.
   // in that order.
   // if we are falling back to the first fallback url, remove it from the list of fallback urls for display
-  const videoSource = edxVideoId || youtubeId || html5Sources[0] || '';
+  const videoSource = edxVideoId || youtubeId || (Array.isArray(html5Sources) ? html5Sources[0] : '');
   const videoId = edxVideoId || '';
   const fallbackVideos = (!edxVideoId && !youtubeId)
-    ? html5Sources.slice(1)
-    : html5Sources;
+    ? (Array.isArray(html5Sources) ? html5Sources.slice(1) : [])
+    : (html5Sources ? html5Sources : []);
   return {
     videoSource,
     videoId,
