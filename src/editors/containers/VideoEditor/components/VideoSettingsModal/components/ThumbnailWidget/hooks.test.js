@@ -1,6 +1,6 @@
 import React from 'react';
 import { dispatch } from 'react-redux';
-import { actions } from '../../../../../../data/redux';
+import { thunkActions } from '../../../../../../data/redux';
 
 import * as hooks from './hooks';
 
@@ -21,9 +21,9 @@ jest.mock('react-redux', () => {
 });
 
 jest.mock('../../../../../../data/redux', () => ({
-  actions: {
+  thunkActions: {
     video: {
-      updateField: jest.fn(),
+      uploadThumbnail: jest.fn(),
     },
   },
 }));
@@ -48,9 +48,10 @@ describe('fileInput', () => {
   });
   describe('addFile (uploadImage args)', () => {
     const eventSuccess = { target: { files: [new File([testValue], 'sOMEUrl.jpg')] } };
+    const image = eventSuccess.target.files[0];
     it('dispatches updateField action with the first target file', () => {
       hook.addFile(eventSuccess);
-      expect(dispatch).toHaveBeenCalledWith(actions.video.updateField({ thumbnail: testValue }));
+      expect(dispatch).toHaveBeenCalledWith(thunkActions.video.uploadThumbnail({ thumbnail: image }));
     });
   });
 });

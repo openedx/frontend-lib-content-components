@@ -27,7 +27,8 @@ const thunkActionsKeys = keyStore(thunkActions);
 const mockLanguage = 'la';
 const mockFile = 'soMEtRANscRipT';
 const mockFilename = 'soMEtRANscRipT.srt';
-const mockThumbnailResponse = { image_url: 'soMEimAGEUrL' };
+const mockThumbnail = 'sOMefILE';
+const mockThumbnailResponse = { data: { image_url: 'soMEimAGEUrL' } };
 const mockAllowThumbnailUpload = { data: { allowThumbnailUpload: 'soMEbOolEAn' } };
 
 const testMetadata = {
@@ -135,15 +136,30 @@ describe('video thunkActions', () => {
     const youtubeId = 'yOuTuBEiD';
     const html5Sources = ['htmLOne', 'hTMlTwo', 'htMLthrEE'];
     describe('when there is an edx video id, youtube id and html5 sources', () => {
-      it('returns the edx video id for video source and html5 sources for fallback videos', () => {
+      it('returns the youtube id for video source and html5 sources for fallback videos', () => {
         expect(thunkActions.determineVideoSource({
           edxVideoId,
           youtubeId,
           html5Sources,
         })).toEqual({
+          videoSource: youtubeId,
+          videoId: edxVideoId,
+          videoType: 'youtube',
+          fallbackVideos: html5Sources,
+        });
+      });
+    });
+    describe('when there is an edx video id', () => {
+      it('returns the edx video id for video source', () => {
+        expect(thunkActions.determineVideoSource({
+          edxVideoId,
+          youtubeId: '',
+          html5Sources: '',
+        })).toEqual({
           videoSource: edxVideoId,
           videoId: edxVideoId,
-          fallbackVideos: html5Sources,
+          videoType: 'edxVideo',
+          fallbackVideos: '',
         });
       });
     });
@@ -156,6 +172,7 @@ describe('video thunkActions', () => {
         })).toEqual({
           videoSource: youtubeId,
           videoId: '',
+          videoType: 'youtube',
           fallbackVideos: html5Sources,
         });
       });
@@ -169,6 +186,7 @@ describe('video thunkActions', () => {
         })).toEqual({
           videoSource: 'htmLOne',
           videoId: '',
+          videoType: 'html5source',
           fallbackVideos: ['hTMlTwo', 'htMLthrEE'],
         });
       });
@@ -180,6 +198,7 @@ describe('video thunkActions', () => {
         })).toEqual({
           videoSource: 'htmlOne',
           videoId: '',
+          videoType: 'html5source',
           fallbackVideos: [],
         });
       });
@@ -193,6 +212,7 @@ describe('video thunkActions', () => {
         })).toEqual({
           videoSource: '',
           videoId: '',
+          videoType: '',
           fallbackVideos: [],
         });
       });
@@ -228,7 +248,7 @@ describe('video thunkActions', () => {
   });
   describe('uploadThumbnail', () => {
     beforeEach(() => {
-      thunkActions.uploadThumbnail()(dispatch, getState);
+      thunkActions.uploadThumbnail({ thumbnail: mockThumbnail })(dispatch, getState);
       [[dispatchedAction]] = dispatch.mock.calls;
     });
     it('dispatches uploadThumbnail action', () => {
@@ -237,7 +257,11 @@ describe('video thunkActions', () => {
     it('dispatches actions.video.updateField on success', () => {
       dispatch.mockClear();
       dispatchedAction.uploadThumbnail.onSuccess(mockThumbnailResponse);
-      expect(dispatch).toHaveBeenCalledWith(actions.video.updateField({ thumbnail: mockThumbnailResponse.image_url }));
+      expect(dispatch).toHaveBeenCalledWith(
+        actions.video.updateField({
+          thumbnail: mockThumbnailResponse.data.image_url,
+        }),
+      );
     });
   });
   describe('deleteTranscript', () => {

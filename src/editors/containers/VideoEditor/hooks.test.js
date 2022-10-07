@@ -24,7 +24,7 @@ jest.mock('react-redux', () => {
 jest.mock('../../data/redux', () => ({
   thunkActions: {
     video: {
-      uploadThumbnail: jest.fn(),
+      saveVideoData: jest.fn(),
     },
   },
 }));
@@ -92,9 +92,9 @@ describe('VideoEditorHooks', () => {
     });
   });
   describe('fetchVideoContent', () => {
-    it('equals dispatch(thunkActions.video.uploadThumbnail())', () => {
+    it('equals dispatch(thunkActions.video.saveVideoData())', () => {
       hook = module.fetchVideoContent()({ dispatch });
-      expect(hook).toEqual(dispatch(thunkActions.video.uploadThumbnail()));
+      expect(hook).toEqual(dispatch(thunkActions.video.saveVideoData()));
     });
   });
 });

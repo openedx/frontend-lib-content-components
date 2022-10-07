@@ -15,6 +15,7 @@ jest.mock('../../../../../../data/redux', () => ({
     video: {
       allowThumbnailUpload: jest.fn(state => ({ allowThumbnailUpload: state })),
       thumbnail: jest.fn(state => ({ thumbnail: state })),
+      videoType: jest.fn(state => ({ videoType: state })),
     },
   },
 }));
@@ -26,6 +27,7 @@ describe('ThumbnailWidget', () => {
     intl: { formatMessage },
     allowThumbnailUpload: false,
     thumbnail: null,
+    videoType: '',
     updateField: jest.fn().mockName('args.updateField'),
   };
 
@@ -37,12 +39,17 @@ describe('ThumbnailWidget', () => {
     });
     test('snapshots: renders as expected with a thumbnail provided', () => {
       expect(
-        shallow(<ThumbnailWidget {...props} thumbnail="sOMeUrl" />),
+        shallow(<ThumbnailWidget {...props} thumbnail="sOMeUrl" videoType="edxVideo" />),
       ).toMatchSnapshot();
     });
-    test('snapshots: renders as expected with a thumbnail provided', () => {
+    test('snapshots: renders as expected where thumbnail uploads are allowed', () => {
       expect(
         shallow(<ThumbnailWidget {...props} thumbnail="sOMeUrl" allowThumbnailUpload />),
+      ).toMatchSnapshot();
+    });
+    test('snapshots: renders as expected where videoType equals edxVideo', () => {
+      expect(
+        shallow(<ThumbnailWidget {...props} thumbnail="sOMeUrl" allowThumbnailUpload videoType="edxVideo" />),
       ).toMatchSnapshot();
     });
   });
@@ -57,6 +64,11 @@ describe('ThumbnailWidget', () => {
       expect(
         mapStateToProps(testState).thumbnail,
       ).toEqual(selectors.video.thumbnail(testState));
+    });
+    test('videoType from video.videoType', () => {
+      expect(
+        mapStateToProps(testState).videoType,
+      ).toEqual(selectors.video.videoType(testState));
     });
   });
   describe('mapDispatchToProps', () => {

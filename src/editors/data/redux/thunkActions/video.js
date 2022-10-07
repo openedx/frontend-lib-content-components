@@ -7,6 +7,7 @@ export const loadVideoData = () => (dispatch, getState) => {
   const rawVideoData = state.app.blockValue.data.metadata ? state.app.blockValue.data.metadata : {};
   const {
     videoSource,
+    videoType,
     videoId,
     fallbackVideos,
   } = module.determineVideoSource({
@@ -20,6 +21,7 @@ export const loadVideoData = () => (dispatch, getState) => {
 
   dispatch(actions.video.load({
     videoSource,
+    videoType,
     videoId,
     fallbackVideos,
     allowVideoDownloads: rawVideoData.download_video,
@@ -39,6 +41,8 @@ export const loadVideoData = () => (dispatch, getState) => {
       noDerivatives: licenseOptions.nd,
       shareAlike: licenseOptions.sa,
     },
+    thumbnail: rawVideoData.thumbnail,
+    originalThumbnail: rawVideoData.thumbnail,
   }));
   dispatch(requests.allowThumbnailUpload({
     onSuccess: (response) => dispatch(actions.video.updateField({
@@ -55,13 +59,25 @@ export const determineVideoSource = ({
   // videoSource should be the edx_video_id (if present), or the youtube url (if present), or the first fallback url.
   // in that order.
   // if we are falling back to the first fallback url, remove it from the list of fallback urls for display
-  const videoSource = edxVideoId || youtubeId || html5Sources[0] || '';
+  let videoType;
+  const videoSource = youtubeId || html5Sources[0] || edxVideoId || '';
+  if (youtubeId) {
+    videoType = 'youtube';
+  } else if (html5Sources.length > 0) {
+    videoType = 'html5source';
+  } else if (edxVideoId) {
+    videoType = 'edxVideo';
+  } else {
+    videoType = '';
+  }
   const videoId = edxVideoId || '';
   const fallbackVideos = (!edxVideoId && !youtubeId)
     ? html5Sources.slice(1)
     : html5Sources;
+  // const fallbackVideos = [];
   return {
     videoSource,
+    videoType,
     videoId,
     fallbackVideos,
   };
@@ -135,24 +151,23 @@ export const parseLicense = (license) => {
   return [licenseType, options, version];
 };
 
-export const saveVideoData = () => () => {
+export const saveVideoData = () => (dispatch, getState) => {
   // dispatch(actions.app.setBlockContent)
   // dispatch(requests.saveBlock({ });
+  const state = getState();
+  return selectors.video.videoSettings(state);
 };
 
-export const uploadThumbnail = () => (dispatch, getState) => {
+export const uploadThumbnail = ({ thumbnail }) => (dispatch, getState) => {
   const state = getState();
-  const { originalThumbnail, thumbnail, videoId } = state.video;
-  if (thumbnail !== originalThumbnail) {
-    dispatch(requests.uploadThumbnail({
-      thumbnail,
-      videoId,
-      onSuccess: (response) => dispatch(actions.video.updateField({
-        thumbnail: response.image_url,
-      })),
-    }));
-  }
-  return selectors.video.videoSettings(state);
+  const { videoId } = state.video;
+  dispatch(requests.uploadThumbnail({
+    thumbnail,
+    videoId,
+    onSuccess: (response) => dispatch(actions.video.updateField({
+      thumbnail: response.data.image_url,
+    })),
+  }));
 };
 
 // Transcript Thunks:

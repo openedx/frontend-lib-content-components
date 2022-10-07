@@ -27,6 +27,7 @@ export const simpleSelectors = [
   stateKeys.licenseDetails,
   stateKeys.allowThumbnailUpload,
   stateKeys.originalThumbnail,
+  stateKeys.videoType,
 ].reduce((obj, key) => ({ ...obj, [key]: state => state.video[key] }), {});
 
 export const openLanguages = createSelector(

@@ -80,5 +80,5 @@ export const validateVideoSource = ({ setVideoSourceErrors }) => {
 };
 
 export const fetchVideoContent = () => ({ dispatch }) => (
-  dispatch(thunkActions.video.uploadThumbnail())
+  dispatch(thunkActions.video.saveVideoData())
 );

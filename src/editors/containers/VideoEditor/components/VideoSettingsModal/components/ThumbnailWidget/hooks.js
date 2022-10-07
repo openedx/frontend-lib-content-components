@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { actions } from '../../../../../../data/redux';
+import { thunkActions } from '../../../../../../data/redux';
 
 export const fileInput = ({ setThumbnailSrc }) => {
   const dispatch = useDispatch();
@@ -15,7 +15,7 @@ export const fileInput = ({ setThumbnailSrc }) => {
     };
     if (image) {
       reader.readAsDataURL(image);
-      dispatch(actions.video.updateField({ thumbnail: image }));
+      dispatch(thunkActions.video.uploadThumbnail({ thumbnail: image }));
     }
   };
   return {

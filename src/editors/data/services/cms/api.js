@@ -102,7 +102,6 @@ export const apiMethods = {
         videoSource: content.videoSource,
         fallbackVideos: content.fallbackVideos,
       });
-      // console.log(type);
       return {
         category: blockType,
         courseKey: learningContextId,
@@ -114,6 +113,7 @@ export const apiMethods = {
           edx_video_id: edxVideoId,
           html5_sources: html5Sources,
           youtube_id_1_0: youtubeId,
+          thumbnail: content.thumbnail,
           download_track: content.allowTranscriptDownloads,
           track: '', // TODO Downloadable Transcript URL. Backend expects a file name, for example: "something.srt"
           show_captions: content.showTranscriptByDefault,

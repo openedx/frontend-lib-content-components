@@ -4,6 +4,16 @@ export const messages = {
     defaultMessage: 'Thumbnail',
     description: 'Title for thumbnail widget',
   },
+  unavailableSubtitle: {
+    id: 'authoring.videoeditor.thumbnail.unavailable.subtitle',
+    defaultMessage: 'Unavailable',
+    description: 'Subtitle for unavailable thumbnail widget',
+  },
+  unavailableMessage: {
+    id: 'authoring.videoeditor.thumbnail.unavailable.message',
+    defaultMessage: 'Select a video from your library to enable this feature',
+    description: 'Message for unavailable thumbnail widget',
+  },
   uploadButtonLabel: {
     id: 'authoring.videoeditor.thumbnail.upload.label',
     defaultMessage: 'Upload Thumbnail',
