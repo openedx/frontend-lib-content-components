@@ -24,7 +24,7 @@ export const createResampledFile = ({ canvasUrl, filename, mimeType }) => {
   return new File([u8arr], filename, { type: mimeType });
 };
 
-/** resampledImage({ image, filename })
+/** resampleImage({ image, filename })
  * resampledImage takes a canvasUrl, filename, and a valid mimeType. The
  * canvasUrl is parsed and written to an 8-bit array of unsigned integers. The
  * new array is saved to  a new file with the same filename as the original image.
@@ -32,7 +32,7 @@ export const createResampledFile = ({ canvasUrl, filename, mimeType }) => {
  * @param {string} filename - string of the image's filename
  * @return {array} array containing the base64 URL for the resampled image and the file containing the resampled image
  */
-export const resampledImage = ({ image, filename }) => {
+export const resampleImage = ({ image, filename }) => {
   const canvas = document.createElement('canvas');
   const ctx = canvas.getContext('2d');
 
@@ -97,7 +97,7 @@ export const fileInput = ({ setThumbnailSrc, imgRef }) => {
         const image = imgRef.current;
         image.onload = () => {
           if (!module.checkValidDimensions({ width: image.naturalWidth, height: image.naturalHeight })) {
-            const [resampledUrl, resampledFile] = module.resampledImage({ image, filename: file.name });
+            const [resampledUrl, resampledFile] = module.resampleImage({ image, filename: file.name });
             setThumbnailSrc(resampledUrl);
             dispatch(actions.video.updateField({ thumbnail: resampledFile }));
           }

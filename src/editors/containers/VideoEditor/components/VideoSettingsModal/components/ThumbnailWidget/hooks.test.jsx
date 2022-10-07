@@ -43,11 +43,11 @@ describe('createResampledFile', () => {
   hook = hooks.createResampledFile({ canvasUrl: 'data:MimETYpe,sOMEUrl', filename: testValue, mimeType: 'sOmEuiMAge' });
   expect(hook).toEqual(resampledFile);
 });
-describe('resampledImage', () => {
+describe('resampleImage', () => {
   const spy = jest.spyOn(hooks, hookKeys.createResampledFile)
     .mockReturnValueOnce(resampledFile);
   const image = shallow(<img width="800" height="800" alt="" />);
-  hook = hooks.resampledImage({ image, filename: testValue });
+  hook = hooks.resampleImage({ image, filename: testValue });
   expect(spy).toHaveBeenCalledWith({ canvasUrl: 'data:,', filename: testValue, mimeType: 'image/png' });
   expect(spy.mock.calls.length).toEqual(1);
   expect(spy).toHaveReturnedWith(resampledFile);
