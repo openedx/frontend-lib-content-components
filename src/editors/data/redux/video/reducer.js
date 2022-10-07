@@ -29,7 +29,6 @@ const initialState = {
     shareAlike: false,
   },
   allowThumbnailUpload: null,
-  originalThumbnail: null,
 };
 
 // eslint-disable-next-line no-unused-vars

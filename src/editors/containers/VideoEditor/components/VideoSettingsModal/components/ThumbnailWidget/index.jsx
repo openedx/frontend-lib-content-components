@@ -53,7 +53,7 @@ export const ThumbnailWidget = ({
       )}
       {thumbnail ? (
         <Stack direction="horizontal" gap={3}>
-          <Image src={thumbnailSrc} alt={intl.formatMessage(messages.thumbnailAltText)} />
+          <Image src={thumbnailSrc || thumbnail} alt={intl.formatMessage(messages.thumbnailAltText)} />
           { (allowThumbnailUpload && isEdxVideo) ? (
             <OverlayTrigger
               key="top"

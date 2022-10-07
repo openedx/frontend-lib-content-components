@@ -42,7 +42,6 @@ export const loadVideoData = () => (dispatch, getState) => {
       shareAlike: licenseOptions.sa,
     },
     thumbnail: rawVideoData.thumbnail,
-    originalThumbnail: rawVideoData.thumbnail,
   }));
   dispatch(requests.allowThumbnailUpload({
     onSuccess: (response) => dispatch(actions.video.updateField({
@@ -161,12 +160,16 @@ export const saveVideoData = () => (dispatch, getState) => {
 export const uploadThumbnail = ({ thumbnail }) => (dispatch, getState) => {
   const state = getState();
   const { videoId } = state.video;
+  const { studioEndpointUrl } = state.app;
   dispatch(requests.uploadThumbnail({
     thumbnail,
     videoId,
-    onSuccess: (response) => dispatch(actions.video.updateField({
-      thumbnail: response.data.image_url,
-    })),
+    onSuccess: (response) => {
+      const thumbnailUrl = studioEndpointUrl + response.data.image_url;
+      dispatch(actions.video.updateField({
+        thumbnail: thumbnailUrl,
+      }));
+    },
   }));
 };
 
