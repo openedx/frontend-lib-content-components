@@ -29,6 +29,7 @@ const mockFile = 'soMEtRANscRipT';
 const mockFilename = 'soMEtRANscRipT.srt';
 const mockThumbnail = 'sOMefILE';
 const mockThumbnailResponse = { data: { image_url: 'soMEimAGEUrL' } };
+const thumbnailUrl = 'soMEeNDPoiNTsoMEimAGEUrL';
 const mockAllowThumbnailUpload = { data: { allowThumbnailUpload: 'soMEbOolEAn' } };
 
 const testMetadata = {
@@ -257,7 +258,6 @@ describe('video thunkActions', () => {
     it('dispatches actions.video.updateField on success', () => {
       dispatch.mockClear();
       dispatchedAction.uploadThumbnail.onSuccess(mockThumbnailResponse);
-      const thumbnailUrl = 'soMEeNDPoiNT' + mockThumbnailResponse.data.image_url
       expect(dispatch).toHaveBeenCalledWith(
         actions.video.updateField({
           thumbnail: thumbnailUrl,
