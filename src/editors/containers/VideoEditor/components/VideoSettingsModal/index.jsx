@@ -2,7 +2,7 @@ import React from 'react';
 
 import { thunkActions } from '../../../../data/redux';
 // import VideoPreview from './components/VideoPreview';
-import ErrorSummary from './components/ErrorSummary';
+import ErrorSummary from './ErrorSummary';
 import DurationWidget from './components/DurationWidget';
 import HandoutWidget from './components/HandoutWidget';
 import LicenseWidget from './components/LicenseWidget';

@@ -17,7 +17,7 @@ export const updateErrors = ({ isUploadError, isDeleteError }) => {
   if (isDeleteError) {
     setError({ ...error, deleteError: messages.deleteTranscriptError.defaultMessage });
   }
-}
+};
 
 export const transcriptLanguages = (transcripts) => {
   const languages = [];

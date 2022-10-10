@@ -32,14 +32,13 @@ export const errorsHook = () => {
       videoSource: [videoSourceErrors, setVideoSourceErrors],
     },
     validateEntry: () => {
-      let validated = true;
-      if (Object.keys(durationErrors).length > 0) { validated = false; }
-      if (Object.keys(handoutErrors).length > 0) { validated = false; }
-      if (Object.keys(licenseErrors).length > 0) { validated = false; }
-      if (Object.keys(thumbnailErrors).length > 0) { validated = false; }
-      if (Object.keys(transcriptsErrors).length > 0) { validated = false; }
-      if (Object.keys(videoSourceErrors).length > 0) { validated = false; }
-      return validated;
+      if (Object.keys(durationErrors).length > 0) { return false; }
+      if (Object.keys(handoutErrors).length > 0) { return false; }
+      if (Object.keys(licenseErrors).length > 0) { return false; }
+      if (Object.keys(thumbnailErrors).length > 0) { return false; }
+      if (Object.keys(transcriptsErrors).length > 0) { return false; }
+      if (Object.keys(videoSourceErrors).length > 0) { return false; }
+      return true;
     },
   };
 };
