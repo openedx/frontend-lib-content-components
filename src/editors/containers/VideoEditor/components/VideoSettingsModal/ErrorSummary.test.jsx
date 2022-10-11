@@ -20,14 +20,14 @@ describe('ErrorSummary', () => {
       jest.spyOn(React, 'useContext').mockReturnValueOnce({});
       jest.spyOn(module, 'hasError').mockReturnValue(false);
       expect(
-        shallow(<module.ErrorSummary/>),
+        shallow(<module.ErrorSummary />),
       ).toMatchSnapshot();
     });
     test('snapshots: renders as expected when there are errors', () => {
       jest.spyOn(React, 'useContext').mockReturnValueOnce(error);
       jest.spyOn(module, 'hasError').mockReturnValue(true);
       expect(
-        shallow(<module.ErrorSummary/>),
+        shallow(<module.ErrorSummary />),
       ).toMatchSnapshot();
     });
   });

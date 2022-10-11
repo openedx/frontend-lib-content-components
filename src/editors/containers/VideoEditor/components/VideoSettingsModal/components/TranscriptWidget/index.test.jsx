@@ -9,7 +9,7 @@ import { TranscriptWidget, mapStateToProps, mapDispatchToProps } from '.';
 
 jest.mock('react', () => ({
   ...jest.requireActual('react'),
-  useContext: jest.fn(() => ({ transcripts: ['error.transcripts', jest.fn().mockName('error.setTranscripts')]})),
+  useContext: jest.fn(() => ({ transcripts: ['error.transcripts', jest.fn().mockName('error.setTranscripts')] })),
 }));
 
 jest.mock('../../../../../../data/redux', () => ({

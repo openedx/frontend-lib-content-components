@@ -1,6 +1,5 @@
 import { MockUseState } from '../../../testUtils';
 
-import { keyStore } from '../../utils';
 import * as module from './hooks';
 
 jest.mock('react', () => ({
