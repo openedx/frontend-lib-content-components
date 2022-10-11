@@ -7,6 +7,11 @@ exports[`EditableHeader snapshot snapshot 1`] = `
     onChange={[MockFunction args.handleChange]}
     onKeyDown={[MockFunction args.handleKeyDown]}
     placeholder="Title"
+    style={
+      Object {
+        "padding-inline-end": "calc(1rem + 84px)",
+      }
+    }
     trailingElement={
       <injectIntl(ShimmedIntlComponent)
         cancelEdit={[MockFunction args.cancelEdit]}
