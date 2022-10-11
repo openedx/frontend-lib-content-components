@@ -14,6 +14,7 @@ export const EditableHeader = ({
 }) => (
   <Form.Group>
     <Form.Control
+      style={{ 'padding-inline-end': 'calc(1rem + 84px)' }}
       autoFocus
       trailingElement={<EditConfirmationButtons {...{ updateTitle, cancelEdit }} />}
       onChange={handleChange}
