@@ -7,25 +7,41 @@ import {
   sigleSelectWithHints,
 } from './mockData/problemTestData';
 
-describe('Check Markdown Parser', () => {
-  test('Test Multiselect with hints and feedback', () => {
-    const markdown = new ReactStateParser(checklistWithFeebackHints.problem).getMarkdown();
-    expect(markdown).toBe(checklistWithFeebackHints.markdown);
+describe("Check Markdown Parser", () => {
+  test("Test Multiselect with hints and feedback", () => {
+    let markdown = new ReactStateParser(checklistWithFeebackHints.state).getMarkdown();
+    expect(markdown).toBe(checklistWithFeebackHints.metadata.markdown);
   });
-  test('Test Dropdown with hints and feedback', () => {
-    const markdown = new ReactStateParser(dropdownWithFeedbackHints.problem).getMarkdown();
-    expect(markdown).toBe(dropdownWithFeedbackHints.markdown);
+  test("Test Dropdown with hints and feedback", () => {
+    let markdown = new ReactStateParser(dropdownWithFeedbackHints.state).getMarkdown();
+    expect(markdown).toBe(dropdownWithFeedbackHints.metadata.markdown);
   });
-  test('Test Numeric with multiple correct and hints', () => {
-    const markdown = new ReactStateParser(numericWithHints.problem).getMarkdown();
-    expect(markdown).toBe(numericWithHints.markdown);
+  test("Test Numeric with multiple correct and hints", () => {
+    let markdown = new ReactStateParser(numericWithHints.state).getMarkdown();
+    expect(markdown).toBe(numericWithHints.metadata.markdown);
   });
-  test('Test Text with multiple correct and hints', () => {
-    const markdown = new ReactStateParser(textInputWithHints.problem).getMarkdown();
-    expect(markdown).toBe(textInputWithHints.markdown);
+  test("Test Text with multiple correct and hints", () => {
+    let markdown = new ReactStateParser(textInputWithHints.state).getMarkdown();
+    // console.log(markdown);
+    expect(markdown).toBe(textInputWithHints.metadata.markdown);
   });
-  test('Test single select with hints', () => {
-    const markdown = new ReactStateParser(sigleSelectWithHints.problem).getMarkdown();
-    expect(markdown).toBe(sigleSelectWithHints.markdown);
+  test("Test single select with hints", () => {
+    let markdown = new ReactStateParser(sigleSelectWithHints.state).getMarkdown();
+    expect(markdown).toBe(sigleSelectWithHints.metadata.markdown);
+  });
+})
+
+describe("Test State to Settings Parser", () => {
+  test("Test settings parsed from react state", () => {
+    const settings = new ReactStateParser(checklistWithFeebackHints.state).getSettings();
+    const { markdown, ...settingsPayload } = checklistWithFeebackHints.metadata
+    expect(settings).toStrictEqual(settingsPayload);
+  });
+})
+
+describe("Test State to Metadata Parser", () => {
+  test("Test settings parsed from react state", () => {
+    let metadata = new ReactStateParser(checklistWithFeebackHints.state).getMetadata();
+    expect(metadata).toStrictEqual(checklistWithFeebackHints.metadata);
   });
 });

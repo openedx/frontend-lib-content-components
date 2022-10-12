@@ -10,12 +10,16 @@ export const popuplateItem = (parentObject, itemName, statekey, metadata) => {
     return parentObject;
 }
 
-const parseScoringSettings = (metadata) => {
+export const parseScoringSettings = (metadata) => {
     let scoring = {};
 
     let attempts = popuplateItem({}, 'max_attempts', 'number', metadata);
     if (!isEmpty(attempts)){
-        attempts = { ...attempts, unlimited: false, };
+        let unlimited = true;
+        if (attempts.number > 0) {
+            unlimited = false;
+        }
+        attempts = { ...attempts, unlimited: unlimited, };
         scoring = { ...scoring, attempts };
     }
 
@@ -24,7 +28,7 @@ const parseScoringSettings = (metadata) => {
     return scoring;
 }
 
-const parseShowAnswer = (metadata) => {
+export const parseShowAnswer = (metadata) => {
     let showAnswer = {};
 
     let showAnswerType = get(metadata, 'showanswer', {});
@@ -37,7 +41,7 @@ const parseShowAnswer = (metadata) => {
     return showAnswer;
 }
 
-const parseSettings = (metadata) => {
+export const parseSettings = (metadata) => {
     let settings = {};
     
     if (isNil(metadata) || isEmpty(metadata)){
@@ -66,8 +70,4 @@ const parseSettings = (metadata) => {
 
     return settings;
 }
-
-export {
-    parseSettings,
-};
   

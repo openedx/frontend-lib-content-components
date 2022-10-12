@@ -1,0 +1,118 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ShowAnswerCard snapshot snapshot: show answer setting card 1`] = `
+<SettingsOption
+  summary="After Some Number of Attempts"
+  title="Show Answer"
+>
+  <div>
+    <span>
+      <FormattedMessage
+        defaultMessage="Set attempt logic for when learners can see the correct answer."
+        description="Show Answer settings card text"
+        id="authoring.problemeditor.settings.showAnswer.text"
+      />
+    </span>
+  </div>
+  <div>
+    <Hyperlink
+      destination="#"
+      target="_blank"
+    >
+      <FormattedMessage
+        defaultMessage="Set a default value in advanced settings"
+        description="Advanced settings link text"
+        id="authoring.problemeditor.settings.advancedSettingLink.text"
+      />
+    </Hyperlink>
+  </div>
+  <Form.Group>
+    <Form.Control
+      as="select"
+      onChange={[MockFunction showAnswerCardHooks.handleShowAnswerChange]}
+      value="after_attempts"
+    >
+      <option
+        key="0"
+        value="always"
+      >
+        Always
+      </option>
+      <option
+        key="1"
+        value="answered"
+      >
+        Answered
+      </option>
+      <option
+        key="2"
+        value="attempted"
+      >
+        Attempted or Past Due
+      </option>
+      <option
+        key="3"
+        value="closed"
+      >
+        Closed
+      </option>
+      <option
+        key="4"
+        value="finished"
+      >
+        Finished
+      </option>
+      <option
+        key="5"
+        value="correct_or_past_due"
+      >
+        Correct or Past Due
+      </option>
+      <option
+        key="6"
+        value="past_due"
+      >
+        Past Due
+      </option>
+      <option
+        key="7"
+        value="never"
+      >
+        Never
+      </option>
+      <option
+        key="8"
+        value="after_attempts"
+      >
+        After Some Number of Attempts
+      </option>
+      <option
+        key="9"
+        value="after_all_attempts"
+      >
+        After All Attempts
+      </option>
+      <option
+        key="10"
+        value="after_all_attempts_or_correct"
+      >
+        After All Attempts or Correct
+      </option>
+      <option
+        key="11"
+        value="attempted_no_past_due"
+      >
+        Attempted
+      </option>
+    </Form.Control>
+  </Form.Group>
+  <Form.Group>
+    <Form.Control
+      floatingLabel="Number of Attempts"
+      onChange={[MockFunction showAnswerCardHooks.handleAttemptsChange]}
+      type="number"
+      value={5}
+    />
+  </Form.Group>
+</SettingsOption>
+`;

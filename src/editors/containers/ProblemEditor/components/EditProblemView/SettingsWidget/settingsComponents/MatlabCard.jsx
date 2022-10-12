@@ -1,31 +1,23 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react';
+import { useDispatch } from 'react-redux';
 import { injectIntl, FormattedMessage, intlShape } from '@edx/frontend-platform/i18n';
 import SettingsOption from '../SettingsOption';
 import { Form, MailtoLink } from '@edx/paragon'
-import { isEmpty } from 'lodash-es';
 import PropTypes from 'prop-types';
-import { problemDataProps } from '../../../../../../data/services/cms/types';
 import messages from '../messages';
+import { matlabCardHooks } from '../hooks';
 
 export const MatlabCard = ({
     matLabApiKey,
-    updateSettings,
     intl,
 }) => {
-    const [summary, setSummary] = useState("")
-
-    useEffect(() => {
-        if (isEmpty(matLabApiKey)) {
-            setSummary(intl.formatMessage(messages.matlabNoKeySummary))
-        } else {
-            setSummary(matLabApiKey)
-        }
-    })
+    const dispatch = useDispatch();
+    const {summary, handleChange} = matlabCardHooks(matLabApiKey, dispatch);
 
     return (
         <SettingsOption
             title={intl.formatMessage(messages.matlabSettingTitle)}
-            summary={summary}
+            summary={summary.intl ? intl.formatMessage(summary.message, {...summary.values}) : summary.message}
         >
             <div>
                 <span>
@@ -43,7 +35,7 @@ export const MatlabCard = ({
             <Form.Group>
                 <Form.Control
                     value={matLabApiKey}
-                    onChange={(e) => updateSettings({ matLabApiKey: e.target.value })}
+                    onChange={handleChange}
                     floatingLabel={intl.formatMessage(messages.matlabInputLabel)}
                 />
             </Form.Group>
@@ -52,8 +44,7 @@ export const MatlabCard = ({
 }
 
 MatlabCard.propTypes = {
-    matLabApiKey: problemDataProps.settings.timeBetween,
-    updateSettings: PropTypes.func.isRequired,
+    matLabApiKey: PropTypes.string.isRequired,
     intl: intlShape.isRequired,
 };
 

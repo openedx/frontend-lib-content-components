@@ -2,20 +2,21 @@ import React, { useState } from 'react';
 import { Collapsible, Icon, Card, } from '@edx/paragon';
 import { KeyboardArrowUp, KeyboardArrowDown } from '@edx/paragon/icons';
 import PropTypes from 'prop-types';
+import { showFullCard } from './hooks';
 
 export const SettingsOption = ({
     title,
     summary,
     children
 }) => {
-    const [cardCollapsed, setCardCollapsed] = useState(false)
+    const {isCardCollapsed, toggleCardCollapse} = showFullCard();
 
     return (
         <Card>
             <Card.Section>
                 <Collapsible.Advanced
-                    open={cardCollapsed}
-                    onToggle={() => setCardCollapsed(!cardCollapsed)}
+                    open={isCardCollapsed}
+                    onToggle={toggleCardCollapse}
                 >
                     <Collapsible.Trigger className="collapsible-trigger d-flex">
                         <span className="flex-grow-1">{title}</span>
@@ -30,14 +31,14 @@ export const SettingsOption = ({
             </Card.Section>
             <Card.Section>
                 <Collapsible.Advanced
-                    open={!cardCollapsed}
+                    open={!isCardCollapsed}
                 >
                     <Collapsible.Body className="collapsible-body">
                         <span>{summary}</span>
                     </Collapsible.Body>
                 </Collapsible.Advanced>
                 <Collapsible.Advanced
-                    open={cardCollapsed}
+                    open={isCardCollapsed}
                 >
                     <Collapsible.Body className="collapsible-body">
                         {children}

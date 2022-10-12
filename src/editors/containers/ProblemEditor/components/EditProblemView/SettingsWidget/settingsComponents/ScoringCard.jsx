@@ -1,24 +1,19 @@
 import React from 'react'
+import { useDispatch } from 'react-redux';
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 import SettingsOption from '../SettingsOption';
 import { Form } from '@edx/paragon';
 import PropTypes from 'prop-types';
 import { problemDataProps } from '../../../../../../data/services/cms/types';
 import messages from '../messages';
+import { scoringCardHooks } from '../hooks';
 
 export const ScoringCard = ({
     scoring,
-    updateSettings,
     intl,
 }) => {
-    const handleAttemptChange = (event) => {
-        let unlimitedAttempts = true
-        const attemptNumber = parseInt(event.target.value)
-        if (event.target.value > 0) {
-            unlimitedAttempts = false
-        }
-        updateSettings({ scoring: { ...scoring, attempts: { number: attemptNumber, unlimited: unlimitedAttempts } } })
-    }
+    const dispatch = useDispatch();
+    const {handleMaxAttemptChange, handleWeightChange} = scoringCardHooks(scoring, dispatch);
 
     return (
         <SettingsOption
@@ -29,7 +24,7 @@ export const ScoringCard = ({
                 <Form.Control
                     type="number"
                     value={scoring.attempts.number}
-                    onChange={handleAttemptChange}
+                    onChange={handleMaxAttemptChange}
                     floatingLabel={intl.formatMessage(messages.scoringAttemptsInputLabel)}
                 />
             </Form.Group>
@@ -37,7 +32,7 @@ export const ScoringCard = ({
                 <Form.Control
                     type="number"
                     value={scoring.weight}
-                    onChange={(e) => updateSettings({ scoring: { ...scoring, weight: parseFloat(e.target.value) } })}
+                    onChange={handleWeightChange}
                     floatingLabel={intl.formatMessage(messages.scoringWeightInputLabel)}
                 />
             </Form.Group>
@@ -46,8 +41,6 @@ export const ScoringCard = ({
 }
 
 ScoringCard.propTypes = {
-    scoring: problemDataProps.settings.scoring,
-    updateSettings: PropTypes.func.isRequired,
     intl: intlShape.isRequired,
 };
 

@@ -52,7 +52,7 @@ This guide presumes you have a functioning devstack.
 
 4. open a terminal at the folder you just cloned in, frontend-lib-content-components.
     1. run `$ npm install`
-    2. run `$ npm run-script-build` when you want to see your changes.
+    2. run `$ make build` when you want to see your changes.
 
     # Add A New Xblock Editor
     1. run `$ npm run-script addXblock <yourxblock string name ex: html>`

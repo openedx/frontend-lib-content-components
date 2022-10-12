@@ -1,0 +1,44 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TypeCard snapshot snapshot: renders type setting card 1`] = `
+<SettingsOption
+  summary="Text Input Problem"
+  title="Type"
+>
+  <TypeRow
+    key="0"
+    label="Text Input Problem"
+    lastRow={false}
+    selected={false}
+    typeKey="TEXTINPUT"
+  />
+  <TypeRow
+    key="1"
+    label="Numeric Response Problem"
+    lastRow={false}
+    selected={true}
+    typeKey="NUMERIC"
+  />
+  <TypeRow
+    key="2"
+    label="Dropdown Problem"
+    lastRow={false}
+    selected={true}
+    typeKey="DROPDOWN"
+  />
+  <TypeRow
+    key="3"
+    label="Multi Select Problem"
+    lastRow={false}
+    selected={true}
+    typeKey="MULTISELECT"
+  />
+  <TypeRow
+    key="4"
+    label="Single Select Problem"
+    lastRow={true}
+    selected={true}
+    typeKey="SINGLESELECT"
+  />
+</SettingsOption>
+`;

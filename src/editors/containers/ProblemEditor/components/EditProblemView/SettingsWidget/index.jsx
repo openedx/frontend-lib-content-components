@@ -1,11 +1,9 @@
-import React, { useState } from 'react';
-import { selectors, actions } from '../../../../../data/redux';
+import React from 'react';
+import { selectors } from '../../../../../data/redux';
 import { injectIntl, FormattedMessage } from '@edx/frontend-platform/i18n';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
 import ScoringCard from './settingsComponents/ScoringCard';
 import ShowAnswerCard from './settingsComponents/ShowAnswerCard';
-import { ProblemTypeKeys } from '../../../../../data/constants/problem';
 import { problemDataProps } from '../../../../../data/services/cms/types';
 import HintsCard from './settingsComponents/HintsCard';
 import ResetCard from './settingsComponents/ResetCard';
@@ -15,16 +13,15 @@ import TimerCard from './settingsComponents/TimerCard';
 import { Button, Col, Collapsible, Container, Row } from '@edx/paragon';
 import TypeCard from './settingsComponents/TypeCard';
 import messages from './messages';
+import { showAdvancedSettingsCards } from './hooks';
 
 // This widget should be connected, grab all settings from store, update them as needed.
 export const SettingsWidget = ({
   problemType,
   // redux
   settings,
-  updateSettings,
-  updateField,
 }) => {
-  const [showAdvanced, setShowAdvanced] = useState(false)
+  const {isAdvancedCardsVisible, showAdvancedCards} = showAdvancedSettingsCards();
   return (
     <div>
       <div>
@@ -35,23 +32,23 @@ export const SettingsWidget = ({
           <Row>
             <Col>
               <Row className='my-2'>
-                <TypeCard problemType={problemType} updateField={updateField} />
+                <TypeCard problemType={problemType} />
               </Row>
               <Row className='my-2'>
-                <ScoringCard scoring={settings.scoring} updateSettings={updateSettings} />
+                <ScoringCard scoring={settings.scoring} />
               </Row>
               <Row className='mt-2'>
-                <HintsCard hints={settings.hints} updateSettings={updateSettings} />
+                <HintsCard hints={settings.hints} />
               </Row>
 
               <Row>
-                <Collapsible.Advanced open={!showAdvanced} >
+                <Collapsible.Advanced open={!isAdvancedCardsVisible} >
                   <Collapsible.Body className="collapsible-body">
                     <Button
                       className="my-3 ml-2"
                       variant="link"
                       size="inline"
-                      onClick={() => setShowAdvanced(true)}
+                      onClick={showAdvancedCards}
                     >
                       <FormattedMessage {...messages.showAdvanceSettingsButtonText} />
                     </Button>
@@ -59,22 +56,22 @@ export const SettingsWidget = ({
                 </Collapsible.Advanced>
               </Row>
 
-              <Collapsible.Advanced open={showAdvanced} >
+              <Collapsible.Advanced open={isAdvancedCardsVisible} >
                 <Collapsible.Body className="collapsible-body">
                   <Row className='my-2'>
-                    <RandomizationCard randomization={settings.randomization} updateSettings={updateSettings} />
+                    <RandomizationCard randomization={settings.randomization} />
                   </Row>
                   <Row className='my-2'>
-                    <ShowAnswerCard showAnswer={settings.showAnswer} updateSettings={updateSettings} />
+                    <ShowAnswerCard showAnswer={settings.showAnswer} />
                   </Row>
                   <Row className='my-2'>
-                    <ResetCard showResetButton={settings.showResetButton} updateSettings={updateSettings} />
+                    <ResetCard showResetButton={settings.showResetButton} />
                   </Row>
                   <Row className='my-2'>
-                    <TimerCard timeBetween={settings.timeBetween} updateSettings={updateSettings} />
+                    <TimerCard timeBetween={settings.timeBetween} />
                   </Row>
                   <Row className='my-2'>
-                    <MatlabCard matLabApiKey={settings.matLabApiKey} updateSettings={updateSettings} />
+                    <MatlabCard matLabApiKey={settings.matLabApiKey} />
                   </Row>
                 </Collapsible.Body>
               </Collapsible.Advanced>
@@ -88,19 +85,13 @@ export const SettingsWidget = ({
 }
 
 SettingsWidget.propTypes = {
-  problemType: ProblemTypeKeys.isRequired,
   settings: problemDataProps.settings.isRequired,
-  updateSettings: PropTypes.func.isRequired,
-  updateField: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
   settings: selectors.problem.settings(state),
 });
 
-const mapDispatchToProps = {
-  updateSettings: actions.problem.updateSettings,
-  updateField: actions.problem.updateField,
-}
+const mapDispatchToProps = {}
 
 export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(SettingsWidget));
