@@ -44,7 +44,7 @@ export const ThumbnailWidget = ({
   return (
     <CollapsibleFormWidget
       title={intl.formatMessage(messages.title)}
-      subtitle={isEdxVideo ? thumbnailSrc : intl.formatMessage(messages.unavailableSubtitle)}
+      subtitle={isEdxVideo ? null : intl.formatMessage(messages.unavailableSubtitle)}
     >
       {isEdxVideo ? null : (
         <Alert variant="info">
