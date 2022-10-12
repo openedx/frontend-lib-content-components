@@ -1,18 +1,19 @@
 import React from 'react'
+import { useDispatch } from 'react-redux';
 import { injectIntl, FormattedMessage, intlShape } from '@edx/frontend-platform/i18n';
 import SettingsOption from '../SettingsOption';
 import { Form, Hyperlink } from '@edx/paragon'
 import { RandomizationType, RandomizationTypeKeys } from '../../../../../../data/constants/problem';
 import PropTypes from 'prop-types';
-import { problemDataProps } from '../../../../../../data/services/cms/types';
 import messages from '../messages';
+import { randomizationCardHooks } from '../hooks';
 
 export const RandomizationCard = ({
     randomization,
-    updateSettings,
     intl,
 }) => {
-
+    const dispatch = useDispatch();
+    const {handleChange} = randomizationCardHooks(dispatch);
     return (
         <SettingsOption
             title={intl.formatMessage(messages.randomizationSettingTitle)}
@@ -32,7 +33,7 @@ export const RandomizationCard = ({
                 <Form.Control
                     as="select"
                     value={randomization}
-                    onChange={(e) => updateSettings({ randomization: e.target.value })}
+                    onChange={handleChange}
                 >
                     {Object.values(RandomizationTypeKeys).map((randomType, i) => (
                         <option
@@ -49,8 +50,7 @@ export const RandomizationCard = ({
 }
 
 RandomizationCard.propTypes = {
-    randomization: problemDataProps.settings.randomization,
-    updateSettings: PropTypes.func.isRequired,
+    randomization: PropTypes.string.isRequired,
     intl: intlShape.isRequired,
 };
 

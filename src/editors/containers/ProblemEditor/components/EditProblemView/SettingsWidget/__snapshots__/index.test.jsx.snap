@@ -1,0 +1,183 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SettingsWidget snapshot snapshot: renders Settings widget page 1`] = `
+<div>
+  <div>
+    <h3>
+      <FormattedMessage
+        defaultMessage="Settings"
+        description="Settings Title"
+        id="authoring.problemeditor.settings.settingsWidgetTitle"
+      />
+    </h3>
+    <Container>
+      <Row>
+        <Col>
+          <Row
+            className="my-2"
+          >
+            <InjectIntl(ShimmedIntlComponent)
+              problemType="TEXTINPUT"
+            />
+          </Row>
+          <Row
+            className="my-2"
+          >
+            <InjectIntl(ShimmedIntlComponent) />
+          </Row>
+          <Row
+            className="mt-2"
+          >
+            <InjectIntl(ShimmedIntlComponent) />
+          </Row>
+          <Row>
+            <Collapsible.Advanced
+              open={true}
+            >
+              <Collapsible.Body
+                className="collapsible-body"
+              >
+                <Button
+                  className="my-3 ml-2"
+                  size="inline"
+                  variant="link"
+                >
+                  <FormattedMessage
+                    defaultMessage="Show advanced settings"
+                    description="Button text to show advanced settings"
+                    id="authoring.problemeditor.settings.showAdvancedButton"
+                  />
+                </Button>
+              </Collapsible.Body>
+            </Collapsible.Advanced>
+          </Row>
+          <Collapsible.Advanced
+            open={false}
+          >
+            <Collapsible.Body
+              className="collapsible-body"
+            >
+              <Row
+                className="my-2"
+              >
+                <InjectIntl(ShimmedIntlComponent) />
+              </Row>
+              <Row
+                className="my-2"
+              >
+                <InjectIntl(ShimmedIntlComponent) />
+              </Row>
+              <Row
+                className="my-2"
+              >
+                <InjectIntl(ShimmedIntlComponent) />
+              </Row>
+              <Row
+                className="my-2"
+              >
+                <InjectIntl(ShimmedIntlComponent) />
+              </Row>
+              <Row
+                className="my-2"
+              >
+                <InjectIntl(ShimmedIntlComponent) />
+              </Row>
+            </Collapsible.Body>
+          </Collapsible.Advanced>
+        </Col>
+      </Row>
+    </Container>
+  </div>
+</div>
+`;
+
+exports[`SettingsWidget snapshot snapshot: renders Settings widget page advanced settings visible 1`] = `
+<div>
+  <div>
+    <h3>
+      <FormattedMessage
+        defaultMessage="Settings"
+        description="Settings Title"
+        id="authoring.problemeditor.settings.settingsWidgetTitle"
+      />
+    </h3>
+    <Container>
+      <Row>
+        <Col>
+          <Row
+            className="my-2"
+          >
+            <InjectIntl(ShimmedIntlComponent)
+              problemType="TEXTINPUT"
+            />
+          </Row>
+          <Row
+            className="my-2"
+          >
+            <InjectIntl(ShimmedIntlComponent) />
+          </Row>
+          <Row
+            className="mt-2"
+          >
+            <InjectIntl(ShimmedIntlComponent) />
+          </Row>
+          <Row>
+            <Collapsible.Advanced
+              open={false}
+            >
+              <Collapsible.Body
+                className="collapsible-body"
+              >
+                <Button
+                  className="my-3 ml-2"
+                  size="inline"
+                  variant="link"
+                >
+                  <FormattedMessage
+                    defaultMessage="Show advanced settings"
+                    description="Button text to show advanced settings"
+                    id="authoring.problemeditor.settings.showAdvancedButton"
+                  />
+                </Button>
+              </Collapsible.Body>
+            </Collapsible.Advanced>
+          </Row>
+          <Collapsible.Advanced
+            open={true}
+          >
+            <Collapsible.Body
+              className="collapsible-body"
+            >
+              <Row
+                className="my-2"
+              >
+                <InjectIntl(ShimmedIntlComponent) />
+              </Row>
+              <Row
+                className="my-2"
+              >
+                <InjectIntl(ShimmedIntlComponent) />
+              </Row>
+              <Row
+                className="my-2"
+              >
+                <InjectIntl(ShimmedIntlComponent) />
+              </Row>
+              <Row
+                className="my-2"
+              >
+                <InjectIntl(ShimmedIntlComponent) />
+              </Row>
+              <Row
+                className="my-2"
+              >
+                <InjectIntl(ShimmedIntlComponent) />
+              </Row>
+            </Collapsible.Body>
+          </Collapsible.Advanced>
+        </Col>
+      </Row>
+    </Container>
+  </div>
+</div>
+`;

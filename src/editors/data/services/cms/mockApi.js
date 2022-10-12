@@ -56,7 +56,7 @@ export const fetchBlockById = ({ blockId, studioEndpointUrl }) => {
         an incorrect answer
         ]]`,
         attempts_before_showanswer_button: 7,
-        matlab_api_key: "numerical_input_matlab_api_key",
+        matlab_api_key: "sample_matlab_api_key",
         max_attempts: 5,
         rerandomize: "per_student",
         show_reset_button: true,

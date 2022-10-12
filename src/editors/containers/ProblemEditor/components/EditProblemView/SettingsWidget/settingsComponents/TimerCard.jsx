@@ -1,16 +1,18 @@
-import React from 'react'
+import React from 'react';
+import { useDispatch } from 'react-redux';
 import { injectIntl, FormattedMessage, intlShape } from '@edx/frontend-platform/i18n';
 import SettingsOption from '../SettingsOption';
 import { Form } from '@edx/paragon';
 import PropTypes from 'prop-types';
-import { problemDataProps } from '../../../../../../data/services/cms/types';
 import messages from '../messages';
+import { timerCardHooks } from '../hooks';
 
 export const TimerCard = ({
     timeBetween,
-    updateSettings,
     intl
 }) => {
+    const dispatch = useDispatch();
+    const {handleChange} = timerCardHooks(dispatch);
 
     return (
         <SettingsOption
@@ -26,7 +28,7 @@ export const TimerCard = ({
                 <Form.Control
                     type="number"
                     value={timeBetween}
-                    onChange={(e) => updateSettings({ timeBetween: e.target.value })}
+                    onChange={handleChange}
                     floatingLabel={intl.formatMessage(messages.timerInputLabel)}
                 />
             </Form.Group>
@@ -35,8 +37,7 @@ export const TimerCard = ({
 }
 
 TimerCard.propTypes = {
-    timeBetween: problemDataProps.settings.timeBetween,
-    updateSettings: PropTypes.func.isRequired,
+    timeBetween: PropTypes.number.isRequired,
     intl: intlShape.isRequired,
 };
 

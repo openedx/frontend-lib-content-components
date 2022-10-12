@@ -1,4 +1,5 @@
 import React from 'react'
+import { useDispatch } from 'react-redux';
 import { injectIntl, FormattedMessage, intlShape } from '@edx/frontend-platform/i18n';
 import SettingsOption from '../SettingsOption';
 import { Form, Hyperlink } from '@edx/paragon';
@@ -6,13 +7,14 @@ import { ShowAnswerTypes, ShowAnswerTypesKeys } from '../../../../../../data/con
 import PropTypes from 'prop-types';
 import { problemDataProps } from '../../../../../../data/services/cms/types';
 import messages from '../messages';
+import { showAnswerCardHooks } from '../hooks';
 
 export const ShowAnswerCard = ({
     showAnswer,
-    updateSettings,
     intl,
 }) => {
-
+    const dispatch = useDispatch();
+    const {handleShowAnswerChange, handleAttemptsChange} = showAnswerCardHooks(showAnswer, dispatch);
     return (
         <SettingsOption
             title={intl.formatMessage(messages.showAnswerSettingsTitle)}
@@ -32,7 +34,7 @@ export const ShowAnswerCard = ({
                 <Form.Control
                     as="select"
                     value={showAnswer.on}
-                    onChange={(e) => updateSettings({ showAnswer: { ...showAnswer, on: e.target.value } })}
+                    onChange={handleShowAnswerChange}
                 >
                     {Object.values(ShowAnswerTypesKeys).map((answerType, i) => (
                         <option
@@ -48,7 +50,7 @@ export const ShowAnswerCard = ({
                 <Form.Control
                     type="number"
                     value={showAnswer.afterAttempts}
-                    onChange={(e) => updateSettings({ showAnswer: { ...showAnswer, afterAttempts: parseInt(e.target.value) } })}
+                    onChange={handleAttemptsChange}
                     floatingLabel={intl.formatMessage(messages.showAnswerAttemptsInputLabel)}
                 />
             </Form.Group>
@@ -57,8 +59,6 @@ export const ShowAnswerCard = ({
 }
 
 ShowAnswerCard.propTypes = {
-    showAnswer: problemDataProps.settings.showAnswer,
-    updateSettings: PropTypes.func.isRequired,
     intl: intlShape.isRequired,
 };
 

@@ -81,6 +81,7 @@ jest.mock('@edx/paragon', () => jest.requireActual('testUtils').mockNestedCompon
     Body: 'Card.Body',
   },
   Col: 'Col',
+  Container: 'Container',
   Dropdown: {
     Item: 'Dropdown.Item',
     Menu: 'Dropdown.Menu',
@@ -94,6 +95,7 @@ jest.mock('@edx/paragon', () => jest.requireActual('testUtils').mockNestedCompon
   IconButton: 'IconButton',
   IconButtonWithTooltip: 'IconButtonWithTooltip',
   Image: 'Image',
+  MailtoLink: 'MailtoLink',
   ModalDialog: {
     Footer: 'ModalDialog.Footer',
     Header: 'ModalDialog.Header',

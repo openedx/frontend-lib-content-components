@@ -1,17 +1,19 @@
 import React from 'react'
-import { injectIntl, FormattedMessage, intlShape } from '@edx/frontend-platform/i18n';
+import { useDispatch } from 'react-redux';
+import { FormattedMessage, injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 import SettingsOption from '../SettingsOption';
-import { Button, ButtonGroup, Form, Hyperlink } from '@edx/paragon';
+import { Button, ButtonGroup, Hyperlink } from '@edx/paragon';
 import PropTypes from 'prop-types';
-import { problemDataProps } from '../../../../../../data/services/cms/types';
 import messages from '../messages';
+import { resetCardHooks } from '../hooks';
 
 export const ResetCard = ({
     showResetButton,
-    updateSettings,
+    //injected
     intl,
 }) => {
-
+    const dispatch = useDispatch();
+    const {setResetTrue, setResetFalse} = resetCardHooks(dispatch);
     return (
         <SettingsOption
             title={intl.formatMessage(messages.resetSettingsTitle)}
@@ -28,10 +30,10 @@ export const ResetCard = ({
                 </Hyperlink>
             </div>
             <ButtonGroup size="lg" className="mb-2">
-                <Button variant={showResetButton ? "outline-primary" : "primary"} onClick={() => updateSettings({ showResetButton: false })} >
+                <Button variant={showResetButton ? "outline-primary" : "primary"} onClick={setResetFalse} >
                     <FormattedMessage {...messages.resetSettingsFalse} />
                 </Button>
-                <Button variant={showResetButton ? "primary" : "outline-primary"} onClick={() => updateSettings({ showResetButton: true })} >
+                <Button variant={showResetButton ? "primary" : "outline-primary"} onClick={setResetTrue} >
                     <FormattedMessage {...messages.resetSettingsTrue} />
                 </Button>
             </ButtonGroup>
@@ -40,8 +42,8 @@ export const ResetCard = ({
 }
 
 ResetCard.propTypes = {
-    showResetButton: problemDataProps.settings.timeBetween,
-    updateSettings: PropTypes.func.isRequired,
+    showResetButton: PropTypes.bool.isRequired,
+    // injected
     intl: intlShape.isRequired,
 };
 
