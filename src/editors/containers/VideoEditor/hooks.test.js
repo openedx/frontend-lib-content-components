@@ -1,14 +1,34 @@
+import { dispatch } from 'react-redux';
+import { thunkActions } from '../../data/redux';
 import { MockUseState } from '../../../testUtils';
 
-import { keyStore } from '../../utils';
 import * as module from './hooks';
 
 jest.mock('react', () => ({
   ...jest.requireActual('react'),
+  useRef: jest.fn(val => ({ current: val })),
+  useEffect: jest.fn(),
+  useCallback: (cb, prereqs) => ({ cb, prereqs }),
+}));
+
+jest.mock('react-redux', () => {
+  const dispatchFn = jest.fn();
+  return {
+    ...jest.requireActual('react-redux'),
+    dispatch: dispatchFn,
+    useDispatch: jest.fn(() => dispatchFn),
+  };
+});
+
+jest.mock('../../data/redux', () => ({
+  thunkActions: {
+    video: {
+      saveVideoData: jest.fn(),
+    },
+  },
 }));
 
 const state = new MockUseState(module);
-const moduleKeys = keyStore(module);
 
 let hook;
 
@@ -33,40 +53,52 @@ describe('VideoEditorHooks', () => {
       state.restore();
     });
 
-    const mockTrue = () => true;
-    const mockFalse = () => false;
+    const fakeDurationError = {
+      field1: 'field1msg',
+      field2: 'field2msg',
+    };
     test('error: state values', () => {
-      expect(module.errorsHook().error).toEqual({
-        duration: state.stateVals[state.keys.durationErrors],
-        handout: state.stateVals[state.keys.handoutErrors],
-        license: state.stateVals[state.keys.licenseErrors],
-        thumbnail: state.stateVals[state.keys.thumbnailErrors],
-        transcripts: state.stateVals[state.keys.transcriptsErrors],
-        videoSource: state.stateVals[state.keys.videoSourceErrors],
-      });
+      expect(module.errorsHook().error.duration).toEqual([
+        state.stateVals[state.keys.durationErrors],
+        state.setState[state.keys.durationErrors],
+      ]);
+      expect(module.errorsHook().error.handout).toEqual([
+        state.stateVals[state.keys.handoutErrors],
+        state.setState[state.keys.handoutErrors],
+      ]);
+      expect(module.errorsHook().error.license).toEqual([
+        state.stateVals[state.keys.licenseErrors],
+        state.setState[state.keys.licenseErrors],
+      ]);
+      expect(module.errorsHook().error.thumbnail).toEqual([
+        state.stateVals[state.keys.thumbnailErrors],
+        state.setState[state.keys.thumbnailErrors],
+      ]);
+      expect(module.errorsHook().error.transcripts).toEqual([
+        state.stateVals[state.keys.transcriptsErrors],
+        state.setState[state.keys.transcriptsErrors],
+      ]);
+      expect(module.errorsHook().error.videoSource).toEqual([
+        state.stateVals[state.keys.videoSourceErrors],
+        state.setState[state.keys.videoSourceErrors],
+      ]);
     });
     describe('validateEntry', () => {
-      beforeEach(() => {
-        hook = module.errorsHook();
-      });
       test('validateEntry: returns true if all validation calls are true', () => {
-        jest.spyOn(module, moduleKeys.validateDuration).mockImplementationOnce(mockTrue);
-        jest.spyOn(module, moduleKeys.validateHandout).mockImplementationOnce(mockTrue);
-        jest.spyOn(module, moduleKeys.validateLicense).mockImplementationOnce(mockTrue);
-        jest.spyOn(module, moduleKeys.validateThumbnail).mockImplementationOnce(mockTrue);
-        jest.spyOn(module, moduleKeys.validateTranscripts).mockImplementationOnce(mockTrue);
-        jest.spyOn(module, moduleKeys.validateVideoSource).mockImplementationOnce(mockTrue);
+        hook = module.errorsHook();
         expect(hook.validateEntry()).toEqual(true);
       });
       test('validateEntry: returns false if any validation calls are false', () => {
-        jest.spyOn(module, moduleKeys.validateDuration).mockImplementationOnce(mockFalse);
-        jest.spyOn(module, moduleKeys.validateHandout).mockImplementationOnce(mockTrue);
-        jest.spyOn(module, moduleKeys.validateLicense).mockImplementationOnce(mockTrue);
-        jest.spyOn(module, moduleKeys.validateThumbnail).mockImplementationOnce(mockTrue);
-        jest.spyOn(module, moduleKeys.validateTranscripts).mockImplementationOnce(mockTrue);
-        jest.spyOn(module, moduleKeys.validateVideoSource).mockImplementationOnce(mockTrue);
+        state.mockVal(state.keys.durationErrors, fakeDurationError);
+        hook = module.errorsHook();
         expect(hook.validateEntry()).toEqual(false);
       });
+    });
+  });
+  describe('fetchVideoContent', () => {
+    it('equals dispatch(thunkActions.video.saveVideoData())', () => {
+      hook = module.fetchVideoContent()({ dispatch });
+      expect(hook).toEqual(dispatch(thunkActions.video.saveVideoData()));
     });
   });
 });

@@ -25,11 +25,16 @@ export const simpleSelectors = [
   stateKeys.handout,
   stateKeys.licenseType,
   stateKeys.licenseDetails,
+  stateKeys.allowThumbnailUpload,
+  stateKeys.videoType,
 ].reduce((obj, key) => ({ ...obj, [key]: state => state.video[key] }), {});
 
 export const openLanguages = createSelector(
   [module.simpleSelectors.transcripts],
   (transcripts) => {
+    if (!transcripts) {
+      return videoTranscriptLanguages;
+    }
     const open = Object.entries(videoTranscriptLanguages).filter(
       ([lang]) => !Object.keys(transcripts).includes(lang),
     );
@@ -46,8 +51,55 @@ export const getTranscriptDownloadUrl = createSelector(
   }),
 );
 
+export const videoSettings = createSelector(
+  [
+    module.simpleSelectors.videoSource,
+    module.simpleSelectors.videoId,
+    module.simpleSelectors.fallbackVideos,
+    module.simpleSelectors.allowVideoDownloads,
+    module.simpleSelectors.thumbnail,
+    module.simpleSelectors.transcripts,
+    module.simpleSelectors.allowTranscriptDownloads,
+    module.simpleSelectors.duration,
+    module.simpleSelectors.showTranscriptByDefault,
+    module.simpleSelectors.handout,
+    module.simpleSelectors.licenseType,
+    module.simpleSelectors.licenseDetails,
+  ],
+  (
+    videoSource,
+    videoId,
+    fallbackVideos,
+    allowVideoDownloads,
+    thumbnail,
+    transcripts,
+    allowTranscriptDownloads,
+    duration,
+    showTranscriptByDefault,
+    handout,
+    licenseType,
+    licenseDetails,
+  ) => (
+    {
+      videoSource,
+      videoId,
+      fallbackVideos,
+      allowVideoDownloads,
+      thumbnail,
+      transcripts,
+      allowTranscriptDownloads,
+      duration,
+      showTranscriptByDefault,
+      handout,
+      licenseType,
+      licenseDetails,
+    }
+  ),
+);
+
 export default {
+  ...simpleSelectors,
   openLanguages,
   getTranscriptDownloadUrl,
-  ...simpleSelectors,
+  videoSettings,
 };

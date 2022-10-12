@@ -4,6 +4,7 @@ import { StrictDict } from '../../../utils';
 
 const initialState = {
   videoSource: '',
+  videoType: '',
   videoId: '',
   fallbackVideos: [
     '',
@@ -27,6 +28,7 @@ const initialState = {
     noDerivatives: false,
     shareAlike: false,
   },
+  allowThumbnailUpload: null,
 };
 
 // eslint-disable-next-line no-unused-vars

@@ -1,30 +1,32 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import EditorContainer from '../EditorContainer';
 import VideoEditorModal from './components/VideoEditorModal';
-import * as hooks from './hooks';
+import { ErrorContext, errorsHook, fetchVideoContent } from './hooks';
 
-export default function VideoEditor({
+export const VideoEditor = ({
   onClose,
-}) {
+}) => {
   const {
     error,
     validateEntry,
-  } = hooks.errorsHook();
-
+  } = errorsHook();
   return (
-    <EditorContainer
-      getContent={() => ({})}
-      onClose={onClose}
-      validateEntry={validateEntry}
-    >
-      <div className="video-editor">
-        <VideoEditorModal {...{ error }} />
-      </div>
-    </EditorContainer>
+    <ErrorContext.Provider value={error}>
+      <EditorContainer
+        getContent={fetchVideoContent()}
+        onClose={onClose}
+        validateEntry={validateEntry}
+      >
+        <div className="video-editor">
+          <VideoEditorModal />
+        </div>
+      </EditorContainer>
+    </ErrorContext.Provider>
   );
-}
+};
 
 VideoEditor.defaultProps = {
   onClose: null,
@@ -32,3 +34,9 @@ VideoEditor.defaultProps = {
 VideoEditor.propTypes = {
   onClose: PropTypes.func,
 };
+
+export const mapStateToProps = () => {};
+
+export const mapDispatchToProps = {};
+
+export default connect(mapStateToProps, mapDispatchToProps)(VideoEditor);
