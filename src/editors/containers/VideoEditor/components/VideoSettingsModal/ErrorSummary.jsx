@@ -8,14 +8,16 @@ import messages from './components/messages';
 import { ErrorContext } from '../../hooks';
 import * as module from './ErrorSummary';
 
-export const hasError = (errHook) => (Object.keys(errHook[0]).length !== 0);
+export const hasNoError = (error) => Object.keys(error[0]).length === 0;
+
+export const showAlert = (errors) => !Object.values(errors).every(module.hasNoError);
 
 export const ErrorSummary = () => {
-  const error = React.useContext(ErrorContext);
+  const errors = React.useContext(ErrorContext);
   return (
     <Alert
       icon={Info}
-      show={Object.values(error).every(module.hasError)}
+      show={module.showAlert(errors)}
       variant="danger"
     >
       <Alert.Heading>

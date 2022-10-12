@@ -4,47 +4,42 @@ import { shallow } from 'enzyme';
 import * as module from './ErrorSummary';
 
 describe('ErrorSummary', () => {
-  const error = {
-    duration: ['durationErrors', jest.fn().mockName('setDurationErrors')],
-    handout: ['handoutErrors', jest.fn().mockName('setHandoutErrors')],
-    license: ['licenseErrors', jest.fn().mockName('setLicenseErrors')],
-    thumbnail: ['thumbnailErrors', jest.fn().mockName('setThumbnailErrors')],
-    transcripts: ['transcriptsErrors', jest.fn().mockName('setTranscriptsErrors')],
-    videoSource: ['videoSourceErrors', jest.fn().mockName('setVideoSourceErrors')],
+  const errors = {
+    widgetWithError: [{ err1: 'mSg', err2: 'msG2' }, jest.fn()],
+    widgetWithNoError: [{}, jest.fn()],
   };
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
   describe('render', () => {
-    afterEach(() => {
-      jest.restoreAllMocks();
+    beforeEach(() => {
+      jest.spyOn(React, 'useContext').mockReturnValueOnce({});
     });
     test('snapshots: renders as expected when there are no errors', () => {
-      jest.spyOn(React, 'useContext').mockReturnValueOnce({});
-      jest.spyOn(module, 'hasError').mockReturnValue(false);
-      expect(
-        shallow(<module.ErrorSummary />),
-      ).toMatchSnapshot();
+      jest.spyOn(module, 'showAlert').mockReturnValue(false);
+      expect(shallow(<module.ErrorSummary />)).toMatchSnapshot();
     });
     test('snapshots: renders as expected when there are errors', () => {
-      jest.spyOn(React, 'useContext').mockReturnValueOnce(error);
-      jest.spyOn(module, 'hasError').mockReturnValue(true);
-      expect(
-        shallow(<module.ErrorSummary />),
-      ).toMatchSnapshot();
+      jest.spyOn(module, 'showAlert').mockReturnValue(true);
+      expect(shallow(<module.ErrorSummary />)).toMatchSnapshot();
     });
   });
-  describe('hasError', () => {
-    const notEmptyError = [
-      { field1: 'eRrOrMsG' },
-      () => jest.fn(),
-    ];
-    const emptyError = [
-      {},
-      () => jest.fn(),
-    ];
+  describe('hasNoError', () => {
     it('returns true', () => {
-      expect(module.hasError(notEmptyError)).toEqual(true);
+      expect(module.hasNoError(errors.widgetWithError)).toEqual(false);
     });
     it('returns false', () => {
-      expect(module.hasError(emptyError)).toEqual(false);
+      expect(module.hasNoError(errors.widgetWithNoError)).toEqual(true);
+    });
+  });
+  describe('showAlert', () => {
+    it('returns true', () => {
+      jest.spyOn(module, 'hasNoError').mockReturnValue(false);
+      expect(module.showAlert(errors)).toEqual(true);
+    });
+    it('returns false', () => {
+      jest.spyOn(module, 'hasNoError').mockReturnValue(true);
+      expect(module.showAlert(errors)).toEqual(false);
     });
   });
 });

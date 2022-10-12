@@ -24,7 +24,7 @@ exports[`ErrorSummary render snapshots: renders as expected when there are error
 
 exports[`ErrorSummary render snapshots: renders as expected when there are no errors 1`] = `
 <Alert
-  show={true}
+  show={false}
   variant="danger"
 >
   <Alert.Heading>
