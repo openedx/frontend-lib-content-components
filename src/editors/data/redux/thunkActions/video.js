@@ -15,7 +15,6 @@ export const loadVideoData = () => (dispatch, getState) => {
     youtubeId: rawVideoData.youtube_id_1_0,
     html5Sources: rawVideoData.html5_sources,
   });
-
   // we don't appear to want to parse license version
   const [licenseType, licenseOptions] = module.parseLicense(rawVideoData.license);
 
@@ -63,12 +62,12 @@ export const determineVideoSource = ({
   let videoType = '';
   let fallbackVideos = [];
   if (youtubeId) {
-    // videoSource = edxVideoId;
+    // videoSource = youtubeUrl;
     // fallbackVideos = html5Sources;
     [videoSource, fallbackVideos] = [youtubeUrl, html5Sources];
     videoType = 'youtube';
   } else if (edxVideoId) {
-    // videoSource = youtubeUrl;
+    // videoSource = edxVideoId;
     // fallbackVideos = html5Sources;
     [videoSource, fallbackVideos] = [edxVideoId, html5Sources];
     videoType = 'edxVideo';

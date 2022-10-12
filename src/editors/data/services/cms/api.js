@@ -168,7 +168,9 @@ export const processVideoIds = ({ videoSource, fallbackVideos }) => {
     html5Sources.push(videoSource);
   }
 
-  fallbackVideos.forEach((src) => (src ? html5Sources.push(src) : null));
+  if (fallbackVideos) {
+    fallbackVideos.forEach((src) => (src ? html5Sources.push(src) : null));
+  }
 
   return {
     edxVideoId,

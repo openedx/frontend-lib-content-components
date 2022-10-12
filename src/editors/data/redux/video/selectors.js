@@ -54,6 +54,7 @@ export const getTranscriptDownloadUrl = createSelector(
 export const videoSettings = createSelector(
   [
     module.simpleSelectors.videoSource,
+    module.simpleSelectors.videoId,
     module.simpleSelectors.fallbackVideos,
     module.simpleSelectors.allowVideoDownloads,
     module.simpleSelectors.thumbnail,

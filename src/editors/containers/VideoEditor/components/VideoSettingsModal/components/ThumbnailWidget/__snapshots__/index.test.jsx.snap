@@ -111,7 +111,7 @@ exports[`ThumbnailWidget snapshots snapshots: renders as expected with default p
       }
     >
       <FormattedMessage
-        defaultMessage="Images must have an aspect ration of 16:9 (1280x720 px recommended)"
+        defaultMessage="Images must have an aspect ratio of 16:9 (1280x720 px recommended)"
         description="Message for thumbnail aspectRequirements"
         id="authoring.videoeditor.thumbnail.upload.aspectRequirements"
       />
