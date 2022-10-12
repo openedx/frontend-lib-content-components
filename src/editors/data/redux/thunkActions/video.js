@@ -25,7 +25,7 @@ export const loadVideoData = () => (dispatch, getState) => {
     videoId,
     fallbackVideos,
     allowVideoDownloads: rawVideoData.download_video,
-    transcripts: rawVideoData.transcripts,
+    transcripts: rawVideoData.transcripts || {},
     allowTranscriptDownloads: rawVideoData.download_track,
     showTranscriptByDefault: rawVideoData.show_captions,
     duration: { // TODO duration is not always sent so they should be calculated.
@@ -55,25 +55,32 @@ export const determineVideoSource = ({
   youtubeId,
   html5Sources,
 }) => {
-  // videoSource should be the edx_video_id (if present), or the youtube url (if present), or the first fallback url.
-  // in that order.
-  // if we are falling back to the first fallback url, remove it from the list of fallback urls for display
-  let videoType;
-  const videoSource = youtubeId || html5Sources[0] || edxVideoId || '';
-  if (youtubeId) {
-    videoType = 'youtube';
-  } else if (html5Sources.length > 0) {
-    videoType = 'html5source';
-  } else if (edxVideoId) {
-    videoType = 'edxVideo';
-  } else {
-    videoType = '';
-  }
+  // videoSource should be the edx_video_id, the youtube url or the first fallback url in that order.
+  // If we are falling back to the first fallback url, remove it from the list of fallback urls for display.
+  const youtubeUrl = `https://youtu.be/${youtubeId}`;
   const videoId = edxVideoId || '';
-  const fallbackVideos = (!edxVideoId && !youtubeId)
-    ? html5Sources.slice(1)
-    : html5Sources;
-  // const fallbackVideos = [];
+  let videoSource = '';
+  let videoType = '';
+  let fallbackVideos = [];
+  if (youtubeId) {
+    // videoSource = edxVideoId;
+    // fallbackVideos = html5Sources;
+    [videoSource, fallbackVideos] = [youtubeUrl, html5Sources];
+    videoType = 'youtube';
+  } else if (edxVideoId) {
+    // videoSource = youtubeUrl;
+    // fallbackVideos = html5Sources;
+    [videoSource, fallbackVideos] = [edxVideoId, html5Sources];
+    videoType = 'edxVideo';
+  } else if (Array.isArray(html5Sources) && html5Sources[0]) {
+    // videoSource = html5Sources[0];
+    // fallbackVideos = html5Sources.slice(1);
+    [videoSource, fallbackVideos] = [html5Sources[0], html5Sources.slice(1)];
+    videoType = 'html5source';
+  }
+  if (fallbackVideos.length === 0) {
+    fallbackVideos = ['', ''];
+  }
   return {
     videoSource,
     videoType,

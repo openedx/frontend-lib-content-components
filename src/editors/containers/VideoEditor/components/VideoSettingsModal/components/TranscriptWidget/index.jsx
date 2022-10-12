@@ -27,12 +27,12 @@ import ErrorAlert from '../../../../../../sharedComponents/ErrorAlerts/ErrorAler
 import CollapsibleFormWidget from '../CollapsibleFormWidget';
 
 import TranscriptListItem from './TranscriptListItem';
+import { ErrorContext } from '../../../../hooks';
 
 /**
  * Collapsible Form widget controlling video transcripts
  */
 export const TranscriptWidget = ({
-  error,
   // redux
   transcripts,
   allowTranscriptDownloads,
@@ -41,6 +41,7 @@ export const TranscriptWidget = ({
   isUploadError,
   isDeleteError,
 }) => {
+  const [error] = React.useContext(ErrorContext).transcripts;
   const languagesArr = hooks.transcriptLanguages(transcripts);
   const fileInput = hooks.fileInput({ onAddFile: hooks.addFileCallback({ dispatch: useDispatch() }) });
   const hasTranscripts = hooks.hasTranscripts(transcripts);
@@ -122,10 +123,8 @@ export const TranscriptWidget = ({
 };
 
 TranscriptWidget.defaultProps = {
-  error: {},
 };
 TranscriptWidget.propTypes = {
-  error: PropTypes.node,
   // redux
   transcripts: PropTypes.shape({}).isRequired,
   allowTranscriptDownloads: PropTypes.bool.isRequired,

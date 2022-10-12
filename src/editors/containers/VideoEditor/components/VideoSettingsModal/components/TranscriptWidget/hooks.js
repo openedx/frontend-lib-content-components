@@ -2,9 +2,21 @@ import React from 'react';
 import { thunkActions, actions } from '../../../../../../data/redux';
 import * as module from './hooks';
 import { videoTranscriptLanguages } from '../../../../../../data/constants/video';
+import { ErrorContext } from '../../../../hooks';
+import messages from './messages';
 
 export const state = {
   inDeleteConfirmation: (args) => React.useState(args),
+};
+
+export const updateErrors = ({ isUploadError, isDeleteError }) => {
+  const [error, setError] = React.useContext(ErrorContext).transcripts;
+  if (isUploadError) {
+    setError({ ...error, uploadError: messages.uploadTranscriptError.defaultMessage });
+  }
+  if (isDeleteError) {
+    setError({ ...error, deleteError: messages.deleteTranscriptError.defaultMessage });
+  }
 };
 
 export const transcriptLanguages = (transcripts) => {

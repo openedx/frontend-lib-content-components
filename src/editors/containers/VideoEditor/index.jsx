@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 import EditorContainer from '../EditorContainer';
 import VideoEditorModal from './components/VideoEditorModal';
-import { errorsHook, fetchVideoContent } from './hooks';
+import { ErrorContext, errorsHook, fetchVideoContent } from './hooks';
 
 export const VideoEditor = ({
   onClose,
@@ -14,15 +14,17 @@ export const VideoEditor = ({
     validateEntry,
   } = errorsHook();
   return (
-    <EditorContainer
-      getContent={fetchVideoContent()}
-      onClose={onClose}
-      validateEntry={validateEntry}
-    >
-      <div className="video-editor">
-        <VideoEditorModal {...{ error }} />
-      </div>
-    </EditorContainer>
+    <ErrorContext.Provider value={error}>
+      <EditorContainer
+        getContent={fetchVideoContent()}
+        onClose={onClose}
+        validateEntry={validateEntry}
+      >
+        <div className="video-editor">
+          <VideoEditorModal />
+        </div>
+      </EditorContainer>
+    </ErrorContext.Provider>
   );
 };
 
