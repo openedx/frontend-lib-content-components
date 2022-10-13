@@ -2,6 +2,7 @@ import { has, isUndefined } from 'lodash-es';
 import { createSlice } from '@reduxjs/toolkit';
 import { indexToLetterMap } from '../../../containers/ProblemEditor/data/OLXParser';
 import { StrictDict } from '../../../utils';
+import { ProblemTypeKeys } from '../../constants/problem';
 
 const nextAlphaId = (lastId) => String.fromCharCode(lastId.charCodeAt(0) + 1);
 const initialState = {
@@ -81,7 +82,6 @@ const problem = createSlice({
       if (currAnswers.length >= indexToLetterMap.length) {
         return state;
       }
-      const [firstAnswer] = currAnswers;
       const newOption = {
         id: currAnswers.length ? nextAlphaId(currAnswers[currAnswers.length - 1].id) : 'A',
         title: '',
@@ -90,7 +90,7 @@ const problem = createSlice({
         feedback: undefined,
         correct: false,
       };
-      if (isUndefined(firstAnswer.feedback)) {
+      if (state.problemType === ProblemTypeKeys.MULTISELECT) {
         newOption.selectedFeedback = '';
         newOption.unselectedFeedback = '';
       } else {

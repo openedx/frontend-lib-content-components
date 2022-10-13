@@ -1,5 +1,4 @@
 import React, { memo, useEffect, useState } from 'react';
-import { isUndefined } from 'lodash-es';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import {
@@ -9,8 +8,9 @@ import { AddComment, Delete } from '@edx/paragon/icons';
 import { FormattedMessage, injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 
 import messages from './messages';
-import { actions } from '../../../../../data/redux';
+import { actions, selectors } from '../../../../../data/redux';
 import { answerOptionProps } from '../../../../../data/services/cms/types';
+import { ProblemTypeKeys } from '../../../../../data/constants/problem';
 
 export const AnswerOption = ({
   answer,
@@ -20,6 +20,7 @@ export const AnswerOption = ({
   // redux
   deleteAnswer,
   updateAnswer,
+  problemType,
 }) => {
   const [isFeedbackVisible, setIsFeedbackVisible] = useState(false);
   const removeAnswer = () => deleteAnswer({ id: answer.id });
@@ -80,7 +81,7 @@ export const AnswerOption = ({
   );
 
   const displayFeedbackControl = () => {
-    if (!isUndefined(answer.feedback)) {
+    if (problemType !== ProblemTypeKeys.MULTISELECT) {
       return feedbackControl({
         key: `feedback-${answer.id}`,
         feedback: answer.feedback,
@@ -166,9 +167,13 @@ AnswerOption.propTypes = {
   // redux
   deleteAnswer: PropTypes.func.isRequired,
   updateAnswer: PropTypes.func.isRequired,
+  problemType: PropTypes.string.isRequired,
 };
 
-export const mapStateToProps = () => ({});
+export const mapStateToProps = (state) => ({
+  problemType: selectors.problem.problemType(state),
+});
+
 export const mapDispatchToProps = {
   deleteAnswer: actions.problem.deleteAnswer,
   updateAnswer: actions.problem.updateAnswer,

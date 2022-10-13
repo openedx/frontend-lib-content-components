@@ -1,11 +1,11 @@
 import { StrictDict } from '../../utils';
 
 export const ProblemTypeKeys = StrictDict({
-  TEXTINPUT: 'TEXTINPUT',
-  NUMERIC: 'NUMERIC',
-  DROPDOWN: 'DROPDOWN',
-  MULTISELECT: 'MULTISELECT',
-  SINGLESELECT: 'SINGLESELECT',
+  TEXTINPUT: 'stringresponse',
+  NUMERIC: 'numericalresponse',
+  DROPDOWN: 'optionresponse',
+  MULTISELECT: 'choiceresponse',
+  SINGLESELECT: 'multiplechoiceresponse',
 });
 
 export const ProblemTypes = StrictDict({
@@ -39,12 +39,4 @@ export const ProblemTypes = StrictDict({
     description: 'Specify one or more correct text answers, including numbers and special characters, submitted in a response field.',
     helpLink: 'something.com',
   },
-});
-
-export const OLXProblemTypes = StrictDict({
-  TEXTINPUT: 'stringresponse',
-  NUMERIC: 'numericalresponse',
-  DROPDOWN: 'optionresponse',
-  MULTISELECT: 'choiceresponse',
-  SINGLESELECT: 'multiplechoiceresponse',
 });

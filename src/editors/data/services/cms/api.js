@@ -48,11 +48,12 @@ export const apiMethods = {
       };
     } else if (blockType === 'problem') {
       response = {
+        data: content.olx,
         category: blockType,
         couseKey: learningContextId,
         has_changes: true,
         id: blockId,
-        metadata: { display_name: title, markdown: content },
+        metadata: { display_name: title, markdown: content.markdown },
       };
     } else {
       throw new TypeError(`No Block in V2 Editors named /"${blockType}/", Cannot Save Content.`);

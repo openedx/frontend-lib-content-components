@@ -1,6 +1,6 @@
 import { XMLParser, XMLBuilder } from 'fast-xml-parser';
 import _ from 'lodash-es';
-import { ProblemTypeKeys, OLXProblemTypes } from '../../../data/constants/problem';
+import { ProblemTypeKeys } from '../../../data/constants/problem';
 
 export const indexToLetterMap = [...Array(26)].map((val, i) => String.fromCharCode(i + 65));
 
@@ -57,10 +57,10 @@ export class OLXParser {
         );
       });
     } else {
-      const feedback = this.getAnswerFeedback(element, `${option}hint`);
+      const feedback = this.getAnswerFeedback(choice, `${option}hint`);
       answers.push({
-        title: element['#text'],
-        correct: eval(element['@_correct'].toLowerCase()),
+        title: choice['#text'],
+        correct: eval(choice['@_correct'].toLowerCase()),
         id: indexToLetterMap[answers.length],
         ...feedback,
       });
@@ -96,7 +96,7 @@ export class OLXParser {
           feedbackKeys = eval(answerFeedback['@_selected'].toLowerCase()) ? 'selectedFeedback' : 'unselectedFeedback';
         }
         feedback = {
-          [feedbackKeys]: choice[hintKey]['#text'],
+          [feedbackKeys]: answerFeedback['#text'],
         };
       }
     }
@@ -271,7 +271,12 @@ export class OLXParser {
     const builder = new XMLBuilder();
     const problemObject = _.get(this.problem, problemType);
     let questionObject = {};
-    // TODO: How do we uniquely identify the label and description?
+    /* TODO: How do we uniquely identify the label and description?
+      In order to parse label and description, there should be two states
+      and settings should be introduced to edit the label and description.
+      In turn editing the settings update the state and then it can be added to
+      the parsed OLX.
+    */
     const tagMap = {
       label: 'bold',
       description: 'em',
@@ -322,24 +327,12 @@ export class OLXParser {
   }
 
   getProblemType() {
-    const { problem } = this.parsedOLX;
-    const problemKeys = Object.keys(problem);
-    const intersectedProblems = _.intersection(Object.values(OLXProblemTypes), problemKeys);
+    const problemKeys = Object.keys(this.problem);
+    const intersectedProblems = _.intersection(Object.values(ProblemTypeKeys), problemKeys);
     if (intersectedProblems.length > 1) {
       throw ('More than one problem type is not supported!');
     }
-    let problemType = '';
-    if (_.includes(problemKeys, OLXProblemTypes.DROPDOWN)) {
-      problemType = ProblemTypeKeys.DROPDOWN;
-    } else if (_.includes(problemKeys, OLXProblemTypes.TEXTINPUT)) {
-      problemType = ProblemTypeKeys.TEXTINPUT;
-    } else if (_.includes(problemKeys, OLXProblemTypes.NUMERIC)) {
-      problemType = ProblemTypeKeys.NUMERIC;
-    } else if (_.includes(problemKeys, OLXProblemTypes.MULTISELECT)) {
-      problemType = ProblemTypeKeys.MULTISELECT;
-    } else if (_.includes(problemKeys, OLXProblemTypes.SINGLESELECT)) {
-      problemType = ProblemTypeKeys.SINGLESELECT;
-    }
+    const problemType = intersectedProblems[0];
     return problemType;
   }
 
@@ -352,10 +345,10 @@ export class OLXParser {
     let groupFeedbackList = [];
     const problemType = this.getProblemType();
     const hints = this.getHints();
-    const question = this.parseQuestions(OLXProblemTypes[problemType]);
+    const question = this.parseQuestions(problemType);
     switch (problemType) {
       case ProblemTypeKeys.DROPDOWN:
-        answersObject = this.parseMultipleChoiceAnswers('optionresponse', 'optioninput', 'option');
+        answersObject = this.parseMultipleChoiceAnswers(ProblemTypeKeys.DROPDOWN, 'optioninput', 'option');
         break;
       case ProblemTypeKeys.TEXTINPUT:
         answersObject = this.parseStringResponse();
@@ -364,10 +357,10 @@ export class OLXParser {
         answersObject = this.parseNumericResponse();
         break;
       case ProblemTypeKeys.MULTISELECT:
-        answersObject = this.parseMultipleChoiceAnswers('choiceresponse', 'checkboxgroup', 'choice');
+        answersObject = this.parseMultipleChoiceAnswers(ProblemTypeKeys.MULTISELECT, 'checkboxgroup', 'choice');
         break;
       case ProblemTypeKeys.SINGLESELECT:
-        answersObject = this.parseMultipleChoiceAnswers('multiplechoiceresponse', 'choicegroup', 'choice');
+        answersObject = this.parseMultipleChoiceAnswers(ProblemTypeKeys.SINGLESELECT, 'choicegroup', 'choice');
         break;
       default:
         throw ('The problem type is not supported');
