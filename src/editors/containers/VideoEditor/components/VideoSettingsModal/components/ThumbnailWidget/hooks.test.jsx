@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import { dispatch } from 'react-redux';
-import { actions } from '../../../../../../data/redux';
+import { actions, thunkActions } from '../../../../../../data/redux';
 import { keyStore } from '../../../../../../utils';
 import * as hooks from './hooks';
 
@@ -25,6 +25,11 @@ jest.mock('../../../../../../data/redux', () => ({
   actions: {
     video: {
       updateField: jest.fn(),
+    },
+  },
+  thunkActions: {
+    video: {
+      uploadThumbnail: jest.fn(),
     },
   },
 }));
@@ -68,16 +73,19 @@ describe('checkValidDimensions', () => {
   });
 });
 describe('checkValidSize', () => {
+  const onSizeFail = jest.fn();
   it('returns false for valid max file size', () => {
-    hook = hooks.checkValidSize(maxFileFail);
+    hook = hooks.checkValidSize({ file: maxFileFail, onSizeFail });
+    expect(onSizeFail).toHaveBeenCalled();
     expect(hook).toEqual(false);
   });
   it('returns false for valid max file size', () => {
-    hook = hooks.checkValidSize(minFileFail);
+    hook = hooks.checkValidSize({ file: minFileFail, onSizeFail });
+    expect(onSizeFail).toHaveBeenCalled();
     expect(hook).toEqual(false);
   });
   it('returns true for valid file size', () => {
-    hook = hooks.checkValidSize(selectedFileSuccess);
+    hook = hooks.checkValidSize({ file: selectedFileSuccess, onSizeFail });
     expect(hook).toEqual(true);
   });
 });
@@ -114,6 +122,7 @@ describe('fileInput', () => {
       hook.addFile(eventSuccess);
       expect(spies.checkValidSize).toHaveReturnedWith(true);
       expect(dispatch).toHaveBeenCalledWith(actions.video.updateField({ thumbnail: ' ' }));
+      expect(dispatch).toHaveBeenCalledWith(thunkActions.video.uploadThumbnail({ thumbnail: eventSuccess.target.files[0] }));
     });
   });
 });

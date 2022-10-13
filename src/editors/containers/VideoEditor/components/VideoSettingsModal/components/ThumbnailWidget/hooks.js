@@ -1,8 +1,14 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { actions } from '../../../../../../data/redux';
+import { actions, thunkActions } from '../../../../../../data/redux';
 import * as constants from './constants';
 import * as module from './hooks';
+import { ErrorContext } from '../../../../hooks';
+import messages from './messages';
+
+export const state = {
+  showSizeError: (args) => React.useState(args),
+};
 
 /** resampledFile({ canvasUrl, filename, mimeType })
  * resampledFile takes a canvasUrl, filename, and a valid mimeType. The
@@ -70,28 +76,29 @@ export const checkValidDimensions = ({ width, height }) => {
   }
   return true;
 };
-export const checkValidSize = (file) => {
-  // Check if the file size is greater than 10 MB, upload size limit
-  if (file.size > constants.MAX_FILE_SIZE_MB) {
-    return false;
-  }
-  if (file.size < constants.MIN_FILE_SIZE_KB) {
+export const checkValidSize = ({ file, onSizeFail }) => {
+  // Check if the file size is greater than 2 MB, upload size maximum, or
+  // if the file size is greater than 2 KB, upload size minimum
+  if (file.size > constants.MAX_FILE_SIZE_MB || file.size < constants.MIN_FILE_SIZE_KB) {
+    onSizeFail();
     return false;
   }
   return true;
 };
 
-export const fileInput = ({ setThumbnailSrc, imgRef }) => {
+export const fileInput = ({ setThumbnailSrc, imgRef, fileSizeError }) => {
   const dispatch = useDispatch();
   const ref = React.useRef();
   const click = () => ref.current.click();
   const addFile = (e) => {
     const file = e.target.files[0];
     const reader = new FileReader();
-    if (file) {
-      if (!module.checkValidSize(file)) {
-        return;
-      }
+    if (file && module.checkValidSize({
+      file,
+      onSizeFail: () => {
+        fileSizeError.set();
+      },
+    })) {
       reader.onload = () => {
         setThumbnailSrc(reader.result);
         const image = imgRef.current;
@@ -99,15 +106,17 @@ export const fileInput = ({ setThumbnailSrc, imgRef }) => {
           if (!module.checkValidDimensions({ width: image.naturalWidth, height: image.naturalHeight })) {
             const [resampledUrl, resampledFile] = module.resampleImage({ image, filename: file.name });
             setThumbnailSrc(resampledUrl);
-            dispatch(actions.video.updateField({ thumbnail: resampledFile }));
+            dispatch(thunkActions.video.uploadThumbnail({ thumbnail: resampledFile }));
+            return;
           }
+          dispatch(thunkActions.video.uploadThumbnail({ thumbnail: file }));
         };
       };
-      reader.readAsDataURL(file);
+      console.log('made it pass the if statement');
       dispatch(actions.video.updateField({ thumbnail: ' ' }));
+      reader.readAsDataURL(file);
     }
   };
-
   return {
     click,
     addFile,
@@ -115,6 +124,25 @@ export const fileInput = ({ setThumbnailSrc, imgRef }) => {
   };
 };
 
+export const fileSizeError = () => {
+  const [showSizeError, setShowSizeError] = module.state.showSizeError(false);
+  return {
+    fileSizeError: {
+      show: showSizeError,
+      set: () => setShowSizeError(true),
+      dismiss: () => setShowSizeError(false),
+    },
+  };
+};
+
+export const updateErrors = (fileSizeError) => {
+  const [error, setError] = React.useContext(ErrorContext).thumbnail;
+  const [showSizeError, setShowSizeError] = module.state.showSizeError(false);
+  setError({ ...error, fileSizeError: messages.fileSizeError.defaultMessage });
+};
+
 export default {
   fileInput,
+  fileSizeError,
+  updateErrors,
 };

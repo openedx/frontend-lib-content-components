@@ -84,6 +84,9 @@ jest.mock('@edx/paragon', () => jest.requireActual('testUtils').mockNestedCompon
     Menu: 'Dropdown.Menu',
     Toggle: 'Dropdown.Toggle',
   },
+  ErrorContext: {
+    Provider: 'ErrorContext.Provider',
+  },
   Icon: 'Icon',
   IconButton: 'IconButton',
   Image: 'Image',
