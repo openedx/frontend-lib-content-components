@@ -69,7 +69,7 @@ exports[`ThumbnailWidget snapshots snapshots: renders as expected where videoTyp
       src="sOMeUrl"
       thumbnail={true}
     />
-    <Component
+    <IconButtonWithTooltip
       className="d-inline-block"
       iconAs="Icon"
       onClick={[Function]}
