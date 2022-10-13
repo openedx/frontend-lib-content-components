@@ -16,6 +16,7 @@ jest.mock('..', () => ({
   },
 }));
 jest.mock('./requests', () => ({
+  uploadAsset: (args) => ({uploadAsset: args }),
   deleteTranscript: (args) => ({ deleteTranscript: args }),
   uploadTranscript: (args) => ({ uploadTranscript: args }),
 }));
@@ -199,6 +200,23 @@ describe('video thunkActions', () => {
         },
         '4.0',
       ]);
+    });
+  });
+  describe('uploadHandout', () => {
+    beforeEach(() => {
+      thunkActions.uploadHandout({ file: mockFilename })(dispatch);
+      [[dispatchedAction]] = dispatch.mock.calls;
+    });
+    it('dispatches uploadAsset action', () => {
+      expect(dispatchedAction.uploadAsset).not.toBe(undefined);
+    });
+    test('passes file as image prop', () => {
+      expect(dispatchedAction.uploadAsset.asset).toEqual(mockFilename);
+    });
+    test('onSuccess: calls setSelection with camelized response.data.asset', () => {
+      const handout = mockFilename;
+      dispatchedAction.uploadAsset.onSuccess({ data: { asset: { url: mockFilename } } });
+      expect(dispatch).toHaveBeenCalledWith(actions.video.updateField({ handout }));;
     });
   });
   describe('deleteTranscript', () => {
