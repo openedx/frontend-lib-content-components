@@ -67,6 +67,7 @@ jest.mock('@edx/paragon', () => jest.requireActual('testUtils').mockNestedCompon
     Spacer: 'ActionRow.Spacer',
   },
   Button: 'Button',
+  ButtonGroup: 'ButtonGroup',
   Collapsible: {
     Advanced: 'Advanced',
     Body: 'Body',
@@ -84,8 +85,12 @@ jest.mock('@edx/paragon', () => jest.requireActual('testUtils').mockNestedCompon
     Menu: 'Dropdown.Menu',
     Toggle: 'Dropdown.Toggle',
   },
+  ErrorContext: {
+    Provider: 'ErrorContext.Provider',
+  },
   Icon: 'Icon',
   IconButton: 'IconButton',
+  IconButtonWithTooltip: 'IconButtonWithTooltip',
   Image: 'Image',
   ModalDialog: {
     Footer: 'ModalDialog.Footer',
@@ -102,6 +107,7 @@ jest.mock('@edx/paragon', () => jest.requireActual('testUtils').mockNestedCompon
     Group: 'Form.Group',
     Label: 'Form.Label',
     Text: 'Form.Text',
+    Row: 'Form.Row',
   },
   FullscreenModal: 'FullscreenModal',
   Scrollable: 'Scrollable',
@@ -113,6 +119,7 @@ jest.mock('@edx/paragon', () => jest.requireActual('testUtils').mockNestedCompon
   Stack: 'Stack',
   Toast: 'Toast',
   Tooltip: 'ToolTip',
+  Truncate: 'Truncate',
   OverlayTrigger: 'OverLayTrigger',
 }));
 

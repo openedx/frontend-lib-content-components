@@ -12,11 +12,14 @@ jest.mock('..', () => ({
   selectors: {
     video: {
       videoId: (state) => ({ videoId: state }),
+      videoSettings: (state) => ({ videoSettings: state }),
     },
   },
 }));
 jest.mock('./requests', () => ({
   uploadAsset: (args) => ({ uploadAsset: args }),
+  allowThumbnailUpload: (args) => ({ allowThumbnailUpload: args }),
+  uploadThumbnail: (args) => ({ uploadThumbnail: args }),
   deleteTranscript: (args) => ({ deleteTranscript: args }),
   uploadTranscript: (args) => ({ uploadTranscript: args }),
 }));
@@ -25,6 +28,10 @@ const thunkActionsKeys = keyStore(thunkActions);
 const mockLanguage = 'la';
 const mockFile = 'soMEtRANscRipT';
 const mockFilename = 'soMEtRANscRipT.srt';
+const mockThumbnail = 'sOMefILE';
+const mockThumbnailResponse = { data: { image_url: 'soMEimAGEUrL' } };
+const thumbnailUrl = 'soMEeNDPoiNTsoMEimAGEUrL';
+const mockAllowThumbnailUpload = { data: { allowThumbnailUpload: 'soMEbOolEAn' } };
 
 const testMetadata = {
   download_track: 'dOWNlOAdTraCK',
@@ -38,7 +45,12 @@ const testMetadata = {
   start_time: 'stARtTiME',
   transcripts: { la: 'test VALUE' },
 };
-const testState = { transcripts: { la: 'test VALUE' }, videoId: 'soMEvIDEo' };
+const testState = {
+  transcripts: { la: 'test VALUE' },
+  thumbnail: 'sOMefILE',
+  originalThumbnail: null,
+  videoId: 'soMEvIDEo',
+};
 const testUpload = { transcripts: { la: { filename: mockFilename } } };
 const testReplaceUpload = {
   file: mockFile,
@@ -62,8 +74,24 @@ describe('video thunkActions', () => {
     }));
   });
   describe('loadVideoData', () => {
+    let dispatchedLoad;
+    beforeEach(() => {
+      thunkActions.loadVideoData()(dispatch, getState);
+      [[dispatchedLoad], [dispatchedAction]] = dispatch.mock.calls;
+    });
     afterEach(() => {
       jest.restoreAllMocks();
+    });
+    it('dispatches allowThumbnailUpload action', () => {
+      expect(dispatchedLoad).not.toEqual(undefined);
+      expect(dispatchedAction.allowThumbnailUpload).not.toEqual(undefined);
+    });
+    it('dispatches actions.video.updateField on success', () => {
+      dispatch.mockClear();
+      dispatchedAction.allowThumbnailUpload.onSuccess(mockAllowThumbnailUpload);
+      expect(dispatch).toHaveBeenCalledWith(actions.video.updateField({
+        allowThumbnailUpload: mockAllowThumbnailUpload.data.allowThumbnailUpload,
+      }));
     });
     it('dispatches actions.video.load', () => {
       jest.spyOn(thunkActions, thunkActionsKeys.determineVideoSource).mockReturnValue({
@@ -111,15 +139,30 @@ describe('video thunkActions', () => {
     const youtubeUrl = `https://youtu.be/${youtubeId}`;
     const html5Sources = ['htmLOne', 'hTMlTwo', 'htMLthrEE'];
     describe('when there is an edx video id, youtube id and html5 sources', () => {
-      it('returns the edx video id for video source and html5 sources for fallback videos', () => {
+      it('returns the youtube id for video source and html5 sources for fallback videos', () => {
         expect(thunkActions.determineVideoSource({
           edxVideoId,
           youtubeId,
           html5Sources,
         })).toEqual({
+          videoSource: youtubeUrl,
+          videoId: edxVideoId,
+          videoType: 'youtube',
+          fallbackVideos: html5Sources,
+        });
+      });
+    });
+    describe('when there is an edx video id', () => {
+      it('returns the edx video id for video source', () => {
+        expect(thunkActions.determineVideoSource({
+          edxVideoId,
+          youtubeId: '',
+          html5Sources: '',
+        })).toEqual({
           videoSource: edxVideoId,
           videoId: edxVideoId,
-          fallbackVideos: html5Sources,
+          videoType: 'edxVideo',
+          fallbackVideos: ['', ''],
         });
       });
     });
@@ -132,6 +175,7 @@ describe('video thunkActions', () => {
         })).toEqual({
           videoSource: youtubeUrl,
           videoId: '',
+          videoType: 'youtube',
           fallbackVideos: html5Sources,
         });
       });
@@ -145,6 +189,7 @@ describe('video thunkActions', () => {
         })).toEqual({
           videoSource: 'htmLOne',
           videoId: '',
+          videoType: 'html5source',
           fallbackVideos: ['hTMlTwo', 'htMLthrEE'],
         });
       });
@@ -157,6 +202,7 @@ describe('video thunkActions', () => {
           videoSource: 'htmlOne',
           videoId: '',
           fallbackVideos: ['', ''],
+          videoType: 'html5source',
         });
       });
     });
@@ -170,6 +216,7 @@ describe('video thunkActions', () => {
           videoSource: '',
           videoId: '',
           fallbackVideos: ['', ''],
+          videoType: '',
         });
       });
     });
@@ -217,6 +264,24 @@ describe('video thunkActions', () => {
       const handout = mockFilename;
       dispatchedAction.uploadAsset.onSuccess({ data: { asset: { url: mockFilename } } });
       expect(dispatch).toHaveBeenCalledWith(actions.video.updateField({ handout }));
+    });
+  });
+  describe('uploadThumbnail', () => {
+    beforeEach(() => {
+      thunkActions.uploadThumbnail({ thumbnail: mockThumbnail })(dispatch, getState);
+      [[dispatchedAction]] = dispatch.mock.calls;
+    });
+    it('dispatches uploadThumbnail action', () => {
+      expect(dispatchedAction.uploadThumbnail).not.toEqual(undefined);
+    });
+    it('dispatches actions.video.updateField on success', () => {
+      dispatch.mockClear();
+      dispatchedAction.uploadThumbnail.onSuccess(mockThumbnailResponse);
+      expect(dispatch).toHaveBeenCalledWith(
+        actions.video.updateField({
+          thumbnail: thumbnailUrl,
+        }),
+      );
     });
   });
   describe('deleteTranscript', () => {
