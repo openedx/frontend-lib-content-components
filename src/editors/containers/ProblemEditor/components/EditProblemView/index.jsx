@@ -8,6 +8,7 @@ import QuestionWidget from './QuestionWidget';
 import { EditorContainer } from '../../../EditorContainer';
 import { selectors } from '../../../../data/redux';
 import { ReactStateParser } from '../../data/ReactStateParser';
+import { ReactStateOLXParser } from '../../data/ReactStateOLXParser';
 
 export const EditProblemView = ({
   problemType,
@@ -15,7 +16,11 @@ export const EditProblemView = ({
 }) => {
   const parseSate = (problemState) => () => {
     const reactParser = new ReactStateParser(problemState);
-    return reactParser.getMarkdown();
+    const reactOLXParser = new ReactStateOLXParser({ problem: problemState });
+    return {
+      markdown: reactParser.getMarkdown(),
+      olx: reactOLXParser.buildOLX(),
+    };
   };
   return (
     <EditorContainer getContent={parseSate(problemState)}>

@@ -1,6 +1,6 @@
 import _ from 'lodash-es';
 import { XMLParser, XMLBuilder } from 'fast-xml-parser';
-import { ProblemTypeKeys, OLXProblemTypes } from '../../../data/constants/problem';
+import { ProblemTypeKeys } from '../../../data/constants/problem';
 
 export class ReactStateOLXParser {
   constructor(problemState) {
@@ -122,7 +122,7 @@ export class ReactStateOLXParser {
     const answerObject = this.buildTextInputAnswersFeedback();
     const problemObject = {
       problem: {
-        [OLXProblemTypes.TEXTINPUT]: {
+        [ProblemTypeKeys.TEXTINPUT]: {
           ...question,
           ...answerObject,
         },
@@ -137,16 +137,16 @@ export class ReactStateOLXParser {
     let answerObject = {};
     const additionAnswers = [];
     const wrongAnswers = [];
-    let firstCorrectAnswer = false;
+    let firstCorrectAnswerParsed = false;
     answers.forEach((answer) => {
       const correcthint = this.getAnswerHints(answer);
-      if (answer.correct && firstCorrectAnswer) {
+      if (answer.correct && firstCorrectAnswerParsed) {
         additionAnswers.push({
           '@_answer': answer.title,
           ...correcthint,
         });
-      } else if (answer.correct && !firstCorrectAnswer) {
-        firstCorrectAnswer = true;
+      } else if (answer.correct && !firstCorrectAnswerParsed) {
+        firstCorrectAnswerParsed = true;
         answerObject = {
           '@_answer': answer.title,
           ...correcthint,
@@ -173,11 +173,11 @@ export class ReactStateOLXParser {
   buildNumericInput() {
     const question = this.addQuestion();
     const demandhint = this.addHints();
-    const answers = this.buildNumericalResponse();
+    const answerObject = this.buildNumericalResponse();
     const problemObject = {
       problem: {
         ...question,
-        [OLXProblemTypes.NUMERIC]: answers,
+        [ProblemTypeKeys.NUMERIC]: answerObject,
         ...demandhint,
       },
     };
@@ -186,11 +186,19 @@ export class ReactStateOLXParser {
 
   buildNumericalResponse() {
     const { answers } = this.problemState;
-    const answerArray = [];
+    let answerObject = {};
+    const additionalAnswers = [];
+    let firstCorrectAnswerParsed = false;
+    /*
+    TODO: Need to figure out how to add multiple numericalresponse,
+    the parser right now converts all the other right answers into
+    additional answers.
+    */
     answers.forEach((answer) => {
-      if (answer.correct) {
+      const correcthint = this.getAnswerHints(answer);
+      if (answer.correct && !firstCorrectAnswerParsed) {
+        firstCorrectAnswerParsed = true;
         let responseParam = {};
-        const correcthint = this.getAnswerHints(answer);
         if (_.has(answer, 'tolerance')) {
           responseParam = {
             responseparam: {
@@ -199,23 +207,32 @@ export class ReactStateOLXParser {
             },
           };
         }
-        answerArray.push({
-          formulaequationinput: {
-            '#text': '',
-          },
+        answerObject = {
           '@_answer': answer.title,
           ...responseParam,
+          ...correcthint,
+        };
+      } else if (answer.correct && firstCorrectAnswerParsed) {
+        additionalAnswers.push({
+          '@_answer': answer.title,
           ...correcthint,
         });
       }
     });
-    return answerArray;
+    answerObject = {
+      ...answerObject,
+      additional_answer: additionalAnswers,
+      formulaequationinput: {
+        '#text': '',
+      },
+    };
+    return answerObject;
   }
 
   getAnswerHints(elementObject) {
     const feedback = elementObject?.feedback;
     let correcthint = {};
-    if (feedback !== '' && feedback !== undefined) {
+    if (feedback !== undefined && feedback !== '') {
       correcthint = {
         correcthint: {
           '#text': feedback,
@@ -230,13 +247,13 @@ export class ReactStateOLXParser {
     let problemString = '';
     switch (problemType) {
       case ProblemTypeKeys.MULTISELECT:
-        problemString = this.buildMultiSelectProblem(OLXProblemTypes.MULTISELECT, 'checkboxgroup', 'choice');
+        problemString = this.buildMultiSelectProblem(ProblemTypeKeys.MULTISELECT, 'checkboxgroup', 'choice');
         break;
       case ProblemTypeKeys.DROPDOWN:
-        problemString = this.buildMultiSelectProblem(OLXProblemTypes.DROPDOWN, 'optioninput', 'option');
+        problemString = this.buildMultiSelectProblem(ProblemTypeKeys.DROPDOWN, 'optioninput', 'option');
         break;
       case ProblemTypeKeys.SINGLESELECT:
-        problemString = this.buildMultiSelectProblem(OLXProblemTypes.SINGLESELECT, 'choicegroup', 'choice');
+        problemString = this.buildMultiSelectProblem(ProblemTypeKeys.SINGLESELECT, 'choicegroup', 'choice');
         break;
       case ProblemTypeKeys.TEXTINPUT:
         problemString = this.buildTextInput();

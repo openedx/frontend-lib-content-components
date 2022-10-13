@@ -19,7 +19,7 @@ export class ReactStateParser {
 
   parseHints() {
     let hintString = '';
-    const hitnsList = this.problemState.hints;
+    const hitnsList = this.problemState.settings.hints;
     for (const hint in hitnsList) {
       hintString += `||${hitnsList[hint].value}||\n`;
     }
@@ -54,8 +54,8 @@ export class ReactStateParser {
     for (const answer in answers) {
       const answerObject = answers[answer];
       const answerContent = answerObject.title;
-      const answerSelectedFeedback = answerObject?.selectedFeedback;
-      const answerUnselectedFeedback = answerObject?.unselectedFeedback;
+      const answerSelectedFeedback = _.get(answerObject, 'selectedFeedback', '');
+      const answerUnselectedFeedback = _.get(answerObject, 'unselectedFeedback', '');
       const isSelectedFeedbackPresent = (answerSelectedFeedback.trim() !== '' && answerSelectedFeedback !== undefined);
       const isUnselectedFeedbackPresent = (answerUnselectedFeedback.trim() !== '' && answerUnselectedFeedback !== undefined);
       if (answerObject.correct) {
@@ -82,7 +82,7 @@ export class ReactStateParser {
       let answerOptionString = '';
       const answerObject = answers[answer];
       const answerContent = answerObject.title;
-      const answerFeedback = answerObject?.feedback;
+      const answerFeedback = _.get(answerObject, 'feedback', '');
       if (answerObject.correct) {
         answerOptionString += `(x) ${answerContent}`;
       } else {

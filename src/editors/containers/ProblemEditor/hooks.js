@@ -20,7 +20,7 @@ export const problemEditorConfig = ({
   },
   initialValue: question || '',
   onFocusOut: () => {
-    const content = editorRef.current.getContent({ format: 'text' });
+    const content = editorRef.current.getContent();
     updateQuestion(content);
   },
 });
