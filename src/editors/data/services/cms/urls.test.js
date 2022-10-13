@@ -96,7 +96,7 @@ describe('cms url methods', () => {
   });
   describe('downloadVideoHandoutUrl', () => {
     it('returns url with studioEndpointUrl and handout', () => {
-      expect(downloadVideoHandoutUrl({ studioEndpointUrl, handout}))
+      expect(downloadVideoHandoutUrl({ studioEndpointUrl, handout }))
         .toEqual(`${studioEndpointUrl}${handout}`);
     });
   });

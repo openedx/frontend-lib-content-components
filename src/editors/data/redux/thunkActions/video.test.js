@@ -16,7 +16,7 @@ jest.mock('..', () => ({
   },
 }));
 jest.mock('./requests', () => ({
-  uploadAsset: (args) => ({uploadAsset: args }),
+  uploadAsset: (args) => ({ uploadAsset: args }),
   deleteTranscript: (args) => ({ deleteTranscript: args }),
   uploadTranscript: (args) => ({ uploadTranscript: args }),
 }));
@@ -216,7 +216,7 @@ describe('video thunkActions', () => {
     test('onSuccess: calls setSelection with camelized response.data.asset', () => {
       const handout = mockFilename;
       dispatchedAction.uploadAsset.onSuccess({ data: { asset: { url: mockFilename } } });
-      expect(dispatch).toHaveBeenCalledWith(actions.video.updateField({ handout }));;
+      expect(dispatch).toHaveBeenCalledWith(actions.video.updateField({ handout }));
     });
   });
   describe('deleteTranscript', () => {
