@@ -2,6 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { dispatch } from 'react-redux';
 import { actions, thunkActions } from '../../../../../../data/redux';
+import { MockUseState } from '../../../../../../../testUtils';
 import { keyStore } from '../../../../../../utils';
 import * as hooks from './hooks';
 
@@ -34,6 +35,7 @@ jest.mock('../../../../../../data/redux', () => ({
   },
 }));
 
+const state = new MockUseState(hooks);
 const hookKeys = keyStore(hooks);
 let hook;
 const setThumbnailSrc = jest.fn();
@@ -43,6 +45,10 @@ const maxFileFail = { name: testValue, size: 20000000 };
 const minFileFail = { name: testValue, size: 200 };
 const resampledFile = new File([selectedFileSuccess], testValue);
 const imgRef = React.useRef.mockReturnValueOnce({ current: undefined });
+
+describe('state hooks', () => {
+  state.testGetter(state.keys.showSizeError);
+});
 
 describe('createResampledFile', () => {
   hook = hooks.createResampledFile({ canvasUrl: 'data:MimETYpe,sOMEUrl', filename: testValue, mimeType: 'sOmEuiMAge' });
@@ -91,8 +97,9 @@ describe('checkValidSize', () => {
 });
 describe('fileInput', () => {
   const spies = {};
+  const fileSizeError = { set: jest.fn() };
   beforeEach(() => {
-    hook = hooks.fileInput({ setThumbnailSrc, imgRef });
+    hook = hooks.fileInput({ setThumbnailSrc, imgRef, fileSizeError });
   });
   it('returns a ref for the file input', () => {
     expect(hook.ref).toEqual({ current: undefined });
@@ -100,7 +107,7 @@ describe('fileInput', () => {
   test('click calls current.click on the ref', () => {
     const click = jest.fn();
     React.useRef.mockReturnValueOnce({ current: { click } });
-    hook = hooks.fileInput({ setThumbnailSrc, imgRef });
+    hook = hooks.fileInput({ setThumbnailSrc, imgRef, fileSizeError });
     hook.click();
     expect(click).toHaveBeenCalled();
   });
@@ -122,7 +129,11 @@ describe('fileInput', () => {
       hook.addFile(eventSuccess);
       expect(spies.checkValidSize).toHaveReturnedWith(true);
       expect(dispatch).toHaveBeenCalledWith(actions.video.updateField({ thumbnail: ' ' }));
-      expect(dispatch).toHaveBeenCalledWith(thunkActions.video.uploadThumbnail({ thumbnail: eventSuccess.target.files[0] }));
+      expect(dispatch).toHaveBeenCalledWith(
+        thunkActions.video.uploadThumbnail({
+          thumbnail: eventSuccess.target.files[0],
+        }),
+      );
     });
   });
 });

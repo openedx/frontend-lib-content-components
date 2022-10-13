@@ -3,8 +3,6 @@ import { useDispatch } from 'react-redux';
 import { actions, thunkActions } from '../../../../../../data/redux';
 import * as constants from './constants';
 import * as module from './hooks';
-import { ErrorContext } from '../../../../hooks';
-import messages from './messages';
 
 export const state = {
   showSizeError: (args) => React.useState(args),
@@ -112,7 +110,6 @@ export const fileInput = ({ setThumbnailSrc, imgRef, fileSizeError }) => {
           dispatch(thunkActions.video.uploadThumbnail({ thumbnail: file }));
         };
       };
-      console.log('made it pass the if statement');
       dispatch(actions.video.updateField({ thumbnail: ' ' }));
       reader.readAsDataURL(file);
     }
@@ -135,14 +132,7 @@ export const fileSizeError = () => {
   };
 };
 
-export const updateErrors = (fileSizeError) => {
-  const [error, setError] = React.useContext(ErrorContext).thumbnail;
-  const [showSizeError, setShowSizeError] = module.state.showSizeError(false);
-  setError({ ...error, fileSizeError: messages.fileSizeError.defaultMessage });
-};
-
 export default {
   fileInput,
   fileSizeError,
-  updateErrors,
 };
