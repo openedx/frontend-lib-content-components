@@ -119,7 +119,7 @@ export const mapStateToProps = (state) => ({
 });
 
 export const mapDispatchToProps = (dispatch) => ({
-  updateField: (stateUpdate) => dispatch(actions.video.updateField(stateUpdate)),
+  updateField: (payload) => dispatch(actions.video.updateField(payload)),
 });
 
 export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(HandoutWidget));
