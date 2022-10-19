@@ -30,6 +30,11 @@ export const fetchImages = () => (dispatch) => {
   }));
 };
 
+export const fetchAssets = () => (dispatch) => {
+  dispatch(requests.fetchAssets({
+    onSuccess: (response) => dispatch(actions.app.setAssets(response.data.assets)),
+  }));
+};
 /**
  * @param {string} studioEndpointUrl
  * @param {string} blockId
@@ -42,6 +47,7 @@ export const initialize = (data) => (dispatch) => {
   dispatch(module.fetchUnit());
   dispatch(module.fetchStudioView());
   dispatch(module.fetchImages());
+  dispatch(module.fetchAssets());
 };
 
 /**
@@ -76,6 +82,7 @@ export default StrictDict({
   initialize,
   saveBlock,
   fetchImages,
+  fetchAssets,
   uploadImage,
   fetchVideos,
   fetchStudioView,

@@ -48,6 +48,7 @@ export const TextEditor = ({
   initializeEditor,
   images,
   imagesFinished,
+  assets,
   // inject
   intl,
 }) => {
@@ -88,7 +89,7 @@ export const TextEditor = ({
 
   return (
     <EditorContainer
-      getContent={hooks.getContent({ editorRef, isRaw, images })}
+      getContent={hooks.getContent({ editorRef, isRaw, assets })}
       onClose={onClose}
     >
       <div className="editor-body h-75 overflow-auto">
@@ -134,6 +135,7 @@ TextEditor.defaultProps = {
   studioEndpointUrl: null,
   images: null,
   imagesFinished: null,
+  assets: null,
 };
 TextEditor.propTypes = {
   onClose: PropTypes.func.isRequired,
@@ -149,6 +151,7 @@ TextEditor.propTypes = {
   isLibrary: PropTypes.bool,
   imagesFinished: PropTypes.bool,
   images: PropTypes.shape({}),
+  assets: PropTypes.shape({}),
   // inject
   intl: intlShape.isRequired,
 };
@@ -162,6 +165,7 @@ export const mapStateToProps = (state) => ({
   isLibrary: selectors.app.isLibrary(state),
   imagesFinished: selectors.requests.isFinished(state, { requestKey: RequestKeys.fetchImages }),
   images: selectors.app.images(state),
+  assets: selectors.app.assets(state),
 });
 
 export const mapDispatchToProps = {

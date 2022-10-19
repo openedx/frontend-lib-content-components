@@ -16,6 +16,7 @@ const initialState = {
   studioEndpointUrl: null,
   lmsEndpointUrl: null,
   images: {},
+  assets: {},
 };
 
 // eslint-disable-next-line no-unused-vars
@@ -46,6 +47,7 @@ const app = createSlice({
     setSaveResponse: (state, { payload }) => ({ ...state, saveResponse: payload }),
     initializeEditor: (state) => ({ ...state, editorInitialized: true }),
     setImages: (state, { payload }) => ({ ...state, images: payload }),
+    setAssets: (state, { payload }) => ({ ...state, assets: payload }),
   },
 });
 

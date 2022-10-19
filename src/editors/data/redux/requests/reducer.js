@@ -15,6 +15,7 @@ const initialState = {
   [RequestKeys.uploadThumbnail]: { status: RequestStates.inactive },
   [RequestKeys.uploadTranscript]: { status: RequestStates.inactive },
   [RequestKeys.deleteTranscript]: { status: RequestStates.inactive },
+  [RequestKeys.fetchAssets]: { status: RequestStates.inactive },
 
 };
 

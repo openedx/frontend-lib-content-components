@@ -26,6 +26,7 @@ jest.mock('../../services/cms/api', () => ({
   fetchByUnitId: ({ id, url }) => ({ id, url }),
   saveBlock: (args) => args,
   fetchImages: ({ id, url }) => ({ id, url }),
+  fetchAssets: ({ id, url }) => ({ id, url }),
   uploadImage: (args) => args,
   loadImages: jest.fn(),
   allowThumbnailUpload: jest.fn(),
@@ -211,6 +212,21 @@ describe('requests thunkActions module', () => {
           promise: api.fetchStudioView({
             studioEndpointUrl: selectors.app.studioEndpointUrl(testState),
             blockId: selectors.app.blockId(testState),
+          }),
+        },
+      });
+    });
+    describe('fetchAssets', () => {
+      testNetworkRequestAction({
+        action: requests.fetchAssets,
+        args: fetchParams,
+        expectedString: 'with fetchAssets promise',
+        expectedData: {
+          ...fetchParams,
+          requestKey: RequestKeys.fetchAssets,
+          promise: api.fetchAssets({
+            studioEndpointUrl: selectors.app.studioEndpointUrl(testState),
+            learningContextId: selectors.app.learningContextId(testState),
           }),
         },
       });

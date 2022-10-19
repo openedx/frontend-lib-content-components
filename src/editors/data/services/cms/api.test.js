@@ -69,6 +69,13 @@ describe('cms api', () => {
       });
     });
 
+    describe('fetchAssets', () => {
+      it('should call get with url.courseAssets', () => {
+        apiMethods.fetchAssets({ learningContextId, studioEndpointUrl });
+        expect(get).toHaveBeenCalledWith(urls.courseAssets({ studioEndpointUrl, learningContextId }));
+      });
+    });
+
     describe('normalizeContent', () => {
       test('return value for blockType: html', () => {
         const content = 'Im baby palo santo ugh celiac fashion axe. La croix lo-fi venmo whatever. Beard man braid migas single-origin coffee forage ramps.';

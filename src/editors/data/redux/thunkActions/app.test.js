@@ -9,6 +9,7 @@ jest.mock('./requests', () => ({
   fetchImages: (args) => ({ fetchImages: args }),
   uploadImage: (args) => ({ uploadImage: args }),
   fetchStudioView: (args) => ({ fetchStudioView: args }),
+  fetchAssets: (args) => ({ fetchAssets: args }),
 }));
 
 jest.mock('../../../utils', () => ({
@@ -85,11 +86,13 @@ describe('app thunkActions', () => {
         fetchUnit,
         fetchStudioView,
         fetchImages,
+        fetchAssets,
       } = thunkActions;
       thunkActions.fetchBlock = () => 'fetchBlock';
       thunkActions.fetchUnit = () => 'fetchUnit';
       thunkActions.fetchStudioView = () => 'fetchStudioView';
       thunkActions.fetchImages = () => 'fetchImages';
+      thunkActions.fetchAssets = () => 'fetchAssets';
       thunkActions.initialize(testValue)(dispatch);
       expect(dispatch.mock.calls).toEqual([
         [actions.app.initialize(testValue)],
@@ -97,11 +100,13 @@ describe('app thunkActions', () => {
         [thunkActions.fetchUnit()],
         [thunkActions.fetchStudioView()],
         [thunkActions.fetchImages()],
+        [thunkActions.fetchAssets()],
       ]);
       thunkActions.fetchBlock = fetchBlock;
       thunkActions.fetchUnit = fetchUnit;
       thunkActions.fetchStudioView = fetchStudioView;
       thunkActions.fetchImages = fetchImages;
+      thunkActions.fetchAssets = fetchAssets;
     });
   });
   describe('saveBlock', () => {
@@ -129,12 +134,21 @@ describe('app thunkActions', () => {
     });
   });
   describe('fetchImages', () => {
-    it('dispatches fetchUnit action with setImages for onSuccess param', () => {
+    it('dispatches fetchImages action with setImages for onSuccess param', () => {
       const response = 'testRESPONSE';
       thunkActions.fetchImages()(dispatch);
       const [[dispatchCall]] = dispatch.mock.calls;
       dispatchCall.fetchImages.onSuccess(response);
       expect(dispatch).toHaveBeenCalledWith(actions.app.setImages(response));
+    });
+  });
+  describe('fetchAssets', () => {
+    it('dispatches fetchAssets action with setAssets for onSuccess param', () => {
+      const response = { data: { assets: 'testRESPONSE' } };
+      thunkActions.fetchAssets()(dispatch);
+      const [[dispatchCall]] = dispatch.mock.calls;
+      dispatchCall.fetchAssets.onSuccess(response);
+      expect(dispatch).toHaveBeenCalledWith(actions.app.setAssets(response.data.assets));
     });
   });
   describe('uploadImage', () => {

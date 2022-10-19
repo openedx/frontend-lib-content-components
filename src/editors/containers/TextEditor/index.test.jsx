@@ -72,6 +72,7 @@ jest.mock('../../data/redux', () => ({
       isRaw: jest.fn(state => ({ isRaw: state })),
       images: jest.fn(state => ({ images: state })),
       isLibrary: jest.fn(state => ({ isLibrary: state })),
+      assets: jest.fn(state => ({ assets: state })),
     },
     requests: {
       isFailed: jest.fn((state, params) => ({ isFailed: { state, params } })),
@@ -93,6 +94,7 @@ describe('TextEditor', () => {
     isLibrary: false,
     imagesFinished: true,
     images: { sOmEuiMAge: { staTICUrl: '/assets/sOmEuiMAge' } },
+    assets: { sOmEaSsET: { staTICUrl: '/assets/sOmEaSsET' }},
     // inject
     intl: { formatMessage },
   };
@@ -140,6 +142,11 @@ describe('TextEditor', () => {
       expect(
         mapStateToProps(testState).images,
       ).toEqual(selectors.app.images(testState));
+    });
+    test('assets from app.assets', () => {
+      expect(
+        mapStateToProps(testState).assets,
+      ).toEqual(selectors.app.assets(testState));
     });
     test('blockFailed from requests.isFailed', () => {
       expect(
