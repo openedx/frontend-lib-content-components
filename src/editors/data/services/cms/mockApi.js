@@ -173,6 +173,11 @@ export const fetchAssets = ({ learningContextId, studioEndpointUrl }) => mockPro
   },
 });
 
+// eslint-disable-next-line
+export const allowThumbnailUpload = ({ studioEndpointUrl }) => mockPromise({
+  data: true,
+});
+
 export const normalizeContent = ({
   blockId,
   blockType,
@@ -231,9 +236,4 @@ export const uploadAsset = ({
     },
     msg: 'Upload completed',
   },
-});
-export const allowThumbnailUpload = ({
-  studioEndpointUrl,
-}) => mockPromise({
-  data: true,
 });

@@ -94,7 +94,7 @@ describe('TextEditor', () => {
     isLibrary: false,
     imagesFinished: true,
     images: { sOmEuiMAge: { staTICUrl: '/assets/sOmEuiMAge' } },
-    assets: { sOmEaSsET: { staTICUrl: '/assets/sOmEaSsET' }},
+    assets: { sOmEaSsET: { staTICUrl: '/assets/sOmEaSsET' } },
     // inject
     intl: { formatMessage },
   };
