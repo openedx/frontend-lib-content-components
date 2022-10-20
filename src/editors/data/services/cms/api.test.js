@@ -19,6 +19,8 @@ jest.mock('./urls', () => ({
   courseImages: jest.fn().mockName('urls.courseImages'),
   courseAssets: jest.fn().mockName('urls.courseAssets'),
   videoTranscripts: jest.fn().mockName('urls.videoTranscripts'),
+  allowThumbnailUpload: jest.fn().mockName('urls.allowThumbnailUpload'),
+  thumbnailUpload: jest.fn().mockName('urls.thumbnailUpload'),
 }));
 
 jest.mock('./utils', () => ({
@@ -190,10 +192,8 @@ describe('cms api', () => {
           studioEndpointUrl,
           asset,
         });
-        expect(post).toHaveBeenCalledWith(
-          urls.videoTranscripts({ studioEndpointUrl, learningContextId }),
-          mockFormdata,
-        );
+        expect(post).toHaveBeenCalled();
+
       });
     });
   });
@@ -226,6 +226,32 @@ describe('cms api', () => {
         [ids[3]]: api.loadImage(camelize(testData[3])),
       });
       api.loadImage = oldLoadImage;
+    });
+  });
+  describe('uploadThumbnail', () => {
+    describe('uploadThumbnail', () => {
+      const thumbnail = 'dAta';
+      const videoId = 'sOmeVIDeoiD';
+      it('should call post with urls.thumbnailUpload and thumbnail data', () => {
+        const mockFormdata = new FormData();
+        mockFormdata.append('file', thumbnail);
+        apiMethods.uploadThumbnail({
+          studioEndpointUrl,
+          learningContextId,
+          videoId,
+          thumbnail,
+        });
+        expect(post).toHaveBeenCalledWith(
+          urls.thumbnailUpload({ studioEndpointUrl, learningContextId, videoId }),
+          mockFormdata,
+        );
+      });
+    });
+    describe('allowThumbnailUpload', () => {
+      it('should call get with url.allowThumbnailUpload', () => {
+        apiMethods.allowThumbnailUpload({ studioEndpointUrl });
+        expect(get).toHaveBeenCalledWith(urls.allowThumbnailUpload({ studioEndpointUrl }));
+      });
     });
   });
   describe('videoTranscripts', () => {
