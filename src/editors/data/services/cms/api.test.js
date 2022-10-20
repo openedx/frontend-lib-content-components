@@ -192,8 +192,10 @@ describe('cms api', () => {
           studioEndpointUrl,
           asset,
         });
-        expect(post).toHaveBeenCalled();
-
+        expect(post).toHaveBeenCalledWith(
+          urls.courseAssets({ studioEndpointUrl, learningContextId }),
+          mockFormdata,
+        );
       });
     });
   });
