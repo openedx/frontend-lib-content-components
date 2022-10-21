@@ -173,6 +173,15 @@ export const prepareEditorRef = () => {
   return { editorRef, refReady, setEditorRef };
 };
 
+export const filterAssets = ({ assets }) => {
+  let images = [];
+  const assetsList = Object.values(assets);
+  if (assetsList.length > 0) {
+    images = assetsList.filter(asset => asset.contentType.startsWith('image/'));
+  }
+  return images;
+};
+
 export const setAssetToStaticUrl = ({ editorValue, assets }) => {
   /* For assets to remain usable across course instances, we convert their url to be course-agnostic.
    * For example, /assets/course/<asset hash>/filename gets converted to /static/filename. This is
@@ -182,7 +191,7 @@ export const setAssetToStaticUrl = ({ editorValue, assets }) => {
   let content = editorValue;
   const assetUrls = [];
   assets.forEach(asset => {
-    assetUrls.push({ portableUrl: asset.portable_url, displayName: asset.display_name });
+    assetUrls.push({ portableUrl: asset.portableUrl, displayName: asset.displayName });
   });
   const assetSrcs = typeof content === 'string' ? content.split(/(src="|href=")/g) : [];
   assetSrcs.forEach(src => {
@@ -216,8 +225,7 @@ export const getContent = ({ editorRef, isRaw, assets }) => () => {
 
 export const fetchImageUrls = (images) => {
   const imageUrls = [];
-  const imgsArray = Object.values(images);
-  imgsArray.forEach(image => {
+  images.forEach(image => {
     imageUrls.push({ staticFullUrl: image.staticFullUrl, displayName: image.displayName });
   });
   return imageUrls;

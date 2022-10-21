@@ -46,8 +46,7 @@ export const TextEditor = ({
   studioEndpointUrl,
   blockFailed,
   initializeEditor,
-  images,
-  imagesFinished,
+  assetsFinished,
   assets,
   // inject
   intl,
@@ -55,6 +54,7 @@ export const TextEditor = ({
   const { editorRef, refReady, setEditorRef } = hooks.prepareEditorRef();
   const { isImgOpen, openImgModal, closeImgModal } = hooks.imgModalToggle();
   const { isSourceCodeOpen, openSourceCodeModal, closeSourceCodeModal } = hooks.sourceCodeModalToggle(editorRef);
+  const images = hooks.filterAssets({ assets });
   const imageSelection = hooks.selectedImage(null);
 
   if (!refReady) { return null; }
@@ -112,7 +112,7 @@ export const TextEditor = ({
           <FormattedMessage {...messages.couldNotLoadTextContext} />
         </Toast>
 
-        {(!imagesFinished)
+        {(!assetsFinished)
           ? (
             <div className="text-center p-6">
               <Spinner
@@ -133,8 +133,7 @@ TextEditor.defaultProps = {
   isLibrary: null,
   lmsEndpointUrl: null,
   studioEndpointUrl: null,
-  images: null,
-  imagesFinished: null,
+  assetsFinished: null,
   assets: null,
 };
 TextEditor.propTypes = {
@@ -149,8 +148,7 @@ TextEditor.propTypes = {
   initializeEditor: PropTypes.func.isRequired,
   isRaw: PropTypes.bool,
   isLibrary: PropTypes.bool,
-  imagesFinished: PropTypes.bool,
-  images: PropTypes.shape({}),
+  assetsFinished: PropTypes.bool,
   assets: PropTypes.shape({}),
   // inject
   intl: intlShape.isRequired,
@@ -163,8 +161,7 @@ export const mapStateToProps = (state) => ({
   blockFailed: selectors.requests.isFailed(state, { requestKey: RequestKeys.fetchBlock }),
   isRaw: selectors.app.isRaw(state),
   isLibrary: selectors.app.isLibrary(state),
-  imagesFinished: selectors.requests.isFinished(state, { requestKey: RequestKeys.fetchImages }),
-  images: selectors.app.images(state),
+  assetsFinished: selectors.requests.isFinished(state, { requestKey: RequestKeys.fetchAssets }),
   assets: selectors.app.assets(state),
 });
 

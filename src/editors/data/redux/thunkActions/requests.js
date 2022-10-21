@@ -122,19 +122,6 @@ export const uploadAsset = ({ asset, ...rest }) => (dispatch, getState) => {
   }));
 };
 
-export const fetchImages = ({ ...rest }) => (dispatch, getState) => {
-  dispatch(module.networkRequest({
-    requestKey: RequestKeys.fetchImages,
-    promise: api
-      .fetchImages({
-        studioEndpointUrl: selectors.app.studioEndpointUrl(getState()),
-        learningContextId: selectors.app.learningContextId(getState()),
-      })
-      .then((response) => loadImages(response.data.assets)),
-    ...rest,
-  }));
-};
-
 export const fetchAssets = ({ ...rest }) => (dispatch, getState) => {
   dispatch(module.networkRequest({
     requestKey: RequestKeys.fetchAssets,
@@ -142,7 +129,8 @@ export const fetchAssets = ({ ...rest }) => (dispatch, getState) => {
       .fetchAssets({
         studioEndpointUrl: selectors.app.studioEndpointUrl(getState()),
         learningContextId: selectors.app.learningContextId(getState()),
-      }),
+      })
+      .then((response) => loadImages(response.data.assets)),
     ...rest,
   }));
 };
@@ -201,7 +189,6 @@ export const uploadTranscript = ({
 
 export default StrictDict({
   fetchBlock,
-  fetchImages,
   fetchStudioView,
   fetchUnit,
   saveBlock,

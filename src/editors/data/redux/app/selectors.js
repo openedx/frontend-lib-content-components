@@ -22,7 +22,6 @@ export const simpleSelectors = {
   studioEndpointUrl: mkSimpleSelector(app => app.studioEndpointUrl),
   unitUrl: mkSimpleSelector(app => app.unitUrl),
   blockTitle: mkSimpleSelector(app => app.blockTitle),
-  images: mkSimpleSelector(app => app.images),
   assets: mkSimpleSelector(app => app.assets),
 };
 

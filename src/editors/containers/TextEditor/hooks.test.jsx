@@ -95,24 +95,12 @@ describe('TextEditor hooks', () => {
         expect(editor.setContent).toHaveBeenCalled();
       });
     });
-
-    // describe('setAssetToStaticUrl', () => {
-    //   it('returns content with updated img links', () => {
-    //     const editorValue = '<img src="/asset@asset-block/soME_ImagE_URl1"/> <img src="/asset@soMEImagEURl" />';
-    //     const assets = [
-    //       { portable_url: '/static/soMEImagEURl', display_name: 'soMEImagEURl' },
-    //       { portable_url: '/static/soME_ImagE_URl1', display_name: 'soME ImagE URl1' },
-    //     ];
-    //     const content = module.setAssetToStaticUrl({ editorValue, assets });
-    //     expect(content).toEqual('<img src="/static/soME_ImagE_URl1"/> <img src="/static/soMEImagEURl" />');
-    //   });
-    // });
     describe('setAssetToStaticUrl', () => {
       it('returns content with updated img links', () => {
         const editorValue = '<img src="/asset@asset-block/soME_ImagE_URl1"/> <a href="/asset@soMEImagEURl">testing link</a>';
         const assets = [
-          { portable_url: '/static/soMEImagEURl', display_name: 'soMEImagEURl' },
-          { portable_url: '/static/soME_ImagE_URl1', display_name: 'soME ImagE URl1' },
+          { portableUrl: '/static/soMEImagEURl', displayName: 'soMEImagEURl' },
+          { portableUrl: '/static/soME_ImagE_URl1', displayName: 'soME ImagE URl1' },
         ];
         const content = module.setAssetToStaticUrl({ editorValue, assets });
         expect(content).toEqual('<img src="/static/soME_ImagE_URl1"/> <a href="/static/soMEImagEURl">testing link</a>');
@@ -132,7 +120,7 @@ describe('TextEditor hooks', () => {
         blockValue: null,
         lmsEndpointUrl: 'sOmEuRl.cOm',
         studioEndpointUrl: 'sOmEoThEruRl.cOm',
-        images: { sOmEuiMAge: { staTICUrl: '/assets/sOmEuiMAge' } },
+        images: [{ staTICUrl: '/assets/sOmEuiMAge' }],
         isLibrary: false,
       };
       const evt = 'fakeEvent';

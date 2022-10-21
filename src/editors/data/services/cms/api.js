@@ -14,9 +14,6 @@ export const apiMethods = {
   fetchStudioView: ({ blockId, studioEndpointUrl }) => get(
     urls.blockStudioView({ studioEndpointUrl, blockId }),
   ),
-  fetchImages: ({ learningContextId, studioEndpointUrl }) => get(
-    urls.courseImages({ studioEndpointUrl, learningContextId }),
-  ),
   fetchAssets: ({ learningContextId, studioEndpointUrl }) => get(
     urls.courseAssets({ studioEndpointUrl, learningContextId }),
   ),

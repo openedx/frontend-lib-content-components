@@ -24,15 +24,9 @@ export const fetchUnit = () => (dispatch) => {
   }));
 };
 
-export const fetchImages = () => (dispatch) => {
-  dispatch(requests.fetchImages({
-    onSuccess: (response) => dispatch(actions.app.setImages(response)),
-  }));
-};
-
 export const fetchAssets = () => (dispatch) => {
   dispatch(requests.fetchAssets({
-    onSuccess: (response) => dispatch(actions.app.setAssets(response.data.assets)),
+    onSuccess: (response) => dispatch(actions.app.setAssets(response)),
   }));
 };
 /**
@@ -46,7 +40,6 @@ export const initialize = (data) => (dispatch) => {
   dispatch(module.fetchBlock());
   dispatch(module.fetchUnit());
   dispatch(module.fetchStudioView());
-  dispatch(module.fetchImages());
   dispatch(module.fetchAssets());
 };
 
@@ -81,7 +74,6 @@ export default StrictDict({
   fetchUnit,
   initialize,
   saveBlock,
-  fetchImages,
   fetchAssets,
   uploadImage,
   fetchVideos,

@@ -16,7 +16,6 @@ jest.mock('./urls', () => ({
   block: jest.fn().mockName('urls.block'),
   blockAncestor: jest.fn().mockName('urls.blockAncestor'),
   blockStudioView: jest.fn().mockName('urls.StudioView'),
-  courseImages: jest.fn().mockName('urls.courseImages'),
   courseAssets: jest.fn().mockName('urls.courseAssets'),
   videoTranscripts: jest.fn().mockName('urls.videoTranscripts'),
   allowThumbnailUpload: jest.fn().mockName('urls.allowThumbnailUpload'),
@@ -61,13 +60,6 @@ describe('cms api', () => {
       it('should call get with url.blockStudioView', () => {
         apiMethods.fetchStudioView({ blockId, studioEndpointUrl });
         expect(get).toHaveBeenCalledWith(urls.blockStudioView({ studioEndpointUrl, blockId }));
-      });
-    });
-
-    describe('fetchImages', () => {
-      it('should call get with url.courseImages', () => {
-        apiMethods.fetchImages({ learningContextId, studioEndpointUrl });
-        expect(get).toHaveBeenCalledWith(urls.courseImages({ studioEndpointUrl, learningContextId }));
       });
     });
 

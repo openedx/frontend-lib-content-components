@@ -31,10 +31,6 @@ export const courseAssets = ({ studioEndpointUrl, learningContextId }) => (
   `${studioEndpointUrl}/assets/${learningContextId}/?page_size=500`
 );
 
-export const courseImages = ({ studioEndpointUrl, learningContextId }) => (
-  `${courseAssets({ studioEndpointUrl, learningContextId })}&sort=uploadDate&direction=desc&asset_type=Images`
-);
-
 export const allowThumbnailUpload = ({ studioEndpointUrl }) => (
   `${studioEndpointUrl}/video_images_upload_enabled`
 );

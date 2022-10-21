@@ -6,7 +6,6 @@ import {
   blockAncestor,
   blockStudioView,
   courseAssets,
-  courseImages,
   downloadVideoTranscriptURL,
   videoTranscripts,
   downloadVideoHandoutUrl,
@@ -74,12 +73,6 @@ describe('cms url methods', () => {
     it('returns url with studioEndpointUrl and learningContextId', () => {
       expect(courseAssets({ studioEndpointUrl, learningContextId }))
         .toEqual(`${studioEndpointUrl}/assets/${learningContextId}/?page_size=500`);
-    });
-  });
-  describe('courseImages', () => {
-    it('returns url with studioEndpointUrl, learningContextId and courseAssets query', () => {
-      expect(courseImages({ studioEndpointUrl, learningContextId }))
-        .toEqual(`${courseAssets({ studioEndpointUrl, learningContextId })}&sort=uploadDate&direction=desc&asset_type=Images`);
     });
   });
   describe('videoTranscripts', () => {
