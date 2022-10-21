@@ -181,3 +181,16 @@ export const uploadAsset = ({
     msg: 'Upload completed',
   },
 });
+
+export const allowThumbnailUpload = ({
+  learningContextId,
+  studioEndpointUrl,
+}) => mockPromise({
+});
+
+export const fetchCourseDetails = ({ studioEndpointUrl, learningContextId }) => mockPromise({
+  data: {
+    // license: "creative-commons: ver=4.0 BY NC",
+    license: "all-rights-reserved",
+  },
+});

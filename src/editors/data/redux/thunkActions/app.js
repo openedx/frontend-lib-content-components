@@ -30,6 +30,13 @@ export const fetchImages = () => (dispatch) => {
   }));
 };
 
+export const fetchCourseDetails = () => (dispatch) => {
+  dispatch(requests.fetchCourseDetails({
+    onSuccess: (response) => dispatch(actions.app.setCourseDetails(response)),
+    onFailure: (e) => dispatch(actions.app.setCourseDetails(e)),
+  }));
+};
+
 /**
  * @param {string} studioEndpointUrl
  * @param {string} blockId
@@ -42,6 +49,7 @@ export const initialize = (data) => (dispatch) => {
   dispatch(module.fetchUnit());
   dispatch(module.fetchStudioView());
   dispatch(module.fetchImages());
+  dispatch(module.fetchCourseDetails());
 };
 
 /**
@@ -72,11 +80,12 @@ export const fetchVideos = ({ onSuccess }) => (dispatch) => {
 
 export default StrictDict({
   fetchBlock,
+  fetchCourseDetails,
+  fetchImages,
+  fetchStudioView,
   fetchUnit,
+  fetchVideos,
   initialize,
   saveBlock,
-  fetchImages,
   uploadImage,
-  fetchVideos,
-  fetchStudioView,
 });

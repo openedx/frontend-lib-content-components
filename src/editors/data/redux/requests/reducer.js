@@ -15,6 +15,7 @@ const initialState = {
   [RequestKeys.uploadThumbnail]: { status: RequestStates.inactive },
   [RequestKeys.uploadTranscript]: { status: RequestStates.inactive },
   [RequestKeys.deleteTranscript]: { status: RequestStates.inactive },
+  [RequestKeys.fetchCourseDetails]: { status: RequestStates.inactive },
 };
 
 // eslint-disable-next-line no-unused-vars

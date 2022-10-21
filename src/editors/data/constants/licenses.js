@@ -1,9 +1,24 @@
 import { StrictDict } from '../../utils';
 
-const LicenseTypes = StrictDict({
-  creativeCommons: 'creative-commons',
-  allRightsReserved: 'all-rights-reserved',
-  publicDomainDedication: 'public-domain-dedication',
+export const LicenseNames = StrictDict({
+  allRightsReserved: 'All Rights Reserved',
+  creativeCommons: 'Creative Commons',
 });
 
-export default LicenseTypes;
+export const LicenseTypes = StrictDict({
+  allRightsReserved: 'all-rights-reserved',
+  creativeCommons: 'creative-commons',
+  // publicDomainDedication: 'public-domain-dedication', // future?
+});
+
+export const LicenseLevel = StrictDict({
+  block: 'block',
+  course: 'course',
+  library: 'library',
+})
+
+export default {
+  LicenseLevel,
+  LicenseNames,
+  LicenseTypes,
+};

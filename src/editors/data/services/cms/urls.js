@@ -54,3 +54,7 @@ export const downloadVideoTranscriptURL = ({ studioEndpointUrl, blockId, languag
 export const downloadVideoHandoutUrl = ({ studioEndpointUrl, handout }) => (
   `${studioEndpointUrl}${handout}`
 );
+
+export const courseDetailsUrl = ({studioEndpointUrl, courseKey}) => (
+  `${studioEndpointUrl}/settings/details/${courseKey}`
+);
