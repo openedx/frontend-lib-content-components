@@ -5,6 +5,7 @@ import * as module from './video';
 export const loadVideoData = () => (dispatch, getState) => {
   const state = getState();
   const rawVideoData = state.app.blockValue.data.metadata ? state.app.blockValue.data.metadata : {};
+  const courseLicenseData = state.app.courseDetails.data ? state.app.courseDetails.data : {};
   const {
     videoSource,
     videoType,
@@ -17,6 +18,7 @@ export const loadVideoData = () => (dispatch, getState) => {
   });
   // we don't appear to want to parse license version
   const [licenseType, licenseOptions] = module.parseLicense(rawVideoData.license);
+  const [courseLicenseType, courseLicenseDetails] = module.parseLicense(courseLicenseData.license);
 
   dispatch(actions.video.load({
     videoSource,
@@ -39,6 +41,13 @@ export const loadVideoData = () => (dispatch, getState) => {
       noncommercial: licenseOptions.nc,
       noDerivatives: licenseOptions.nd,
       shareAlike: licenseOptions.sa,
+    },
+    courseLicenseType,
+    courseLicenseDetails: {
+      attribution: courseLicenseDetails.by,
+      noncommercial: courseLicenseDetails.nc,
+      noDerivatives: courseLicenseDetails.nd,
+      shareAlike: courseLicenseDetails.sa,
     },
     thumbnail: rawVideoData.thumbnail,
   }));

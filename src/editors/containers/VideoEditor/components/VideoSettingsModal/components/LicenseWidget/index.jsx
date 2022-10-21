@@ -105,6 +105,8 @@ export const mapStateToProps = (state) => ({
   isLibrary: selectors.app.isLibrary(state),
   licenseType: selectors.video.licenseType(state),
   licenseDetails: selectors.video.licenseDetails(state),
+  courseLicenseType: selectors.video.courseLicenseType(state),
+  courseLicenseDetails: selectors.video.courseLicenseDetails(state),
 });
 
 export const mapDispatchToProps = (dispatch) => ({
