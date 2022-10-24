@@ -85,7 +85,7 @@ describe('ImageUploadModal', () => {
         expect(execCommandMock).toBeCalledWith(
           tinyMCEKeys.commands.insertContent,
           false,
-          { selection, settings, lmsEndpointUrl, },
+          { selection, settings, lmsEndpointUrl },
         );
         expect(setSelection).toBeCalledWith(null);
         expect(close).toBeCalled();
