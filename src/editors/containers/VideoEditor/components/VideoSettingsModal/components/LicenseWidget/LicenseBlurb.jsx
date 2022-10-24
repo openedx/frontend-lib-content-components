@@ -34,14 +34,6 @@ export const LicenseBlurb = ({
   );
 };
 
-LicenseBlurb.defaultProps = {
-  details: {
-    attribution: false,
-    noncommercial: false,
-    noDerivatives: false,
-    shareAlike: false,
-  },
-};
 LicenseBlurb.propTypes = {
   license: PropTypes.string.isRequired,
   details: PropTypes.shape({}).isRequired,

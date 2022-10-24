@@ -91,13 +91,15 @@ export const LicenseWidget = ({
   );
 };
 
-LicenseWidget.defaultProps = {
-  isLibrary: null,
-};
 LicenseWidget.propTypes = {
   // injected
   intl: intlShape.isRequired,
   // redux
+  isLibrary: PropTypes.bool.isRequired,
+  licenseType: PropTypes.string.isRequired,
+  licenseDetails: PropTypes.shape({}).isRequired,
+  courseLicenseType: PropTypes.string.isRequired,
+  courseLicenseDetails: PropTypes.shape({}).isRequired,
   updateField: PropTypes.func.isRequired,
 };
 

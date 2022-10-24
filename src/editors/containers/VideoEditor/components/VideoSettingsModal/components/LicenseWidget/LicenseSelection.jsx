@@ -74,14 +74,6 @@ export const LicenseSelection = ({
   );
 };
 
-LicenseSelection.defaultProps = {
-  details: {
-    attribution: false,
-    noncommercial: false,
-    noDerivatives: false,
-    shareAlike: false,
-  },
-};
 LicenseSelection.propTypes = {
   license: PropTypes.string.isRequired,
   details: PropTypes.shape({}).isRequired,

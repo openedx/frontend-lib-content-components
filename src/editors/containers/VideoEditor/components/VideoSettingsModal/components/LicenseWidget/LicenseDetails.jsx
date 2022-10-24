@@ -155,14 +155,6 @@ export const LicenseDetails = ({
   );
 };
 
-// LicenseDetails.defaultProps = {
-//   details: {
-//     // attribution: false,
-//     // noncommercial: false,
-//     // noDerivatives: false,
-//     // shareAlike: false,
-//   },
-// };
 LicenseDetails.propTypes = {
   license: PropTypes.string.isRequired,
   details: PropTypes.shape({}).isRequired,
