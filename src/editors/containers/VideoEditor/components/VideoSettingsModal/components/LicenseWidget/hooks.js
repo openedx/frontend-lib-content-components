@@ -10,19 +10,18 @@ export const determineLicense = ({
 }) => {
   let level = LicenseLevel.course;
   if (licenseType) {
-    // TODO : library doesn't work?
-    // if (isLibrary) {
-    //   level = LicenseLevel.library;
-    // }
-    // else {
+    if (isLibrary) {
+      level = LicenseLevel.library;
+    }
+    else {
       level = LicenseLevel.block;
-    // }
+    }
   }
 
   return {
     license: licenseType ? licenseType : courseLicenseType,
     details: licenseType ? licenseDetails : courseLicenseDetails,
-    level,
+    level: LicenseLevel.block,
   };
 };
 

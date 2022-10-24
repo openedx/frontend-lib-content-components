@@ -10,6 +10,7 @@ import {
   Card,
   Form,
   Icon,
+  Stack,
 } from '@edx/paragon';
 import { Attribution } from '@edx/paragon/icons';
 
@@ -29,7 +30,6 @@ export const LicenseDetails = ({
   // redux
   updateField,
 }) => {
-
   return (
     level === LicenseLevel.block && details
       ? (
@@ -38,7 +38,7 @@ export const LicenseDetails = ({
             <Form.Label className="mt-3">LicenseDetails</Form.Label>
             {license === LicenseTypes.allRightsReserved
               ? <Form.Text>You reserve all rights for your work.</Form.Text>
-              : <>
+              : <Stack gap={3}>
                   <Card>
                     <Card.Header
                       title={
@@ -54,7 +54,12 @@ export const LicenseDetails = ({
                     </Card.Section>
                   </Card>
 
-                  <Card>
+                  <Card isClickable
+                    onClick={() => updateField({
+                      licenseDetails: {
+                        ...details,
+                        noncommercial: !details.noncommercial,
+                      }})}>
                     <Card.Header
                       title={
                         <div className="d-flex flex-row flex-row">
@@ -65,6 +70,7 @@ export const LicenseDetails = ({
                       actions={
                         <Form.Checkbox 
                           checked={details.noncommercial}
+                          disabled={level !== LicenseLevel.block}
                           onChange={(e) => updateField({ 
                             licenseDetails: {
                               ...details,
@@ -78,7 +84,13 @@ export const LicenseDetails = ({
                     </Card.Section>
                   </Card>
 
-                  <Card>
+                  <Card isClickable
+                    onClick={() => updateField({
+                      licenseDetails: {
+                        ...details,
+                        noDerivatives: !details.noDerivatives,
+                        shareAlike: !details.noDerivatives ? false : details.shareAlike,
+                      }})}>
                     <Card.Header
                       title={
                         <div className="d-flex flex-row flex-row">
@@ -89,6 +101,7 @@ export const LicenseDetails = ({
                       actions={
                         <Form.Checkbox 
                           checked={details.noDerivatives}
+                          disabled={level !== LicenseLevel.block}
                           onChange={(e) => updateField({ 
                             licenseDetails: {
                               ...details,
@@ -103,7 +116,13 @@ export const LicenseDetails = ({
                     </Card.Section>
                   </Card>
 
-                  <Card>
+                  <Card isClickable
+                    onClick={() => updateField({
+                      licenseDetails: {
+                        ...details,
+                        shareAlike: !details.shareAlike,
+                        noDerivatives: !details.shareAlike ? false : details.noDerivatives,
+                      }})}>
                     <Card.Header
                       title={
                         <div className="d-flex flex-row flex-row">
@@ -114,6 +133,7 @@ export const LicenseDetails = ({
                       actions={
                         <Form.Checkbox 
                           checked={details.shareAlike}
+                          disabled={level !== LicenseLevel.block}
                           onChange={(e) => updateField({ 
                             licenseDetails: {
                               ...details,
@@ -127,7 +147,7 @@ export const LicenseDetails = ({
                       Allow others to distribute derivative works only under a license identical to the license that governs your work. This option is incompatible with "No Derivatives".
                     </Card.Section>
                   </Card>
-                </>}
+                </Stack>}
           </Form.Group>
         </div>
       )
