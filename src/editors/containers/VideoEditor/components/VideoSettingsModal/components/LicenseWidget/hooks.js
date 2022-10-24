@@ -21,7 +21,7 @@ export const determineLicense = ({
   return {
     license: licenseType ? licenseType : courseLicenseType,
     details: licenseType ? licenseDetails : courseLicenseDetails,
-    level: LicenseLevel.block,
+    level,
   };
 };
 
