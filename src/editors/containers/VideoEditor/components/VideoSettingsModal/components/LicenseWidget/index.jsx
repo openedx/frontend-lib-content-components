@@ -17,7 +17,7 @@ import { Add } from '@edx/paragon/icons';
 
 import { actions, selectors } from '../../../../../../data/redux';
 import hooks from './hooks';
-
+import messages from './messages';
 import CollapsibleFormWidget from '../CollapsibleFormWidget';
 import LicenseBlurb from './LicenseBlurb';
 import LicenseSelection from './LicenseSelection';
@@ -25,7 +25,7 @@ import LicenseDetails from './LicenseDetails';
 import { LicenseTypes } from '../../../../../../data/constants/licenses';
 
 /**
- * Collapsible Form widget controlling videe licence type and details
+ * Collapsible Form widget controlling videe license type and details
  */
 export const LicenseWidget = ({
   // injected
@@ -38,7 +38,7 @@ export const LicenseWidget = ({
   courseLicenseDetails,
   updateField,
 }) => {
-  const { license, details, level } = hooks.determineLicense({ 
+  const { license, details, level } = hooks.determineLicense({
     isLibrary,
     licenseType,
     licenseDetails,
@@ -55,7 +55,7 @@ export const LicenseWidget = ({
           <Form.Text>{levelDescription}</Form.Text>
         </div>
       }
-      title="License"
+      title={intl.formatMessage(messages.title)}
     >
       <Stack gap={3}>
         <LicenseSelection license={license} level={level} />
@@ -63,16 +63,16 @@ export const LicenseWidget = ({
         <LicenseDetails license={license} details={details} level={level} />
 
         <Form.Group>
-          <Form.Label className="mt-3">License Display</Form.Label>
-          <Card>
+          <Form.Label className="mt-3">
+            <FormattedMessage {...messages.displaySubsectionTitle}/>
+          </Form.Label>
+          <Card className="mb-3">
             <Card.Header title={<LicenseBlurb license={license} details={details} />} />
             <Card.Section>{licenseDescription}</Card.Section>
           </Card>
-          {licenseType === LicenseTypes.creativeCommons
-            ? <Hyperlink destination="https://creativecommons.org/about" target="_blank">
-                View License Details
-              </Hyperlink>
-            : null}
+          <Hyperlink destination="https://creativecommons.org/about" target="_blank">
+            <FormattedMessage {...messages.viewLicenseDetailsLabel}/>
+          </Hyperlink>
         </Form.Group>
 
         {!licenseType
@@ -82,7 +82,7 @@ export const LicenseWidget = ({
                 variant="link"
                 onClick={() => updateField({ licenseType: LicenseTypes.allRightsReserved })}
               >
-                Add a license for this video
+                <FormattedMessage {...messages.addLicenseButtonLabel}/>
               </Button>
             </div>
           : null}

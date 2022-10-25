@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import {
   FormattedMessage,
   injectIntl,
-  intlShape,
 } from '@edx/frontend-platform/i18n';
 import {
   Card,
@@ -17,16 +16,15 @@ import { Attribution } from '@edx/paragon/icons';
 import { actions } from '../../../../../../data/redux';
 import { LicenseLevel, LicenseTypes } from '../../../../../../data/constants/licenses';
 
+import {messages} from './messages';
 /**
- * Collapsible Form widget controlling videe licence type and details
+ * Collapsible Form widget controlling videe license type and details
  */
 // TODO change placeholder icons for NC, ND, SA
 export const LicenseDetails = ({
   license,
   details,
   level,
-  // injected
-  intl,
   // redux
   updateField,
 }) => {
@@ -35,22 +33,28 @@ export const LicenseDetails = ({
       ? (
         <div className="border-primary-100 border-bottom pb-4">
           <Form.Group>
-            <Form.Label className="mt-3">LicenseDetails</Form.Label>
+            <Form.Label className="mt-3">
+              <FormattedMessage {...messages.detailsSubsectionTitle}/>
+            </Form.Label>
             {license === LicenseTypes.allRightsReserved
-              ? <Form.Text>You reserve all rights for your work.</Form.Text>
-              : <Stack gap={3}>
+              ? (
+                <Form.Text>
+                  <FormattedMessage {...messages.allRightsReservedSectionMessage}/>
+                </Form.Text>
+              ) : (
+                <Stack gap={3}>
                   <Card>
                     <Card.Header
                       title={
                         <div className="d-flex flex-row flex-nowrap">
                           <Icon src={Attribution} />
-                          Attribution
+                          <FormattedMessage {...messages.attributionCheckboxLabel}/>
                         </div>
                       }
                       actions={<Form.Checkbox checked disabled />}
                     />
                     <Card.Section>
-                      Allow others to copy, distribute, display and perform your copyrighted work but only if they give credit the way you request. Currently, this option is required.
+                      <FormattedMessage {...messages.attributionSectionDescription}/>
                     </Card.Section>
                   </Card>
 
@@ -64,14 +68,14 @@ export const LicenseDetails = ({
                       title={
                         <div className="d-flex flex-row flex-row">
                           <Icon src={Attribution} />
-                          Noncommercial
+                          <FormattedMessage {...messages.noncommercialCheckboxLabel}/>
                         </div>
                       }
                       actions={
-                        <Form.Checkbox 
+                        <Form.Checkbox
                           checked={details.noncommercial}
                           disabled={level !== LicenseLevel.block}
-                          onChange={(e) => updateField({ 
+                          onChange={(e) => updateField({
                             licenseDetails: {
                               ...details,
                               noncommercial: e.target.checked,
@@ -80,7 +84,7 @@ export const LicenseDetails = ({
                       }
                     />
                     <Card.Section>
-                      Allow others to copy, distribute, display and perform your work - and derivative works based upon it - but for noncommercial purposes only.
+                      <FormattedMessage {...messages.noncommercialSectionDescription}/>
                     </Card.Section>
                   </Card>
 
@@ -95,14 +99,14 @@ export const LicenseDetails = ({
                       title={
                         <div className="d-flex flex-row flex-row">
                           <Icon src={Attribution} />
-                          No Derivatives
+                          <FormattedMessage {...messages.noDerivativesCheckboxLabel}/>
                         </div>
                       }
                       actions={
-                        <Form.Checkbox 
+                        <Form.Checkbox
                           checked={details.noDerivatives}
                           disabled={level !== LicenseLevel.block}
-                          onChange={(e) => updateField({ 
+                          onChange={(e) => updateField({
                             licenseDetails: {
                               ...details,
                               noDerivatives: e.target.checked,
@@ -112,7 +116,7 @@ export const LicenseDetails = ({
                       }
                     />
                     <Card.Section>
-                      Allow others to copy, distribute, display and perform only verbatim copies of your work, not derivative works based upon it. This option is incompatible with "Share Alike".
+                      <FormattedMessage {...messages.noDerivativesSectionDescription}/>
                     </Card.Section>
                   </Card>
 
@@ -127,14 +131,14 @@ export const LicenseDetails = ({
                       title={
                         <div className="d-flex flex-row flex-row">
                           <Icon src={Attribution} />
-                          Share Alike
+                          <FormattedMessage {...messages.shareAlikeCheckboxLabel}/>
                         </div>
                       }
                       actions={
-                        <Form.Checkbox 
+                        <Form.Checkbox
                           checked={details.shareAlike}
                           disabled={level !== LicenseLevel.block}
-                          onChange={(e) => updateField({ 
+                          onChange={(e) => updateField({
                             licenseDetails: {
                               ...details,
                               shareAlike: e.target.checked,
@@ -144,11 +148,12 @@ export const LicenseDetails = ({
                       }
                     />
                     <Card.Section>
-                      Allow others to distribute derivative works only under a license identical to the license that governs your work. This option is incompatible with "No Derivatives".
+                      <FormattedMessage {...messages.shareAlikeSectionDescription}/>
                     </Card.Section>
                   </Card>
-                </Stack>}
-          </Form.Group>
+                </Stack>
+              )}
+            </Form.Group>
         </div>
       )
       : null
@@ -159,8 +164,6 @@ LicenseDetails.propTypes = {
   license: PropTypes.string.isRequired,
   details: PropTypes.shape({}).isRequired,
   level: PropTypes.string.isRequired,
-  // injected
-  intl: intlShape.isRequired,
   // redux
   updateField: PropTypes.func.isRequired,
 };

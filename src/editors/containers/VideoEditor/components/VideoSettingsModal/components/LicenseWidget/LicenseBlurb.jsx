@@ -3,19 +3,17 @@ import PropTypes from 'prop-types';
 import {
   FormattedMessage,
   injectIntl,
-  intlShape,
 } from '@edx/frontend-platform/i18n';
 import { Form, Icon } from '@edx/paragon';
 import { Attribution, Copyright } from '@edx/paragon/icons';
 
+import messages from './messages';
 import { LicenseTypes } from '../../../../../../data/constants/licenses';
 
 // TODO: currently using attribution and copyright for placeholder icons. check https://2u-internal.atlassian.net/browse/PAR-815
 export const LicenseBlurb = ({
   license,
   details,
-  // injected
-  intl,
 }) => {
   return (
     <div className="d-flex flex-row flex-row">
@@ -28,8 +26,8 @@ export const LicenseBlurb = ({
       {details.noDerivatives ? <Icon src={Attribution} /> : null}
       {details.shareAlike ? <Icon src={Attribution} /> : null}
       {license === LicenseTypes.allRightsReserved
-        ? <Form.Text>All Rights Reserved</Form.Text>
-        : <Form.Text>Creative Commons</Form.Text>}
+        ? <Form.Text><FormattedMessage {...messages.allRightsReservedIconsLabel} /></Form.Text>
+        : <Form.Text><FormattedMessage {...messages.creativeCommonsIconsLabel} /></Form.Text>}
     </div>
   );
 };
@@ -37,8 +35,6 @@ export const LicenseBlurb = ({
 LicenseBlurb.propTypes = {
   license: PropTypes.string.isRequired,
   details: PropTypes.shape({}).isRequired,
-  // injected
-  intl: intlShape.isRequired,
 };
 
 export default injectIntl(LicenseBlurb);

@@ -9,7 +9,7 @@ import {
 import {
   Form,
   Icon,
-  IconButton,
+  IconButtonWithTooltip,
   OverlayTrigger,
   Tooltip,
 } from '@edx/paragon';
@@ -17,10 +17,11 @@ import { Delete } from '@edx/paragon/icons';
 
 import { actions } from '../../../../../../data/redux';
 import hooks from './hooks';
+import messages from './messages';
 import { LicenseLevel, LicenseNames, LicenseTypes } from '../../../../../../data/constants/licenses';
 
 /**
- * Collapsible Form widget controlling videe licence type and details
+ * Collapsible Form widget controlling videe license type and details
  */
 export const LicenseSelection = ({
   license,
@@ -50,23 +51,16 @@ export const LicenseSelection = ({
             })}
           </Form.Control>
           {level === LicenseLevel.block
-            ? (<OverlayTrigger
-                key="top"
-                placement="top"
-                overlay={(
-                  <Tooltip>
-                    Delete
-                  </Tooltip>
-                )}
-              >
-                <IconButton
-                  className="d-inline-block"
-                  iconAs={Icon}
-                  src={Delete}
-                  onClick={() => updateField({ licenseType: null })}
-                />
-              </OverlayTrigger>)
-            : null}
+            ? (
+              <IconButtonWithTooltip
+                iconAs={Icon}
+                src={Delete}
+                onClick={() => updateField({ licenseType: null })}
+                tooltipPlacement="top"
+                tooltipContent={<FormattedMessage {...messages.deleteLicenseSelection} />}
+              />
+            ): null
+          }
         </Form.Row>
         <Form.Text>{levelDescription}</Form.Text>
       </Form.Group>

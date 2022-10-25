@@ -1,3 +1,5 @@
+import { FormattedMessage } from '@edx/frontend-platform/i18n';
+import messages from './messages';
 import { actions } from '../../../../../../data/redux';
 import { LicenseLevel, LicenseTypes } from '../../../../../../data/constants/licenses';
 
@@ -26,21 +28,20 @@ export const determineLicense = ({
 };
 
 export const determineText = ({ level }) => {
-  // TODO intl
   let levelDescription = '';
   let licenseDescription = '';
   switch (level) {
     case LicenseLevel.course:
-      levelDescription = "This license currently set at the course level";
-      licenseDescription = "Licenses set at the course level appear at the bottom of courseware pages within your course.";
+      levelDescription = <FormattedMessage {...messages.courseLevelDescription}/>;
+      licenseDescription = <FormattedMessage {...messages.courseLicenseDescription}/>;
       break;
     case LicenseLevel.library:
-      levelDescription = "This license currently set at the library level";
-      licenseDescription = "Licenses set at the library level appear at the specific library video.";
+    levelDescription = <FormattedMessage {...messages.libraryLevelDescription}/>;
+    licenseDescription = <FormattedMessage {...messages.libraryLicenseDescription}/>;
       break;
     default: // default to block
-      levelDescription = "This license is set specifically for this video";
-      licenseDescription = "When a video has a different license than the course as a whole, learners see the license at the bottom right of the video player.";
+    levelDescription = <FormattedMessage {...messages.defaultLevelDescription}/>;
+      licenseDescription = <FormattedMessage {...messages.defaultLicenseDescription}/>;
       break;
   }
 
