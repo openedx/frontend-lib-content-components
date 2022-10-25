@@ -15,7 +15,7 @@ const initialState = {
   editorInitialized: false,
   studioEndpointUrl: null,
   lmsEndpointUrl: null,
-  images: {},
+  assets: {},
   courseDetails: {},
 };
 
@@ -43,7 +43,7 @@ const app = createSlice({
     setBlockTitle: (state, { payload }) => ({ ...state, blockTitle: payload }),
     setSaveResponse: (state, { payload }) => ({ ...state, saveResponse: payload }),
     initializeEditor: (state) => ({ ...state, editorInitialized: true }),
-    setImages: (state, { payload }) => ({ ...state, images: payload }),
+    setAssets: (state, { payload }) => ({ ...state, assets: payload }),
     setCourseDetails: (state, { payload }) => ({ ...state, courseDetails: payload }),
   },
 });
