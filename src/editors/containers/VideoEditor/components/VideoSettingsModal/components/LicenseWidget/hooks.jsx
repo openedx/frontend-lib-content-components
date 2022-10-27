@@ -14,14 +14,13 @@ export const determineLicense = ({
   if (licenseType) {
     if (isLibrary) {
       level = LicenseLevel.library;
-    }
-    else {
+    } else {
       level = LicenseLevel.block;
     }
   }
 
   return {
-    license: licenseType ? licenseType : courseLicenseType,
+    license: licenseType || courseLicenseType,
     details: licenseType ? licenseDetails : courseLicenseDetails,
     level,
   };
@@ -32,16 +31,16 @@ export const determineText = ({ level }) => {
   let licenseDescription = '';
   switch (level) {
     case LicenseLevel.course:
-      levelDescription = <FormattedMessage {...messages.courseLevelDescription}/>;
-      licenseDescription = <FormattedMessage {...messages.courseLicenseDescription}/>;
+      levelDescription = <FormattedMessage {...messages.courseLevelDescription} />;
+      licenseDescription = <FormattedMessage {...messages.courseLicenseDescription} />;
       break;
     case LicenseLevel.library:
-    levelDescription = <FormattedMessage {...messages.libraryLevelDescription}/>;
-    licenseDescription = <FormattedMessage {...messages.libraryLicenseDescription}/>;
+      levelDescription = <FormattedMessage {...messages.libraryLevelDescription} />;
+      licenseDescription = <FormattedMessage {...messages.libraryLicenseDescription} />;
       break;
     default: // default to block
-    levelDescription = <FormattedMessage {...messages.defaultLevelDescription}/>;
-      licenseDescription = <FormattedMessage {...messages.defaultLicenseDescription}/>;
+      levelDescription = <FormattedMessage {...messages.defaultLevelDescription} />;
+      licenseDescription = <FormattedMessage {...messages.defaultLicenseDescription} />;
       break;
   }
 
@@ -56,7 +55,10 @@ export const onSelectLicense = ({
 }) => (license) => {
   switch (license) {
     case LicenseTypes.allRightsReserved:
-      dispatch(actions.video.updateField({ licenseType: LicenseTypes.allRightsReserved}));
+      dispatch(actions.video.updateField({
+        licenseType: LicenseTypes.allRightsReserved,
+        licenseDetails: {},
+      }));
       break;
     case LicenseTypes.creativeCommons:
       dispatch(actions.video.updateField({
@@ -68,6 +70,9 @@ export const onSelectLicense = ({
           shareAlike: false,
         },
       }));
+      break;
+    default:
+      dispatch(actions.video.updateField({ licenseType: LicenseTypes.select }));
       break;
   }
 };

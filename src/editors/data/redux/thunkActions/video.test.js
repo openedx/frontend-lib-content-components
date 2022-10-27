@@ -10,6 +10,9 @@ jest.mock('..', () => ({
     },
   },
   selectors: {
+    app: {
+      courseDetails: (state) => ({ courseDetails: state }),
+    },
     video: {
       videoId: (state) => ({ videoId: state }),
       videoSettings: (state) => ({ videoSettings: state }),
@@ -44,6 +47,7 @@ const testMetadata = {
   show_captions: 'shOWcapTIONS',
   start_time: 'stARtTiME',
   transcripts: { la: 'test VALUE' },
+  thumbnail: 'thuMBNaIl',
 };
 const testState = {
   transcripts: { la: 'test VALUE' },
@@ -69,6 +73,7 @@ describe('video thunkActions', () => {
         blockId: 'soMEBloCk',
         blockValue: { data: { metadata: { ...testMetadata } } },
         studioEndpointUrl: 'soMEeNDPoiNT',
+        courseDetails: { data: { license: null } },
       },
       video: testState,
     }));
@@ -76,28 +81,11 @@ describe('video thunkActions', () => {
   describe('loadVideoData', () => {
     let dispatchedLoad;
     beforeEach(() => {
-      thunkActions.loadVideoData()(dispatch, getState);
-      [[dispatchedLoad], [dispatchedAction]] = dispatch.mock.calls;
-    });
-    afterEach(() => {
-      jest.restoreAllMocks();
-    });
-    it('dispatches allowThumbnailUpload action', () => {
-      expect(dispatchedLoad).not.toEqual(undefined);
-      expect(dispatchedAction.allowThumbnailUpload).not.toEqual(undefined);
-    });
-    it('dispatches actions.video.updateField on success', () => {
-      dispatch.mockClear();
-      dispatchedAction.allowThumbnailUpload.onSuccess(mockAllowThumbnailUpload);
-      expect(dispatch).toHaveBeenCalledWith(actions.video.updateField({
-        allowThumbnailUpload: mockAllowThumbnailUpload.data.allowThumbnailUpload,
-      }));
-    });
-    it('dispatches actions.video.load', () => {
       jest.spyOn(thunkActions, thunkActionsKeys.determineVideoSource).mockReturnValue({
         videoSource: 'videOsOurce',
         videoId: 'videOiD',
         fallbackVideos: 'fALLbACKvIDeos',
+        videoType: 'viDEOtyPE',
       });
       jest.spyOn(thunkActions, thunkActionsKeys.parseLicense).mockReturnValue([
         'liCENSEtyPe',
@@ -109,10 +97,21 @@ describe('video thunkActions', () => {
         },
       ]);
       thunkActions.loadVideoData()(dispatch, getState);
-      expect(dispatch).toHaveBeenCalledWith(actions.video.load({
+      [[dispatchedLoad], [dispatchedAction]] = dispatch.mock.calls;
+    });
+    afterEach(() => {
+      jest.restoreAllMocks();
+    });
+    it('dispatches allowThumbnailUpload action', () => {
+      expect(dispatchedLoad).not.toEqual(undefined);
+      expect(dispatchedAction.allowThumbnailUpload).not.toEqual(undefined);
+    });
+    it('dispatches actions.video.load', () => {
+      expect(dispatchedLoad.load).toEqual({
         videoSource: 'videOsOurce',
         videoId: 'videOiD',
         fallbackVideos: 'fALLbACKvIDeos',
+        videoType: 'viDEOtyPE',
         allowVideoDownloads: testMetadata.download_video,
         transcripts: testMetadata.transcripts,
         allowTranscriptDownloads: testMetadata.download_track,
@@ -130,6 +129,21 @@ describe('video thunkActions', () => {
           noDerivatives: true,
           shareAlike: false,
         },
+        courseLicenseType: 'liCENSEtyPe',
+        courseLicenseDetails: {
+          attribution: true,
+          noncommercial: true,
+          noDerivatives: true,
+          shareAlike: false,
+        },
+        thumbnail: testMetadata.thumbnail,
+      });
+    });
+    it('dispatches actions.video.updateField on success', () => {
+      dispatch.mockClear();
+      dispatchedAction.allowThumbnailUpload.onSuccess(mockAllowThumbnailUpload);
+      expect(dispatch).toHaveBeenCalledWith(actions.video.updateField({
+        allowThumbnailUpload: mockAllowThumbnailUpload.data.allowThumbnailUpload,
       }));
     });
   });
@@ -225,7 +239,7 @@ describe('video thunkActions', () => {
     let license;
     it('returns all-rights-reserved when there is no license', () => {
       expect(thunkActions.parseLicense(license)).toEqual([
-        'all-rights-reserved',
+        '',
         {},
       ]);
     });

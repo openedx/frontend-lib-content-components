@@ -1,0 +1,112 @@
+import React from 'react';
+import { shallow } from 'enzyme';
+
+import { formatMessage } from '../../../../../../../testUtils';
+import { actions, selectors } from '../../../../../../data/redux';
+import { LicenseWidget, mapStateToProps, mapDispatchToProps } from '.';
+
+jest.mock('react', () => ({
+  ...jest.requireActual('react'),
+  useContext: jest.fn(() => ({ license: ['error.license', jest.fn().mockName('error.setLicense')] })),
+}));
+
+jest.mock('../../../../../../data/redux', () => ({
+  actions: {
+    video: {
+      updateField: jest.fn().mockName('actions.video.updateField'),
+    },
+  },
+  selectors: {
+    app: {
+      isLibrary: jest.fn(state => ({ isLibrary: state })),
+    },
+    video: {
+      licenseType: jest.fn(state => ({ licenseType: state })),
+      licenseDetails: jest.fn(state => ({ licenseDetails: state })),
+      courseLicenseType: jest.fn(state => ({ courseLicenseType: state })),
+      courseLicenseDetails: jest.fn(state => ({ courseLicenseDetails: state })),
+    },
+  },
+}));
+
+describe('LicenseWidget', () => {
+  const props = {
+    error: {},
+    subtitle: 'SuBTItle',
+    title: 'tiTLE',
+    intl: { formatMessage },
+    isLibrary: false,
+    licenseType: '',
+    licenseDetails: {},
+    courseLicenseType: 'all-rights-reserved',
+    courseLicenseDetails: {},
+    updateField: jest.fn().mockName('args.updateField'),
+  };
+
+  describe('snapshots', () => {
+    test('snapshots: renders as expected with default props', () => {
+      expect(
+        shallow(<LicenseWidget {...props} />),
+      ).toMatchSnapshot();
+    });
+    test('snapshots: renders as expected with isLibrary true', () => {
+      expect(
+        shallow(<LicenseWidget {...props} isLibrary licenseType="all-rights-reserved" />),
+      ).toMatchSnapshot();
+    });
+    test('snapshots: renders as expected with licenseType defined', () => {
+      expect(
+        shallow(<LicenseWidget {...props} licenseType="all-rights-reserved" />),
+      ).toMatchSnapshot();
+    });
+    // test('snapshots: renders as expected with showTranscriptByDefault true', () => {
+    //   expect(
+    //     shallow(<LicenseWidget {...props} showTranscriptByDefault transcripts={{ en: 'sOMeUrl' }} />),
+    //   ).toMatchSnapshot();
+    // });
+    // test('snapshot: renders ErrorAlert with upload error message', () => {
+    //   expect(
+    //     shallow(<LicenseWidget {...props} isUploadError transcripts={{ en: 'sOMeUrl' }} />),
+    //   ).toMatchSnapshot();
+    // });
+    // test('snapshot: renders ErrorAlert with delete error message', () => {
+    //   expect(
+    //     shallow(<LicenseWidget {...props} isDeleteError transcripts={{ en: 'sOMeUrl' }} />),
+    //   ).toMatchSnapshot();
+    // });
+  });
+  describe('mapStateToProps', () => {
+    const testState = { A: 'pple', B: 'anana', C: 'ucumber' };
+    test('isLibrary from app.isLibrary', () => {
+      expect(
+        mapStateToProps(testState).isLibrary,
+      ).toEqual(selectors.app.isLibrary(testState));
+    });
+    test('licenseType from video.licenseType', () => {
+      expect(
+        mapStateToProps(testState).licenseType,
+      ).toEqual(selectors.video.licenseType(testState));
+    });
+    test('licenseDetails from video.licenseDetails', () => {
+      expect(
+        mapStateToProps(testState).licenseDetails,
+      ).toEqual(selectors.video.licenseDetails(testState));
+    });
+    test('courseLicenseType from video.courseLicenseType', () => {
+      expect(
+        mapStateToProps(testState).courseLicenseType,
+      ).toEqual(selectors.video.courseLicenseType(testState));
+    });
+    test('courseLicenseDetails from video.courseLicenseDetails', () => {
+      expect(
+        mapStateToProps(testState).courseLicenseDetails,
+      ).toEqual(selectors.video.courseLicenseDetails(testState));
+    });
+  });
+  describe('mapDispatchToProps', () => {
+    const dispatch = jest.fn();
+    test('updateField from actions.video.updateField', () => {
+      expect(mapDispatchToProps.updateField).toEqual(dispatch(actions.video.updateField));
+    });
+  });
+});

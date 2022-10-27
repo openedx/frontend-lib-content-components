@@ -19,7 +19,6 @@ export const loadVideoData = () => (dispatch, getState) => {
   // we don't appear to want to parse license version
   const [licenseType, licenseOptions] = module.parseLicense(rawVideoData.license);
   const [courseLicenseType, courseLicenseDetails] = module.parseLicense(courseLicenseData.license);
-
   dispatch(actions.video.load({
     videoSource,
     videoType,
@@ -103,7 +102,7 @@ export const parseLicense = (license) => {
   if (!license) {
     // Default to All Rights Reserved if no license
     // is detected
-    return ['all-rights-reserved', {}];
+    return ['', {}];
   }
 
   // Search for a colon character denoting the end

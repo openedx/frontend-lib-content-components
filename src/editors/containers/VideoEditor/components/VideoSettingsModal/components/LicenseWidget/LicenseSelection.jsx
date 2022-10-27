@@ -10,12 +10,10 @@ import {
   Form,
   Icon,
   IconButtonWithTooltip,
-  OverlayTrigger,
-  Tooltip,
 } from '@edx/paragon';
 import { Delete } from '@edx/paragon/icons';
 
-import { actions } from '../../../../../../data/redux';
+import { actions, selectors } from '../../../../../../data/redux';
 import hooks from './hooks';
 import messages from './messages';
 import { LicenseLevel, LicenseNames, LicenseTypes } from '../../../../../../data/constants/licenses';
@@ -29,55 +27,59 @@ export const LicenseSelection = ({
   // injected
   intl,
   // redux
+  courseLicenseType,
   updateField,
 }) => {
   const { levelDescription } = hooks.determineText({ level });
   const onLicenseChange = hooks.onSelectLicense({ dispatch: useDispatch() });
-
+  const ref = React.useRef();
   return (
-    <div className="border-primary-100 border-bottom pb-4">
-      <Form.Group className="mt-2 mx-2">
-        <Form.Row className="mt-4.5">
-          <Form.Control
-            as="select"
-            defaultValue={license}
-            disabled={level !== LicenseLevel.block}
-            floatingLabel="License Type"
-            onChange={(e) => onLicenseChange(e.target.value)}
-          >
-            {Object.entries(LicenseNames).map(([key, text]) => {
-              if (license === key) { return (<option value={LicenseTypes[key]} selected>{text}</option>); }
-              return (<option value={LicenseTypes[key]}>{text}</option>);
-            })}
-          </Form.Control>
-          {level === LicenseLevel.block
-            ? (
-              <IconButtonWithTooltip
-                iconAs={Icon}
-                src={Delete}
-                onClick={() => updateField({ licenseType: null })}
-                tooltipPlacement="top"
-                tooltipContent={<FormattedMessage {...messages.deleteLicenseSelection} />}
-              />
-            ): null
-          }
-        </Form.Row>
-        <Form.Text>{levelDescription}</Form.Text>
-      </Form.Group>
-    </div>
+    <Form.Group className="mt-2 mx-2">
+      <Form.Row className="mt-4.5">
+        <Form.Control
+          as="select"
+          ref={ref}
+          defaultValue={license}
+          disabled={level !== LicenseLevel.block}
+          floatingLabel={intl.formatMessage(messages.licenseTypeLabel)}
+          onChange={(e) => onLicenseChange(e.target.value)}
+        >
+          {Object.entries(LicenseNames).map(([key, text]) => {
+            if (license === key) { return (<option value={LicenseTypes[key]} selected>{text}</option>); }
+            if (key === LicenseTypes.select) { return (<option hidden>{text}</option>); }
+            return (<option value={LicenseTypes[key]}>{text}</option>);
+          })}
+        </Form.Control>
+        {level === LicenseLevel.block ? (
+          <IconButtonWithTooltip
+            iconAs={Icon}
+            src={Delete}
+            onClick={() => {
+              ref.current.value = courseLicenseType;
+              updateField({ licenseType: '', licenseDetails: {} });
+            }}
+            tooltipPlacement="top"
+            tooltipContent={<FormattedMessage {...messages.deleteLicenseSelection} />}
+          />
+        ) : null }
+      </Form.Row>
+      <Form.Text>{levelDescription}</Form.Text>
+    </Form.Group>
   );
 };
 
 LicenseSelection.propTypes = {
   license: PropTypes.string.isRequired,
-  details: PropTypes.shape({}).isRequired,
+  level: PropTypes.string.isRequired,
   // injected
   intl: intlShape.isRequired,
   // redux
+  courseLicenseType: PropTypes.string.isRequired,
   updateField: PropTypes.func.isRequired,
 };
 
 export const mapStateToProps = (state) => ({
+  courseLicenseType: selectors.video.courseLicenseType(state),
 });
 
 export const mapDispatchToProps = (dispatch) => ({

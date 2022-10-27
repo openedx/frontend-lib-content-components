@@ -8,9 +8,7 @@ import {
 } from '@edx/frontend-platform/i18n';
 import {
   Button,
-  Card,
   Form,
-  Hyperlink,
   Stack,
 } from '@edx/paragon';
 import { Add } from '@edx/paragon/icons';
@@ -22,7 +20,7 @@ import CollapsibleFormWidget from '../CollapsibleFormWidget';
 import LicenseBlurb from './LicenseBlurb';
 import LicenseSelection from './LicenseSelection';
 import LicenseDetails from './LicenseDetails';
-import { LicenseTypes } from '../../../../../../data/constants/licenses';
+import LicenseDisplay from './LicenseDisplay';
 
 /**
  * Collapsible Form widget controlling videe license type and details
@@ -46,46 +44,42 @@ export const LicenseWidget = ({
     courseLicenseDetails,
   });
   const { licenseDescription, levelDescription } = hooks.determineText({ level });
-
   return (
     <CollapsibleFormWidget
-      subtitle={
+      subtitle={(
         <div>
           <LicenseBlurb license={license} details={details} />
           <Form.Text>{levelDescription}</Form.Text>
         </div>
-      }
+      )}
       title={intl.formatMessage(messages.title)}
     >
       <Stack gap={3}>
-        <LicenseSelection license={license} level={level} />
 
-        <LicenseDetails license={license} details={details} level={level} />
-
-        <Form.Group>
-          <Form.Label className="mt-3">
-            <FormattedMessage {...messages.displaySubsectionTitle}/>
-          </Form.Label>
-          <Card className="mb-3">
-            <Card.Header title={<LicenseBlurb license={license} details={details} />} />
-            <Card.Section>{licenseDescription}</Card.Section>
-          </Card>
-          <Hyperlink destination="https://creativecommons.org/about" target="_blank">
-            <FormattedMessage {...messages.viewLicenseDetailsLabel}/>
-          </Hyperlink>
-        </Form.Group>
-
-        {!licenseType
-          ? <div className="border-primary-100 border-top pb-4">
-              <Button
-                iconBefore={Add}
-                variant="link"
-                onClick={() => updateField({ licenseType: LicenseTypes.allRightsReserved })}
-              >
-                <FormattedMessage {...messages.addLicenseButtonLabel}/>
-              </Button>
-            </div>
-          : null}
+        {license ? (
+          <>
+            <LicenseSelection license={license} level={level} />
+            <LicenseDetails license={license} details={details} level={level} />
+            <LicenseDisplay
+              license={license}
+              details={details}
+              licenseDescription={licenseDescription}
+              level={level}
+            />
+          </>
+        ) : null }
+        {!licenseType ? (
+          <>
+            <div className="border-primary-100 border-bottom" />
+            <Button
+              iconBefore={Add}
+              variant="link"
+              onClick={() => updateField({ licenseType: 'select', licenseDetails: {} })}
+            >
+              <FormattedMessage {...messages.addLicenseButtonLabel} />
+            </Button>
+          </>
+        ) : null }
       </Stack>
     </CollapsibleFormWidget>
   );

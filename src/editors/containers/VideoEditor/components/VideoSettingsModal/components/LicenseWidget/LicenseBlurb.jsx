@@ -5,7 +5,14 @@ import {
   injectIntl,
 } from '@edx/frontend-platform/i18n';
 import { Form, Icon } from '@edx/paragon';
-import { Attribution, Copyright } from '@edx/paragon/icons';
+import {
+  Attribution,
+  Copyright,
+  Cc,
+  Nd,
+  Nc,
+  Sa,
+} from '@edx/paragon/icons';
 
 import messages from './messages';
 import { LicenseTypes } from '../../../../../../data/constants/licenses';
@@ -14,27 +21,30 @@ import { LicenseTypes } from '../../../../../../data/constants/licenses';
 export const LicenseBlurb = ({
   license,
   details,
-}) => {
-  return (
-    <div className="d-flex flex-row flex-row">
+}) => (
+  <div className="d-flex flex-row flex-row">
     {/* TODO: creative commons should have the rights reserved icon */}
-      {license === LicenseTypes.allRightsReserved
-        ? <Icon src={Copyright} />
-        : <Icon src={Copyright} />}
-      {details.attribution ? <Icon src={Attribution} /> : null}
-      {details.noncommercial ? <Icon src={Attribution} /> : null}
-      {details.noDerivatives ? <Icon src={Attribution} /> : null}
-      {details.shareAlike ? <Icon src={Attribution} /> : null}
-      {license === LicenseTypes.allRightsReserved
-        ? <Form.Text><FormattedMessage {...messages.allRightsReservedIconsLabel} /></Form.Text>
-        : <Form.Text><FormattedMessage {...messages.creativeCommonsIconsLabel} /></Form.Text>}
-    </div>
-  );
-};
+    {license === LicenseTypes.allRightsReserved
+      ? <Icon src={Copyright} />
+      : <Icon src={Cc} />}
+    {details.attribution ? <Icon src={Attribution} /> : null}
+    {details.noncommercial ? <Icon src={Nc} /> : null}
+    {details.noDerivatives ? <Icon src={Nd} /> : null}
+    {details.shareAlike ? <Icon src={Sa} /> : null}
+    {license === LicenseTypes.allRightsReserved
+      ? <Form.Text><FormattedMessage {...messages.allRightsReservedIconsLabel} /></Form.Text>
+      : <Form.Text><FormattedMessage {...messages.creativeCommonsIconsLabel} /></Form.Text>}
+  </div>
+);
 
 LicenseBlurb.propTypes = {
   license: PropTypes.string.isRequired,
-  details: PropTypes.shape({}).isRequired,
+  details: PropTypes.shape({
+    attribution: PropTypes.bool.isRequired,
+    noncommercial: PropTypes.bool.isRequired,
+    noDerivatives: PropTypes.bool.isRequired,
+    shareAlike: PropTypes.bool.isRequired,
+  }).isRequired,
 };
 
 export default injectIntl(LicenseBlurb);

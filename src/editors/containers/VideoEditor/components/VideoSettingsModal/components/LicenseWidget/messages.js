@@ -4,6 +4,11 @@ export const messages = {
     defaultMessage: 'License',
     description: 'Title for license widget',
   },
+  licenseTypeLabel: {
+    id: 'authoring.videoeditor.license.licenseType.label',
+    defaultMessage: 'License Type',
+    description: 'Label for license type selection field',
+  },
   detailsSubsectionTitle: {
     id: 'authoring.videoeditor.license.detailsSubsection.title',
     defaultMessage: 'License Details',
@@ -16,7 +21,7 @@ export const messages = {
   },
   addLicenseButtonLabel: {
     id: 'authoring.videoeditor.license.add.label',
-    defaultMessage: 'Add a license from this video',
+    defaultMessage: 'Add a license for this video',
     description: 'Label for add license button',
   },
   deleteLicenseSelection: {

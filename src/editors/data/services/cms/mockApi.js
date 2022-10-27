@@ -120,7 +120,13 @@ export const fetchAssets = ({ learningContextId, studioEndpointUrl }) => mockPro
     ],
   },
 });
-
+// eslint-disable-next-line
+export const fetchCourseDetails = ({ studioEndpointUrl, learningContextId }) => mockPromise({
+  data: {
+    // license: "creative-commons: ver=4.0 BY NC",
+    license: 'all-rights-reserved',
+  },
+});
 // eslint-disable-next-line
 export const allowThumbnailUpload = ({ studioEndpointUrl }) => mockPromise({
   data: true,
@@ -183,18 +189,5 @@ export const uploadAsset = ({
       id: 'asset-v1:edX+test101+2021_T1+type@asset+block@journey_escape.jpg',
     },
     msg: 'Upload completed',
-  },
-});
-
-export const allowThumbnailUpload = ({
-  learningContextId,
-  studioEndpointUrl,
-}) => mockPromise({
-});
-
-export const fetchCourseDetails = ({ studioEndpointUrl, learningContextId }) => mockPromise({
-  data: {
-    // license: "creative-commons: ver=4.0 BY NC",
-    license: "all-rights-reserved",
   },
 });
