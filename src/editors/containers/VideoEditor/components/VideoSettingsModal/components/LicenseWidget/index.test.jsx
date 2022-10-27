@@ -59,21 +59,6 @@ describe('LicenseWidget', () => {
         shallow(<LicenseWidget {...props} licenseType="all-rights-reserved" />),
       ).toMatchSnapshot();
     });
-    // test('snapshots: renders as expected with showTranscriptByDefault true', () => {
-    //   expect(
-    //     shallow(<LicenseWidget {...props} showTranscriptByDefault transcripts={{ en: 'sOMeUrl' }} />),
-    //   ).toMatchSnapshot();
-    // });
-    // test('snapshot: renders ErrorAlert with upload error message', () => {
-    //   expect(
-    //     shallow(<LicenseWidget {...props} isUploadError transcripts={{ en: 'sOMeUrl' }} />),
-    //   ).toMatchSnapshot();
-    // });
-    // test('snapshot: renders ErrorAlert with delete error message', () => {
-    //   expect(
-    //     shallow(<LicenseWidget {...props} isDeleteError transcripts={{ en: 'sOMeUrl' }} />),
-    //   ).toMatchSnapshot();
-    // });
   });
   describe('mapStateToProps', () => {
     const testState = { A: 'pple', B: 'anana', C: 'ucumber' };
