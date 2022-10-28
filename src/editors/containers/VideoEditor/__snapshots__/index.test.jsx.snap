@@ -16,3 +16,20 @@ exports[`VideoEditor snapshots renders as expected with default behavior 1`] = `
   </EditorContainer>
 </Component>
 `;
+
+exports[`VideoEditor snapshots renders as expected with default behavior 2`] = `
+<Component
+  value="hooks.errorsHook.error"
+>
+  <EditorContainer
+    onClose={[MockFunction props.onClose]}
+    validateEntry={[MockFunction validateEntry]}
+  >
+    <div
+      className="video-editor"
+    >
+      <VideoEditorModal />
+    </div>
+  </EditorContainer>
+</Component>
+`;

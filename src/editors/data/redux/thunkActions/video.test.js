@@ -74,6 +74,7 @@ describe('video thunkActions', () => {
         blockValue: { data: { metadata: { ...testMetadata } } },
         studioEndpointUrl: 'soMEeNDPoiNT',
         courseDetails: { data: { license: null } },
+        studioView: { data: { html: 'sOMeHTml' } },
       },
       video: testState,
     }));
@@ -236,22 +237,29 @@ describe('video thunkActions', () => {
     });
   });
   describe('parseLicense', () => {
-    let license;
+    const emptyLicenseData = null;
+    const noLicense = 'sOMeHTml data-metadata &#34;sOMeHTml&#34;';
     it('returns all-rights-reserved when there is no license', () => {
-      expect(thunkActions.parseLicense(license)).toEqual([
+      expect(thunkActions.parseLicense(emptyLicenseData)).toEqual([
         '',
         {},
       ]);
     });
     it('returns expected values for a license with no options', () => {
-      license = 'sOmeLIcense';
+      expect(thunkActions.parseLicense(noLicense)).toEqual([
+        '',
+        {},
+      ]);
+    });
+    it('returns expected values for a license with all rights reserved', () => {
+      const license = 'sOMeHTml data-metadata &#34;license&#34; &#34;value&#34;= "all-rights-reserved", &#34;type&#34;';
       expect(thunkActions.parseLicense(license)).toEqual([
-        license,
+        'all-rights-reserved',
         {},
       ]);
     });
     it('returns expected type and options for creative commons', () => {
-      license = 'creative-commons: ver=4.0 BY NC ND';
+      const license = 'sOMeHTml data-metadata &#34;license&#34; &#34;value&#34;= "creative-commons: ver=4.0 BY NC ND", &#34;type&#34;';
       expect(thunkActions.parseLicense(license)).toEqual([
         'creative-commons',
         {
