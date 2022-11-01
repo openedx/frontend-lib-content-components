@@ -18,7 +18,7 @@ export const apiMethods = {
     urls.courseAssets({ studioEndpointUrl, learningContextId }),
   ),
   fetchCourseDetails: ({ studioEndpointUrl, learningContextId }) => get(
-    urls.courseDetailsUrl({ studioEndpointUrl, courseKey: learningContextId }),
+    urls.courseDetailsUrl({ studioEndpointUrl, learningContextId }),
   ),
   uploadAsset: ({
     learningContextId,

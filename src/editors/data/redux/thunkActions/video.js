@@ -17,9 +17,11 @@ export const loadVideoData = () => (dispatch, getState) => {
     youtubeId: rawVideoData.youtube_id_1_0,
     html5Sources: rawVideoData.html5_sources,
   });
-  // we don't appear to want to parse license version
-  const [licenseType, licenseOptions] = module.parseLicense(licenseData);
-  const [courseLicenseType, courseLicenseDetails] = module.parseLicense(courseLicenseData.license);
+  const [licenseType, licenseOptions] = module.parseLicense({ licenseData, level: 'block' });
+  const [courseLicenseType, courseLicenseDetails] = module.parseLicense({
+    licenseData: courseLicenseData.license,
+    level: 'course',
+  });
   dispatch(actions.video.load({
     videoSource,
     videoType,
@@ -98,35 +100,33 @@ export const determineVideoSource = ({
 };
 
 // partially copied from frontend-app-learning/src/courseware/course/course-license/CourseLicense.jsx
-// in the long run, should be shared (perhaps one day the learning MFE will depend on this repo)
-export const parseLicense = (licenseData) => {
+export const parseLicense = ({ licenseData, level }) => {
   if (!licenseData) {
-    return ['', {}];
+    return [null, {}];
   }
-  let license;
-  const metadataArr = licenseData.split('data-metadata');
-  metadataArr.forEach(arr => {
-    console.log(arr);
-    const parsedStr = arr.replace(/&#34;/g, '"');
-    if (parsedStr.includes('license')) {
-      license = parsedStr.substring(parsedStr.indexOf('"value"'), parsedStr.indexOf('", "type"'));
-    }
-  });
-  if (!license) {
-    return ['', {}];
+  let license = licenseData;
+  if (level === 'block') {
+    const metadataArr = licenseData.split('data-metadata');
+    metadataArr.forEach(arr => {
+      const parsedStr = arr.replace(/&#34;/g, '"');
+      if (parsedStr.includes('license')) {
+        license = parsedStr.substring(parsedStr.indexOf('"value"'), parsedStr.indexOf(', "type"')).replace(/"value": |"/g, '');
+      }
+    });
+  }
+  if (!license || license.includes('null')) {
+    return [null, {}];
+  }
+  if (license === 'all-rights-reserved') {
+    // no options, so the entire thing is the license type
+    return [license, {}];
   }
   // Search for a colon character denoting the end
   // of the license type and start of the options
   const colonIndex = license.lastIndexOf(':');
-  if (license.includes('all-rights-reserved')) {
-    // no options, so the entire thing is the license type
-    return ['all-rights-reserved', {}];
-  }
-
   // Split the license on the colon
-  const licenseType = license.slice(10, colonIndex).trim();
+  const licenseType = license.slice(0, colonIndex).trim();
   const optionStr = license.slice(colonIndex + 1).trim();
-
   let options = {};
   let version = '';
 

@@ -18,12 +18,12 @@ import hooks from './hooks';
 import messages from './messages';
 import CollapsibleFormWidget from '../CollapsibleFormWidget';
 import LicenseBlurb from './LicenseBlurb';
-import LicenseSelection from './LicenseSelection';
+import LicenseSelector from './LicenseSelector';
 import LicenseDetails from './LicenseDetails';
 import LicenseDisplay from './LicenseDisplay';
 
 /**
- * Collapsible Form widget controlling videe license type and details
+ * Collapsible Form widget controlling video license type and details
  */
 export const LicenseWidget = ({
   // injected
@@ -58,7 +58,7 @@ export const LicenseWidget = ({
 
         {license ? (
           <>
-            <LicenseSelection license={license} level={level} />
+            <LicenseSelector license={license} level={level} />
             <LicenseDetails license={license} details={details} level={level} />
             <LicenseDisplay
               license={license}

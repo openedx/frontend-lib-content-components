@@ -17,13 +17,11 @@ import {
 import messages from './messages';
 import { LicenseTypes } from '../../../../../../data/constants/licenses';
 
-// TODO: currently using attribution and copyright for placeholder icons. check https://2u-internal.atlassian.net/browse/PAR-815
 export const LicenseBlurb = ({
   license,
   details,
 }) => (
   <div className="d-flex flex-row flex-row">
-    {/* TODO: creative commons should have the rights reserved icon */}
     {license === LicenseTypes.allRightsReserved
       ? <Icon src={Copyright} />
       : <Icon src={Cc} />}

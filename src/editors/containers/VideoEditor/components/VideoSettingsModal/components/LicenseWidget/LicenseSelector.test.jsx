@@ -3,12 +3,25 @@ import { shallow } from 'enzyme';
 
 import { formatMessage } from '../../../../../../../testUtils';
 import { actions, selectors } from '../../../../../../data/redux';
-import { LicenseSelection, mapStateToProps, mapDispatchToProps } from './LicenseSelection';
+import { LicenseSelector, mapStateToProps, mapDispatchToProps } from './LicenseSelector';
 
-jest.mock('react', () => ({
-  ...jest.requireActual('react'),
-  useContext: jest.fn(() => ({ license: ['error.license', jest.fn().mockName('error.setLicense')] })),
-}));
+jest.mock('react', () => {
+  const updateState = jest.fn();
+  return {
+    ...jest.requireActual('react'),
+    updateState,
+    useContext: jest.fn(() => ({ license: ['error.license', jest.fn().mockName('error.setLicense')] })),
+  };
+});
+
+jest.mock('react-redux', () => {
+  const dispatchFn = jest.fn();
+  return {
+    ...jest.requireActual('react-redux'),
+    dispatch: dispatchFn,
+    useDispatch: jest.fn(() => dispatchFn),
+  };
+});
 
 jest.mock('../../../../../../data/redux', () => ({
   actions: {
@@ -23,7 +36,7 @@ jest.mock('../../../../../../data/redux', () => ({
   },
 }));
 
-describe('LicenseSelection', () => {
+describe('LicenseSelector', () => {
   const props = {
     intl: { formatMessage },
     license: 'all-rights-reserved',
@@ -31,21 +44,25 @@ describe('LicenseSelection', () => {
     courseLicenseType: 'all-rights-reserved',
     updateField: jest.fn().mockName('args.updateField'),
   };
-
   describe('snapshots', () => {
     test('snapshots: renders as expected with default props', () => {
       expect(
-        shallow(<LicenseSelection {...props} />),
+        shallow(<LicenseSelector {...props} />),
+      ).toMatchSnapshot();
+    });
+    test('snapshots: renders as expected with library level', () => {
+      expect(
+        shallow(<LicenseSelector {...props} level="library" />),
       ).toMatchSnapshot();
     });
     test('snapshots: renders as expected with block level', () => {
       expect(
-        shallow(<LicenseSelection {...props} level="block" />),
+        shallow(<LicenseSelector {...props} level="block" />),
       ).toMatchSnapshot();
     });
     test('snapshots: renders as expected with no license', () => {
       expect(
-        shallow(<LicenseSelection {...props} license="" />),
+        shallow(<LicenseSelector {...props} license="" />),
       ).toMatchSnapshot();
     });
   });
