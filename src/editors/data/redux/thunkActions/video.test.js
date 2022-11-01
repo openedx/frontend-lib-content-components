@@ -238,29 +238,41 @@ describe('video thunkActions', () => {
   });
   describe('parseLicense', () => {
     const emptyLicenseData = null;
-    const noLicense = 'sOMeHTml data-metadata &#34;sOMeHTml&#34;';
-    it('returns all-rights-reserved when there is no license', () => {
-      expect(thunkActions.parseLicense(emptyLicenseData)).toEqual([
-        '',
+    const noLicense = 'sOMeHTml data-metadata &#34;license&#34; &#34;value&#34;= null, &#34;type&#34;';
+    it('returns expected values for a license with no course license', () => {
+      expect(thunkActions.parseLicense({
+        licenseData: emptyLicenseData,
+        level: 'sOMElevEL',
+      })).toEqual([
+        null,
         {},
       ]);
     });
-    it('returns expected values for a license with no options', () => {
-      expect(thunkActions.parseLicense(noLicense)).toEqual([
-        '',
+    it('returns expected values for a license with no block license', () => {
+      expect(thunkActions.parseLicense({
+        licenseData: noLicense,
+        level: 'block',
+      })).toEqual([
+        null,
         {},
       ]);
     });
     it('returns expected values for a license with all rights reserved', () => {
-      const license = 'sOMeHTml data-metadata &#34;license&#34; &#34;value&#34;= "all-rights-reserved", &#34;type&#34;';
-      expect(thunkActions.parseLicense(license)).toEqual([
+      const license = 'sOMeHTml data-metadata &#34;license&#34; &#34;value&#34;: &#34;all-rights-reserved&#34;, &#34;type&#34;';
+      expect(thunkActions.parseLicense({
+        licenseData: license,
+        level: 'block',
+      })).toEqual([
         'all-rights-reserved',
         {},
       ]);
     });
     it('returns expected type and options for creative commons', () => {
-      const license = 'sOMeHTml data-metadata &#34;license&#34; &#34;value&#34;= "creative-commons: ver=4.0 BY NC ND", &#34;type&#34;';
-      expect(thunkActions.parseLicense(license)).toEqual([
+      const license = 'sOMeHTml data-metadata &#34;license&#34; &#34;value&#34;: &#34;creative-commons: ver=4.0 BY NC ND&#34;, &#34;type&#34;';
+      expect(thunkActions.parseLicense({
+        licenseData: license,
+        level: 'block',
+      })).toEqual([
         'creative-commons',
         {
           by: true,

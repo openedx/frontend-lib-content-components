@@ -21,7 +21,7 @@ import { LicenseLevel, LicenseNames, LicenseTypes } from '../../../../../../data
 /**
  * Collapsible Form widget controlling videe license type and details
  */
-export const LicenseSelection = ({
+export const LicenseSelector = ({
   license,
   level,
   // injected
@@ -68,7 +68,7 @@ export const LicenseSelection = ({
   );
 };
 
-LicenseSelection.propTypes = {
+LicenseSelector.propTypes = {
   license: PropTypes.string.isRequired,
   level: PropTypes.string.isRequired,
   // injected
@@ -86,4 +86,4 @@ export const mapDispatchToProps = (dispatch) => ({
   updateField: (stateUpdate) => dispatch(actions.video.updateField(stateUpdate)),
 });
 
-export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(LicenseSelection));
+export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(LicenseSelector));

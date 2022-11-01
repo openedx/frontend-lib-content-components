@@ -4,7 +4,7 @@ exports[`LicenseDisplay snapshots snapshots: renders as expected with default pr
 
 exports[`LicenseDisplay snapshots snapshots: renders as expected with level set to block 1`] = `
 <div
-  className="border-primary-100 border-top pb-4"
+  className="border-primary-100 border-top pb-3"
 >
   <Form.Group>
     <Form.Label
@@ -29,7 +29,7 @@ exports[`LicenseDisplay snapshots snapshots: renders as expected with level set 
 
 exports[`LicenseDisplay snapshots snapshots: renders as expected with level set to block and license set to Creative Commons 1`] = `
 <div
-  className="border-primary-100 border-top pb-4"
+  className="border-primary-100 border-top pb-3"
 >
   <Form.Group>
     <Form.Label
@@ -173,5 +173,7 @@ exports[`LicenseDisplay snapshots snapshots: renders as expected with level set 
   </Form.Group>
 </div>
 `;
+
+exports[`LicenseDisplay snapshots snapshots: renders as expected with level set to block and license set to select 1`] = `""`;
 
 exports[`LicenseDisplay snapshots snapshots: renders as expected with level set to library 1`] = `""`;

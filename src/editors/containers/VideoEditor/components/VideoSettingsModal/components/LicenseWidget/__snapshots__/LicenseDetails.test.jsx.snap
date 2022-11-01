@@ -2,34 +2,9 @@
 
 exports[`LicenseDetails snapshots snapshots: renders as expected with default props 1`] = `""`;
 
-exports[`LicenseDetails snapshots snapshots: renders as expected with level set to block 1`] = `
-<div
-  className="border-primary-100 border-top pb-4"
->
-  <Form.Group>
-    <Form.Label
-      className="mt-3"
-    >
-      <FormattedMessage
-        defaultMessage="License Details"
-        description="Title for license detatils subsection"
-        id="authoring.videoeditor.license.detailsSubsection.title"
-      />
-    </Form.Label>
-    <Form.Text>
-      <FormattedMessage
-        defaultMessage="You reserve all rights for your work."
-        description="All Rights Reserved section message"
-        id="authoring.videoeditor.license.allRightsReservedSectionMessage"
-      />
-    </Form.Text>
-  </Form.Group>
-</div>
-`;
-
 exports[`LicenseDetails snapshots snapshots: renders as expected with level set to block and license set to Creative Commons 1`] = `
 <div
-  className="border-primary-100 border-top pb-4"
+  className="border-primary-100 border-top pb-3"
 >
   <Form.Group>
     <Form.Label
@@ -173,5 +148,32 @@ exports[`LicenseDetails snapshots snapshots: renders as expected with level set 
   </Form.Group>
 </div>
 `;
+
+exports[`LicenseDetails snapshots snapshots: renders as expected with level set to block and license set to all rights reserved 1`] = `
+<div
+  className="border-primary-100 border-top pb-3"
+>
+  <Form.Group>
+    <Form.Label
+      className="mt-3"
+    >
+      <FormattedMessage
+        defaultMessage="License Details"
+        description="Title for license detatils subsection"
+        id="authoring.videoeditor.license.detailsSubsection.title"
+      />
+    </Form.Label>
+    <Form.Text>
+      <FormattedMessage
+        defaultMessage="You reserve all rights for your work."
+        description="All Rights Reserved section message"
+        id="authoring.videoeditor.license.allRightsReservedSectionMessage"
+      />
+    </Form.Text>
+  </Form.Group>
+</div>
+`;
+
+exports[`LicenseDetails snapshots snapshots: renders as expected with level set to block and license set to select 1`] = `""`;
 
 exports[`LicenseDetails snapshots snapshots: renders as expected with level set to library 1`] = `""`;

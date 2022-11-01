@@ -12,8 +12,8 @@ describe('LicenseDisplay', () => {
   const props = {
     license: 'all-rights-reserved',
     details: {},
-    level: 'course',
     licenseDescription: 'FormattedMessage component with license description',
+    level: 'course',
   };
 
   describe('snapshots', () => {
@@ -30,6 +30,11 @@ describe('LicenseDisplay', () => {
     test('snapshots: renders as expected with level set to block', () => {
       expect(
         shallow(<LicenseDetails {...props} level="block" />),
+      ).toMatchSnapshot();
+    });
+    test('snapshots: renders as expected with level set to block and license set to select', () => {
+      expect(
+        shallow(<LicenseDetails {...props} level="block" license="select" />),
       ).toMatchSnapshot();
     });
     test('snapshots: renders as expected with level set to block and license set to Creative Commons', () => {

@@ -7,7 +7,7 @@ import {
 } from '@edx/frontend-platform/i18n';
 import {
   Card,
-  Form,
+  Stack,
   Hyperlink,
 } from '@edx/paragon';
 
@@ -26,22 +26,18 @@ export const LicenseDisplay = ({
   level,
 }) => (
   license !== LicenseTypes.select ? (
-    <div className="border-primary-100 border-top pb-4">
-      <Form.Group>
-        <Form.Label className="mt-3">
-          <FormattedMessage {...messages.displaySubsectionTitle} />
-        </Form.Label>
-        <Card className="mb-3">
-          <Card.Header title={<LicenseBlurb license={license} details={details} />} />
-          <Card.Section>{licenseDescription}</Card.Section>
-        </Card>
-        {level !== LicenseLevel.course ? (
-          <Hyperlink destination="https://creativecommons.org/about" target="_blank">
-            <FormattedMessage {...messages.viewLicenseDetailsLabel} />
-          </Hyperlink>
-        ) : null }
-      </Form.Group>
-    </div>
+    <Stack gap={3} className="border-primary-100 border-top">
+      <FormattedMessage {...messages.displaySubsectionTitle} />
+      <Card className="mb-3">
+        <Card.Header title={<LicenseBlurb license={license} details={details} />} />
+        <Card.Section>{licenseDescription}</Card.Section>
+      </Card>
+      {level !== LicenseLevel.course ? (
+        <Hyperlink destination="https://creativecommons.org/about" target="_blank">
+          <FormattedMessage {...messages.viewLicenseDetailsLabel} />
+        </Hyperlink>
+      ) : null }
+    </Stack>
   ) : null
 );
 

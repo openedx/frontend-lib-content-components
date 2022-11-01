@@ -39,7 +39,7 @@ export const fetchStudioView = ({ blockId, studioEndpointUrl }) => mockPromise({
   data: {
     // The following is sent for 'raw' editors.
     html: blockId.includes('mockRaw') ? 'data-editor="raw"' : '',
-    data: '<p>Test prompt content</p>',
+    data: '<p>Test prompt content</p> <div data-metadata="license, value="all-rights-reserved", type=" />',
     display_name: 'My Text Prompt',
     metadata: {
       display_name: 'Welcome!',

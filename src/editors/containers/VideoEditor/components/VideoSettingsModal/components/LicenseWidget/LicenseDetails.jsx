@@ -23,9 +23,8 @@ import { LicenseLevel, LicenseTypes } from '../../../../../../data/constants/lic
 
 import { messages } from './messages';
 /**
- * Collapsible Form widget controlling videe license type and details
+ * Collapsible Form widget controlling video license type and details
  */
-// TODO change placeholder icons for NC, ND, SA
 export const LicenseDetails = ({
   license,
   details,
@@ -34,7 +33,7 @@ export const LicenseDetails = ({
   updateField,
 }) => (
   level === LicenseLevel.block && details && license !== 'select' ? (
-    <div className="border-primary-100 border-top pb-4">
+    <div className="border-primary-100 border-top pb-3">
       <Form.Group>
         <Form.Label className="mt-3">
           <FormattedMessage {...messages.detailsSubsectionTitle} />

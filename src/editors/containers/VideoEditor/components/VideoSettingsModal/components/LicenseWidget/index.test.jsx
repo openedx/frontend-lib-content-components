@@ -5,10 +5,14 @@ import { formatMessage } from '../../../../../../../testUtils';
 import { actions, selectors } from '../../../../../../data/redux';
 import { LicenseWidget, mapStateToProps, mapDispatchToProps } from '.';
 
-jest.mock('react', () => ({
-  ...jest.requireActual('react'),
-  useContext: jest.fn(() => ({ license: ['error.license', jest.fn().mockName('error.setLicense')] })),
-}));
+jest.mock('react', () => {
+  const updateState = jest.fn();
+  return {
+    ...jest.requireActual('react'),
+    updateState,
+    useContext: jest.fn(() => ({ license: ['error.license', jest.fn().mockName('error.setLicense')] })),
+  };
+});
 
 jest.mock('../../../../../../data/redux', () => ({
   actions: {
@@ -36,7 +40,7 @@ describe('LicenseWidget', () => {
     title: 'tiTLE',
     intl: { formatMessage },
     isLibrary: false,
-    licenseType: '',
+    licenseType: null,
     licenseDetails: {},
     courseLicenseType: 'all-rights-reserved',
     courseLicenseDetails: {},
@@ -44,6 +48,16 @@ describe('LicenseWidget', () => {
   };
 
   describe('snapshots', () => {
+    // determineLicense.mockReturnValue({
+    //   license: false,
+    //   details: jest.fn().mockName('modal.openModal'),
+    //   level: 'course',
+    // });
+    // determineText.mockReturnValue({
+    //   isSourceCodeOpen: false,
+    //   openSourceCodeModal: jest.fn().mockName('modal.openModal'),
+    //   closeSourceCodeModal: jest.fn().mockName('modal.closeModal'),
+    // });
     test('snapshots: renders as expected with default props', () => {
       expect(
         shallow(<LicenseWidget {...props} />),

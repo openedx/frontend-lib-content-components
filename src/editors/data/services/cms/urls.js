@@ -51,6 +51,6 @@ export const downloadVideoHandoutUrl = ({ studioEndpointUrl, handout }) => (
   `${studioEndpointUrl}${handout}`
 );
 
-export const courseDetailsUrl = ({ studioEndpointUrl, courseKey }) => (
-  `${studioEndpointUrl}/settings/details/${courseKey}`
+export const courseDetailsUrl = ({ studioEndpointUrl, learningContextId }) => (
+  `${studioEndpointUrl}/settings/details/${learningContextId}`
 );

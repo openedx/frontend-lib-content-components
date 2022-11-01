@@ -4,10 +4,14 @@ import { shallow } from 'enzyme';
 import { actions } from '../../../../../../data/redux';
 import { LicenseDetails, mapStateToProps, mapDispatchToProps } from './LicenseDetails';
 
-jest.mock('react', () => ({
-  ...jest.requireActual('react'),
-  useContext: jest.fn(() => ({ license: ['error.license', jest.fn().mockName('error.setLicense')] })),
-}));
+jest.mock('react', () => {
+  const updateState = jest.fn();
+  return {
+    ...jest.requireActual('react'),
+    updateState,
+    useContext: jest.fn(() => ({ license: ['error.license', jest.fn().mockName('error.setLicense')] })),
+  };
+});
 
 jest.mock('../../../../../../data/redux', () => ({
   actions: {
@@ -19,7 +23,7 @@ jest.mock('../../../../../../data/redux', () => ({
 
 describe('LicenseDetails', () => {
   const props = {
-    license: 'all-rights-reserved',
+    license: null,
     details: {},
     level: 'course',
     updateField: jest.fn().mockName('args.updateField'),
@@ -36,9 +40,14 @@ describe('LicenseDetails', () => {
         shallow(<LicenseDetails {...props} level="library" />),
       ).toMatchSnapshot();
     });
-    test('snapshots: renders as expected with level set to block', () => {
+    test('snapshots: renders as expected with level set to block and license set to select', () => {
       expect(
-        shallow(<LicenseDetails {...props} level="block" />),
+        shallow(<LicenseDetails {...props} level="block" license="select" />),
+      ).toMatchSnapshot();
+    });
+    test('snapshots: renders as expected with level set to block and license set to all rights reserved', () => {
+      expect(
+        shallow(<LicenseDetails {...props} level="block" license="all-rights-reserved" />),
       ).toMatchSnapshot();
     });
     test('snapshots: renders as expected with level set to block and license set to Creative Commons', () => {
