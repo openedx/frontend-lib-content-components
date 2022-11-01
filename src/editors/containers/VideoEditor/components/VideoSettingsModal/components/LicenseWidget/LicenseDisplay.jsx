@@ -15,31 +15,31 @@ import { LicenseLevel, LicenseTypes } from '../../../../../../data/constants/lic
 
 import LicenseBlurb from './LicenseBlurb';
 import { messages } from './messages';
-/**
- * Collapsible Form widget controlling videe license type and details
- */
-// TODO change placeholder icons for NC, ND, SA
+
 export const LicenseDisplay = ({
   license,
   details,
   licenseDescription,
   level,
-}) => (
-  license !== LicenseTypes.select ? (
-    <Stack gap={3} className="border-primary-100 border-top">
-      <FormattedMessage {...messages.displaySubsectionTitle} />
-      <Card className="mb-3">
-        <Card.Header title={<LicenseBlurb license={license} details={details} />} />
-        <Card.Section>{licenseDescription}</Card.Section>
-      </Card>
-      {level !== LicenseLevel.course ? (
-        <Hyperlink destination="https://creativecommons.org/about" target="_blank">
-          <FormattedMessage {...messages.viewLicenseDetailsLabel} />
-        </Hyperlink>
-      ) : null }
-    </Stack>
-  ) : null
-);
+}) => {
+  if (license !== LicenseTypes.select) {
+    return (
+      <Stack gap={3} className="border-primary-100 border-top">
+        <FormattedMessage {...messages.displaySubsectionTitle} />
+        <Card className="mb-3">
+          <Card.Header title={<LicenseBlurb license={license} details={details} />} />
+          <Card.Section>{licenseDescription}</Card.Section>
+        </Card>
+        {level !== LicenseLevel.course ? (
+          <Hyperlink destination="https://creativecommons.org/about" target="_blank">
+            <FormattedMessage {...messages.viewLicenseDetailsLabel} />
+          </Hyperlink>
+        ) : null }
+      </Stack>
+    );
+  }
+  return null;
+};
 
 LicenseDisplay.propTypes = {
   license: PropTypes.string.isRequired,

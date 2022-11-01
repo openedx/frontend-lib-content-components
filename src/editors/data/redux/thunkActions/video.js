@@ -127,7 +127,7 @@ export const parseLicense = ({ licenseData, level }) => {
   // Split the license on the colon
   const licenseType = license.slice(0, colonIndex).trim();
   const optionStr = license.slice(colonIndex + 1).trim();
-  let options = {};
+  const options = {};
   let version = '';
 
   // Set the defaultVersion to 4.0
@@ -153,19 +153,6 @@ export const parseLicense = ({ licenseData, level }) => {
       options[key.toLowerCase()] = value;
     }
   });
-
-  // No options
-  if (Object.keys(options).length === 0) {
-    // If no other options are set for the
-    // license, set version to 1.0
-    version = '1.0';
-
-    // Set the `zero` option so the link
-    // works correctly
-    options = {
-      zero: true,
-    };
-  }
 
   // Set the version to whatever was included,
   // using `defaultVersion` as a fallback if unset

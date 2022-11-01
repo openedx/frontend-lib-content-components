@@ -18,9 +18,6 @@ import hooks from './hooks';
 import messages from './messages';
 import { LicenseLevel, LicenseNames, LicenseTypes } from '../../../../../../data/constants/licenses';
 
-/**
- * Collapsible Form widget controlling videe license type and details
- */
 export const LicenseSelector = ({
   license,
   level,

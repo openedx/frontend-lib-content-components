@@ -20,11 +20,8 @@ import {
 
 import { actions } from '../../../../../../data/redux';
 import { LicenseLevel, LicenseTypes } from '../../../../../../data/constants/licenses';
-
 import { messages } from './messages';
-/**
- * Collapsible Form widget controlling video license type and details
- */
+
 export const LicenseDetails = ({
   license,
   details,
