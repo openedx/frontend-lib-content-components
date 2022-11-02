@@ -22,16 +22,18 @@ export const LicenseBlurb = ({
   details,
 }) => (
   <div className="d-flex flex-row flex-row">
-    {license === LicenseTypes.allRightsReserved
-      ? <Icon src={Copyright} />
-      : <Icon src={Cc} />}
+    {license === LicenseTypes.allRightsReserved ? <Icon src={Copyright} /> : null}
+    {license === LicenseTypes.creativeCommons ? <Icon src={Cc} /> : null}
     {details.attribution ? <Icon src={Attribution} /> : null}
     {details.noncommercial ? <Icon src={Nc} /> : null}
     {details.noDerivatives ? <Icon src={Nd} /> : null}
     {details.shareAlike ? <Icon src={Sa} /> : null}
     {license === LicenseTypes.allRightsReserved
       ? <Form.Text><FormattedMessage {...messages.allRightsReservedIconsLabel} /></Form.Text>
-      : <Form.Text><FormattedMessage {...messages.creativeCommonsIconsLabel} /></Form.Text>}
+      : null}
+    {license === LicenseTypes.creativeCommons
+      ? <Form.Text><FormattedMessage {...messages.creativeCommonsIconsLabel} /></Form.Text>
+      : null}
   </div>
 );
 
