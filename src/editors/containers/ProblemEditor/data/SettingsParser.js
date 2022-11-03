@@ -1,6 +1,6 @@
 import _ from 'lodash-es';
 
-import { ShowAnswerTypes, RandomizationType } from "../../../data/constants/problem";
+import { ShowAnswerTypes } from "../../../data/constants/problem";
 
 export const popuplateItem = (parentObject, itemName, statekey, metadata) => {
     let item = _.get(metadata, itemName, null);
@@ -53,11 +53,6 @@ export const parseSettings = (metadata) => {
     let scoring = parseScoringSettings(metadata);
     if (!_.isEmpty(scoring)){
         settings = { ...settings, scoring };
-    }
-
-    let randomization = get(metadata, 'rerandomize', null)
-    if (!isNil(randomization) && randomization in RandomizationType){
-        settings = { ...settings, randomization };
     }
 
     let showAnswer = parseShowAnswer(metadata);

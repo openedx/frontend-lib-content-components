@@ -142,15 +142,6 @@ describe('Problem settings hooks', () => {
         });
     });
 
-    describe('Randomization card hooks', () => {
-        test('test handleChange', () => {
-            const value = "never";
-            output = hooks.randomizationCardHooks(dispatch);
-            output.handleChange({ target: { value } });
-            expect(dispatch).toHaveBeenCalledWith(actions.problem.updateSettings({ randomization: value }));
-        });
-    });
-
     describe('Reset card hooks', () => {
         beforeEach(() => {
             output = hooks.resetCardHooks(updateSettings);
