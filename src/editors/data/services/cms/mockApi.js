@@ -132,9 +132,7 @@ export const normalizeContent = ({
       couseKey: learningContextId,
       has_changes: true,
       id: blockId,
-      // TODO: fix merge issue
-      // metadata: { display_name: title, markdown: content.markdown },
-      metadata: { display_name: title,  ...content },
+      metadata: { display_name: title,  ...content.settings },
     };
   } else {
     throw new TypeError(`No Block in V2 Editors named /"${blockType}/", Cannot Save Content.`);
