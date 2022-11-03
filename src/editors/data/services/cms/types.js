@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { ProblemTypes, RandomizationType, ShowAnswerTypes } from '../../constants/problem';
+import { ProblemTypes, ShowAnswerTypes } from '../../constants/problem';
 
 export const videoDataProps = {
   videoSource: PropTypes.string,
@@ -52,7 +52,6 @@ export const problemDataProps = {
       }),
     }),
     hints: PropTypes.arrayOf(PropTypes.string),
-    randomization: PropTypes.instanceOf(RandomizationType),
     timeBetween: PropTypes.number,
     matLabApiKey: PropTypes.string,
     showAnswer: PropTypes.shape({

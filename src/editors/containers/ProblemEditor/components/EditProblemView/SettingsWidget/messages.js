@@ -69,16 +69,6 @@ export const messages = {
         defaultMessage: 'None',
         description: 'Matlab no key summary',
     },
-    randomizationSettingTitle: {
-        id: 'authoring.problemeditor.settings.randomization.title',
-        defaultMessage: 'Randomization',
-        description: 'Randomization settings card title',
-    },
-    randomizationSettingText: {
-        id: 'authoring.problemeditor.settings.randomization.text',
-        defaultMessage: 'Defines when to randomize the variables specified in the associated Python script. For problems that do not randomize values, specify "Never".',
-        description: 'Randomization settings card text',
-    },
     resetSettingsTitle: {
         id: 'authoring.problemeditor.settings.reset.title',
         defaultMessage: 'Show reset option',

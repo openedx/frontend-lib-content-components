@@ -2,7 +2,7 @@ import _ from 'lodash-es';
 import { createSlice } from '@reduxjs/toolkit';
 import { indexToLetterMap } from '../../../containers/ProblemEditor/data/OLXParser';
 import { StrictDict } from '../../../utils';
-import { RandomizationTypeKeys, ProblemTypeKeys, ShowAnswerTypesKeys } from '../../constants/problem';
+import { ProblemTypeKeys, ShowAnswerTypesKeys } from '../../constants/problem';
 
 const nextAlphaId = (lastId) => String.fromCharCode(lastId.charCodeAt(0) + 1);
 const initialState = {
@@ -21,7 +21,6 @@ const initialState = {
       },
     },
     hints: [],
-    randomization: RandomizationTypeKeys.NEVER,
     timeBetween: 0,
     matLabApiKey: '',
     showAnswer: {

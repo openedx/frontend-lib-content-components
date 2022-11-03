@@ -101,12 +101,6 @@ export const matlabCardHooks = (matLabApiKey, updateSettings) => {
     }
 }
 
-export const randomizationCardHooks = (dispatch) => ({
-    handleChange: (event) => {
-        dispatch(actions.problem.updateSettings({ randomization: event.target.value }));
-    }
-})
-
 export const resetCardHooks = (updateSettings) => {
 
     const setReset = (value) => {

@@ -8,7 +8,6 @@ import ShowAnswerCard from './settingsComponents/ShowAnswerCard';
 import HintsCard from './settingsComponents/HintsCard';
 import ResetCard from './settingsComponents/ResetCard';
 import MatlabCard from './settingsComponents/MatlabCard';
-import RandomizationCard from './settingsComponents/RandomizationCard';
 import TimerCard from './settingsComponents/TimerCard';
 import { Button, Col, Collapsible, Container, Row } from '@edx/paragon';
 import TypeCard from './settingsComponents/TypeCard';
@@ -62,9 +61,6 @@ export const SettingsWidget = ({
 
               <Collapsible.Advanced open={isAdvancedCardsVisible} >
                 <Collapsible.Body className="collapsible-body">
-                  <Row className='my-2'>
-                    <RandomizationCard randomization={settings.randomization} />
-                  </Row>
                   <Row className='my-2'>
                     <ShowAnswerCard showAnswer={settings.showAnswer} updateSettings={updateSettings} />
                   </Row>

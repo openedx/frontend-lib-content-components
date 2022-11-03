@@ -106,29 +106,3 @@ export const ShowAnswerTypes = StrictDict({
     defaultMessage: 'Attempted',
   },
 });
-
-export const RandomizationTypeKeys = StrictDict({
-  ALWAYS: 'always',
-  ONRESET: 'onreset',
-  NEVER: 'never',
-  PER_STUDENT: 'per_student',
-});
-
-export const RandomizationType = StrictDict({
-  [RandomizationTypeKeys.ALWAYS]: {
-    id: 'authoring.problemeditor.settings.randomizationtype.always',
-    defaultMessage: 'Always',
-  },
-  [RandomizationTypeKeys.ONRESET]: {
-    id: 'authoring.problemeditor.settings.randomizationtype.onreset',
-    defaultMessage: 'On Reset',
-  },
-  [RandomizationTypeKeys.NEVER]: {
-    id: 'authoring.problemeditor.settings.randomizationtype.never',
-    defaultMessage: 'Never',
-  },
-  [RandomizationTypeKeys.PER_STUDENT]: {
-    id: 'authoring.problemeditor.settings.randomizationtype.perstudent',
-    defaultMessage: 'Per Student',
-  },
-});  
