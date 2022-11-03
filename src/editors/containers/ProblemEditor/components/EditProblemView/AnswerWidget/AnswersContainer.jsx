@@ -8,7 +8,6 @@ import { FormattedMessage } from '@edx/frontend-platform/i18n';
 import messages from './messages';
 import { initializeAnswerContainer } from '../../../hooks';
 import { actions, selectors } from '../../../../../data/redux';
-import { ProblemTypeKeys } from '../../../../../data/constants/problem';
 import { answerOptionProps } from '../../../../../data/services/cms/types';
 import AnswerOption from './AnswerOption';
 
@@ -42,7 +41,7 @@ export const AnswersContainer = ({
 };
 
 AnswersContainer.propTypes = {
-  problemType: ProblemTypeKeys.isRequired,
+  problemType: PropTypes.string.isRequired,
   answers: PropTypes.arrayOf(answerOptionProps).isRequired,
 };
 

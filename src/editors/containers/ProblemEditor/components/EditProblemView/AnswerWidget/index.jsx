@@ -1,8 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { FormattedMessage } from '@edx/frontend-platform/i18n';
 
 import messages from './messages';
-import { ProblemTypeKeys, ProblemTypes } from '../../../../../data/constants/problem';
+import { ProblemTypes } from '../../../../../data/constants/problem';
 import AnswersContainer from './AnswersContainer';
 
 // This widget should be connected, grab all answers from store, update them as needed.
@@ -27,6 +28,6 @@ const AnswerWidget = ({
 };
 
 AnswerWidget.propTypes = {
-  problemType: ProblemTypeKeys.isRequired,
+  problemType: PropTypes.string.isRequired,
 };
 export default AnswerWidget;

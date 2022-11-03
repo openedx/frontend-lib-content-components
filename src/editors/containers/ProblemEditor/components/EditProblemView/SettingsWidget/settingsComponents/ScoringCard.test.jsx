@@ -2,7 +2,6 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { formatMessage } from '../../../../../../../testUtils';
 import { scoringCardHooks } from '../hooks';
-import { useDispatch } from 'react-redux';
 import { ScoringCard } from './ScoringCard';
 
 jest.mock('../hooks', () => ({
@@ -17,6 +16,8 @@ describe('ScoringCard', () => {
             unlimited: false,
             number: 5,
         },
+        updateSettings: jest.fn().mockName('args.updateSettings'),
+        intl: { formatMessage },
     };
     
     const props = {
@@ -34,8 +35,7 @@ describe('ScoringCard', () => {
     describe('behavior', () => {
         it(' calls scoringCardHooks when initialized', () => {
             shallow(<ScoringCard {...props} />);
-            const dispatch = useDispatch();
-            expect(scoringCardHooks).toHaveBeenCalledWith(scoring,dispatch);
+            expect(scoringCardHooks).toHaveBeenCalledWith(scoring, props.updateSettings);
         });
     });
 

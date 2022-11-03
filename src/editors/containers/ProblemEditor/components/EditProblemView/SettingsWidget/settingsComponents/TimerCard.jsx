@@ -1,5 +1,4 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
 import { injectIntl, FormattedMessage, intlShape } from '@edx/frontend-platform/i18n';
 import SettingsOption from '../SettingsOption';
 import { Form } from '@edx/paragon';
@@ -9,17 +8,18 @@ import { timerCardHooks } from '../hooks';
 
 export const TimerCard = ({
     timeBetween,
+    updateSettings,
+    //inject
     intl
 }) => {
-    const dispatch = useDispatch();
-    const {handleChange} = timerCardHooks(dispatch);
+    const { handleChange } = timerCardHooks(updateSettings);
 
     return (
         <SettingsOption
             title={intl.formatMessage(messages.timerSettingsTitle)}
             summary={intl.formatMessage(messages.timerSummary, { time: timeBetween })}
         >
-            <div>
+            <div className='spacedMessage'>
                 <span>
                     <FormattedMessage {...messages.timerSettingText} />
                 </span>

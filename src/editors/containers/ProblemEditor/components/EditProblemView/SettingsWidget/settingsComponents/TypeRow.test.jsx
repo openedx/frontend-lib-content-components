@@ -1,9 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { formatMessage } from '../../../../../../../testUtils';
 import { TypeRow } from './TypeRow';
 import { typeRowHooks } from '../hooks';
-import { useDispatch } from 'react-redux';
 
 jest.mock('../hooks', () => ({
     typeRowHooks: jest.fn(),
@@ -17,6 +15,7 @@ describe('TypeRow', () => {
         label: "Text Input Problem",
         selected: true,
         lastRow: false,
+        updateField: jest.fn().mockName('args.updateField'),
     };
 
     const typeRowHooksProps = {
@@ -28,8 +27,7 @@ describe('TypeRow', () => {
     describe('behavior', () => {
         it(' calls typeRowHooks when initialized', () => {
             shallow(<TypeRow {...props} />);
-            const dispatch = useDispatch();
-            expect(typeRowHooks).toHaveBeenCalledWith(typeKey, dispatch);
+            expect(typeRowHooks).toHaveBeenCalledWith(typeKey, props.updateField);
         });
     });
 

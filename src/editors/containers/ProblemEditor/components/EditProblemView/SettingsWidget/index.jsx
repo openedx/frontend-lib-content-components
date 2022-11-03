@@ -1,10 +1,10 @@
 import React from 'react';
-import { selectors } from '../../../../../data/redux';
+import PropTypes from 'prop-types';
+import { selectors, actions } from '../../../../../data/redux';
 import { injectIntl, FormattedMessage } from '@edx/frontend-platform/i18n';
 import { connect } from 'react-redux';
 import ScoringCard from './settingsComponents/ScoringCard';
 import ShowAnswerCard from './settingsComponents/ShowAnswerCard';
-import { problemDataProps } from '../../../../../data/services/cms/types';
 import HintsCard from './settingsComponents/HintsCard';
 import ResetCard from './settingsComponents/ResetCard';
 import MatlabCard from './settingsComponents/MatlabCard';
@@ -15,13 +15,17 @@ import TypeCard from './settingsComponents/TypeCard';
 import messages from './messages';
 import { showAdvancedSettingsCards } from './hooks';
 
+import './index.scss';
+
 // This widget should be connected, grab all settings from store, update them as needed.
 export const SettingsWidget = ({
   problemType,
   // redux
   settings,
+  updateSettings,
+  updateField,
 }) => {
-  const {isAdvancedCardsVisible, showAdvancedCards} = showAdvancedSettingsCards();
+  const { isAdvancedCardsVisible, showAdvancedCards } = showAdvancedSettingsCards();
   return (
     <div>
       <div>
@@ -32,13 +36,13 @@ export const SettingsWidget = ({
           <Row>
             <Col>
               <Row className='my-2'>
-                <TypeCard problemType={problemType} />
+                <TypeCard problemType={problemType} updateField={updateField} />
               </Row>
               <Row className='my-2'>
-                <ScoringCard scoring={settings.scoring} />
+                <ScoringCard scoring={settings.scoring} updateSettings={updateSettings} />
               </Row>
               <Row className='mt-2'>
-                <HintsCard hints={settings.hints} />
+                <HintsCard hints={settings.hints} updateSettings={updateSettings} />
               </Row>
 
               <Row>
@@ -62,16 +66,16 @@ export const SettingsWidget = ({
                     <RandomizationCard randomization={settings.randomization} />
                   </Row>
                   <Row className='my-2'>
-                    <ShowAnswerCard showAnswer={settings.showAnswer} />
+                    <ShowAnswerCard showAnswer={settings.showAnswer} updateSettings={updateSettings} />
                   </Row>
                   <Row className='my-2'>
-                    <ResetCard showResetButton={settings.showResetButton} />
+                    <ResetCard showResetButton={settings.showResetButton} updateSettings={updateSettings} />
                   </Row>
                   <Row className='my-2'>
-                    <TimerCard timeBetween={settings.timeBetween} />
+                    <TimerCard timeBetween={settings.timeBetween} updateSettings={updateSettings} />
                   </Row>
                   <Row className='my-2'>
-                    <MatlabCard matLabApiKey={settings.matLabApiKey} />
+                    <MatlabCard matLabApiKey={settings.matLabApiKey} updateSettings={updateSettings} />
                   </Row>
                 </Collapsible.Body>
               </Collapsible.Advanced>
@@ -85,13 +89,16 @@ export const SettingsWidget = ({
 }
 
 SettingsWidget.propTypes = {
-  settings: problemDataProps.settings.isRequired,
+  problemType: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   settings: selectors.problem.settings(state),
 });
 
-const mapDispatchToProps = {}
+export const mapDispatchToProps = {
+  updateSettings: actions.problem.updateSettings,
+  updateField: actions.problem.updateField,
+}
 
 export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(SettingsWidget));

@@ -17,7 +17,7 @@ exports[`SettingsWidget snapshot snapshot: renders Settings widget page 1`] = `
             className="my-2"
           >
             <InjectIntl(ShimmedIntlComponent)
-              problemType="TEXTINPUT"
+              problemType="stringresponse"
             />
           </Row>
           <Row
@@ -77,11 +77,6 @@ exports[`SettingsWidget snapshot snapshot: renders Settings widget page 1`] = `
               >
                 <InjectIntl(ShimmedIntlComponent) />
               </Row>
-              <Row
-                className="my-2"
-              >
-                <InjectIntl(ShimmedIntlComponent) />
-              </Row>
             </Collapsible.Body>
           </Collapsible.Advanced>
         </Col>
@@ -108,7 +103,7 @@ exports[`SettingsWidget snapshot snapshot: renders Settings widget page advanced
             className="my-2"
           >
             <InjectIntl(ShimmedIntlComponent)
-              problemType="TEXTINPUT"
+              problemType="stringresponse"
             />
           </Row>
           <Row
@@ -148,11 +143,6 @@ exports[`SettingsWidget snapshot snapshot: renders Settings widget page advanced
             <Collapsible.Body
               className="collapsible-body"
             >
-              <Row
-                className="my-2"
-              >
-                <InjectIntl(ShimmedIntlComponent) />
-              </Row>
               <Row
                 className="my-2"
               >

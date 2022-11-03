@@ -1,10 +1,10 @@
-import { isEmpty, get, isNil } from 'lodash-es';
+import _ from 'lodash-es';
 
 import { ShowAnswerTypes, RandomizationType } from "../../../data/constants/problem";
 
 export const popuplateItem = (parentObject, itemName, statekey, metadata) => {
-    let item = get(metadata, itemName, null);
-    if (!isNil(item)) {
+    let item = _.get(metadata, itemName, null);
+    if (!_.isNil(item)) {
         parentObject = { ...parentObject, [statekey]: item };
     }
     return parentObject;
@@ -14,7 +14,7 @@ export const parseScoringSettings = (metadata) => {
     let scoring = {};
 
     let attempts = popuplateItem({}, 'max_attempts', 'number', metadata);
-    if (!isEmpty(attempts)){
+    if (!_.isEmpty(attempts)){
         let unlimited = true;
         if (attempts.number > 0) {
             unlimited = false;
@@ -31,8 +31,8 @@ export const parseScoringSettings = (metadata) => {
 export const parseShowAnswer = (metadata) => {
     let showAnswer = {};
 
-    let showAnswerType = get(metadata, 'showanswer', {});
-    if (!isNil(showAnswerType) && showAnswerType in ShowAnswerTypes){
+    let showAnswerType = _.get(metadata, 'showanswer', {});
+    if (!_.isNil(showAnswerType) && showAnswerType in ShowAnswerTypes){
         showAnswer = { ...showAnswer, ['on']: showAnswerType };
     }
 
@@ -44,14 +44,14 @@ export const parseShowAnswer = (metadata) => {
 export const parseSettings = (metadata) => {
     let settings = {};
     
-    if (isNil(metadata) || isEmpty(metadata)){
+    if (_.isNil(metadata) || _.isEmpty(metadata)){
         return settings;
     }
 
     settings = popuplateItem(settings, 'matlab_api_key', 'matLabApiKey', metadata);
 
     let scoring = parseScoringSettings(metadata);
-    if (!isEmpty(scoring)){
+    if (!_.isEmpty(scoring)){
         settings = { ...settings, scoring };
     }
 
@@ -61,13 +61,11 @@ export const parseSettings = (metadata) => {
     }
 
     let showAnswer = parseShowAnswer(metadata);
-    if (!isEmpty(showAnswer)){
+    if (!_.isEmpty(showAnswer)){
         settings = { ...settings, showAnswer }
     }
-
     settings = popuplateItem(settings, 'show_reset_button', 'showResetButton', metadata);
     settings = popuplateItem(settings, 'submission_wait_seconds', 'timeBetween', metadata);
 
     return settings;
 }
-  

@@ -4,7 +4,6 @@ import { formatMessage } from '../../../../../../../testUtils';
 import { HintsCard } from './HintsCard';
 import { hintsCardHooks, hintsRowHooks } from '../hooks';
 import messages from '../messages';
-import { useDispatch } from 'react-redux';
 
 jest.mock('../hooks', () => ({
     hintsCardHooks: jest.fn(),
@@ -20,7 +19,8 @@ describe('HintsCard', () => {
     const props = {
         intl: { formatMessage },
         hints: hints_0,
-        updateSettings: jest.fn(),
+        updateSettings: jest.fn().mockName('args.updateSettings'),
+        intl: { formatMessage },
     };
 
     const hintsRowHooksProps = {
@@ -38,8 +38,7 @@ describe('HintsCard', () => {
             
             hintsCardHooks.mockReturnValue(hintsCardHooksProps);
             shallow(<HintsCard {...props} />);
-            const dispatch = useDispatch();
-            expect(hintsCardHooks).toHaveBeenCalledWith( hints_0, dispatch );
+            expect(hintsCardHooks).toHaveBeenCalledWith( hints_0, props.updateSettings );
         });
     });
 

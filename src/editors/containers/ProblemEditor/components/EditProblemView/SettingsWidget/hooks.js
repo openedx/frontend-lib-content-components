@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import * as module from './hooks';
 import messages from './messages';
 import { actions } from '../../../../../data/redux';
-import { isEmpty } from 'lodash-es';
+import _ from 'lodash-es';
 
 export const state = {
     showAdvanced: (val) => useState(val),
@@ -27,8 +27,8 @@ export const showFullCard = () => {
     };
 }
 
-export const hintsCardHooks = (hints, dispatch) => {
-    const [summary, setSummary] = module.state.summary({ message: "", values: {} })
+export const hintsCardHooks = (hints, updateSettings) => {
+    const [summary, setSummary] = module.state.summary({ message: messages.noHintSummary, values: {} })
 
     useEffect(() => {
         const hintsNumber = hints.length;
@@ -40,10 +40,13 @@ export const hintsCardHooks = (hints, dispatch) => {
     }, [hints]);
 
     const handleAdd = () => {
-        let newId = Math.max(...hints.map(hint => hint.id)) + 1
+        let newId = 0
+        if (!_.isEmpty(hints)){
+            newId = Math.max(...hints.map(hint => hint.id)) + 1
+        }
         const hint = { id: newId, value: "" }
         hints = [...hints, hint]
-        dispatch(actions.problem.updateSettings({ hints }));
+        updateSettings({ hints });
     }
 
 
@@ -53,7 +56,7 @@ export const hintsCardHooks = (hints, dispatch) => {
     }
 }
 
-export const hintsRowHooks = (id, hints, dispatch) => {
+export const hintsRowHooks = (id, hints, updateSettings) => {
 
     const handleChange = (event) => {
         const value = event.target.value
@@ -63,12 +66,12 @@ export const hintsRowHooks = (id, hints, dispatch) => {
             }
             return hint;
         });
-        dispatch(actions.problem.updateSettings({ hints }));
+        updateSettings({ hints });
     }
 
     const handleDelete = () => {
         hints = hints.filter((hint) => (hint.id != id));
-        dispatch(actions.problem.updateSettings({ hints }));
+        updateSettings({ hints });
     }
 
     return {
@@ -77,11 +80,11 @@ export const hintsRowHooks = (id, hints, dispatch) => {
     }
 }
 
-export const matlabCardHooks = (matLabApiKey, dispatch) => {
+export const matlabCardHooks = (matLabApiKey, updateSettings) => {
     const [summary, setSummary] = module.state.summary({ message: "", values: {}, intl: false })
 
     useEffect(() => {
-        if (isEmpty(matLabApiKey)) {
+        if (_.isEmpty(matLabApiKey)) {
             setSummary({ message: messages.matlabNoKeySummary, values: {}, intl: true });
         } else {
             setSummary({ message: matLabApiKey, values: {}, intl: false });
@@ -89,7 +92,7 @@ export const matlabCardHooks = (matLabApiKey, dispatch) => {
     }, [matLabApiKey])
 
     const handleChange = (event) => {
-        dispatch(actions.problem.updateSettings({ matLabApiKey: event.target.value }));
+        updateSettings({ matLabApiKey: event.target.value });
     }
 
     return {
@@ -104,10 +107,10 @@ export const randomizationCardHooks = (dispatch) => ({
     }
 })
 
-export const resetCardHooks = (dispatch) => {
+export const resetCardHooks = (updateSettings) => {
 
     const setReset = (value) => {
-        dispatch(actions.problem.updateSettings({ showResetButton: value }));
+        updateSettings({ showResetButton: value });
     }
 
     return {
@@ -116,19 +119,26 @@ export const resetCardHooks = (dispatch) => {
     }
 }
 
-export const scoringCardHooks = (scoring, dispatch) => {
+export const scoringCardHooks = (scoring, updateSettings) => {
 
     const handleMaxAttemptChange = (event) => {
         let unlimitedAttempts = true;
-        const attemptNumber = parseInt(event.target.value);
+        let attemptNumber = parseInt(event.target.value);
+        if(_.isNaN(attemptNumber)) {
+            attemptNumber = 0;
+        }
         if (attemptNumber > 0) {
             unlimitedAttempts = false;
         }
-        dispatch(actions.problem.updateSettings({ scoring: { ...scoring, attempts: { number: attemptNumber, unlimited: unlimitedAttempts } } }));
+        updateSettings({ scoring: { ...scoring, attempts: { number: attemptNumber, unlimited: unlimitedAttempts } } });
     }
 
     const handleWeightChange = (event) => {
-        dispatch(actions.problem.updateSettings({ scoring: { ...scoring, weight: parseFloat(event.target.value) } }));
+        let weight = parseFloat(event.target.value)
+        if(_.isNaN(weight)) {
+            weight = 0;
+        }
+        updateSettings({ scoring: { ...scoring, weight: weight } });
     }
 
     return {
@@ -137,14 +147,18 @@ export const scoringCardHooks = (scoring, dispatch) => {
     }
 }
 
-export const showAnswerCardHooks = (showAnswer, dispatch) => {
+export const showAnswerCardHooks = (showAnswer, updateSettings) => {
 
     const handleShowAnswerChange = (event) => {
-        dispatch(actions.problem.updateSettings({ showAnswer: { ...showAnswer, on: event.target.value } }));
+        updateSettings({ showAnswer: { ...showAnswer, on: event.target.value } });
     }
 
     const handleAttemptsChange = (event) => {
-        dispatch(actions.problem.updateSettings({ showAnswer: { ...showAnswer, afterAttempts: parseInt(event.target.value) } }));
+        let attempts = parseInt(event.target.value)
+        if(_.isNaN(attempts)){
+            attempts = 0;
+        }
+        updateSettings({ showAnswer: { ...showAnswer, afterAttempts: attempts } });
     }
 
     return {
@@ -153,21 +167,24 @@ export const showAnswerCardHooks = (showAnswer, dispatch) => {
     }
 }
 
-export const timerCardHooks = (dispatch) => ({
+export const timerCardHooks = (updateSettings) => ({
 
     handleChange: (event) => {
-        dispatch(actions.problem.updateSettings({ timeBetween: event.target.value }));
+        let time = parseInt(event.target.value);
+        if(_.isNaN(time)){
+            time = 0;
+        }
+        updateSettings({ timeBetween: time });
     }
 })
 
-export const typeRowHooks = (typeKey, dispatch) => {
+export const typeRowHooks = (typeKey, updateField) => {
 
     const onClick = () => {
-        dispatch(actions.problem.updateField({ problemType: typeKey }));
+        updateField({ problemType: typeKey });
     }
 
     return {
         onClick,
     }
-
 }

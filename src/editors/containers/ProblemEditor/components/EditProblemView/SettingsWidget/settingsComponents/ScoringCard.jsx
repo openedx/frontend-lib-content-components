@@ -1,19 +1,17 @@
 import React from 'react'
-import { useDispatch } from 'react-redux';
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 import SettingsOption from '../SettingsOption';
 import { Form } from '@edx/paragon';
-import PropTypes from 'prop-types';
-import { problemDataProps } from '../../../../../../data/services/cms/types';
 import messages from '../messages';
 import { scoringCardHooks } from '../hooks';
 
 export const ScoringCard = ({
     scoring,
+    updateSettings,
+    //inject
     intl,
 }) => {
-    const dispatch = useDispatch();
-    const {handleMaxAttemptChange, handleWeightChange} = scoringCardHooks(scoring, dispatch);
+    const { handleMaxAttemptChange, handleWeightChange } = scoringCardHooks(scoring, updateSettings);
 
     return (
         <SettingsOption

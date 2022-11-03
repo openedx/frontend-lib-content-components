@@ -19,12 +19,9 @@
     "core-js": "^3.21.1",
     "dotenv": "^16.0.0",
     "prop-types": "^15.5.10",
+    "react": "^16.14.0",
     "react-dom": "^16.14.0",
     "react-intl": "^5.24.6",
-    "react-redux": "^7.2.8",
-    "regenerator-runtime": "^0.13.9",
-    "webpack-cli": "4.10.0",
-    "react": "^16.14.0",
-    "@edx/paragon": "19.6.0"
+    "regenerator-runtime": "^0.13.9"
   }
 }

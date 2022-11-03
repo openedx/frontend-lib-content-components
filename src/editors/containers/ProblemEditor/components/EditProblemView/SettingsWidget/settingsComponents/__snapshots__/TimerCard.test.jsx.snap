@@ -3,9 +3,11 @@
 exports[`TimerCard snapshot snapshot: renders reset true setting card 1`] = `
 <SettingsOption
   summary="5 seconds"
-  title="Time Between Attempts"
+  title="Time between attempts"
 >
-  <div>
+  <div
+    className="spacedMessage"
+  >
     <span>
       <FormattedMessage
         defaultMessage="Seconds a student must wait between submissions for a problem with multiple attempts."

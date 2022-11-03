@@ -13,7 +13,7 @@ export const SettingsOption = ({
 
     return (
         <Card>
-            <Card.Section>
+            <Card.Section className="settingsCardTitleSection">
                 <Collapsible.Advanced
                     open={isCardCollapsed}
                     onToggle={toggleCardCollapse}

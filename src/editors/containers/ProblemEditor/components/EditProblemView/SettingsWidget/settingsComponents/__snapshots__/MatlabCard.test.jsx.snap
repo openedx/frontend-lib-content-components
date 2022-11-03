@@ -5,7 +5,9 @@ exports[`MatlabCard snapshot snapshot: renders matlab setting card 1`] = `
   summary="matlab_api_key"
   title="MATLAB API Key"
 >
-  <div>
+  <div
+    className="halfSpacedMessage"
+  >
     <span>
       <FormattedMessage
         defaultMessage="Enter the API key provided by MathWorks for accessing the MATLAB Hosted Service. This key is granted for exclusive use by this course for the specified duration."
@@ -14,14 +16,16 @@ exports[`MatlabCard snapshot snapshot: renders matlab setting card 1`] = `
       />
     </span>
   </div>
-  <div>
+  <div
+    className="spacedMessage"
+  >
     <span>
       <FormattedMessage
         defaultMessage="Please do not share the API key with other courses and notify MathWorks immediately if you believe the key is exposed or compromised. To obtain a key for your course, or to report an issue please contact"
         description="Matlab settings card text 2"
         id="authoring.problemeditor.settings.matlab.text.two"
       />
-        
+       
       <MailtoLink
         to="moocsupport@mathworks.com"
       >
@@ -44,7 +48,9 @@ exports[`MatlabCard snapshot snapshot: renders matlab setting card no key 1`] = 
   summary="None"
   title="MATLAB API Key"
 >
-  <div>
+  <div
+    className="halfSpacedMessage"
+  >
     <span>
       <FormattedMessage
         defaultMessage="Enter the API key provided by MathWorks for accessing the MATLAB Hosted Service. This key is granted for exclusive use by this course for the specified duration."
@@ -53,14 +59,16 @@ exports[`MatlabCard snapshot snapshot: renders matlab setting card no key 1`] = 
       />
     </span>
   </div>
-  <div>
+  <div
+    className="spacedMessage"
+  >
     <span>
       <FormattedMessage
         defaultMessage="Please do not share the API key with other courses and notify MathWorks immediately if you believe the key is exposed or compromised. To obtain a key for your course, or to report an issue please contact"
         description="Matlab settings card text 2"
         id="authoring.problemeditor.settings.matlab.text.two"
       />
-        
+       
       <MailtoLink
         to="moocsupport@mathworks.com"
       >
