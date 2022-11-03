@@ -2,7 +2,9 @@
 
 exports[`SettingsOption render snapshot: renders correct 1`] = `
 <Card>
-  <Card.Section>
+  <Card.Section
+    className="settingsCardTitleSection"
+  >
     <Collapsible.Advanced
       onToggle={[Function]}
       open={false}

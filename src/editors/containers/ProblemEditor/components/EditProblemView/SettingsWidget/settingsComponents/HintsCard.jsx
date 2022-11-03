@@ -1,5 +1,4 @@
 import React from 'react'
-import { useDispatch } from 'react-redux';
 import { injectIntl, FormattedMessage, intlShape } from '@edx/frontend-platform/i18n';
 import SettingsOption from '../SettingsOption';
 import { Button } from '@edx/paragon'
@@ -10,22 +9,22 @@ import HintRow from './HintRow';
 
 export const HintsCard = ({
     hints,
+    updateSettings,
+    //inject
     intl,
 }) => {
-    const dispatch = useDispatch();
-    const { summary, handleAdd } = hintsCardHooks(hints, dispatch);
-
+    const { summary, handleAdd } = hintsCardHooks(hints, updateSettings);
     return (
         <SettingsOption
             title={intl.formatMessage(messages.hintSettingTitle)}
-            summary={intl.formatMessage(summary.message, {...summary.values})}
+            summary={intl.formatMessage(summary.message, { ...summary.values })}
         >
             {hints.map((hint) => (
                 <HintRow
                     key={hint.id}
                     id={hint.id}
                     value={hint.value}
-                    {...hintsRowHooks(hint.id, hints, dispatch)}
+                    {...hintsRowHooks(hint.id, hints, updateSettings)}
                 />
             ))}
             <Button

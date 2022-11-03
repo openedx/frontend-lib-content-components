@@ -3,7 +3,6 @@ import { shallow } from 'enzyme';
 import { formatMessage } from '../../../../../../../testUtils';
 import { TimerCard } from './TimerCard';
 import { timerCardHooks } from '../hooks';
-import { useDispatch } from 'react-redux';
 
 jest.mock('../hooks', () => ({
   timerCardHooks: jest.fn(),
@@ -14,6 +13,7 @@ describe('TimerCard', () => {
 
   const props = {
     timeBetween: 5,
+    updateSettings: jest.fn().mockName('args.updateSettings'),
     intl: { formatMessage },
   };
 
@@ -26,8 +26,7 @@ describe('TimerCard', () => {
   describe('behavior', () => {
     it(' calls timerCardHooks when initialized', () => {
         shallow(<TimerCard {...props} />);
-        const dispatch = useDispatch();
-        expect(timerCardHooks).toHaveBeenCalledWith( dispatch );
+        expect(timerCardHooks).toHaveBeenCalledWith( props.updateSettings );
     });
 });
 

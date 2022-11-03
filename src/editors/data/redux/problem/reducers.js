@@ -1,8 +1,8 @@
-import { has } from 'lodash-es';
+import _ from 'lodash-es';
 import { createSlice } from '@reduxjs/toolkit';
 import { indexToLetterMap } from '../../../containers/ProblemEditor/data/OLXParser';
 import { StrictDict } from '../../../utils';
-import { RandomizationTypeKeys, ProblemTypeKeys, ShowAnswerTypesKeys } from "../../constants/problem";
+import { RandomizationTypeKeys, ProblemTypeKeys, ShowAnswerTypesKeys } from '../../constants/problem';
 
 const nextAlphaId = (lastId) => String.fromCharCode(lastId.charCodeAt(0) + 1);
 const initialState = {
@@ -55,7 +55,7 @@ const problem = createSlice({
         }
         // set other answers as incorrect if problem only has one answer correct
         // and changes object include correct key change
-        if (hasSingleAnswer && has(answer, 'correct') && obj.correct) {
+        if (hasSingleAnswer && _.has(answer, 'correct') && obj.correct) {
           return { ...obj, correct: false };
         }
         return obj;

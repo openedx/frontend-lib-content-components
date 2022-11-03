@@ -1,5 +1,4 @@
-import React from 'react'
-import { useDispatch } from 'react-redux';
+import React from 'react';
 import { FormattedMessage, injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 import SettingsOption from '../SettingsOption';
 import { Button, ButtonGroup, Hyperlink } from '@edx/paragon';
@@ -9,22 +8,22 @@ import { resetCardHooks } from '../hooks';
 
 export const ResetCard = ({
     showResetButton,
-    //injected
+    updateSettings,
+    //inject
     intl,
 }) => {
-    const dispatch = useDispatch();
-    const {setResetTrue, setResetFalse} = resetCardHooks(dispatch);
+    const { setResetTrue, setResetFalse } = resetCardHooks(updateSettings);
     return (
         <SettingsOption
             title={intl.formatMessage(messages.resetSettingsTitle)}
             summary={showResetButton ? intl.formatMessage(messages.resetSettingsTrue) : intl.formatMessage(messages.resetSettingsFalse)}
         >
-            <div>
+            <div className='halfSpacedMessage'>
                 <span>
                     <FormattedMessage {...messages.resetSettingText} />
                 </span>
             </div>
-            <div>
+            <div className='spacedMessage'>
                 <Hyperlink destination="#" target="_blank">
                     <FormattedMessage {...messages.advancedSettingsLinkText} />
                 </Hyperlink>

@@ -9,6 +9,7 @@ export const HintRow = ({
     value,
     handleChange,
     handleDelete,
+    //inject
     intl,
 }) => {
     return (

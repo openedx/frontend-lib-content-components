@@ -1,31 +1,29 @@
-import React from 'react'
-import { useDispatch } from 'react-redux';
+import React from 'react';
 import { injectIntl, FormattedMessage, intlShape } from '@edx/frontend-platform/i18n';
 import SettingsOption from '../SettingsOption';
 import { Form, Hyperlink } from '@edx/paragon';
 import { ShowAnswerTypes, ShowAnswerTypesKeys } from '../../../../../../data/constants/problem';
-import PropTypes from 'prop-types';
-import { problemDataProps } from '../../../../../../data/services/cms/types';
 import messages from '../messages';
 import { showAnswerCardHooks } from '../hooks';
 
 export const ShowAnswerCard = ({
     showAnswer,
+    updateSettings,
+    //inject
     intl,
 }) => {
-    const dispatch = useDispatch();
-    const {handleShowAnswerChange, handleAttemptsChange} = showAnswerCardHooks(showAnswer, dispatch);
+    const { handleShowAnswerChange, handleAttemptsChange } = showAnswerCardHooks(showAnswer, updateSettings);
     return (
         <SettingsOption
             title={intl.formatMessage(messages.showAnswerSettingsTitle)}
             summary={intl.formatMessage(ShowAnswerTypes[showAnswer.on])}
         >
-            <div>
+            <div className='halfSpacedMessage'>
                 <span>
                     <FormattedMessage {...messages.showAnswerSettingText} />
                 </span>
             </div>
-            <div>
+            <div className='spacedMessage'>
                 <Hyperlink destination="#" target="_blank">
                     <FormattedMessage {...messages.advancedSettingsLinkText} />
                 </Hyperlink>

@@ -3,7 +3,6 @@ import { shallow } from 'enzyme';
 import { formatMessage } from '../../../../../../../testUtils';
 import { ResetCard } from './ResetCard';
 import { resetCardHooks } from '../hooks';
-import { useDispatch } from 'react-redux';
 
 jest.mock('../hooks', () => ({
   resetCardHooks: jest.fn(),
@@ -14,6 +13,7 @@ describe('ResetCard', () => {
 
   const props = {
     showResetButton: false,
+    updateSettings: jest.fn().mockName('args.updateSettings'),
     intl: { formatMessage },
   };
 
@@ -27,8 +27,7 @@ describe('ResetCard', () => {
   describe('behavior', () => {
     it(' calls resetCardHooks when initialized', () => {
         shallow(<ResetCard {...props} />);
-        const dispatch = useDispatch();
-        expect(resetCardHooks).toHaveBeenCalledWith( dispatch );
+        expect(resetCardHooks).toHaveBeenCalledWith( props.updateSettings );
     });
 });
 

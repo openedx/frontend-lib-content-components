@@ -1,5 +1,4 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
 import { injectIntl, FormattedMessage, intlShape } from '@edx/frontend-platform/i18n';
 import SettingsOption from '../SettingsOption';
 import { Form, MailtoLink } from '@edx/paragon'
@@ -9,24 +8,25 @@ import { matlabCardHooks } from '../hooks';
 
 export const MatlabCard = ({
     matLabApiKey,
+    updateSettings,
+    //inject
     intl,
 }) => {
-    const dispatch = useDispatch();
-    const {summary, handleChange} = matlabCardHooks(matLabApiKey, dispatch);
+    const { summary, handleChange } = matlabCardHooks(matLabApiKey, updateSettings);
 
     return (
         <SettingsOption
             title={intl.formatMessage(messages.matlabSettingTitle)}
-            summary={summary.intl ? intl.formatMessage(summary.message, {...summary.values}) : summary.message}
+            summary={summary.intl ? intl.formatMessage(summary.message, { ...summary.values }) : summary.message}
         >
-            <div>
+            <div className='halfSpacedMessage'>
                 <span>
                     <FormattedMessage {...messages.matlabSettingText1} />
                 </span>
             </div>
-            <div>
+            <div className='spacedMessage'>
                 <span>
-                    <FormattedMessage {...messages.matlabSettingText2} /> &nbsp;
+                    <FormattedMessage {...messages.matlabSettingText2} />&nbsp;
                     <MailtoLink to="moocsupport@mathworks.com">
                         moocsupport@mathworks.com
                     </MailtoLink>

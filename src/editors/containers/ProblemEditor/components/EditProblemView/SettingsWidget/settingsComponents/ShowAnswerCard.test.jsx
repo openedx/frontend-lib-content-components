@@ -3,7 +3,6 @@ import { shallow } from 'enzyme';
 import { formatMessage } from '../../../../../../../testUtils';
 import { ShowAnswerCard } from './ShowAnswerCard';
 import { showAnswerCardHooks } from '../hooks';
-import { useDispatch } from 'react-redux';
 
 jest.mock('../hooks', () => ({
     showAnswerCardHooks: jest.fn(),
@@ -14,6 +13,8 @@ describe('ShowAnswerCard', () => {
     const showAnswer = {
         on: "after_attempts",
         afterAttempts: 5,
+        updateSettings: jest.fn().mockName('args.updateSettings'),
+        intl: { formatMessage },
     }
     const props = {
         showAnswer: showAnswer,
@@ -30,8 +31,7 @@ describe('ShowAnswerCard', () => {
     describe('behavior', () => {
         it(' calls showAnswerCardHooks when initialized', () => {
             shallow(<ShowAnswerCard {...props} />);
-            const dispatch = useDispatch();
-            expect(showAnswerCardHooks).toHaveBeenCalledWith(showAnswer, dispatch);
+            expect(showAnswerCardHooks).toHaveBeenCalledWith(showAnswer, props.updateSettings);
         });
     });
 

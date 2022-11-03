@@ -33,9 +33,9 @@ const state = new MockUseState(hooks);
 
 describe('Problem settings hooks', () => {
     let output;
-    let dispatch;
+    let updateSettings;
     beforeEach(() => {
-        dispatch = jest.fn();
+        updateSettings = jest.fn()
         state.mock();
     });
     afterEach(() => { 
@@ -70,7 +70,7 @@ describe('Problem settings hooks', () => {
     describe('Hint card hooks', () => {
         test('test useEffect triggers set hints summary no hint', () => {
             const hints = [];
-            hooks.hintsCardHooks(hints, dispatch);
+            hooks.hintsCardHooks(hints, updateSettings);
             expect(state.setState[state.keys.summary]).not.toHaveBeenCalled();
             const [cb, prereqs] = useEffect.mock.calls[0];
             expect(prereqs).toStrictEqual([[]]);
@@ -79,20 +79,20 @@ describe('Problem settings hooks', () => {
         })
         test('test useEffect triggers set hints summary', () => {
             const hints = [{ id: 1, value: "hint1" }];
-            output = hooks.hintsCardHooks(hints, dispatch);
+            output = hooks.hintsCardHooks(hints, updateSettings);
             expect(state.setState[state.keys.summary]).not.toHaveBeenCalled();
             const [cb, prereqs] = useEffect.mock.calls[0];
             expect(prereqs).toStrictEqual([[{ id: 1, value: "hint1" }]]);
             cb();
             expect(state.setState[state.keys.summary]).toHaveBeenCalledWith({ message: messages.hintSummary, values: { hint: hints[0].value, count: (hints.length - 1) } });
         })
-        test('test handleAdd triggers dispatch', () => {
+        test('test handleAdd triggers updateSettings', () => {
             const hint1 = { id: 1, value: "hint1" }
             const hint2 = { id: 2, value: "" }
             const hints = [hint1];
-            output = hooks.hintsCardHooks(hints, dispatch);
+            output = hooks.hintsCardHooks(hints, updateSettings);
             output.handleAdd();
-            expect(dispatch).toHaveBeenCalledWith(actions.problem.updateSettings({ hints: [hint1, hint2] }));
+            expect(updateSettings).toHaveBeenCalledWith({ hints: [hint1, hint2] });
         })
     });
 
@@ -103,22 +103,22 @@ describe('Problem settings hooks', () => {
         const modified_hint = { id: 2, value: value }
         const hints = [hint1, hint2];
         beforeEach(() => {
-            output = hooks.hintsRowHooks(2, hints, dispatch);
+            output = hooks.hintsRowHooks(2, hints, updateSettings);
         });
         test('test handleChange', () => {
             output.handleChange({ target: { value } });
-            expect(dispatch).toHaveBeenCalledWith(actions.problem.updateSettings({ hints: [hint1, modified_hint] }));
+            expect(updateSettings).toHaveBeenCalledWith({ hints: [hint1, modified_hint] });
         });
         test('test handleDelete', () => {
             output.handleDelete();
-            expect(dispatch).toHaveBeenCalledWith(actions.problem.updateSettings({ hints: [hint1] }));
+            expect(updateSettings).toHaveBeenCalledWith({ hints: [hint1] });
         });
     });
 
     describe('Matlab card hooks', () => {
         test('test useEffect triggers set summary', () => {
             const api_key = "matlab_api_key";
-            hooks.matlabCardHooks(api_key, dispatch);
+            hooks.matlabCardHooks(api_key, updateSettings);
             expect(state.setState[state.keys.summary]).not.toHaveBeenCalled();
             const [cb, prereqs] = useEffect.mock.calls[0];
             expect(prereqs).toStrictEqual([api_key]);
@@ -126,7 +126,7 @@ describe('Problem settings hooks', () => {
             expect(state.setState[state.keys.summary]).toHaveBeenCalledWith({ "message": api_key, "values": {}, "intl": false });
         });
         test('test useEffect triggers set summary no key', () => {
-            hooks.matlabCardHooks("", dispatch);
+            hooks.matlabCardHooks("", updateSettings);
             expect(state.setState[state.keys.summary]).not.toHaveBeenCalled();
             const [cb, prereqs] = useEffect.mock.calls[0];
             expect(prereqs).toStrictEqual([""]);
@@ -136,9 +136,9 @@ describe('Problem settings hooks', () => {
         test('test handleChange', () => {
             const api_key = "matlab_api_key";
             const value = "new_matlab_api_key";
-            output = hooks.matlabCardHooks(api_key, dispatch);
+            output = hooks.matlabCardHooks(api_key, updateSettings);
             output.handleChange({ target: { value } });
-            expect(dispatch).toHaveBeenCalledWith(actions.problem.updateSettings({ matLabApiKey: value }));
+            expect(updateSettings).toHaveBeenCalledWith({ matLabApiKey: value });
         });
     });
 
@@ -153,15 +153,15 @@ describe('Problem settings hooks', () => {
 
     describe('Reset card hooks', () => {
         beforeEach(() => {
-            output = hooks.resetCardHooks(dispatch);
+            output = hooks.resetCardHooks(updateSettings);
         });
         test('test setResetTrue', () => {
             output.setResetTrue();
-            expect(dispatch).toHaveBeenCalledWith(actions.problem.updateSettings({ showResetButton: true }));
+            expect(updateSettings).toHaveBeenCalledWith({ showResetButton: true });
         });
         test('test setResetFalse', () => {
             output.setResetFalse();
-            expect(dispatch).toHaveBeenCalledWith(actions.problem.updateSettings({ showResetButton: false }));
+            expect(updateSettings).toHaveBeenCalledWith({ showResetButton: false });
         });
     });
 
@@ -174,22 +174,22 @@ describe('Problem settings hooks', () => {
             },
         };
         beforeEach(() => {
-            output = hooks.scoringCardHooks(scoring, dispatch);
+            output = hooks.scoringCardHooks(scoring, updateSettings);
         });
         test('test handleMaxAttemptChange', () => {
             const value = 6
             output.handleMaxAttemptChange({ target: { value } });
-            expect(dispatch).toHaveBeenCalledWith(actions.problem.updateSettings({ scoring: { ...scoring, attempts: { number: value, unlimited: false } } }));
+            expect(updateSettings).toHaveBeenCalledWith({ scoring: { ...scoring, attempts: { number: value, unlimited: false } } });
         });
         test('test handleMaxAttemptChange set attempts to zero', () => {
             const value = 0
             output.handleMaxAttemptChange({ target: { value } });
-            expect(dispatch).toHaveBeenCalledWith(actions.problem.updateSettings({ scoring: { ...scoring, attempts: { number: value, unlimited: true } } }));
+            expect(updateSettings).toHaveBeenCalledWith({ scoring: { ...scoring, attempts: { number: value, unlimited: true } } });
         });
         test('test handleWeightChange', () => {
             const value = 2
             output.handleWeightChange({ target: { value } });
-            expect(dispatch).toHaveBeenCalledWith(actions.problem.updateSettings({ scoring: { ...scoring, weight: parseFloat(value) } }));
+            expect(updateSettings).toHaveBeenCalledWith({ scoring: { ...scoring, weight: parseFloat(value) } });
         });
     });
 
@@ -199,35 +199,36 @@ describe('Problem settings hooks', () => {
             afterAttempts: 5,
         };
         beforeEach(() => {
-            output = hooks.showAnswerCardHooks(showAnswer, dispatch);
+            output = hooks.showAnswerCardHooks(showAnswer, updateSettings);
         });
         test('test handleShowAnswerChange', () => {
             const value = "always";
             output.handleShowAnswerChange({ target: { value } });
-            expect(dispatch).toHaveBeenCalledWith(actions.problem.updateSettings({ showAnswer: { ...showAnswer, on: value } }));
+            expect(updateSettings).toHaveBeenCalledWith({ showAnswer: { ...showAnswer, on: value } });
         });
         test('test handleAttemptsChange', () => {
             const value = 3;
             output.handleAttemptsChange({ target: { value } });
-            expect(dispatch).toHaveBeenCalledWith(actions.problem.updateSettings({ showAnswer: { ...showAnswer, afterAttempts: parseInt(value) } }));
+            expect(updateSettings).toHaveBeenCalledWith({ showAnswer: { ...showAnswer, afterAttempts: parseInt(value) } });
         });
     });
 
     describe('Timer card hooks', () => {
         test('test handleChange', () => {
-            output = hooks.timerCardHooks(dispatch);
+            output = hooks.timerCardHooks(updateSettings);
             const value = 5;
             output.handleChange({ target: { value } });
-            expect(dispatch).toHaveBeenCalledWith(actions.problem.updateSettings({ timeBetween: value }));
+            expect(updateSettings).toHaveBeenCalledWith({ timeBetween: value });
         });
     });
 
     describe('Type row hooks', () => {
         test('test onClick', () => {
             const typekey = "TEXTINPUT"
-            output = hooks.typeRowHooks(typekey, dispatch);
+            const updateField = jest.fn()
+            output = hooks.typeRowHooks(typekey, updateField);
             output.onClick();
-            expect(dispatch).toHaveBeenCalledWith(actions.problem.updateField({ problemType: typekey }));
+            expect(updateField).toHaveBeenCalledWith({ problemType: typekey });
         });
     });
 

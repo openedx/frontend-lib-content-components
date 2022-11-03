@@ -5,7 +5,9 @@ exports[`ResetCard snapshot snapshot: renders reset true setting card 1`] = `
   summary="False"
   title="Show reset option"
 >
-  <div>
+  <div
+    className="halfSpacedMessage"
+  >
     <span>
       <FormattedMessage
         defaultMessage="Determines whether a 'Reset' button is shown so the user may reset their answer, generally for use in practice or formative assessments."
@@ -14,7 +16,9 @@ exports[`ResetCard snapshot snapshot: renders reset true setting card 1`] = `
       />
     </span>
   </div>
-  <div>
+  <div
+    className="spacedMessage"
+  >
     <Hyperlink
       destination="#"
       target="_blank"
@@ -59,7 +63,9 @@ exports[`ResetCard snapshot snapshot: renders reset true setting card 2`] = `
   summary="True"
   title="Show reset option"
 >
-  <div>
+  <div
+    className="halfSpacedMessage"
+  >
     <span>
       <FormattedMessage
         defaultMessage="Determines whether a 'Reset' button is shown so the user may reset their answer, generally for use in practice or formative assessments."
@@ -68,7 +74,9 @@ exports[`ResetCard snapshot snapshot: renders reset true setting card 2`] = `
       />
     </span>
   </div>
-  <div>
+  <div
+    className="spacedMessage"
+  >
     <Hyperlink
       destination="#"
       target="_blank"

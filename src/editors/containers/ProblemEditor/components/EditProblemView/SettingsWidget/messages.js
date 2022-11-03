@@ -111,7 +111,7 @@ export const messages = {
     },
     scoringWeightInputLabel: {
         id: 'authoring.problemeditor.settings.scoring.weight.inputLabel',
-        defaultMessage: 'Weight',
+        defaultMessage: 'Points',
         description: 'Scoring weight input label',
     },
     scoringSummary: {
@@ -121,7 +121,7 @@ export const messages = {
     },
     showAnswerSettingsTitle: {
         id: 'authoring.problemeditor.settings.showAnswer.title',
-        defaultMessage: 'Show Answer',
+        defaultMessage: 'Show answer',
         description: 'Show Answer settings card title',
     },
     showAnswerAttemptsInputLabel: {
@@ -131,12 +131,12 @@ export const messages = {
     },
     showAnswerSettingText: {
         id: 'authoring.problemeditor.settings.showAnswer.text',
-        defaultMessage: 'Set attempt logic for when learners can see the correct answer.',
+        defaultMessage: 'Define when learners can see the correct answer.',
         description: 'Show Answer settings card text',
     },
     timerSettingsTitle: {
         id: 'authoring.problemeditor.settings.timer.title',
-        defaultMessage: 'Time Between Attempts',
+        defaultMessage: 'Time between attempts',
         description: 'Timer settings card title',
     },
     timerSummary: {

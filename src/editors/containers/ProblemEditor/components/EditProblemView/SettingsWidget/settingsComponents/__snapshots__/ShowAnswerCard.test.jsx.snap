@@ -3,18 +3,22 @@
 exports[`ShowAnswerCard snapshot snapshot: show answer setting card 1`] = `
 <SettingsOption
   summary="After Some Number of Attempts"
-  title="Show Answer"
+  title="Show answer"
 >
-  <div>
+  <div
+    className="halfSpacedMessage"
+  >
     <span>
       <FormattedMessage
-        defaultMessage="Set attempt logic for when learners can see the correct answer."
+        defaultMessage="Define when learners can see the correct answer."
         description="Show Answer settings card text"
         id="authoring.problemeditor.settings.showAnswer.text"
       />
     </span>
   </div>
-  <div>
+  <div
+    className="spacedMessage"
+  >
     <Hyperlink
       destination="#"
       target="_blank"

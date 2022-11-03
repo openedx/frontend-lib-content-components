@@ -1,7 +1,6 @@
 import React from 'react';
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 import SettingsOption from '../SettingsOption';
-import PropTypes from 'prop-types';
 import { ProblemTypeKeys, ProblemTypes } from '../../../../../../data/constants/problem';
 import messages from '../messages';
 import TypeRow from './TypeRow';
@@ -9,6 +8,8 @@ import TypeRow from './TypeRow';
 
 export const TypeCard = ({
     problemType,
+    updateField,
+    //inject
     intl,
 }) => {
 
@@ -26,6 +27,7 @@ export const TypeCard = ({
                     label={ProblemTypes[typeKey].title}
                     selected={typeKey !== problemType}
                     lastRow={(i + 1) == problemTypeKeysArray.length}
+                    updateField={updateField}
                 />
             ))}
         </SettingsOption>

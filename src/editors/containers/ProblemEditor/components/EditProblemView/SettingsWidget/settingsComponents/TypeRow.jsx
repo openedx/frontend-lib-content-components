@@ -1,9 +1,6 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
-import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 import { Container, Icon } from '@edx/paragon';
 import PropTypes from 'prop-types';
-import { ProblemTypeKeys } from '../../../../../../data/constants/problem';
 import { Check } from '@edx/paragon/icons';
 import { typeRowHooks } from '../hooks';
 
@@ -13,10 +10,10 @@ export const TypeRow = ({
     label,
     selected,
     lastRow,
+    updateField,
 }) => {
 
-    const dispatch = useDispatch();
-    const {onClick} = typeRowHooks(typeKey, dispatch);
+    const {onClick} = typeRowHooks(typeKey, updateField);
 
     return (
         <>

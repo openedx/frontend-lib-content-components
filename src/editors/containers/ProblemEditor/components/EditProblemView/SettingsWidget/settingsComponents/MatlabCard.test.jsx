@@ -2,7 +2,6 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { formatMessage } from '../../../../../../../testUtils';
 import { matlabCardHooks } from '../hooks';
-import { useDispatch } from 'react-redux';
 import { MatlabCard } from './MatlabCard';
 import messages from '../messages';
 
@@ -15,6 +14,7 @@ describe('MatlabCard', () => {
     const matLabApiKey = "matlab_api_key"
     const props = {
         matLabApiKey: matLabApiKey,
+        updateSettings: jest.fn().mockName('args.updateSettings'),
         intl: { formatMessage },
     };
 
@@ -26,8 +26,7 @@ describe('MatlabCard', () => {
             };
             matlabCardHooks.mockReturnValue(matlabCardHooksProps);
             shallow(<MatlabCard {...props} />);
-            const dispatch = useDispatch();
-            expect(matlabCardHooks).toHaveBeenCalledWith(matLabApiKey, dispatch);
+            expect(matlabCardHooks).toHaveBeenCalledWith(matLabApiKey, props.updateSettings);
         });
     });
 

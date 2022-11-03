@@ -1,7 +1,9 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import { showAdvancedSettingsCards } from './hooks';
-import { SettingsWidget } from '.';
+import { SettingsWidget, mapDispatchToProps } from '.';
+import { ProblemTypeKeys } from '../../../../../data/constants/problem';
+import { actions } from '../../../../../data/redux';
 
 jest.mock('./hooks', () => ({
     showAdvancedSettingsCards: jest.fn(),
@@ -11,7 +13,7 @@ jest.mock('./hooks', () => ({
 describe('SettingsWidget', () => {
 
     const props = {
-        problemType: "TEXTINPUT",
+        problemType: ProblemTypeKeys.TEXTINPUT,
         settings: {},
     };
 
@@ -43,6 +45,18 @@ describe('SettingsWidget', () => {
             };
             showAdvancedSettingsCards.mockReturnValue(showAdvancedSettingsCardsProps);
             expect(shallow(<SettingsWidget {...props} />)).toMatchSnapshot();
+        });
+    });
+
+    describe('mapDispatchToProps', () => {
+        test('updateSettings from actions.problem.updateSettings', () => {
+            expect(mapDispatchToProps.updateSettings).toEqual(actions.problem.updateSettings);
+        });
+    });
+
+    describe('mapDispatchToProps', () => {
+        test('updateField from actions.problem.updateField', () => {
+            expect(mapDispatchToProps.updateField).toEqual(actions.problem.updateField);
         });
     });
 });
