@@ -7,7 +7,7 @@ import SettingsWidget from './SettingsWidget';
 import QuestionWidget from './QuestionWidget';
 import { EditorContainer } from '../../../EditorContainer';
 import { selectors } from '../../../../data/redux';
-import { ReactStateParser } from '../../data/ReactStateParser';
+import { ReactStateSettingsParser } from '../../data/ReactStateSettingsParser';
 import { ReactStateOLXParser } from '../../data/ReactStateOLXParser';
 import { Col, Container, Row } from '@edx/paragon';
 
@@ -17,22 +17,13 @@ export const EditProblemView = ({
   problemState,
 }) => {
   const parseSate = (problemState) => () => {
-  //   const reactParser = new ReactStateParser(problemState);
-  //   const reactOLXParser = new ReactStateOLXParser({ problem: problemState });
-  //   return {
-  //     markdown: reactParser.getMarkdown(),
-  //     olx: reactOLXParser.buildOLX(),
-  //   };
-  // };
-  // return (
-  //   <EditorContainer getContent={parseSate(problemState)}>
-  //     <QuestionWidget />
-  //     <AnswerWidget problemType={problemType} />
-  //     <SettingsWidget />
-  //   </EditorContainer>
-      let reactParser = new ReactStateParser(problemState);
-      return reactParser.getMetadata();
-  }
+    const reactSettingsParser = new ReactStateSettingsParser(problemState);
+    const reactOLXParser = new ReactStateOLXParser({ problem: problemState });
+    return {
+      settings: reactSettingsParser.getSettings(),
+      olx: reactOLXParser.buildOLX(),
+    };
+  };
   return (
     <EditorContainer getContent={parseSate(problemState)}>
       <Container fluid>
