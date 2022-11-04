@@ -45,13 +45,10 @@ export const TitleHeader = ({
   }
   return (
     <div className="d-flex">
-      <Truncate>
         {localTitle}
-      </Truncate>
       <IconButton
         alt={intl.formatMessage(messages.editTitleLabel)}
         className="mr-2"
-        iconAs={Icon}
         onClick={startEditing}
         size="sm"
         src={Edit}

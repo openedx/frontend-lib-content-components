@@ -6,7 +6,7 @@ export const loadVideoData = () => (dispatch, getState) => {
   const state = getState();
   const rawVideoData = state.app.blockValue.data.metadata ? state.app.blockValue.data.metadata : {};
   const courseLicenseData = state.app.courseDetails.data ? state.app.courseDetails.data : {};
-  const licenseData = state.app.studioView?.data?.html;
+  const studioView = state.app.studioView?.data?.html;
   const {
     videoSource,
     videoType,
@@ -17,7 +17,8 @@ export const loadVideoData = () => (dispatch, getState) => {
     youtubeId: rawVideoData.youtube_id_1_0,
     html5Sources: rawVideoData.html5_sources,
   });
-  const [licenseType, licenseOptions] = module.parseLicense({ licenseData, level: 'block' });
+  const [licenseType, licenseOptions] = module.parseLicense({ licenseData: studioView, level: 'block' });
+  const transcripts = module.parseTranscripts({transcriptsData: studioView});
   const [courseLicenseType, courseLicenseDetails] = module.parseLicense({
     licenseData: courseLicenseData.license,
     level: 'course',
@@ -28,7 +29,7 @@ export const loadVideoData = () => (dispatch, getState) => {
     videoId,
     fallbackVideos,
     allowVideoDownloads: rawVideoData.download_video,
-    transcripts: rawVideoData.transcripts || {},
+    transcripts: transcripts,
     allowTranscriptDownloads: rawVideoData.download_track,
     showTranscriptByDefault: rawVideoData.show_captions,
     duration: { // TODO duration is not always sent so they should be calculated.
@@ -98,6 +99,18 @@ export const determineVideoSource = ({
     fallbackVideos,
   };
 };
+
+
+export const parseTranscripts = ({transcriptsData}) => {
+  if (!transcriptsData) {
+    return {};
+  }
+  const startString = 'language.", "value": '
+  const cleanedStr = transcriptsData.replace(/&#34;/g, '"');
+  const metadataStr = cleanedStr.substring( cleanedStr.indexOf(startString) + startString.length, cleanedStr.indexOf(', "type": "VideoTranslations"'));
+  console.log(metadataStr);
+  return JSON.parse(metadataStr);
+}
 
 // partially copied from frontend-app-learning/src/courseware/course/course-license/CourseLicense.jsx
 export const parseLicense = ({ licenseData, level }) => {
@@ -242,6 +255,30 @@ export const deleteTranscript = ({ language }) => (dispatch, getState) => {
     },
   }));
 };
+
+export const updateTranscriptLanguage = ({newLanguageCode,  languageBeforeChange }) = (dispatch, getState) =>{
+  const state = getState();
+  const { videoId, transcripts } = state.video;
+  selectors.video.getTranscriptDownloadUrl(state)
+  dispatch(requests.getTranscriptFile({
+    studioEndpointUrl,
+    blockId,
+    language: languageBeforeChange,
+    onSuccess: (response) => {
+      dispatch(requests.updateTranscriptLanguage({
+        language: languageBeforeChange ,
+        file: response.file,
+        filename: response.file.name,
+        newLanguageCode,
+        onSuccess: () =>{
+          const { [languageBeforeChange]: removedProperty, ...trimmedTranscripts } = transcripts;
+          const newTranscripts = { [e.target.value]: { filename }, ...trimmedTranscripts };
+          dispatch(actions.video.updateField({ transcripts: newTranscripts }));
+        }
+      }));
+    },
+  }));
+}
 
 export const replaceTranscript = ({ newFile, newFilename, language }) => (dispatch, getState) => {
   const state = getState();

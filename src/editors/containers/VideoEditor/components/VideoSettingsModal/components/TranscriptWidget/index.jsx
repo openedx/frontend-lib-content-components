@@ -67,10 +67,9 @@ export const TranscriptWidget = ({
         {hasTranscripts ? (
 
           <Form.Group className="mt-4.5">
-            { Object.entries(transcripts).map(([language, value]) => (
+            { Object.entries(transcripts).map(([language]) => (
               <TranscriptListItem
                 language={language}
-                title={value.filename}
               />
             ))}
             <div className="mb-1">

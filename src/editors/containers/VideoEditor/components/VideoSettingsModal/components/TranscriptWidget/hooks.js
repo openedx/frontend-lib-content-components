@@ -42,6 +42,11 @@ export const onSelectLanguage = ({
 }) => (e) => {
   const { [languageBeforeChange]: removedProperty, ...trimmedTranscripts } = transcripts;
   const newTranscripts = { [e.target.value]: { filename }, ...trimmedTranscripts };
+  dispatch(
+    actions.video.updateTranscriptLanguage({
+        newLanguageCode: e.target.value, languageBeforeChange
+    })
+  )
   dispatch(actions.video.updateField({ transcripts: newTranscripts }));
 };
 

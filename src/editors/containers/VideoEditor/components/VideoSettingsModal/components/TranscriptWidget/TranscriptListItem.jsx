@@ -15,7 +15,6 @@ import FileInput from '../../../../../../sharedComponents/FileInput';
 import messages from './messages';
 
 export const TranscriptListItem = ({
-  title,
   language,
   // redux
   deleteTranscript,
@@ -48,7 +47,6 @@ export const TranscriptListItem = ({
         ) : (
           <>
             <Card.Header
-              subtitle={title}
               actions={(
                 <Dropdown>
                   <Dropdown.Toggle
@@ -61,15 +59,15 @@ export const TranscriptListItem = ({
                   />
                   <Dropdown.Menu className="video_transcript Action Menu">
                     <Dropdown.Item
-                      key={`transcript-actions-${title}-replace`}
+                      key={`transcript-actions-${language}-replace`}
                       onClick={fileInput.click}
                     >
                       <FormattedMessage {...messages.replaceTranscript} />
                     </Dropdown.Item>
-                    <Dropdown.Item key={`transcript-actions-${title}-download`} href={downloadLink}>
+                    <Dropdown.Item key={`transcript-actions-${language}-download`} href={downloadLink}>
                       <FormattedMessage {...messages.downloadTranscript} />
                     </Dropdown.Item>
-                    <Dropdown.Item key={`transcript-actions-${title}-delete`} onClick={launchDeleteConfirmation}>
+                    <Dropdown.Item key={`transcript-actions-${language}-delete`} onClick={launchDeleteConfirmation}>
                       <FormattedMessage {...messages.deleteTranscript} />
                     </Dropdown.Item>
                   </Dropdown.Menu>
@@ -78,7 +76,7 @@ export const TranscriptListItem = ({
               )}
             />
             <LanguageSelect
-              title={title}
+              title={language}
               language={language}
             />
           </>
@@ -89,7 +87,6 @@ export const TranscriptListItem = ({
 };
 
 TranscriptListItem.propTypes = {
-  title: PropTypes.string.isRequired,
   language: PropTypes.string.isRequired,
   // redux
   deleteTranscript: PropTypes.func.isRequired,
