@@ -13,7 +13,6 @@ describe('DurationWidget', () => {
     intl: { formatMessage },
   };
   describe('render', () => {
-    const testContent = (<p>Some test string</p>);
     test('snapshots: renders as expected with default props', () => {
       expect(
         shallow(<DurationWidget {...props} />),
