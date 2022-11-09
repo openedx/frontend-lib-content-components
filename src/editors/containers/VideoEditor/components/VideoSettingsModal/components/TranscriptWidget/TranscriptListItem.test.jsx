@@ -1,9 +1,9 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import { TranscriptListItem, mapDispatchToProps, mapStateToProps } from './TranscriptListItem';
+import { TranscriptListItem, mapDispatchToProps, mapStateToProps } from '../TranscriptWidget/TranscriptListItem';
 import { thunkActions, selectors } from '../../../../../../data/redux';
-import hooks from './hooks';
+import hooks from '../TranscriptWidget/hooks';
 
 jest.mock('react-redux', () => {
   const dispatchFn = jest.fn().mockName('mockUseDispatch');

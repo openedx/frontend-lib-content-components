@@ -45,7 +45,7 @@ export const TitleHeader = ({
   }
   return (
     <div className="d-flex">
-        {localTitle}
+      {localTitle}
       <IconButton
         alt={intl.formatMessage(messages.editTitleLabel)}
         className="mr-2"

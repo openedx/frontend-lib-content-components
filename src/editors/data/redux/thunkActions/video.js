@@ -1,4 +1,5 @@
 import { actions, selectors } from '..';
+import { removeItemOnce } from '../../../utils';
 import * as requests from './requests';
 import * as module from './video';
 
@@ -18,18 +19,20 @@ export const loadVideoData = () => (dispatch, getState) => {
     html5Sources: rawVideoData.html5_sources,
   });
   const [licenseType, licenseOptions] = module.parseLicense({ licenseData: studioView, level: 'block' });
-  const transcripts = module.parseTranscripts({transcriptsData: studioView});
+  const transcripts = module.parseTranscripts({ transcriptsData: studioView });
+  console.log('transcripts');
   const [courseLicenseType, courseLicenseDetails] = module.parseLicense({
     licenseData: courseLicenseData.license,
     level: 'course',
   });
+
   dispatch(actions.video.load({
     videoSource,
     videoType,
     videoId,
     fallbackVideos,
     allowVideoDownloads: rawVideoData.download_video,
-    transcripts: transcripts,
+    transcripts,
     allowTranscriptDownloads: rawVideoData.download_track,
     showTranscriptByDefault: rawVideoData.show_captions,
     duration: { // TODO duration is not always sent so they should be calculated.
@@ -100,17 +103,16 @@ export const determineVideoSource = ({
   };
 };
 
-
-export const parseTranscripts = ({transcriptsData}) => {
+export const parseTranscripts = ({ transcriptsData }) => {
   if (!transcriptsData) {
-    return {};
+    return [];
   }
-  const startString = 'language.", "value": '
+  const startString = 'language.", "value": ';
   const cleanedStr = transcriptsData.replace(/&#34;/g, '"');
-  const metadataStr = cleanedStr.substring( cleanedStr.indexOf(startString) + startString.length, cleanedStr.indexOf(', "type": "VideoTranslations"'));
+  const metadataStr = cleanedStr.substring(cleanedStr.indexOf(startString) + startString.length, cleanedStr.indexOf(', "type": "VideoTranslations"'));
   console.log(metadataStr);
-  return JSON.parse(metadataStr);
-}
+  return Object.keys(JSON.parse(metadataStr));
+};
 
 // partially copied from frontend-app-learning/src/courseware/course/course-license/CourseLicense.jsx
 export const parseLicense = ({ licenseData, level }) => {
@@ -210,31 +212,29 @@ export const uploadHandout = ({ file }) => (dispatch) => {
 
 // Transcript Thunks:
 
-export const uploadTranscript = ({ language, filename, file }) => (dispatch, getState) => {
+export const uploadTranscript = ({ language, file }) => (dispatch, getState) => {
   const state = getState();
   const { transcripts, videoId } = state.video;
-  let lang = language;
-  if (!language) {
-    [[lang]] = selectors.video.openLanguages(state);
-  }
+  console.log({ roastBeast: transcripts });
+  // Remove the placeholder '' from the unset language from the list of transcripts.
+  const transcriptsPlaceholderRemoved = (transcripts === []) ? transcripts : removeItemOnce(transcripts, '');
+
   dispatch(requests.uploadTranscript({
-    language: lang,
+    language,
     videoId,
     transcript: file,
     onSuccess: (response) => {
       dispatch(actions.video.updateField({
-        transcripts: {
-          ...transcripts,
-          [lang]: { filename },
-        },
+        transcripts: [
+          ...transcriptsPlaceholderRemoved,
+          language],
       }));
       if (selectors.video.videoId(state) === '') {
         dispatch(actions.video.updateField({
-          videoId: response.edx_video_id,
+          videoId: response.data.edx_video_id,
         }));
       }
     },
-
   }));
 };
 
@@ -245,55 +245,44 @@ export const deleteTranscript = ({ language }) => (dispatch, getState) => {
     language,
     videoId,
     onSuccess: () => {
-      const updateTranscripts = {};
-      Object.keys(transcripts).forEach((key) => {
-        if (key !== language) {
-          updateTranscripts[key] = transcripts[key];
-        }
-      });
-      dispatch(actions.video.updateField({ transcripts: updateTranscripts }));
+      const updatedTranscripts = transcripts.filter((code) => code !== language);
+      console.log({ updatedTranscripts });
+      dispatch(actions.video.updateField({ transcripts: updatedTranscripts }));
     },
   }));
 };
 
-export const updateTranscriptLanguage = ({newLanguageCode,  languageBeforeChange }) = (dispatch, getState) =>{
+export const updateTranscriptLanguage = ({ newLanguageCode, languageBeforeChange }) => (dispatch, getState) => {
   const state = getState();
-  const { videoId, transcripts } = state.video;
-  selectors.video.getTranscriptDownloadUrl(state)
+  const { video: { transcripts, videoId } } = state;
+  selectors.video.getTranscriptDownloadUrl(state);
   dispatch(requests.getTranscriptFile({
-    studioEndpointUrl,
-    blockId,
+    videoId,
     language: languageBeforeChange,
     onSuccess: (response) => {
+      console.log({ response });
       dispatch(requests.updateTranscriptLanguage({
-        language: languageBeforeChange ,
-        file: response.file,
-        filename: response.file.name,
+        languageBeforeChange,
+        file: new File([new Blob([response.data], { type: 'text/plain' })], `${videoId}_${newLanguageCode}.srt`, { type: 'text/plain' }),
         newLanguageCode,
-        onSuccess: () =>{
-          const { [languageBeforeChange]: removedProperty, ...trimmedTranscripts } = transcripts;
-          const newTranscripts = { [e.target.value]: { filename }, ...trimmedTranscripts };
+        videoId,
+        onSuccess: () => {
+          const newTranscripts = transcripts
+            .filter(transcript => transcript !== languageBeforeChange).append(newLanguageCode);
           dispatch(actions.video.updateField({ transcripts: newTranscripts }));
-        }
+        },
       }));
     },
   }));
-}
+};
 
 export const replaceTranscript = ({ newFile, newFilename, language }) => (dispatch, getState) => {
   const state = getState();
-  const { transcripts, videoId } = state.video;
+  const { videoId } = state.video;
   dispatch(requests.deleteTranscript({
     language,
     videoId,
     onSuccess: () => {
-      const updateTranscripts = {};
-      Object.keys(transcripts).forEach((key) => {
-        if (key !== language) {
-          updateTranscripts[key] = transcripts[key];
-        }
-      });
-      dispatch(actions.video.updateField({ transcripts: updateTranscripts }));
       dispatch(uploadTranscript({ language, file: newFile, filename: newFilename }));
     },
   }));
@@ -307,6 +296,7 @@ export default {
   uploadThumbnail,
   uploadTranscript,
   deleteTranscript,
+  updateTranscriptLanguage,
   replaceTranscript,
   uploadHandout,
 };

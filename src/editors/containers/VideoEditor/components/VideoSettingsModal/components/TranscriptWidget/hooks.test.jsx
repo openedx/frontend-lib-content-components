@@ -1,4 +1,4 @@
-import * as module from './hooks';
+import * as module from '../TranscriptWidget/hooks';
 
 import { actions, thunkActions } from '../../../../../../data/redux';
 import { MockUseState } from '../../../../../../../testUtils';
