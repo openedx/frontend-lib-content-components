@@ -40,7 +40,6 @@ export const Transcript = ({
   // redux
   deleteTranscript,
 }) => {
-  console.log({ language });
   const { inDeleteConfirmation, launchDeleteConfirmation, cancelDelete } = module.hooks.setUpDeleteConfirmation();
   return (
     <>
