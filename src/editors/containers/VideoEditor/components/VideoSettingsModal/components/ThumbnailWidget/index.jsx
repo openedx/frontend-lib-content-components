@@ -33,6 +33,7 @@ export const ThumbnailWidget = ({
   // injected
   intl,
   // redux
+  isLibrary,
   allowThumbnailUpload,
   thumbnail,
   updateField,
@@ -48,12 +49,21 @@ export const ThumbnailWidget = ({
     fileSizeError,
   });
   const isEdxVideo = videoType === 'edxVideo';
+  const getSubtitle = () => {
+    if (isEdxVideo) {
+      if (thumbnail) {
+        return intl.formatMessage(messages.yesSubtitle);
+      }
+      return intl.formatMessage(messages.noneSubtitle);
+    }
+    return intl.formatMessage(messages.unavailableSubtitle);
+  };
 
-  return (
+  return (!isLibrary ? (
     <CollapsibleFormWidget
       isError={Object.keys(error).length !== 0}
       title={intl.formatMessage(messages.title)}
-      subtitle={isEdxVideo ? null : intl.formatMessage(messages.unavailableSubtitle)}
+      subtitle={getSubtitle()}
     >
       <ErrorAlert
         dismissError={fileSizeError.dismiss}
@@ -103,19 +113,21 @@ export const ThumbnailWidget = ({
         </Stack>
       )}
     </CollapsibleFormWidget>
-  );
+  ) : null);
 };
 
 ThumbnailWidget.propTypes = {
   // injected
   intl: intlShape.isRequired,
   // redux
+  isLibrary: PropTypes.bool.isRequired,
   allowThumbnailUpload: PropTypes.bool.isRequired,
   thumbnail: PropTypes.string.isRequired,
   updateField: PropTypes.func.isRequired,
   videoType: PropTypes.string.isRequired,
 };
 export const mapStateToProps = (state) => ({
+  isLibrary: selectors.app.isLibrary(state),
   allowThumbnailUpload: selectors.video.allowThumbnailUpload(state),
   thumbnail: selectors.video.thumbnail(state),
   videoType: selectors.video.videoType(state),

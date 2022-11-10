@@ -38,19 +38,19 @@ const mockFile = 'soMEtRANscRipT';
 const mockFilename = 'soMEtRANscRipT.srt';
 const mockThumbnail = 'sOMefILE';
 const mockThumbnailResponse = { data: { image_url: 'soMEimAGEUrL' } };
-const thumbnailUrl = 'soMEeNDPoiNTsoMEimAGEUrL';
+const thumbnailUrl = 'soMEimAGEUrL';
 const mockAllowThumbnailUpload = { data: { allowThumbnailUpload: 'soMEbOolEAn' } };
 
 const testMetadata = {
   download_track: 'dOWNlOAdTraCK',
   download_video: 'downLoaDViDEo',
   edx_video_id: 'soMEvIDEo',
-  end_time: 'StOpTIMe',
+  end_time: 0,
   handout: 'hANdoUT',
   html5_sources: [],
   license: 'liCENse',
   show_captions: 'shOWcapTIONS',
-  start_time: 'stARtTiME',
+  start_time: 0,
   transcripts: ['do', 're', 'mi'],
   thumbnail: 'thuMBNaIl',
 };
@@ -128,7 +128,7 @@ describe('video thunkActions', () => {
         duration: {
           startTime: testMetadata.start_time,
           stopTime: testMetadata.end_time,
-          total: null,
+          total: 0,
         },
         handout: testMetadata.handout,
         licenseType: 'liCENSEtyPe',
