@@ -120,8 +120,6 @@ export const apiMethods = {
         videoSource: content.videoSource,
         fallbackVideos: content.fallbackVideos,
       });
-
-      console.log({ outputvideoId: edxVideoId });
       return {
         category: blockType,
         courseKey: learningContextId,
