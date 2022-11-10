@@ -45,7 +45,7 @@ export const Transcript = ({
     <>
       {inDeleteConfirmation
         ? (
-          <Card>
+          <Card className="mb-2">
             <Card.Header title={(<FormattedMessage {...messages.deleteConfirmationHeader} />)} />
             <Card.Body>
               <Card.Section>
@@ -55,7 +55,15 @@ export const Transcript = ({
                 <Button variant="tertiary" className="mb-2 mb-sm-0" onClick={cancelDelete}>
                   <FormattedMessage {...messages.cancelDeleteLabel} />
                 </Button>
-                <Button variant="danger" className="mb-2 mb-sm-0" onClick={() => deleteTranscript({ language })}>
+                <Button
+                  variant="danger"
+                  className="mb-2 mb-sm-0"
+                  onClick={() => {
+                    deleteTranscript({ language });
+                    // stop showing the card
+                    cancelDelete();
+                  }}
+                >
                   <FormattedMessage {...messages.confirmDeleteLabel} />
                 </Button>
               </Card.Footer>

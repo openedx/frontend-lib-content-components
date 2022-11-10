@@ -33,7 +33,7 @@ jest.mock('../../../utils', () => ({
 
 const thunkActionsKeys = keyStore(thunkActions);
 
-const mockLanguage = 'la';
+const mockLanguage = 'na';
 const mockFile = 'soMEtRANscRipT';
 const mockFilename = 'soMEtRANscRipT.srt';
 const mockThumbnail = 'sOMefILE';
@@ -60,7 +60,7 @@ const testState = {
   originalThumbnail: null,
   videoId: 'soMEvIDEo',
 };
-const testUpload = { transcripts: ['la', 'la'] };
+const testUpload = { transcripts: ['la', 'na'] };
 const testReplaceUpload = {
   file: mockFile,
   language: mockLanguage,
@@ -328,7 +328,7 @@ describe('video thunkActions', () => {
   });
   describe('deleteTranscript', () => {
     beforeEach(() => {
-      thunkActions.deleteTranscript({ language: mockLanguage })(dispatch, getState);
+      thunkActions.deleteTranscript({ language: 'la' })(dispatch, getState);
       [[dispatchedAction]] = dispatch.mock.calls;
     });
     it('dispatches deleteTranscript action', () => {

@@ -221,11 +221,15 @@ export const uploadTranscript = ({ language, file }) => (dispatch, getState) => 
     videoId,
     transcript: file,
     onSuccess: (response) => {
-      dispatch(actions.video.updateField({
-        transcripts: [
-          ...transcriptsPlaceholderRemoved,
-          language],
-      }));
+      // if we aren't replacing, add the language to the redux store.
+      if (!transcriptsPlaceholderRemoved.includes(language)) {
+        dispatch(actions.video.updateField({
+          transcripts: [
+            ...transcriptsPlaceholderRemoved,
+            language],
+        }));
+      }
+
       if (selectors.video.videoId(state) === '') {
         dispatch(actions.video.updateField({
           videoId: response.data.edx_video_id,

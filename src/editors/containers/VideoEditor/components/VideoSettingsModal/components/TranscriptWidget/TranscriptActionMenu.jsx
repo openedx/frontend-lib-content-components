@@ -64,8 +64,8 @@ export const TranscriptActionMenu = ({
 TranscriptActionMenu.propTypes = {
   index: PropTypes.number.isRequired,
   language: PropTypes.string.isRequired,
-  // redux
   launchDeleteConfirmation: PropTypes.func.isRequired,
+  // redux
   getTranscriptDownloadUrl: PropTypes.func.isRequired,
 };
 

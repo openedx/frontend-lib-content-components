@@ -34,7 +34,9 @@ exports[`Transcript Component component component snapshots: renders as expected
 
 exports[`Transcript Component component component snapshots: renders as expected with default props: show confirm delete 1`] = `
 <Fragment>
-  <Card>
+  <Card
+    className="mb-2"
+  >
     <Card.Header
       title={
         <FormattedMessage

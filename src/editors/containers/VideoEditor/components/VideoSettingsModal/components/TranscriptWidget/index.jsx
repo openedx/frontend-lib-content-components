@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import {
   FormattedMessage,
   injectIntl,
+  intlShape,
 } from '@edx/frontend-platform/i18n';
 import {
   Form,
@@ -20,7 +21,7 @@ import { actions, selectors } from '../../../../../../data/redux';
 import messages from './messages';
 
 import { RequestKeys } from '../../../../../../data/constants/requests';
-import { videoTranscriptLanguages } from '../../../../../../data/constants/video';
+import { in8lTranscriptLanguages } from '../../../../../../data/constants/video';
 
 import ErrorAlert from '../../../../../../sharedComponents/ErrorAlerts/ErrorAlert';
 import CollapsibleFormWidget from '../CollapsibleFormWidget';
@@ -39,12 +40,13 @@ export const hooks = {
       setError({ ...error, deleteError: messages.deleteTranscriptError.defaultMessage });
     }
   },
-  transcriptLanguages: (transcripts) => {
+  transcriptLanguages: (transcripts, intl) => {
     const languages = [];
     if (transcripts && transcripts.length > 0) {
+      const fullTextTranslatedStrings = in8lTranscriptLanguages(intl);
       transcripts.forEach(transcript => {
         if (!(transcript === '')) {
-          languages.push(videoTranscriptLanguages[transcript]);
+          languages.push(fullTextTranslatedStrings[transcript]);
         }
       });
 
@@ -80,9 +82,11 @@ export const TranscriptWidget = ({
   updateField,
   isUploadError,
   isDeleteError,
+  // intl
+  intl,
 }) => {
   const [error] = React.useContext(ErrorContext).transcripts;
-  const fullTextLanguages = module.hooks.transcriptLanguages(transcripts);
+  const fullTextLanguages = module.hooks.transcriptLanguages(transcripts, intl);
   const hasTranscripts = module.hooks.hasTranscripts(transcripts);
   return (
     <CollapsibleFormWidget
@@ -177,6 +181,7 @@ TranscriptWidget.propTypes = {
   updateField: PropTypes.func.isRequired,
   isUploadError: PropTypes.bool.isRequired,
   isDeleteError: PropTypes.bool.isRequired,
+  intl: PropTypes.shape(intlShape).isRequired,
 };
 export const mapStateToProps = (state) => ({
   transcripts: selectors.video.transcripts(state),

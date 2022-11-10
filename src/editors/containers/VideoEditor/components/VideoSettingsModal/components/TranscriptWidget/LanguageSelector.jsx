@@ -86,7 +86,6 @@ LanguageSelector.propTypes = {
 
 export const mapStateToProps = (state) => ({
   openLanguages: selectors.video.openLanguages(state),
-  transcripts: selectors.video.transcripts(state),
 });
 
 export const mapDispatchToProps = {};

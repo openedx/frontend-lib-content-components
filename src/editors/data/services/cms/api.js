@@ -111,7 +111,6 @@ export const apiMethods = {
       };
     }
     if (blockType === 'video') {
-      // found da bug! It is here
       const {
         html5Sources,
         edxVideoId,
