@@ -20,7 +20,6 @@ export const loadVideoData = () => (dispatch, getState) => {
   });
   const [licenseType, licenseOptions] = module.parseLicense({ licenseData: studioView, level: 'block' });
   const transcripts = module.parseTranscripts({ transcriptsData: studioView });
-  console.log('transcripts');
   const [courseLicenseType, courseLicenseDetails] = module.parseLicense({
     licenseData: courseLicenseData.license,
     level: 'course',
@@ -110,7 +109,6 @@ export const parseTranscripts = ({ transcriptsData }) => {
   const startString = 'language.", "value": ';
   const cleanedStr = transcriptsData.replace(/&#34;/g, '"');
   const metadataStr = cleanedStr.substring(cleanedStr.indexOf(startString) + startString.length, cleanedStr.indexOf(', "type": "VideoTranslations"'));
-  console.log(metadataStr);
   return Object.keys(JSON.parse(metadataStr));
 };
 
@@ -215,7 +213,6 @@ export const uploadHandout = ({ file }) => (dispatch) => {
 export const uploadTranscript = ({ language, file }) => (dispatch, getState) => {
   const state = getState();
   const { transcripts, videoId } = state.video;
-  console.log({ roastBeast: transcripts });
   // Remove the placeholder '' from the unset language from the list of transcripts.
   const transcriptsPlaceholderRemoved = (transcripts === []) ? transcripts : removeItemOnce(transcripts, '');
 
@@ -246,7 +243,6 @@ export const deleteTranscript = ({ language }) => (dispatch, getState) => {
     videoId,
     onSuccess: () => {
       const updatedTranscripts = transcripts.filter((code) => code !== language);
-      console.log({ updatedTranscripts });
       dispatch(actions.video.updateField({ transcripts: updatedTranscripts }));
     },
   }));
@@ -260,7 +256,6 @@ export const updateTranscriptLanguage = ({ newLanguageCode, languageBeforeChange
     videoId,
     language: languageBeforeChange,
     onSuccess: (response) => {
-      console.log({ response });
       dispatch(requests.updateTranscriptLanguage({
         languageBeforeChange,
         file: new File([new Blob([response.data], { type: 'text/plain' })], `${videoId}_${newLanguageCode}.srt`, { type: 'text/plain' }),
