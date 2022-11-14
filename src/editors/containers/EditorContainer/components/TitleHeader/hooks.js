@@ -25,17 +25,17 @@ export const hooks = {
     const title = useSelector(selectors.app.displayTitle);
     const [localTitle, setLocalTitle] = module.state.localTitle(title);
     return {
-      updateTitle: () => {
+      updateTitle: (e) => {
         if (localTitle.length <= 0) {
           setLocalTitle(title);
           stopEditing();
-        } else {
+        } else if (!e.currentTarget.contains(e.relatedTarget)) {
           dispatch(actions.app.setBlockTitle(localTitle));
           stopEditing();
         }
       },
       handleChange: (e) => setLocalTitle(e.target.value),
-      cancelEdit: () => {
+      cancelEdit: (e) => {
         setLocalTitle(title);
         stopEditing();
       },
