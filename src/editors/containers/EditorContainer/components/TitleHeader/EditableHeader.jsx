@@ -15,7 +15,7 @@ export const EditableHeader = ({
   const width = localTitle.length * 8 + 200;
   return (
     <Form.Group
-      style={{ 'min-width': '200px', 'width': `${width}px`}}
+      style={{ 'min-width': '200px', width: `${width}px`}}
       className="mw-100"
       onBlur={(e) => updateTitle(e)}
     >

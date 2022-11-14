@@ -35,7 +35,7 @@ export const hooks = {
         }
       },
       handleChange: (e) => setLocalTitle(e.target.value),
-      cancelEdit: (e) => {
+      cancelEdit: () => {
         setLocalTitle(title);
         stopEditing();
       },
