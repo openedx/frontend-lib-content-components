@@ -16,6 +16,7 @@ jest.mock('..', () => ({
     video: {
       videoId: (state) => ({ videoId: state }),
       videoSettings: (state) => ({ videoSettings: state }),
+      getTranscriptDownloadUrl: (state) => ({ getTranscriptDownloadUrl: state }),
     },
   },
 }));
@@ -25,6 +26,8 @@ jest.mock('./requests', () => ({
   uploadThumbnail: (args) => ({ uploadThumbnail: args }),
   deleteTranscript: (args) => ({ deleteTranscript: args }),
   uploadTranscript: (args) => ({ uploadTranscript: args }),
+  getTranscriptFile: (args) => ({ getTranscriptFile: args }),
+  updateTranscriptLanguage: (args) => ({ updateTranscriptLanguage: args }),
 }));
 
 jest.mock('../../../utils', () => ({
@@ -356,6 +359,23 @@ describe('video thunkActions', () => {
       dispatch.mockClear();
       dispatchedAction.uploadTranscript.onSuccess();
       expect(dispatch).toHaveBeenCalledWith(actions.video.updateField(testUpload));
+    });
+  });
+  describe('updateTranscriptLanguage', () => {
+    beforeEach(() => {
+      thunkActions.updateTranscriptLanguage({
+        newLanguageCode: mockLanguage,
+        languageBeforeChange: `${mockLanguage}i`,
+      })(dispatch, getState);
+      [[dispatchedAction]] = dispatch.mock.calls;
+    });
+    it('dispatches uploadTranscript action', () => {
+      expect(dispatchedAction.getTranscriptFile).not.toEqual(undefined);
+    });
+    it('dispatches actions.video.updateField on success', () => {
+      dispatch.mockClear();
+      dispatchedAction.getTranscriptFile.onSuccess({ data: 'sOme StRinG Data' });
+      expect(dispatch).toHaveBeenCalled();
     });
   });
   describe('replaceTranscript', () => {

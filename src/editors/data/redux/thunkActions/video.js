@@ -254,7 +254,7 @@ export const deleteTranscript = ({ language }) => (dispatch, getState) => {
     language,
     videoId,
     onSuccess: () => {
-      const updatedTranscripts = transcripts.filter((code) => code !== language);
+      const updatedTranscripts = transcripts.filter((langCode) => langCode !== language);
       dispatch(actions.video.updateField({ transcripts: updatedTranscripts }));
     },
   }));

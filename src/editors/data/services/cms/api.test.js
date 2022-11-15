@@ -287,6 +287,21 @@ describe('cms api', () => {
         );
       });
     });
+    describe('transcript get', () => {
+      it('should call get with urls.videoTranscripts and transcript data', () => {
+        const mockJSON = { data: { lang: language, edx_video_id: videoId } };
+        apiMethods.getTranscript({
+          blockId,
+          studioEndpointUrl,
+          videoId,
+          language,
+        });
+        expect(get).toHaveBeenCalledWith(
+          `${urls.videoTranscripts({ studioEndpointUrl, blockId })}?language_code=${language}`,
+          mockJSON,
+        );
+      });
+    });
   });
   describe('processVideoIds', () => {
     const edxVideoId = 'eDXviDEoid';
