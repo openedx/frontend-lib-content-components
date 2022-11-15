@@ -38,7 +38,7 @@ export const openLanguages = createSelector(
       return videoTranscriptLanguages;
     }
     const open = Object.keys(videoTranscriptLanguages).filter(
-      (lang) => !Object.keys(transcripts).includes(lang),
+      (lang) => !transcripts.includes(lang),
     );
     return open;
   },
