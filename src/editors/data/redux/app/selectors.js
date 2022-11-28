@@ -36,7 +36,7 @@ export const isInitialized = createSelector(
     module.simpleSelectors.unitUrl,
     module.simpleSelectors.blockValue,
   ],
-  (unitUrl, blockValue) => !!(unitUrl && blockValue),
+  (unitUrl, blockValue) => !!(blockValue && (unitUrl || blockValue.data.is_lib_v2)),
 );
 
 export const displayTitle = createSelector(

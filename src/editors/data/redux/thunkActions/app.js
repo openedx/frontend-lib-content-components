@@ -47,7 +47,9 @@ export const fetchCourseDetails = () => (dispatch) => {
 export const initialize = (data) => (dispatch) => {
   dispatch(actions.app.initialize(data));
   dispatch(module.fetchBlock());
-  dispatch(module.fetchUnit());
+  if (!data.blockId.startsWith('lb:')) {
+    dispatch(module.fetchUnit());
+  }
   dispatch(module.fetchStudioView());
   dispatch(module.fetchAssets());
   dispatch(module.fetchCourseDetails());

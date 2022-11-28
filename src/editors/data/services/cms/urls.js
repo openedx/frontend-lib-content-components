@@ -15,9 +15,12 @@ export const returnUrl = ({ studioEndpointUrl, unitUrl, learningContextId }) => 
   return unitUrl ? unit({ studioEndpointUrl, unitUrl }) : '';
 };
 
-export const block = ({ studioEndpointUrl, blockId }) => (
-  `${studioEndpointUrl}/xblock/${blockId}`
-);
+export const block = ({ studioEndpointUrl, blockId }) => {
+  if (blockId.startsWith('lb:')) {
+    return `${studioEndpointUrl}/api/libraries/v2/${blockId}/data/`;
+  }
+  return `${studioEndpointUrl}/xblock/${blockId}`;
+};
 
 export const blockAncestor = ({ studioEndpointUrl, blockId }) => (
   `${block({ studioEndpointUrl, blockId })}?fields=ancestorInfo`
