@@ -23,7 +23,7 @@ describe('VideoEditorHandout hooks', () => {
   describe('updateVideoType', () => {
     const sourceEdxVideo = {
       onBlur: jest.fn(),
-      local: '',
+      local: '06b1503a-7df4-4e72-b970-326e02dbcbe4',
     };
     const sourceYouTube = {
       onBlur: jest.fn(),
