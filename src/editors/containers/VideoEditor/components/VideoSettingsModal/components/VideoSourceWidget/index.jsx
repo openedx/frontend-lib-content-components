@@ -9,7 +9,7 @@ import {
   Icon,
   Button,
 } from '@edx/paragon';
-import { Delete, Info, Add } from '@edx/paragon/icons';
+import { DeleteOutline, InfoOutline, Add } from '@edx/paragon/icons';
 import {
   FormattedMessage,
   injectIntl,
@@ -79,7 +79,7 @@ export const VideoSourceWidget = ({
               key={`top-delete-${videoUrl}`}
               tooltipPlacement="top"
               tooltipContent={intl.formatMessage(messages.deleteFallbackVideo)}
-              src={Delete}
+              src={DeleteOutline}
               iconAs={Icon}
               alt={intl.formatMessage(messages.deleteFallbackVideo)}
               onClick={() => deleteFallbackVideo(videoUrl)}
@@ -100,7 +100,7 @@ export const VideoSourceWidget = ({
             key="top"
             tooltipPlacement="top"
             tooltipContent={intl.formatMessage(messages.tooltipMessage)}
-            src={Info}
+            src={InfoOutline}
             iconAs={Icon}
             alt={intl.formatMessage(messages.tooltipMessage)}
           />

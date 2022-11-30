@@ -7,7 +7,7 @@ import {
   Card, Button, IconButton, Row,
   Icon,
 } from '@edx/paragon';
-import { Delete } from '@edx/paragon/icons';
+import { DeleteOutline } from '@edx/paragon/icons';
 
 import {
   FormattedMessage,
@@ -80,7 +80,7 @@ export const Transcript = ({
               <IconButton
                 className="d-inline-block"
                 iconAs={Icon}
-                src={Delete}
+                src={DeleteOutline}
                 onClick={() => launchDeleteConfirmation()}
               />
             ) : (

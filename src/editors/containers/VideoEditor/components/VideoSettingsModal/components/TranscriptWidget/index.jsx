@@ -15,7 +15,7 @@ import {
   IconButtonWithTooltip,
   ActionRow,
 } from '@edx/paragon';
-import { Add, Info } from '@edx/paragon/icons';
+import { Add, InfoOutline } from '@edx/paragon/icons';
 
 import { actions, selectors } from '../../../../../../data/redux';
 import messages from './messages';
@@ -130,7 +130,7 @@ export const TranscriptWidget = ({
                 key="top"
                 tooltipPlacement="top"
                 tooltipContent={intl.formatMessage(messages.tooltipMessage)}
-                src={Info}
+                src={InfoOutline}
                 iconAs={Icon}
                 alt={intl.formatMessage(messages.tooltipMessage)}
               />

@@ -14,7 +14,7 @@ import {
   IconButtonWithTooltip,
   Alert,
 } from '@edx/paragon';
-import { Delete, FileUpload } from '@edx/paragon/icons';
+import { DeleteOutline, FileUpload } from '@edx/paragon/icons';
 
 import { actions, selectors } from '../../../../../../data/redux';
 import { acceptedImgKeys } from './constants';
@@ -93,7 +93,7 @@ export const ThumbnailWidget = ({
               tooltipPlacement="top"
               tooltipContent={intl.formatMessage(messages.deleteThumbnail)}
               iconAs={Icon}
-              src={Delete}
+              src={DeleteOutline}
               onClick={() => updateField({ thumbnail: null })}
             />
           ) : null }
