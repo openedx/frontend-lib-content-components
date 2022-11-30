@@ -93,7 +93,7 @@ export const TranscriptWidget = ({
     <CollapsibleFormWidget
       isError={Object.keys(error).length !== 0}
       subtitle={fullTextLanguages}
-      title="Transcript"
+      title={intl.formatMessage(messages.title)}
     >
       <ErrorAlert
         hideHeading

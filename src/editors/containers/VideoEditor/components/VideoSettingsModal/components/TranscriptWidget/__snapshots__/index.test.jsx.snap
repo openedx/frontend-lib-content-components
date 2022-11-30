@@ -4,7 +4,7 @@ exports[`TranscriptWidget component snapshots snapshot: renders ErrorAlert with 
 <CollapsibleFormWidget
   isError={true}
   subtitle="English"
-  title="Transcript"
+  title="Transcripts"
 >
   <ErrorAlert
     dismissError={null}
@@ -123,7 +123,7 @@ exports[`TranscriptWidget component snapshots snapshot: renders ErrorAlert with 
 <CollapsibleFormWidget
   isError={true}
   subtitle="English, French"
-  title="Transcript"
+  title="Transcripts"
 >
   <ErrorAlert
     dismissError={null}
@@ -246,7 +246,7 @@ exports[`TranscriptWidget component snapshots snapshots: renders as expected wit
 <CollapsibleFormWidget
   isError={true}
   subtitle="English"
-  title="Transcript"
+  title="Transcripts"
 >
   <ErrorAlert
     dismissError={null}
@@ -365,7 +365,7 @@ exports[`TranscriptWidget component snapshots snapshots: renders as expected wit
 <CollapsibleFormWidget
   isError={true}
   subtitle="None"
-  title="Transcript"
+  title="Transcripts"
 >
   <ErrorAlert
     dismissError={null}
@@ -431,7 +431,7 @@ exports[`TranscriptWidget component snapshots snapshots: renders as expected wit
 <CollapsibleFormWidget
   isError={true}
   subtitle="English"
-  title="Transcript"
+  title="Transcripts"
 >
   <ErrorAlert
     dismissError={null}
@@ -550,7 +550,7 @@ exports[`TranscriptWidget component snapshots snapshots: renders as expected wit
 <CollapsibleFormWidget
   isError={true}
   subtitle="English"
-  title="Transcript"
+  title="Transcripts"
 >
   <ErrorAlert
     dismissError={null}
