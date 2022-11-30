@@ -8,7 +8,6 @@ import {
 } from '@edx/frontend-platform/i18n';
 import {
   Button,
-  Form,
   Stack,
 } from '@edx/paragon';
 import { Add } from '@edx/paragon/icons';

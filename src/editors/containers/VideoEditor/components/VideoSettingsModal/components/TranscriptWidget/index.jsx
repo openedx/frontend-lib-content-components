@@ -130,13 +130,13 @@ export const TranscriptWidget = ({
               <OverlayTrigger
                 key="top"
                 placement="top"
-                overlay={
-                  <Tooltip id={`tooltip-top`}>
+                overlay={(
+                  <Tooltip id="tooltip-top">
                     <FormattedMessage {...messages.tooltipMessage} />
                   </Tooltip>
-                }
+                )}
               >
-                <Icon src={Info} style={{ height: '16px', width: "16px" }}/>
+                <Icon src={Info} style={{ height: '16px', width: '16px' }} />
               </OverlayTrigger>
               <ActionRow.Spacer />
             </ActionRow>
@@ -162,7 +162,7 @@ export const TranscriptWidget = ({
         <Stack gap={3} className="border-primary-100 border-top">
           <Button
             className="text-primary-500 font-weight-bold"
-            size='sm'
+            size="sm"
             iconBefore={Add}
             variant="link"
             onClick={() => module.hooks.onAddNewTranscript({ transcripts, updateField })}

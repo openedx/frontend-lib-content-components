@@ -35,7 +35,8 @@ export const LicenseDisplay = ({
             className="text-primary-500"
             size="sm"
             destination="https://creativecommons.org/about"
-            target="_blank">
+            target="_blank"
+          >
             <FormattedMessage {...messages.viewLicenseDetailsLabel} />
           </Hyperlink>
         ) : null }

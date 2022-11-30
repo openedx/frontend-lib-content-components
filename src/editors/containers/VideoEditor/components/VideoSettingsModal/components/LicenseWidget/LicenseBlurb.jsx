@@ -4,7 +4,7 @@ import {
   FormattedMessage,
   injectIntl,
 } from '@edx/frontend-platform/i18n';
-import { Form, Icon } from '@edx/paragon';
+import { Icon } from '@edx/paragon';
 import {
   Attribution,
   Copyright,

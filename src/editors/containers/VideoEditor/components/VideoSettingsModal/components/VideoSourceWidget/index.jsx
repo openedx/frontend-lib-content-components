@@ -101,13 +101,13 @@ export const VideoSourceWidget = ({
           <OverlayTrigger
             key="top"
             placement="top"
-            overlay={
-              <Tooltip id={`tooltip-top`}>
+            overlay={(
+              <Tooltip id="tooltip-top">
                 <FormattedMessage {...messages.tooltipMessage} />
               </Tooltip>
-            }
+            )}
           >
-            <Icon src={Info} style={{ height: '16px', width: "16px" }}/>
+            <Icon src={Info} style={{ height: '16px', width: '16px' }} />
           </OverlayTrigger>
           <ActionRow.Spacer />
         </ActionRow>
