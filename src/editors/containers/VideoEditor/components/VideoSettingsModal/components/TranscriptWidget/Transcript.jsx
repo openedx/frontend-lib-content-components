@@ -78,7 +78,6 @@ export const Transcript = ({
             />
             { language === '' ? (
               <IconButton
-                className="d-inline-block"
                 iconAs={Icon}
                 src={DeleteOutline}
                 onClick={() => launchDeleteConfirmation()}
