@@ -7,7 +7,6 @@ import {
 } from '@edx/frontend-platform/i18n';
 import {
   ActionRow,
-  Card,
   CheckboxControl,
   Form,
   Icon,
@@ -23,7 +22,6 @@ import {
 import { actions } from '../../../../../../data/redux';
 import { LicenseLevel, LicenseTypes } from '../../../../../../data/constants/licenses';
 import { messages } from './messages';
-import { ActionRowSpacer } from '@edx/paragon/dist/ActionRow';
 
 export const LicenseDetails = ({
   license,
@@ -58,7 +56,7 @@ export const LicenseDetails = ({
                       <FormattedMessage {...messages.attributionCheckboxLabel} />
                     </Form.Label>
                     <ActionRow.Spacer />
-                    <CheckboxControl 
+                    <CheckboxControl
                       disabled
                       checked
                       aria-label="Checkbox"
@@ -77,7 +75,7 @@ export const LicenseDetails = ({
                       <FormattedMessage {...messages.noncommercialCheckboxLabel} />
                     </Form.Label>
                     <ActionRow.Spacer />
-                    <CheckboxControl 
+                    <CheckboxControl
                       checked={details.noncommercial}
                       disabled={level === LicenseLevel.course}
                       onChange={(e) => updateField({
@@ -102,7 +100,7 @@ export const LicenseDetails = ({
                       <FormattedMessage {...messages.noDerivativesCheckboxLabel} />
                     </Form.Label>
                     <ActionRow.Spacer />
-                    <CheckboxControl 
+                    <CheckboxControl
                       checked={details.noDerivatives}
                       disabled={level === LicenseLevel.course}
                       onChange={(e) => updateField({
@@ -128,7 +126,7 @@ export const LicenseDetails = ({
                       <FormattedMessage {...messages.shareAlikeCheckboxLabel} />
                     </Form.Label>
                     <ActionRow.Spacer />
-                    <CheckboxControl 
+                    <CheckboxControl
                       cchecked={details.shareAlike}
                       disabled={level === LicenseLevel.course}
                       onChange={(e) => updateField({

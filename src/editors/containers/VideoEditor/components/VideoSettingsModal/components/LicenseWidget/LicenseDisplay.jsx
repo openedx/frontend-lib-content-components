@@ -6,7 +6,6 @@ import {
   injectIntl,
 } from '@edx/frontend-platform/i18n';
 import {
-  Card,
   Stack,
   Hyperlink,
 } from '@edx/paragon';

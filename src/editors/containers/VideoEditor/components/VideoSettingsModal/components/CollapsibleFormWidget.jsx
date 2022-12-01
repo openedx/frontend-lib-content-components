@@ -57,6 +57,7 @@ export const CollapsibleFormWidget = ({
 
 CollapsibleFormWidget.defaultProps = {
   subtitle: null,
+  fontSize: null,
 };
 
 CollapsibleFormWidget.propTypes = {
@@ -64,6 +65,7 @@ CollapsibleFormWidget.propTypes = {
   isError: PropTypes.bool.isRequired,
   subtitle: PropTypes.node,
   title: PropTypes.node.isRequired,
+  fontSize: PropTypes.string,
   // injected
   intl: intlShape.isRequired,
 };
