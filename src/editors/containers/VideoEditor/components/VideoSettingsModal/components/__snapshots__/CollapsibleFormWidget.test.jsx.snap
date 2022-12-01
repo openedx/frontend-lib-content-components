@@ -25,7 +25,7 @@ exports[`CollapsibleFormWidget render snapshots: renders as expected with defaul
           tiTLE
         </div>
         <div
-          className="undefined"
+          className=""
         >
           SuBTItle
         </div>
@@ -60,7 +60,7 @@ exports[`CollapsibleFormWidget render snapshots: renders as expected with defaul
     </Visible>
   </Trigger>
   <Body
-    className="collapsible-body rounded px-0 undefined"
+    className="collapsible-body rounded px-0 "
   >
     <p>
       Some test string
@@ -95,7 +95,7 @@ exports[`CollapsibleFormWidget render snapshots: renders with open={true} when t
           tiTLE
         </div>
         <div
-          className="undefined"
+          className=""
         >
           SuBTItle
         </div>
@@ -133,7 +133,7 @@ exports[`CollapsibleFormWidget render snapshots: renders with open={true} when t
     </Visible>
   </Trigger>
   <Body
-    className="collapsible-body rounded px-0 undefined"
+    className="collapsible-body rounded px-0 "
   >
     <p>
       Some test string

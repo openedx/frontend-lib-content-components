@@ -57,7 +57,7 @@ export const CollapsibleFormWidget = ({
 
 CollapsibleFormWidget.defaultProps = {
   subtitle: null,
-  fontSize: null,
+  fontSize: '',
 };
 
 CollapsibleFormWidget.propTypes = {
