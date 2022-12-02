@@ -140,7 +140,7 @@ export const deleteThumbnail = ({ dispatch }) => () => {
   emptyCanvas.height = constants.MAX_HEIGHT;
   ctx.fillStyle = 'black';
   ctx.fillRect(0, 0, emptyCanvas.width, emptyCanvas.height);
-  const file = createResampledFile({ canvasUrl: emptyCanvas.toDataURL(), filename: 'emptyCanvas.png', mimeType: 'image/png' });
+  const file = createResampledFile({ canvasUrl: emptyCanvas.toDataURL(), filename: 'blankThumbnail.png', mimeType: 'image/png' });
   dispatch(thunkActions.video.uploadThumbnail({ thumbnail: file, emptyCanvas }));
 };
 
