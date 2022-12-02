@@ -137,10 +137,13 @@ describe('fileInput', () => {
     });
   });
   describe('deleteThumbnail', () => {
-    const testFile = new File([selectedFileSuccess], 'sOMEUrl.jpg')
+    const testFile = new File([selectedFileSuccess], 'sOMEUrl.jpg');
     hooks.deleteThumbnail({ dispatch })();
-    expect(dispatch).toHaveBeenNthCalledWith(1, actions.video.updateField({ thumbnail: null}));
+    expect(dispatch).toHaveBeenNthCalledWith(1, actions.video.updateField({ thumbnail: null }));
     expect(hooks.createResampledFile).toHaveBeenCalled();
-    expect(dispatch).toHaveBeenNthCalledWith(2, thunkActions.video.uploadThumbnail({ thumbnail: testFile, emptyCanvas: true}))
+    expect(dispatch).toHaveBeenNthCalledWith(2, thunkActions.video.uploadThumbnail({
+      thumbnail: testFile,
+      emptyCanvas: true,
+    }));
   });
 });
