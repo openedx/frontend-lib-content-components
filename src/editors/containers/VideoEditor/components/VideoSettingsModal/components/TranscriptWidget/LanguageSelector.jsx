@@ -59,15 +59,15 @@ export const LanguageSelector = ({
     <div className="col col-11">
       <Form.Group controlId={`selectLanguage-form-${index}`} className="mw-100">
         <Form.Control as="select" aria-label={intl.formatMessage(messages.languageSelectLabel)} defaultValue={language} onChange={(e) => onLanguageChange(e)}>
-          <option value="">{intl.formatMessage(messages.languageSelectPlaceholder)}</option>
           {Object.entries(videoTranscriptLanguages).map(([lang, text]) => {
             if (language === lang) { return (<option value={lang} selected>{text}</option>); }
-            if (language === '') { return (<option hidden>{text}</option>)}
+            if (lang === 'placeholder') { return (<option hidden>{intl.formatMessage(messages.languageSelectPlaceholder)}</option>)}
             if (openLanguages.some(row => row.includes(lang))) {
               return (<option value={lang}>{text}</option>);
             }
             return (<option value={lang} disabled>{text}</option>);
           })}
+          
         </Form.Control>
       </Form.Group>
       <FileInput fileInput={input} acceptedFiles=".srt" />
