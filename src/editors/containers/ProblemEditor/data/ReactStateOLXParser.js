@@ -2,7 +2,7 @@ import _ from 'lodash-es';
 import { XMLParser, XMLBuilder } from 'fast-xml-parser';
 import { ProblemTypeKeys } from '../../../data/constants/problem';
 
-export class ReactStateOLXParser {
+class ReactStateOLXParser {
   constructor(problemState) {
     const parserOptions = {
       ignoreAttributes: false,
@@ -267,3 +267,5 @@ export class ReactStateOLXParser {
     return problemString;
   }
 }
+
+export default ReactStateOLXParser;

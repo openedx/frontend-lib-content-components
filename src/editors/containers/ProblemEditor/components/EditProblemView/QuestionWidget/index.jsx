@@ -1,6 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Editor } from '@tinymce/tinymce-react';
-import { useSelector, useDispatch, connect } from 'react-redux';
+import { connect } from 'react-redux';
 import { injectIntl, FormattedMessage } from '@edx/frontend-platform/i18n';
 import * as hooks from '../../../hooks';
 import { selectors, actions } from '../../../../../data/redux';
@@ -31,6 +32,11 @@ export const QuestionWidget = ({
       </div>
     </div>
   );
+};
+
+QuestionWidget.propTypes = {
+  question: PropTypes.string.isRequired,
+  updateQuestion: PropTypes.func.isRequired,
 };
 
 export const mapStateToProps = (state) => ({

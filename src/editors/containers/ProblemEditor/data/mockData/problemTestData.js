@@ -9,78 +9,78 @@ export const checklistWithFeebackHints = {
         title: 'a correct answer',
         correct: true,
         selectedFeedback: ' You can specify optional feedback that appears after the learner selects and submits this answer.',
-        unselectedFeedback: 'You can specify optional feedback that appears after the learner clears and submits this answer.'
+        unselectedFeedback: 'You can specify optional feedback that appears after the learner clears and submits this answer.',
       },
       {
         id: 'B',
         title: 'an incorrect answer',
         correct: false,
         selectedFeedback: '',
-        unselectedFeedback: ''
+        unselectedFeedback: '',
       },
       {
         id: 'C',
         title: 'an incorrect answer',
         correct: false,
         selectedFeedback: ' You can specify optional feedback for none, all, or a subset of the answers.',
-        unselectedFeedback: 'You can specify optional feedback for selected answers, cleared answers, or both.'
+        unselectedFeedback: 'You can specify optional feedback for selected answers, cleared answers, or both.',
       },
       {
         id: 'D',
         title: 'a correct answer',
         correct: true,
         selectedFeedback: '',
-        unselectedFeedback: ''
-      }
+        unselectedFeedback: '',
+      },
     ],
     groupFeedbackList: [
       {
         id: 3,
         answers: [
-          "A",
-          "B",
-          "D"
+          'A',
+          'B',
+          'D',
         ],
-        feedback: 'You can specify optional feedback for a combination of answers which appears after the specified set of answers is submitted.'
+        feedback: 'You can specify optional feedback for a combination of answers which appears after the specified set of answers is submitted.',
       },
       {
         id: 4,
         answers: [
-          "A",
-          "B",
-          "C",
-          "D"
+          'A',
+          'B',
+          'C',
+          'D',
         ],
-        feedback: 'You can specify optional feedback for one, several, or all answer combinations.'
-      }
+        feedback: 'You can specify optional feedback for one, several, or all answer combinations.',
+      },
     ],
     settings: {
       hints: [
         {
           id: 14,
-          value: 'You can add an optional hint like this. Problems that have a hint include a hint button, and this text appears the first time learners select the button.'
+          value: 'You can add an optional hint like this. Problems that have a hint include a hint button, and this text appears the first time learners select the button.',
         },
         {
           id: 15,
-          value: 'If you add more than one hint, a different hint appears each time learners select the hint button.'
-        }
+          value: 'If you add more than one hint, a different hint appears each time learners select the hint button.',
+        },
       ],
       scoring: {
         weight: 2.5,
         attempts: {
           unlimited: false,
-          number: 5
-        }
+          number: 5,
+        },
       },
       randomization: 'per_student',
       timeBetween: 3,
       matLabApiKey: 'sample_matlab_api_key',
       showAnswer: {
         on: 'after_attempts',
-        afterAttempts: 2
+        afterAttempts: 2,
       },
-      showResetButton: true
-    }
+      showResetButton: true,
+    },
   },
   metadata: {
     markdown: `You can use this template as a guide to the simple editor markdown and OLX markup to use for checkboxes with hints and feedback problems. Edit this component to replace this template with your own assessment.
@@ -103,7 +103,7 @@ export const checklistWithFeebackHints = {
     attempts_before_showanswer_button: 2,
     submission_wait_seconds: 3,
     weight: 2.5,
-  }
+  },
 };
 
 export const dropdownWithFeedbackHints = {
@@ -116,32 +116,32 @@ export const dropdownWithFeedbackHints = {
         id: 'A',
         title: 'an incorrect answer',
         correct: false,
-        feedback: 'You can specify optional feedback like this, which appears after this answer is submitted.'
+        feedback: 'You can specify optional feedback like this, which appears after this answer is submitted.',
       },
       {
         id: 'B',
         title: 'the correct answer',
         correct: true,
-        feedback: ''
+        feedback: '',
       },
       {
         id: 'C',
         title: 'an incorrect answer',
         correct: false,
-        feedback: 'You can specify optional feedback for none, a subset, or all of the answers.'
-      }
+        feedback: 'You can specify optional feedback for none, a subset, or all of the answers.',
+      },
     ],
     groupFeedbackList: [],
     settings: {
       hints: [
         {
           id: 8,
-          value: 'You can add an optional hint like this. Problems that have a hint include a hint button, and this text appears the first time learners select the button.'
+          value: 'You can add an optional hint like this. Problems that have a hint include a hint button, and this text appears the first time learners select the button.',
         },
         {
           id: 9,
-          value: 'If you add more than one hint, a different hint appears each time learners select the hint button.'
-        }
+          value: 'If you add more than one hint, a different hint appears each time learners select the hint button.',
+        },
       ],
       scoring: {
         weight: 2.5,
@@ -158,7 +158,7 @@ export const dropdownWithFeedbackHints = {
         afterAttempts: 2,
       },
       showResetButton: true,
-    }
+    },
   },
   metadata: {
     markdown: `You can use this template as a guide to the simple editor markdown and OLX markup to use for dropdown with hints and feedback problems. Edit this component to replace this template with your own assessment.
@@ -177,8 +177,8 @@ export const dropdownWithFeedbackHints = {
     attempts_before_showanswer_button: 2,
     submission_wait_seconds: 3,
     weight: 2.5,
-  }
-}
+  },
+};
 
 export const numericWithHints = {
   state: {
@@ -190,49 +190,49 @@ export const numericWithHints = {
         id: 'A',
         title: '100 +-5',
         feedback: 'You can specify optional feedback like this, which appears after this answer is submitted.',
-        correct: true
+        correct: true,
       },
       {
         id: 'B',
         title: '90 +-5',
         feedback: 'You can specify optional feedback like this, which appears after this answer is submitted.',
-        correct: true
+        correct: true,
       },
       {
         id: 'C',
         title: '60 +-5',
         feedback: 'You can specify optional feedback like this, which appears after this answer is submitted.',
-        correct: false
-      }
+        correct: false,
+      },
     ],
     groupFeedbackList: [],
     settings: {
       hints: [
         {
           id: 6,
-          value: 'You can add an optional hint like this. Problems that have a hint include a hint button, and this text appears the first time learners select the button.'
+          value: 'You can add an optional hint like this. Problems that have a hint include a hint button, and this text appears the first time learners select the button.',
         },
         {
           id: 7,
-          value: 'If you add more than one hint, a different hint appears each time learners select the hint button.'
-        }
+          value: 'If you add more than one hint, a different hint appears each time learners select the hint button.',
+        },
       ],
       scoring: {
         weight: 2.5,
         attempts: {
           unlimited: true,
-          number: 0
-        }
+          number: 0,
+        },
       },
       randomization: 'per_student',
       timeBetween: 0,
       matLabApiKey: '',
       showAnswer: {
         on: 'after_attempts',
-        afterAttempts: 1
+        afterAttempts: 1,
       },
-      showResetButton: false
-    }
+      showResetButton: false,
+    },
   },
   metadata: {
     markdown: `You can use this template as a guide to the simple editor markdown and OLX markup to use for numerical input with hints and feedback problems. Edit this component to replace this template with your own assessment.
@@ -249,8 +249,8 @@ not=60 +-5 {{You can specify optional feedback like this, which appears after th
     rerandomize: 'invalid_input',
     showanswer: 'invalid_input',
     attempts_before_showanswer_button: 2,
-  }
-}
+  },
+};
 
 export const textInputWithHints = {
   state: {
@@ -262,49 +262,49 @@ export const textInputWithHints = {
         id: 'A',
         title: 'the correct answer',
         feedback: 'You can specify optional feedback like this, which appears after this answer is submitted.',
-        correct: true
+        correct: true,
       },
       {
         id: 'B',
         title: 'optional acceptable variant of the correct answer',
         feedback: '',
-        correct: true
+        correct: true,
       },
       {
         id: 'C',
         title: 'optional incorrect answer such as a frequent misconception',
         feedback: 'You can specify optional feedback for none, a subset, or all of the answers.',
-        correct: false
-      }
+        correct: false,
+      },
     ],
     groupFeedbackList: [],
     settings: {
       hints: [
         {
           id: 9,
-          value: 'You can add an optional hint like this. Problems that have a hint include a hint button, and this text appears the first time learners select the button.'
+          value: 'You can add an optional hint like this. Problems that have a hint include a hint button, and this text appears the first time learners select the button.',
         },
         {
           id: 10,
-          value: 'If you add more than one hint, a different hint appears each time learners select the hint button.'
-        }
+          value: 'If you add more than one hint, a different hint appears each time learners select the hint button.',
+        },
       ],
       scoring: {
         weight: 2.5,
         attempts: {
           unlimited: true,
-          number: 0
-        }
+          number: 0,
+        },
       },
       randomization: '',
       timeBetween: 0,
       matLabApiKey: '',
       showAnswer: {
         on: '',
-        afterAttempts: 1
+        afterAttempts: 1,
       },
-      showResetButton: false
-    }
+      showResetButton: false,
+    },
   },
   metadata: {
     markdown: `You can use this template as a guide to the simple editor markdown and OLX markup to use for text input with hints and feedback problems. Edit this component to replace this template with your own assessment.
@@ -317,8 +317,8 @@ not=optional incorrect answer such as a frequent misconception {{You can specify
 ||If you add more than one hint, a different hint appears each time learners select the hint button.||
 `,
     weight: 2.5,
-  }
-}
+  },
+};
 
 export const sigleSelectWithHints = {
   state: {
@@ -330,55 +330,55 @@ export const sigleSelectWithHints = {
         id: 'A',
         title: 'a correct answer',
         correct: true,
-        feedback: 'Some new feedback'
+        feedback: 'Some new feedback',
       },
       {
         id: 'B',
         title: 'an incorrect answer',
         correct: false,
-        feedback: ''
+        feedback: '',
       },
       {
         id: 'C',
         title: 'an incorrect answer',
         correct: false,
-        feedback: 'Wrong feedback'
+        feedback: 'Wrong feedback',
       },
       {
         id: 'D',
         title: 'an incorrect answer again',
         correct: false,
-        feedback: ''
-      }
+        feedback: '',
+      },
     ],
     groupFeedbackList: [],
     settings: {
       hints: [
         {
           id: 13,
-          value: 'You can add an optional hint like this. Problems that have a hint include a hint button, and this text appears the first time learners select the button.'
+          value: 'You can add an optional hint like this. Problems that have a hint include a hint button, and this text appears the first time learners select the button.',
         },
         {
           id: 14,
-          value: 'If you add more than one hint, a different hint appears each time learners select the hint button.'
-        }
+          value: 'If you add more than one hint, a different hint appears each time learners select the hint button.',
+        },
       ],
       scoring: {
         weight: 0,
         attempts: {
           unlimited: true,
-          number: 0
-        }
+          number: 0,
+        },
       },
       randomization: '',
       timeBetween: 0,
       matLabApiKey: '',
       showAnswer: {
         on: '',
-        afterAttempts: 1
+        afterAttempts: 1,
       },
-      showResetButton: false
-    }
+      showResetButton: false,
+    },
   },
   metadata: {
     markdown: `You can use this template as a guide to the simple editor markdown and OLX markup to use for checkboxes with hints and feedback problems. Edit this component to replace this template with your own assessment.
@@ -390,6 +390,6 @@ export const sigleSelectWithHints = {
 ( ) an incorrect answer again
 ||You can add an optional hint like this. Problems that have a hint include a hint button, and this text appears the first time learners select the button.||
 ||If you add more than one hint, a different hint appears each time learners select the hint button.||
-`
-  }
-}
+`,
+  },
+};

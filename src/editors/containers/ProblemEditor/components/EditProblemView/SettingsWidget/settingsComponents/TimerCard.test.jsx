@@ -8,9 +8,7 @@ jest.mock('../hooks', () => ({
   timerCardHooks: jest.fn(),
 }));
 
-
 describe('TimerCard', () => {
-
   const props = {
     timeBetween: 5,
     updateSettings: jest.fn().mockName('args.updateSettings'),
@@ -25,10 +23,10 @@ describe('TimerCard', () => {
 
   describe('behavior', () => {
     it(' calls timerCardHooks when initialized', () => {
-        shallow(<TimerCard {...props} />);
-        expect(timerCardHooks).toHaveBeenCalledWith( props.updateSettings );
+      shallow(<TimerCard {...props} />);
+      expect(timerCardHooks).toHaveBeenCalledWith(props.updateSettings);
     });
-});
+  });
 
   describe('snapshot', () => {
     test('snapshot: renders reset true setting card', () => {

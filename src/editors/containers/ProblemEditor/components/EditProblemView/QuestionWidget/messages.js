@@ -5,3 +5,5 @@ export const messages = {
     description: 'Question Title',
   },
 };
+
+export default messages;

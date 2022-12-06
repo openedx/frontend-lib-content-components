@@ -1,3 +1,6 @@
+// Parse OLX to JavaScript objects.
+/* eslint no-eval: 0 */
+
 import { XMLParser, XMLBuilder } from 'fast-xml-parser';
 import _ from 'lodash-es';
 import { ProblemTypeKeys } from '../../../data/constants/problem';
@@ -18,7 +21,7 @@ export const nonQuestionKeys = [
   '@_type',
   'formulaequationinput',
   'numericalresponse',
-  'demandhint'
+  'demandhint',
 ];
 
 export class OLXParser {
@@ -209,7 +212,6 @@ export class OLXParser {
         subAnswers = this.parseNumericResponseObject(numericalAnswer, answers.length);
         answers = _.concat(answers, subAnswers);
       });
-
     } else {
       subAnswers = this.parseNumericResponseObject(numericalresponse, answers.length);
       answers = _.concat(answers, subAnswers);
@@ -224,7 +226,7 @@ export class OLXParser {
 
   parseNumericResponseObject(numericalresponse, answerOffset) {
     let answerFeedback = '';
-    let answers = [];
+    const answers = [];
     let responseParam = {};
     // TODO: UI needs to be added to support adding tolerence in numeric response.
     const feedback = this.getFeedback(numericalresponse);
@@ -232,10 +234,10 @@ export class OLXParser {
       const type = _.get(numericalresponse, 'responseparam.@_type');
       const defaultValue = _.get(numericalresponse, 'responseparam.@_default');
       responseParam = {
-        [type]: defaultValue
-      }
+        [type]: defaultValue,
+      };
     }
-      answers.push({
+    answers.push({
       id: indexToLetterMap[answers.length + answerOffset],
       title: numericalresponse['@_answer'],
       correct: true,
@@ -330,7 +332,11 @@ export class OLXParser {
     const problemKeys = Object.keys(this.problem);
     const intersectedProblems = _.intersection(Object.values(ProblemTypeKeys), problemKeys);
     if (intersectedProblems.length > 1) {
-      throw ('More than one problem type is not supported!');
+      const errorMessage = {
+        code: 500,
+        message: 'More than one problem type is not supported!',
+      };
+      throw errorMessage;
     }
     const problemType = intersectedProblems[0];
     return problemType;
@@ -346,6 +352,10 @@ export class OLXParser {
     const problemType = this.getProblemType();
     const hints = this.getHints();
     const question = this.parseQuestions(problemType);
+    const errorMessage = {
+      code: 500,
+      message: 'The problem type is not supported!',
+    };
     switch (problemType) {
       case ProblemTypeKeys.DROPDOWN:
         answersObject = this.parseMultipleChoiceAnswers(ProblemTypeKeys.DROPDOWN, 'optioninput', 'option');
@@ -363,7 +373,7 @@ export class OLXParser {
         answersObject = this.parseMultipleChoiceAnswers(ProblemTypeKeys.SINGLESELECT, 'choicegroup', 'choice');
         break;
       default:
-        throw ('The problem type is not supported');
+        throw errorMessage;
     }
 
     if (_.has(answersObject, 'additionalStringAttributes')) {

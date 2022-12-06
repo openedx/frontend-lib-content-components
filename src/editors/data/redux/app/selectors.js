@@ -41,14 +41,13 @@ export const isInitialized = createSelector(
 
 export const isRaw = createSelector([module.simpleSelectors.studioView],
   (studioView) => {
+    let editorIsRaw = false;
     if (studioView === null) {
-      return null;
+      editorIsRaw = false;
+    } else if (studioView.data.html.includes('data-editor="raw"')) {
+      editorIsRaw = true;
     }
-    console.log(studioView.data.html);
-    if (studioView.data.html.includes('data-editor="raw"')) {
-      return true;
-    }
-    return false;
+    return editorIsRaw;
   });
 
 export const displayTitle = createSelector(

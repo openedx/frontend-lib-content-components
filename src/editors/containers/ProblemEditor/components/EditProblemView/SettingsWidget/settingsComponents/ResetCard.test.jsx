@@ -8,9 +8,7 @@ jest.mock('../hooks', () => ({
   resetCardHooks: jest.fn(),
 }));
 
-
 describe('ResetCard', () => {
-
   const props = {
     showResetButton: false,
     updateSettings: jest.fn().mockName('args.updateSettings'),
@@ -26,17 +24,17 @@ describe('ResetCard', () => {
 
   describe('behavior', () => {
     it(' calls resetCardHooks when initialized', () => {
-        shallow(<ResetCard {...props} />);
-        expect(resetCardHooks).toHaveBeenCalledWith( props.updateSettings );
+      shallow(<ResetCard {...props} />);
+      expect(resetCardHooks).toHaveBeenCalledWith(props.updateSettings);
     });
-});
+  });
 
   describe('snapshot', () => {
     test('snapshot: renders reset true setting card', () => {
       expect(shallow(<ResetCard {...props} />)).toMatchSnapshot();
     });
     test('snapshot: renders reset true setting card', () => {
-      expect(shallow(<ResetCard {...props} showResetButton={true} />)).toMatchSnapshot();
+      expect(shallow(<ResetCard {...props} showResetButton />)).toMatchSnapshot();
     });
   });
 });

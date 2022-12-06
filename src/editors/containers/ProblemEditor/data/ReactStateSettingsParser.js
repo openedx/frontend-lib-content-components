@@ -1,15 +1,15 @@
-import { popuplateItem } from "./SettingsParser";
+import { popuplateItem } from './SettingsParser';
 
-export class ReactStateSettingsParser {
+class ReactStateSettingsParser {
   constructor(problemState) {
     this.problemState = problemState;
   }
 
   getSettings() {
-    let settings = {}
-    const stateSettings = this.problemState.settings
+    let settings = {};
+    const stateSettings = this.problemState.settings;
 
-    settings = popuplateItem(settings, 'matLabApiKey', 'matlab_api_key', stateSettings)
+    settings = popuplateItem(settings, 'matLabApiKey', 'matlab_api_key', stateSettings);
     settings = popuplateItem(settings, 'number', 'max_attempts', stateSettings.scoring.attempts);
     settings = popuplateItem(settings, 'weight', 'weight', stateSettings.scoring);
     settings = popuplateItem(settings, 'on', 'showanswer', stateSettings.showAnswer);
@@ -19,5 +19,6 @@ export class ReactStateSettingsParser {
 
     return settings;
   }
-
 }
+
+export default ReactStateSettingsParser;

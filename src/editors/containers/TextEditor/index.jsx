@@ -142,6 +142,7 @@ TextEditor.propTypes = {
   blockValue: PropTypes.shape({
     data: PropTypes.shape({ data: PropTypes.string }),
   }),
+  isRaw: PropTypes.bool,
   lmsEndpointUrl: PropTypes.string,
   studioEndpointUrl: PropTypes.string,
   blockFailed: PropTypes.bool.isRequired,

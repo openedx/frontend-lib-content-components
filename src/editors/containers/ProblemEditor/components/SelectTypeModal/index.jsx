@@ -1,13 +1,11 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import ProblemTypeSelect from './content/ProblemTypeSelect';
 import Preview from './content/Preview';
 import SelectTypeWrapper from './SelectTypeWrapper';
+import * as hooks from './hooks';
 
-export const SelectTypeModal = ({
-  onClose,
-}) => {
+export const SelectTypeModal = () => {
   const { selected, setSelected } = hooks.state.selected(null);
 
   return (
@@ -20,10 +18,6 @@ export const SelectTypeModal = ({
       </SelectTypeWrapper>
     </div>
   );
-};
-
-SelectTypeModal.propTypes = {
-  onClose: PropTypes.func.isRequired,
 };
 
 export default SelectTypeModal;

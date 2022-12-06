@@ -43,6 +43,7 @@ export const AnswersContainer = ({
 AnswersContainer.propTypes = {
   problemType: PropTypes.string.isRequired,
   answers: PropTypes.arrayOf(answerOptionProps).isRequired,
+  addAnswer: PropTypes.func.isRequired,
 };
 
 export const mapStateToProps = (state) => ({

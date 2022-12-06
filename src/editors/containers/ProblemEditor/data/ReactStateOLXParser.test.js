@@ -1,5 +1,4 @@
 import { OLXParser } from './OLXParser';
-import { ReactStateOLXParser } from './ReactStateOLXParser';
 import {
   checkboxesOLXWithFeedbackAndHintsOLX,
   dropdownOLXWithFeedbackAndHintsOLX,
@@ -9,6 +8,7 @@ import {
   mutlipleChoiceWithFeedbackAndHintsOLX,
   textInputWithFeedbackAndHintsOLXWithMultipleAnswers,
 } from './mockData/olxTestData';
+import ReactStateOLXParser from './ReactStateOLXParser';
 
 describe('Check React Sate OLXParser problem', () => {
   test('Test checkbox with feedback and hints problem type', () => {

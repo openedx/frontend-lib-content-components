@@ -6,8 +6,9 @@ import { parseSettings } from '../../../containers/ProblemEditor/data/SettingsPa
 export const initializeProblem = (blockValue) => (dispatch) => {
   const rawOLX = _.get(blockValue, 'data.data', {});
   const olxParser = new OLXParser(rawOLX);
-  let { settings, ...data } = olxParser.getParsedOLXData();
-  settings = { ...settings, ...parseSettings(_.get(blockValue, 'data.metadata', {})) }
+  const { ...data } = olxParser.getParsedOLXData();
+  let { settings } = olxParser.getParsedOLXData();
+  settings = { ...settings, ...parseSettings(_.get(blockValue, 'data.metadata', {})) };
   if (!_.isEmpty(rawOLX) && !_.isEmpty(data)) {
     dispatch(actions.problem.load({ ...data, rawOLX, settings }));
   }

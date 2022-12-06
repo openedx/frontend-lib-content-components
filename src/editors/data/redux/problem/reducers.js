@@ -45,10 +45,8 @@ const problem = createSlice({
       question: payload,
     }),
     updateAnswer: (state, { payload }) => {
-      // you can mutuate state only inside creating
-      // https://redux-toolkit.js.org/usage/immer-reducers#immutable-updates-with-immer
       const { id, hasSingleAnswer, ...answer } = payload;
-      state.answers = state.answers.map(obj => {
+      const answers = state.answers.map(obj => {
         if (obj.id === id) {
           return { ...obj, ...answer };
         }
@@ -59,19 +57,27 @@ const problem = createSlice({
         }
         return obj;
       });
+      return {
+        ...state,
+        answers,
+      };
     },
     deleteAnswer: (state, { payload }) => {
       const { id } = payload;
       if (state.answers.length <= 1) {
         return state;
       }
-      state.answers = state.answers.filter(obj => obj.id !== id).map((answer, index) => {
+      const answers = state.answers.filter(obj => obj.id !== id).map((answer, index) => {
         const newId = indexToLetterMap[index];
         if (answer.id === newId) {
           return answer;
         }
         return { ...answer, id: newId };
       });
+      return {
+        ...state,
+        answers,
+      };
     },
     addAnswer: (state) => {
       const currAnswers = state.answers;
@@ -92,25 +98,29 @@ const problem = createSlice({
       } else {
         newOption.feedback = '';
       }
-      state.answers = [
+      const answers = [
         ...currAnswers,
         newOption,
       ];
+      return {
+        ...state,
+        answers,
+      };
     },
-    updateSettings: (state, {payload}) => ({
+    updateSettings: (state, { payload }) => ({
       ...state,
       settings: {
         ...state.settings,
-        ...payload
-      }
+        ...payload,
+      },
     }),
-    load: (state, { payload: { settings: {scoring, showAnswer, ...settings}, ...payload } }) => ({
+    load: (state, { payload: { settings: { scoring, showAnswer, ...settings }, ...payload } }) => ({
       ...state,
       settings: {
         ...state.settings,
         scoring: { ...state.settings.scoring, ...scoring },
         showAnswer: { ...state.settings.showAnswer, ...showAnswer },
-        ...settings
+        ...settings,
       },
       ...payload,
     }),

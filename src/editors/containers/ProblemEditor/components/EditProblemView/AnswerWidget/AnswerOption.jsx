@@ -12,6 +12,47 @@ import { actions, selectors } from '../../../../../data/redux';
 import { answerOptionProps } from '../../../../../data/services/cms/types';
 import { ProblemTypeKeys } from '../../../../../data/constants/problem';
 
+const Checker = ({
+  hasSingleAnswer, answer, setAnswer,
+}) => {
+  let CheckerType = Form.Checkbox;
+  if (hasSingleAnswer) {
+    CheckerType = Form.Radio;
+  }
+  return (
+    <CheckerType
+      className="pl-4 mt-3"
+      value={answer.id}
+      onChange={(e) => setAnswer({ correct: e.target.checked })}
+      defaultChecked={answer.correct}
+      checked={answer.correct}
+    >
+      {answer.id}
+    </CheckerType>
+  );
+};
+
+const FeedbackControl = ({
+  feedback, onChange, labelMessage, labelMessageBoldUnderline, key, answer, intl,
+}) => (
+  <Form.Group key={key}>
+    <Form.Label className="mb-3">
+      <FormattedMessage
+        {...labelMessage}
+        values={{
+          answerId: answer.id,
+          boldunderline: <b><u><FormattedMessage {...labelMessageBoldUnderline} /></u></b>,
+        }}
+      />
+    </Form.Label>
+    <Form.Control
+      placeholder={intl.formatMessage(messages.feedbackPlaceholder)}
+      value={feedback}
+      onChange={onChange}
+    />
+  </Form.Group>
+);
+
 export const AnswerOption = ({
   answer,
   hasSingleAnswer,
@@ -42,68 +83,36 @@ export const AnswerOption = ({
     setIsFeedbackVisible(open);
   };
 
-  const Checker = () => {
-    let CheckerType = Form.Checkbox;
-    if (hasSingleAnswer) {
-      CheckerType = Form.Radio;
-    }
-    return (
-      <CheckerType
-        className="pl-4 mt-3"
-        value={answer.id}
-        onChange={(e) => setAnswer({ correct: e.target.checked })}
-        defaultChecked={answer.correct}
-      >
-        {answer.id}
-      </CheckerType>
-    );
-  };
-
-  const feedbackControl = ({
-    feedback, onChange, labelMessage, labelMessageBoldUnderline, key,
-  }) => (
-    <Form.Group key={key}>
-      <Form.Label className="mb-3">
-        <FormattedMessage
-          {...labelMessage}
-          values={{
-            answerId: answer.id,
-            boldunderline: <b><u><FormattedMessage {...labelMessageBoldUnderline} /></u></b>,
-          }}
-        />
-      </Form.Label>
-      <Form.Control
-        placeholder={intl.formatMessage(messages.feedbackPlaceholder)}
-        value={feedback}
-        onChange={onChange}
-      />
-    </Form.Group>
-  );
-
-  const displayFeedbackControl = () => {
+  const displayFeedbackControl = (answerObject) => {
     if (problemType !== ProblemTypeKeys.MULTISELECT) {
-      return feedbackControl({
-        key: `feedback-${answer.id}`,
-        feedback: answer.feedback,
+      return FeedbackControl({
+        key: `feedback-${answerObject.id}`,
+        feedback: answerObject.feedback,
         onChange: (e) => setAnswer({ feedback: e.target.value }),
         labelMessage: messages.selectedFeedbackLabel,
         labelMessageBoldUnderline: messages.selectedFeedbackLabelBoldUnderlineText,
+        answer: answerObject,
+        intl,
       });
     }
     return [
-      feedbackControl({
-        key: `selectedfeedback-${answer.id}`,
-        feedback: answer.selectedFeedback,
+      FeedbackControl({
+        key: `selectedfeedback-${answerObject.id}`,
+        feedback: answerObject.selectedFeedback,
         onChange: (e) => setAnswer({ selectedFeedback: e.target.value }),
         labelMessage: messages.selectedFeedbackLabel,
         labelMessageBoldUnderline: messages.selectedFeedbackLabelBoldUnderlineText,
+        answer: answerObject,
+        intl,
       }),
-      feedbackControl({
-        key: `unselectedfeedback-${answer.id}`,
-        feedback: answer.unselectedFeedback,
+      FeedbackControl({
+        key: `unselectedfeedback-${answerObject.id}`,
+        feedback: answerObject.unselectedFeedback,
         onChange: (e) => setAnswer({ unselectedFeedback: e.target.value }),
         labelMessage: messages.unSelectedFeedbackLabel,
         labelMessageBoldUnderline: messages.unSelectedFeedbackLabelBoldUnderlineText,
+        answer: answerObject,
+        intl,
       }),
     ];
   };
@@ -117,7 +126,11 @@ export const AnswerOption = ({
       <Row className="my-2">
 
         <Col xs={1}>
-          <Checker />
+          <Checker
+            hasSingleAnswer={hasSingleAnswer}
+            answer={answer}
+            setAnswer={setAnswer}
+          />
         </Col>
 
         <Col xs={10}>
@@ -131,7 +144,7 @@ export const AnswerOption = ({
 
           <Collapsible.Body>
             <div className="bg-dark-100 p-4 mt-3">
-              {displayFeedbackControl()}
+              {displayFeedbackControl(answer)}
             </div>
           </Collapsible.Body>
         </Col>
@@ -168,6 +181,22 @@ AnswerOption.propTypes = {
   deleteAnswer: PropTypes.func.isRequired,
   updateAnswer: PropTypes.func.isRequired,
   problemType: PropTypes.string.isRequired,
+};
+
+FeedbackControl.propTypes = {
+  feedback: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+  labelMessage: PropTypes.string.isRequired,
+  labelMessageBoldUnderline: PropTypes.string.isRequired,
+  key: PropTypes.string.isRequired,
+  answer: answerOptionProps.isRequired,
+  intl: intlShape.isRequired,
+};
+
+Checker.propTypes = {
+  hasSingleAnswer: PropTypes.bool.isRequired,
+  answer: answerOptionProps.isRequired,
+  setAnswer: PropTypes.func.isRequired,
 };
 
 export const mapStateToProps = (state) => ({

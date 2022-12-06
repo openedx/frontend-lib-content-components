@@ -1,31 +1,31 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import { injectIntl } from '@edx/frontend-platform/i18n';
 import { connect } from 'react-redux';
+import { Col, Container, Row } from '@edx/paragon';
 import AnswerWidget from './AnswerWidget';
 import SettingsWidget from './SettingsWidget';
 import QuestionWidget from './QuestionWidget';
 import { EditorContainer } from '../../../EditorContainer';
 import { selectors } from '../../../../data/redux';
-import { ReactStateSettingsParser } from '../../data/ReactStateSettingsParser';
-import { ReactStateOLXParser } from '../../data/ReactStateOLXParser';
-import { Col, Container, Row } from '@edx/paragon';
-
+import ReactStateSettingsParser from '../../data/ReactStateSettingsParser';
+import ReactStateOLXParser from '../../data/ReactStateOLXParser';
 
 export const EditProblemView = ({
   problemType,
   problemState,
 }) => {
-  const parseSate = (problemState) => () => {
-    const reactSettingsParser = new ReactStateSettingsParser(problemState);
-    const reactOLXParser = new ReactStateOLXParser({ problem: problemState });
+  const parseState = (problem) => () => {
+    const reactSettingsParser = new ReactStateSettingsParser(problem);
+    const reactOLXParser = new ReactStateOLXParser({ problem });
     return {
       settings: reactSettingsParser.getSettings(),
       olx: reactOLXParser.buildOLX(),
     };
   };
   return (
-    <EditorContainer getContent={parseSate(problemState)}>
+    <EditorContainer getContent={parseState(problemState)}>
       <Container fluid>
         <Row>
           <Col xs={9}>
@@ -39,6 +39,12 @@ export const EditProblemView = ({
       </Container>
     </EditorContainer>
   );
+};
+
+EditProblemView.propTypes = {
+  problemType: PropTypes.string.isRequired,
+  // eslint-disable-next-line
+  problemState: PropTypes.any.isRequired,
 };
 
 export const mapStateToProps = (state) => ({

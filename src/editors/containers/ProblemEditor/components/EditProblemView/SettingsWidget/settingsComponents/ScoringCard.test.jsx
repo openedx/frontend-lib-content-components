@@ -5,58 +5,63 @@ import { scoringCardHooks } from '../hooks';
 import { ScoringCard } from './ScoringCard';
 
 jest.mock('../hooks', () => ({
-    scoringCardHooks: jest.fn(),
+  scoringCardHooks: jest.fn(),
 }));
 
-
 describe('ScoringCard', () => {
-    const scoring = {
-        weight: 1.5,
-        attempts: {
-            unlimited: false,
-            number: 5,
-        },
-        updateSettings: jest.fn().mockName('args.updateSettings'),
-        intl: { formatMessage },
-    };
-    
-    const props = {
-        scoring: scoring,
-        intl: { formatMessage },
-    };
+  const scoring = {
+    weight: 1.5,
+    attempts: {
+      unlimited: false,
+      number: 5,
+    },
+    updateSettings: jest.fn().mockName('args.updateSettings'),
+    intl: { formatMessage },
+  };
 
-    const scoringCardHooksProps = {
-        handleMaxAttemptChange: jest.fn().mockName('scoringCardHooks.handleMaxAttemptChange'),
-        handleWeightChange: jest.fn().mockName('scoringCardHooks.handleWeightChange'),
-    };
+  const props = {
+    scoring,
+    intl: { formatMessage },
+  };
 
-    scoringCardHooks.mockReturnValue(scoringCardHooksProps);
+  const scoringCardHooksProps = {
+    handleMaxAttemptChange: jest.fn().mockName('scoringCardHooks.handleMaxAttemptChange'),
+    handleWeightChange: jest.fn().mockName('scoringCardHooks.handleWeightChange'),
+  };
 
-    describe('behavior', () => {
-        it(' calls scoringCardHooks when initialized', () => {
-            shallow(<ScoringCard {...props} />);
-            expect(scoringCardHooks).toHaveBeenCalledWith(scoring, props.updateSettings);
-        });
+  scoringCardHooks.mockReturnValue(scoringCardHooksProps);
+
+  describe('behavior', () => {
+    it(' calls scoringCardHooks when initialized', () => {
+      shallow(<ScoringCard {...props} />);
+      expect(scoringCardHooks).toHaveBeenCalledWith(scoring, props.updateSettings);
     });
+  });
 
-      describe('snapshot', () => {
-        test('snapshot: scoring setting card', () => {
-          expect(shallow(<ScoringCard {...props} />)).toMatchSnapshot();
-        });
-        test('snapshot: scoring setting card zero zero weight', () => {
-            expect(shallow(<ScoringCard {...props} scoring={{
-                ...scoring,
-                weight:0,
-            }} />)).toMatchSnapshot();
-          });
-          test('snapshot: scoring setting card max attempts', () => {
-            expect(shallow(<ScoringCard {...props} scoring={{
-                ...scoring,
-                attempts: {
-                    unlimited: true,
-                    number: 0,
-                },
-            }} />)).toMatchSnapshot();
-          });
-      });
+  describe('snapshot', () => {
+    test('snapshot: scoring setting card', () => {
+      expect(shallow(<ScoringCard {...props} />)).toMatchSnapshot();
+    });
+    test('snapshot: scoring setting card zero zero weight', () => {
+      expect(shallow(<ScoringCard
+        {...props}
+        scoring={{
+          ...scoring,
+          weight: 0,
+        }}
+      />)).toMatchSnapshot();
+    });
+    test('snapshot: scoring setting card max attempts', () => {
+      expect(shallow(<ScoringCard
+        {...props}
+        scoring={{
+          ...scoring,
+          attempts: {
+            unlimited: true,
+            number: 0,
+          },
+        }}
+      />)).toMatchSnapshot();
+    });
+  });
 });
