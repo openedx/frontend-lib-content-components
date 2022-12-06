@@ -5,7 +5,7 @@ import {
   Form,
 } from '@edx/paragon';
 import { connect, useDispatch } from 'react-redux';
-import { FormattedMessage, injectIntl, intlShape } from '@edx/frontend-platform/i18n';
+import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 import { thunkActions, selectors } from '../../../../../../data/redux';
 import { videoTranscriptLanguages } from '../../../../../../data/constants/video';
 import { FileInput, fileInput } from '../../../../../../sharedComponents/FileInput';
@@ -54,20 +54,18 @@ export const LanguageSelector = ({
   const onLanguageChange = module.hooks.onSelectLanguage({
     dispatch: useDispatch(), languageBeforeChange: localLang, setLocalLang, triggerupload: input.click,
   });
-  console.log(language);
   return (
     <div className="col col-11">
       <Form.Group controlId={`selectLanguage-form-${index}`} className="mw-100">
         <Form.Control as="select" aria-label={intl.formatMessage(messages.languageSelectLabel)} defaultValue={language} onChange={(e) => onLanguageChange(e)}>
           {Object.entries(videoTranscriptLanguages).map(([lang, text]) => {
             if (language === lang) { return (<option value={lang} selected>{text}</option>); }
-            if (lang === 'placeholder') { return (<option hidden>{intl.formatMessage(messages.languageSelectPlaceholder)}</option>)}
+            if (lang === 'placeholder') { return (<option hidden>{intl.formatMessage(messages.languageSelectPlaceholder)}</option>); }
             if (openLanguages.some(row => row.includes(lang))) {
               return (<option value={lang}>{text}</option>);
             }
             return (<option value={lang} disabled>{text}</option>);
           })}
-          
         </Form.Control>
       </Form.Group>
       <FileInput fileInput={input} acceptedFiles=".srt" />
