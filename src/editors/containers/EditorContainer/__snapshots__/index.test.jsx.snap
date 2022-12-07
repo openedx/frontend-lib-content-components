@@ -3,7 +3,7 @@
 exports[`EditorContainer component render snapshot: initialized. enable save and pass to header 1`] = `
 <div>
   <ModalDialog.Header
-    className="border-bottom zindex-10"
+    className="shadow-sm zindex-10"
   >
     <ModalDialog.Title>
       <div
@@ -63,7 +63,7 @@ exports[`EditorContainer component render snapshot: initialized. enable save and
 exports[`EditorContainer component render snapshot: not initialized. disable save and pass to header 1`] = `
 <div>
   <ModalDialog.Header
-    className="border-bottom zindex-10"
+    className="shadow-sm zindex-10"
   >
     <ModalDialog.Title>
       <div
