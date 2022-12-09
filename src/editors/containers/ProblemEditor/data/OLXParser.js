@@ -18,7 +18,7 @@ export const nonQuestionKeys = [
   '@_type',
   'formulaequationinput',
   'numericalresponse',
-  'demandhint'
+  'demandhint',
 ];
 
 export class OLXParser {
@@ -209,7 +209,6 @@ export class OLXParser {
         subAnswers = this.parseNumericResponseObject(numericalAnswer, answers.length);
         answers = _.concat(answers, subAnswers);
       });
-
     } else {
       subAnswers = this.parseNumericResponseObject(numericalresponse, answers.length);
       answers = _.concat(answers, subAnswers);
@@ -224,7 +223,7 @@ export class OLXParser {
 
   parseNumericResponseObject(numericalresponse, answerOffset) {
     let answerFeedback = '';
-    let answers = [];
+    const answers = [];
     let responseParam = {};
     // TODO: UI needs to be added to support adding tolerence in numeric response.
     const feedback = this.getFeedback(numericalresponse);
@@ -232,10 +231,10 @@ export class OLXParser {
       const type = _.get(numericalresponse, 'responseparam.@_type');
       const defaultValue = _.get(numericalresponse, 'responseparam.@_default');
       responseParam = {
-        [type]: defaultValue
-      }
+        [type]: defaultValue,
+      };
     }
-      answers.push({
+    answers.push({
       id: indexToLetterMap[answers.length + answerOffset],
       title: numericalresponse['@_answer'],
       correct: true,
@@ -329,8 +328,12 @@ export class OLXParser {
   getProblemType() {
     const problemKeys = Object.keys(this.problem);
     const intersectedProblems = _.intersection(Object.values(ProblemTypeKeys), problemKeys);
+
+    if (intersectedProblems.length === 0) {
+      return null;
+    }
     if (intersectedProblems.length > 1) {
-      throw ('More than one problem type is not supported!');
+      return ProblemTypeKeys.ADVANCED;
     }
     const problemType = intersectedProblems[0];
     return problemType;
@@ -346,6 +349,7 @@ export class OLXParser {
     const problemType = this.getProblemType();
     const hints = this.getHints();
     const question = this.parseQuestions(problemType);
+
     switch (problemType) {
       case ProblemTypeKeys.DROPDOWN:
         answersObject = this.parseMultipleChoiceAnswers(ProblemTypeKeys.DROPDOWN, 'optioninput', 'option');
@@ -362,8 +366,11 @@ export class OLXParser {
       case ProblemTypeKeys.SINGLESELECT:
         answersObject = this.parseMultipleChoiceAnswers(ProblemTypeKeys.SINGLESELECT, 'choicegroup', 'choice');
         break;
+      case ProblemTypeKeys.ADVANCED:
+        break;
       default:
-        throw ('The problem type is not supported');
+        // if problem is unset, return null
+        return {};
     }
 
     if (_.has(answersObject, 'additionalStringAttributes')) {

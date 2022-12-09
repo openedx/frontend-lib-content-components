@@ -1,12 +1,14 @@
 import {
   useState,
 } from 'react';
-import { StrictDict } from '../../utils';
-
-import * as module from './hooks';
+import { StrictDict } from '../../../../utils';
 
 export const state = StrictDict({
   selected: (val) => useState(val),
 });
 
-export default { state };
+export const onSelect = ({ selected }) => {
+  return;
+};
+
+export default { state, onSelect };

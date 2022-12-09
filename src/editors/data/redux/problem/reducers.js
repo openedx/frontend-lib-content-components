@@ -97,23 +97,28 @@ const problem = createSlice({
         newOption,
       ];
     },
-    updateSettings: (state, {payload}) => ({
+    updateSettings: (state, { payload }) => ({
       ...state,
       settings: {
         ...state.settings,
-        ...payload
-      }
+        ...payload,
+      },
     }),
-    load: (state, { payload: { settings: {scoring, showAnswer, ...settings}, ...payload } }) => ({
+    load: (state, { payload: { settings: { scoring, showAnswer, ...settings }, ...payload } }) => ({
       ...state,
       settings: {
         ...state.settings,
         scoring: { ...state.settings.scoring, ...scoring },
         showAnswer: { ...state.settings.showAnswer, ...showAnswer },
-        ...settings
+        ...settings,
       },
       ...payload,
     }),
+    setEnableTypeSelection: (state) => ({
+      ...state,
+      problemType: null,
+    }),
+
     onSelect: (state, { payload }) => ({
       ...state,
       ...payload,
