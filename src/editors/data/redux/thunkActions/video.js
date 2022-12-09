@@ -114,8 +114,18 @@ export const parseTranscripts = ({ transcriptsData }) => {
     cleanedStr.indexOf(startString) + startString.length,
     cleanedStr.indexOf(endString),
   );
-  const transcriptsObj = JSON.parse(transcriptsJson);
-  return Object.keys(transcriptsObj.value);
+  // const transcriptsObj = JSON.parse(transcriptsJson);
+  try {
+    const transcriptsObj = JSON.parse(transcriptsJson);
+    return Object.keys(transcriptsObj.value);
+  } catch (error) {
+    if (error instanceof SyntaxError) {
+      console.error('Invalid JSON:', error.message);
+    } else {
+      throw error;
+    }
+    return [];
+  }
 };
 
 // partially copied from frontend-app-learning/src/courseware/course/course-license/CourseLicense.jsx
