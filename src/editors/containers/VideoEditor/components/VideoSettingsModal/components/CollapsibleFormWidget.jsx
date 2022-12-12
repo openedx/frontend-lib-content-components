@@ -35,9 +35,7 @@ export const CollapsibleFormWidget = ({
       <Collapsible.Visible whenClosed className="p-0 pb-3">
         <div className="d-flex flex-column flex-grow-1">
           <div className="d-flex flex-grow-1 w-75 x-small">{title}</div>
-          {subtitle ?
-            <div className={`${fontSize} mt-3`}>{subtitle}</div> : null
-          }
+          {subtitle ? <div className={`${fontSize} mt-3`}>{subtitle}</div> : null}
         </div>
         <div className="d-flex flex-row align-self-start">
           {isError && <Icon className="alert-icon" src={Info} />}

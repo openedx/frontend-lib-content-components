@@ -37,9 +37,9 @@ export const LicenseDetails = ({
           <FormattedMessage {...messages.detailsSubsectionTitle} />
         </div>
 
-        {license === LicenseTypes.allRightsReserved ?
-          <FormattedMessage {...messages.allRightsReservedSectionMessage} /> : null
-        }
+        {license === LicenseTypes.allRightsReserved ? (
+          <FormattedMessage {...messages.allRightsReservedSectionMessage} />
+        ) : null}
 
         {license === LicenseTypes.creativeCommons
           ? (
@@ -141,7 +141,7 @@ export const LicenseDetails = ({
                 </div>
               </div>
             </Stack>
-          )  : null}
+          ) : null}
       </Form.Group>
     </div>
   ) : null
