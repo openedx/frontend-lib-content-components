@@ -3,9 +3,7 @@ import { shallow } from 'enzyme';
 
 import { formatMessage } from '../../../../../../../testUtils';
 import { selectors } from '../../../../../../data/redux';
-import { isEdxVideo } from '../../../../../../data/services/cms/api';
 import { ThumbnailWidget, mapStateToProps, mapDispatchToProps } from '.';
-import { before } from 'lodash-es';
 
 jest.mock('react', () => ({
   ...jest.requireActual('react'),
@@ -44,9 +42,6 @@ describe('ThumbnailWidget', () => {
     videoId: '',
     updateField: jest.fn().mockName('args.updateField'),
   };
-  beforeEach(() =>{
-
-  });
   describe('snapshots', () => {
     test('snapshots: renders as expected with default props', () => {
       expect(
