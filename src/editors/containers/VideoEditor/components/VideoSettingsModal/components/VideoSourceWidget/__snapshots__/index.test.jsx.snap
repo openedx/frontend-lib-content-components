@@ -16,7 +16,7 @@ exports[`VideoSourceWidget snapshots snapshots: renders as expected with default
         value=""
       />
       <Component
-        className="text-primary-300 my-3"
+        className="text-primary-300 mb-4"
       >
         <FormattedMessage
           defaultMessage="If you were assigned a video ID by edX, enter the ID here."
@@ -31,7 +31,7 @@ exports[`VideoSourceWidget snapshots snapshots: renders as expected with default
         value=""
       />
       <Component
-        className="text-primary-300 mt-3"
+        className="text-primary-300"
       >
         <FormattedMessage
           defaultMessage="The URL for your video. This can be a YouTube URL, or a link

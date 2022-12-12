@@ -66,7 +66,7 @@ export const VideoSourceWidget = ({
             onBlur={(e) => updateVideoId({ e, source: videoId })}
             value={videoId.local}
           />
-          <FormControlFeedback className="text-primary-300 my-3">
+          <FormControlFeedback className="text-primary-300 mb-4">
             <FormattedMessage {...messages.videoIdFeedback} />
           </FormControlFeedback>
           <Form.Control
@@ -75,7 +75,7 @@ export const VideoSourceWidget = ({
             onBlur={(e) => updateVideoId({ e, source })}
             value={source.local}
           />
-          <FormControlFeedback className="text-primary-300 mt-3">
+          <FormControlFeedback className="text-primary-300">
             <FormattedMessage {...messages.videoUrlFeedback} />
           </FormControlFeedback>
         </div>

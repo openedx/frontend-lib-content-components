@@ -3,7 +3,9 @@ import { shallow } from 'enzyme';
 
 import { formatMessage } from '../../../../../../../testUtils';
 import { selectors } from '../../../../../../data/redux';
+import { isEdxVideo } from '../../../../../../data/services/cms/api';
 import { ThumbnailWidget, mapStateToProps, mapDispatchToProps } from '.';
+import { before } from 'lodash-es';
 
 jest.mock('react', () => ({
   ...jest.requireActual('react'),
@@ -27,6 +29,10 @@ jest.mock('../../../../../../data/redux', () => ({
   },
 }));
 
+jest.mock('../../../../../../data/services/cms/api', () => ({
+  isEdxVideo: (args) => (args),
+}));
+
 describe('ThumbnailWidget', () => {
   const props = {
     error: {},
@@ -38,7 +44,9 @@ describe('ThumbnailWidget', () => {
     videoId: '',
     updateField: jest.fn().mockName('args.updateField'),
   };
+  beforeEach(() =>{
 
+  });
   describe('snapshots', () => {
     test('snapshots: renders as expected with default props', () => {
       expect(
@@ -52,7 +60,7 @@ describe('ThumbnailWidget', () => {
     });
     test('snapshots: renders as expected with a thumbnail provided', () => {
       expect(
-        shallow(<ThumbnailWidget {...props} thumbnail="sOMeUrl" videoId="e0466f70-9fb0-40d0-bcd0-3a3f6e9fa890" />),
+        shallow(<ThumbnailWidget {...props} thumbnail="sOMeUrl" videoId="sOMeViDEoID" />),
       ).toMatchSnapshot();
     });
     test('snapshots: renders as expected where thumbnail uploads are allowed', () => {
@@ -62,12 +70,12 @@ describe('ThumbnailWidget', () => {
     });
     test('snapshots: renders as expected where videoId is valid', () => {
       expect(
-        shallow(<ThumbnailWidget {...props} thumbnail="sOMeUrl" allowThumbnailUpload videoId="e0466f70-9fb0-40d0-bcd0-3a3f6e9fa890" />),
+        shallow(<ThumbnailWidget {...props} thumbnail="sOMeUrl" allowThumbnailUpload videoId="sOMeViDEoID" />),
       ).toMatchSnapshot();
     });
     test('snapshots: renders as expected where videoId is valid and no thumbnail', () => {
       expect(
-        shallow(<ThumbnailWidget {...props} allowThumbnailUpload videoId="e0466f70-9fb0-40d0-bcd0-3a3f6e9fa890" />),
+        shallow(<ThumbnailWidget {...props} allowThumbnailUpload videoId="sOMeViDEoID" />),
       ).toMatchSnapshot();
     });
   });
