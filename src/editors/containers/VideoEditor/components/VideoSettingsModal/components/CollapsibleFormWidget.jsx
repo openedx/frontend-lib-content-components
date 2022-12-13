@@ -24,18 +24,18 @@ export const CollapsibleFormWidget = ({
   intl,
 }) => (
   <Collapsible.Advanced
-    className="collapsible-card rounded mx-4 my-3 px-3 py-2 text-primary-500"
+    className="collapsible-card rounded mx-4 my-3 px-4 text-primary-500"
     defaultOpen
     open={isError || undefined}
   >
     <Collapsible.Trigger
-      className="collapsible-trigger d-flex border-0 align-items-center"
+      className="collapsible-trigger d-flex border-0 align-items-center pt-4 p-0"
       style={{ justifyContent: 'unset' }}
     >
       <Collapsible.Visible whenClosed>
         <div className="d-flex flex-column flex-grow-1">
           <div className="d-flex flex-grow-1 w-75 x-small">{title}</div>
-          <div className={`${fontSize}`}>{subtitle}</div>
+          <div className={`${fontSize} mb-4`}>{subtitle}</div>
         </div>
         <div className="d-flex flex-row align-self-start">
           {isError && <Icon className="alert-icon" src={Info} />}

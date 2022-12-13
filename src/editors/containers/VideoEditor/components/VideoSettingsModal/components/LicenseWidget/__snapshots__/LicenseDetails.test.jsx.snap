@@ -4,7 +4,7 @@ exports[`LicenseDetails snapshots snapshots: renders as expected with default pr
 
 exports[`LicenseDetails snapshots snapshots: renders as expected with level set to block and license set to Creative Commons 1`] = `
 <div
-  className="x-small border-primary-100 border-bottom m-0"
+  className="x-small border-primary-100 border-bottom m-0 pr-1"
 >
   <Form.Group>
     <div>
@@ -148,7 +148,7 @@ exports[`LicenseDetails snapshots snapshots: renders as expected with level set 
 
 exports[`LicenseDetails snapshots snapshots: renders as expected with level set to block and license set to all rights reserved 1`] = `
 <div
-  className="x-small border-primary-100 border-bottom m-0"
+  className="x-small border-primary-100 border-bottom m-0 pr-1"
 >
   <Form.Group>
     <div>
@@ -175,7 +175,7 @@ exports[`LicenseDetails snapshots snapshots: renders as expected with level set 
 
 exports[`LicenseDetails snapshots snapshots: renders as expected with level set to library 1`] = `
 <div
-  className="x-small border-primary-100 border-bottom m-0"
+  className="x-small border-primary-100 border-bottom m-0 pr-1"
 >
   <Form.Group>
     <div>
