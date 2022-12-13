@@ -65,7 +65,7 @@ export const LicenseSelector = ({
           </>
         ) : null }
       </ActionRow>
-      <div className="x-small">{levelDescription}</div>
+      <div className="x-small mt-3">{levelDescription}</div>
       {license === LicenseTypes.select ? null : <div className="border-primary-100 mt-3 border-bottom" />}
     </>
   );

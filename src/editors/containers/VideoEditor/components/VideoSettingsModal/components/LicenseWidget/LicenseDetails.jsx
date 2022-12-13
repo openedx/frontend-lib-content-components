@@ -32,8 +32,8 @@ export const LicenseDetails = ({
 }) => (
   level !== LicenseLevel.course && details && license !== 'select' ? (
     <div className="x-small border-primary-100 border-bottom m-0 pr-1">
-      <Form.Group>
-        <div>
+      <Form.Group className="pb-2">
+        <div className="mb-3">
           <FormattedMessage {...messages.detailsSubsectionTitle} />
         </div>
         {license === LicenseTypes.allRightsReserved ? (
@@ -43,8 +43,8 @@ export const LicenseDetails = ({
         ) : null}
         {license === LicenseTypes.creativeCommons
           ? (
-            <Stack gap={3}>
-              <div className="border-primary-100 border-bottom py-3">
+            <Stack gap={4}>
+              <div className="border-primary-100 border-bottom pb-4">
                 <Form.Group>
                   <ActionRow>
                     <Icon className="text-primary-500" src={Attribution} />
@@ -63,7 +63,7 @@ export const LicenseDetails = ({
                   <FormattedMessage {...messages.attributionSectionDescription} />
                 </div>
               </div>
-              <div className="border-primary-100 border-bottom py-3">
+              <div className="border-primary-100 border-bottom pb-4">
                 <Form.Group>
                   <ActionRow>
                     <Icon src={Nc} />
@@ -88,7 +88,7 @@ export const LicenseDetails = ({
                   <FormattedMessage {...messages.noncommercialSectionDescription} />
                 </div>
               </div>
-              <div className="border-primary-100 border-bottom py-3">
+              <div className="border-primary-100 border-bottom pb-4">
                 <Form.Group>
                   <ActionRow>
                     <Icon src={Nd} />
@@ -141,9 +141,7 @@ export const LicenseDetails = ({
                 </div>
               </div>
             </Stack>
-          )
-          : null}
-
+          ) : null}
       </Form.Group>
     </div>
   ) : null
