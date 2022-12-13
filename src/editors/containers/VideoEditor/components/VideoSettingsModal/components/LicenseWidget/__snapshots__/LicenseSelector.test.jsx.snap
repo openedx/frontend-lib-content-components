@@ -51,7 +51,7 @@ exports[`LicenseSelector snapshots snapshots: renders as expected with block lev
     />
   </div>
   <div
-    className="border-primary-100 mt-4 border-bottom"
+    className="border-primary-100 mt-3 border-bottom"
   />
 </Fragment>
 `;
@@ -94,7 +94,7 @@ exports[`LicenseSelector snapshots snapshots: renders as expected with default p
     />
   </div>
   <div
-    className="border-primary-100 mt-4 border-bottom"
+    className="border-primary-100 mt-3 border-bottom"
   />
 </Fragment>
 `;
@@ -150,7 +150,7 @@ exports[`LicenseSelector snapshots snapshots: renders as expected with library l
     />
   </div>
   <div
-    className="border-primary-100 mt-4 border-bottom"
+    className="border-primary-100 mt-3 border-bottom"
   />
 </Fragment>
 `;
@@ -193,7 +193,7 @@ exports[`LicenseSelector snapshots snapshots: renders as expected with no licens
     />
   </div>
   <div
-    className="border-primary-100 mt-4 border-bottom"
+    className="border-primary-100 mt-3 border-bottom"
   />
 </Fragment>
 `;
