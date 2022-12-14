@@ -20,9 +20,13 @@ export const EditorContainer = ({
   const handleCancelClicked = hooks.handleCancelClicked({ onClose });
   return (
     <div>
-      <ModalDialog.Header>
+      <ModalDialog.Header className="shadow-sm zindex-10">
         <ModalDialog.Title>
-          <TitleHeader isInitialized={isInitialized} />
+          <div
+            style={{ height: '44px', margin: 'auto' }}
+          >
+            <TitleHeader isInitialized={isInitialized} />
+          </div>
           <div className="pgn__modal-close-container">
             <IconButton
               src={Close}

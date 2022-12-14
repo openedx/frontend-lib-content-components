@@ -48,13 +48,12 @@ export const LicenseWidget = ({
       subtitle={(
         <div>
           <LicenseBlurb license={license} details={details} />
-          <div>{levelDescription}</div>
+          <div className="x-small mt-2">{levelDescription}</div>
         </div>
       )}
       title={intl.formatMessage(messages.title)}
     >
-      <Stack gap={3}>
-
+      <Stack gap={4}>
         {license ? (
           <>
             <LicenseSelector license={license} level={level} />
@@ -63,15 +62,14 @@ export const LicenseWidget = ({
               license={license}
               details={details}
               licenseDescription={licenseDescription}
-              level={level}
             />
           </>
         ) : null }
         {!licenseType ? (
           <>
-            <div className="border-primary-100 border-bottom" />
+            <div className="border-primary-100 border-bottom my-2" />
             <Button
-              className="text-primary-500 font-weight-bold"
+              className="text-primary-500 font-weight-bold justify-content-start pl-0"
               size="sm"
               iconBefore={Add}
               variant="link"

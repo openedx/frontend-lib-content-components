@@ -11,7 +11,6 @@ export const loadVideoData = () => (dispatch, getState) => {
   const studioView = state.app.studioView?.data?.html;
   const {
     videoSource,
-    videoType,
     videoId,
     fallbackVideos,
   } = module.determineVideoSource({
@@ -28,7 +27,6 @@ export const loadVideoData = () => (dispatch, getState) => {
 
   dispatch(actions.video.load({
     videoSource,
-    videoType,
     videoId,
     fallbackVideos,
     allowVideoDownloads: rawVideoData.download_video,
@@ -74,30 +72,21 @@ export const determineVideoSource = ({
   const youtubeUrl = `https://youtu.be/${youtubeId}`;
   const videoId = edxVideoId || '';
   let videoSource = '';
-  let videoType = '';
   let fallbackVideos = [];
   if (youtubeId) {
     // videoSource = youtubeUrl;
     // fallbackVideos = html5Sources;
     [videoSource, fallbackVideos] = [youtubeUrl, html5Sources];
-    videoType = 'youtube';
   } else if (edxVideoId) {
-    // videoSource = edxVideoId;
     // fallbackVideos = html5Sources;
-    [videoSource, fallbackVideos] = [edxVideoId, html5Sources];
-    videoType = 'edxVideo';
+    fallbackVideos = html5Sources;
   } else if (Array.isArray(html5Sources) && html5Sources[0]) {
     // videoSource = html5Sources[0];
     // fallbackVideos = html5Sources.slice(1);
     [videoSource, fallbackVideos] = [html5Sources[0], html5Sources.slice(1)];
-    videoType = 'html5source';
-  }
-  if (!fallbackVideos || fallbackVideos.length === 0) {
-    fallbackVideos = ['', ''];
   }
   return {
     videoSource,
-    videoType,
     videoId,
     fallbackVideos,
   };
@@ -107,10 +96,25 @@ export const parseTranscripts = ({ transcriptsData }) => {
   if (!transcriptsData) {
     return [];
   }
-  const startString = 'language.", "value": ';
   const cleanedStr = transcriptsData.replace(/&#34;/g, '"');
-  const metadataStr = cleanedStr.substring(cleanedStr.indexOf(startString) + startString.length, cleanedStr.indexOf(', "type": "VideoTranslations"'));
-  return Object.keys(JSON.parse(metadataStr));
+  const startString = '"transcripts": ';
+  const endString = ', "youtube_id_0_75": ';
+  const transcriptsJson = cleanedStr.substring(
+    cleanedStr.indexOf(startString) + startString.length,
+    cleanedStr.indexOf(endString),
+  );
+  // const transcriptsObj = JSON.parse(transcriptsJson);
+  try {
+    const transcriptsObj = JSON.parse(transcriptsJson);
+    return Object.keys(transcriptsObj.value);
+  } catch (error) {
+    if (error instanceof SyntaxError) {
+      console.error('Invalid JSON:', error.message);
+    } else {
+      throw error;
+    }
+    return [];
+  }
 };
 
 // partially copied from frontend-app-learning/src/courseware/course/course-license/CourseLicense.jsx
@@ -180,7 +184,7 @@ export const saveVideoData = () => (dispatch, getState) => {
   return selectors.video.videoSettings(state);
 };
 
-export const uploadThumbnail = ({ thumbnail }) => (dispatch, getState) => {
+export const uploadThumbnail = ({ thumbnail, emptyCanvas }) => (dispatch, getState) => {
   const state = getState();
   const { videoId } = state.video;
   const { studioEndpointUrl } = state.app;
@@ -196,9 +200,11 @@ export const uploadThumbnail = ({ thumbnail }) => (dispatch, getState) => {
         // in stage and production, image_url is an absolute path to the image
         thumbnailUrl = response.data.image_url;
       }
-      dispatch(actions.video.updateField({
-        thumbnail: thumbnailUrl,
-      }));
+      if (!emptyCanvas) {
+        dispatch(actions.video.updateField({
+          thumbnail: thumbnailUrl,
+        }));
+      }
     },
     onFailure: (e) => console.log({ UploadFailure: e }, 'Resampling thumbnail upload'),
   }));

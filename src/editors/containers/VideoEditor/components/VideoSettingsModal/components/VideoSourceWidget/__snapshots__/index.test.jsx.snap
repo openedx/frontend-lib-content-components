@@ -2,6 +2,7 @@
 
 exports[`VideoSourceWidget snapshots snapshots: renders as expected with default props 1`] = `
 <injectIntl(ShimmedIntlComponent)
+  fontSize="x-small"
   title="Video source"
 >
   <Form.Group>
@@ -9,14 +10,39 @@ exports[`VideoSourceWidget snapshots snapshots: renders as expected with default
       className="border-primary-100 border-bottom pb-4"
     >
       <Form.Control
-        floatingLabel="Video ID or URL"
+        floatingLabel="Video ID"
         onBlur={[Function]}
         onChange={[MockFunction]}
         value=""
       />
+      <Component
+        className="text-primary-300 mb-4"
+      >
+        <FormattedMessage
+          defaultMessage="If you were assigned a video ID by edX, enter the ID here."
+          description="Feedback for video ID field"
+          id="authoring.videoeditor.videoSource.videoId.feedback"
+        />
+      </Component>
+      <Form.Control
+        floatingLabel="Video URL"
+        onBlur={[Function]}
+        onChange={[MockFunction]}
+        value=""
+      />
+      <Component
+        className="text-primary-300"
+      >
+        <FormattedMessage
+          defaultMessage="The URL for your video. This can be a YouTube URL, or a link
+    to an .mp4, .ogg, or .webm video file hosted elsewhere on the internet."
+          description="Feedback for video URL field"
+          id="authoring.videoeditor.videoSource.videoUrl.feedback"
+        />
+      </Component>
     </div>
     <div
-      className="mt-3"
+      className="mt-4"
     >
       <FormattedMessage
         defaultMessage="Fallback videos"
@@ -24,7 +50,9 @@ exports[`VideoSourceWidget snapshots snapshots: renders as expected with default
         id="authoring.videoeditor.videoSource.fallbackVideo.title"
       />
     </div>
-    <div>
+    <div
+      className="mt-3"
+    >
       <FormattedMessage
         defaultMessage="To be sure all learners can access the video, edX
     recommends providing additional videos in both .mp4 and
@@ -35,7 +63,7 @@ exports[`VideoSourceWidget snapshots snapshots: renders as expected with default
       />
     </div>
     <Form.Row
-      className="mt-4"
+      className="mt-3.5 mx-0 flex-nowrap"
     >
       <Form.Control
         floatingLabel="Video URL"
@@ -50,7 +78,7 @@ exports[`VideoSourceWidget snapshots snapshots: renders as expected with default
       />
     </Form.Row>
     <ActionRow
-      className="mt-4"
+      className="mt-4.5"
     >
       <Form.Checkbox
         checked={false}
@@ -96,8 +124,11 @@ exports[`VideoSourceWidget snapshots snapshots: renders as expected with default
       <ActionRow.Spacer />
     </ActionRow>
   </Form.Group>
+  <div
+    className="my-4 border-primary-100 border-bottom"
+  />
   <Button
-    className="text-primary-500 font-weight-bold"
+    className="text-primary-500 font-weight-bold pl-0"
     onClick={[Function]}
     size="sm"
     variant="link"

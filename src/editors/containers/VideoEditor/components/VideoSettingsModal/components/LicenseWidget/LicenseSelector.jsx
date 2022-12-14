@@ -7,6 +7,7 @@ import {
   intlShape,
 } from '@edx/frontend-platform/i18n';
 import {
+  ActionRow,
   Form,
   Icon,
   IconButtonWithTooltip,
@@ -31,10 +32,11 @@ export const LicenseSelector = ({
   const onLicenseChange = hooks.onSelectLicense({ dispatch: useDispatch() });
   const ref = React.useRef();
   return (
-    <Form.Group className="mt-2 mx-2">
-      <Form.Row className="mt-4.5">
+    <>
+      <ActionRow>
         <Form.Control
           as="select"
+          className="w-100 m-0 p-0"
           ref={ref}
           defaultValue={license}
           disabled={level === LicenseLevel.course}
@@ -48,20 +50,24 @@ export const LicenseSelector = ({
           })}
         </Form.Control>
         {level !== LicenseLevel.course ? (
-          <IconButtonWithTooltip
-            iconAs={Icon}
-            src={DeleteOutline}
-            onClick={() => {
-              ref.current.value = courseLicenseType;
-              updateField({ licenseType: '', licenseDetails: {} });
-            }}
-            tooltipPlacement="top"
-            tooltipContent={<FormattedMessage {...messages.deleteLicenseSelection} />}
-          />
+          <>
+            <ActionRow.Spacer />
+            <IconButtonWithTooltip
+              iconAs={Icon}
+              src={DeleteOutline}
+              onClick={() => {
+                ref.current.value = courseLicenseType;
+                updateField({ licenseType: '', licenseDetails: {} });
+              }}
+              tooltipPlacement="top"
+              tooltipContent={<FormattedMessage {...messages.deleteLicenseSelection} />}
+            />
+          </>
         ) : null }
-      </Form.Row>
-      <div>{levelDescription}</div>
-    </Form.Group>
+      </ActionRow>
+      <div className="x-small mt-3">{levelDescription}</div>
+      {license === LicenseTypes.select ? null : <div className="border-primary-100 mt-3 border-bottom" />}
+    </>
   );
 };
 

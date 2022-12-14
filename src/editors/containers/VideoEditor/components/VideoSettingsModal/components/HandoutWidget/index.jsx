@@ -47,6 +47,7 @@ export const HandoutWidget = ({
 
   return (!isLibrary ? (
     <CollapsibleFormWidget
+      fontSize="x-small"
       isError={Object.keys(error).length !== 0}
       title={intl.formatMessage(messages.titleLabel)}
       subtitle={handoutName}
@@ -96,7 +97,7 @@ export const HandoutWidget = ({
         <Stack gap={3}>
           <FormattedMessage {...messages.addHandoutMessage} />
           <Button
-            className="text-primary-500 font-weight-bold"
+            className="text-primary-500 font-weight-bold justify-content-start pl-0"
             size="sm"
             iconBefore={FileUpload}
             onClick={fileInput.click}

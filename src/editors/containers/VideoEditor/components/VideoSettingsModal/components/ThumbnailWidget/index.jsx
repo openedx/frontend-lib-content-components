@@ -1,5 +1,5 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import {
   FormattedMessage,
@@ -16,7 +16,9 @@ import {
 } from '@edx/paragon';
 import { DeleteOutline, FileUpload } from '@edx/paragon/icons';
 
-import { actions, selectors } from '../../../../../../data/redux';
+import { selectors } from '../../../../../../data/redux';
+import { isEdxVideo } from '../../../../../../data/services/cms/api';
+
 import { acceptedImgKeys } from './constants';
 import * as hooks from './hooks';
 import messages from './messages';
@@ -36,9 +38,9 @@ export const ThumbnailWidget = ({
   isLibrary,
   allowThumbnailUpload,
   thumbnail,
-  updateField,
-  videoType,
+  videoId,
 }) => {
+  const dispatch = useDispatch();
   const [error] = React.useContext(ErrorContext).thumbnail;
   const imgRef = React.useRef();
   const [thumbnailSrc, setThumbnailSrc] = React.useState(thumbnail);
@@ -48,9 +50,10 @@ export const ThumbnailWidget = ({
     imgRef,
     fileSizeError,
   });
-  const isEdxVideo = videoType === 'edxVideo';
+  const edxVideo = isEdxVideo(videoId);
+  const deleteThumbnail = hooks.deleteThumbnail({ dispatch });
   const getSubtitle = () => {
-    if (isEdxVideo) {
+    if (edxVideo) {
       if (thumbnail) {
         return intl.formatMessage(messages.yesSubtitle);
       }
@@ -58,9 +61,9 @@ export const ThumbnailWidget = ({
     }
     return intl.formatMessage(messages.unavailableSubtitle);
   };
-
   return (!isLibrary ? (
     <CollapsibleFormWidget
+      fontSize="x-small"
       isError={Object.keys(error).length !== 0}
       title={intl.formatMessage(messages.title)}
       subtitle={getSubtitle()}
@@ -72,8 +75,8 @@ export const ThumbnailWidget = ({
       >
         <FormattedMessage {...messages.fileSizeError} />
       </ErrorAlert>
-      {isEdxVideo ? null : (
-        <Alert variant="info">
+      {edxVideo ? null : (
+        <Alert variant="light">
           <FormattedMessage {...messages.unavailableMessage} />
         </Alert>
       )}
@@ -87,32 +90,32 @@ export const ThumbnailWidget = ({
             src={thumbnailSrc || thumbnail}
             alt={intl.formatMessage(messages.thumbnailAltText)}
           />
-          { (allowThumbnailUpload && isEdxVideo) ? (
+          { (allowThumbnailUpload && edxVideo) ? (
             <IconButtonWithTooltip
               tooltipPlacement="top"
               tooltipContent={intl.formatMessage(messages.deleteThumbnail)}
               iconAs={Icon}
               src={DeleteOutline}
-              onClick={() => updateField({ thumbnail: null })}
+              onClick={deleteThumbnail}
             />
           ) : null }
         </Stack>
       ) : (
-        <Stack gap={3}>
-          <div>
+        <Stack gap={4}>
+          <div className="text-center">
             <FormattedMessage {...messages.addThumbnail} />
-          </div>
-          <div style={{ color: 'grey' }}>
-            <FormattedMessage {...messages.aspectRequirements} />
+            <div className="text-primary-300">
+              <FormattedMessage {...messages.aspectRequirements} />
+            </div>
           </div>
           <FileInput fileInput={fileInput} acceptedFiles={Object.values(acceptedImgKeys).join()} />
           <Button
-            className="text-primary-500 font-weight-bold"
+            className="text-primary-500 font-weight-bold justify-content-start pl-0"
             size="sm"
             iconBefore={FileUpload}
             onClick={fileInput.click}
             variant="link"
-            disabled={!isEdxVideo}
+            disabled={!edxVideo}
           >
             <FormattedMessage {...messages.uploadButtonLabel} />
           </Button>
@@ -129,18 +132,15 @@ ThumbnailWidget.propTypes = {
   isLibrary: PropTypes.bool.isRequired,
   allowThumbnailUpload: PropTypes.bool.isRequired,
   thumbnail: PropTypes.string.isRequired,
-  updateField: PropTypes.func.isRequired,
-  videoType: PropTypes.string.isRequired,
+  videoId: PropTypes.string.isRequired,
 };
 export const mapStateToProps = (state) => ({
   isLibrary: selectors.app.isLibrary(state),
   allowThumbnailUpload: selectors.video.allowThumbnailUpload(state),
   thumbnail: selectors.video.thumbnail(state),
-  videoType: selectors.video.videoType(state),
+  videoId: selectors.video.videoId(state),
 });
 
-export const mapDispatchToProps = (dispatch) => ({
-  updateField: (stateUpdate) => dispatch(actions.video.updateField(stateUpdate)),
-});
+export const mapDispatchToProps = {};
 
 export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(ThumbnailWidget));

@@ -94,7 +94,6 @@ describe('video thunkActions', () => {
         videoSource: 'videOsOurce',
         videoId: 'videOiD',
         fallbackVideos: 'fALLbACKvIDeos',
-        videoType: 'viDEOtyPE',
       });
       jest.spyOn(thunkActions, thunkActionsKeys.parseLicense).mockReturnValue([
         'liCENSEtyPe',
@@ -123,7 +122,6 @@ describe('video thunkActions', () => {
         videoSource: 'videOsOurce',
         videoId: 'videOiD',
         fallbackVideos: 'fALLbACKvIDeos',
-        videoType: 'viDEOtyPE',
         allowVideoDownloads: testMetadata.download_video,
         transcripts: testMetadata.transcripts,
         allowTranscriptDownloads: testMetadata.download_track,
@@ -173,7 +171,6 @@ describe('video thunkActions', () => {
         })).toEqual({
           videoSource: youtubeUrl,
           videoId: edxVideoId,
-          videoType: 'youtube',
           fallbackVideos: html5Sources,
         });
       });
@@ -185,10 +182,9 @@ describe('video thunkActions', () => {
           youtubeId: '',
           html5Sources: '',
         })).toEqual({
-          videoSource: edxVideoId,
+          videoSource: '',
           videoId: edxVideoId,
-          videoType: 'edxVideo',
-          fallbackVideos: ['', ''],
+          fallbackVideos: '',
         });
       });
     });
@@ -201,7 +197,6 @@ describe('video thunkActions', () => {
         })).toEqual({
           videoSource: youtubeUrl,
           videoId: '',
-          videoType: 'youtube',
           fallbackVideos: html5Sources,
         });
       });
@@ -215,7 +210,6 @@ describe('video thunkActions', () => {
         })).toEqual({
           videoSource: 'htmLOne',
           videoId: '',
-          videoType: 'html5source',
           fallbackVideos: ['hTMlTwo', 'htMLthrEE'],
         });
       });
@@ -227,8 +221,7 @@ describe('video thunkActions', () => {
         })).toEqual({
           videoSource: 'htmlOne',
           videoId: '',
-          fallbackVideos: ['', ''],
-          videoType: 'html5source',
+          fallbackVideos: [],
         });
       });
     });
@@ -241,10 +234,29 @@ describe('video thunkActions', () => {
         })).toEqual({
           videoSource: '',
           videoId: '',
-          fallbackVideos: ['', ''],
-          videoType: '',
+          fallbackVideos: [],
         });
       });
+    });
+  });
+  describe('parseTranscripts', () => {
+    const testStudioViewDataWithTranscripts = 'de descarga debajo del video.&#34;, &#34;value&#34;: &#34;&#34;, &#34;type&#34;: &#34;Generic&#34;, &#34;options&#34;: []}, &#34;transcripts&#34;: {&#34;explicitly_set&#34;: false, &#34;default_value&#34;: {}, &#34;field_name&#34;: &#34;transcripts&#34;, &#34;display_name&#34;: &#34;Idiomas de transcripci\\u00f3n&#34;, &#34;help&#34;: &#34;A\\u00f1ada transcripciones en diferentes idiomas. Haga clic a continuaci\\u00f3n para especificar un idioma y subir un archivo .srt de transcripci\\u00f3n para dicho idioma.&#34;, &#34;value&#34;: {&#34;aa&#34;: &#34;non_existent_dummy_file_name&#34;, &#34;ab&#34;: &#34;non_existent_dummy_file_name&#34;, &#34;ba&#34;: &#34;non_existent_dummy_file_name&#34;, &#34;en&#34;: &#34;external video-en.txt&#34;}, &#34;type&#34;: &#34;VideoTranslations&#34;, &#34;options&#34;: [], &#34;custom&#34;: true, &#34;languages&#34;: [{&#34;label&#34;: &#34;Abkhazian&#34;, &#34;code&#34;: &#34;ab&#34;}], &#34;urlRoot&#34;: &#34;/xblock/block-v1:GalileoX+XS_Mate001+3T2022+type@video+block@20bc09f5522d430f8e43c2bc377b348c/handler/studio_transcript/translation&#34;}, &#34;youtube_id_0_75&#34;: {';
+    const testStudioViewData = 'de descarga debajo del video.&#34;, &#34;value&#34;: &#34;&#34;, &#34;type&#34;: &#34;Generic&#34;, &#34;options&#34;: []}, &#34;transcripts&#34;: {&#34;explicitly_set&#34;: false, &#34;default_value&#34;: {}, &#34;field_name&#34;: &#34;transcripts&#34;, &#34;display_name&#34;: &#34;Idiomas de transcripci\\u00f3n&#34;, &#34;help&#34;: &#34;A\\u00f1ada transcripciones en diferentes idiomas. Haga clic a continuaci\\u00f3n para especificar un idioma y subir un archivo .srt de transcripci\\u00f3n para dicho idioma.&#34;, &#34;value&#34;: {}, &#34;type&#34;: &#34;VideoTranslations&#34;, &#34;options&#34;: [], &#34;custom&#34;: true, &#34;languages&#34;: [{&#34;label&#34;: &#34;Abkhazian&#34;, &#34;code&#34;: &#34;ab&#34;}], &#34;urlRoot&#34;: &#34;/xblock/block-v1:GalileoX+XS_Mate001+3T2022+type@video+block@20bc09f5522d430f8e43c2bc377b348c/handler/studio_transcript/translation&#34;}, &#34;youtube_id_0_75&#34;: {';
+    const testBadStudioViewData = 'tHiSiSaBAdDaTa';
+    it('returns an array of languages given a JSON string', () => {
+      expect(thunkActions.parseTranscripts({
+        transcriptsData: testStudioViewDataWithTranscripts,
+      })).toEqual(['aa', 'ab', 'ba', 'en']);
+    });
+    it('returns an empty array when there are no transcripts', () => {
+      expect(thunkActions.parseTranscripts({
+        transcriptsData: testStudioViewData,
+      })).toEqual([]);
+    });
+    it('returns an empty array given an unparsable JSON string', () => {
+      expect(thunkActions.parseTranscripts({
+        transcriptsData: testBadStudioViewData,
+      })).toEqual([]);
     });
   });
   describe('parseLicense', () => {
@@ -327,6 +339,15 @@ describe('video thunkActions', () => {
           thumbnail: thumbnailUrl,
         }),
       );
+    });
+  });
+  describe('uploadThumbnail - emptyCanvas', () => {
+    beforeEach(() => {
+      thunkActions.uploadThumbnail({ thumbnail: mockThumbnail, emptyCanvas: true })(dispatch, getState);
+      [[dispatchedAction]] = dispatch.mock.calls;
+    });
+    it('dispatches uploadThumbnail action', () => {
+      expect(dispatchedAction.uploadThumbnail).not.toEqual(undefined);
     });
   });
   describe('deleteTranscript', () => {

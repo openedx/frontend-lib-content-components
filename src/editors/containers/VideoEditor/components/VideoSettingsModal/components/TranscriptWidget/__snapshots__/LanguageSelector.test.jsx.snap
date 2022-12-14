@@ -2,16 +2,16 @@
 
 exports[`LanguageSelector snapshot transcript option 1`] = `
 <div
-  className="col col-11"
+  className="col col-11 p-0"
 >
   <Form.Group
-    className="mw-100"
+    className="mw-100  m-0"
     controlId="selectLanguage-form-undefined"
   >
     <Form.Control
+      aria-label="Languages"
       as="select"
       defaultValue="kl"
-      floatingLabel="Languages"
       onChange={[Function]}
     >
       <option
@@ -49,16 +49,16 @@ exports[`LanguageSelector snapshot transcript option 1`] = `
 
 exports[`LanguageSelector snapshots -- no transcripts no Open Languages, all should be disabled 1`] = `
 <div
-  className="col col-11"
+  className="col col-11 p-0"
 >
   <Form.Group
-    className="mw-100"
+    className="mw-100  m-0"
     controlId="selectLanguage-form-undefined"
   >
     <Form.Control
+      aria-label="Languages"
       as="select"
       defaultValue="kl"
-      floatingLabel="Languages"
       onChange={[Function]}
     >
       <option

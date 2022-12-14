@@ -10,6 +10,7 @@ import {
   Button,
   Tooltip,
   OverlayTrigger,
+  FormControlFeedback,
 } from '@edx/paragon';
 import { DeleteOutline, InfoOutline, Add } from '@edx/paragon/icons';
 import {
@@ -36,6 +37,7 @@ export const VideoSourceWidget = ({
 }) => {
   const dispatch = useDispatch();
   const {
+    videoId,
     videoSource: source,
     fallbackVideos,
     allowVideoDownloads: allowDownload,
@@ -43,34 +45,48 @@ export const VideoSourceWidget = ({
     dispatch,
     fields: {
       [widgetHooks.selectorKeys.videoSource]: widgetHooks.genericWidget,
+      [widgetHooks.selectorKeys.videoId]: widgetHooks.genericWidget,
       [widgetHooks.selectorKeys.fallbackVideos]: widgetHooks.arrayWidget,
       [widgetHooks.selectorKeys.allowVideoDownloads]: widgetHooks.genericWidget,
     },
   });
   const deleteFallbackVideo = module.deleteFallbackVideo({ fallbackVideos: fallbackVideos.formValue, dispatch });
-  const updateVideoType = module.updateVideoType({ dispatch });
+  const updateVideoId = module.updateVideoId({ dispatch });
 
   return (
     <CollapsibleFormWidget
+      fontSize="x-small"
       title={intl.formatMessage(messages.titleLabel)}
     >
       <Form.Group>
         <div className="border-primary-100 border-bottom pb-4">
           <Form.Control
-            floatingLabel={intl.formatMessage(messages.videoIdOrUrlLabel)}
+            floatingLabel={intl.formatMessage(messages.videoIdLabel)}
+            onChange={videoId.onChange}
+            onBlur={(e) => updateVideoId({ e, source: videoId })}
+            value={videoId.local}
+          />
+          <FormControlFeedback className="text-primary-300 mb-4">
+            <FormattedMessage {...messages.videoIdFeedback} />
+          </FormControlFeedback>
+          <Form.Control
+            floatingLabel={intl.formatMessage(messages.videoUrlLabel)}
             onChange={source.onChange}
-            onBlur={(e) => updateVideoType({ e, source })}
+            onBlur={(e) => updateVideoId({ e, source })}
             value={source.local}
           />
+          <FormControlFeedback className="text-primary-300">
+            <FormattedMessage {...messages.videoUrlFeedback} />
+          </FormControlFeedback>
         </div>
-        <div className="mt-3">
+        <div className="mt-4">
           <FormattedMessage {...messages.fallbackVideoTitle} />
         </div>
-        <div>
+        <div className="mt-3">
           <FormattedMessage {...messages.fallbackVideoMessage} />
         </div>
-        {fallbackVideos.formValue.map((videoUrl, index) => (
-          <Form.Row className="mt-4">
+        {fallbackVideos.formValue.length > 0 ? fallbackVideos.formValue.map((videoUrl, index) => (
+          <Form.Row className="mt-3.5 mx-0 flex-nowrap">
             <Form.Control
               floatingLabel={intl.formatMessage(messages.fallbackVideoLabel)}
               onChange={fallbackVideos.onChange(index)}
@@ -87,8 +103,8 @@ export const VideoSourceWidget = ({
               onClick={() => deleteFallbackVideo(videoUrl)}
             />
           </Form.Row>
-        ))}
-        <ActionRow className="mt-4">
+        )) : null}
+        <ActionRow className="mt-4.5">
           <Form.Checkbox
             checked={allowDownload.local}
             className="decorative-control-label"
@@ -112,8 +128,9 @@ export const VideoSourceWidget = ({
           <ActionRow.Spacer />
         </ActionRow>
       </Form.Group>
+      <div className="my-4 border-primary-100 border-bottom" />
       <Button
-        className="text-primary-500 font-weight-bold"
+        className="text-primary-500 font-weight-bold pl-0"
         size="sm"
         iconBefore={Add}
         variant="link"

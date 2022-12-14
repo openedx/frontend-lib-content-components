@@ -6,12 +6,11 @@ import {
   injectIntl,
 } from '@edx/frontend-platform/i18n';
 import {
-  Card,
   Stack,
   Hyperlink,
 } from '@edx/paragon';
 
-import { LicenseLevel, LicenseTypes } from '../../../../../../data/constants/licenses';
+import { LicenseTypes } from '../../../../../../data/constants/licenses';
 
 import LicenseBlurb from './LicenseBlurb';
 import { messages } from './messages';
@@ -20,26 +19,22 @@ export const LicenseDisplay = ({
   license,
   details,
   licenseDescription,
-  level,
 }) => {
   if (license !== LicenseTypes.select) {
     return (
-      <Stack gap={3} className="border-primary-100 border-top">
-        <FormattedMessage {...messages.displaySubsectionTitle} />
-        <Card className="mb-3">
-          <Card.Header title={<LicenseBlurb license={license} details={details} />} />
-          <Card.Section>{licenseDescription}</Card.Section>
-        </Card>
-        {level !== LicenseLevel.course ? (
-          <Hyperlink
-            className="text-primary-500"
-            size="sm"
-            destination="https://creativecommons.org/about"
-            target="_blank"
-          >
-            <FormattedMessage {...messages.viewLicenseDetailsLabel} />
-          </Hyperlink>
-        ) : null }
+      <Stack gap={3}>
+        <div className="x-small"><FormattedMessage {...messages.displaySubsectionTitle} /></div>
+        <div className="small border border-gray-300 rounded p-4">
+          <LicenseBlurb license={license} details={details} />
+          <div className="x-small mt-3">{licenseDescription}</div>
+        </div>
+        <Hyperlink
+          className="text-primary-500 x-small"
+          destination="https://creativecommons.org/about"
+          target="_blank"
+        >
+          <FormattedMessage {...messages.viewLicenseDetailsLabel} />
+        </Hyperlink>
       </Stack>
     );
   }

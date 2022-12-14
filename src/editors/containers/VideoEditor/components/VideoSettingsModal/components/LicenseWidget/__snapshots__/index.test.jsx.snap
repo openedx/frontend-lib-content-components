@@ -8,7 +8,9 @@ exports[`LicenseWidget snapshots snapshots: renders as expected with default pro
         details={Object {}}
         license="all-rights-reserved"
       />
-      <div>
+      <div
+        className="x-small mt-2"
+      >
         <FormattedMessage
           defaultMessage="This license currently set at the course level"
           description="Helper text for license type when using course license"
@@ -20,7 +22,7 @@ exports[`LicenseWidget snapshots snapshots: renders as expected with default pro
   title="License"
 >
   <Stack
-    gap={3}
+    gap={4}
   >
     <injectIntl(ShimmedIntlComponent)
       level="course"
@@ -33,7 +35,6 @@ exports[`LicenseWidget snapshots snapshots: renders as expected with default pro
     />
     <injectIntl(ShimmedIntlComponent)
       details={Object {}}
-      level="course"
       license="all-rights-reserved"
       licenseDescription={
         <FormattedMessage
@@ -44,10 +45,10 @@ exports[`LicenseWidget snapshots snapshots: renders as expected with default pro
       }
     />
     <div
-      className="border-primary-100 border-bottom"
+      className="border-primary-100 border-bottom my-2"
     />
     <Button
-      className="text-primary-500 font-weight-bold"
+      className="text-primary-500 font-weight-bold justify-content-start pl-0"
       onClick={[Function]}
       size="sm"
       variant="link"
@@ -70,7 +71,9 @@ exports[`LicenseWidget snapshots snapshots: renders as expected with isLibrary t
         details={Object {}}
         license="all-rights-reserved"
       />
-      <div>
+      <div
+        className="x-small mt-2"
+      >
         <FormattedMessage
           defaultMessage="This license currently set at the library level"
           description="Helper text for license type when using library license"
@@ -82,7 +85,7 @@ exports[`LicenseWidget snapshots snapshots: renders as expected with isLibrary t
   title="License"
 >
   <Stack
-    gap={3}
+    gap={4}
   >
     <injectIntl(ShimmedIntlComponent)
       level="library"
@@ -95,7 +98,6 @@ exports[`LicenseWidget snapshots snapshots: renders as expected with isLibrary t
     />
     <injectIntl(ShimmedIntlComponent)
       details={Object {}}
-      level="library"
       license="all-rights-reserved"
       licenseDescription={
         <FormattedMessage
@@ -117,7 +119,9 @@ exports[`LicenseWidget snapshots snapshots: renders as expected with licenseType
         details={Object {}}
         license="all-rights-reserved"
       />
-      <div>
+      <div
+        className="x-small mt-2"
+      >
         <FormattedMessage
           defaultMessage="This license is set specifically for this video"
           description="Helper text for license type when choosing for a spcific video"
@@ -129,7 +133,7 @@ exports[`LicenseWidget snapshots snapshots: renders as expected with licenseType
   title="License"
 >
   <Stack
-    gap={3}
+    gap={4}
   >
     <injectIntl(ShimmedIntlComponent)
       level="block"
@@ -142,7 +146,6 @@ exports[`LicenseWidget snapshots snapshots: renders as expected with licenseType
     />
     <injectIntl(ShimmedIntlComponent)
       details={Object {}}
-      level="block"
       license="all-rights-reserved"
       licenseDescription={
         <FormattedMessage
