@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { injectIntl } from '@edx/frontend-platform/i18n';
 import { connect } from 'react-redux';
 import { Col, Container, Row } from '@edx/paragon';
 import AnswerWidget from './AnswerWidget';
@@ -52,4 +51,4 @@ export const mapStateToProps = (state) => ({
   problemState: selectors.problem.completeState(state),
 });
 
-export default injectIntl(connect(mapStateToProps)(EditProblemView));
+export default connect(mapStateToProps)(EditProblemView);

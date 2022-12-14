@@ -58,7 +58,6 @@ export const fetchBlockById = ({ blockId, studioEndpointUrl }) => {
         attempts_before_showanswer_button: 7,
         matlab_api_key: 'sample_matlab_api_key',
         max_attempts: 5,
-        rerandomize: 'per_student',
         show_reset_button: true,
         showanswer: 'after_attempts',
         submission_wait_seconds: 15,

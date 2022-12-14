@@ -35,9 +35,9 @@ export const ShowAnswerCard = ({
           value={showAnswer.on}
           onChange={handleShowAnswerChange}
         >
-          {Object.values(ShowAnswerTypesKeys).map((answerType, i) => (
+          {Object.values(ShowAnswerTypesKeys).map((answerType) => (
             <option
-              key={Symbol(i)}
+              key={answerType}
               value={answerType}
             >
               {intl.formatMessage(ShowAnswerTypes[answerType])}

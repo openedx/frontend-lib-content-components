@@ -37,73 +37,73 @@ exports[`ShowAnswerCard snapshot snapshot: show answer setting card 1`] = `
       value="after_attempts"
     >
       <option
-        key="0"
+        key="always"
         value="always"
       >
         Always
       </option>
       <option
-        key="1"
+        key="answered"
         value="answered"
       >
         Answered
       </option>
       <option
-        key="2"
+        key="attempted"
         value="attempted"
       >
         Attempted or Past Due
       </option>
       <option
-        key="3"
+        key="closed"
         value="closed"
       >
         Closed
       </option>
       <option
-        key="4"
+        key="finished"
         value="finished"
       >
         Finished
       </option>
       <option
-        key="5"
+        key="correct_or_past_due"
         value="correct_or_past_due"
       >
         Correct or Past Due
       </option>
       <option
-        key="6"
+        key="past_due"
         value="past_due"
       >
         Past Due
       </option>
       <option
-        key="7"
+        key="never"
         value="never"
       >
         Never
       </option>
       <option
-        key="8"
+        key="after_attempts"
         value="after_attempts"
       >
         After Some Number of Attempts
       </option>
       <option
-        key="9"
+        key="after_all_attempts"
         value="after_all_attempts"
       >
         After All Attempts
       </option>
       <option
-        key="10"
+        key="after_all_attempts_or_correct"
         value="after_all_attempts_or_correct"
       >
         After All Attempts or Correct
       </option>
       <option
-        key="11"
+        key="attempted_no_past_due"
         value="attempted_no_past_due"
       >
         Attempted

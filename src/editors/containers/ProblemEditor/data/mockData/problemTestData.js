@@ -72,7 +72,6 @@ export const checklistWithFeebackHints = {
           number: 5,
         },
       },
-      randomization: 'per_student',
       timeBetween: 3,
       matLabApiKey: 'sample_matlab_api_key',
       showAnswer: {
@@ -97,7 +96,6 @@ export const checklistWithFeebackHints = {
 `,
     matlab_api_key: 'sample_matlab_api_key',
     max_attempts: 5,
-    rerandomize: 'per_student',
     show_reset_button: true,
     showanswer: 'after_attempts',
     attempts_before_showanswer_button: 2,
@@ -150,7 +148,6 @@ export const dropdownWithFeedbackHints = {
           number: 5,
         },
       },
-      randomization: 'never',
       timeBetween: 3,
       matLabApiKey: '',
       showAnswer: {
@@ -224,7 +221,6 @@ export const numericWithHints = {
           number: 0,
         },
       },
-      randomization: 'per_student',
       timeBetween: 0,
       matLabApiKey: '',
       showAnswer: {
@@ -296,7 +292,6 @@ export const textInputWithHints = {
           number: 0,
         },
       },
-      randomization: '',
       timeBetween: 0,
       matLabApiKey: '',
       showAnswer: {
@@ -370,7 +365,6 @@ export const sigleSelectWithHints = {
           number: 0,
         },
       },
-      randomization: '',
       timeBetween: 0,
       matLabApiKey: '',
       showAnswer: {

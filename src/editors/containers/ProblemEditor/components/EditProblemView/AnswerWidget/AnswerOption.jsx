@@ -1,5 +1,5 @@
-import React, { memo, useEffect, useState } from 'react';
-import { connect } from 'react-redux';
+import React, { memo } from 'react';
+import { connect, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import {
   Col, Collapsible, Icon, IconButton, Form, Row,
@@ -8,9 +8,10 @@ import { AddComment, Delete } from '@edx/paragon/icons';
 import { FormattedMessage, injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 
 import messages from './messages';
-import { actions, selectors } from '../../../../../data/redux';
+import { selectors } from '../../../../../data/redux';
 import { answerOptionProps } from '../../../../../data/services/cms/types';
 import { ProblemTypeKeys } from '../../../../../data/constants/problem';
+import * as hooks from './hooks';
 
 const Checker = ({
   hasSingleAnswer, answer, setAnswer,
@@ -24,7 +25,6 @@ const Checker = ({
       className="pl-4 mt-3"
       value={answer.id}
       onChange={(e) => setAnswer({ correct: e.target.checked })}
-      defaultChecked={answer.correct}
       checked={answer.correct}
     >
       {answer.id}
@@ -59,29 +59,12 @@ export const AnswerOption = ({
   // injected
   intl,
   // redux
-  deleteAnswer,
-  updateAnswer,
   problemType,
 }) => {
-  const [isFeedbackVisible, setIsFeedbackVisible] = useState(false);
-  const removeAnswer = () => deleteAnswer({ id: answer.id });
-  const setAnswer = (payload) => updateAnswer({ id: answer.id, hasSingleAnswer, ...payload });
-
-  useEffect(() => {
-    // Show feedback fields if feedback is present
-    setIsFeedbackVisible(isVisible => (
-      !!answer.selectedFeedback || !!answer.unselectedFeedback || !!answer.feedback || isVisible
-    ));
-  }, [answer]);
-
-  const toggleFeedback = (open) => {
-    // Do not allow to hide if feedback is added
-    if (!!answer.selectedFeedback || !!answer.unselectedFeedback || !!answer.feedback) {
-      setIsFeedbackVisible(true);
-      return;
-    }
-    setIsFeedbackVisible(open);
-  };
+  const dispatch = useDispatch();
+  const removeAnswer = hooks.removeAnswer({ answer, dispatch });
+  const setAnswer = hooks.setAnswer({ answer, hasSingleAnswer, dispatch });
+  const { isFeedbackVisible, toggleFeedback } = hooks.prepareFeedback(answer);
 
   const displayFeedbackControl = (answerObject) => {
     if (problemType !== ProblemTypeKeys.MULTISELECT) {
@@ -138,7 +121,7 @@ export const AnswerOption = ({
             as="textarea"
             rows={1}
             value={answer.title}
-            onChange={(e) => setAnswer({ title: e.target.value })}
+            onChange={(e) => { setAnswer({ title: e.target.value }); }}
             placeholder={intl.formatMessage(messages.answerTextboxPlaceholder)}
           />
 
@@ -178,8 +161,6 @@ AnswerOption.propTypes = {
   // injected
   intl: intlShape.isRequired,
   // redux
-  deleteAnswer: PropTypes.func.isRequired,
-  updateAnswer: PropTypes.func.isRequired,
   problemType: PropTypes.string.isRequired,
 };
 
@@ -203,8 +184,5 @@ export const mapStateToProps = (state) => ({
   problemType: selectors.problem.problemType(state),
 });
 
-export const mapDispatchToProps = {
-  deleteAnswer: actions.problem.deleteAnswer,
-  updateAnswer: actions.problem.updateAnswer,
-};
+export const mapDispatchToProps = {};
 export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(memo(AnswerOption)));
