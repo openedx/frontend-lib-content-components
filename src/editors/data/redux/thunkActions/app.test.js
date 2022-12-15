@@ -6,8 +6,10 @@ jest.mock('./requests', () => ({
   fetchBlock: (args) => ({ fetchBlock: args }),
   fetchUnit: (args) => ({ fetchUnit: args }),
   saveBlock: (args) => ({ saveBlock: args }),
-  fetchImages: (args) => ({ fetchImages: args }),
-  uploadImage: (args) => ({ uploadImage: args }),
+  uploadAsset: (args) => ({ uploadAsset: args }),
+  fetchStudioView: (args) => ({ fetchStudioView: args }),
+  fetchAssets: (args) => ({ fetchAssets: args }),
+  fetchCourseDetails: (args) => ({ fetchCourseDetails: args }),
 }));
 
 jest.mock('../../../utils', () => ({
@@ -37,6 +39,27 @@ describe('app thunkActions', () => {
       expect(dispatch).toHaveBeenCalledWith(actions.app.setBlockValue(testValue));
     });
   });
+
+  describe('fetchStudioView', () => {
+    beforeEach(() => {
+      thunkActions.fetchStudioView()(dispatch);
+      [[dispatchedAction]] = dispatch.mock.calls;
+    });
+    it('dispatches fetchStudioView action', () => {
+      expect(dispatchedAction.fetchStudioView).not.toEqual(undefined);
+    });
+    it('dispatches actions.app.setStudioViewe on success', () => {
+      dispatch.mockClear();
+      dispatchedAction.fetchStudioView.onSuccess(testValue);
+      expect(dispatch).toHaveBeenCalledWith(actions.app.setStudioView(testValue));
+    });
+    it('dispatches setStudioView on failure', () => {
+      dispatch.mockClear();
+      dispatchedAction.fetchStudioView.onFailure(testValue);
+      expect(dispatch).toHaveBeenCalledWith(actions.app.setStudioView(testValue));
+    });
+  });
+
   describe('fetchUnit', () => {
     beforeEach(() => {
       thunkActions.fetchUnit()(dispatch);
@@ -56,19 +79,53 @@ describe('app thunkActions', () => {
       expect(dispatch).toHaveBeenCalledWith(actions.app.setUnitUrl(testValue));
     });
   });
+  describe('fetchCourseDetails', () => {
+    beforeEach(() => {
+      thunkActions.fetchCourseDetails()(dispatch);
+      [[dispatchedAction]] = dispatch.mock.calls;
+    });
+    it('dispatches fetchUnit action', () => {
+      expect(dispatchedAction.fetchCourseDetails).not.toEqual(undefined);
+    });
+    it('dispatches actions.app.setUnitUrl on success', () => {
+      dispatch.mockClear();
+      dispatchedAction.fetchCourseDetails.onSuccess(testValue);
+      expect(dispatch).toHaveBeenCalledWith(actions.app.setCourseDetails(testValue));
+    });
+    it('dispatches actions.app.setUnitUrl on failure', () => {
+      dispatch.mockClear();
+      dispatchedAction.fetchCourseDetails.onFailure(testValue);
+      expect(dispatch).toHaveBeenCalledWith(actions.app.setCourseDetails(testValue));
+    });
+  });
   describe('initialize', () => {
     it('dispatches actions.app.initialize, and then fetches both block and unit', () => {
-      const { fetchBlock, fetchUnit } = thunkActions;
+      const {
+        fetchBlock,
+        fetchUnit,
+        fetchStudioView,
+        fetchAssets,
+        fetchCourseDetails,
+      } = thunkActions;
       thunkActions.fetchBlock = () => 'fetchBlock';
       thunkActions.fetchUnit = () => 'fetchUnit';
+      thunkActions.fetchStudioView = () => 'fetchStudioView';
+      thunkActions.fetchAssets = () => 'fetchAssets';
+      thunkActions.fetchCourseDetails = () => 'fetchCourseDetails';
       thunkActions.initialize(testValue)(dispatch);
       expect(dispatch.mock.calls).toEqual([
         [actions.app.initialize(testValue)],
         [thunkActions.fetchBlock()],
         [thunkActions.fetchUnit()],
+        [thunkActions.fetchStudioView()],
+        [thunkActions.fetchAssets()],
+        [thunkActions.fetchCourseDetails()],
       ]);
       thunkActions.fetchBlock = fetchBlock;
       thunkActions.fetchUnit = fetchUnit;
+      thunkActions.fetchStudioView = fetchStudioView;
+      thunkActions.fetchAssets = fetchAssets;
+      thunkActions.fetchCourseDetails = fetchCourseDetails;
     });
   });
   describe('saveBlock', () => {
@@ -95,12 +152,13 @@ describe('app thunkActions', () => {
       expect(returnToUnit).toHaveBeenCalled();
     });
   });
-  describe('fetchImages', () => {
-    it('dispatches fetchUnit action with setImages for onSuccess param', () => {
-      const setImages = jest.fn();
-      thunkActions.fetchImages({ setImages })(dispatch);
-      [[dispatchedAction]] = dispatch.mock.calls;
-      expect(dispatchedAction.fetchImages).toEqual({ onSuccess: setImages });
+  describe('fetchAssets', () => {
+    it('dispatches fetchAssets action with setAssets for onSuccess param', () => {
+      const response = { data: { assets: 'testRESPONSE' } };
+      thunkActions.fetchAssets()(dispatch);
+      const [[dispatchCall]] = dispatch.mock.calls;
+      dispatchCall.fetchAssets.onSuccess(response);
+      expect(dispatch).toHaveBeenCalledWith(actions.app.setAssets(response));
     });
   });
   describe('uploadImage', () => {
@@ -109,14 +167,14 @@ describe('app thunkActions', () => {
       thunkActions.uploadImage({ file: testValue, setSelection })(dispatch);
       [[dispatchedAction]] = dispatch.mock.calls;
     });
-    it('dispatches uploadImage action', () => {
-      expect(dispatchedAction.uploadImage).not.toBe(undefined);
+    it('dispatches uploadAsset action', () => {
+      expect(dispatchedAction.uploadAsset).not.toBe(undefined);
     });
     test('passes file as image prop', () => {
-      expect(dispatchedAction.uploadImage.image).toEqual(testValue);
+      expect(dispatchedAction.uploadAsset.asset).toEqual(testValue);
     });
     test('onSuccess: calls setSelection with camelized response.data.asset', () => {
-      dispatchedAction.uploadImage.onSuccess({ data: { asset: testValue } });
+      dispatchedAction.uploadAsset.onSuccess({ data: { asset: testValue } });
       expect(setSelection).toHaveBeenCalledWith(camelizeKeys(testValue));
     });
   });

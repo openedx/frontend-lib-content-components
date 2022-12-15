@@ -28,9 +28,29 @@ export const blockStudioView = ({ studioEndpointUrl, blockId }) => (
 );
 
 export const courseAssets = ({ studioEndpointUrl, learningContextId }) => (
-  `${studioEndpointUrl}/assets/${learningContextId}/`
+  `${studioEndpointUrl}/assets/${learningContextId}/?page_size=500`
 );
 
-export const courseImages = ({ studioEndpointUrl, learningContextId }) => (
-  `${courseAssets({ studioEndpointUrl, learningContextId })}?sort=uploadDate&direction=desc&asset_type=Images`
+export const allowThumbnailUpload = ({ studioEndpointUrl }) => (
+  `${studioEndpointUrl}/video_images_upload_enabled`
+);
+
+export const thumbnailUpload = ({ studioEndpointUrl, learningContextId, videoId }) => (
+  `${studioEndpointUrl}/video_images/${learningContextId}/${videoId}`
+);
+
+export const videoTranscripts = ({ studioEndpointUrl, blockId }) => (
+  `${block({ studioEndpointUrl, blockId })}/handler/studio_transcript/translation`
+);
+
+export const downloadVideoTranscriptURL = ({ studioEndpointUrl, blockId, language }) => (
+  `${videoTranscripts({ studioEndpointUrl, blockId })}?language_code=${language}`
+);
+
+export const downloadVideoHandoutUrl = ({ studioEndpointUrl, handout }) => (
+  `${studioEndpointUrl}${handout}`
+);
+
+export const courseDetailsUrl = ({ studioEndpointUrl, learningContextId }) => (
+  `${studioEndpointUrl}/settings/details/${learningContextId}`
 );

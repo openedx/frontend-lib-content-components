@@ -13,15 +13,20 @@ export const EditorContainer = ({
   children,
   getContent,
   onClose,
+  validateEntry,
 }) => {
   const dispatch = useDispatch();
   const isInitialized = hooks.isInitialized();
   const handleCancelClicked = hooks.handleCancelClicked({ onClose });
   return (
     <div>
-      <ModalDialog.Header>
+      <ModalDialog.Header className="shadow-sm zindex-10">
         <ModalDialog.Title>
-          <TitleHeader isInitialized={isInitialized} />
+          <div
+            style={{ height: '44px', margin: 'auto' }}
+          >
+            <TitleHeader isInitialized={isInitialized} />
+          </div>
           <div className="pgn__modal-close-container">
             <IconButton
               src={Close}
@@ -34,7 +39,7 @@ export const EditorContainer = ({
       {isInitialized && children}
       <EditorFooter
         onCancel={handleCancelClicked}
-        onSave={hooks.handleSaveClicked({ getContent, dispatch })}
+        onSave={hooks.handleSaveClicked({ dispatch, getContent, validateEntry })}
         disableSave={!isInitialized}
         saveFailed={hooks.saveFailed()}
       />
@@ -43,11 +48,13 @@ export const EditorContainer = ({
 };
 EditorContainer.defaultProps = {
   onClose: null,
+  validateEntry: null,
 };
 EditorContainer.propTypes = {
-  getContent: PropTypes.func.isRequired,
   children: PropTypes.node.isRequired,
+  getContent: PropTypes.func.isRequired,
   onClose: PropTypes.func,
+  validateEntry: PropTypes.func,
 };
 
 export default EditorContainer;

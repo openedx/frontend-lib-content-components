@@ -22,6 +22,7 @@ export const simpleSelectors = {
   studioEndpointUrl: mkSimpleSelector(app => app.studioEndpointUrl),
   unitUrl: mkSimpleSelector(app => app.unitUrl),
   blockTitle: mkSimpleSelector(app => app.blockTitle),
+  assets: mkSimpleSelector(app => app.assets),
 };
 
 export const returnUrl = createSelector(
@@ -68,6 +69,7 @@ export const displayTitle = createSelector(
       : blockType[0].toUpperCase() + blockType.substring(1);
   },
 );
+
 export const analytics = createSelector(
   [
     module.simpleSelectors.blockId,
@@ -79,6 +81,32 @@ export const analytics = createSelector(
   ),
 );
 
+export const isRaw = createSelector(
+  [module.simpleSelectors.studioView],
+  (studioView) => {
+    if (!studioView || !studioView.data || !studioView.data.html) {
+      return null;
+    }
+    if (studioView.data.html.includes('data-editor="raw"')) {
+      return true;
+    }
+    return false;
+  },
+);
+
+export const isLibrary = createSelector(
+  [module.simpleSelectors.learningContextId],
+  (learningContextId) => {
+    if (!learningContextId) {
+      return null;
+    }
+    if (learningContextId && learningContextId.startsWith('library-v1')) {
+      return true;
+    }
+    return false;
+  },
+);
+
 export default {
   ...simpleSelectors,
   isInitialized,
@@ -86,4 +114,5 @@ export default {
   displayTitle,
   analytics,
   isRaw,
+  isLibrary,
 };

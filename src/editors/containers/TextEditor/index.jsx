@@ -31,6 +31,8 @@ import { RequestKeys } from '../../data/constants/requests';
 
 import EditorContainer from '../EditorContainer';
 import ImageUploadModal from './components/ImageUploadModal';
+import SourceCodeModal from './components/SourceCodeModal';
+import RawEditor from './components/RawEditor';
 import * as hooks from './hooks';
 import messages from './messages';
 
@@ -38,41 +40,79 @@ export const TextEditor = ({
   onClose,
   // redux
   isRaw,
+  isLibrary,
   blockValue,
   lmsEndpointUrl,
   studioEndpointUrl,
   blockFailed,
-  blockFinished,
   initializeEditor,
+  assetsFinished,
+  assets,
   // inject
   intl,
 }) => {
   const { editorRef, refReady, setEditorRef } = hooks.prepareEditorRef();
-  const { isOpen, openModal, closeModal } = hooks.modalToggle();
+  const { isImgOpen, openImgModal, closeImgModal } = hooks.imgModalToggle();
+  const { isSourceCodeOpen, openSourceCodeModal, closeSourceCodeModal } = hooks.sourceCodeModalToggle(editorRef);
+  const images = hooks.filterAssets({ assets });
   const imageSelection = hooks.selectedImage(null);
 
   if (!refReady) { return null; }
 
-  console.log(`This is a Raw Editor: ${isRaw}`);
+  const selectEditor = () => {
+    if (isRaw) {
+      return (
+        <RawEditor
+          editorRef={editorRef}
+          text={blockValue}
+        />
+      );
+    }
+    return (
+      <Editor
+        {...hooks.editorConfig({
+          setEditorRef,
+          blockValue,
+          openImgModal,
+          openSourceCodeModal,
+          initializeEditor,
+          lmsEndpointUrl,
+          studioEndpointUrl,
+          isLibrary,
+          images,
+          setSelection: imageSelection.setSelection,
+          clearSelection: imageSelection.clearSelection,
+        })}
+      />
+    );
+  };
 
   return (
     <EditorContainer
-      getContent={hooks.getContent({ editorRef })}
+      getContent={hooks.getContent({ editorRef, isRaw, assets })}
       onClose={onClose}
     >
       <div className="editor-body h-75 overflow-auto">
-        <ImageUploadModal
-          isOpen={isOpen}
-          close={closeModal}
+        {isLibrary ? null : (
+          <ImageUploadModal
+            isOpen={isImgOpen}
+            close={closeImgModal}
+            editorRef={editorRef}
+            images={images}
+            {...imageSelection}
+          />
+        )}
+        <SourceCodeModal
+          isOpen={isSourceCodeOpen}
+          close={closeSourceCodeModal}
           editorRef={editorRef}
-          {...imageSelection}
         />
 
         <Toast show={blockFailed} onClose={hooks.nullMethod}>
           <FormattedMessage {...messages.couldNotLoadTextContext} />
         </Toast>
 
-        {(!blockFinished)
+        {(!assetsFinished)
           ? (
             <div className="text-center p-6">
               <Spinner
@@ -81,21 +121,7 @@ export const TextEditor = ({
                 screenreadertext={intl.formatMessage(messages.spinnerScreenReaderText)}
               />
             </div>
-          )
-          : (
-            <Editor
-              {...hooks.editorConfig({
-                setEditorRef,
-                blockValue,
-                openModal,
-                initializeEditor,
-                lmsEndpointUrl,
-                studioEndpointUrl,
-                setSelection: imageSelection.setSelection,
-                clearSelection: imageSelection.clearSelection,
-              })}
-            />
-          )}
+          ) : (selectEditor())}
       </div>
 
     </EditorContainer>
@@ -103,8 +129,12 @@ export const TextEditor = ({
 };
 TextEditor.defaultProps = {
   blockValue: null,
+  isRaw: null,
+  isLibrary: null,
   lmsEndpointUrl: null,
   studioEndpointUrl: null,
+  assetsFinished: null,
+  assets: null,
 };
 TextEditor.propTypes = {
   onClose: PropTypes.func.isRequired,
@@ -115,8 +145,11 @@ TextEditor.propTypes = {
   lmsEndpointUrl: PropTypes.string,
   studioEndpointUrl: PropTypes.string,
   blockFailed: PropTypes.bool.isRequired,
-  blockFinished: PropTypes.bool.isRequired,
   initializeEditor: PropTypes.func.isRequired,
+  isRaw: PropTypes.bool,
+  isLibrary: PropTypes.bool,
+  assetsFinished: PropTypes.bool,
+  assets: PropTypes.shape({}),
   // inject
   intl: intlShape.isRequired,
 };
@@ -126,8 +159,10 @@ export const mapStateToProps = (state) => ({
   lmsEndpointUrl: selectors.app.lmsEndpointUrl(state),
   studioEndpointUrl: selectors.app.studioEndpointUrl(state),
   blockFailed: selectors.requests.isFailed(state, { requestKey: RequestKeys.fetchBlock }),
-  blockFinished: selectors.requests.isFinished(state, { requestKey: RequestKeys.fetchBlock }),
   isRaw: selectors.app.isRaw(state),
+  isLibrary: selectors.app.isLibrary(state),
+  assetsFinished: selectors.requests.isFinished(state, { requestKey: RequestKeys.fetchAssets }),
+  assets: selectors.app.assets(state),
 });
 
 export const mapDispatchToProps = {

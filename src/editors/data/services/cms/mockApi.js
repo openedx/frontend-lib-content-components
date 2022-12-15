@@ -10,6 +10,57 @@ export const fetchBlockById = ({ blockId, studioEndpointUrl }) => mockPromise({
   data: {
     data: '<p>Test prompt content</p>',
     display_name: 'My Text Prompt',
+    metadata: {
+      display_name: 'Welcome!',
+      download_track: true,
+      download_video: true,
+      edx_video_id: 'f36f06b5-92e5-47c7-bb26-bcf986799cb7',
+      html5_sources: [
+        'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+        'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+      ],
+      show_captions: true,
+      sub: '',
+      track: '',
+      transcripts: {
+        en: { filename: 'my-transcript-url' },
+      },
+      xml_attributes: {
+        source: '',
+      },
+      youtube_id_1_0: 'dQw4w9WgXcQ',
+    },
+  },
+});
+
+// TODO: update to return block data appropriate per block ID, which will equal block type
+// eslint-disable-next-line
+export const fetchStudioView = ({ blockId, studioEndpointUrl }) => mockPromise({
+  data: {
+    // The following is sent for 'raw' editors.
+    html: blockId.includes('mockRaw') ? 'data-editor="raw"' : '',
+    data: '<p>Test prompt content</p> <div data-metadata="license, "value": "all-rights-reserved", "type": " />',
+    display_name: 'My Text Prompt',
+    metadata: {
+      display_name: 'Welcome!',
+      download_track: true,
+      download_video: true,
+      edx_video_id: 'f36f06b5-92e5-47c7-bb26-bcf986799cb7',
+      html5_sources: [
+        'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+        'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+      ],
+      show_captions: true,
+      sub: '',
+      track: '',
+      transcripts: {
+        en: { filename: 'my-transcript-url' },
+      },
+      xml_attributes: {
+        source: '',
+      },
+      youtube_id_1_0: 'dQw4w9WgXcQ',
+    },
   },
 });
 
@@ -19,7 +70,7 @@ export const fetchByUnitId = ({ blockId, studioEndpointUrl }) => mockPromise({
   data: { ancestors: [{ id: 'unitUrl' }] },
 });
 // eslint-disable-next-line
-export const fetchImages = ({ learningContextId, studioEndpointUrl }) => mockPromise({
+export const fetchAssets = ({ learningContextId, studioEndpointUrl }) => mockPromise({
   data: {
     assets: [
       {
@@ -69,6 +120,17 @@ export const fetchImages = ({ learningContextId, studioEndpointUrl }) => mockPro
     ],
   },
 });
+// eslint-disable-next-line
+export const fetchCourseDetails = ({ studioEndpointUrl, learningContextId }) => mockPromise({
+  data: {
+    // license: "creative-commons: ver=4.0 BY NC",
+    license: 'all-rights-reserved',
+  },
+});
+// eslint-disable-next-line
+export const allowThumbnailUpload = ({ studioEndpointUrl }) => mockPromise({
+  data: true,
+});
 
 export const normalizeContent = ({
   blockId,
@@ -108,13 +170,13 @@ export const saveBlock = ({
   }),
 });
 
-export const uploadImage = ({
+export const uploadAsset = ({
   learningContextId,
   studioEndpointUrl,
   // image,
 }) => mockPromise({
   url: urls.courseAssets({ studioEndpointUrl, learningContextId }),
-  image: {
+  asset: {
     asset: {
       display_name: 'journey_escape.jpg',
       content_type: 'image/jpeg',

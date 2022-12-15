@@ -4,13 +4,14 @@ import { StrictDict } from '../../../utils';
 
 const initialState = {
   videoSource: '',
+  videoId: '',
   fallbackVideos: [
     '',
     '',
   ],
   allowVideoDownloads: false,
   thumbnail: null,
-  transcripts: {},
+  transcripts: [],
   allowTranscriptDownloads: false,
   duration: {
     startTime: '00:00:00',
@@ -21,11 +22,19 @@ const initialState = {
   handout: null,
   licenseType: null,
   licenseDetails: {
-    attribution: false,
+    attribution: true,
     noncommercial: false,
     noDerivatives: false,
     shareAlike: false,
   },
+  courseLicenseType: null,
+  courseLicenseDetails: {
+    attribution: true,
+    noncommercial: false,
+    noDerivatives: false,
+    shareAlike: false,
+  },
+  allowThumbnailUpload: null,
 };
 
 // eslint-disable-next-line no-unused-vars

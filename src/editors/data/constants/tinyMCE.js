@@ -10,7 +10,7 @@ export const commands = StrictDict({
 
 export const buttons = StrictDict({
   addImageButton: 'addimagebutton',
-  blockQuote: 'blockQuote',
+  blockQuote: 'blockquote',
   codeBlock: 'codeBlock',
   align: StrictDict({
     center: 'aligncenter',
@@ -48,6 +48,7 @@ export const buttons = StrictDict({
   }),
   table: 'table',
   undo: 'undo',
+  underline: 'underline',
 });
 
 export const plugins = listKeyStore([

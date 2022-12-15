@@ -16,13 +16,13 @@ export const hooks = {
 };
 
 const VideoEditorModal = ({
-  isOpen,
   close,
+  isOpen,
 }) => {
   const dispatch = useDispatch();
   module.hooks.initialize(dispatch);
   return (
-    <VideoSettingsModal {...{ isOpen, close }} />
+    <VideoSettingsModal {...{ close, isOpen }} />
   );
   // TODO: add logic to show SelectVideoModal if no selection
 };
@@ -30,7 +30,7 @@ const VideoEditorModal = ({
 VideoEditorModal.defaultProps = {
 };
 VideoEditorModal.propTypes = {
-  isOpen: PropTypes.bool.isRequired,
   close: PropTypes.func.isRequired,
+  isOpen: PropTypes.bool.isRequired,
 };
 export default VideoEditorModal;

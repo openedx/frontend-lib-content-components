@@ -1,7 +1,7 @@
 import * as utils from '../../../utils';
 import * as api from './api';
 import * as urls from './urls';
-import { get, post } from './utils';
+import { get, post, deleteObject } from './utils';
 
 jest.mock('../../../utils', () => {
   const camelizeMap = (obj) => ({ ...obj, camelized: true });
@@ -15,13 +15,17 @@ jest.mock('../../../utils', () => {
 jest.mock('./urls', () => ({
   block: jest.fn().mockName('urls.block'),
   blockAncestor: jest.fn().mockName('urls.blockAncestor'),
-  courseImages: jest.fn().mockName('urls.courseImages'),
+  blockStudioView: jest.fn().mockName('urls.StudioView'),
   courseAssets: jest.fn().mockName('urls.courseAssets'),
+  videoTranscripts: jest.fn().mockName('urls.videoTranscripts'),
+  allowThumbnailUpload: jest.fn().mockName('urls.allowThumbnailUpload'),
+  thumbnailUpload: jest.fn().mockName('urls.thumbnailUpload'),
 }));
 
 jest.mock('./utils', () => ({
   get: jest.fn().mockName('get'),
   post: jest.fn().mockName('post'),
+  deleteObject: jest.fn().mockName('deleteObject'),
 }));
 
 const { camelize } = utils;
@@ -29,12 +33,14 @@ const { camelize } = utils;
 const { apiMethods } = api;
 
 const blockId = 'coursev1:2uX@4345432';
-const content = 'Im baby palo santo ugh celiac fashion axe. La croix lo-fi venmo whatever. Beard man braid migas single-origin coffee forage ramps.';
 const learningContextId = 'demo2uX';
 const studioEndpointUrl = 'hortus.coa';
 const title = 'remember this needs to go into metadata to save';
 
 describe('cms api', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
   describe('apiMethods', () => {
     describe('fetchBlockId', () => {
       it('should call get with url.blocks', () => {
@@ -50,15 +56,23 @@ describe('cms api', () => {
       });
     });
 
-    describe('fetchImages', () => {
-      it('should call get with url.courseImages', () => {
-        apiMethods.fetchImages({ learningContextId, studioEndpointUrl });
-        expect(get).toHaveBeenCalledWith(urls.courseImages({ studioEndpointUrl, learningContextId }));
+    describe('fetchStudioView', () => {
+      it('should call get with url.blockStudioView', () => {
+        apiMethods.fetchStudioView({ blockId, studioEndpointUrl });
+        expect(get).toHaveBeenCalledWith(urls.blockStudioView({ studioEndpointUrl, blockId }));
+      });
+    });
+
+    describe('fetchAssets', () => {
+      it('should call get with url.courseAssets', () => {
+        apiMethods.fetchAssets({ learningContextId, studioEndpointUrl });
+        expect(get).toHaveBeenCalledWith(urls.courseAssets({ studioEndpointUrl, learningContextId }));
       });
     });
 
     describe('normalizeContent', () => {
       test('return value for blockType: html', () => {
+        const content = 'Im baby palo santo ugh celiac fashion axe. La croix lo-fi venmo whatever. Beard man braid migas single-origin coffee forage ramps.';
         expect(apiMethods.normalizeContent({
           blockId,
           blockType: 'html',
@@ -67,12 +81,68 @@ describe('cms api', () => {
           title,
         })).toEqual({
           category: 'html',
-          couseKey: learningContextId,
+          courseKey: learningContextId,
           data: content,
           has_changes: true,
           id: blockId,
           metadata: { display_name: title },
         });
+      });
+      test('return value for blockType: video', () => {
+        const content = {
+          videoSource: 'viDeOSouRCE',
+          fallbackVideos: 'FalLBacKVidEOs',
+          allowVideoDownloads: 'alLOwViDeodownLOads',
+          thumbnail: 'THUmbNaIL',
+          transcripts: 'traNScRiPts',
+          allowTranscriptDownloads: 'aLloWTRaNScriPtdoWnlOADS',
+          duration: {
+            startTime: '00:00:00',
+            stopTime: '00:00:00',
+          },
+          showTranscriptByDefault: 'ShOWtrANscriPTBYDeFAulT',
+          handout: 'HAnDOuT',
+          licenseType: 'LiCeNsETYpe',
+          licenseDetails: 'liCENSeDetAIls',
+        };
+        const html5Sources = 'hTML5souRCES';
+        const edxVideoId = 'eDXviDEOid';
+        const youtubeId = 'yOUtUBeid';
+        const license = 'LiCEnsE';
+        jest.spyOn(api, 'processVideoIds').mockReturnValue({
+          html5Sources,
+          edxVideoId,
+          youtubeId,
+        });
+        jest.spyOn(api, 'processLicense').mockReturnValue(license);
+        expect(apiMethods.normalizeContent({
+          blockId,
+          blockType: 'video',
+          content,
+          learningContextId,
+          title,
+        })).toEqual({
+          category: 'video',
+          courseKey: learningContextId,
+          display_name: title,
+          id: blockId,
+          metadata: {
+            display_name: title,
+            download_video: content.allowVideoDownloads,
+            edx_video_id: edxVideoId,
+            html5_sources: html5Sources,
+            youtube_id_1_0: youtubeId,
+            thumbnail: content.thumbnail,
+            download_track: content.allowTranscriptDownloads,
+            track: '',
+            show_captions: content.showTranscriptByDefault,
+            handout: content.handout,
+            start_time: content.duration.startTime,
+            end_time: content.duration.stopTime,
+            license,
+          },
+        });
+        jest.restoreAllMocks();
       });
       test('throw error for invalid blockType', () => {
         expect(() => { apiMethods.normalizeContent({ blockType: 'somethingINVALID' }); })
@@ -81,6 +151,7 @@ describe('cms api', () => {
     });
 
     describe('saveBlock', () => {
+      const content = 'Im baby palo santo ugh celiac fashion axe. La croix lo-fi venmo whatever. Beard man braid migas single-origin coffee forage ramps.';
       it('should call post with urls.block and normalizeContent', () => {
         apiMethods.saveBlock({
           blockId,
@@ -103,15 +174,15 @@ describe('cms api', () => {
       });
     });
 
-    describe('uploadImage', () => {
-      const image = { photo: 'dAta' };
+    describe('uploadAsset', () => {
+      const asset = { photo: 'dAta' };
       it('should call post with urls.courseAssets and imgdata', () => {
         const mockFormdata = new FormData();
-        mockFormdata.append('file', image);
-        apiMethods.uploadImage({
+        mockFormdata.append('file', asset);
+        apiMethods.uploadAsset({
           learningContextId,
           studioEndpointUrl,
-          image,
+          asset,
         });
         expect(post).toHaveBeenCalledWith(
           urls.courseAssets({ studioEndpointUrl, learningContextId }),
@@ -149,6 +220,265 @@ describe('cms api', () => {
         [ids[3]]: api.loadImage(camelize(testData[3])),
       });
       api.loadImage = oldLoadImage;
+    });
+  });
+  describe('uploadThumbnail', () => {
+    describe('uploadThumbnail', () => {
+      const thumbnail = 'dAta';
+      const videoId = 'sOmeVIDeoiD';
+      it('should call post with urls.thumbnailUpload and thumbnail data', () => {
+        const mockFormdata = new FormData();
+        mockFormdata.append('file', thumbnail);
+        apiMethods.uploadThumbnail({
+          studioEndpointUrl,
+          learningContextId,
+          videoId,
+          thumbnail,
+        });
+        expect(post).toHaveBeenCalledWith(
+          urls.thumbnailUpload({ studioEndpointUrl, learningContextId, videoId }),
+          mockFormdata,
+        );
+      });
+    });
+    describe('allowThumbnailUpload', () => {
+      it('should call get with url.allowThumbnailUpload', () => {
+        apiMethods.allowThumbnailUpload({ studioEndpointUrl });
+        expect(get).toHaveBeenCalledWith(urls.allowThumbnailUpload({ studioEndpointUrl }));
+      });
+    });
+  });
+  describe('videoTranscripts', () => {
+    const language = 'la';
+    const videoId = 'sOmeVIDeoiD';
+    describe('uploadTranscript', () => {
+      const transcript = { transcript: 'dAta' };
+      it('should call post with urls.videoTranscripts and transcript data', () => {
+        const mockFormdata = new FormData();
+        mockFormdata.append('file', transcript);
+        mockFormdata.append('edx_video_id', videoId);
+        mockFormdata.append('language_code', language);
+        mockFormdata.append('new_language_code', language);
+        apiMethods.uploadTranscript({
+          blockId,
+          studioEndpointUrl,
+          transcript,
+          videoId,
+          language,
+        });
+        expect(post).toHaveBeenCalledWith(
+          urls.videoTranscripts({ studioEndpointUrl, blockId }),
+          mockFormdata,
+        );
+      });
+    });
+    describe('transcript delete', () => {
+      it('should call deleteObject with urls.videoTranscripts and transcript data', () => {
+        const mockDeleteJSON = { data: { lang: language, edx_video_id: videoId } };
+        apiMethods.deleteTranscript({
+          blockId,
+          studioEndpointUrl,
+          videoId,
+          language,
+        });
+        expect(deleteObject).toHaveBeenCalledWith(
+          urls.videoTranscripts({ studioEndpointUrl, blockId }),
+          mockDeleteJSON,
+        );
+      });
+    });
+    describe('transcript get', () => {
+      it('should call get with urls.videoTranscripts and transcript data', () => {
+        const mockJSON = { data: { lang: language, edx_video_id: videoId } };
+        apiMethods.getTranscript({
+          blockId,
+          studioEndpointUrl,
+          videoId,
+          language,
+        });
+        expect(get).toHaveBeenCalledWith(
+          `${urls.videoTranscripts({ studioEndpointUrl, blockId })}?language_code=${language}`,
+          mockJSON,
+        );
+      });
+    });
+  });
+  describe('processVideoIds', () => {
+    const edxVideoId = 'eDXviDEoid';
+    const youtubeId = 'yOuTuBeID';
+    const html5Sources = [
+      'sOuRce1',
+      'sourCE2',
+    ];
+    afterEach(() => {
+      jest.restoreAllMocks();
+    });
+    describe('if the videoSource is an edx video id', () => {
+      beforeEach(() => {
+        jest.spyOn(api, 'isEdxVideo').mockReturnValue(true);
+        jest.spyOn(api, 'parseYoutubeId').mockReturnValue(null);
+      });
+      it('returns edxVideoId when there are no fallbackVideos', () => {
+        expect(api.processVideoIds({
+          edxVideoId,
+          videoSource: '',
+          fallbackVideos: [],
+          videoId: edxVideoId,
+        })).toEqual({
+          edxVideoId,
+          html5Sources: [],
+          youtubeId: '',
+        });
+      });
+      it('returns edxVideoId and html5Sources when there are fallbackVideos', () => {
+        expect(api.processVideoIds({
+          edxVideoId,
+          videoSource: 'edxVideoId',
+          fallbackVideos: html5Sources,
+          videoId: edxVideoId,
+        })).toEqual({
+          edxVideoId,
+          html5Sources,
+          youtubeId: '',
+        });
+      });
+    });
+    describe('if the videoSource is a youtube url', () => {
+      beforeEach(() => {
+        jest.spyOn(api, 'isEdxVideo').mockReturnValue(false);
+        jest.spyOn(api, 'parseYoutubeId').mockReturnValue(youtubeId);
+      });
+      it('returns youtubeId when there are no fallbackVideos', () => {
+        expect(api.processVideoIds({
+          edxVideoId,
+          videoSource: edxVideoId,
+          fallbackVideos: [],
+          videoId: '',
+        })).toEqual({
+          edxVideoId,
+          html5Sources: [],
+          youtubeId,
+        });
+      });
+      it('returns youtubeId and html5Sources when there are fallbackVideos', () => {
+        expect(api.processVideoIds({
+          edxVideoId,
+          videoSource: edxVideoId,
+          fallbackVideos: html5Sources,
+          videoId: '',
+        })).toEqual({
+          edxVideoId,
+          html5Sources,
+          youtubeId,
+        });
+      });
+    });
+    describe('if the videoSource is an html5 source', () => {
+      beforeEach(() => {
+        jest.spyOn(api, 'isEdxVideo').mockReturnValue(false);
+        jest.spyOn(api, 'parseYoutubeId').mockReturnValue(null);
+      });
+      it('returns html5Sources when there are no fallbackVideos', () => {
+        expect(api.processVideoIds({
+          edxVideoId,
+          videoSource: html5Sources[0],
+          fallbackVideos: [],
+          videoId: '',
+        })).toEqual({
+          edxVideoId,
+          html5Sources: [html5Sources[0]],
+          youtubeId: '',
+        });
+      });
+      it('returns html5Sources when there are fallbackVideos', () => {
+        expect(api.processVideoIds({
+          edxVideoId,
+          videoSource: html5Sources[0],
+          fallbackVideos: [html5Sources[1]],
+          videoId: '',
+        })).toEqual({
+          edxVideoId,
+          html5Sources,
+          youtubeId: '',
+        });
+      });
+    });
+  });
+  describe('isEdxVideo', () => {
+    it('returns true if id is in uuid4 format', () => {
+      const id = 'c2afd8c8-3329-4dfc-95be-4ee6d986c3e5';
+      expect(api.isEdxVideo(id)).toEqual(true);
+    });
+    it('returns false if id is not in uuid4 format', () => {
+      const id = 'someB-ad-Id';
+      expect(api.isEdxVideo(id)).toEqual(false);
+    });
+  });
+  describe('parseYoutubeId', () => {
+    it('returns the youtube id in an url', () => {
+      const id = '3_yD_cEKoCk';
+      const testURLs = [
+        'https://www.youtube.com/watch?v=3_yD_cEKoCk&feature=featured',
+        'https://www.youtube.com/watch?v=3_yD_cEKoCk',
+        'http://www.youtube.com/watch?v=3_yD_cEKoCk',
+        '//www.youtube.com/watch?v=3_yD_cEKoCk',
+        'www.youtube.com/watch?v=3_yD_cEKoCk',
+        'https://youtube.com/watch?v=3_yD_cEKoCk',
+        'http://youtube.com/watch?v=3_yD_cEKoCk',
+        '//youtube.com/watch?v=3_yD_cEKoCk',
+        'youtube.com/watch?v=3_yD_cEKoCk',
+        'https://m.youtube.com/watch?v=3_yD_cEKoCk',
+        'http://m.youtube.com/watch?v=3_yD_cEKoCk',
+        '//m.youtube.com/watch?v=3_yD_cEKoCk',
+        'm.youtube.com/watch?v=3_yD_cEKoCk',
+        'https://www.youtube.com/v/3_yD_cEKoCk?fs=1&hl=en_US',
+        'http://www.youtube.com/v/3_yD_cEKoCk?fs=1&hl=en_US',
+        '//www.youtube.com/v/3_yD_cEKoCk?fs=1&hl=en_US',
+        'www.youtube.com/v/3_yD_cEKoCk?fs=1&hl=en_US',
+        'youtube.com/v/3_yD_cEKoCk?fs=1&hl=en_US',
+        'https://www.youtube.com/embed/3_yD_cEKoCk?autoplay=1',
+        'https://www.youtube.com/embed/3_yD_cEKoCk',
+        'http://www.youtube.com/embed/3_yD_cEKoCk',
+        '//www.youtube.com/embed/3_yD_cEKoCk',
+        'www.youtube.com/embed/3_yD_cEKoCk',
+        'https://youtube.com/embed/3_yD_cEKoCk',
+        'http://youtube.com/embed/3_yD_cEKoCk',
+        '//youtube.com/embed/3_yD_cEKoCk',
+        'youtube.com/embed/3_yD_cEKoCk',
+        'https://youtu.be/3_yD_cEKoCk?t=120',
+        'https://youtu.be/3_yD_cEKoCk',
+        'http://youtu.be/3_yD_cEKoCk',
+        '//youtu.be/3_yD_cEKoCk',
+        'youtu.be/3_yD_cEKoCk',
+      ];
+      testURLs.forEach((url) => {
+        expect(api.parseYoutubeId(url)).toEqual(id);
+      });
+    });
+    it('returns null if the url is not a youtube url', () => {
+      const badURL = 'https://someothersite.com/3_yD_cEKoCk';
+      expect(api.parseYoutubeId(badURL)).toEqual(null);
+    });
+  });
+  describe('processLicense', () => {
+    it('returns empty string when licenseType is empty or not a valid licnese type', () => {
+      expect(api.processLicense('', {})).toEqual('');
+      expect(api.processLicense('LiCeNsETYpe', {})).toEqual('');
+    });
+    it('returns empty string when licenseType equals creative commons', () => {
+      const licenseType = 'creative-commons';
+      const licenseDetails = {
+        attribution: true,
+        noncommercial: false,
+        noDerivatives: true,
+        shareAlike: false,
+      };
+      expect(api.processLicense(licenseType, licenseDetails)).toEqual('creative-commons: ver=4.0 BY ND');
+    });
+    it('returns empty string when licenseType equals creative commons', () => {
+      const licenseType = 'all-rights-reserved';
+      const licenseDetails = {};
+      expect(api.processLicense(licenseType, licenseDetails)).toEqual('all-rights-reserved');
     });
   });
 });

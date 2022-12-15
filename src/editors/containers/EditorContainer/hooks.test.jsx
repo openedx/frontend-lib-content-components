@@ -11,6 +11,7 @@ jest.mock('../../data/redux', () => ({
   selectors: {
     app: {
       isInitialized: (state) => ({ isInitialized: state }),
+      images: (state) => ({ images: state }),
     },
     requests: {
       isFailed: (...args) => ({ requestFailed: args }),
@@ -41,20 +42,28 @@ describe('EditorContainer hooks', () => {
       jest.clearAllMocks();
     });
     describe('handleSaveClicked', () => {
-      it('returns callback to saveBlock with dispatch and content from getContent', () => {
+      it('returns callback to saveBlock with dispatch and content from setAssetToStaticUrl', () => {
         const getContent = () => 'myTestContentValue';
+        const setAssetToStaticUrl = () => 'myTestContentValue';
+        const validateEntry = () => 'vaLIdAteENTry';
         const output = hooks.handleSaveClicked({
           getContent,
+          images: {
+            portableUrl: '/static/sOmEuiMAge.jpeg',
+            displayName: 'sOmEuiMAge',
+          },
           destination: 'testDEsTURL',
           analytics: 'soMEanALytics',
           dispatch,
+          validateEntry,
         });
         output();
         expect(appHooks.saveBlock).toHaveBeenCalledWith({
-          content: getContent(),
+          content: setAssetToStaticUrl(reactRedux.useSelector(selectors.app.images), getContent),
           destination: reactRedux.useSelector(selectors.app.returnUrl),
           analytics: reactRedux.useSelector(selectors.app.analytics),
           dispatch,
+          validateEntry,
         });
       });
     });

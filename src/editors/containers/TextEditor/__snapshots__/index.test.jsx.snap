@@ -1,15 +1,95 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`TextEditor snapshots block failed to load, Toast is shown 1`] = `
+exports[`TextEditor snapshots ImageUploadModal is not rendered 1`] = `
 <EditorContainer
   getContent={
     Object {
       "getContent": Object {
+        "assets": Object {
+          "sOmEaSsET": Object {
+            "staTICUrl": "/assets/sOmEaSsET",
+          },
+        },
         "editorRef": Object {
           "current": Object {
             "value": "something",
           },
         },
+        "isRaw": false,
+      },
+    }
+  }
+  onClose={[MockFunction props.onClose]}
+>
+  <div
+    className="editor-body h-75 overflow-auto"
+  >
+    <SourceCodeModal
+      close={[MockFunction modal.closeModal]}
+      editorRef={
+        Object {
+          "current": Object {
+            "value": "something",
+          },
+        }
+      }
+      isOpen={false}
+    />
+    <Toast
+      onClose={[MockFunction hooks.nullMethod]}
+      show={false}
+    >
+      <FormattedMessage
+        defaultMessage="Error: Could Not Load Text Content"
+        description="Error Message Dispayed When HTML content fails to Load"
+        id="authoring.texteditor.load.error"
+      />
+    </Toast>
+    <Editor
+      editorConfig={
+        Object {
+          "blockValue": Object {
+            "data": Object {
+              "data": "eDiTablE Text",
+            },
+          },
+          "clearSelection": [MockFunction hooks.selectedImage.clearSelection],
+          "images": Array [
+            Object {
+              "staTICUrl": "/assets/sOmEaSsET",
+            },
+          ],
+          "initializeEditor": [MockFunction args.intializeEditor],
+          "isLibrary": true,
+          "lmsEndpointUrl": "sOmEvaLue.cOm",
+          "openImgModal": [MockFunction modal.openModal],
+          "openSourceCodeModal": [MockFunction modal.openModal],
+          "setEditorRef": [MockFunction hooks.prepareEditorRef.setEditorRef],
+          "setSelection": [MockFunction hooks.selectedImage.setSelection],
+          "studioEndpointUrl": "sOmEoThERvaLue.cOm",
+        }
+      }
+    />
+  </div>
+</EditorContainer>
+`;
+
+exports[`TextEditor snapshots block failed to load, Toast is shown 1`] = `
+<EditorContainer
+  getContent={
+    Object {
+      "getContent": Object {
+        "assets": Object {
+          "sOmEaSsET": Object {
+            "staTICUrl": "/assets/sOmEaSsET",
+          },
+        },
+        "editorRef": Object {
+          "current": Object {
+            "value": "something",
+          },
+        },
+        "isRaw": false,
       },
     }
   }
@@ -28,9 +108,27 @@ exports[`TextEditor snapshots block failed to load, Toast is shown 1`] = `
           },
         }
       }
+      images={
+        Array [
+          Object {
+            "staTICUrl": "/assets/sOmEaSsET",
+          },
+        ]
+      }
       isOpen={false}
       selection="hooks.selectedImage.selection"
       setSelection={[MockFunction hooks.selectedImage.setSelection]}
+    />
+    <SourceCodeModal
+      close={[MockFunction modal.closeModal]}
+      editorRef={
+        Object {
+          "current": Object {
+            "value": "something",
+          },
+        }
+      }
+      isOpen={false}
     />
     <Toast
       onClose={[MockFunction hooks.nullMethod]}
@@ -47,13 +145,20 @@ exports[`TextEditor snapshots block failed to load, Toast is shown 1`] = `
         Object {
           "blockValue": Object {
             "data": Object {
-              "some": "eDiTablE Text",
+              "data": "eDiTablE Text",
             },
           },
           "clearSelection": [MockFunction hooks.selectedImage.clearSelection],
+          "images": Array [
+            Object {
+              "staTICUrl": "/assets/sOmEaSsET",
+            },
+          ],
           "initializeEditor": [MockFunction args.intializeEditor],
+          "isLibrary": false,
           "lmsEndpointUrl": "sOmEvaLue.cOm",
-          "openModal": [MockFunction modal.openModal],
+          "openImgModal": [MockFunction modal.openModal],
+          "openSourceCodeModal": [MockFunction modal.openModal],
           "setEditorRef": [MockFunction hooks.prepareEditorRef.setEditorRef],
           "setSelection": [MockFunction hooks.selectedImage.setSelection],
           "studioEndpointUrl": "sOmEoThERvaLue.cOm",
@@ -64,16 +169,22 @@ exports[`TextEditor snapshots block failed to load, Toast is shown 1`] = `
 </EditorContainer>
 `;
 
-exports[`TextEditor snapshots not yet loaded, Spinner appears 1`] = `
+exports[`TextEditor snapshots loaded, raw editor 1`] = `
 <EditorContainer
   getContent={
     Object {
       "getContent": Object {
+        "assets": Object {
+          "sOmEaSsET": Object {
+            "staTICUrl": "/assets/sOmEaSsET",
+          },
+        },
         "editorRef": Object {
           "current": Object {
             "value": "something",
           },
         },
+        "isRaw": true,
       },
     }
   }
@@ -92,9 +203,113 @@ exports[`TextEditor snapshots not yet loaded, Spinner appears 1`] = `
           },
         }
       }
+      images={
+        Array [
+          Object {
+            "staTICUrl": "/assets/sOmEaSsET",
+          },
+        ]
+      }
       isOpen={false}
       selection="hooks.selectedImage.selection"
       setSelection={[MockFunction hooks.selectedImage.setSelection]}
+    />
+    <SourceCodeModal
+      close={[MockFunction modal.closeModal]}
+      editorRef={
+        Object {
+          "current": Object {
+            "value": "something",
+          },
+        }
+      }
+      isOpen={false}
+    />
+    <Toast
+      onClose={[MockFunction hooks.nullMethod]}
+      show={false}
+    >
+      <FormattedMessage
+        defaultMessage="Error: Could Not Load Text Content"
+        description="Error Message Dispayed When HTML content fails to Load"
+        id="authoring.texteditor.load.error"
+      />
+    </Toast>
+    <RawEditor
+      editorRef={
+        Object {
+          "current": Object {
+            "value": "something",
+          },
+        }
+      }
+      text={
+        Object {
+          "data": Object {
+            "data": "eDiTablE Text",
+          },
+        }
+      }
+    />
+  </div>
+</EditorContainer>
+`;
+
+exports[`TextEditor snapshots not yet loaded, Spinner appears 1`] = `
+<EditorContainer
+  getContent={
+    Object {
+      "getContent": Object {
+        "assets": Object {
+          "sOmEaSsET": Object {
+            "staTICUrl": "/assets/sOmEaSsET",
+          },
+        },
+        "editorRef": Object {
+          "current": Object {
+            "value": "something",
+          },
+        },
+        "isRaw": false,
+      },
+    }
+  }
+  onClose={[MockFunction props.onClose]}
+>
+  <div
+    className="editor-body h-75 overflow-auto"
+  >
+    <ImageUploadModal
+      clearSelection={[MockFunction hooks.selectedImage.clearSelection]}
+      close={[MockFunction modal.closeModal]}
+      editorRef={
+        Object {
+          "current": Object {
+            "value": "something",
+          },
+        }
+      }
+      images={
+        Array [
+          Object {
+            "staTICUrl": "/assets/sOmEaSsET",
+          },
+        ]
+      }
+      isOpen={false}
+      selection="hooks.selectedImage.selection"
+      setSelection={[MockFunction hooks.selectedImage.setSelection]}
+    />
+    <SourceCodeModal
+      close={[MockFunction modal.closeModal]}
+      editorRef={
+        Object {
+          "current": Object {
+            "value": "something",
+          },
+        }
+      }
+      isOpen={false}
     />
     <Toast
       onClose={[MockFunction hooks.nullMethod]}
@@ -124,11 +339,17 @@ exports[`TextEditor snapshots renders as expected with default behavior 1`] = `
   getContent={
     Object {
       "getContent": Object {
+        "assets": Object {
+          "sOmEaSsET": Object {
+            "staTICUrl": "/assets/sOmEaSsET",
+          },
+        },
         "editorRef": Object {
           "current": Object {
             "value": "something",
           },
         },
+        "isRaw": false,
       },
     }
   }
@@ -147,9 +368,27 @@ exports[`TextEditor snapshots renders as expected with default behavior 1`] = `
           },
         }
       }
+      images={
+        Array [
+          Object {
+            "staTICUrl": "/assets/sOmEaSsET",
+          },
+        ]
+      }
       isOpen={false}
       selection="hooks.selectedImage.selection"
       setSelection={[MockFunction hooks.selectedImage.setSelection]}
+    />
+    <SourceCodeModal
+      close={[MockFunction modal.closeModal]}
+      editorRef={
+        Object {
+          "current": Object {
+            "value": "something",
+          },
+        }
+      }
+      isOpen={false}
     />
     <Toast
       onClose={[MockFunction hooks.nullMethod]}
@@ -166,13 +405,20 @@ exports[`TextEditor snapshots renders as expected with default behavior 1`] = `
         Object {
           "blockValue": Object {
             "data": Object {
-              "some": "eDiTablE Text",
+              "data": "eDiTablE Text",
             },
           },
           "clearSelection": [MockFunction hooks.selectedImage.clearSelection],
+          "images": Array [
+            Object {
+              "staTICUrl": "/assets/sOmEaSsET",
+            },
+          ],
           "initializeEditor": [MockFunction args.intializeEditor],
+          "isLibrary": false,
           "lmsEndpointUrl": "sOmEvaLue.cOm",
-          "openModal": [MockFunction modal.openModal],
+          "openImgModal": [MockFunction modal.openModal],
+          "openSourceCodeModal": [MockFunction modal.openModal],
           "setEditorRef": [MockFunction hooks.prepareEditorRef.setEditorRef],
           "setSelection": [MockFunction hooks.selectedImage.setSelection],
           "studioEndpointUrl": "sOmEoThERvaLue.cOm",

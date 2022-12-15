@@ -19,8 +19,8 @@ const durationPairs = [
 const trickyDurations = [
   ['10:00', 600000],
   ['23', 23000],
-  ['100:100:100', 100 * (m + s + h)],
-  ['23:42:781', 23 * h + 42 * m + 781 * s],
+  ['99:99:99', 99 * (m + s + h)],
+  ['23:42:81', 23 * h + 42 * m + 81 * s],
 ];
 let spies = {};
 let props;
@@ -41,10 +41,68 @@ describe('Video Settings Modal duration hooks', () => {
     });
   });
 
+  describe('onDurationChange', () => {
+    beforeEach(() => {
+      props = {
+        duration: { startTime: '00:00:00' },
+        index: 'startTime',
+        val: 'vAl',
+      };
+      hook = duration.onDurationChange;
+    });
+    it('returns duration with no change if duration[index] does not match HH:MM:SS format', () => {
+      const badChecks = [
+        'ab:cd:ef', // non-digit characters
+        '12:34:567', // characters past max length
+      ];
+      badChecks.forEach(val => expect(hook(props.duration, props.index, val)).toEqual(props.duration));
+    });
+    it('returns duration with an added \':\' after 2 characters when caret is at end', () => {
+      props.duration = { startTime: '0' };
+      props.val = '00';
+      document.activeElement.selectionStart = props.duration[props.index].length + 1;
+      expect(hook(props.duration, props.index, props.val)).toEqual({ startTime: '00:' });
+    });
+    it('returns duration with an added \':\' after 5 characters when caret is at end', () => {
+      props.duration = { startTime: '00:0' };
+      props.val = '00:00';
+      document.activeElement.selectionStart = props.duration[props.index].length + 1;
+      expect(hook(props.duration, props.index, props.val)).toEqual({ startTime: '00:00:' });
+    });
+  });
+  describe('onDurationKeyDown', () => {
+    beforeEach(() => {
+      props = {
+        duration: { startTime: '00:00:00' },
+        index: 'startTime',
+        event: 'eVeNt',
+      };
+      hook = duration.onDurationKeyDown;
+    });
+    it('enter event: calls blur()', () => {
+      props.event = { key: 'Enter' };
+      const blurSpy = jest.spyOn(document.activeElement, 'blur');
+      hook(props.duration, props.index, props.event);
+      expect(blurSpy).toHaveBeenCalled();
+    });
+    it('backspace event: returns duration with deleted end character when that character is \':\' and caret is at end', () => {
+      props.duration = { startTime: '00:' };
+      props.event = { key: 'Backspace' };
+      document.activeElement.selectionStart = props.duration[props.index].length;
+      expect(hook(props.duration, props.index, props.event)).toEqual({ startTime: '00' });
+    });
+  });
   describe('durationFromValue', () => {
+    beforeEach(() => {
+      hook = duration.durationFromValue;
+    });
+    it('returns 00:00:00 if given a bad value', () => {
+      const badChecks = ['a', '', null, -1];
+      badChecks.forEach(val => expect(hook(val)).toEqual('00:00:00'));
+    });
     it('translates milliseconds into hh:mm:ss format', () => {
       durationPairs.forEach(
-        ([val, dur]) => expect(duration.durationFromValue(val)).toEqual(dur),
+        ([val, dur]) => expect(hook(val)).toEqual(dur),
       );
     });
   });
@@ -52,9 +110,9 @@ describe('Video Settings Modal duration hooks', () => {
     beforeEach(() => {
       hook = duration.valueFromDuration;
     });
-    it('returns null if given a bad duration string', () => {
+    it('returns 0 if given a bad duration string', () => {
       const badChecks = ['a', '00:00:1f', '0adg:00:04'];
-      badChecks.forEach(dur => expect(hook(dur)).toEqual(null));
+      badChecks.forEach(dur => expect(hook(dur)).toEqual(0));
     });
     it('returns simple durations', () => {
       durationPairs.forEach(([val, dur]) => expect(hook(dur)).toEqual(val));
@@ -77,19 +135,18 @@ describe('Video Settings Modal duration hooks', () => {
     });
   });
   describe('updateDuration', () => {
-    const testDuration = 'myDuration';
-    const testIndex = 'startTime';
-    const mockValueFromDuration = (dur) => ({ value: dur });
-    const mockDurationFromValue = (value) => ({ duration: value });
+    const testValidIndex = 'startTime';
+    const testStopIndex = 'stopTime';
+    const testValidDuration = '00:00:00';
+    const testValidValue = 0;
+    const testInvalidDuration = 'abc';
     beforeEach(() => {
       props = {
-        formValue: { startTime: 230000, stopTime: 0 },
-        local: { startTime: '00:00:23', stopTime: '00:00:00' },
+        formValue: { startTime: 23000, stopTime: 600000 },
+        local: { startTime: '00:00:23', stopTime: '00:10:00' },
         setLocal: jest.fn(),
         setFormValue: jest.fn(),
       };
-      spies.valueFromDuration = jest.spyOn(duration, durationKeys.valueFromDuration)
-        .mockImplementation(mockValueFromDuration);
       hook = duration.updateDuration;
       ({ cb, prereqs } = hook(props).useCallback);
     });
@@ -104,29 +161,54 @@ describe('Video Settings Modal duration hooks', () => {
     describe('callback', () => {
       describe('if the passed durationString is valid', () => {
         it('sets the local value to updated strings and form value to new timestamp value', () => {
-          cb(testIndex, testDuration);
-          expect(duration.valueFromDuration).toHaveBeenCalledWith(testDuration);
+          cb(testValidIndex, testValidDuration);
           expect(props.setLocal).toHaveBeenCalledWith({
             ...props.local,
-            [testIndex]: testDuration,
+            [testValidIndex]: testValidDuration,
           });
           expect(props.setFormValue).toHaveBeenCalledWith({
             ...props.formValue,
-            [testIndex]: mockValueFromDuration(testDuration),
+            [testValidIndex]: testValidValue,
           });
         });
       });
       describe('if the passed durationString is not valid', () => {
-        it('updates local back to the string for the form-stored timestamp value', () => {
-          spies.valueFromDuration.mockReturnValue(null);
-          spies.durationFromValue = jest.spyOn(duration, durationKeys.durationFromValue)
-            .mockImplementationOnce(mockDurationFromValue);
-          hook(props).useCallback.cb(testIndex, testDuration);
+        it('updates local values to 0 (the default)', () => {
+          hook(props).useCallback.cb(testValidIndex, testInvalidDuration);
           expect(props.setLocal).toHaveBeenCalledWith({
             ...props.local,
-            [testIndex]: mockDurationFromValue(props.formValue[testIndex]),
+            [testValidIndex]: testValidDuration,
           });
-          expect(props.setFormValue).not.toHaveBeenCalled();
+          expect(props.setFormValue).toHaveBeenCalledWith({
+            ...props.formValue,
+            [testValidIndex]: testValidValue,
+          });
+        });
+      });
+      describe('if the passed startTime is after (or equal to) the stored non-zero stopTime', () => {
+        it('updates local startTime values to 1 second before stopTime', () => {
+          hook(props).useCallback.cb(testValidIndex, '00:10:00');
+          expect(props.setLocal).toHaveBeenCalledWith({
+            ...props.local,
+            [testValidIndex]: '00:09:59',
+          });
+          expect(props.setFormValue).toHaveBeenCalledWith({
+            ...props.formValue,
+            [testValidIndex]: 599000,
+          });
+        });
+      });
+      describe('if the passed stopTime is before (or equal to) the stored startTime', () => {
+        it('updates local stopTime values to 1 second after startTime', () => {
+          hook(props).useCallback.cb(testStopIndex, '00:00:22');
+          expect(props.setLocal).toHaveBeenCalledWith({
+            ...props.local,
+            [testStopIndex]: '00:00:24',
+          });
+          expect(props.setFormValue).toHaveBeenCalledWith({
+            ...props.formValue,
+            [testStopIndex]: 24000,
+          });
         });
       });
     });

@@ -8,7 +8,6 @@ const initialState = {
   blockContent: null,
   studioView: null,
   saveResponse: null,
-
   blockId: null,
   blockTitle: null,
   blockType: null,
@@ -16,6 +15,8 @@ const initialState = {
   editorInitialized: false,
   studioEndpointUrl: null,
   lmsEndpointUrl: null,
+  assets: {},
+  courseDetails: {},
 };
 
 // eslint-disable-next-line no-unused-vars
@@ -37,14 +38,14 @@ const app = createSlice({
       blockValue: payload,
       blockTitle: payload.data.display_name,
     }),
-    setStudioView: (state, { payload }) => ({
-      ...state,
-      studioView: payload,
-    }),
+
+    setStudioView: (state, { payload }) => ({ ...state, studioView: payload }),
     setBlockContent: (state, { payload }) => ({ ...state, blockContent: payload }),
     setBlockTitle: (state, { payload }) => ({ ...state, blockTitle: payload }),
     setSaveResponse: (state, { payload }) => ({ ...state, saveResponse: payload }),
     initializeEditor: (state) => ({ ...state, editorInitialized: true }),
+    setAssets: (state, { payload }) => ({ ...state, assets: payload }),
+    setCourseDetails: (state, { payload }) => ({ ...state, courseDetails: payload }),
   },
 });
 

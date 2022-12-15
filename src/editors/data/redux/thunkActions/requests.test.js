@@ -9,6 +9,10 @@ const testState = {
 };
 
 jest.mock('../app/selectors', () => ({
+  simpleSelectors: {
+    studioEndpointUrl: (state) => ({ studioEndpointUrl: state }),
+    blockId: (state) => ({ blockId: state }),
+  },
   studioEndpointUrl: (state) => ({ studioEndpointUrl: state }),
   blockId: (state) => ({ blockId: state }),
   blockType: (state) => ({ blockType: state }),
@@ -18,11 +22,18 @@ jest.mock('../app/selectors', () => ({
 
 jest.mock('../../services/cms/api', () => ({
   fetchBlockById: ({ id, url }) => ({ id, url }),
+  fetchStudioView: ({ id, url }) => ({ id, url }),
   fetchByUnitId: ({ id, url }) => ({ id, url }),
+  fetchCourseDetails: (args) => args,
   saveBlock: (args) => args,
-  fetchImages: ({ id, url }) => ({ id, url }),
-  uploadImage: (args) => args,
+  fetchAssets: ({ id, url }) => ({ id, url }),
+  uploadAsset: (args) => args,
   loadImages: jest.fn(),
+  allowThumbnailUpload: jest.fn(),
+  uploadThumbnail: jest.fn(),
+  uploadTranscript: jest.fn(),
+  deleteTranscript: jest.fn(),
+  getTranscript: jest.fn(),
 }));
 
 const apiKeys = keyStore(api);
@@ -191,9 +202,38 @@ describe('requests thunkActions module', () => {
         },
       });
     });
-
-    describe('fetchImages', () => {
-      let fetchImages;
+    describe('fetchStudioView', () => {
+      testNetworkRequestAction({
+        action: requests.fetchStudioView,
+        args: fetchParams,
+        expectedString: 'with fetchStudioView promise',
+        expectedData: {
+          ...fetchParams,
+          requestKey: RequestKeys.fetchStudioView,
+          promise: api.fetchStudioView({
+            studioEndpointUrl: selectors.app.studioEndpointUrl(testState),
+            blockId: selectors.app.blockId(testState),
+          }),
+        },
+      });
+    });
+    describe('fetchCourseDetails', () => {
+      testNetworkRequestAction({
+        action: requests.fetchCourseDetails,
+        args: fetchParams,
+        expectedString: 'with fetchCourseDetails promise',
+        expectedData: {
+          ...fetchParams,
+          requestKey: RequestKeys.fetchCourseDetails,
+          promise: api.fetchCourseDetails({
+            studioEndpointUrl: selectors.app.studioEndpointUrl(testState),
+            learningContextId: selectors.app.learningContextId(testState),
+          }),
+        },
+      });
+    });
+    describe('fetchAssets', () => {
+      let fetchAssets;
       let loadImages;
       let dispatchedAction;
       const expectedArgs = {
@@ -201,12 +241,12 @@ describe('requests thunkActions module', () => {
         learningContextId: selectors.app.learningContextId(testState),
       };
       beforeEach(() => {
-        fetchImages = jest.fn((args) => new Promise((resolve) => {
-          resolve({ data: { assets: { fetchImages: args } } });
+        fetchAssets = jest.fn((args) => new Promise((resolve) => {
+          resolve({ data: { assets: { fetchAssets: args } } });
         }));
-        jest.spyOn(api, apiKeys.fetchImages).mockImplementationOnce(fetchImages);
+        jest.spyOn(api, apiKeys.fetchAssets).mockImplementationOnce(fetchAssets);
         loadImages = jest.spyOn(api, apiKeys.loadImages).mockImplementationOnce(() => ({}));
-        requests.fetchImages({ ...fetchParams, onSuccess, onFailure })(dispatch, () => testState);
+        requests.fetchAssets({ ...fetchParams, onSuccess, onFailure })(dispatch, () => testState);
         [[dispatchedAction]] = dispatch.mock.calls;
       });
       it('dispatches networkRequest', () => {
@@ -216,14 +256,13 @@ describe('requests thunkActions module', () => {
         expect(dispatchedAction.networkRequest.onSuccess).toEqual(onSuccess);
         expect(dispatchedAction.networkRequest.onFailure).toEqual(onFailure);
       });
-      test('api.fetchImages promise called with studioEndpointUrl and learningContextId', () => {
-        expect(fetchImages).toHaveBeenCalledWith(expectedArgs);
+      test('api.fetchAssets promise called with studioEndpointUrl and learningContextId', () => {
+        expect(fetchAssets).toHaveBeenCalledWith(expectedArgs);
       });
       test('promise is chained with api.loadImages', () => {
-        expect(loadImages).toHaveBeenCalledWith({ fetchImages: expectedArgs });
+        expect(loadImages).toHaveBeenCalledWith({ fetchAssets: expectedArgs });
       });
     });
-
     describe('saveBlock', () => {
       const content = 'SoME HtMl CoNtent As String';
       testNetworkRequestAction({
@@ -244,19 +283,142 @@ describe('requests thunkActions module', () => {
         },
       });
     });
-
-    describe('uploadImage', () => {
-      const image = 'SoME iMage CoNtent As String';
+    describe('uploadAsset', () => {
+      const asset = 'SoME iMage CoNtent As String';
       testNetworkRequestAction({
-        action: requests.uploadImage,
-        args: { image, ...fetchParams },
-        expectedString: 'with uploadImage promise',
+        action: requests.uploadAsset,
+        args: { asset, ...fetchParams },
+        expectedString: 'with uploadAsset promise',
         expectedData: {
           ...fetchParams,
-          requestKey: RequestKeys.uploadImage,
-          promise: api.uploadImage({
+          requestKey: RequestKeys.uploadAsset,
+          promise: api.uploadAsset({
             learningContextId: selectors.app.learningContextId(testState),
-            image,
+            asset,
+            studioEndpointUrl: selectors.app.studioEndpointUrl(testState),
+          }),
+        },
+      });
+    });
+    describe('allowThumbnailUpload', () => {
+      testNetworkRequestAction({
+        action: requests.allowThumbnailUpload,
+        args: { ...fetchParams },
+        expectedString: 'with allowThumbnailUpload promise',
+        expectedData: {
+          ...fetchParams,
+          requestKey: RequestKeys.allowThumbnailUpload,
+          promise: api.allowThumbnailUpload({
+            studioEndpointUrl: selectors.app.studioEndpointUrl(testState),
+          }),
+        },
+      });
+    });
+    describe('uploadThumbnail', () => {
+      const thumbnail = 'SoME tHumbNAil CoNtent As String';
+      const videoId = 'SoME VidEOid CoNtent As String';
+      testNetworkRequestAction({
+        action: requests.uploadThumbnail,
+        args: { thumbnail, videoId, ...fetchParams },
+        expectedString: 'with uploadThumbnail promise',
+        expectedData: {
+          ...fetchParams,
+          requestKey: RequestKeys.uploadThumbnail,
+          promise: api.uploadThumbnail({
+            learningContextId: selectors.app.learningContextId(testState),
+            thumbnail,
+            videoId,
+            studioEndpointUrl: selectors.app.studioEndpointUrl(testState),
+          }),
+        },
+      });
+    });
+    describe('deleteTranscript', () => {
+      const language = 'SoME laNGUage CoNtent As String';
+      const videoId = 'SoME VidEOid CoNtent As String';
+      testNetworkRequestAction({
+        action: requests.deleteTranscript,
+        args: { language, videoId, ...fetchParams },
+        expectedString: 'with deleteTranscript promise',
+        expectedData: {
+          ...fetchParams,
+          requestKey: RequestKeys.deleteTranscript,
+          promise: api.deleteTranscript({
+            blockId: selectors.app.blockId(testState),
+            language,
+            videoId,
+            studioEndpointUrl: selectors.app.studioEndpointUrl(testState),
+          }),
+        },
+      });
+    });
+    describe('getTranscriptFile', () => {
+      const language = 'SoME laNGUage CoNtent As String';
+      const videoId = 'SoME VidEOid CoNtent As String';
+      testNetworkRequestAction({
+        action: requests.getTranscriptFile,
+        args: { language, videoId, ...fetchParams },
+        expectedString: 'with getTranscriptFile promise',
+        expectedData: {
+          ...fetchParams,
+          requestKey: RequestKeys.getTranscriptFile,
+          promise: api.getTranscript({
+            blockId: selectors.app.blockId(testState),
+            language,
+            videoId,
+            studioEndpointUrl: selectors.app.studioEndpointUrl(testState),
+          }),
+        },
+      });
+    });
+    describe('updateTranscriptLanguage', () => {
+      const languageBeforeChange = 'SoME laNGUage CoNtent As String';
+      const newLanguageCode = 'SoME NEW laNGUage CoNtent As String';
+      const videoId = 'SoME VidEOid CoNtent As String';
+      testNetworkRequestAction({
+        action: requests.updateTranscriptLanguage,
+        args: {
+          languageBeforeChange,
+          newLanguageCode,
+          videoId,
+          ...fetchParams,
+        },
+        expectedString: 'with uploadTranscript promise',
+        expectedData: {
+          ...fetchParams,
+          requestKey: RequestKeys.updateTranscriptLanguage,
+          promise: api.uploadTranscript({
+            blockId: selectors.app.blockId(testState),
+            videoId,
+            language: languageBeforeChange,
+            newLanguage: newLanguageCode,
+            studioEndpointUrl: selectors.app.studioEndpointUrl(testState),
+          }),
+        },
+      });
+    });
+
+    describe('uploadTranscript', () => {
+      const language = 'SoME laNGUage CoNtent As String';
+      const videoId = 'SoME VidEOid CoNtent As String';
+      const transcript = 'SoME tRANscRIPt CoNtent As String';
+      testNetworkRequestAction({
+        action: requests.uploadTranscript,
+        args: {
+          transcript,
+          language,
+          videoId,
+          ...fetchParams,
+        },
+        expectedString: 'with uploadTranscript promise',
+        expectedData: {
+          ...fetchParams,
+          requestKey: RequestKeys.uploadTranscript,
+          promise: api.uploadTranscript({
+            blockId: selectors.app.blockId(testState),
+            transcript,
+            videoId,
+            language,
             studioEndpointUrl: selectors.app.studioEndpointUrl(testState),
           }),
         },

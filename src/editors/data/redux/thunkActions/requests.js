@@ -24,13 +24,19 @@ export const networkRequest = ({
   onFailure,
 }) => (dispatch) => {
   dispatch(actions.requests.startRequest(requestKey));
-  return promise.then((response) => {
-    if (onSuccess) { onSuccess(response); }
-    dispatch(actions.requests.completeRequest({ requestKey, response }));
-  }).catch((error) => {
-    if (onFailure) { onFailure(error); }
-    dispatch(actions.requests.failRequest({ requestKey, error }));
-  });
+  return promise
+    .then((response) => {
+      if (onSuccess) {
+        onSuccess(response);
+      }
+      dispatch(actions.requests.completeRequest({ requestKey, response }));
+    })
+    .catch((error) => {
+      if (onFailure) {
+        onFailure(error);
+      }
+      dispatch(actions.requests.failRequest({ requestKey, error }));
+    });
 };
 
 /**
@@ -51,7 +57,8 @@ export const fetchBlock = ({ ...rest }) => (dispatch, getState) => {
 };
 
 /**
- * Tracked fetchByBlockId api method.
+
+ * Tracked fetchStudioView api method.
  * Tracked to the `fetchBlock` request key.
  * @param {[func]} onSuccess - onSuccess method ((response) => { ... })
  * @param {[func]} onFailure - onFailure method ((error) => { ... })
@@ -104,34 +111,143 @@ export const saveBlock = ({ content, ...rest }) => (dispatch, getState) => {
     ...rest,
   }));
 };
-export const uploadImage = ({ image, ...rest }) => (dispatch, getState) => {
+export const uploadAsset = ({ asset, ...rest }) => (dispatch, getState) => {
   dispatch(module.networkRequest({
-    requestKey: RequestKeys.uploadImage,
-    promise: api.uploadImage({
+    requestKey: RequestKeys.uploadAsset,
+    promise: api.uploadAsset({
       learningContextId: selectors.app.learningContextId(getState()),
-      image,
+      asset,
       studioEndpointUrl: selectors.app.studioEndpointUrl(getState()),
     }),
     ...rest,
   }));
 };
 
-export const fetchImages = ({ ...rest }) => (dispatch, getState) => {
+export const fetchAssets = ({ ...rest }) => (dispatch, getState) => {
   dispatch(module.networkRequest({
-    requestKey: RequestKeys.fetchImages,
-    promise: api.fetchImages({
+    requestKey: RequestKeys.fetchAssets,
+    promise: api
+      .fetchAssets({
+        studioEndpointUrl: selectors.app.studioEndpointUrl(getState()),
+        learningContextId: selectors.app.learningContextId(getState()),
+      })
+      .then((response) => loadImages(response.data.assets)),
+    ...rest,
+  }));
+};
+
+export const allowThumbnailUpload = ({ ...rest }) => (dispatch, getState) => {
+  dispatch(module.networkRequest({
+    requestKey: RequestKeys.allowThumbnailUpload,
+    promise: api.allowThumbnailUpload({
+      studioEndpointUrl: selectors.app.studioEndpointUrl(getState()),
+    }),
+    ...rest,
+  }));
+};
+
+export const uploadThumbnail = ({ thumbnail, videoId, ...rest }) => (dispatch, getState) => {
+  dispatch(module.networkRequest({
+    requestKey: RequestKeys.uploadThumbnail,
+    promise: api.uploadThumbnail({
       studioEndpointUrl: selectors.app.studioEndpointUrl(getState()),
       learningContextId: selectors.app.learningContextId(getState()),
-    }).then((response) => loadImages(response.data.assets)),
+      thumbnail,
+      videoId,
+    }),
+    ...rest,
+  }));
+};
+
+export const deleteTranscript = ({ language, videoId, ...rest }) => (dispatch, getState) => {
+  dispatch(module.networkRequest({
+    requestKey: RequestKeys.deleteTranscript,
+    promise: api.deleteTranscript({
+      blockId: selectors.app.blockId(getState()),
+      language,
+      videoId,
+      studioEndpointUrl: selectors.app.studioEndpointUrl(getState()),
+    }),
+    ...rest,
+  }));
+};
+
+export const uploadTranscript = ({
+  transcript,
+  videoId,
+  language,
+  ...rest
+}) => (dispatch, getState) => {
+  dispatch(module.networkRequest({
+    requestKey: RequestKeys.uploadTranscript,
+    promise: api.uploadTranscript({
+      blockId: selectors.app.blockId(getState()),
+      transcript,
+      videoId,
+      language,
+      studioEndpointUrl: selectors.app.studioEndpointUrl(getState()),
+    }),
+    ...rest,
+  }));
+};
+
+export const updateTranscriptLanguage = ({
+  file,
+  languageBeforeChange,
+  newLanguageCode,
+  videoId,
+  ...rest
+}) => (dispatch, getState) => {
+  dispatch(module.networkRequest({
+    requestKey: RequestKeys.updateTranscriptLanguage,
+    promise: api.uploadTranscript({
+      blockId: selectors.app.blockId(getState()),
+      transcript: file,
+      videoId,
+      language: languageBeforeChange,
+      newLanguage: newLanguageCode,
+      studioEndpointUrl: selectors.app.studioEndpointUrl(getState()),
+    }),
+    ...rest,
+  }));
+};
+
+export const getTranscriptFile = ({ language, videoId, ...rest }) => (dispatch, getState) => {
+  dispatch(module.networkRequest({
+    requestKey: RequestKeys.getTranscriptFile,
+    promise: api.getTranscript({
+      studioEndpointUrl: selectors.app.studioEndpointUrl(getState()),
+      blockId: selectors.app.blockId(getState()),
+      videoId,
+      language,
+    }),
+    ...rest,
+  }));
+};
+
+export const fetchCourseDetails = ({ ...rest }) => (dispatch, getState) => {
+  dispatch(module.networkRequest({
+    requestKey: RequestKeys.fetchCourseDetails,
+    promise: api.fetchCourseDetails({
+      studioEndpointUrl: selectors.app.studioEndpointUrl(getState()),
+      learningContextId: selectors.app.learningContextId(getState()),
+    }),
     ...rest,
   }));
 };
 
 export default StrictDict({
-  uploadImage,
-  fetchImages,
-  fetchUnit,
   fetchBlock,
-  saveBlock,
   fetchStudioView,
+  fetchUnit,
+  saveBlock,
+  fetchAssets,
+  uploadAsset,
+  allowThumbnailUpload,
+  uploadThumbnail,
+  deleteTranscript,
+  uploadTranscript,
+  updateTranscriptLanguage,
+  fetchCourseDetails,
+  getTranscriptFile,
 });

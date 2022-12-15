@@ -13,7 +13,7 @@ export const fetchBlock = () => (dispatch) => {
 export const fetchStudioView = () => (dispatch) => {
   dispatch(requests.fetchStudioView({
     onSuccess: (response) => dispatch(actions.app.setStudioView(response)),
-    onFailure: (e) => console.log({ fetchFailure: e }),
+    onFailure: (e) => dispatch(actions.app.setStudioView(e)),
   }));
 };
 
@@ -21,6 +21,19 @@ export const fetchUnit = () => (dispatch) => {
   dispatch(requests.fetchUnit({
     onSuccess: (response) => dispatch(actions.app.setUnitUrl(response)),
     onFailure: (e) => dispatch(actions.app.setUnitUrl(e)),
+  }));
+};
+
+export const fetchAssets = () => (dispatch) => {
+  dispatch(requests.fetchAssets({
+    onSuccess: (response) => dispatch(actions.app.setAssets(response)),
+  }));
+};
+
+export const fetchCourseDetails = () => (dispatch) => {
+  dispatch(requests.fetchCourseDetails({
+    onSuccess: (response) => dispatch(actions.app.setCourseDetails(response)),
+    onFailure: (e) => dispatch(actions.app.setCourseDetails(e)),
   }));
 };
 
@@ -35,6 +48,8 @@ export const initialize = (data) => (dispatch) => {
   dispatch(module.fetchBlock());
   dispatch(module.fetchUnit());
   dispatch(module.fetchStudioView());
+  dispatch(module.fetchAssets());
+  dispatch(module.fetchCourseDetails());
 };
 
 /**
@@ -51,29 +66,26 @@ export const saveBlock = ({ content, returnToUnit }) => (dispatch) => {
   }));
 };
 
-export const fetchImages = ({ setImages }) => (dispatch) => {
-  dispatch(requests.fetchImages({ onSuccess: setImages }));
-};
-
 export const uploadImage = ({ file, setSelection }) => (dispatch) => {
-  dispatch(requests.uploadImage({
-    image: file,
+  dispatch(requests.uploadAsset({
+    asset: file,
     onSuccess: (response) => setSelection(camelizeKeys(response.data.asset)),
   }));
 };
 
 export const fetchVideos = ({ onSuccess }) => (dispatch) => {
-  dispatch(requests.fetchImages({ onSuccess }));
+  dispatch(requests.fetchAssets({ onSuccess }));
   // onSuccess(mockData.mockVideoData);
 };
 
 export default StrictDict({
   fetchBlock,
+  fetchCourseDetails,
+  fetchStudioView,
   fetchUnit,
+  fetchVideos,
   initialize,
   saveBlock,
-  fetchImages,
+  fetchAssets,
   uploadImage,
-  fetchVideos,
-  fetchStudioView,
 });

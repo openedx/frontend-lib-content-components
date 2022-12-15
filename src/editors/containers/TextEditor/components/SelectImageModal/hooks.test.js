@@ -27,25 +27,6 @@ jest.mock('react-redux', () => {
 jest.mock('../../../../data/redux', () => ({
   thunkActions: {
     app: {
-      fetchImages: jest.fn(),
-      uploadImage: jest.fn(),
-    },
-  },
-}));
-
-jest.mock('react-redux', () => {
-  const dispatchFn = jest.fn();
-  return {
-    ...jest.requireActual('react-redux'),
-    dispatch: dispatchFn,
-    useDispatch: jest.fn(() => dispatchFn),
-  };
-});
-
-jest.mock('../../../../data/redux', () => ({
-  thunkActions: {
-    app: {
-      fetchImages: jest.fn(),
       uploadImage: jest.fn(),
     },
   },
@@ -54,7 +35,8 @@ jest.mock('../../../../data/redux', () => ({
 const state = new MockUseState(hooks);
 const hookKeys = keyStore(hooks);
 let hook;
-const testValue = 'testVALUE';
+const testValue = 'testVALUEVALIDIMAGE';
+const testValueInvalidImage = { value: 'testVALUEVALIDIMAGE', size: 90000000 };
 
 describe('SelectImageModal hooks', () => {
   beforeEach(() => {
@@ -62,10 +44,10 @@ describe('SelectImageModal hooks', () => {
   });
   describe('state hooks', () => {
     state.testGetter(state.keys.highlighted);
-    state.testGetter(state.keys.images);
     state.testGetter(state.keys.showSelectImageError);
     state.testGetter(state.keys.searchString);
     state.testGetter(state.keys.sortBy);
+    state.testGetter(state.keys.showSizeError);
   });
 
   describe('using state', () => {
@@ -119,9 +101,10 @@ describe('SelectImageModal hooks', () => {
     });
     describe('displayList', () => {
       const props = {
-        images: { p1: 'data1', p2: 'data2', p3: 'other distinct data' },
+        images: ['data1', 'data2', 'other distinct data'],
         sortBy: sortKeys.dateNewest,
         searchString: 'test search string',
+
       };
       const load = (loadProps = {}) => {
         jest.spyOn(hooks, hookKeys.filteredList).mockImplementationOnce(
@@ -153,6 +136,13 @@ describe('SelectImageModal hooks', () => {
       const props = {
         setSelection: jest.fn(),
         searchSortProps: { searchString: 'Es', sortBy: sortKeys.dateNewest },
+        images: [
+          {
+            displayName: 'sOmEuiMAge',
+            staTICUrl: '/assets/sOmEuiMAge',
+            id: 'sOmEuiMAgeURl',
+          },
+        ],
       };
       const displayList = (args) => ({ displayList: args });
       const load = () => {
@@ -162,31 +152,17 @@ describe('SelectImageModal hooks', () => {
       beforeEach(() => {
         load();
       });
-      it('returns images value, initialized to an empty object', () => {
-        expect(state.stateVals.images).toEqual(hook.images);
-        expect(state.stateVals.images).toEqual({});
-      });
-      it('dispatches fetchImages thunkAction once, with setImages as onSuccess param', () => {
-        expect(React.useEffect.mock.calls.length).toEqual(1);
-        const [cb, prereqs] = React.useEffect.mock.calls[0];
-        expect(prereqs).toEqual([]);
-        cb();
-        expect(dispatch).toHaveBeenCalledWith(
-          thunkActions.app.fetchImages({ setImages: state.setState.images }),
-        );
-      });
       describe('selectBtnProps', () => {
         test('on click, if sets selection to the image with the same id', () => {
-          const highlighted = 'id1';
-          state.mockVal(state.keys.images, { [highlighted]: testValue });
+          const highlighted = 'sOmEuiMAgeURl';
+          const highlightedValue = { displayName: 'sOmEuiMAge', staTICUrl: '/assets/sOmEuiMAge', id: 'sOmEuiMAgeURl' };
           state.mockVal(state.keys.highlighted, highlighted);
           load();
           expect(props.setSelection).not.toHaveBeenCalled();
           hook.selectBtnProps.onClick();
-          expect(props.setSelection).toHaveBeenCalledWith(testValue);
+          expect(props.setSelection).toHaveBeenCalledWith(highlightedValue);
         });
         test('on click, sets showSelectImageError to true if nothing is highlighted', () => {
-          state.mockVal(state.keys.images, { });
           state.mockVal(state.keys.highlighted, null);
           load();
           hook.selectBtnProps.onClick();
@@ -206,24 +182,24 @@ describe('SelectImageModal hooks', () => {
         test('displayList returns displayListhook called with searchSortProps and images', () => {
           expect(hook.galleryProps.displayList).toEqual(displayList({
             ...props.searchSortProps,
-            images: hook.images,
+            images: props.images,
           }));
         });
       });
-      describe('error', () => {
+      describe('galleryError', () => {
         test('show is initialized to false and returns properly', () => {
           const show = 'sHOWSelectiMaGEeRROr';
-          expect(hook.error.show).toEqual(false);
+          expect(hook.galleryError.show).toEqual(false);
           state.mockVal(state.keys.showSelectImageError, show);
           hook = hooks.imgListHooks(props);
-          expect(hook.error.show).toEqual(show);
+          expect(hook.galleryError.show).toEqual(show);
         });
         test('set sets showSelectImageError to true', () => {
-          hook.error.set();
+          hook.galleryError.set();
           expect(state.setState.showSelectImageError).toHaveBeenCalledWith(true);
         });
         test('dismiss sets showSelectImageError to false', () => {
-          hook.error.dismiss();
+          hook.galleryError.dismiss();
           expect(state.setState.showSelectImageError).toHaveBeenCalledWith(false);
         });
         // TODO
@@ -238,10 +214,29 @@ describe('SelectImageModal hooks', () => {
       });
     });
   });
+  describe('checkValidFileSize', () => {
+    const selectedFileFail = testValueInvalidImage;
+    const selectedFileSuccess = { value: testValue, size: 2000 };
+    const clearSelection = jest.fn();
+    const onSizeFail = jest.fn();
+    it('returns false for valid file size ', () => {
+      hook = hooks.checkValidFileSize({ selectedFile: selectedFileFail, clearSelection, onSizeFail });
+      expect(clearSelection).toHaveBeenCalled();
+      expect(onSizeFail).toHaveBeenCalled();
+      expect(hook).toEqual(false);
+    });
+    it('returns true for valid file size', () => {
+      hook = hooks.checkValidFileSize({ selectedFile: selectedFileSuccess, clearSelection, onSizeFail });
+      expect(hook).toEqual(true);
+    });
+  });
   describe('fileInputHooks', () => {
     const setSelection = jest.fn();
+    const clearSelection = jest.fn();
+    const imgList = { inputError: { show: true, dismiss: jest.fn(), set: jest.fn() } };
+    const spies = {};
     beforeEach(() => {
-      hook = hooks.fileInputHooks({ setSelection });
+      hook = hooks.fileInputHooks({ setSelection, clearSelection, imgList });
     });
     it('returns a ref for the file input', () => {
       expect(hook.ref).toEqual({ current: undefined });
@@ -254,9 +249,23 @@ describe('SelectImageModal hooks', () => {
       expect(click).toHaveBeenCalled();
     });
     describe('addFile (uploadImage args)', () => {
-      const event = { target: { files: [testValue] } };
+      const eventSuccess = { target: { files: [{ value: testValue, size: 2000 }] } };
+      const eventFailure = { target: { files: [testValueInvalidImage] } };
+      it('image fails to upload if file size is greater than 1000000', () => {
+        const checkValidFileSize = false;
+        spies.checkValidFileSize = jest.spyOn(hooks, hookKeys.checkValidFileSize)
+          .mockReturnValueOnce(checkValidFileSize);
+        hook.addFile(eventFailure);
+        expect(spies.checkValidFileSize.mock.calls.length).toEqual(1);
+        expect(spies.checkValidFileSize).toHaveReturnedWith(false);
+      });
       it('dispatches uploadImage thunkAction with the first target file and setSelection', () => {
-        hook.addFile(event);
+        const checkValidFileSize = true;
+        spies.checkValidFileSize = jest.spyOn(hooks, hookKeys.checkValidFileSize)
+          .mockReturnValueOnce(checkValidFileSize);
+        hook.addFile(eventSuccess);
+        expect(spies.checkValidFileSize.mock.calls.length).toEqual(1);
+        expect(spies.checkValidFileSize).toHaveReturnedWith(true);
         expect(dispatch).toHaveBeenCalledWith(thunkActions.app.uploadImage({
           file: testValue,
           setSelection,
@@ -271,8 +280,10 @@ describe('SelectImageModal hooks', () => {
     };
     const searchAndSortHooks = { search: 'props' };
     const fileInputHooks = { file: 'input hooks' };
+    const images = { sOmEuiMAge: { staTICUrl: '/assets/sOmEuiMAge' } };
 
     const setSelection = jest.fn();
+    const clearSelection = jest.fn();
     const spies = {};
     beforeEach(() => {
       spies.imgList = jest.spyOn(hooks, hookKeys.imgListHooks)
@@ -281,26 +292,29 @@ describe('SelectImageModal hooks', () => {
         .mockReturnValueOnce(searchAndSortHooks);
       spies.file = jest.spyOn(hooks, hookKeys.fileInputHooks)
         .mockReturnValueOnce(fileInputHooks);
-      hook = hooks.imgHooks({ setSelection });
+      hook = hooks.imgHooks({ setSelection, clearSelection, images });
     });
     it('forwards fileInputHooks as fileInput, called with uploadImage prop', () => {
       expect(hook.fileInput).toEqual(fileInputHooks);
       expect(spies.file.mock.calls.length).toEqual(1);
       expect(spies.file).toHaveBeenCalledWith({
-        setSelection,
+        setSelection, clearSelection, imgList: imgListHooks,
       });
     });
-    it('initializes imgListHooks with setSelection and searchAndSortHooks', () => {
+    it('initializes imgListHooks with setSelection,searchAndSortHooks, and images', () => {
       expect(spies.imgList.mock.calls.length).toEqual(1);
       expect(spies.imgList).toHaveBeenCalledWith({
         setSelection,
         searchSortProps: searchAndSortHooks,
+        images,
       });
     });
     it('forwards searchAndSortHooks as searchSortProps', () => {
       expect(hook.searchSortProps).toEqual(searchAndSortHooks);
       expect(spies.file.mock.calls.length).toEqual(1);
-      expect(spies.file).toHaveBeenCalledWith({ setSelection });
+      expect(spies.file).toHaveBeenCalledWith({
+        setSelection, clearSelection, imgList: imgListHooks,
+      });
     });
     it('forwards galleryProps and selectBtnProps from the image list hooks', () => {
       expect(hook.galleryProps).toEqual(imgListHooks.galleryProps);

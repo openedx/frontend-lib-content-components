@@ -57,7 +57,7 @@ describe('TitleHeader hooks', () => {
         output.startEditing();
         expect(React.updateState).toHaveBeenCalledWith({ val: false, newVal: true });
       });
-      test('stopEditign calls the setter function with false', () => {
+      test('stopEditing calls the setter function with false', () => {
         output.stopEditing();
         expect(React.updateState).toHaveBeenCalledWith({ val: false, newVal: false });
       });
@@ -74,7 +74,9 @@ describe('TitleHeader hooks', () => {
       });
       describe('updateTitle hook', () => {
         it('calls setBlockTitle with localTitle, and stopEditing', () => {
-          output.updateTitle();
+          const div = document.createElement('div');
+          const mockEvent = { currentTarget: div };
+          output.updateTitle(mockEvent);
           expect(dispatch).toHaveBeenCalledWith(actions.app.setBlockTitle(output.localTitle));
           expect(stopEditing).toHaveBeenCalled();
         });
@@ -86,6 +88,13 @@ describe('TitleHeader hooks', () => {
           expect(state.setState[state.keys.localTitle]).toHaveBeenCalledWith(value);
         });
       });
+      describe('cancelEdit', () => {
+        it('calls setLocalTitle with previously stored title, and stopEditing', () => {
+          output.cancelEdit();
+          expect(state.setState[state.keys.localTitle]).toHaveBeenCalledWith(useSelector(selectors.app.displayTitle));
+          expect(stopEditing).toHaveBeenCalled();
+        });
+      });
     });
     describe('local title hooks', () => {
       let oldHooks;
@@ -95,6 +104,7 @@ describe('TitleHeader hooks', () => {
         stopEditing: 'STOPeDITING',
         handleChange: 'HANDLEcHANGE',
         localTitle: 'LOCALtITLE',
+        cancelEdit: 'CANCelEDit',
       };
       const newHooks = {
         isEditing: () => ({
@@ -106,6 +116,7 @@ describe('TitleHeader hooks', () => {
           updateTitle: args,
           handleChange: values.handleChange,
           localTitle: values.localTitle,
+          cancelEdit: values.cancelEdit,
         })),
         handleKeyDown: jest.fn(args => ({ handleKeyDown: args })),
       };
@@ -125,13 +136,14 @@ describe('TitleHeader hooks', () => {
         expect(output.startEditing).toEqual(values.startEditing);
         expect(output.stopEditing).toEqual(values.stopEditing);
       });
-      it('returns localTitle, updateTitle, and handleChange, tied to the localTitle hook', () => {
+      it('returns localTitle, updateTitle, handleChange, and cancelEdit tied to the localTitle hook', () => {
         expect(output.updateTitle).toEqual({
           dispatch,
           stopEditing: values.stopEditing,
         });
         expect(output.handleChange).toEqual(values.handleChange);
         expect(output.localTitle).toEqual(values.localTitle);
+        expect(output.cancelEdit).toEqual(values.cancelEdit);
       });
       it('returns a new ref for inputRef', () => {
         expect(output.inputRef).toEqual({ ref: undefined });

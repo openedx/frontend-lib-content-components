@@ -1,8 +1,9 @@
 import PropTypes from 'prop-types';
-import LicenseTypes from '../../constants/licenses';
+import { LicenseTypes } from '../../constants/licenses';
 
 export const videoDataProps = {
   videoSource: PropTypes.string,
+  videoId: PropTypes.string,
   fallbackVideos: PropTypes.arrayOf(PropTypes.string),
   allowVideoDownloads: PropTypes.bool,
   thumbnail: PropTypes.string,
@@ -22,18 +23,20 @@ export const videoDataProps = {
     noDerivatives: PropTypes.bool,
     shareAlike: PropTypes.bool,
   }),
+  originalThumbnail: PropTypes.string,
 };
 
 export const singleVideoData = {
   videoSource: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+  videoId: '7c12381b-6503-4d52-82bd-6ad01b902220',
   fallbackVideos: [
     'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
     'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
   ],
   allowVideoDownloads: true,
-  thumbnail: 'my-thumbnail-file-url', // filename
+  thumbnail: 'someString', // filename
   transcripts: {
-    english: 'my-transcript-url',
+    en: { filename: 'my-transcript-url' },
   },
   allowTranscriptDownloads: false,
   duration: {
@@ -45,9 +48,10 @@ export const singleVideoData = {
   handout: 'my-handout-url',
   licenseType: LicenseTypes.creativeCommons,
   licenseDetails: {
-    attribution: false,
+    attribution: true,
     noncommercial: false,
     noDerivatives: false,
     shareAlike: false,
   },
+  originalThumbnail: 'someString',
 };

@@ -8,10 +8,19 @@ export const RequestStates = StrictDict({
 });
 
 export const RequestKeys = StrictDict({
+  fetchAssets: 'fetchAssets',
   fetchBlock: 'fetchBlock',
+  fetchImages: 'fetchImages',
+  fetchStudioView: 'fetchStudioView',
   fetchUnit: 'fetchUnit',
   fetchStudioView: 'fetchStudioView',
   saveBlock: 'saveBlock',
-  fetchImages: 'fetchImages',
-  uploadImage: 'uploadImage',
+  uploadAsset: 'uploadAsset',
+  allowThumbnailUpload: 'allowThumbnailUpload',
+  uploadThumbnail: 'uploadThumbnail',
+  uploadTranscript: 'uploadTranscript',
+  deleteTranscript: 'deleteTranscript',
+  fetchCourseDetails: 'fetchCourseDetails',
+  updateTranscriptLanguage: 'updateTranscriptLanguage',
+  getTranscriptFile: 'getTranscriptFile',
 });

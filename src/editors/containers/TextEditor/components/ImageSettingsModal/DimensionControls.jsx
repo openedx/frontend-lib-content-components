@@ -42,18 +42,14 @@ export const DimensionControls = ({
     <div className="mt-4.5">
       <Form.Control
         className="dimension-input"
-        type="number"
         value={value.width}
-        min={1}
         onChange={hooks.onInputChange(setWidth)}
         onBlur={updateDimensions}
         floatingLabel={intl.formatMessage(messages.widthFloatingLabel)}
       />
       <Form.Control
         className="dimension-input"
-        type="number"
         value={value.height}
-        min={1}
         onChange={hooks.onInputChange(setHeight)}
         onBlur={updateDimensions}
         floatingLabel={intl.formatMessage(messages.heightFloatingLabel)}
@@ -74,14 +70,14 @@ export const DimensionControls = ({
 ));
 DimensionControls.defaultProps = {
   value: {
-    height: 100,
-    width: 100,
+    height: '100',
+    width: '100',
   },
 };
 DimensionControls.propTypes = ({
   value: PropTypes.shape({
-    height: PropTypes.number,
-    width: PropTypes.number,
+    height: PropTypes.string,
+    width: PropTypes.string,
   }),
   setHeight: PropTypes.func.isRequired,
   setWidth: PropTypes.func.isRequired,

@@ -42,9 +42,12 @@ describe('app selectors unit tests', () => {
         simpleKeys.learningContextId,
         simpleKeys.editorInitialized,
         simpleKeys.saveResponse,
+        simpleKeys.lmsEndpointUrl,
         simpleKeys.studioEndpointUrl,
         simpleKeys.unitUrl,
         simpleKeys.blockTitle,
+        simpleKeys.studioView,
+        simpleKeys.assets,
       ].map(testSimpleSelector);
     });
   });
@@ -109,6 +112,52 @@ describe('app selectors unit tests', () => {
     it('returns the blockType capitalized if not html', () => {
       expect(selectors.displayTitle.cb('video', null)).toEqual('Video');
       expect(selectors.displayTitle.cb('random', null)).toEqual('Random');
+    });
+  });
+
+  describe('isRaw', () => {
+    const studioViewRaw = {
+      data: {
+        html: 'data-editor="raw"',
+      },
+    };
+    const studioViewVisual = {
+      data: {
+        html: 'sOmEthIngElse',
+      },
+    };
+    it('is memoized based on studioView', () => {
+      expect(selectors.isRaw.preSelectors).toEqual([
+        simpleSelectors.studioView,
+      ]);
+    });
+    it('returns null if studioView is null', () => {
+      expect(selectors.isRaw.cb(null)).toEqual(null);
+    });
+    it('returns true if studioView is raw', () => {
+      expect(selectors.isRaw.cb(studioViewRaw)).toEqual(true);
+    });
+    it('returns false if the studioView is not Raw', () => {
+      expect(selectors.isRaw.cb(studioViewVisual)).toEqual(false);
+    });
+  });
+
+  describe('isLibrary', () => {
+    const learningContextIdLibrary = 'library-v1:name';
+    const learningContextIdCourse = 'course-v1:name';
+    it('is memoized based on studioView', () => {
+      expect(selectors.isLibrary.preSelectors).toEqual([
+        simpleSelectors.learningContextId,
+      ]);
+    });
+    it('returns null if blockId is null', () => {
+      expect(selectors.isLibrary.cb(null)).toEqual(null);
+    });
+    it('returns true if blockId starts with lib', () => {
+      expect(selectors.isLibrary.cb(learningContextIdLibrary)).toEqual(true);
+    });
+    it('returns false if the blockId does not start with lib', () => {
+      expect(selectors.isLibrary.cb(learningContextIdCourse)).toEqual(false);
     });
   });
 });

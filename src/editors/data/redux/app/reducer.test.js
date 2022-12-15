@@ -43,9 +43,12 @@ describe('app reducer', () => {
     };
     [
       ['setUnitUrl', 'unitUrl'],
+      ['setStudioView', 'studioView'],
       ['setBlockContent', 'blockContent'],
       ['setBlockTitle', 'blockTitle'],
       ['setSaveResponse', 'saveResponse'],
+      ['setAssets', 'assets'],
+      ['setCourseDetails', 'courseDetails'],
     ].map(args => setterTest(...args));
     describe('setBlockValue', () => {
       it('sets blockValue, as well as setting the blockTitle from data.display_name', () => {

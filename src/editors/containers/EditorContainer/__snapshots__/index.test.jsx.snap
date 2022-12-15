@@ -2,11 +2,22 @@
 
 exports[`EditorContainer component render snapshot: initialized. enable save and pass to header 1`] = `
 <div>
-  <ModalDialog.Header>
+  <ModalDialog.Header
+    className="shadow-sm zindex-10"
+  >
     <ModalDialog.Title>
-      <InjectIntl(ShimmedIntlComponent)
-        isInitialized={true}
-      />
+      <div
+        style={
+          Object {
+            "height": "44px",
+            "margin": "auto",
+          }
+        }
+      >
+        <injectIntl(ShimmedIntlComponent)
+          isInitialized={true}
+        />
+      </div>
       <div
         className="pgn__modal-close-container"
       >
@@ -27,7 +38,7 @@ exports[`EditorContainer component render snapshot: initialized. enable save and
   <h1>
     My test content
   </h1>
-  <InjectIntl(ShimmedIntlComponent)
+  <injectIntl(ShimmedIntlComponent)
     disableSave={false}
     onCancel={
       Object {
@@ -41,6 +52,7 @@ exports[`EditorContainer component render snapshot: initialized. enable save and
         "handleSaveClicked": Object {
           "dispatch": [MockFunction react-redux.dispatch],
           "getContent": [MockFunction props.getContent],
+          "validateEntry": [MockFunction props.validateEntry],
         },
       }
     }
@@ -50,11 +62,22 @@ exports[`EditorContainer component render snapshot: initialized. enable save and
 
 exports[`EditorContainer component render snapshot: not initialized. disable save and pass to header 1`] = `
 <div>
-  <ModalDialog.Header>
+  <ModalDialog.Header
+    className="shadow-sm zindex-10"
+  >
     <ModalDialog.Title>
-      <InjectIntl(ShimmedIntlComponent)
-        isInitialized={false}
-      />
+      <div
+        style={
+          Object {
+            "height": "44px",
+            "margin": "auto",
+          }
+        }
+      >
+        <injectIntl(ShimmedIntlComponent)
+          isInitialized={false}
+        />
+      </div>
       <div
         className="pgn__modal-close-container"
       >
@@ -72,7 +95,7 @@ exports[`EditorContainer component render snapshot: not initialized. disable sav
       </div>
     </ModalDialog.Title>
   </ModalDialog.Header>
-  <InjectIntl(ShimmedIntlComponent)
+  <injectIntl(ShimmedIntlComponent)
     disableSave={true}
     onCancel={
       Object {
@@ -86,6 +109,7 @@ exports[`EditorContainer component render snapshot: not initialized. disable sav
         "handleSaveClicked": Object {
           "dispatch": [MockFunction react-redux.dispatch],
           "getContent": [MockFunction props.getContent],
+          "validateEntry": [MockFunction props.validateEntry],
         },
       }
     }

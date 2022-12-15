@@ -12,6 +12,8 @@ import { actions, selectors } from '../../../../../data/redux';
 import {
   updateDuration,
   durationValue,
+  onDurationChange,
+  onDurationKeyDown,
 } from './duration';
 
 import {
@@ -19,6 +21,7 @@ import {
   handleIndexTransformEvent,
   onValue,
   onChecked,
+  onEvent,
 } from './handlers';
 import * as module from './hooks';
 
@@ -27,6 +30,7 @@ export const selectorKeys = keyStore(selectors.video);
 export const state = StrictDict(
   [
     selectorKeys.videoSource,
+    selectorKeys.videoId,
     selectorKeys.fallbackVideos,
     selectorKeys.allowVideoDownloads,
 
@@ -205,15 +209,15 @@ export const arrayWidget = ({ dispatch, key }) => {
   const widget = module.valueHooks({ dispatch, key });
   return {
     ...widget,
-    onChange: handleIndexTransformEvent({
-      handler: onValue,
-      setter: widget.setLocal,
-      transform: module.updatedArray,
-      local: widget.local,
-    }),
     onBlur: handleIndexTransformEvent({
       handler: onValue,
       setter: widget.setAll,
+      transform: module.updatedArray,
+      local: widget.local,
+    }),
+    onChange: handleIndexTransformEvent({
+      handler: onValue,
+      setter: widget.setLocal,
       transform: module.updatedArray,
       local: widget.local,
     }),
@@ -299,7 +303,16 @@ export const durationWidget = ({ dispatch }) => {
       handleIndexTransformEvent({
         handler: onValue,
         setter: setLocal,
-        transform: module.updatedObject,
+        transform: onDurationChange,
+        local,
+      }),
+      [local],
+    ),
+    onKeyDown: useCallback(
+      handleIndexTransformEvent({
+        handler: onEvent,
+        setter: setLocal,
+        transform: onDurationKeyDown,
         local,
       }),
       [local],

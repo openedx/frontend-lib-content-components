@@ -67,13 +67,31 @@ jest.mock('@edx/paragon', () => jest.requireActual('testUtils').mockNestedCompon
     Spacer: 'ActionRow.Spacer',
   },
   Button: 'Button',
+  ButtonGroup: 'ButtonGroup',
+  Collapsible: {
+    Advanced: 'Advanced',
+    Body: 'Body',
+    Trigger: 'Trigger',
+    Visible: 'Visible',
+  },
+  Card: {
+    Header: 'Card.Header',
+    Section: 'Card.Section',
+    Footer: 'Card.Footer',
+    Body: 'Card.Body',
+  },
   Dropdown: {
     Item: 'Dropdown.Item',
     Menu: 'Dropdown.Menu',
     Toggle: 'Dropdown.Toggle',
   },
+  ErrorContext: {
+    Provider: 'ErrorContext.Provider',
+  },
+  Hyperlink: 'Hyperlink',
   Icon: 'Icon',
   IconButton: 'IconButton',
+  IconButtonWithTooltip: 'IconButtonWithTooltip',
   Image: 'Image',
   ModalDialog: {
     Footer: 'ModalDialog.Footer',
@@ -89,15 +107,21 @@ jest.mock('@edx/paragon', () => jest.requireActual('testUtils').mockNestedCompon
     },
     Group: 'Form.Group',
     Label: 'Form.Label',
+    Text: 'Form.Text',
+    Row: 'Form.Row',
   },
   FullscreenModal: 'FullscreenModal',
   Scrollable: 'Scrollable',
   SelectableBox: {
     Set: 'SelectableBox.Set',
   },
+
   Spinner: 'Spinner',
   Stack: 'Stack',
   Toast: 'Toast',
+  Tooltip: 'ToolTip',
+  Truncate: 'Truncate',
+  OverlayTrigger: 'OverLayTrigger',
 }));
 
 jest.mock('@edx/paragon/icons', () => ({
