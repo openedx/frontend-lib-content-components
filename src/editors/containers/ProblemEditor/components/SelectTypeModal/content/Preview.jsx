@@ -12,17 +12,15 @@ import { selectors } from '../../../../../data/redux';
 import { ProblemTypes } from '../../../../../data/constants/problem';
 
 export const Preview = ({
-  // redux
   problemType,
   // injected
   intl,
 }) => {
-  const tempProblemType = 'choiceresponse';
 
   if (problemType === null) {
     return null;
   }
-  const data = ProblemTypes[tempProblemType];
+  const data = ProblemTypes[problemType];
   return (
     <div className="col col-6 bg-light-300 rounded p-4">
       <div className="small">
@@ -47,17 +45,14 @@ export const Preview = ({
   );
 };
 
+Preview.defaultProps = {
+  problemType: null,
+};
+
 Preview.propTypes = {
-  // redux
-  problemType: PropTypes.string.isRequired,
+  problemType: PropTypes.string,
   // injected
   intl: intlShape.isRequired,
 };
 
-export const mapStateToProps = (state) => ({
-  problemType: selectors.problem.problemType(state),
-});
-
-export const mapDispatchToProps = {};
-
-export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(Preview));
+export default injectIntl(Preview);

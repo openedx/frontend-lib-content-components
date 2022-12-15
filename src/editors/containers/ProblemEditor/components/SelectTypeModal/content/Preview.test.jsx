@@ -2,21 +2,12 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import { formatMessage } from '../../../../../../testUtils';
-import { selectors } from '../../../../../data/redux';
 import * as module from './Preview';
-
-jest.mock('../../../../../data/redux', () => ({
-  selectors: {
-    problem: {
-      problemType: jest.fn(state => ({ isLibrary: state })),
-    },
-  },
-}));
 
 describe('Preview', () => {
   const props = {
     intl: { formatMessage },
-    problemType: '',
+    problemType: null,
   };
   describe('snapshots', () => {
     test('snapshots: renders as expected with default props', () => {
@@ -46,21 +37,8 @@ describe('Preview', () => {
     });
     test('snapshots: renders as expected with problemType is multiplechoiceresponse', () => {
       expect(
-        shallow(<module.Preview {...props} problemType="multipechoiceresponse" />),
+        shallow(<module.Preview {...props} problemType="multiplechoiceresponse" />),
       ).toMatchSnapshot();
-    });
-  });
-  describe('mapStateToProps', () => {
-    const testState = { A: 'pple', B: 'anana', C: 'ucumber' };
-    test('problemType from problem.problemType', () => {
-      expect(
-        module.mapStateToProps(testState).problemType,
-      ).toEqual(selectors.problem.problemType(testState));
-    });
-  });
-  describe('mapDispatchToProps', () => {
-    test('mapDispatchToProps to equal an empty object', () => {
-      expect(module.mapDispatchToProps).toEqual({});
     });
   });
 });
