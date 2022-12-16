@@ -1,4 +1,5 @@
 import { StrictDict } from '../../utils';
+import * as templates from './olxTemplates';
 
 export const ProblemTypeKeys = StrictDict({
   TEXTINPUT: 'stringresponse',
@@ -46,6 +47,60 @@ export const ProblemTypes = StrictDict({
     preview: ('<div />'),
     description: 'An Advanced Problem Type',
     helpLink: 'something.com',
+  },
+});
+
+export const AdvanceProblemKeys = StrictDict({
+  BLANK: 'blankadvanced',
+  CIRCUITSCHEMATIC: 'circuitschematic',
+  CUSTOMGRADER: 'customgrader',
+  DRAGANDDROP: 'drag_and_drop',
+  FORMULA: 'formularesponse',
+  IMAGE: 'imageresponse',
+  JSINPUT: 'jsinput_response',
+  PROBLEMWITHHINT: 'problem_with_hint',
+});
+
+export const AdvanceProblems = StrictDict({
+  [AdvanceProblemKeys.BLANK]: {
+    title: 'Blank advance problem',
+    status: '',
+    template: '<problem></problem>',
+  },
+  [AdvanceProblemKeys.CIRCUITSCHEMATIC]: {
+    title: 'Circuit schematic builder',
+    status: 'Not supported',
+    template: templates.circuitSchematic,
+  },
+  [AdvanceProblemKeys.CUSTOMGRADER]: {
+    title: 'Custom Python-evaluated input',
+    status: 'Provisional',
+    template: templates.customGrader,
+  },
+  [AdvanceProblemKeys.DRAGANDDROP]: {
+    title: 'Drag and drop (deprecated version)',
+    status: 'Not supported',
+    template: templates.dragAndDrop,
+  },
+  [AdvanceProblemKeys.FORMULA]: {
+    title: 'Math expression input',
+    status: '',
+    template: templates.formualResponse,
+  },
+  [AdvanceProblemKeys.IMAGE]: {
+    title: 'Image mapped input',
+    status: 'Not supported',
+    template: templates.imageResponse,
+  },
+  [AdvanceProblemKeys.JSINPUT]: {
+    title: 'Custom JavaScript display and grading',
+    status: '',
+    template: templates.jsInputResponse,
+  },
+  [AdvanceProblemKeys.PROBLEMWITHHINT]: {
+    title: 'Problem with adaptive hint',
+    status: 'Not supported',
+    template: templates.problemWithHint,
   },
 });
 

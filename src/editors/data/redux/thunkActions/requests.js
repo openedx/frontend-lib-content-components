@@ -127,6 +127,17 @@ export const fetchImages = ({ ...rest }) => (dispatch, getState) => {
   }));
 };
 
+export const fetchAdvanceSettings = ({ ...rest }) => (dispatch, getState) => {
+  dispatch(module.networkRequest({
+    requestKey: RequestKeys.fetchAdvanceSettings,
+    promise: api.fetchAdvanceSettings({
+      studioEndpointUrl: selectors.app.studioEndpointUrl(getState()),
+      learningContextId: selectors.app.learningContextId(getState()),
+    }),
+    ...rest,
+  }));
+};
+
 export default StrictDict({
   uploadImage,
   fetchImages,
@@ -134,4 +145,5 @@ export default StrictDict({
   fetchBlock,
   saveBlock,
   fetchStudioView,
+  fetchAdvanceSettings,
 });

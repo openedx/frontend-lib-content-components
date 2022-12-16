@@ -17,6 +17,9 @@ export const apiMethods = {
   fetchImages: ({ learningContextId, studioEndpointUrl }) => get(
     urls.courseImages({ studioEndpointUrl, learningContextId }),
   ),
+  fetchAdvanceSettings: ({ studioEndpointUrl, learningContextId }) => get(
+    urls.courseAdvanceSettings({ studioEndpointUrl, learningContextId }),
+  ),
   uploadImage: ({
     learningContextId,
     studioEndpointUrl,

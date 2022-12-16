@@ -1,0 +1,37 @@
+export const messages = {
+  advanceMenuTitle: {
+    id: 'authoring.problemEditor.advanceProblem.menu.title',
+    defaultMessage: 'Advanced problems',
+    description: 'Title for advanced problem menu',
+  },
+  advanceProblemTypeLabel: {
+    id: 'authoring.problemEditor.advanceProblem.problemType.label',
+    defaultMessage: '{problemType}',
+    description: 'Label for advance problem type radio select',
+  },
+  problemSupportStatus: {
+    id: 'authoring.problemEditor.advanceProblem.supportStatus',
+    defaultMessage: '{supportStatus}',
+    description: `Text for advance problem type's support status`,
+  },
+  supportStatusTooltipMessage: {
+    id: 'authoring.problemEditor.advanceProblem.supportStatus.tooltipMessage',
+    defaultMessage: `{supportStatus,  select,
+      Provisional {Provisionally supported tools might lack the robustness of functionality
+        that your courses require. edX does not have control over the quality of the software,
+        or of the content that can be provided using these tools.
+        \n \n
+        Test these tools thoroughly before using them in your course, especially in graded
+        sections. Complete documentstion might not be available for provisionally supported
+        tools, or documentation might be available from sources other than edX.}
+      Not_supported {Tools with no support are not maintained by edX, and might be deprecated
+        in the future. They are not recommened for use in courses due to non-compliance with one
+        or more of the base requirements, such as testing, accessibility, internationalization,
+        and documentation.}
+      other { } 
+    }`,
+    description: 'Message for support status tooltip',
+  },
+};
+
+export default messages
