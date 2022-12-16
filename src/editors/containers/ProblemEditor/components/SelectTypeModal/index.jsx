@@ -12,14 +12,14 @@ export const SelectTypeModal = ({
   const { selected, setSelected } = hooks.state.selected(null);
 
   return (
-    <div>
-      <SelectTypeWrapper selected={selected}>
+    <SelectTypeWrapper selected={selected} onClose={onClose}>
+      <div className="row">
         <ProblemTypeSelect setSelected={setSelected} />
         <Preview
           problemType={selected}
         />
-      </SelectTypeWrapper>
-    </div>
+      </div>
+    </SelectTypeWrapper>
   );
 };
 

@@ -28,7 +28,9 @@ export const SelectTypeWrapper = ({
           </div>
         </ModalDialog.Title>
       </ModalDialog.Header>
-      {children}
+      <ModalDialog.Body>
+        {children}
+      </ModalDialog.Body>
       <SelectTypeFooter
         selected={selected}
         onCancel={handleCancelClicked}
