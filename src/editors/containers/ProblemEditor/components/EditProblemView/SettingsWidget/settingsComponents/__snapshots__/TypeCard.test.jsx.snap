@@ -40,9 +40,17 @@ exports[`TypeCard snapshot snapshot: renders type setting card 1`] = `
   <TypeRow
     key="4"
     label="Single Select Problem"
-    lastRow={true}
+    lastRow={false}
     selected={true}
     typeKey="multiplechoiceresponse"
+    updateField={[MockFunction args.updateField]}
+  />
+  <TypeRow
+    key="5"
+    label="Advanced Problem"
+    lastRow={true}
+    selected={true}
+    typeKey="advanced"
     updateField={[MockFunction args.updateField]}
   />
 </SettingsOption>
