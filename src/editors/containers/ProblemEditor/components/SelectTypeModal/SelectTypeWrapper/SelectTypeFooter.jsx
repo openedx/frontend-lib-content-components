@@ -24,14 +24,14 @@ export const SelectTypeFooter = ({
       <ActionRow>
         <ActionRow.Spacer />
         <Button
-          aria-label="cancel"
+          aria-label={intl.FormattedMessage(messages.cancelButtonAriaLabel)}
           variant="tertiary"
           onClick={onCancel}
         >
           <FormattedMessage {...messages.cancelButtonLabel} />
         </Button>
         <Button
-          aria-label="select"
+          aria-label={intl.FormattedMessage(messages.selectButtonAriaLabel)}
           onClick={hooks.onSelect( setProblemType, selected )}
           disabled={!selected}
         >

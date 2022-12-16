@@ -12,9 +12,9 @@ jest.mock('../hooks', () => ({
 
 describe('SelectTypeFooter', () => {
   const props = {
-    onCancel: jest.fn(),
+    onCancel: jest.fn().mockName('onCancel'),
     selected: null,
-    setProblemType: jest.fn(),
+    setProblemType: jest.fn().mockName('setProblemType'),
   };
 
   test('snapshot', () => {
