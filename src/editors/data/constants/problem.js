@@ -6,13 +6,23 @@ import numericalInput from '../images/numericalInput.png';
 import textInput from '../images/textInput.png';
 
 export const ProblemTypeKeys = StrictDict({
-  TEXTINPUT: 'stringresponse',
-  NUMERIC: 'numericalresponse',
-  DROPDOWN: 'optionresponse',
-  MULTISELECT: 'choiceresponse',
   SINGLESELECT: 'multiplechoiceresponse',
+  MULTISELECT: 'choiceresponse',
+  DROPDOWN: 'optionresponse',
+  NUMERIC: 'numericalresponse',
+  TEXTINPUT: 'stringresponse',
   ADVANCED: 'advanced',
 });
+
+// Use for rendering problem type select page
+//   should not use advanced
+export const ProblemTypeOrder = [
+  ProblemTypeKeys.SINGLESELECT,
+  ProblemTypeKeys.MULTISELECT,
+  ProblemTypeKeys.DROPDOWN,
+  ProblemTypeKeys.NUMERIC,
+  ProblemTypeKeys.TEXTINPUT,
+];
 
 export const ProblemTypes = StrictDict({
   [ProblemTypeKeys.SINGLESELECT]: {

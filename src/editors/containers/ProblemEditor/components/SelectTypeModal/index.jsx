@@ -5,13 +5,13 @@ import ProblemTypeSelect from './content/ProblemTypeSelect';
 import Preview from './content/Preview';
 import SelectTypeWrapper from './SelectTypeWrapper';
 import hooks from './hooks';
-import { ProblemTypeKeys } from '../../../../data/constants/problem';
 import { Col, Container, Row } from '@edx/paragon';
 
 export const SelectTypeModal = ({
   onClose,
 }) => {
   const { selected, setSelected } = hooks.selectHooks();
+  hooks.useArrowNav(selected, setSelected);
 
   return (
     <SelectTypeWrapper onClose={onClose} selected={selected}>

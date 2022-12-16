@@ -1,12 +1,19 @@
+import React from 'react';
+import { mount } from 'enzyme';
 import { MockUseState } from '../../../../../testUtils';
 import * as hooks from './hooks';
+import { SelectTypeModal } from '.';
 import { ProblemTypeKeys } from '../../../../data/constants/problem';
 
 jest.mock('react', () => ({
+  ...jest.requireActual('react'),
   useState: (val) => ({ useState: val }),
 }));
 
 const state = new MockUseState(hooks);
+const mockSetProblemType = jest.fn().mockName('setProblemType');
+const mockSelected = 'vAl';
+const mockSetSelected = jest.fn().mockName('setSelected');
 
 describe('SelectTypeModal hooks', () => {
   beforeEach(() => {
@@ -30,11 +37,9 @@ describe('SelectTypeModal hooks', () => {
   });
 
   describe('onSelect', () => {
-    const mockSetType = jest.fn().mockName('setProblemType');
-    const mockSelected = 'vAl';
     test('setProblemType is called with selected', () => {
-      hooks.onSelect(mockSetType, mockSelected)();
-      expect(mockSetType).toHaveBeenCalledWith({ selected: mockSelected });
+      hooks.onSelect(mockSetProblemType, mockSelected)();
+      expect(mockSetProblemType).toHaveBeenCalledWith({ selected: mockSelected });
     });
   });
 });

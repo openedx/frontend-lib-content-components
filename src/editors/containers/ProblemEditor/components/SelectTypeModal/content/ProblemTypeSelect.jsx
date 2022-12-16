@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { SelectableBox } from '@edx/paragon';
-import { ProblemTypes, ProblemTypeKeys} from '../../../../../data/constants/problem';
+import { ProblemTypes, ProblemTypeOrder, ProblemTypeKeys } from '../../../../../data/constants/problem';
 
 export const ProblemTypeSelect = ({
   selected,
@@ -17,21 +17,11 @@ export const ProblemTypeSelect = ({
       type={settings.type}
       value={selected}
     >
-      <SelectableBox value={ProblemTypeKeys.SINGLESELECT} {...settings}>
-        {ProblemTypes[ProblemTypeKeys.SINGLESELECT].title}
-      </SelectableBox>
-      <SelectableBox value={ProblemTypeKeys.MULTISELECT} {...settings}>
-        {ProblemTypes[ProblemTypeKeys.MULTISELECT].title}
-      </SelectableBox>
-      <SelectableBox value={ProblemTypeKeys.DROPDOWN} {...settings}>
-        {ProblemTypes[ProblemTypeKeys.DROPDOWN].title}
-      </SelectableBox>
-      <SelectableBox value={ProblemTypeKeys.NUMERIC} {...settings}>
-        {ProblemTypes[ProblemTypeKeys.NUMERIC].title}
-      </SelectableBox>
-      <SelectableBox value={ProblemTypeKeys.TEXTINPUT} {...settings}>
-        {ProblemTypes[ProblemTypeKeys.TEXTINPUT].title}
-      </SelectableBox>
+      {ProblemTypeOrder.map((key) => (
+        <SelectableBox value={key} {...settings}>
+          {ProblemTypes[key].title}
+        </SelectableBox>
+      ))}
     </SelectableBox.Set>
   );
 };

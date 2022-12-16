@@ -16,7 +16,7 @@ exports[`SelectTypeModal snapshot 1`] = `
         />
       </Col>
       <Col>
-        <Preview
+        <InjectIntl(ShimmedIntlComponent)
           problemType="mOcKsELEcted"
         />
       </Col>
