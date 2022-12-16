@@ -14,18 +14,13 @@ export const SelectTypeModal = ({
 console.log(selected);
   return (
     <SelectTypeWrapper selected={selected} onClose={onClose}>
-      {/*{selected !== 'advanced' ? (
-        <div className="row">
-          <ProblemTypeSelect setSelected={setSelected} />
-          <Preview
-            problemType={selected}
-          />
-        </div>
-      ) : (
-        <AdvanceTypeSelect selected = {selected} setSelected={setSelected} />
-      )}*/}
-              <AdvanceTypeSelect setSelected={setSelected} />
-
+      <div className="row">
+        <ProblemTypeSelect setSelected={setSelected} />
+        <Preview
+          problemType={selected}
+        />
+      </div>
+      <AdvanceTypeSelect setSelected={setSelected} />
     </SelectTypeWrapper>
   );
 };
