@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { StrictDict } from '../../../../utils';
-import { ProblemTypeKeys, ProblemTypeOrder } from '../../../../data/constants/problem';
+import { ProblemTypeKeys, ProblemTypes } from '../../../../data/constants/problem';
 import * as module from './hooks';
 
 export const state = StrictDict({
@@ -15,8 +15,9 @@ export const selectHooks = () => {
   };
 };
 
-export const onSelect = ( setProblemType, selected ) => () =>
+export const onSelect = ( setProblemType, selected ) => () => {
   setProblemType({ selected });
+};
 
 export const useArrowNav = (selected, setSelected) => {
   useEffect(() => {
@@ -28,23 +29,24 @@ export const useArrowNav = (selected, setSelected) => {
   }, [selected, setSelected]);
 
   const detectKeyDown = (e) => {
-    let ind = ProblemTypeOrder.findIndex(el => el === selected);
     switch (e.key) {
       case "ArrowUp":
-        ind--;
-        if (ind < 0) {
-          ind = 0;
+        if (ProblemTypes[selected].prev) {
+          setSelected(ProblemTypes[selected].prev);
         }
         break;
       case "ArrowDown":
-        ind++;
-        if (ind > 4) {
-          ind = 4;
+        if (ProblemTypes[selected].next) {
+          setSelected(ProblemTypes[selected].next);
         }
         break;
     }
-    setSelected(ProblemTypeOrder[ind]);
   };
 };
 
-export default { state, selectHooks, onSelect, useArrowNav };
+export default {
+  state,
+  selectHooks,
+  onSelect,
+  useArrowNav
+};

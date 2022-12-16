@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { SelectableBox } from '@edx/paragon';
-import { ProblemTypes, ProblemTypeOrder, ProblemTypeKeys } from '../../../../../data/constants/problem';
+import { ProblemTypes, ProblemTypeKeys } from '../../../../../data/constants/problem';
 
 export const ProblemTypeSelect = ({
   selected,
@@ -17,10 +17,12 @@ export const ProblemTypeSelect = ({
       type={settings.type}
       value={selected}
     >
-      {ProblemTypeOrder.map((key) => (
-        <SelectableBox value={key} {...settings}>
-          {ProblemTypes[key].title}
-        </SelectableBox>
+      {Object.values(ProblemTypeKeys).map((key) => (
+        key !== 'advanced'
+          ?  <SelectableBox value={key} {...settings}>
+            {ProblemTypes[key].title}
+          </SelectableBox>
+          : null
       ))}
     </SelectableBox.Set>
   );

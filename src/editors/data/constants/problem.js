@@ -14,46 +14,44 @@ export const ProblemTypeKeys = StrictDict({
   ADVANCED: 'advanced',
 });
 
-// Use for rendering problem type select page
-//   should not use advanced
-export const ProblemTypeOrder = [
-  ProblemTypeKeys.SINGLESELECT,
-  ProblemTypeKeys.MULTISELECT,
-  ProblemTypeKeys.DROPDOWN,
-  ProblemTypeKeys.NUMERIC,
-  ProblemTypeKeys.TEXTINPUT,
-];
-
 export const ProblemTypes = StrictDict({
   [ProblemTypeKeys.SINGLESELECT]: {
     title: 'Single Select Problem',
     preview: singleSelect,
     description: 'Specify one correct answer from a list of possible options',
     helpLink: 'https://edx.readthedocs.io/projects/edx-partner-course-staff/en/latest/exercises_tools/multiple_choice.html',
+    next: ProblemTypeKeys.MULTISELECT,
   },
   [ProblemTypeKeys.MULTISELECT]: {
     title: 'Multi Select Problem',
     preview: multiSelect,
     description: 'Specify one or more correct answers from a list of possible options.',
     helpLink: 'https://edx.readthedocs.io/projects/edx-partner-course-staff/en/latest/exercises_tools/checkbox.html',
+    next: ProblemTypeKeys.DROPDOWN,
+    prev: ProblemTypeKeys.SINGLESELECT,
   },
   [ProblemTypeKeys.DROPDOWN]: {
     title: 'Dropdown Problem',
     preview: dropdown,
     description: 'Specify one correct answer from a list of possible options, selected in a dropdown menu.',
     helpLink: 'https://edx.readthedocs.io/projects/edx-partner-course-staff/en/latest/exercises_tools/dropdown.html',
+    next: ProblemTypeKeys.NUMERIC,
+    prev: ProblemTypeKeys.MULTISELECT,
   },
   [ProblemTypeKeys.NUMERIC]: {
     title: 'Numeric Response Problem',
     preview: numericalInput,
     description: 'Specify one or more correct numeric answers, submitted in a response field.',
     helpLink: 'https://edx.readthedocs.io/projects/edx-partner-course-staff/en/latest/exercises_tools/numerical_input.html',
+    next: ProblemTypeKeys.TEXTINPUT,
+    prev: ProblemTypeKeys.DROPDOWN,
   },
   [ProblemTypeKeys.TEXTINPUT]: {
     title: 'Text Input Problem',
     preview: textInput,
     description: 'Specify one or more correct text answers, including numbers and special characters, submitted in a response field.',
     helpLink: 'https://edx.readthedocs.io/projects/edx-partner-course-staff/en/latest/exercises_tools/text_input.html',
+    prev: ProblemTypeKeys.NUMERIC,
   },
 
   [ProblemTypeKeys.ADVANCED]: {
