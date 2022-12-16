@@ -9,7 +9,7 @@ const ProblemTypeSelect = ({
   setSelected,
 }) => {
   const handleChange = e => setSelected(e.target.value);
-  const handleClick = () => setSelected('advanced');
+  const handleClick = () => setSelected('blankadvanced');
   return (
     <Form.Group>
       <Form.RadioSet

@@ -11,16 +11,19 @@ export const SelectTypeModal = ({
   onClose,
 }) => {
   const [selected, setSelected ] = hooks.state.selected(null);
-console.log(selected);
+console.log(selected !== 'blankadvanced');
   return (
     <SelectTypeWrapper selected={selected} onClose={onClose}>
       <div className="row">
-        <ProblemTypeSelect setSelected={setSelected} />
-        <Preview
-          problemType={selected}
-        />
+        {(selected !== 'blankadvanced') ? (
+          <>
+            <ProblemTypeSelect setSelected={setSelected} />
+            <Preview
+              problemType={selected}
+            />
+          </>
+        ) : <AdvanceTypeSelect setSelected={setSelected} />}
       </div>
-      <AdvanceTypeSelect setSelected={setSelected} />
     </SelectTypeWrapper>
   );
 };

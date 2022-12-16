@@ -4,8 +4,7 @@ import PropTypes from 'prop-types';
 import { Form, ActionRow, IconButton, Icon, OverlayTrigger, Tooltip } from '@edx/paragon';
 import { ArrowBack } from '@edx/paragon/icons';
 import { FormattedMessage, injectIntl, intlShape } from '@edx/frontend-platform/i18n';
-import { camelizeKeys } from '../../../../../utils';
-import { AdvanceProblemKeys, AdvanceProblems } from '../../../../../data/constants/problem';
+import { AdvanceProblems } from '../../../../../data/constants/problem';
 import messages from './messages';
 
 export const AdvanceTypeSelect = ({
@@ -15,7 +14,6 @@ export const AdvanceTypeSelect = ({
 }) => {
   const [value, setValue] = React.useState('blankadvanced')
   const handleChange = e => {setSelected(e.target.value); setValue(e.target.value)}
-  console.log(camelizeKeys(AdvanceProblems['imageresponse'].status));
   return (
     <div className="col col-8 border rounded p-0">
       <Form.Group className='p-0'>
