@@ -22,7 +22,6 @@ export const onSelect = ( setProblemType, selected ) => () => {
 export const useArrowNav = (selected, setSelected) => {
   useEffect(() => {
     document.addEventListener('keydown', detectKeyDown, true);
-
     return () => {
       document.removeEventListener('keydown', detectKeyDown, true);
     };
@@ -30,14 +29,16 @@ export const useArrowNav = (selected, setSelected) => {
 
   const detectKeyDown = (e) => {
     switch (e.key) {
-      case "ArrowUp":
+      case 'ArrowUp':
         if (ProblemTypes[selected].prev) {
           setSelected(ProblemTypes[selected].prev);
+          document.getElementById(ProblemTypes[selected].prev).focus();
         }
         break;
-      case "ArrowDown":
+      case 'ArrowDown':
         if (ProblemTypes[selected].next) {
           setSelected(ProblemTypes[selected].next);
+          document.getElementById(ProblemTypes[selected].next).focus();
         }
         break;
     }

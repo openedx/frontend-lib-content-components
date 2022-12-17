@@ -9,6 +9,7 @@ exports[`ProblemTypeSelect snapshot DROPDOWN 1`] = `
 >
   <SelectableBox
     aria-label="checkbox"
+    id="multiplechoiceresponse"
     type="radio"
     value="multiplechoiceresponse"
   >
@@ -16,6 +17,7 @@ exports[`ProblemTypeSelect snapshot DROPDOWN 1`] = `
   </SelectableBox>
   <SelectableBox
     aria-label="checkbox"
+    id="choiceresponse"
     type="radio"
     value="choiceresponse"
   >
@@ -23,6 +25,7 @@ exports[`ProblemTypeSelect snapshot DROPDOWN 1`] = `
   </SelectableBox>
   <SelectableBox
     aria-label="checkbox"
+    id="optionresponse"
     type="radio"
     value="optionresponse"
   >
@@ -30,6 +33,7 @@ exports[`ProblemTypeSelect snapshot DROPDOWN 1`] = `
   </SelectableBox>
   <SelectableBox
     aria-label="checkbox"
+    id="numericalresponse"
     type="radio"
     value="numericalresponse"
   >
@@ -37,6 +41,7 @@ exports[`ProblemTypeSelect snapshot DROPDOWN 1`] = `
   </SelectableBox>
   <SelectableBox
     aria-label="checkbox"
+    id="stringresponse"
     type="radio"
     value="stringresponse"
   >
@@ -54,6 +59,7 @@ exports[`ProblemTypeSelect snapshot MULTISELECT 1`] = `
 >
   <SelectableBox
     aria-label="checkbox"
+    id="multiplechoiceresponse"
     type="radio"
     value="multiplechoiceresponse"
   >
@@ -61,6 +67,7 @@ exports[`ProblemTypeSelect snapshot MULTISELECT 1`] = `
   </SelectableBox>
   <SelectableBox
     aria-label="checkbox"
+    id="choiceresponse"
     type="radio"
     value="choiceresponse"
   >
@@ -68,6 +75,7 @@ exports[`ProblemTypeSelect snapshot MULTISELECT 1`] = `
   </SelectableBox>
   <SelectableBox
     aria-label="checkbox"
+    id="optionresponse"
     type="radio"
     value="optionresponse"
   >
@@ -75,6 +83,7 @@ exports[`ProblemTypeSelect snapshot MULTISELECT 1`] = `
   </SelectableBox>
   <SelectableBox
     aria-label="checkbox"
+    id="numericalresponse"
     type="radio"
     value="numericalresponse"
   >
@@ -82,6 +91,7 @@ exports[`ProblemTypeSelect snapshot MULTISELECT 1`] = `
   </SelectableBox>
   <SelectableBox
     aria-label="checkbox"
+    id="stringresponse"
     type="radio"
     value="stringresponse"
   >
@@ -99,6 +109,7 @@ exports[`ProblemTypeSelect snapshot NUMERIC 1`] = `
 >
   <SelectableBox
     aria-label="checkbox"
+    id="multiplechoiceresponse"
     type="radio"
     value="multiplechoiceresponse"
   >
@@ -106,6 +117,7 @@ exports[`ProblemTypeSelect snapshot NUMERIC 1`] = `
   </SelectableBox>
   <SelectableBox
     aria-label="checkbox"
+    id="choiceresponse"
     type="radio"
     value="choiceresponse"
   >
@@ -113,6 +125,7 @@ exports[`ProblemTypeSelect snapshot NUMERIC 1`] = `
   </SelectableBox>
   <SelectableBox
     aria-label="checkbox"
+    id="optionresponse"
     type="radio"
     value="optionresponse"
   >
@@ -120,6 +133,7 @@ exports[`ProblemTypeSelect snapshot NUMERIC 1`] = `
   </SelectableBox>
   <SelectableBox
     aria-label="checkbox"
+    id="numericalresponse"
     type="radio"
     value="numericalresponse"
   >
@@ -127,6 +141,7 @@ exports[`ProblemTypeSelect snapshot NUMERIC 1`] = `
   </SelectableBox>
   <SelectableBox
     aria-label="checkbox"
+    id="stringresponse"
     type="radio"
     value="stringresponse"
   >
@@ -144,6 +159,7 @@ exports[`ProblemTypeSelect snapshot SINGLESELECT 1`] = `
 >
   <SelectableBox
     aria-label="checkbox"
+    id="multiplechoiceresponse"
     type="radio"
     value="multiplechoiceresponse"
   >
@@ -151,6 +167,7 @@ exports[`ProblemTypeSelect snapshot SINGLESELECT 1`] = `
   </SelectableBox>
   <SelectableBox
     aria-label="checkbox"
+    id="choiceresponse"
     type="radio"
     value="choiceresponse"
   >
@@ -158,6 +175,7 @@ exports[`ProblemTypeSelect snapshot SINGLESELECT 1`] = `
   </SelectableBox>
   <SelectableBox
     aria-label="checkbox"
+    id="optionresponse"
     type="radio"
     value="optionresponse"
   >
@@ -165,6 +183,7 @@ exports[`ProblemTypeSelect snapshot SINGLESELECT 1`] = `
   </SelectableBox>
   <SelectableBox
     aria-label="checkbox"
+    id="numericalresponse"
     type="radio"
     value="numericalresponse"
   >
@@ -172,6 +191,7 @@ exports[`ProblemTypeSelect snapshot SINGLESELECT 1`] = `
   </SelectableBox>
   <SelectableBox
     aria-label="checkbox"
+    id="stringresponse"
     type="radio"
     value="stringresponse"
   >
@@ -189,6 +209,7 @@ exports[`ProblemTypeSelect snapshot TEXTINPUT 1`] = `
 >
   <SelectableBox
     aria-label="checkbox"
+    id="multiplechoiceresponse"
     type="radio"
     value="multiplechoiceresponse"
   >
@@ -196,6 +217,7 @@ exports[`ProblemTypeSelect snapshot TEXTINPUT 1`] = `
   </SelectableBox>
   <SelectableBox
     aria-label="checkbox"
+    id="choiceresponse"
     type="radio"
     value="choiceresponse"
   >
@@ -203,6 +225,7 @@ exports[`ProblemTypeSelect snapshot TEXTINPUT 1`] = `
   </SelectableBox>
   <SelectableBox
     aria-label="checkbox"
+    id="optionresponse"
     type="radio"
     value="optionresponse"
   >
@@ -210,6 +233,7 @@ exports[`ProblemTypeSelect snapshot TEXTINPUT 1`] = `
   </SelectableBox>
   <SelectableBox
     aria-label="checkbox"
+    id="numericalresponse"
     type="radio"
     value="numericalresponse"
   >
@@ -217,6 +241,7 @@ exports[`ProblemTypeSelect snapshot TEXTINPUT 1`] = `
   </SelectableBox>
   <SelectableBox
     aria-label="checkbox"
+    id="stringresponse"
     type="radio"
     value="stringresponse"
   >

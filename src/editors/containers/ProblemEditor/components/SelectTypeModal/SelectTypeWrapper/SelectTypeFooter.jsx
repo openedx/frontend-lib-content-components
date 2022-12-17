@@ -16,7 +16,7 @@ import { actions } from '../../../../../data/redux';
 export const SelectTypeFooter = ({
   onCancel,
   selected,
-  // Redux
+  // redux
   setProblemType,
   // injected,
   intl,

@@ -19,7 +19,7 @@ export const ProblemTypeSelect = ({
     >
       {Object.values(ProblemTypeKeys).map((key) => (
         key !== 'advanced'
-          ?  <SelectableBox value={key} {...settings}>
+          ?  <SelectableBox id={key} value={key} {...settings}>
             {ProblemTypes[key].title}
           </SelectableBox>
           : null

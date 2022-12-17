@@ -2,6 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import { Button } from '@edx/paragon';
+import { formatMessage } from '../../../../../../testUtils';
 import * as module from './SelectTypeFooter';
 import hooks from '../hooks';
 import { actions } from '../../../../../data/redux';
@@ -14,7 +15,10 @@ describe('SelectTypeFooter', () => {
   const props = {
     onCancel: jest.fn().mockName('onCancel'),
     selected: null,
+    // redux
     setProblemType: jest.fn().mockName('setProblemType'),
+    // inject
+    intl: { formatMessage },
   };
 
   test('snapshot', () => {
