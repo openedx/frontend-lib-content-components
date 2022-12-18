@@ -3,11 +3,13 @@ import { useState, useEffect } from 'react';
 import _ from 'lodash-es';
 import * as module from './hooks';
 import messages from './messages';
+import { ShowAnswerTypesKeys } from '../../../../../data/constants/problem';
 
 export const state = {
   showAdvanced: (val) => useState(val),
   cardCollapsed: (val) => useState(val),
   summary: (val) => useState(val),
+  showAttempts: (val) => useState(val),
 };
 
 export const showAdvancedSettingsCards = () => {
@@ -137,8 +139,21 @@ export const scoringCardHooks = (scoring, updateSettings) => {
 };
 
 export const showAnswerCardHooks = (showAnswer, updateSettings) => {
+  const [showAttempts, setShowAttempts] = module.state.showAttempts(false);
+  const numberOfAttemptsChoice = [
+    ShowAnswerTypesKeys.AFTER_SOME_NUMBER_OF_ATTEMPTS,
+    ShowAnswerTypesKeys.AFTER_ALL_ATTEMPTS,
+    ShowAnswerTypesKeys.AFTER_ALL_ATTEMPTS_OR_CORRECT,
+  ];
+
+  useEffect(() => {
+    setShowAttempts(_.includes(numberOfAttemptsChoice, showAnswer.on));
+  }, [showAttempts]);
+
   const handleShowAnswerChange = (event) => {
-    updateSettings({ showAnswer: { ...showAnswer, on: event.target.value } });
+    const { value } = event.target;
+    setShowAttempts(_.includes(numberOfAttemptsChoice, value));
+    updateSettings({ showAnswer: { ...showAnswer, on: value } });
   };
 
   const handleAttemptsChange = (event) => {
@@ -152,6 +167,7 @@ export const showAnswerCardHooks = (showAnswer, updateSettings) => {
   return {
     handleShowAnswerChange,
     handleAttemptsChange,
+    showAttempts,
   };
 };
 

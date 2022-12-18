@@ -110,13 +110,5 @@ exports[`ShowAnswerCard snapshot snapshot: show answer setting card 1`] = `
       </option>
     </Form.Control>
   </Form.Group>
-  <Form.Group>
-    <Form.Control
-      floatingLabel="Number of Attempts"
-      onChange={[MockFunction showAnswerCardHooks.handleAttemptsChange]}
-      type="number"
-      value={5}
-    />
-  </Form.Group>
 </SettingsOption>
 `;

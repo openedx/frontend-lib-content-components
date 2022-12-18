@@ -13,7 +13,11 @@ export const ShowAnswerCard = ({
   // inject
   intl,
 }) => {
-  const { handleShowAnswerChange, handleAttemptsChange } = showAnswerCardHooks(showAnswer, updateSettings);
+  const {
+    handleShowAnswerChange,
+    handleAttemptsChange,
+    showAttempts,
+  } = showAnswerCardHooks(showAnswer, updateSettings);
   return (
     <SettingsOption
       title={intl.formatMessage(messages.showAnswerSettingsTitle)}
@@ -45,14 +49,17 @@ export const ShowAnswerCard = ({
           ))}
         </Form.Control>
       </Form.Group>
-      <Form.Group>
-        <Form.Control
-          type="number"
-          value={showAnswer.afterAttempts}
-          onChange={handleAttemptsChange}
-          floatingLabel={intl.formatMessage(messages.showAnswerAttemptsInputLabel)}
-        />
-      </Form.Group>
+      { showAttempts
+        && (
+        <Form.Group>
+          <Form.Control
+            type="number"
+            value={showAnswer.afterAttempts}
+            onChange={handleAttemptsChange}
+            floatingLabel={intl.formatMessage(messages.showAnswerAttemptsInputLabel)}
+          />
+        </Form.Group>
+        )}
     </SettingsOption>
   );
 };
