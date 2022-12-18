@@ -44,32 +44,34 @@ class ReactStateOLXParser {
     answers.forEach((answer) => {
       const feedback = [];
       let singleAnswer = {};
-      if (_.has(answer, 'selectedFeedback') && _.get(answer, 'selectedFeedback', '').trim() !== '') {
-        feedback.push({
-          '#text': _.get(answer, 'selectedFeedback'),
-          '@_selected': true,
-        });
+      if (this.hasAttributeWithValue(answer, 'title')) {
+        if (this.hasAttributeWithValue(answer, 'selectedFeedback')) {
+          feedback.push({
+            '#text': _.get(answer, 'selectedFeedback'),
+            '@_selected': true,
+          });
+        }
+        if (this.hasAttributeWithValue(answer, 'unselectedFeedback')) {
+          feedback.push({
+            '#text': _.get(answer, 'unselectedFeedback'),
+            '@_selected': false,
+          });
+        }
+        if (this.hasAttributeWithValue(answer, 'feedback')) {
+          feedback.push({
+            '#text': _.get(answer, 'feedback'),
+          });
+        }
+        if (feedback.length) {
+          singleAnswer[`${option}hint`] = feedback;
+        }
+        singleAnswer = {
+          '#text': answer.title,
+          '@_correct': answer.correct,
+          ...singleAnswer,
+        };
+        choice.push(singleAnswer);
       }
-      if (_.has(answer, 'unselectedFeedback') && _.get(answer, 'unselectedFeedback', '').trim() !== '') {
-        feedback.push({
-          '#text': _.get(answer, 'unselectedFeedback'),
-          '@_selected': false,
-        });
-      }
-      if (_.has(answer, 'feedback') && _.get(answer, 'feedback', '').trim() !== '') {
-        feedback.push({
-          '#text': _.get(answer, 'feedback'),
-        });
-      }
-      if (feedback.length) {
-        singleAnswer[`${option}hint`] = feedback;
-      }
-      singleAnswer = {
-        '#text': answer.title,
-        '@_correct': answer.correct,
-        ...singleAnswer,
-      };
-      choice.push(singleAnswer);
     });
     widget = { [option]: choice };
     if (_.has(this.problemState, 'groupFeedbackList')) {
@@ -140,22 +142,24 @@ class ReactStateOLXParser {
     let firstCorrectAnswerParsed = false;
     answers.forEach((answer) => {
       const correcthint = this.getAnswerHints(answer);
-      if (answer.correct && firstCorrectAnswerParsed) {
-        additionAnswers.push({
-          '@_answer': answer.title,
-          ...correcthint,
-        });
-      } else if (answer.correct && !firstCorrectAnswerParsed) {
-        firstCorrectAnswerParsed = true;
-        answerObject = {
-          '@_answer': answer.title,
-          ...correcthint,
-        };
-      } else if (!answer.correct) {
-        wrongAnswers.push({
-          '@_answer': answer.title,
-          '#text': answer.feedback,
-        });
+      if (this.hasAttributeWithValue(answer, 'title')) {
+        if (answer.correct && firstCorrectAnswerParsed) {
+          additionAnswers.push({
+            '@_answer': answer.title,
+            ...correcthint,
+          });
+        } else if (answer.correct && !firstCorrectAnswerParsed) {
+          firstCorrectAnswerParsed = true;
+          answerObject = {
+            '@_answer': answer.title,
+            ...correcthint,
+          };
+        } else if (!answer.correct) {
+          wrongAnswers.push({
+            '@_answer': answer.title,
+            '#text': answer.feedback,
+          });
+        }
       }
     });
     answerObject = {
@@ -196,27 +200,29 @@ class ReactStateOLXParser {
     */
     answers.forEach((answer) => {
       const correcthint = this.getAnswerHints(answer);
-      if (answer.correct && !firstCorrectAnswerParsed) {
-        firstCorrectAnswerParsed = true;
-        let responseParam = {};
-        if (_.has(answer, 'tolerance')) {
-          responseParam = {
-            responseparam: {
-              '@_type': 'tolerance',
-              '@_default': _.get(answer, 'tolerance', 0),
-            },
+      if (this.hasAttributeWithValue(answer, 'title')) {
+        if (answer.correct && !firstCorrectAnswerParsed) {
+          firstCorrectAnswerParsed = true;
+          let responseParam = {};
+          if (_.has(answer, 'tolerance')) {
+            responseParam = {
+              responseparam: {
+                '@_type': 'tolerance',
+                '@_default': _.get(answer, 'tolerance', 0),
+              },
+            };
+          }
+          answerObject = {
+            '@_answer': answer.title,
+            ...responseParam,
+            ...correcthint,
           };
+        } else if (answer.correct && firstCorrectAnswerParsed) {
+          additionalAnswers.push({
+            '@_answer': answer.title,
+            ...correcthint,
+          });
         }
-        answerObject = {
-          '@_answer': answer.title,
-          ...responseParam,
-          ...correcthint,
-        };
-      } else if (answer.correct && firstCorrectAnswerParsed) {
-        additionalAnswers.push({
-          '@_answer': answer.title,
-          ...correcthint,
-        });
       }
     });
     answerObject = {
@@ -240,6 +246,10 @@ class ReactStateOLXParser {
       };
     }
     return correcthint;
+  }
+
+  hasAttributeWithValue(obj, attr) {
+    return _.has(obj, attr) && _.get(obj, attr, '').trim() !== '';
   }
 
   buildOLX() {
