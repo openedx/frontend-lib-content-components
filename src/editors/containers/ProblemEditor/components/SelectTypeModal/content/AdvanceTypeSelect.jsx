@@ -1,7 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Form, ActionRow, IconButton, Icon, OverlayTrigger, Tooltip } from '@edx/paragon';
+import {
+  Form,
+  ActionRow,
+  IconButton,
+  Icon,
+  OverlayTrigger,
+  Tooltip,
+} from '@edx/paragon';
 import { ArrowBack } from '@edx/paragon/icons';
 import { FormattedMessage, injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 import { AdvanceProblems, ProblemTypeKeys } from '../../../../../data/constants/problem';

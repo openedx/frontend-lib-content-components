@@ -17,8 +17,7 @@ export const SelectTypeModal = ({
 
   return (
     <SelectTypeWrapper onClose={onClose} selected={selected}>
-      <Container className="mx-4 my-3 px-3 py-2">
-        <Row className="justify-content-center">
+        <Row className="justify-content-center align-items-center">
         {(!Object.values(AdvanceProblemKeys).includes(selected)) ? (
           <>
             <Col>
@@ -30,7 +29,6 @@ export const SelectTypeModal = ({
           </>
         ) : <AdvanceTypeSelect selected={selected} setSelected={setSelected} />}
         </Row>
-      </Container>
     </SelectTypeWrapper>
   );
 };
