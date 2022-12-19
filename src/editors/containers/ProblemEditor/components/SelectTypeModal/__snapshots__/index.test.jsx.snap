@@ -1,0 +1,26 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SelectTypeModal snapshot 1`] = `
+<SelectTypeWrapper
+  onClose={[MockFunction]}
+  selected="mOcKsELEcted"
+>
+  <Container
+    className="mx-4 my-3 px-3 py-2"
+  >
+    <Row>
+      <Col>
+        <ProblemTypeSelect
+          selected="mOcKsELEcted"
+          setSelected={[MockFunction setSelected]}
+        />
+      </Col>
+      <Col>
+        <InjectIntl(ShimmedIntlComponent)
+          problemType="mOcKsELEcted"
+        />
+      </Col>
+    </Row>
+  </Container>
+</SelectTypeWrapper>
+`;
