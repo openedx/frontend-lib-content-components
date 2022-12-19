@@ -57,7 +57,7 @@ describe('app thunkActions', () => {
     });
   });
   describe('initialize', () => {
-    it('dispatches actions.app.initialize, and then fetches both block and unit', () => {
+    it('dispatches actions.app.initialize, and then fetches block, unit and studioView', () => {
       const { fetchBlock, fetchUnit } = thunkActions;
       thunkActions.fetchBlock = () => 'fetchBlock';
       thunkActions.fetchUnit = () => 'fetchUnit';
@@ -66,6 +66,7 @@ describe('app thunkActions', () => {
         [actions.app.initialize(testValue)],
         [thunkActions.fetchBlock()],
         [thunkActions.fetchUnit()],
+        [thunkActions.fetchStudioView()],
       ]);
       thunkActions.fetchBlock = fetchBlock;
       thunkActions.fetchUnit = fetchUnit;

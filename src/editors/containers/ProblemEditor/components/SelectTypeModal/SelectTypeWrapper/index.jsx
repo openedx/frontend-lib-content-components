@@ -8,9 +8,9 @@ import SelectTypeFooter from './SelectTypeFooter';
 import * as hooks from '../../../../EditorContainer/hooks';
 
 export const SelectTypeWrapper = ({
-  selected,
-  onClose,
   children,
+  onClose,
+  selected,
 }) => {
   const handleCancelClicked = hooks.handleCancelClicked({ onClose });
 
