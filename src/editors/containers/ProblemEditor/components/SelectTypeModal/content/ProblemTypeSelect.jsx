@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Button, SelectableBox, Form } from '@edx/paragon';
 import { ProblemTypes, ProblemTypeKeys, AdvanceProblemKeys } from '../../../../../data/constants/problem';
+import { FormattedMessage, injectIntl } from '@edx/frontend-platform/i18n';
+import messages from './messages';
 
 export const ProblemTypeSelect = ({
   selected,
@@ -12,20 +14,25 @@ export const ProblemTypeSelect = ({
   const settings = {'aria-label': 'checkbox', type: 'radio'};
 
   return (
-    <SelectableBox.Set
-      columns={1}
-      onChange={handleChange}
-      type={settings.type}
-      value={selected}
-    >
-      {Object.values(ProblemTypeKeys).map((key) => (
-        key !== 'advanced'
-          ?  <SelectableBox id={key} value={key} {...settings}>
-            {ProblemTypes[key].title}
-          </SelectableBox>
-          : null
-      ))}
-    </SelectableBox.Set>
+    <>
+      <SelectableBox.Set
+        columns={1}
+        onChange={handleChange}
+        type={settings.type}
+        value={selected}
+      >
+        {Object.values(ProblemTypeKeys).map((key) => (
+          key !== 'advanced'
+            ?  <SelectableBox id={key} value={key} {...settings}>
+              {ProblemTypes[key].title}
+            </SelectableBox>
+            : null
+        ))}
+      </SelectableBox.Set>
+      <Button variant="link" className="pl-0 mt-2" onClick={handleClick}>
+        <FormattedMessage {...messages.advanceProblemButtonLabel} />
+      </Button>
+    </>
   );
 };
 ProblemTypeSelect.propTypes = {
@@ -33,4 +40,4 @@ ProblemTypeSelect.propTypes = {
   setSelected: PropTypes.func.isRequired,
 };
 
-export default ProblemTypeSelect;
+export default injectIntl(ProblemTypeSelect);

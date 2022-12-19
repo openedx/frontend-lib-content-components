@@ -1,10 +1,16 @@
 import { StrictDict } from '../../utils';
-import * as templates from './olxTemplates';
 import singleSelect from '../images/singleSelect.png';
 import multiSelect from '../images/multiSelect.png';
 import dropdown from '../images/dropdown.png';
 import numericalInput from '../images/numericalInput.png';
 import textInput from '../images/textInput.png';
+import { circuitSchematic } from './olxTemplates/circuitschematic';
+import { customGrader } from './olxTemplates/customgrader';
+import { dragAndDrop } from './olxTemplates/drag_and_drop';
+import { formualResponse } from './olxTemplates/formularesponse';
+import { imageResponse } from './olxTemplates/imageresponse';
+import { jsInputResponse } from './olxTemplates/jsinput_response';
+import { problemWithHint } from './olxTemplates/problem_with_hint';
 
 export const ProblemTypeKeys = StrictDict({
   SINGLESELECT: 'multiplechoiceresponse',
@@ -83,37 +89,37 @@ export const AdvanceProblems = StrictDict({
   [AdvanceProblemKeys.CIRCUITSCHEMATIC]: {
     title: 'Circuit schematic builder',
     status: 'Not supported',
-    template: templates.circuitSchematic,
+    template: circuitSchematic,
   },
   [AdvanceProblemKeys.CUSTOMGRADER]: {
     title: 'Custom Python-evaluated input',
     status: 'Provisional',
-    template: templates.customGrader,
+    template: customGrader,
   },
   [AdvanceProblemKeys.DRAGANDDROP]: {
     title: 'Drag and drop (deprecated version)',
     status: 'Not supported',
-    template: templates.dragAndDrop,
+    template: dragAndDrop,
   },
   [AdvanceProblemKeys.FORMULA]: {
     title: 'Math expression input',
     status: '',
-    template: templates.formualResponse,
+    template: formualResponse,
   },
   [AdvanceProblemKeys.IMAGE]: {
     title: 'Image mapped input',
     status: 'Not supported',
-    template: templates.imageResponse,
+    template: imageResponse,
   },
   [AdvanceProblemKeys.JSINPUT]: {
     title: 'Custom JavaScript display and grading',
     status: '',
-    template: templates.jsInputResponse,
+    template: jsInputResponse,
   },
   [AdvanceProblemKeys.PROBLEMWITHHINT]: {
     title: 'Problem with adaptive hint',
     status: 'Not supported',
-    template: templates.problemWithHint,
+    template: problemWithHint,
   },
 });
 

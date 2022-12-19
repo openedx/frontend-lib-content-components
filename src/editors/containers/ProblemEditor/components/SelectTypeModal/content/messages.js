@@ -1,4 +1,9 @@
 export const messages = {
+  advanceProblemButtonLabel: {
+    id: 'authoring.problemEditor.problemSelect.advanceButton.label',
+    defaultMessage: 'Advance problem types',
+    description: 'Button label for advance problem types option',
+  },
   advanceMenuTitle: {
     id: 'authoring.problemEditor.advanceProblem.menu.title',
     defaultMessage: 'Advanced problems',

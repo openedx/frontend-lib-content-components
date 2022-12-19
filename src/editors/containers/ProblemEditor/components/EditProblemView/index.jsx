@@ -10,6 +10,7 @@ import { selectors } from '../../../../data/redux';
 import { ReactStateSettingsParser } from '../../data/ReactStateSettingsParser';
 import { ReactStateOLXParser } from '../../data/ReactStateOLXParser';
 import { Col, Container, Row } from '@edx/paragon';
+import { AdvanceProblemKeys } from '../../../../data/constants/problem';
 
 
 export const EditProblemView = ({
@@ -24,6 +25,9 @@ export const EditProblemView = ({
       olx: reactOLXParser.buildOLX(),
     };
   };
+  if (Object.values(AdvanceProblemKeys).includes(problemType)) {
+    return `hello raw editor with ${problemType}`
+  }
   return (
     <EditorContainer getContent={parseSate(problemState)}>
       <Container fluid>

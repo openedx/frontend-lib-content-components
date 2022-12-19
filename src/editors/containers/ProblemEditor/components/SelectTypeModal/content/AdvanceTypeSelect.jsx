@@ -4,21 +4,21 @@ import PropTypes from 'prop-types';
 import { Form, ActionRow, IconButton, Icon, OverlayTrigger, Tooltip } from '@edx/paragon';
 import { ArrowBack } from '@edx/paragon/icons';
 import { FormattedMessage, injectIntl, intlShape } from '@edx/frontend-platform/i18n';
-import { AdvanceProblems } from '../../../../../data/constants/problem';
+import { AdvanceProblems, ProblemTypeKeys } from '../../../../../data/constants/problem';
 import messages from './messages';
 
 export const AdvanceTypeSelect = ({
+  selected,
   setSelected,
   // injected
   intl,
 }) => {
-  const [value, setValue] = React.useState('blankadvanced')
-  const handleChange = e => {setSelected(e.target.value); setValue(e.target.value)}
+  const handleChange = e => {setSelected(e.target.value)}
   return (
-    <div className="col col-8 border rounded p-0">
+    <div className="col col-8 border rounded p-0 justify-content-center">
       <Form.Group className='p-0'>
-        <ActionRow className="border-primary-100 border-bottom py-3">
-          <IconButton src={ArrowBack} iconAs={Icon} onClick={setSelected(null)} />
+        <ActionRow className="border-primary-100 border-bottom py-3 pl-2.5 pr-4">
+          <IconButton src={ArrowBack} iconAs={Icon} onClick={() => setSelected(ProblemTypeKeys.SINGLESELECT)} />
           <ActionRow.Spacer/>
           <Form.Label className="h4">
             <FormattedMessage {...messages.advanceMenuTitle} />
@@ -28,13 +28,13 @@ export const AdvanceTypeSelect = ({
         <Form.RadioSet
           name="advanceTypes"
           onChange={handleChange}
-          value={value}
-          className="px-2.5"
+          value={selected}
+          className="px-4"
         >
           {Object.entries(AdvanceProblems).map(([type, data]) => {
             if (data.status !== '') {
               return (
-                <ActionRow className="border-primary-100 py-3 border-bottom">
+                <ActionRow className="border-primary-100 border-bottom m-0 py-3 w-100">
                   <Form.Radio value={type}>
                     {intl.formatMessage(messages.advanceProblemTypeLabel, { problemType: data.title })}
                   </Form.Radio>
@@ -57,7 +57,7 @@ export const AdvanceTypeSelect = ({
               );
             }
             return (
-              <ActionRow className="border-primary-100 py-3 border-bottom">
+              <ActionRow className="border-primary-100 border-bottom m-0 py-3 w-100">
                 <Form.Radio value={type}>
                   {intl.formatMessage(messages.advanceProblemTypeLabel, { problemType: data.title })}
                 </Form.Radio>

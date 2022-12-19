@@ -1,25 +1,25 @@
 import { useEffect, useState } from 'react';
 import { AdvanceProblemKeys, AdvanceProblems } from '../../../../data/constants/problem';
-import { actions } from '../../../../data/redux';
 import { StrictDict } from '../../../../utils';
 import { ProblemTypeKeys, ProblemTypes } from '../../../../data/constants/problem';
 import * as module from './hooks';
 
 export const state = StrictDict({
-  selected: (val) => useState('blankadvanced'),
+  selected: (val) => useState(val),
 });
 
 export const selectHooks = () => {
   const [ selected, setSelected ] = module.state.selected(ProblemTypeKeys.SINGLESELECT);
   return {
-    selected, dispatch,
+    selected,
     setSelected,
   };
 };
 
-export const onSelect = ( setProblemType, selected ) => () => {
-  if (Object.entries(AdvanceProblemKeys).includes(selected)) {
-    dispatch(actions.problem.updateField({rawOlx: AdvanceProblems[selected].template}))
+export const onSelect = ( setProblemType, selected, updateField ) => () => {
+  if (Object.values(AdvanceProblemKeys).includes(selected)) {
+    console.log(AdvanceProblems[selected]);
+    updateField({rawOLX: AdvanceProblems[selected].template})
   }
   setProblemType({ selected });
 };
