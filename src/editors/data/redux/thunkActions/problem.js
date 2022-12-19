@@ -16,7 +16,7 @@ export const initializeProblem = (blockValue) => (dispatch) => {
   const { settings, ...data } = parsedProblem;
   const parsedSettings = { ...settings, ...parseSettings(_.get(blockValue, 'data.metadata', {})) };
   if (!_.isEmpty(rawOLX) && !_.isEmpty(data)) {
-    dispatch(actions.problem.load({ ...data, rawOLX, parsedSettings }));
+    dispatch(actions.problem.load({ ...data, rawOLX, settings: parsedSettings }));
   }
 };
 
