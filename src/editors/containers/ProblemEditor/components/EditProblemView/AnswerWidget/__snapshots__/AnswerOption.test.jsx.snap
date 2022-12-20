@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`AnswerOption render snapshot: renders correct option with feedback 1`] = `
-<Collapsible.Advanced
+<Advanced
   className="collapsible-card"
   onToggle={[Function]}
   open={false}
@@ -9,7 +9,7 @@ exports[`AnswerOption render snapshot: renders correct option with feedback 1`] 
   <Row
     className="my-2"
   >
-    <Col
+    <Component
       xs={1}
     >
       <Checker
@@ -24,8 +24,8 @@ exports[`AnswerOption render snapshot: renders correct option with feedback 1`] 
         hasSingleAnswer={false}
         setAnswer={[Function]}
       />
-    </Col>
-    <Col
+    </Component>
+    <Component
       xs={10}
     >
       <Form.Control
@@ -35,7 +35,7 @@ exports[`AnswerOption render snapshot: renders correct option with feedback 1`] 
         rows={1}
         value="Answer 1"
       />
-      <Collapsible.Body>
+      <Body>
         <div
           className="bg-dark-100 p-4 mt-3"
         >
@@ -72,32 +72,32 @@ exports[`AnswerOption render snapshot: renders correct option with feedback 1`] 
             />
           </Form.Group>
         </div>
-      </Collapsible.Body>
-    </Col>
-    <Col
+      </Body>
+    </Component>
+    <Component
       className="d-inline-flex mt-1"
       xs={1}
     >
-      <Collapsible.Trigger>
+      <Trigger>
         <IconButton
           alt="Toggle feedback"
           iconAs="Icon"
           variant="primary"
         />
-      </Collapsible.Trigger>
+      </Trigger>
       <IconButton
         alt="Delete answer"
         iconAs="Icon"
         onClick={[Function]}
         variant="primary"
       />
-    </Col>
+    </Component>
   </Row>
-</Collapsible.Advanced>
+</Advanced>
 `;
 
 exports[`AnswerOption render snapshot: renders correct option with selected unselected feedback 1`] = `
-<Collapsible.Advanced
+<Advanced
   className="collapsible-card"
   onToggle={[Function]}
   open={false}
@@ -105,7 +105,7 @@ exports[`AnswerOption render snapshot: renders correct option with selected unse
   <Row
     className="my-2"
   >
-    <Col
+    <Component
       xs={1}
     >
       <Checker
@@ -121,8 +121,8 @@ exports[`AnswerOption render snapshot: renders correct option with selected unse
         hasSingleAnswer={false}
         setAnswer={[Function]}
       />
-    </Col>
-    <Col
+    </Component>
+    <Component
       xs={10}
     >
       <Form.Control
@@ -132,7 +132,7 @@ exports[`AnswerOption render snapshot: renders correct option with selected unse
         rows={1}
         value="Answer 1"
       />
-      <Collapsible.Body>
+      <Body>
         <div
           className="bg-dark-100 p-4 mt-3"
         >
@@ -168,26 +168,26 @@ exports[`AnswerOption render snapshot: renders correct option with selected unse
             />
           </Form.Group>
         </div>
-      </Collapsible.Body>
-    </Col>
-    <Col
+      </Body>
+    </Component>
+    <Component
       className="d-inline-flex mt-1"
       xs={1}
     >
-      <Collapsible.Trigger>
+      <Trigger>
         <IconButton
           alt="Toggle feedback"
           iconAs="Icon"
           variant="primary"
         />
-      </Collapsible.Trigger>
+      </Trigger>
       <IconButton
         alt="Delete answer"
         iconAs="Icon"
         onClick={[Function]}
         variant="primary"
       />
-    </Col>
+    </Component>
   </Row>
-</Collapsible.Advanced>
+</Advanced>
 `;

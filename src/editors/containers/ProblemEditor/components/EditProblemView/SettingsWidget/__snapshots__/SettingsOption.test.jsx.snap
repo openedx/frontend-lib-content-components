@@ -5,11 +5,11 @@ exports[`SettingsOption render snapshot: renders correct 1`] = `
   <Card.Section
     className="settingsCardTitleSection"
   >
-    <Collapsible.Advanced
+    <Advanced
       onToggle={[Function]}
       open={false}
     >
-      <Collapsible.Trigger
+      <Trigger
         className="collapsible-trigger d-flex"
       >
         <span
@@ -17,42 +17,42 @@ exports[`SettingsOption render snapshot: renders correct 1`] = `
         >
           Settings Option Title
         </span>
-        <Collapsible.Visible
+        <Visible
           whenClosed={true}
         >
           <Icon />
-        </Collapsible.Visible>
-        <Collapsible.Visible
+        </Visible>
+        <Visible
           whenOpen={true}
         >
           <Icon />
-        </Collapsible.Visible>
-      </Collapsible.Trigger>
-    </Collapsible.Advanced>
+        </Visible>
+      </Trigger>
+    </Advanced>
   </Card.Section>
   <Card.Section>
-    <Collapsible.Advanced
+    <Advanced
       open={true}
     >
-      <Collapsible.Body
+      <Body
         className="collapsible-body"
       >
         <span>
           Settings Option Summary
         </span>
-      </Collapsible.Body>
-    </Collapsible.Advanced>
-    <Collapsible.Advanced
+      </Body>
+    </Advanced>
+    <Advanced
       open={false}
     >
-      <Collapsible.Body
+      <Body
         className="collapsible-body"
       >
         <h1>
           My test content
         </h1>
-      </Collapsible.Body>
-    </Collapsible.Advanced>
+      </Body>
+    </Advanced>
   </Card.Section>
 </Card>
 `;

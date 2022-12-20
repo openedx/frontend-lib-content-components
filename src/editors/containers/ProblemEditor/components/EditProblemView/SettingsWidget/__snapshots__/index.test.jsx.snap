@@ -12,29 +12,29 @@ exports[`SettingsWidget snapshot snapshot: renders Settings widget page 1`] = `
     </h3>
     <Container>
       <Row>
-        <Col>
+        <Component>
           <Row
             className="my-2"
           >
-            <InjectIntl(ShimmedIntlComponent)
+            <injectIntl(ShimmedIntlComponent)
               problemType="stringresponse"
             />
           </Row>
           <Row
             className="my-2"
           >
-            <InjectIntl(ShimmedIntlComponent) />
+            <injectIntl(ShimmedIntlComponent) />
           </Row>
           <Row
             className="mt-2"
           >
-            <InjectIntl(ShimmedIntlComponent) />
+            <injectIntl(ShimmedIntlComponent) />
           </Row>
           <Row>
-            <Collapsible.Advanced
+            <Advanced
               open={true}
             >
-              <Collapsible.Body
+              <Body
                 className="collapsible-body"
               >
                 <Button
@@ -48,38 +48,38 @@ exports[`SettingsWidget snapshot snapshot: renders Settings widget page 1`] = `
                     id="authoring.problemeditor.settings.showAdvancedButton"
                   />
                 </Button>
-              </Collapsible.Body>
-            </Collapsible.Advanced>
+              </Body>
+            </Advanced>
           </Row>
-          <Collapsible.Advanced
+          <Advanced
             open={false}
           >
-            <Collapsible.Body
+            <Body
               className="collapsible-body"
             >
               <Row
                 className="my-2"
               >
-                <InjectIntl(ShimmedIntlComponent) />
+                <injectIntl(ShimmedIntlComponent) />
               </Row>
               <Row
                 className="my-2"
               >
-                <InjectIntl(ShimmedIntlComponent) />
+                <injectIntl(ShimmedIntlComponent) />
               </Row>
               <Row
                 className="my-2"
               >
-                <InjectIntl(ShimmedIntlComponent) />
+                <injectIntl(ShimmedIntlComponent) />
               </Row>
               <Row
                 className="my-2"
               >
-                <InjectIntl(ShimmedIntlComponent) />
+                <injectIntl(ShimmedIntlComponent) />
               </Row>
-            </Collapsible.Body>
-          </Collapsible.Advanced>
-        </Col>
+            </Body>
+          </Advanced>
+        </Component>
       </Row>
     </Container>
   </div>
@@ -98,29 +98,29 @@ exports[`SettingsWidget snapshot snapshot: renders Settings widget page advanced
     </h3>
     <Container>
       <Row>
-        <Col>
+        <Component>
           <Row
             className="my-2"
           >
-            <InjectIntl(ShimmedIntlComponent)
+            <injectIntl(ShimmedIntlComponent)
               problemType="stringresponse"
             />
           </Row>
           <Row
             className="my-2"
           >
-            <InjectIntl(ShimmedIntlComponent) />
+            <injectIntl(ShimmedIntlComponent) />
           </Row>
           <Row
             className="mt-2"
           >
-            <InjectIntl(ShimmedIntlComponent) />
+            <injectIntl(ShimmedIntlComponent) />
           </Row>
           <Row>
-            <Collapsible.Advanced
+            <Advanced
               open={false}
             >
-              <Collapsible.Body
+              <Body
                 className="collapsible-body"
               >
                 <Button
@@ -134,38 +134,38 @@ exports[`SettingsWidget snapshot snapshot: renders Settings widget page advanced
                     id="authoring.problemeditor.settings.showAdvancedButton"
                   />
                 </Button>
-              </Collapsible.Body>
-            </Collapsible.Advanced>
+              </Body>
+            </Advanced>
           </Row>
-          <Collapsible.Advanced
+          <Advanced
             open={true}
           >
-            <Collapsible.Body
+            <Body
               className="collapsible-body"
             >
               <Row
                 className="my-2"
               >
-                <InjectIntl(ShimmedIntlComponent) />
+                <injectIntl(ShimmedIntlComponent) />
               </Row>
               <Row
                 className="my-2"
               >
-                <InjectIntl(ShimmedIntlComponent) />
+                <injectIntl(ShimmedIntlComponent) />
               </Row>
               <Row
                 className="my-2"
               >
-                <InjectIntl(ShimmedIntlComponent) />
+                <injectIntl(ShimmedIntlComponent) />
               </Row>
               <Row
                 className="my-2"
               >
-                <InjectIntl(ShimmedIntlComponent) />
+                <injectIntl(ShimmedIntlComponent) />
               </Row>
-            </Collapsible.Body>
-          </Collapsible.Advanced>
-        </Col>
+            </Body>
+          </Advanced>
+        </Component>
       </Row>
     </Container>
   </div>
