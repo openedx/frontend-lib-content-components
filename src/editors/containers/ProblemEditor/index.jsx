@@ -1,24 +1,12 @@
 import React from 'react';
-import { connect, useDispatch } from 'react-redux';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Spinner } from '@edx/paragon';
-import { FormattedMessage, injectIntl, intlShape } from '@edx/frontend-platform/i18n';
+import { injectIntl } from '@edx/frontend-platform/i18n';
 import SelectTypeModal from './components/SelectTypeModal';
 import EditProblemView from './components/EditProblemView';
-import { selectors } from '../../data/redux/app';
+import { selectors, thunkActions } from '../../data/redux';
 import { RequestKeys } from '../../data/constants/requests';
-import { actions, loopHooks } from 'react-table';
-
-// eslint-disable-next-line react/prop-types
-
-export const hooks = {
-  initializeProblemEditor: ({dispatch,blockFinished,studioViewFinished}) => useEffect(
-    () => dispatch('NAME OF THUNK ACTION'),
-    [blockFinished,studioViewFinished],
-  ),
-}
-
-
 
 export const ProblemEditor = ({
   onClose,
@@ -26,13 +14,12 @@ export const ProblemEditor = ({
   problemType,
   blockFinished,
   studioViewFinished,
+  blockValue,
+  initializeProblemEditor,
 }) => {
-
-  const dispatch = useDispatch();
-  hooks.initializeProblemEditor({dispatch,blockFinished,studioViewFinished})
-
+  React.useEffect(() => initializeProblemEditor(blockValue), [blockValue]);
   // TODO: INTL MSG, Add LOAD FAILED ERROR using BLOCKFAILED
-  if (!blockFinished || !studioViewFinished ) {
+  if (!blockFinished || !studioViewFinished) {
     return (
       <div className="text-center p-6">
         <Spinner
@@ -43,7 +30,7 @@ export const ProblemEditor = ({
       </div>
     );
   }
-  //once data is loaded, init store
+  // once data is loaded, init store
 
   if (problemType === null) {
     return (<SelectTypeModal onClose={onClose} />);
@@ -57,15 +44,19 @@ ProblemEditor.propTypes = {
   blockFinished: PropTypes.bool.isRequired,
   studioViewFinished: PropTypes.bool.isRequired,
   problemType: PropTypes.string.isRequired,
+  initializeProblemEditor: PropTypes.func.isRequired,
+  blockValue: PropTypes.objectOf(PropTypes.object).isRequired,
 };
 
 export const mapStateToProps = (state) => ({
   blockFinished: selectors.requests.isFinished(state, { requestKey: RequestKeys.fetchBlock }),
   studioViewFinished: selectors.requests.isFinished(state, { requestKey: RequestKeys.fetchStudioView }),
   problemType: selectors.problem.problemType(state),
+  blockValue: selectors.app.blockValue(state),
 });
 
 export const mapDispatchToProps = {
+  initializeProblemEditor: thunkActions.problem.initializeProblem,
 };
 
 export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(ProblemEditor));

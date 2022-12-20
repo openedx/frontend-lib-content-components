@@ -9,7 +9,7 @@ import {
 } from '@edx/paragon';
 import { FormattedMessage, injectIntl } from '@edx/frontend-platform/i18n';
 
-import { actions } from '../../../data/redux/app';
+import { actions } from '../../../../../data/redux';
 
 export const SelectTypeFooter = ({
   selected,

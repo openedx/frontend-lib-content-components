@@ -1,5 +1,4 @@
 import { createSelector } from 'reselect';
-
 import { blockTypes } from '../../constants/app';
 import * as urls from '../../services/cms/urls';
 import * as module from './selectors';
@@ -39,18 +38,6 @@ export const isInitialized = createSelector(
   ],
   (unitUrl, blockValue) => !!(unitUrl && blockValue),
 );
-
-export const isRaw = createSelector([module.simpleSelectors.studioView],
-  (studioView) => {
-    if (studioView === null) {
-      return null;
-    }
-    console.log(studioView.data.html);
-    if (studioView.data.html.includes('data-editor="raw"')) {
-      return true;
-    }
-    return false;
-  });
 
 export const displayTitle = createSelector(
   [
