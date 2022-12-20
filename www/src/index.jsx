@@ -1,5 +1,5 @@
 // eslint-disable-next-line
-import 'core-js/es6';
+import 'core-js';
 import 'regenerator-runtime/runtime';
 
 import React from 'react';

@@ -26,7 +26,6 @@ export const EditorGallery = () => {
   const handleBlockChange = (e) => setBlockType(e.target.value);
   const handleRawChange = (e) => setMockRaw(e.target.value === 'true');
 
-
   const dispatch = useDispatch();
   useEffect(() => {
     thunkActions.app.initialize({

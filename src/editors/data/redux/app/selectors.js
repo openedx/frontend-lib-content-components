@@ -39,17 +39,6 @@ export const isInitialized = createSelector(
   (unitUrl, blockValue) => !!(unitUrl && blockValue),
 );
 
-export const isRaw = createSelector([module.simpleSelectors.studioView],
-  (studioView) => {
-    let editorIsRaw = false;
-    if (studioView === null) {
-      editorIsRaw = false;
-    } else if (studioView.data.html.includes('data-editor="raw"')) {
-      editorIsRaw = true;
-    }
-    return editorIsRaw;
-  });
-
 export const displayTitle = createSelector(
   [
     module.simpleSelectors.blockType,

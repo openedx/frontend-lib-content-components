@@ -7,11 +7,11 @@ const mockPromise = (returnValue) => new Promise(resolve => resolve(returnValue)
 // eslint-disable-next-line
 export const fetchBlockById = ({ blockId, studioEndpointUrl }) => {
   let data = {};
-  if (blockId === "html-block-id"){
-      data = {
-        data: '<p>Test prompt content</p>',
-        display_name: 'My Text Prompt',
-        metadata: {
+  if (blockId === 'html-block-id') {
+    data = {
+      data: '<p>Test prompt content</p>',
+      display_name: 'My Text Prompt',
+      metadata: {
         display_name: 'Welcome!',
         download_track: true,
         download_video: true,
@@ -31,8 +31,8 @@ export const fetchBlockById = ({ blockId, studioEndpointUrl }) => {
         },
         youtube_id_1_0: 'dQw4w9WgXcQ',
       },
-    }
-  } else if (blockId === "problem-block-id"){
+    };
+  } else if (blockId === 'problem-block-id') {
     data = {
       data: `<problem>
       <optionresponse>
@@ -65,8 +65,8 @@ export const fetchBlockById = ({ blockId, studioEndpointUrl }) => {
       },
     };
   }
-  return mockPromise({data: {...data},});
-}
+  return mockPromise({ data: { ...data } });
+};
 
 // TODO: update to return block data appropriate per block ID, which will equal block type
 // eslint-disable-next-line
@@ -212,11 +212,11 @@ export const uploadAsset = ({
 // eslint-disable-next-line
 export const fetchStudioView = ({ blockId, studioEndpointUrl }) => {
   let data = {};
-  if (blockId === "html-block-id"){
-      data = {
-        data: '<p>Test prompt content</p>',
-        display_name: 'My Text Prompt',
-        metadata: {
+  if (blockId === 'html-block-id') {
+    data = {
+      data: '<p>Test prompt content</p>',
+      display_name: 'My Text Prompt',
+      metadata: {
         display_name: 'Welcome!',
         download_track: true,
         download_video: true,
@@ -236,9 +236,8 @@ export const fetchStudioView = ({ blockId, studioEndpointUrl }) => {
         },
         youtube_id_1_0: 'dQw4w9WgXcQ',
       },
-    }
-  }
-  else if (blockId === "problem-block-id"){
+    };
+  } else if (blockId === 'problem-block-id') {
     data = {
       data: `<problem>
       <optionresponse>
