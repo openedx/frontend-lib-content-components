@@ -109,7 +109,7 @@ jest.mock('@edx/paragon', () => jest.requireActual('testUtils').mockNestedCompon
     Radio: 'Radio',
     RadioSet: 'RadioSet',
   },
-  Overlay: 'Overlay',
+  OverlayTrigger: 'OverlayTrigger',
   Tooltip: 'Tooltip',
   FullscreenModal: 'FullscreenModal',
   Row: 'Row',

@@ -42,7 +42,7 @@ export const AdvanceTypeSelect = ({
             if (data.status !== '') {
               return (
                 <ActionRow className="border-primary-100 border-bottom m-0 py-3 w-100">
-                  <Form.Radio value={type}>
+                  <Form.Radio id={type} value={type}>
                     {intl.formatMessage(messages.advanceProblemTypeLabel, { problemType: data.title })}
                   </Form.Radio>
                   <ActionRow.Spacer />
@@ -65,7 +65,7 @@ export const AdvanceTypeSelect = ({
             }
             return (
               <ActionRow className="border-primary-100 border-bottom m-0 py-3 w-100">
-                <Form.Radio value={type}>
+                <Form.Radio id={type} value={type}>
                   {intl.formatMessage(messages.advanceProblemTypeLabel, { problemType: data.title })}
                 </Form.Radio>
                 <ActionRow.Spacer />

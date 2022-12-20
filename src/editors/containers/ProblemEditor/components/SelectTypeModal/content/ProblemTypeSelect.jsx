@@ -10,7 +10,7 @@ export const ProblemTypeSelect = ({
   setSelected,
 }) => {
   const handleChange = e => setSelected(e.target.value);
-  const handleClick = () => setSelected('blankadvanced');
+  const handleClick = () => setSelected(AdvanceProblemKeys.BLANK);
   const settings = {'aria-label': 'checkbox', type: 'radio'};
 
   return (

@@ -18,7 +18,6 @@ export const selectHooks = () => {
 
 export const onSelect = ( setProblemType, selected, updateField ) => () => {
   if (Object.values(AdvanceProblemKeys).includes(selected)) {
-    console.log(AdvanceProblems[selected]);
     updateField({rawOLX: AdvanceProblems[selected].template})
   }
   setProblemType({ selected });
@@ -33,17 +32,25 @@ export const useArrowNav = (selected, setSelected) => {
   }, [selected, setSelected]);
 
   const detectKeyDown = (e) => {
+    const problemTypeValues = Object.values(ProblemTypeKeys);
+    const advanceTypeValues = Object.values(AdvanceProblemKeys);
     switch (e.key) {
       case 'ArrowUp':
-        if (ProblemTypes[selected].prev) {
+        if (problemTypeValues.includes(selected) && ProblemTypes[selected].prev) {
           setSelected(ProblemTypes[selected].prev);
           document.getElementById(ProblemTypes[selected].prev).focus();
+        } else if (advanceTypeValues.includes(selected) && AdvanceProblems[selected].prev) {
+          setSelected(AdvanceProblems[selected].prev);
+          document.getElementById(AdvanceProblems[selected].prev).focus();
         }
         break;
       case 'ArrowDown':
-        if (ProblemTypes[selected].next) {
+        if (problemTypeValues.includes(selected) && ProblemTypes[selected].next) {
           setSelected(ProblemTypes[selected].next);
           document.getElementById(ProblemTypes[selected].next).focus();
+        } else if (advanceTypeValues.includes(selected) && AdvanceProblems[selected].next) {
+          setSelected(AdvanceProblems[selected].next);
+          document.getElementById(AdvanceProblems[selected].next).focus();
         }
         break;
     }

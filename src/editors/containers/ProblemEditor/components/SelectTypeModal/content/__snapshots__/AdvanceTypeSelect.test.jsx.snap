@@ -36,6 +36,7 @@ exports[`AdvanceTypeSelect snapshots snapshots: renders as expected with default
         className="border-primary-100 border-bottom m-0 py-3 w-100"
       >
         <Radio
+          id="blankadvanced"
           value="blankadvanced"
         >
           Blank advance problem
@@ -46,12 +47,13 @@ exports[`AdvanceTypeSelect snapshots snapshots: renders as expected with default
         className="border-primary-100 border-bottom m-0 py-3 w-100"
       >
         <Radio
+          id="circuitschematic"
           value="circuitschematic"
         >
           Circuit schematic builder
         </Radio>
         <ActionRow.Spacer />
-        <Component
+        <OverlayTrigger
           overlay={
             <Tooltip>
               <div
@@ -81,18 +83,30 @@ exports[`AdvanceTypeSelect snapshots snapshots: renders as expected with default
           <div>
             Not supported
           </div>
-        </Component>
+        </OverlayTrigger>
       </ActionRow>
       <ActionRow
         className="border-primary-100 border-bottom m-0 py-3 w-100"
       >
         <Radio
+          id="jsinputresponse"
+          value="jsinputresponse"
+        >
+          Custom JavaScript display and grading
+        </Radio>
+        <ActionRow.Spacer />
+      </ActionRow>
+      <ActionRow
+        className="border-primary-100 border-bottom m-0 py-3 w-100"
+      >
+        <Radio
+          id="customgrader"
           value="customgrader"
         >
           Custom Python-evaluated input
         </Radio>
         <ActionRow.Spacer />
-        <Component
+        <OverlayTrigger
           overlay={
             <Tooltip>
               <div
@@ -122,18 +136,19 @@ exports[`AdvanceTypeSelect snapshots snapshots: renders as expected with default
           <div>
             Provisional
           </div>
-        </Component>
+        </OverlayTrigger>
       </ActionRow>
       <ActionRow
         className="border-primary-100 border-bottom m-0 py-3 w-100"
       >
         <Radio
-          value="drag_and_drop"
+          id="draganddrop"
+          value="draganddrop"
         >
           Drag and drop (deprecated version)
         </Radio>
         <ActionRow.Spacer />
-        <Component
+        <OverlayTrigger
           overlay={
             <Tooltip>
               <div
@@ -163,12 +178,55 @@ exports[`AdvanceTypeSelect snapshots snapshots: renders as expected with default
           <div>
             Not supported
           </div>
-        </Component>
+        </OverlayTrigger>
       </ActionRow>
       <ActionRow
         className="border-primary-100 border-bottom m-0 py-3 w-100"
       >
         <Radio
+          id="imageresponse"
+          value="imageresponse"
+        >
+          Image mapped input
+        </Radio>
+        <ActionRow.Spacer />
+        <OverlayTrigger
+          overlay={
+            <Tooltip>
+              <div
+                className="text-gray-300 text-left"
+              >
+                {supportStatus,  select,
+      Provisional {Provisionally supported tools might lack the robustness of functionality
+        that your courses require. edX does not have control over the quality of the software,
+        or of the content that can be provided using these tools.
+        
+ 
+
+        Test these tools thoroughly before using them in your course, especially in graded
+        sections. Complete documentstion might not be available for provisionally supported
+        tools, or documentation might be available from sources other than edX.}
+      Not_supported {Tools with no support are not maintained by edX, and might be deprecated
+        in the future. They are not recommened for use in courses due to non-compliance with one
+        or more of the base requirements, such as testing, accessibility, internationalization,
+        and documentation.}
+      other { } 
+    }
+              </div>
+            </Tooltip>
+          }
+          placement="right"
+        >
+          <div>
+            Not supported
+          </div>
+        </OverlayTrigger>
+      </ActionRow>
+      <ActionRow
+        className="border-primary-100 border-bottom m-0 py-3 w-100"
+      >
+        <Radio
+          id="formularesponse"
           value="formularesponse"
         >
           Math expression input
@@ -179,63 +237,13 @@ exports[`AdvanceTypeSelect snapshots snapshots: renders as expected with default
         className="border-primary-100 border-bottom m-0 py-3 w-100"
       >
         <Radio
-          value="imageresponse"
-        >
-          Image mapped input
-        </Radio>
-        <ActionRow.Spacer />
-        <Component
-          overlay={
-            <Tooltip>
-              <div
-                className="text-gray-300 text-left"
-              >
-                {supportStatus,  select,
-      Provisional {Provisionally supported tools might lack the robustness of functionality
-        that your courses require. edX does not have control over the quality of the software,
-        or of the content that can be provided using these tools.
-        
- 
-
-        Test these tools thoroughly before using them in your course, especially in graded
-        sections. Complete documentstion might not be available for provisionally supported
-        tools, or documentation might be available from sources other than edX.}
-      Not_supported {Tools with no support are not maintained by edX, and might be deprecated
-        in the future. They are not recommened for use in courses due to non-compliance with one
-        or more of the base requirements, such as testing, accessibility, internationalization,
-        and documentation.}
-      other { } 
-    }
-              </div>
-            </Tooltip>
-          }
-          placement="right"
-        >
-          <div>
-            Not supported
-          </div>
-        </Component>
-      </ActionRow>
-      <ActionRow
-        className="border-primary-100 border-bottom m-0 py-3 w-100"
-      >
-        <Radio
-          value="jsinput_response"
-        >
-          Custom JavaScript display and grading
-        </Radio>
-        <ActionRow.Spacer />
-      </ActionRow>
-      <ActionRow
-        className="border-primary-100 border-bottom m-0 py-3 w-100"
-      >
-        <Radio
-          value="problem_with_hint"
+          id="problemwithhint"
+          value="problemwithhint"
         >
           Problem with adaptive hint
         </Radio>
         <ActionRow.Spacer />
-        <Component
+        <OverlayTrigger
           overlay={
             <Tooltip>
               <div
@@ -265,7 +273,7 @@ exports[`AdvanceTypeSelect snapshots snapshots: renders as expected with default
           <div>
             Not supported
           </div>
-        </Component>
+        </OverlayTrigger>
       </ActionRow>
     </RadioSet>
   </Form.Group>
@@ -308,6 +316,7 @@ exports[`AdvanceTypeSelect snapshots snapshots: renders as expected with problem
         className="border-primary-100 border-bottom m-0 py-3 w-100"
       >
         <Radio
+          id="blankadvanced"
           value="blankadvanced"
         >
           Blank advance problem
@@ -318,12 +327,13 @@ exports[`AdvanceTypeSelect snapshots snapshots: renders as expected with problem
         className="border-primary-100 border-bottom m-0 py-3 w-100"
       >
         <Radio
+          id="circuitschematic"
           value="circuitschematic"
         >
           Circuit schematic builder
         </Radio>
         <ActionRow.Spacer />
-        <Component
+        <OverlayTrigger
           overlay={
             <Tooltip>
               <div
@@ -353,18 +363,30 @@ exports[`AdvanceTypeSelect snapshots snapshots: renders as expected with problem
           <div>
             Not supported
           </div>
-        </Component>
+        </OverlayTrigger>
       </ActionRow>
       <ActionRow
         className="border-primary-100 border-bottom m-0 py-3 w-100"
       >
         <Radio
+          id="jsinputresponse"
+          value="jsinputresponse"
+        >
+          Custom JavaScript display and grading
+        </Radio>
+        <ActionRow.Spacer />
+      </ActionRow>
+      <ActionRow
+        className="border-primary-100 border-bottom m-0 py-3 w-100"
+      >
+        <Radio
+          id="customgrader"
           value="customgrader"
         >
           Custom Python-evaluated input
         </Radio>
         <ActionRow.Spacer />
-        <Component
+        <OverlayTrigger
           overlay={
             <Tooltip>
               <div
@@ -394,18 +416,19 @@ exports[`AdvanceTypeSelect snapshots snapshots: renders as expected with problem
           <div>
             Provisional
           </div>
-        </Component>
+        </OverlayTrigger>
       </ActionRow>
       <ActionRow
         className="border-primary-100 border-bottom m-0 py-3 w-100"
       >
         <Radio
-          value="drag_and_drop"
+          id="draganddrop"
+          value="draganddrop"
         >
           Drag and drop (deprecated version)
         </Radio>
         <ActionRow.Spacer />
-        <Component
+        <OverlayTrigger
           overlay={
             <Tooltip>
               <div
@@ -435,12 +458,55 @@ exports[`AdvanceTypeSelect snapshots snapshots: renders as expected with problem
           <div>
             Not supported
           </div>
-        </Component>
+        </OverlayTrigger>
       </ActionRow>
       <ActionRow
         className="border-primary-100 border-bottom m-0 py-3 w-100"
       >
         <Radio
+          id="imageresponse"
+          value="imageresponse"
+        >
+          Image mapped input
+        </Radio>
+        <ActionRow.Spacer />
+        <OverlayTrigger
+          overlay={
+            <Tooltip>
+              <div
+                className="text-gray-300 text-left"
+              >
+                {supportStatus,  select,
+      Provisional {Provisionally supported tools might lack the robustness of functionality
+        that your courses require. edX does not have control over the quality of the software,
+        or of the content that can be provided using these tools.
+        
+ 
+
+        Test these tools thoroughly before using them in your course, especially in graded
+        sections. Complete documentstion might not be available for provisionally supported
+        tools, or documentation might be available from sources other than edX.}
+      Not_supported {Tools with no support are not maintained by edX, and might be deprecated
+        in the future. They are not recommened for use in courses due to non-compliance with one
+        or more of the base requirements, such as testing, accessibility, internationalization,
+        and documentation.}
+      other { } 
+    }
+              </div>
+            </Tooltip>
+          }
+          placement="right"
+        >
+          <div>
+            Not supported
+          </div>
+        </OverlayTrigger>
+      </ActionRow>
+      <ActionRow
+        className="border-primary-100 border-bottom m-0 py-3 w-100"
+      >
+        <Radio
+          id="formularesponse"
           value="formularesponse"
         >
           Math expression input
@@ -451,63 +517,13 @@ exports[`AdvanceTypeSelect snapshots snapshots: renders as expected with problem
         className="border-primary-100 border-bottom m-0 py-3 w-100"
       >
         <Radio
-          value="imageresponse"
-        >
-          Image mapped input
-        </Radio>
-        <ActionRow.Spacer />
-        <Component
-          overlay={
-            <Tooltip>
-              <div
-                className="text-gray-300 text-left"
-              >
-                {supportStatus,  select,
-      Provisional {Provisionally supported tools might lack the robustness of functionality
-        that your courses require. edX does not have control over the quality of the software,
-        or of the content that can be provided using these tools.
-        
- 
-
-        Test these tools thoroughly before using them in your course, especially in graded
-        sections. Complete documentstion might not be available for provisionally supported
-        tools, or documentation might be available from sources other than edX.}
-      Not_supported {Tools with no support are not maintained by edX, and might be deprecated
-        in the future. They are not recommened for use in courses due to non-compliance with one
-        or more of the base requirements, such as testing, accessibility, internationalization,
-        and documentation.}
-      other { } 
-    }
-              </div>
-            </Tooltip>
-          }
-          placement="right"
-        >
-          <div>
-            Not supported
-          </div>
-        </Component>
-      </ActionRow>
-      <ActionRow
-        className="border-primary-100 border-bottom m-0 py-3 w-100"
-      >
-        <Radio
-          value="jsinput_response"
-        >
-          Custom JavaScript display and grading
-        </Radio>
-        <ActionRow.Spacer />
-      </ActionRow>
-      <ActionRow
-        className="border-primary-100 border-bottom m-0 py-3 w-100"
-      >
-        <Radio
-          value="problem_with_hint"
+          id="problemwithhint"
+          value="problemwithhint"
         >
           Problem with adaptive hint
         </Radio>
         <ActionRow.Spacer />
-        <Component
+        <OverlayTrigger
           overlay={
             <Tooltip>
               <div
@@ -537,7 +553,7 @@ exports[`AdvanceTypeSelect snapshots snapshots: renders as expected with problem
           <div>
             Not supported
           </div>
-        </Component>
+        </OverlayTrigger>
       </ActionRow>
     </RadioSet>
   </Form.Group>
@@ -580,6 +596,7 @@ exports[`AdvanceTypeSelect snapshots snapshots: renders as expected with problem
         className="border-primary-100 border-bottom m-0 py-3 w-100"
       >
         <Radio
+          id="blankadvanced"
           value="blankadvanced"
         >
           Blank advance problem
@@ -590,12 +607,13 @@ exports[`AdvanceTypeSelect snapshots snapshots: renders as expected with problem
         className="border-primary-100 border-bottom m-0 py-3 w-100"
       >
         <Radio
+          id="circuitschematic"
           value="circuitschematic"
         >
           Circuit schematic builder
         </Radio>
         <ActionRow.Spacer />
-        <Component
+        <OverlayTrigger
           overlay={
             <Tooltip>
               <div
@@ -625,18 +643,30 @@ exports[`AdvanceTypeSelect snapshots snapshots: renders as expected with problem
           <div>
             Not supported
           </div>
-        </Component>
+        </OverlayTrigger>
       </ActionRow>
       <ActionRow
         className="border-primary-100 border-bottom m-0 py-3 w-100"
       >
         <Radio
+          id="jsinputresponse"
+          value="jsinputresponse"
+        >
+          Custom JavaScript display and grading
+        </Radio>
+        <ActionRow.Spacer />
+      </ActionRow>
+      <ActionRow
+        className="border-primary-100 border-bottom m-0 py-3 w-100"
+      >
+        <Radio
+          id="customgrader"
           value="customgrader"
         >
           Custom Python-evaluated input
         </Radio>
         <ActionRow.Spacer />
-        <Component
+        <OverlayTrigger
           overlay={
             <Tooltip>
               <div
@@ -666,18 +696,19 @@ exports[`AdvanceTypeSelect snapshots snapshots: renders as expected with problem
           <div>
             Provisional
           </div>
-        </Component>
+        </OverlayTrigger>
       </ActionRow>
       <ActionRow
         className="border-primary-100 border-bottom m-0 py-3 w-100"
       >
         <Radio
-          value="drag_and_drop"
+          id="draganddrop"
+          value="draganddrop"
         >
           Drag and drop (deprecated version)
         </Radio>
         <ActionRow.Spacer />
-        <Component
+        <OverlayTrigger
           overlay={
             <Tooltip>
               <div
@@ -707,12 +738,55 @@ exports[`AdvanceTypeSelect snapshots snapshots: renders as expected with problem
           <div>
             Not supported
           </div>
-        </Component>
+        </OverlayTrigger>
       </ActionRow>
       <ActionRow
         className="border-primary-100 border-bottom m-0 py-3 w-100"
       >
         <Radio
+          id="imageresponse"
+          value="imageresponse"
+        >
+          Image mapped input
+        </Radio>
+        <ActionRow.Spacer />
+        <OverlayTrigger
+          overlay={
+            <Tooltip>
+              <div
+                className="text-gray-300 text-left"
+              >
+                {supportStatus,  select,
+      Provisional {Provisionally supported tools might lack the robustness of functionality
+        that your courses require. edX does not have control over the quality of the software,
+        or of the content that can be provided using these tools.
+        
+ 
+
+        Test these tools thoroughly before using them in your course, especially in graded
+        sections. Complete documentstion might not be available for provisionally supported
+        tools, or documentation might be available from sources other than edX.}
+      Not_supported {Tools with no support are not maintained by edX, and might be deprecated
+        in the future. They are not recommened for use in courses due to non-compliance with one
+        or more of the base requirements, such as testing, accessibility, internationalization,
+        and documentation.}
+      other { } 
+    }
+              </div>
+            </Tooltip>
+          }
+          placement="right"
+        >
+          <div>
+            Not supported
+          </div>
+        </OverlayTrigger>
+      </ActionRow>
+      <ActionRow
+        className="border-primary-100 border-bottom m-0 py-3 w-100"
+      >
+        <Radio
+          id="formularesponse"
           value="formularesponse"
         >
           Math expression input
@@ -723,63 +797,13 @@ exports[`AdvanceTypeSelect snapshots snapshots: renders as expected with problem
         className="border-primary-100 border-bottom m-0 py-3 w-100"
       >
         <Radio
-          value="imageresponse"
-        >
-          Image mapped input
-        </Radio>
-        <ActionRow.Spacer />
-        <Component
-          overlay={
-            <Tooltip>
-              <div
-                className="text-gray-300 text-left"
-              >
-                {supportStatus,  select,
-      Provisional {Provisionally supported tools might lack the robustness of functionality
-        that your courses require. edX does not have control over the quality of the software,
-        or of the content that can be provided using these tools.
-        
- 
-
-        Test these tools thoroughly before using them in your course, especially in graded
-        sections. Complete documentstion might not be available for provisionally supported
-        tools, or documentation might be available from sources other than edX.}
-      Not_supported {Tools with no support are not maintained by edX, and might be deprecated
-        in the future. They are not recommened for use in courses due to non-compliance with one
-        or more of the base requirements, such as testing, accessibility, internationalization,
-        and documentation.}
-      other { } 
-    }
-              </div>
-            </Tooltip>
-          }
-          placement="right"
-        >
-          <div>
-            Not supported
-          </div>
-        </Component>
-      </ActionRow>
-      <ActionRow
-        className="border-primary-100 border-bottom m-0 py-3 w-100"
-      >
-        <Radio
-          value="jsinput_response"
-        >
-          Custom JavaScript display and grading
-        </Radio>
-        <ActionRow.Spacer />
-      </ActionRow>
-      <ActionRow
-        className="border-primary-100 border-bottom m-0 py-3 w-100"
-      >
-        <Radio
-          value="problem_with_hint"
+          id="problemwithhint"
+          value="problemwithhint"
         >
           Problem with adaptive hint
         </Radio>
         <ActionRow.Spacer />
-        <Component
+        <OverlayTrigger
           overlay={
             <Tooltip>
               <div
@@ -809,7 +833,7 @@ exports[`AdvanceTypeSelect snapshots snapshots: renders as expected with problem
           <div>
             Not supported
           </div>
-        </Component>
+        </OverlayTrigger>
       </ActionRow>
     </RadioSet>
   </Form.Group>
@@ -852,6 +876,7 @@ exports[`AdvanceTypeSelect snapshots snapshots: renders as expected with problem
         className="border-primary-100 border-bottom m-0 py-3 w-100"
       >
         <Radio
+          id="blankadvanced"
           value="blankadvanced"
         >
           Blank advance problem
@@ -862,12 +887,13 @@ exports[`AdvanceTypeSelect snapshots snapshots: renders as expected with problem
         className="border-primary-100 border-bottom m-0 py-3 w-100"
       >
         <Radio
+          id="circuitschematic"
           value="circuitschematic"
         >
           Circuit schematic builder
         </Radio>
         <ActionRow.Spacer />
-        <Component
+        <OverlayTrigger
           overlay={
             <Tooltip>
               <div
@@ -897,18 +923,30 @@ exports[`AdvanceTypeSelect snapshots snapshots: renders as expected with problem
           <div>
             Not supported
           </div>
-        </Component>
+        </OverlayTrigger>
       </ActionRow>
       <ActionRow
         className="border-primary-100 border-bottom m-0 py-3 w-100"
       >
         <Radio
+          id="jsinputresponse"
+          value="jsinputresponse"
+        >
+          Custom JavaScript display and grading
+        </Radio>
+        <ActionRow.Spacer />
+      </ActionRow>
+      <ActionRow
+        className="border-primary-100 border-bottom m-0 py-3 w-100"
+      >
+        <Radio
+          id="customgrader"
           value="customgrader"
         >
           Custom Python-evaluated input
         </Radio>
         <ActionRow.Spacer />
-        <Component
+        <OverlayTrigger
           overlay={
             <Tooltip>
               <div
@@ -938,18 +976,19 @@ exports[`AdvanceTypeSelect snapshots snapshots: renders as expected with problem
           <div>
             Provisional
           </div>
-        </Component>
+        </OverlayTrigger>
       </ActionRow>
       <ActionRow
         className="border-primary-100 border-bottom m-0 py-3 w-100"
       >
         <Radio
-          value="drag_and_drop"
+          id="draganddrop"
+          value="draganddrop"
         >
           Drag and drop (deprecated version)
         </Radio>
         <ActionRow.Spacer />
-        <Component
+        <OverlayTrigger
           overlay={
             <Tooltip>
               <div
@@ -979,12 +1018,55 @@ exports[`AdvanceTypeSelect snapshots snapshots: renders as expected with problem
           <div>
             Not supported
           </div>
-        </Component>
+        </OverlayTrigger>
       </ActionRow>
       <ActionRow
         className="border-primary-100 border-bottom m-0 py-3 w-100"
       >
         <Radio
+          id="imageresponse"
+          value="imageresponse"
+        >
+          Image mapped input
+        </Radio>
+        <ActionRow.Spacer />
+        <OverlayTrigger
+          overlay={
+            <Tooltip>
+              <div
+                className="text-gray-300 text-left"
+              >
+                {supportStatus,  select,
+      Provisional {Provisionally supported tools might lack the robustness of functionality
+        that your courses require. edX does not have control over the quality of the software,
+        or of the content that can be provided using these tools.
+        
+ 
+
+        Test these tools thoroughly before using them in your course, especially in graded
+        sections. Complete documentstion might not be available for provisionally supported
+        tools, or documentation might be available from sources other than edX.}
+      Not_supported {Tools with no support are not maintained by edX, and might be deprecated
+        in the future. They are not recommened for use in courses due to non-compliance with one
+        or more of the base requirements, such as testing, accessibility, internationalization,
+        and documentation.}
+      other { } 
+    }
+              </div>
+            </Tooltip>
+          }
+          placement="right"
+        >
+          <div>
+            Not supported
+          </div>
+        </OverlayTrigger>
+      </ActionRow>
+      <ActionRow
+        className="border-primary-100 border-bottom m-0 py-3 w-100"
+      >
+        <Radio
+          id="formularesponse"
           value="formularesponse"
         >
           Math expression input
@@ -995,63 +1077,13 @@ exports[`AdvanceTypeSelect snapshots snapshots: renders as expected with problem
         className="border-primary-100 border-bottom m-0 py-3 w-100"
       >
         <Radio
-          value="imageresponse"
-        >
-          Image mapped input
-        </Radio>
-        <ActionRow.Spacer />
-        <Component
-          overlay={
-            <Tooltip>
-              <div
-                className="text-gray-300 text-left"
-              >
-                {supportStatus,  select,
-      Provisional {Provisionally supported tools might lack the robustness of functionality
-        that your courses require. edX does not have control over the quality of the software,
-        or of the content that can be provided using these tools.
-        
- 
-
-        Test these tools thoroughly before using them in your course, especially in graded
-        sections. Complete documentstion might not be available for provisionally supported
-        tools, or documentation might be available from sources other than edX.}
-      Not_supported {Tools with no support are not maintained by edX, and might be deprecated
-        in the future. They are not recommened for use in courses due to non-compliance with one
-        or more of the base requirements, such as testing, accessibility, internationalization,
-        and documentation.}
-      other { } 
-    }
-              </div>
-            </Tooltip>
-          }
-          placement="right"
-        >
-          <div>
-            Not supported
-          </div>
-        </Component>
-      </ActionRow>
-      <ActionRow
-        className="border-primary-100 border-bottom m-0 py-3 w-100"
-      >
-        <Radio
-          value="jsinput_response"
-        >
-          Custom JavaScript display and grading
-        </Radio>
-        <ActionRow.Spacer />
-      </ActionRow>
-      <ActionRow
-        className="border-primary-100 border-bottom m-0 py-3 w-100"
-      >
-        <Radio
-          value="problem_with_hint"
+          id="problemwithhint"
+          value="problemwithhint"
         >
           Problem with adaptive hint
         </Radio>
         <ActionRow.Spacer />
-        <Component
+        <OverlayTrigger
           overlay={
             <Tooltip>
               <div
@@ -1081,7 +1113,7 @@ exports[`AdvanceTypeSelect snapshots snapshots: renders as expected with problem
           <div>
             Not supported
           </div>
-        </Component>
+        </OverlayTrigger>
       </ActionRow>
     </RadioSet>
   </Form.Group>
@@ -1124,6 +1156,7 @@ exports[`AdvanceTypeSelect snapshots snapshots: renders as expected with problem
         className="border-primary-100 border-bottom m-0 py-3 w-100"
       >
         <Radio
+          id="blankadvanced"
           value="blankadvanced"
         >
           Blank advance problem
@@ -1134,12 +1167,13 @@ exports[`AdvanceTypeSelect snapshots snapshots: renders as expected with problem
         className="border-primary-100 border-bottom m-0 py-3 w-100"
       >
         <Radio
+          id="circuitschematic"
           value="circuitschematic"
         >
           Circuit schematic builder
         </Radio>
         <ActionRow.Spacer />
-        <Component
+        <OverlayTrigger
           overlay={
             <Tooltip>
               <div
@@ -1169,18 +1203,30 @@ exports[`AdvanceTypeSelect snapshots snapshots: renders as expected with problem
           <div>
             Not supported
           </div>
-        </Component>
+        </OverlayTrigger>
       </ActionRow>
       <ActionRow
         className="border-primary-100 border-bottom m-0 py-3 w-100"
       >
         <Radio
+          id="jsinputresponse"
+          value="jsinputresponse"
+        >
+          Custom JavaScript display and grading
+        </Radio>
+        <ActionRow.Spacer />
+      </ActionRow>
+      <ActionRow
+        className="border-primary-100 border-bottom m-0 py-3 w-100"
+      >
+        <Radio
+          id="customgrader"
           value="customgrader"
         >
           Custom Python-evaluated input
         </Radio>
         <ActionRow.Spacer />
-        <Component
+        <OverlayTrigger
           overlay={
             <Tooltip>
               <div
@@ -1210,18 +1256,19 @@ exports[`AdvanceTypeSelect snapshots snapshots: renders as expected with problem
           <div>
             Provisional
           </div>
-        </Component>
+        </OverlayTrigger>
       </ActionRow>
       <ActionRow
         className="border-primary-100 border-bottom m-0 py-3 w-100"
       >
         <Radio
-          value="drag_and_drop"
+          id="draganddrop"
+          value="draganddrop"
         >
           Drag and drop (deprecated version)
         </Radio>
         <ActionRow.Spacer />
-        <Component
+        <OverlayTrigger
           overlay={
             <Tooltip>
               <div
@@ -1251,12 +1298,55 @@ exports[`AdvanceTypeSelect snapshots snapshots: renders as expected with problem
           <div>
             Not supported
           </div>
-        </Component>
+        </OverlayTrigger>
       </ActionRow>
       <ActionRow
         className="border-primary-100 border-bottom m-0 py-3 w-100"
       >
         <Radio
+          id="imageresponse"
+          value="imageresponse"
+        >
+          Image mapped input
+        </Radio>
+        <ActionRow.Spacer />
+        <OverlayTrigger
+          overlay={
+            <Tooltip>
+              <div
+                className="text-gray-300 text-left"
+              >
+                {supportStatus,  select,
+      Provisional {Provisionally supported tools might lack the robustness of functionality
+        that your courses require. edX does not have control over the quality of the software,
+        or of the content that can be provided using these tools.
+        
+ 
+
+        Test these tools thoroughly before using them in your course, especially in graded
+        sections. Complete documentstion might not be available for provisionally supported
+        tools, or documentation might be available from sources other than edX.}
+      Not_supported {Tools with no support are not maintained by edX, and might be deprecated
+        in the future. They are not recommened for use in courses due to non-compliance with one
+        or more of the base requirements, such as testing, accessibility, internationalization,
+        and documentation.}
+      other { } 
+    }
+              </div>
+            </Tooltip>
+          }
+          placement="right"
+        >
+          <div>
+            Not supported
+          </div>
+        </OverlayTrigger>
+      </ActionRow>
+      <ActionRow
+        className="border-primary-100 border-bottom m-0 py-3 w-100"
+      >
+        <Radio
+          id="formularesponse"
           value="formularesponse"
         >
           Math expression input
@@ -1267,63 +1357,13 @@ exports[`AdvanceTypeSelect snapshots snapshots: renders as expected with problem
         className="border-primary-100 border-bottom m-0 py-3 w-100"
       >
         <Radio
-          value="imageresponse"
-        >
-          Image mapped input
-        </Radio>
-        <ActionRow.Spacer />
-        <Component
-          overlay={
-            <Tooltip>
-              <div
-                className="text-gray-300 text-left"
-              >
-                {supportStatus,  select,
-      Provisional {Provisionally supported tools might lack the robustness of functionality
-        that your courses require. edX does not have control over the quality of the software,
-        or of the content that can be provided using these tools.
-        
- 
-
-        Test these tools thoroughly before using them in your course, especially in graded
-        sections. Complete documentstion might not be available for provisionally supported
-        tools, or documentation might be available from sources other than edX.}
-      Not_supported {Tools with no support are not maintained by edX, and might be deprecated
-        in the future. They are not recommened for use in courses due to non-compliance with one
-        or more of the base requirements, such as testing, accessibility, internationalization,
-        and documentation.}
-      other { } 
-    }
-              </div>
-            </Tooltip>
-          }
-          placement="right"
-        >
-          <div>
-            Not supported
-          </div>
-        </Component>
-      </ActionRow>
-      <ActionRow
-        className="border-primary-100 border-bottom m-0 py-3 w-100"
-      >
-        <Radio
-          value="jsinput_response"
-        >
-          Custom JavaScript display and grading
-        </Radio>
-        <ActionRow.Spacer />
-      </ActionRow>
-      <ActionRow
-        className="border-primary-100 border-bottom m-0 py-3 w-100"
-      >
-        <Radio
-          value="problem_with_hint"
+          id="problemwithhint"
+          value="problemwithhint"
         >
           Problem with adaptive hint
         </Radio>
         <ActionRow.Spacer />
-        <Component
+        <OverlayTrigger
           overlay={
             <Tooltip>
               <div
@@ -1353,7 +1393,7 @@ exports[`AdvanceTypeSelect snapshots snapshots: renders as expected with problem
           <div>
             Not supported
           </div>
-        </Component>
+        </OverlayTrigger>
       </ActionRow>
     </RadioSet>
   </Form.Group>
@@ -1396,6 +1436,7 @@ exports[`AdvanceTypeSelect snapshots snapshots: renders as expected with problem
         className="border-primary-100 border-bottom m-0 py-3 w-100"
       >
         <Radio
+          id="blankadvanced"
           value="blankadvanced"
         >
           Blank advance problem
@@ -1406,12 +1447,13 @@ exports[`AdvanceTypeSelect snapshots snapshots: renders as expected with problem
         className="border-primary-100 border-bottom m-0 py-3 w-100"
       >
         <Radio
+          id="circuitschematic"
           value="circuitschematic"
         >
           Circuit schematic builder
         </Radio>
         <ActionRow.Spacer />
-        <Component
+        <OverlayTrigger
           overlay={
             <Tooltip>
               <div
@@ -1441,18 +1483,30 @@ exports[`AdvanceTypeSelect snapshots snapshots: renders as expected with problem
           <div>
             Not supported
           </div>
-        </Component>
+        </OverlayTrigger>
       </ActionRow>
       <ActionRow
         className="border-primary-100 border-bottom m-0 py-3 w-100"
       >
         <Radio
+          id="jsinputresponse"
+          value="jsinputresponse"
+        >
+          Custom JavaScript display and grading
+        </Radio>
+        <ActionRow.Spacer />
+      </ActionRow>
+      <ActionRow
+        className="border-primary-100 border-bottom m-0 py-3 w-100"
+      >
+        <Radio
+          id="customgrader"
           value="customgrader"
         >
           Custom Python-evaluated input
         </Radio>
         <ActionRow.Spacer />
-        <Component
+        <OverlayTrigger
           overlay={
             <Tooltip>
               <div
@@ -1482,18 +1536,19 @@ exports[`AdvanceTypeSelect snapshots snapshots: renders as expected with problem
           <div>
             Provisional
           </div>
-        </Component>
+        </OverlayTrigger>
       </ActionRow>
       <ActionRow
         className="border-primary-100 border-bottom m-0 py-3 w-100"
       >
         <Radio
-          value="drag_and_drop"
+          id="draganddrop"
+          value="draganddrop"
         >
           Drag and drop (deprecated version)
         </Radio>
         <ActionRow.Spacer />
-        <Component
+        <OverlayTrigger
           overlay={
             <Tooltip>
               <div
@@ -1523,12 +1578,55 @@ exports[`AdvanceTypeSelect snapshots snapshots: renders as expected with problem
           <div>
             Not supported
           </div>
-        </Component>
+        </OverlayTrigger>
       </ActionRow>
       <ActionRow
         className="border-primary-100 border-bottom m-0 py-3 w-100"
       >
         <Radio
+          id="imageresponse"
+          value="imageresponse"
+        >
+          Image mapped input
+        </Radio>
+        <ActionRow.Spacer />
+        <OverlayTrigger
+          overlay={
+            <Tooltip>
+              <div
+                className="text-gray-300 text-left"
+              >
+                {supportStatus,  select,
+      Provisional {Provisionally supported tools might lack the robustness of functionality
+        that your courses require. edX does not have control over the quality of the software,
+        or of the content that can be provided using these tools.
+        
+ 
+
+        Test these tools thoroughly before using them in your course, especially in graded
+        sections. Complete documentstion might not be available for provisionally supported
+        tools, or documentation might be available from sources other than edX.}
+      Not_supported {Tools with no support are not maintained by edX, and might be deprecated
+        in the future. They are not recommened for use in courses due to non-compliance with one
+        or more of the base requirements, such as testing, accessibility, internationalization,
+        and documentation.}
+      other { } 
+    }
+              </div>
+            </Tooltip>
+          }
+          placement="right"
+        >
+          <div>
+            Not supported
+          </div>
+        </OverlayTrigger>
+      </ActionRow>
+      <ActionRow
+        className="border-primary-100 border-bottom m-0 py-3 w-100"
+      >
+        <Radio
+          id="formularesponse"
           value="formularesponse"
         >
           Math expression input
@@ -1539,63 +1637,13 @@ exports[`AdvanceTypeSelect snapshots snapshots: renders as expected with problem
         className="border-primary-100 border-bottom m-0 py-3 w-100"
       >
         <Radio
-          value="imageresponse"
-        >
-          Image mapped input
-        </Radio>
-        <ActionRow.Spacer />
-        <Component
-          overlay={
-            <Tooltip>
-              <div
-                className="text-gray-300 text-left"
-              >
-                {supportStatus,  select,
-      Provisional {Provisionally supported tools might lack the robustness of functionality
-        that your courses require. edX does not have control over the quality of the software,
-        or of the content that can be provided using these tools.
-        
- 
-
-        Test these tools thoroughly before using them in your course, especially in graded
-        sections. Complete documentstion might not be available for provisionally supported
-        tools, or documentation might be available from sources other than edX.}
-      Not_supported {Tools with no support are not maintained by edX, and might be deprecated
-        in the future. They are not recommened for use in courses due to non-compliance with one
-        or more of the base requirements, such as testing, accessibility, internationalization,
-        and documentation.}
-      other { } 
-    }
-              </div>
-            </Tooltip>
-          }
-          placement="right"
-        >
-          <div>
-            Not supported
-          </div>
-        </Component>
-      </ActionRow>
-      <ActionRow
-        className="border-primary-100 border-bottom m-0 py-3 w-100"
-      >
-        <Radio
-          value="jsinput_response"
-        >
-          Custom JavaScript display and grading
-        </Radio>
-        <ActionRow.Spacer />
-      </ActionRow>
-      <ActionRow
-        className="border-primary-100 border-bottom m-0 py-3 w-100"
-      >
-        <Radio
-          value="problem_with_hint"
+          id="problemwithhint"
+          value="problemwithhint"
         >
           Problem with adaptive hint
         </Radio>
         <ActionRow.Spacer />
-        <Component
+        <OverlayTrigger
           overlay={
             <Tooltip>
               <div
@@ -1625,7 +1673,7 @@ exports[`AdvanceTypeSelect snapshots snapshots: renders as expected with problem
           <div>
             Not supported
           </div>
-        </Component>
+        </OverlayTrigger>
       </ActionRow>
     </RadioSet>
   </Form.Group>
@@ -1668,6 +1716,7 @@ exports[`AdvanceTypeSelect snapshots snapshots: renders as expected with problem
         className="border-primary-100 border-bottom m-0 py-3 w-100"
       >
         <Radio
+          id="blankadvanced"
           value="blankadvanced"
         >
           Blank advance problem
@@ -1678,12 +1727,13 @@ exports[`AdvanceTypeSelect snapshots snapshots: renders as expected with problem
         className="border-primary-100 border-bottom m-0 py-3 w-100"
       >
         <Radio
+          id="circuitschematic"
           value="circuitschematic"
         >
           Circuit schematic builder
         </Radio>
         <ActionRow.Spacer />
-        <Component
+        <OverlayTrigger
           overlay={
             <Tooltip>
               <div
@@ -1713,18 +1763,30 @@ exports[`AdvanceTypeSelect snapshots snapshots: renders as expected with problem
           <div>
             Not supported
           </div>
-        </Component>
+        </OverlayTrigger>
       </ActionRow>
       <ActionRow
         className="border-primary-100 border-bottom m-0 py-3 w-100"
       >
         <Radio
+          id="jsinputresponse"
+          value="jsinputresponse"
+        >
+          Custom JavaScript display and grading
+        </Radio>
+        <ActionRow.Spacer />
+      </ActionRow>
+      <ActionRow
+        className="border-primary-100 border-bottom m-0 py-3 w-100"
+      >
+        <Radio
+          id="customgrader"
           value="customgrader"
         >
           Custom Python-evaluated input
         </Radio>
         <ActionRow.Spacer />
-        <Component
+        <OverlayTrigger
           overlay={
             <Tooltip>
               <div
@@ -1754,18 +1816,19 @@ exports[`AdvanceTypeSelect snapshots snapshots: renders as expected with problem
           <div>
             Provisional
           </div>
-        </Component>
+        </OverlayTrigger>
       </ActionRow>
       <ActionRow
         className="border-primary-100 border-bottom m-0 py-3 w-100"
       >
         <Radio
-          value="drag_and_drop"
+          id="draganddrop"
+          value="draganddrop"
         >
           Drag and drop (deprecated version)
         </Radio>
         <ActionRow.Spacer />
-        <Component
+        <OverlayTrigger
           overlay={
             <Tooltip>
               <div
@@ -1795,12 +1858,55 @@ exports[`AdvanceTypeSelect snapshots snapshots: renders as expected with problem
           <div>
             Not supported
           </div>
-        </Component>
+        </OverlayTrigger>
       </ActionRow>
       <ActionRow
         className="border-primary-100 border-bottom m-0 py-3 w-100"
       >
         <Radio
+          id="imageresponse"
+          value="imageresponse"
+        >
+          Image mapped input
+        </Radio>
+        <ActionRow.Spacer />
+        <OverlayTrigger
+          overlay={
+            <Tooltip>
+              <div
+                className="text-gray-300 text-left"
+              >
+                {supportStatus,  select,
+      Provisional {Provisionally supported tools might lack the robustness of functionality
+        that your courses require. edX does not have control over the quality of the software,
+        or of the content that can be provided using these tools.
+        
+ 
+
+        Test these tools thoroughly before using them in your course, especially in graded
+        sections. Complete documentstion might not be available for provisionally supported
+        tools, or documentation might be available from sources other than edX.}
+      Not_supported {Tools with no support are not maintained by edX, and might be deprecated
+        in the future. They are not recommened for use in courses due to non-compliance with one
+        or more of the base requirements, such as testing, accessibility, internationalization,
+        and documentation.}
+      other { } 
+    }
+              </div>
+            </Tooltip>
+          }
+          placement="right"
+        >
+          <div>
+            Not supported
+          </div>
+        </OverlayTrigger>
+      </ActionRow>
+      <ActionRow
+        className="border-primary-100 border-bottom m-0 py-3 w-100"
+      >
+        <Radio
+          id="formularesponse"
           value="formularesponse"
         >
           Math expression input
@@ -1811,63 +1917,13 @@ exports[`AdvanceTypeSelect snapshots snapshots: renders as expected with problem
         className="border-primary-100 border-bottom m-0 py-3 w-100"
       >
         <Radio
-          value="imageresponse"
-        >
-          Image mapped input
-        </Radio>
-        <ActionRow.Spacer />
-        <Component
-          overlay={
-            <Tooltip>
-              <div
-                className="text-gray-300 text-left"
-              >
-                {supportStatus,  select,
-      Provisional {Provisionally supported tools might lack the robustness of functionality
-        that your courses require. edX does not have control over the quality of the software,
-        or of the content that can be provided using these tools.
-        
- 
-
-        Test these tools thoroughly before using them in your course, especially in graded
-        sections. Complete documentstion might not be available for provisionally supported
-        tools, or documentation might be available from sources other than edX.}
-      Not_supported {Tools with no support are not maintained by edX, and might be deprecated
-        in the future. They are not recommened for use in courses due to non-compliance with one
-        or more of the base requirements, such as testing, accessibility, internationalization,
-        and documentation.}
-      other { } 
-    }
-              </div>
-            </Tooltip>
-          }
-          placement="right"
-        >
-          <div>
-            Not supported
-          </div>
-        </Component>
-      </ActionRow>
-      <ActionRow
-        className="border-primary-100 border-bottom m-0 py-3 w-100"
-      >
-        <Radio
-          value="jsinput_response"
-        >
-          Custom JavaScript display and grading
-        </Radio>
-        <ActionRow.Spacer />
-      </ActionRow>
-      <ActionRow
-        className="border-primary-100 border-bottom m-0 py-3 w-100"
-      >
-        <Radio
-          value="problem_with_hint"
+          id="problemwithhint"
+          value="problemwithhint"
         >
           Problem with adaptive hint
         </Radio>
         <ActionRow.Spacer />
-        <Component
+        <OverlayTrigger
           overlay={
             <Tooltip>
               <div
@@ -1897,7 +1953,7 @@ exports[`AdvanceTypeSelect snapshots snapshots: renders as expected with problem
           <div>
             Not supported
           </div>
-        </Component>
+        </OverlayTrigger>
       </ActionRow>
     </RadioSet>
   </Form.Group>
@@ -1940,6 +1996,7 @@ exports[`AdvanceTypeSelect snapshots snapshots: renders as expected with problem
         className="border-primary-100 border-bottom m-0 py-3 w-100"
       >
         <Radio
+          id="blankadvanced"
           value="blankadvanced"
         >
           Blank advance problem
@@ -1950,12 +2007,13 @@ exports[`AdvanceTypeSelect snapshots snapshots: renders as expected with problem
         className="border-primary-100 border-bottom m-0 py-3 w-100"
       >
         <Radio
+          id="circuitschematic"
           value="circuitschematic"
         >
           Circuit schematic builder
         </Radio>
         <ActionRow.Spacer />
-        <Component
+        <OverlayTrigger
           overlay={
             <Tooltip>
               <div
@@ -1985,18 +2043,30 @@ exports[`AdvanceTypeSelect snapshots snapshots: renders as expected with problem
           <div>
             Not supported
           </div>
-        </Component>
+        </OverlayTrigger>
       </ActionRow>
       <ActionRow
         className="border-primary-100 border-bottom m-0 py-3 w-100"
       >
         <Radio
+          id="jsinputresponse"
+          value="jsinputresponse"
+        >
+          Custom JavaScript display and grading
+        </Radio>
+        <ActionRow.Spacer />
+      </ActionRow>
+      <ActionRow
+        className="border-primary-100 border-bottom m-0 py-3 w-100"
+      >
+        <Radio
+          id="customgrader"
           value="customgrader"
         >
           Custom Python-evaluated input
         </Radio>
         <ActionRow.Spacer />
-        <Component
+        <OverlayTrigger
           overlay={
             <Tooltip>
               <div
@@ -2026,18 +2096,19 @@ exports[`AdvanceTypeSelect snapshots snapshots: renders as expected with problem
           <div>
             Provisional
           </div>
-        </Component>
+        </OverlayTrigger>
       </ActionRow>
       <ActionRow
         className="border-primary-100 border-bottom m-0 py-3 w-100"
       >
         <Radio
-          value="drag_and_drop"
+          id="draganddrop"
+          value="draganddrop"
         >
           Drag and drop (deprecated version)
         </Radio>
         <ActionRow.Spacer />
-        <Component
+        <OverlayTrigger
           overlay={
             <Tooltip>
               <div
@@ -2067,12 +2138,55 @@ exports[`AdvanceTypeSelect snapshots snapshots: renders as expected with problem
           <div>
             Not supported
           </div>
-        </Component>
+        </OverlayTrigger>
       </ActionRow>
       <ActionRow
         className="border-primary-100 border-bottom m-0 py-3 w-100"
       >
         <Radio
+          id="imageresponse"
+          value="imageresponse"
+        >
+          Image mapped input
+        </Radio>
+        <ActionRow.Spacer />
+        <OverlayTrigger
+          overlay={
+            <Tooltip>
+              <div
+                className="text-gray-300 text-left"
+              >
+                {supportStatus,  select,
+      Provisional {Provisionally supported tools might lack the robustness of functionality
+        that your courses require. edX does not have control over the quality of the software,
+        or of the content that can be provided using these tools.
+        
+ 
+
+        Test these tools thoroughly before using them in your course, especially in graded
+        sections. Complete documentstion might not be available for provisionally supported
+        tools, or documentation might be available from sources other than edX.}
+      Not_supported {Tools with no support are not maintained by edX, and might be deprecated
+        in the future. They are not recommened for use in courses due to non-compliance with one
+        or more of the base requirements, such as testing, accessibility, internationalization,
+        and documentation.}
+      other { } 
+    }
+              </div>
+            </Tooltip>
+          }
+          placement="right"
+        >
+          <div>
+            Not supported
+          </div>
+        </OverlayTrigger>
+      </ActionRow>
+      <ActionRow
+        className="border-primary-100 border-bottom m-0 py-3 w-100"
+      >
+        <Radio
+          id="formularesponse"
           value="formularesponse"
         >
           Math expression input
@@ -2083,63 +2197,13 @@ exports[`AdvanceTypeSelect snapshots snapshots: renders as expected with problem
         className="border-primary-100 border-bottom m-0 py-3 w-100"
       >
         <Radio
-          value="imageresponse"
-        >
-          Image mapped input
-        </Radio>
-        <ActionRow.Spacer />
-        <Component
-          overlay={
-            <Tooltip>
-              <div
-                className="text-gray-300 text-left"
-              >
-                {supportStatus,  select,
-      Provisional {Provisionally supported tools might lack the robustness of functionality
-        that your courses require. edX does not have control over the quality of the software,
-        or of the content that can be provided using these tools.
-        
- 
-
-        Test these tools thoroughly before using them in your course, especially in graded
-        sections. Complete documentstion might not be available for provisionally supported
-        tools, or documentation might be available from sources other than edX.}
-      Not_supported {Tools with no support are not maintained by edX, and might be deprecated
-        in the future. They are not recommened for use in courses due to non-compliance with one
-        or more of the base requirements, such as testing, accessibility, internationalization,
-        and documentation.}
-      other { } 
-    }
-              </div>
-            </Tooltip>
-          }
-          placement="right"
-        >
-          <div>
-            Not supported
-          </div>
-        </Component>
-      </ActionRow>
-      <ActionRow
-        className="border-primary-100 border-bottom m-0 py-3 w-100"
-      >
-        <Radio
-          value="jsinput_response"
-        >
-          Custom JavaScript display and grading
-        </Radio>
-        <ActionRow.Spacer />
-      </ActionRow>
-      <ActionRow
-        className="border-primary-100 border-bottom m-0 py-3 w-100"
-      >
-        <Radio
-          value="problem_with_hint"
+          id="problemwithhint"
+          value="problemwithhint"
         >
           Problem with adaptive hint
         </Radio>
         <ActionRow.Spacer />
-        <Component
+        <OverlayTrigger
           overlay={
             <Tooltip>
               <div
@@ -2169,7 +2233,7 @@ exports[`AdvanceTypeSelect snapshots snapshots: renders as expected with problem
           <div>
             Not supported
           </div>
-        </Component>
+        </OverlayTrigger>
       </ActionRow>
     </RadioSet>
   </Form.Group>

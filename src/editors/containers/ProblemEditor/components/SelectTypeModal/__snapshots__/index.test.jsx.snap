@@ -6,7 +6,7 @@ exports[`SelectTypeModal snapshot 1`] = `
   selected="mOcKsELEcted"
 >
   <Row
-    className="justify-content-center align-items-center"
+    className="justify-content-center align-items-center m-4"
   >
     <Col>
       <InjectIntl(ShimmedIntlComponent)

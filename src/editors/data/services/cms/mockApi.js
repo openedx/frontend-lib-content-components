@@ -95,6 +95,10 @@ export const fetchImages = ({ learningContextId, studioEndpointUrl }) => mockPro
     ],
   },
 });
+// eslint-disable-next-line
+export const fetchAdvanceSettings = ({ studioEndpointUrl, learningContextId }) => mockPromise({
+  data: { allow_unsupported_xblocks: { value: true } },
+});
 
 export const normalizeContent = ({
   blockId,

@@ -7,7 +7,7 @@ import textInput from '../images/textInput.png';
 import { circuitSchematic } from './olxTemplates/circuitschematic';
 import { customGrader } from './olxTemplates/customgrader';
 import { dragAndDrop } from './olxTemplates/drag_and_drop';
-import { formualResponse } from './olxTemplates/formularesponse';
+import { formulaResponse } from './olxTemplates/formularesponse';
 import { imageResponse } from './olxTemplates/imageresponse';
 import { jsInputResponse } from './olxTemplates/jsinput_response';
 import { problemWithHint } from './olxTemplates/problem_with_hint';
@@ -60,7 +60,6 @@ export const ProblemTypes = StrictDict({
     helpLink: 'https://edx.readthedocs.io/projects/edx-partner-course-staff/en/latest/exercises_tools/text_input.html',
     prev: ProblemTypeKeys.NUMERIC,
   },
-
   [ProblemTypeKeys.ADVANCED]: {
     title: 'Advanced Problem',
     preview: ('<div />'),
@@ -72,12 +71,12 @@ export const ProblemTypes = StrictDict({
 export const AdvanceProblemKeys = StrictDict({
   BLANK: 'blankadvanced',
   CIRCUITSCHEMATIC: 'circuitschematic',
+  JSINPUT: 'jsinputresponse',
   CUSTOMGRADER: 'customgrader',
-  DRAGANDDROP: 'drag_and_drop',
-  FORMULA: 'formularesponse',
+  DRAGANDDROP: 'draganddrop',
   IMAGE: 'imageresponse',
-  JSINPUT: 'jsinput_response',
-  PROBLEMWITHHINT: 'problem_with_hint',
+  FORMULA: 'formularesponse',
+  PROBLEMWITHHINT: 'problemwithhint',
 });
 
 export const AdvanceProblems = StrictDict({
@@ -85,41 +84,55 @@ export const AdvanceProblems = StrictDict({
     title: 'Blank advance problem',
     status: '',
     template: '<problem></problem>',
+    next: AdvanceProblemKeys.CIRCUITSCHEMATIC,
   },
   [AdvanceProblemKeys.CIRCUITSCHEMATIC]: {
     title: 'Circuit schematic builder',
     status: 'Not supported',
     template: circuitSchematic,
-  },
-  [AdvanceProblemKeys.CUSTOMGRADER]: {
-    title: 'Custom Python-evaluated input',
-    status: 'Provisional',
-    template: customGrader,
-  },
-  [AdvanceProblemKeys.DRAGANDDROP]: {
-    title: 'Drag and drop (deprecated version)',
-    status: 'Not supported',
-    template: dragAndDrop,
-  },
-  [AdvanceProblemKeys.FORMULA]: {
-    title: 'Math expression input',
-    status: '',
-    template: formualResponse,
-  },
-  [AdvanceProblemKeys.IMAGE]: {
-    title: 'Image mapped input',
-    status: 'Not supported',
-    template: imageResponse,
+    prev: AdvanceProblemKeys.BLANK,
+    next: AdvanceProblemKeys.JSINPUT,
   },
   [AdvanceProblemKeys.JSINPUT]: {
     title: 'Custom JavaScript display and grading',
     status: '',
     template: jsInputResponse,
+    prev: AdvanceProblemKeys.CIRCUITSCHEMATIC,
+    next: AdvanceProblemKeys.CUSTOMGRADER,
+  },
+  [AdvanceProblemKeys.CUSTOMGRADER]: {
+    title: 'Custom Python-evaluated input',
+    status: 'Provisional',
+    template: customGrader,
+    prev: AdvanceProblemKeys.JSINPUT,
+    next: AdvanceProblemKeys.DRAGANDDROP,
+  },
+  [AdvanceProblemKeys.DRAGANDDROP]: {
+    title: 'Drag and drop (deprecated version)',
+    status: 'Not supported',
+    template: dragAndDrop,
+    prev: AdvanceProblemKeys.CUSTOMGRADER,
+    next: AdvanceProblemKeys.IMAGE,
+  },
+  [AdvanceProblemKeys.IMAGE]: {
+    title: 'Image mapped input',
+    status: 'Not supported',
+    template: imageResponse,
+    prev: AdvanceProblemKeys.DRAGANDDROP,
+    next: AdvanceProblemKeys.FORMULA,
+  },
+  [AdvanceProblemKeys.FORMULA]: {
+    title: 'Math expression input',
+    status: '',
+    template: formulaResponse,
+    prev: AdvanceProblemKeys.IMAGE,
+    next:AdvanceProblemKeys.PROBLEMWITHHINT,
   },
   [AdvanceProblemKeys.PROBLEMWITHHINT]: {
     title: 'Problem with adaptive hint',
     status: 'Not supported',
     template: problemWithHint,
+    prev: AdvanceProblemKeys.FORMULA,
   },
 });
 

@@ -6,7 +6,7 @@ import Preview from './content/Preview';
 import AdvanceTypeSelect from './content/AdvanceTypeSelect';
 import SelectTypeWrapper from './SelectTypeWrapper';
 import hooks from './hooks';
-import { Col, Container, Row } from '@edx/paragon';
+import { Col, Row } from '@edx/paragon';
 import { AdvanceProblemKeys } from '../../../../data/constants/problem';
 
 export const SelectTypeModal = ({
@@ -17,7 +17,7 @@ export const SelectTypeModal = ({
 
   return (
     <SelectTypeWrapper onClose={onClose} selected={selected}>
-        <Row className="justify-content-center align-items-center">
+        <Row className="justify-content-center align-items-center m-4">
         {(!Object.values(AdvanceProblemKeys).includes(selected)) ? (
           <>
             <Col>
