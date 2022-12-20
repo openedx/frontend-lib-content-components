@@ -27,6 +27,7 @@ export const ProblemTypes = StrictDict({
     preview: singleSelect,
     description: 'Specify one correct answer from a list of possible options',
     helpLink: 'https://edx.readthedocs.io/projects/edx-partner-course-staff/en/latest/exercises_tools/multiple_choice.html',
+    prev: ProblemTypeKeys.TEXTINPUT,
     next: ProblemTypeKeys.MULTISELECT,
   },
   [ProblemTypeKeys.MULTISELECT]: {
@@ -59,6 +60,7 @@ export const ProblemTypes = StrictDict({
     description: 'Specify one or more correct text answers, including numbers and special characters, submitted in a response field.',
     helpLink: 'https://edx.readthedocs.io/projects/edx-partner-course-staff/en/latest/exercises_tools/text_input.html',
     prev: ProblemTypeKeys.NUMERIC,
+    next: ProblemTypeKeys.SINGLESELECT,
   },
   [ProblemTypeKeys.ADVANCED]: {
     title: 'Advanced Problem',
@@ -84,55 +86,41 @@ export const AdvanceProblems = StrictDict({
     title: 'Blank advance problem',
     status: '',
     template: '<problem></problem>',
-    next: AdvanceProblemKeys.CIRCUITSCHEMATIC,
   },
   [AdvanceProblemKeys.CIRCUITSCHEMATIC]: {
     title: 'Circuit schematic builder',
     status: 'Not supported',
     template: circuitSchematic,
-    prev: AdvanceProblemKeys.BLANK,
-    next: AdvanceProblemKeys.JSINPUT,
   },
   [AdvanceProblemKeys.JSINPUT]: {
     title: 'Custom JavaScript display and grading',
     status: '',
     template: jsInputResponse,
-    prev: AdvanceProblemKeys.CIRCUITSCHEMATIC,
-    next: AdvanceProblemKeys.CUSTOMGRADER,
   },
   [AdvanceProblemKeys.CUSTOMGRADER]: {
     title: 'Custom Python-evaluated input',
     status: 'Provisional',
     template: customGrader,
-    prev: AdvanceProblemKeys.JSINPUT,
-    next: AdvanceProblemKeys.DRAGANDDROP,
   },
   [AdvanceProblemKeys.DRAGANDDROP]: {
     title: 'Drag and drop (deprecated version)',
     status: 'Not supported',
     template: dragAndDrop,
-    prev: AdvanceProblemKeys.CUSTOMGRADER,
-    next: AdvanceProblemKeys.IMAGE,
   },
   [AdvanceProblemKeys.IMAGE]: {
     title: 'Image mapped input',
     status: 'Not supported',
     template: imageResponse,
-    prev: AdvanceProblemKeys.DRAGANDDROP,
-    next: AdvanceProblemKeys.FORMULA,
   },
   [AdvanceProblemKeys.FORMULA]: {
     title: 'Math expression input',
     status: '',
     template: formulaResponse,
-    prev: AdvanceProblemKeys.IMAGE,
-    next:AdvanceProblemKeys.PROBLEMWITHHINT,
   },
   [AdvanceProblemKeys.PROBLEMWITHHINT]: {
     title: 'Problem with adaptive hint',
     status: 'Not supported',
     template: problemWithHint,
-    prev: AdvanceProblemKeys.FORMULA,
   },
 });
 

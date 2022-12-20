@@ -33,24 +33,17 @@ export const useArrowNav = (selected, setSelected) => {
 
   const detectKeyDown = (e) => {
     const problemTypeValues = Object.values(ProblemTypeKeys);
-    const advanceTypeValues = Object.values(AdvanceProblemKeys);
     switch (e.key) {
       case 'ArrowUp':
         if (problemTypeValues.includes(selected) && ProblemTypes[selected].prev) {
           setSelected(ProblemTypes[selected].prev);
           document.getElementById(ProblemTypes[selected].prev).focus();
-        } else if (advanceTypeValues.includes(selected) && AdvanceProblems[selected].prev) {
-          setSelected(AdvanceProblems[selected].prev);
-          document.getElementById(AdvanceProblems[selected].prev).focus();
         }
         break;
       case 'ArrowDown':
         if (problemTypeValues.includes(selected) && ProblemTypes[selected].next) {
           setSelected(ProblemTypes[selected].next);
           document.getElementById(ProblemTypes[selected].next).focus();
-        } else if (advanceTypeValues.includes(selected) && AdvanceProblems[selected].next) {
-          setSelected(AdvanceProblems[selected].next);
-          document.getElementById(AdvanceProblems[selected].next).focus();
         }
         break;
     }
