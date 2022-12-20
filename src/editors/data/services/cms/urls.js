@@ -34,3 +34,7 @@ export const courseAssets = ({ studioEndpointUrl, learningContextId }) => (
 export const courseImages = ({ studioEndpointUrl, learningContextId }) => (
   `${courseAssets({ studioEndpointUrl, learningContextId })}?sort=uploadDate&direction=desc&asset_type=Images`
 );
+
+export const courseAdvanceSettings = ({ studioEndpointUrl, learningContextId}) => (
+  `${studioEndpointUrl}/api/contentstore/v0/advanced_settings/${learningContextId}`
+);

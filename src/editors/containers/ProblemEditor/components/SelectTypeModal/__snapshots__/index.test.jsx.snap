@@ -5,22 +5,20 @@ exports[`SelectTypeModal snapshot 1`] = `
   onClose={[MockFunction]}
   selected="mOcKsELEcted"
 >
-  <Container
-    className="mx-4 my-3 px-3 py-2"
+  <Row
+    className="justify-content-center align-items-center m-4"
   >
-    <Row>
-      <Col>
-        <ProblemTypeSelect
-          selected="mOcKsELEcted"
-          setSelected={[MockFunction setSelected]}
-        />
-      </Col>
-      <Col>
-        <InjectIntl(ShimmedIntlComponent)
-          problemType="mOcKsELEcted"
-        />
-      </Col>
-    </Row>
-  </Container>
+    <Col>
+      <InjectIntl(ShimmedIntlComponent)
+        selected="mOcKsELEcted"
+        setSelected={[MockFunction setSelected]}
+      />
+    </Col>
+    <Col>
+      <InjectIntl(ShimmedIntlComponent)
+        problemType="mOcKsELEcted"
+      />
+    </Col>
+  </Row>
 </SelectTypeWrapper>
 `;

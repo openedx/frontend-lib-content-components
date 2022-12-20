@@ -1,7 +1,7 @@
 import React from 'react';
 import { MockUseState } from '../../../../../testUtils';
 import * as module from './hooks';
-import { ProblemTypeKeys } from '../../../../data/constants/problem';
+import { AdvanceProblemKeys, AdvanceProblems, ProblemTypeKeys } from '../../../../data/constants/problem';
 
 jest.mock('react', () => ({
   ...jest.requireActual('react'),
@@ -11,7 +11,9 @@ jest.mock('react', () => ({
 
 const state = new MockUseState(module);
 const mockSetProblemType = jest.fn().mockName('setProblemType');
+const mockUpdateField = jest.fn().mockName('updateField');
 const mockSelected = 'vAl';
+const mockAdvancedSelected = 'blankadvanced';
 const mockSetSelected = jest.fn().mockName('setSelected');
 
 let hook;
@@ -41,8 +43,14 @@ describe('SelectTypeModal hooks', () => {
   });
 
   describe('onSelect', () => {
+    test('updateField is called with selected templated if selected is an Advanced Problem', () => {
+      module.onSelect(mockSetProblemType, mockAdvancedSelected, mockUpdateField)();
+      expect(mockUpdateField).toHaveBeenCalledWith({
+        rawOLX: AdvanceProblems[mockAdvancedSelected].template,
+      });
+    });
     test('setProblemType is called with selected', () => {
-      module.onSelect(mockSetProblemType, mockSelected)();
+      module.onSelect(mockSetProblemType, mockSelected, mockUpdateField)();
       expect(mockSetProblemType).toHaveBeenCalledWith({ selected: mockSelected });
     });
   });
@@ -59,17 +67,18 @@ describe('SelectTypeModal hooks', () => {
     const mockKeyDown = new KeyboardEvent('keydown', { key: 'ArrowDown' });
     let cb;
     let prereqs;
+
     describe('SINGLESELECT', () => {
       beforeEach(() => {
         module.useArrowNav(ProblemTypeKeys.SINGLESELECT, mockSetSelected);
         [cb, prereqs] = React.useEffect.mock.calls[0];
         cb();
       });
-      test('pressing up arrow does not set anything', () => {
+      test('pressing up arrow sets MULTISELECT', () => {
         expect(React.useEffect.mock.calls.length).toEqual(1);
         expect(prereqs).toStrictEqual([ProblemTypeKeys.SINGLESELECT, mockSetSelected]);
         document.dispatchEvent(mockKeyUp);
-        expect(mockSetSelected).not.toHaveBeenCalled();
+        expect(mockSetSelected).toHaveBeenCalledWith(ProblemTypeKeys.TEXTINPUT);
       });
       test('pressing down arrow sets MULTISELECT', () => {
         expect(React.useEffect.mock.calls.length).toEqual(1);
@@ -146,6 +155,12 @@ describe('SelectTypeModal hooks', () => {
         expect(prereqs).toStrictEqual([ProblemTypeKeys.TEXTINPUT, mockSetSelected]);
         document.dispatchEvent(mockKeyUp);
         expect(mockSetSelected).toHaveBeenCalledWith(ProblemTypeKeys.NUMERIC);
+      });
+      test('pressing down arrow sets SINGLESELECT', () => {
+        expect(React.useEffect.mock.calls.length).toEqual(1);
+        expect(prereqs).toStrictEqual([ProblemTypeKeys.TEXTINPUT, mockSetSelected]);
+        document.dispatchEvent(mockKeyDown);
+        expect(mockSetSelected).toHaveBeenCalledWith(ProblemTypeKeys.SINGLESELECT);
       });
     });
   });

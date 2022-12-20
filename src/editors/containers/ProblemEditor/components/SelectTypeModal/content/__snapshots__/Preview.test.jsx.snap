@@ -4,7 +4,7 @@ exports[`Preview snapshots snapshots: renders as expected with default props 1`]
 
 exports[`Preview snapshots snapshots: renders as expected with problemType is choiceresponse 1`] = `
 <div
-  className="col col-6 bg-light-300 rounded p-4"
+  className="bg-light-300 rounded p-4"
 >
   <div
     className="small"
@@ -44,7 +44,7 @@ exports[`Preview snapshots snapshots: renders as expected with problemType is ch
 
 exports[`Preview snapshots snapshots: renders as expected with problemType is multiplechoiceresponse 1`] = `
 <div
-  className="col col-6 bg-light-300 rounded p-4"
+  className="bg-light-300 rounded p-4"
 >
   <div
     className="small"
@@ -84,7 +84,7 @@ exports[`Preview snapshots snapshots: renders as expected with problemType is mu
 
 exports[`Preview snapshots snapshots: renders as expected with problemType is numericalresponse 1`] = `
 <div
-  className="col col-6 bg-light-300 rounded p-4"
+  className="bg-light-300 rounded p-4"
 >
   <div
     className="small"
@@ -124,7 +124,7 @@ exports[`Preview snapshots snapshots: renders as expected with problemType is nu
 
 exports[`Preview snapshots snapshots: renders as expected with problemType is optionresponse 1`] = `
 <div
-  className="col col-6 bg-light-300 rounded p-4"
+  className="bg-light-300 rounded p-4"
 >
   <div
     className="small"
@@ -164,7 +164,7 @@ exports[`Preview snapshots snapshots: renders as expected with problemType is op
 
 exports[`Preview snapshots snapshots: renders as expected with problemType is stringresponse 1`] = `
 <div
-  className="col col-6 bg-light-300 rounded p-4"
+  className="bg-light-300 rounded p-4"
 >
   <div
     className="small"

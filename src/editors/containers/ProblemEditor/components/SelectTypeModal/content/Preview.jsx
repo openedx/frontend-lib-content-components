@@ -22,7 +22,7 @@ export const Preview = ({
   }
   const data = ProblemTypes[problemType];
   return (
-    <div className="col col-6 bg-light-300 rounded p-4">
+    <div className="bg-light-300 rounded p-4">
       <div className="small">
         {intl.formatMessage(messages.previewTitle, { previewTitle: data.title })}
       </div>
