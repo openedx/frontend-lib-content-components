@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { AdvanceProblemKeys, AdvanceProblems } from '../../../../data/constants/problem';
 import { StrictDict } from '../../../../utils';
 import { ProblemTypeKeys, ProblemTypes } from '../../../../data/constants/problem';
 import * as module from './hooks';
@@ -15,7 +16,10 @@ export const selectHooks = () => {
   };
 };
 
-export const onSelect = ( setProblemType, selected ) => () => {
+export const onSelect = ( setProblemType, selected, updateField ) => () => {
+  if (Object.values(AdvanceProblemKeys).includes(selected)) {
+    updateField({rawOLX: AdvanceProblems[selected].template})
+  }
   setProblemType({ selected });
 };
 
@@ -28,15 +32,16 @@ export const useArrowNav = (selected, setSelected) => {
   }, [selected, setSelected]);
 
   const detectKeyDown = (e) => {
+    const problemTypeValues = Object.values(ProblemTypeKeys);
     switch (e.key) {
       case 'ArrowUp':
-        if (ProblemTypes[selected].prev) {
+        if (problemTypeValues.includes(selected) && ProblemTypes[selected].prev) {
           setSelected(ProblemTypes[selected].prev);
           document.getElementById(ProblemTypes[selected].prev).focus();
         }
         break;
       case 'ArrowDown':
-        if (ProblemTypes[selected].next) {
+        if (problemTypeValues.includes(selected) && ProblemTypes[selected].next) {
           setSelected(ProblemTypes[selected].next);
           document.getElementById(ProblemTypes[selected].next).focus();
         }

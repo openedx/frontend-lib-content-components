@@ -2,9 +2,11 @@ import React from 'react';
 
 import ProblemTypeSelect from './content/ProblemTypeSelect';
 import Preview from './content/Preview';
+import AdvanceTypeSelect from './content/AdvanceTypeSelect';
 import SelectTypeWrapper from './SelectTypeWrapper';
 import hooks from './hooks';
-import { Col, Container, Row } from '@edx/paragon';
+import { Col, Row } from '@edx/paragon';
+import { AdvanceProblemKeys } from '../../../../data/constants/problem';
 
 export const SelectTypeModal = ({
   onClose,
@@ -14,16 +16,18 @@ export const SelectTypeModal = ({
 
   return (
     <SelectTypeWrapper onClose={onClose} selected={selected}>
-      <Container className="mx-4 my-3 px-3 py-2">
-        <Row>
-          <Col>
-            <ProblemTypeSelect selected={selected} setSelected={setSelected} />
-          </Col>
-          <Col>
-            <Preview problemType={selected} />
-          </Col>
+        <Row className="justify-content-center align-items-center m-4">
+        {(!Object.values(AdvanceProblemKeys).includes(selected)) ? (
+          <>
+            <Col>
+              <ProblemTypeSelect selected={selected} setSelected={setSelected} />
+            </Col>
+            <Col>
+              <Preview problemType={selected} />
+            </Col>
+          </>
+        ) : <AdvanceTypeSelect selected={selected} setSelected={setSelected} />}
         </Row>
-      </Container>
     </SelectTypeWrapper>
   );
 };

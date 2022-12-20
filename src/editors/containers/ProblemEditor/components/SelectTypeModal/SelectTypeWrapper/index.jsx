@@ -43,7 +43,7 @@ SelectTypeWrapper.defaultProps = {
   onClose: null,
 };
 SelectTypeWrapper.propTypes = {
-  selected: PropTypes.func.isRequired,
+  selected: PropTypes.string.isRequired,
   children: PropTypes.node.isRequired,
   onClose: PropTypes.func,
 };

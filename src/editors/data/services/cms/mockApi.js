@@ -125,6 +125,10 @@ export const fetchCourseDetails = ({ studioEndpointUrl, learningContextId }) => 
 export const allowThumbnailUpload = ({ studioEndpointUrl }) => mockPromise({
   data: true,
 });
+// eslint-disable-next-line
+export const fetchAdvanceSettings = ({ studioEndpointUrl, learningContextId }) => mockPromise({
+  data: { allow_unsupported_xblocks: { value: true } },
+});
 
 export const normalizeContent = ({
   blockId,
