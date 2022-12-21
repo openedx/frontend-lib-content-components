@@ -124,6 +124,11 @@ const problem = createSlice({
       },
       ...payload,
     }),
+    setEnableTypeSelection: (state) => ({
+      ...state,
+      problemType: null,
+    }),
+
     onSelect: (state, { payload }) => ({
       ...state,
       ...payload,

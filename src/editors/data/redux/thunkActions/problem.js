@@ -5,17 +5,17 @@ import { parseSettings } from '../../../containers/ProblemEditor/data/SettingsPa
 
 export const initializeProblem = (blockValue) => (dispatch) => {
   const rawOLX = _.get(blockValue, 'data.data', {});
-  try {
-    const olxParser = new OLXParser(rawOLX);
-    const { ...data } = olxParser.getParsedOLXData();
-    let { settings } = olxParser.getParsedOLXData();
-    settings = { ...settings, ...parseSettings(_.get(blockValue, 'data.metadata', {})) };
-    if (!_.isEmpty(rawOLX) && !_.isEmpty(data)) {
-      dispatch(actions.problem.load({ ...data, rawOLX, settings }));
-    }
-  } catch (error) {
-    // eslint-disable-next-line
-    console.error(error);
+  const olxParser = new OLXParser(rawOLX);
+
+  const parsedProblem = olxParser.getParsedOLXData();
+  if (_.isEmpty(parsedProblem)) {
+    // if problem is blank, enable selection.
+    dispatch(actions.problem.setEnableTypeSelection());
+  }
+  const { settings, ...data } = parsedProblem;
+  const parsedSettings = { ...settings, ...parseSettings(_.get(blockValue, 'data.metadata', {})) };
+  if (!_.isEmpty(rawOLX) && !_.isEmpty(data)) {
+    dispatch(actions.problem.load({ ...data, rawOLX, parsedSettings }));
   }
 };
 

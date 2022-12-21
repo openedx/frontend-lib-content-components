@@ -8,6 +8,7 @@ import {
   ModalDialog,
 } from '@edx/paragon';
 import { FormattedMessage, injectIntl } from '@edx/frontend-platform/i18n';
+import hooks from '../hooks';
 
 import { actions } from '../../../../../data/redux';
 
@@ -15,7 +16,6 @@ export const SelectTypeFooter = ({
   selected,
   onCancel,
   // Redux
-  onSelect,
 }) => (
   <div className="editor-footer" style={{ position: 'sticky', bottom: 0 }}>
     <ModalDialog.Footer className="border-top-0">
@@ -26,14 +26,14 @@ export const SelectTypeFooter = ({
           variant="tertiary"
           onClick={onCancel}
         >
-          <FormattedMessage {...'TODO-CANCEL'} />
+          TODO: -- Cancel
         </Button>
         <Button
           aria-label="TODO: SELECT"
-          onClick={onSelect(selected)}
+          onClick={hooks.onSelect({ selected })}
           disabled={!selected}
         >
-          <FormattedMessage {...'TODO- SELECT'} />
+          TODO: SELECTs
         </Button>
       </ActionRow>
     </ModalDialog.Footer>

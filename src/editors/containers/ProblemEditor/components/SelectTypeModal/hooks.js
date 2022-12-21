@@ -7,4 +7,8 @@ export const state = StrictDict({
   selected: (val) => useState(val),
 });
 
-export default { state };
+export const onSelect = ({ selected }) => {
+  return;
+};
+
+export default { state, onSelect };

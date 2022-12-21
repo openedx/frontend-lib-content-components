@@ -6,6 +6,7 @@ export const ProblemTypeKeys = StrictDict({
   DROPDOWN: 'optionresponse',
   MULTISELECT: 'choiceresponse',
   SINGLESELECT: 'multiplechoiceresponse',
+  ADVANCED: 'advanced',
 });
 
 export const ProblemTypes = StrictDict({
@@ -37,6 +38,13 @@ export const ProblemTypes = StrictDict({
     title: 'Text Input Problem',
     preview: ('<div />'),
     description: 'Specify one or more correct text answers, including numbers and special characters, submitted in a response field.',
+    helpLink: 'something.com',
+  },
+
+  [ProblemTypeKeys.ADVANCED]: {
+    title: 'Advanced Problem',
+    preview: ('<div />'),
+    description: 'An Advanced Problem Type',
     helpLink: 'something.com',
   },
 });
