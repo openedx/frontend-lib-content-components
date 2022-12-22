@@ -1,5 +1,5 @@
 {
-  "name": "@edly/frontend-lib-content-components",
+  "name": "@edly-io/frontend-lib-content-components",
   "version": "1.0.0-semantically-released",
   "description": "A library of high-level components for content handling.",
   "main": "dist/index.js",
