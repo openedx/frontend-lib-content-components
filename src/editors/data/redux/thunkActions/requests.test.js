@@ -354,6 +354,42 @@ describe('requests thunkActions module', () => {
         },
       });
     });
+    describe('checkTranscripts', () => {
+      const youTubeId = 'SoME yOUtUbEiD As String';
+      const videoId = 'SoME VidEOid As String';
+      testNetworkRequestAction({
+        action: requests.checkTranscripts,
+        args: { youTubeId, videoId, ...fetchParams },
+        expectedString: 'with checkTranscripts promise',
+        expectedData: {
+          ...fetchParams,
+          requestKey: RequestKeys.checkTranscripts,
+          promise: api.checkTranscripts({
+            blockId: selectors.app.blockId(testState),
+            youTubeId,
+            videoId,
+            studioEndpointUrl: selectors.app.studioEndpointUrl(testState),
+          }),
+        },
+      });
+    });
+    describe('replaceTranscript', () => {
+      const youTubeId = 'SoME yOUtUbEiD As String';
+      testNetworkRequestAction({
+        action: requests.replaceTranscript,
+        args: { youTubeId, ...fetchParams },
+        expectedString: 'with replaceTranscript promise',
+        expectedData: {
+          ...fetchParams,
+          requestKey: RequestKeys.replaceTranscript,
+          promise: api.replaceTranscript({
+            blockId: selectors.app.blockId(testState),
+            youTubeId,
+            studioEndpointUrl: selectors.app.studioEndpointUrl(testState),
+          }),
+        },
+      });
+    });
     describe('getTranscriptFile', () => {
       const language = 'SoME laNGUage CoNtent As String';
       const videoId = 'SoME VidEOid CoNtent As String';
