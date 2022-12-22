@@ -140,7 +140,7 @@ TextEditor.propTypes = {
   onClose: PropTypes.func.isRequired,
   // redux
   blockValue: PropTypes.shape({
-    data: PropTypes.shape({ data: PropTypes.string }),
+    data: PropTypes.shape({ data: PropTypes.string }, { is_lib_v2: PropTypes.bool }),
   }),
   lmsEndpointUrl: PropTypes.string,
   studioEndpointUrl: PropTypes.string,
