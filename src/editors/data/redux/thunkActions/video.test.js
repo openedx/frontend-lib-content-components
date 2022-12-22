@@ -36,7 +36,7 @@ jest.mock('../../../utils', () => ({
   removeItemOnce: (args) => (args),
 }));
 
-jest.mock('../../services/cms/api' , () => ({
+jest.mock('../../services/cms/api', () => ({
   parseYoutubeId: (args) => (args),
 }));
 
