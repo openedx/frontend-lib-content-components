@@ -9,6 +9,6 @@ config.resolve.modules = [
   'node_modules',
 ];
 
-config.module.rules[0].exclude = /node_modules\/(?!(query-string|split-on-first|strict-uri-encode|@edx))/;
+config.module.rules[0].exclude = /node_modules\/(?!(query-string|split-on-first|strict-uri-encode|@edly-io))/;
 
 module.exports = config;
