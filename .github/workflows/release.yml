@@ -1,11 +1,14 @@
 name: Release CI
 on:
-  push:
+  pull_request_target:
+    types:
+      - closed
     branches:
       - main
       - develop
 jobs:
   release:
+    if: github.event.pull_request.merged == true
     name: Release
     runs-on: ubuntu-latest
     steps:
@@ -25,8 +28,6 @@ jobs:
         run: make validate-no-uncommitted-package-lock-changes
       - name: Lint
         run: npm run lint
-      - name: Test
-        run: npm run test
       - name: i18n_extract
         run: npm run i18n_extract
       - name: Coverage
