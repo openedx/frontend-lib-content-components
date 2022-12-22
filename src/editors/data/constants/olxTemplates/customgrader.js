@@ -1,3 +1,4 @@
+/* eslint-disable */
 // ---
 // metadata:
 //     display_name: Custom Python-Evaluated Input
@@ -73,4 +74,6 @@ export const customGrader = `<problem>
             </div>
         </solution>
     </customresponse>
-</problem>`
+</problem>`;
+
+export default { customGrader };

@@ -25,7 +25,7 @@ export const initializeProblem = (blockValue) => (dispatch) => {
         console.log(response.allow_unsupported_xblocks.value);
       }
     },
-  }))
+  }));
 };
 
 export default { initializeProblem };

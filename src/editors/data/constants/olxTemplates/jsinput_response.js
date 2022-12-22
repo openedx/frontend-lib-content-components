@@ -1,3 +1,4 @@
+/* eslint-disable */
 // ---
 // metadata:
 //     display_name: Custom JavaScript Display and Grading
@@ -75,4 +76,6 @@ export const jsInputResponse = `<problem>
             sop="false"
         />
     </customresponse>
-</problem>`
+</problem>`;
+
+export default { jsInputResponse };

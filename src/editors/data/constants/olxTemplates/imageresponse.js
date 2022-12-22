@@ -1,3 +1,4 @@
+/* eslint-disable */
 // ---
 // metadata:
 //     display_name: Image Mapped Input
@@ -27,4 +28,6 @@ export const imageResponse = `<problem>
                 </div>
             </solution>
         </imageresponse>
-    </problem>`
+    </problem>`;
+
+export default { imageResponse };

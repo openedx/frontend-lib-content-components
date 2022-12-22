@@ -6,7 +6,7 @@ exports[`TypeCard snapshot snapshot: renders type setting card 1`] = `
   title="Type"
 >
   <TypeRow
-    key="0"
+    key="multiplechoiceresponse"
     label="Single Select Problem"
     lastRow={false}
     selected={true}
@@ -14,7 +14,7 @@ exports[`TypeCard snapshot snapshot: renders type setting card 1`] = `
     updateField={[MockFunction args.updateField]}
   />
   <TypeRow
-    key="1"
+    key="choiceresponse"
     label="Multi Select Problem"
     lastRow={false}
     selected={true}
@@ -30,7 +30,7 @@ exports[`TypeCard snapshot snapshot: renders type setting card 1`] = `
     updateField={[MockFunction args.updateField]}
   />
   <TypeRow
-    key="3"
+    key="numericalresponse"
     label="Numeric Response Problem"
     lastRow={false}
     selected={true}
@@ -38,7 +38,7 @@ exports[`TypeCard snapshot snapshot: renders type setting card 1`] = `
     updateField={[MockFunction args.updateField]}
   />
   <TypeRow
-    key="4"
+    key="stringresponse"
     label="Text Input Problem"
     lastRow={false}
     selected={false}
@@ -46,7 +46,7 @@ exports[`TypeCard snapshot snapshot: renders type setting card 1`] = `
     updateField={[MockFunction args.updateField]}
   />
   <TypeRow
-    key="5"
+    key="advanced"
     label="Advanced Problem"
     lastRow={true}
     selected={true}

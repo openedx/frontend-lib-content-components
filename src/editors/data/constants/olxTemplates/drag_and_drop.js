@@ -1,3 +1,4 @@
+/* eslint-disable */
 // ---
 // metadata:
 //     display_name: Drag and Drop (Deprecated Version)
@@ -82,4 +83,6 @@ export const dragAndDrop = `<problem>
                 correct = ['incorrect']
         </answer>
     </customresponse>
-</problem>`
+</problem>`;
+
+export default { dragAndDrop };

@@ -8,17 +8,17 @@ exports[`SelectTypeModal snapshot 1`] = `
   <Row
     className="justify-content-center align-items-center m-4"
   >
-    <Col>
-      <InjectIntl(ShimmedIntlComponent)
+    <Component>
+      <injectIntl(ShimmedIntlComponent)
         selected="mOcKsELEcted"
         setSelected={[MockFunction setSelected]}
       />
-    </Col>
-    <Col>
-      <InjectIntl(ShimmedIntlComponent)
+    </Component>
+    <Component>
+      <injectIntl(ShimmedIntlComponent)
         problemType="mOcKsELEcted"
       />
-    </Col>
+    </Component>
   </Row>
 </SelectTypeWrapper>
 `;

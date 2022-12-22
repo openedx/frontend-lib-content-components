@@ -1,5 +1,4 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Hyperlink, Image } from '@edx/paragon';
 import {
@@ -8,7 +7,6 @@ import {
   intlShape,
 } from '@edx/frontend-platform/i18n';
 import messages from './messages';
-import { selectors } from '../../../../../data/redux';
 import { ProblemTypes } from '../../../../../data/constants/problem';
 
 export const Preview = ({
@@ -16,7 +14,6 @@ export const Preview = ({
   // injected
   intl,
 }) => {
-
   if (problemType === null) {
     return null;
   }

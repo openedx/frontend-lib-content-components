@@ -35,7 +35,7 @@ export const SelectTypeFooter = ({
         </Button>
         <Button
           aria-label={intl.formatMessage(messages.selectButtonAriaLabel)}
-          onClick={hooks.onSelect( setProblemType, selected, updateField )}
+          onClick={hooks.onSelect(setProblemType, selected, updateField)}
           disabled={!selected}
         >
           <FormattedMessage {...messages.selectButtonLabel} />
@@ -53,6 +53,7 @@ SelectTypeFooter.propTypes = {
   onCancel: PropTypes.func.isRequired,
   selected: PropTypes.string,
   setProblemType: PropTypes.func.isRequired,
+  updateField: PropTypes.func.isRequired,
   // injected
   intl: intlShape.isRequired,
 };

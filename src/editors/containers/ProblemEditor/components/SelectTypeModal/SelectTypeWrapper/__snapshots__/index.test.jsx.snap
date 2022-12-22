@@ -22,7 +22,7 @@ exports[`SelectTypeWrapper snapshot 1`] = `
       test child
     </h1>
   </ModalDialog.Body>
-  <InjectIntl(ShimmedIntlComponent)
+  <injectIntl(ShimmedIntlComponent)
     selected="iMAsElecTedValUE"
   />
 </div>

@@ -20,13 +20,13 @@ export const AdvanceTypeSelect = ({
   // injected
   intl,
 }) => {
-  const handleChange = e => {setSelected(e.target.value)}
+  const handleChange = e => { setSelected(e.target.value); };
   return (
     <div className="col col-8 border rounded p-0 justify-content-center">
-      <Form.Group className='p-0'>
+      <Form.Group className="p-0">
         <ActionRow className="border-primary-100 border-bottom py-3 pl-2.5 pr-4">
           <IconButton src={ArrowBack} iconAs={Icon} onClick={() => setSelected(ProblemTypeKeys.SINGLESELECT)} />
-          <ActionRow.Spacer/>
+          <ActionRow.Spacer />
           <Form.Label className="h4">
             <FormattedMessage {...messages.advanceMenuTitle} />
           </Form.Label>
@@ -47,10 +47,10 @@ export const AdvanceTypeSelect = ({
                   </Form.Radio>
                   <ActionRow.Spacer />
                   <OverlayTrigger
-                    placement='right'
+                    placement="right"
                     overlay={(
                       <Tooltip>
-                        <div className='text-gray-300 text-left'>
+                        <div className="text-gray-300 text-left">
                           {intl.formatMessage(messages.supportStatusTooltipMessage, { supportStatus: data.status.replace(' ', '_') })}
                         </div>
                       </Tooltip>
@@ -73,9 +73,20 @@ export const AdvanceTypeSelect = ({
             );
           })}
         </Form.RadioSet>
-      </Form.Group>   
-    </div> 
+      </Form.Group>
+    </div>
   );
+};
+
+AdvanceTypeSelect.defaultProps = {
+  selected: null,
+};
+
+AdvanceTypeSelect.propTypes = {
+  selected: PropTypes.string,
+  setSelected: PropTypes.func.isRequired,
+  // injected
+  intl: intlShape.isRequired,
 };
 
 export default injectIntl(AdvanceTypeSelect);

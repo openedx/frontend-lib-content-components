@@ -45,7 +45,7 @@ describe('SelectTypeFooter', () => {
   describe('mapStateToProps', () => {
     test('is empty', () => {
       expect(module.mapStateToProps()).toEqual({});
-    })
+    });
   });
   describe('mapDispatchToProps', () => {
     test('loads setProblemType from problem.setProblemType actions', () => {

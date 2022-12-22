@@ -1,3 +1,4 @@
+/* eslint-disable */
 // ---
 // metadata:
 //     display_name: Problem with Adaptive Hint
@@ -40,4 +41,6 @@ export const problemWithHint = `<problem>
             <hintgroup hintfn="hint_fn"/>
         </customresponse>
     </text>
-</problem>`
+</problem>`;
+
+export default { problemWithHint };

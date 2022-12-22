@@ -1,3 +1,4 @@
+/* eslint-disable */
 // ---
 // metadata:
 //     display_name: Math Expression Input
@@ -11,4 +12,5 @@ export const formulaResponse = `<problem>
         <responseparam type="tolerance" default="0.00001"/>
         <formulaequationinput size="40"/>
     </formularesponse>
-</problem>`
+</problem>`;
+export default { formulaResponse };

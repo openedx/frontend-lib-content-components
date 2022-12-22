@@ -12,27 +12,27 @@ describe('ProblemTypeSelect', () => {
   describe('snapshot', () => {
     test('SINGLESELECT', () => {
       expect(shallow(
-        <module.ProblemTypeSelect {...props} selected={ProblemTypeKeys.SINGLESELECT} />
+        <module.ProblemTypeSelect {...props} selected={ProblemTypeKeys.SINGLESELECT} />,
       )).toMatchSnapshot();
     });
     test('MULTISELECT', () => {
       expect(shallow(
-        <module.ProblemTypeSelect {...props} selected={ProblemTypeKeys.MULTISELECT} />
+        <module.ProblemTypeSelect {...props} selected={ProblemTypeKeys.MULTISELECT} />,
       )).toMatchSnapshot();
     });
     test('DROPDOWN', () => {
       expect(shallow(
-        <module.ProblemTypeSelect {...props} selected={ProblemTypeKeys.DROPDOWN} />
+        <module.ProblemTypeSelect {...props} selected={ProblemTypeKeys.DROPDOWN} />,
       )).toMatchSnapshot();
     });
     test('NUMERIC', () => {
       expect(shallow(
-        <module.ProblemTypeSelect {...props} selected={ProblemTypeKeys.NUMERIC} />
+        <module.ProblemTypeSelect {...props} selected={ProblemTypeKeys.NUMERIC} />,
       )).toMatchSnapshot();
     });
     test('TEXTINPUT', () => {
       expect(shallow(
-        <module.ProblemTypeSelect {...props} selected={ProblemTypeKeys.TEXTINPUT} />
+        <module.ProblemTypeSelect {...props} selected={ProblemTypeKeys.TEXTINPUT} />,
       )).toMatchSnapshot();
     });
   });

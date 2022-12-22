@@ -126,9 +126,7 @@ jest.mock('@edx/paragon', () => jest.requireActual('testUtils').mockNestedCompon
   Spinner: 'Spinner',
   Stack: 'Stack',
   Toast: 'Toast',
-  Tooltip: 'ToolTip',
   Truncate: 'Truncate',
-  OverlayTrigger: 'OverLayTrigger',
 }));
 
 jest.mock('@edx/paragon/icons', () => ({

@@ -8,7 +8,7 @@ describe('AdvanceTypeSelect', () => {
   const props = {
     intl: { formatMessage },
     selected: 'blankadvanced',
-    setSelected: jest.fn().mockName('setSelect')
+    setSelected: jest.fn().mockName('setSelect'),
   };
   describe('snapshots', () => {
     test('snapshots: renders as expected with default props', () => {

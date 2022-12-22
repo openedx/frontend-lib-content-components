@@ -1,7 +1,8 @@
+/* eslint-disable prefer-destructuring */
 import React from 'react';
 import { MockUseState } from '../../../../../testUtils';
 import * as module from './hooks';
-import { AdvanceProblemKeys, AdvanceProblems, ProblemTypeKeys } from '../../../../data/constants/problem';
+import { AdvanceProblems, ProblemTypeKeys } from '../../../../data/constants/problem';
 
 jest.mock('react', () => ({
   ...jest.requireActual('react'),
@@ -30,12 +31,12 @@ describe('SelectTypeModal hooks', () => {
   describe('selectHooks', () => {
     beforeEach(() => {
       hook = module.selectHooks();
-    })
+    });
     test('selected defaults to SINGLESELECT', () => {
       expect(hook.selected).toEqual(ProblemTypeKeys.SINGLESELECT);
     });
     test('setSelected sets state as expected', () => {
-      const expectedArg = 'neWvAl'
+      const expectedArg = 'neWvAl';
       state.mockVal(state.keys.selected, 'mOcKvAl');
       hook.setSelected(expectedArg);
       expect(state.setState.selected).toHaveBeenCalledWith(expectedArg);

@@ -17,7 +17,7 @@ export const messages = {
   problemSupportStatus: {
     id: 'authoring.problemEditor.advanceProblem.supportStatus',
     defaultMessage: '{supportStatus}',
-    description: `Text for advance problem type's support status`,
+    description: 'Text for advance problem type\'s support status',
   },
   supportStatusTooltipMessage: {
     id: 'authoring.problemEditor.advanceProblem.supportStatus.tooltipMessage',
@@ -66,4 +66,4 @@ export const messages = {
   },
 };
 
-export default messages
+export default messages;

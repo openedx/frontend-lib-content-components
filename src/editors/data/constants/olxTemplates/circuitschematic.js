@@ -1,3 +1,4 @@
+/* eslint-disable */
 // ---
 // metadata:
 //     display_name: Circuit Schematic Builder
@@ -86,4 +87,6 @@ export const circuitSchematic = `<problem>
             </div>
         </solution>
     </schematicresponse>
-</problem>`
+</problem>`;
+
+export default { circuitSchematic };
