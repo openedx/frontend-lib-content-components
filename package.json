@@ -1,6 +1,6 @@
 {
-  "name": "@edly/frontend-lib-content-components",
-  "version": "1.0.0-semantically-released",
+  "name": "zahid-frontend-lib-content-components",
+  "version": "1.0.0",
   "description": "A library of high-level components for content handling.",
   "main": "dist/index.js",
   "publishConfig": {
@@ -25,14 +25,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/edx/frontend-lib-content-components.git"
+    "url": "git+https://github.com/zahid-arbisoft/frontend-lib-content-components.git"
   },
-  "author": "edly",
+  "author": "zahid",
   "license": "AGPL-3.0",
   "bugs": {
-    "url": "https://github.com/edx/frontend-lib-content-components/issues"
+    "url": "https://github.com/zahid-arbisoft/frontend-lib-content-components/issues"
   },
-  "homepage": "https://github.com/edx/frontend-lib-content-components#readme",
+  "homepage": "https://github.com/zahid-arbisoft/frontend-lib-content-components#readme",
   "devDependencies": {
     "@edx/frontend-build": "^11.0.2",
     "@edx/frontend-platform": "2.4.0",
