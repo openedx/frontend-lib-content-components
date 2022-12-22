@@ -25,14 +25,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/edx/frontend-lib-content-components.git"
+    "url": "git+https://github.com/edly-io/frontend-lib-content-components.git"
   },
   "author": "edly",
   "license": "AGPL-3.0",
   "bugs": {
-    "url": "https://github.com/edx/frontend-lib-content-components/issues"
+    "url": "https://github.com/edly-io/frontend-lib-content-components/issues"
   },
-  "homepage": "https://github.com/edx/frontend-lib-content-components#readme",
+  "homepage": "https://github.com/edly-io/frontend-lib-content-components#readme",
   "devDependencies": {
     "@edx/frontend-build": "^11.0.2",
     "@edx/frontend-platform": "2.4.0",
