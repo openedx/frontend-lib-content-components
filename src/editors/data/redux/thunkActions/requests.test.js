@@ -29,11 +29,13 @@ jest.mock('../../services/cms/api', () => ({
   fetchAssets: ({ id, url }) => ({ id, url }),
   uploadAsset: (args) => args,
   loadImages: jest.fn(),
-  allowThumbnailUpload: jest.fn(),
-  uploadThumbnail: jest.fn(),
-  uploadTranscript: jest.fn(),
-  deleteTranscript: jest.fn(),
-  getTranscript: jest.fn(),
+  allowThumbnailUpload: (args) => args,
+  uploadThumbnail: (args) => args,
+  uploadTranscript: (args) => args,
+  deleteTranscript: (args) => args,
+  getTranscript: (args) => args,
+  checkTranscripts: (args) => args,
+  replaceTranscript: (args) => args,
 }));
 
 const apiKeys = keyStore(api);

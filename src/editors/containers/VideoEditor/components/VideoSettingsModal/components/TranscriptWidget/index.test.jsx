@@ -29,7 +29,7 @@ jest.mock('../../../../../../data/redux', () => ({
       transcripts: jest.fn(state => ({ transcripts: state })),
       allowTranscriptDownloads: jest.fn(state => ({ allowTranscriptDownloads: state })),
       showTranscriptByDefault: jest.fn(state => ({ showTranscriptByDefault: state })),
-
+      transcriptCheckCommand: jest.fn(state => ({ transcriptCheckCommand: state })),
     },
     requests: {
       isFailed: jest.fn(state => ({ isFailed: state })),
@@ -90,6 +90,7 @@ describe('TranscriptWidget', () => {
       transcripts: [],
       allowTranscriptDownloads: false,
       showTranscriptByDefault: false,
+      transcriptCheckCommand: false,
       updateField: jest.fn().mockName('args.updateField'),
       isUploadError: false,
       isDeleteError: false,
@@ -99,6 +100,11 @@ describe('TranscriptWidget', () => {
       test('snapshots: renders as expected with default props', () => {
         expect(
           shallow(<module.TranscriptWidget {...props} />),
+        ).toMatchSnapshot();
+      });
+      test('snapshots: renders as expected with transcriptCheckCommand true', () => {
+        expect(
+          shallow(<module.TranscriptWidget {...props} transcriptCheckCommand />),
         ).toMatchSnapshot();
       });
       test('snapshots: renders as expected with transcripts', () => {
@@ -143,6 +149,11 @@ describe('TranscriptWidget', () => {
         expect(
           module.mapStateToProps(testState).showTranscriptByDefault,
         ).toEqual(selectors.video.showTranscriptByDefault(testState));
+      });
+      test('transcriptCheckCommand from video.transcriptCheckCommand', () => {
+        expect(
+          module.mapStateToProps(testState).transcriptCheckCommand,
+        ).toEqual(selectors.video.transcriptCheckCommand(testState));
       });
       test('isUploadError from requests.isFinished', () => {
         expect(

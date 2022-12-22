@@ -20,6 +20,8 @@ jest.mock('./urls', () => ({
   videoTranscripts: jest.fn().mockName('urls.videoTranscripts'),
   allowThumbnailUpload: jest.fn().mockName('urls.allowThumbnailUpload'),
   thumbnailUpload: jest.fn().mockName('urls.thumbnailUpload'),
+  checkTranscripts: jest.fn().mockName('urls.checkTranscripts'),
+  replaceTranscript: jest.fn().mockName('urls.replaceTranscript'),
 }));
 
 jest.mock('./utils', () => ({
@@ -251,6 +253,32 @@ describe('cms api', () => {
   describe('videoTranscripts', () => {
     const language = 'la';
     const videoId = 'sOmeVIDeoiD';
+    const youTubeId = 'SOMeyoutUBeid';
+    describe('checkTranscripts', () => {
+      const getJSON = `{"locator":"${blockId}","videos":[{"mode":"youtube","video":"${youTubeId}","type":"youtube"},{"mode":"edx_video_id","type":"edx_video_id","video":"${videoId}"}]}`;
+      it('should call get with url.checkTranscripts', () => {
+        apiMethods.checkTranscripts({
+          studioEndpointUrl,
+          blockId,
+          videoId,
+          youTubeId,
+        });
+        expect(get).toHaveBeenCalledWith(urls.checkTranscripts({
+          studioEndpointUrl,
+          parameters: encodeURIComponent(getJSON),
+        }));
+      });
+    });
+    describe('replaceTranscript', () => {
+      const getJSON = `{"locator":"${blockId}","videos":[{"mode":"youtube","video":"${youTubeId}","type":"youtube"}]}`;
+      it('should call get with url.replaceTranscript', () => {
+        apiMethods.replaceTranscript({ studioEndpointUrl, blockId, youTubeId });
+        expect(get).toHaveBeenCalledWith(urls.replaceTranscript({
+          studioEndpointUrl,
+          parameters: encodeURIComponent(getJSON),
+        }));
+      });
+    });
     describe('uploadTranscript', () => {
       const transcript = { transcript: 'dAta' };
       it('should call post with urls.videoTranscripts and transcript data', () => {

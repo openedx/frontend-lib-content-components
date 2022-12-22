@@ -158,6 +158,31 @@ export const uploadThumbnail = ({ thumbnail, videoId, ...rest }) => (dispatch, g
   }));
 };
 
+export const checkTranscripts = ({ videoId, youTubeId, ...rest }) => (dispatch, getState) => {
+  dispatch(module.networkRequest({
+    requestKey: RequestKeys.checkTranscripts,
+    promise: api.checkTranscripts({
+      blockId: selectors.app.blockId(getState()),
+      videoId,
+      youTubeId,
+      studioEndpointUrl: selectors.app.studioEndpointUrl(getState()),
+    }),
+    ...rest,
+  }));
+};
+
+export const replaceTranscript = ({ youTubeId, ...rest }) => (dispatch, getState) => {
+  dispatch(module.networkRequest({
+    requestKey: RequestKeys.replaceTranscript,
+    promise: api.replaceTranscript({
+      blockId: selectors.app.blockId(getState()),
+      studioEndpointUrl: selectors.app.studioEndpointUrl(getState()),
+      youTubeId,
+    }),
+    ...rest,
+  }));
+};
+
 export const deleteTranscript = ({ language, videoId, ...rest }) => (dispatch, getState) => {
   dispatch(module.networkRequest({
     requestKey: RequestKeys.deleteTranscript,
@@ -249,4 +274,6 @@ export default StrictDict({
   updateTranscriptLanguage,
   fetchCourseDetails,
   getTranscriptFile,
+  checkTranscripts,
+  replaceTranscript,
 });
