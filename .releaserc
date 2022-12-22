@@ -1,8 +1,5 @@
 {
-  "branches": [
-    {name: "main"},
-    {name: "develop", channel: "beta", prerelease: true},
-  ],
+  "branches": ["main"],
   "tagFormat": "v${version}",
   "verifyConditions": [
     "@semantic-release/npm",

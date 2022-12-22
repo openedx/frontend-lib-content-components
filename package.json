@@ -1,5 +1,5 @@
 {
-  "name": "@edx/frontend-lib-content-components",
+  "name": "@edly/frontend-lib-content-components",
   "version": "1.0.0-semantically-released",
   "description": "A library of high-level components for content handling.",
   "main": "dist/index.js",
@@ -27,7 +27,7 @@
     "type": "git",
     "url": "git+https://github.com/edx/frontend-lib-content-components.git"
   },
-  "author": "edX",
+  "author": "edly",
   "license": "AGPL-3.0",
   "bugs": {
     "url": "https://github.com/edx/frontend-lib-content-components/issues"
