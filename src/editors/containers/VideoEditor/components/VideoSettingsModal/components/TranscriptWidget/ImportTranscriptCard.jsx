@@ -46,7 +46,7 @@ ImportTranscriptCard.defaultProps = {
 };
 
 ImportTranscriptCard.propTypes = {
-  setOpen: PropTypes.bool,
+  setOpen: PropTypes.func,
   // redux
   importTranscript: PropTypes.func.isRequired,
 };

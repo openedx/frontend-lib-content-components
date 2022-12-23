@@ -132,7 +132,7 @@ export const checkTranscripts = ({youTubeId, studioEndpointUrl, blockId, videoId
   },
 });
 // eslint-disable-next-line
-export const replaceTranscript = ({youTubeId, studioEndpointUrl, blockId}) => mockPromise({
+export const importTranscript = ({youTubeId, studioEndpointUrl, blockId}) => mockPromise({
   data: {
     edx_video_id: 'f36f06b5-92e5-47c7-bb26-bcf986799cb7',
   },
