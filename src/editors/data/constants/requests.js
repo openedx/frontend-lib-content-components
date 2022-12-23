@@ -24,4 +24,6 @@ export const RequestKeys = StrictDict({
   getTranscriptFile: 'getTranscriptFile',
   checkTranscriptsForImport: 'checkTranscriptsForImport',
   importTranscript: 'importTranscript',
+  uploadImage: 'uploadImage',
+  fetchAdvanceSettings: 'fetchAdvanceSettings',
 });

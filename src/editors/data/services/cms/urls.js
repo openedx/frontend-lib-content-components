@@ -62,3 +62,7 @@ export const checkTranscriptsForImport = ({ studioEndpointUrl, parameters }) => 
 export const replaceTranscript = ({ studioEndpointUrl, parameters }) => (
   `${studioEndpointUrl}/transcripts/replace?data=${parameters}`
 );
+
+export const courseAdvanceSettings = ({ studioEndpointUrl, learningContextId }) => (
+  `${studioEndpointUrl}/api/contentstore/v0/advanced_settings/${learningContextId}`
+);

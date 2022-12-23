@@ -57,10 +57,10 @@ exports[`TranscriptWidget component snapshots snapshot: renders ErrorAlert with 
             />
           </div>
         </Form.Checkbox>
-        <OverLayTrigger
+        <OverlayTrigger
           key="top"
           overlay={
-            <ToolTip
+            <Tooltip
               id="tooltip-top"
             >
               <FormattedMessage
@@ -68,7 +68,7 @@ exports[`TranscriptWidget component snapshots snapshot: renders ErrorAlert with 
                 description="Message for show by default checkbox"
                 id="authoring.videoeditor.transcripts.upload.allowDownloadTooltipMessage"
               />
-            </ToolTip>
+            </Tooltip>
           }
           placement="top"
         >
@@ -80,7 +80,7 @@ exports[`TranscriptWidget component snapshots snapshot: renders ErrorAlert with 
               }
             }
           />
-        </OverLayTrigger>
+        </OverlayTrigger>
         <ActionRow.Spacer />
       </ActionRow>
       <Form.Checkbox
@@ -180,10 +180,10 @@ exports[`TranscriptWidget component snapshots snapshot: renders ErrorAlert with 
             />
           </div>
         </Form.Checkbox>
-        <OverLayTrigger
+        <OverlayTrigger
           key="top"
           overlay={
-            <ToolTip
+            <Tooltip
               id="tooltip-top"
             >
               <FormattedMessage
@@ -191,7 +191,7 @@ exports[`TranscriptWidget component snapshots snapshot: renders ErrorAlert with 
                 description="Message for show by default checkbox"
                 id="authoring.videoeditor.transcripts.upload.allowDownloadTooltipMessage"
               />
-            </ToolTip>
+            </Tooltip>
           }
           placement="top"
         >
@@ -203,7 +203,7 @@ exports[`TranscriptWidget component snapshots snapshot: renders ErrorAlert with 
               }
             }
           />
-        </OverLayTrigger>
+        </OverlayTrigger>
         <ActionRow.Spacer />
       </ActionRow>
       <Form.Checkbox
@@ -299,10 +299,10 @@ exports[`TranscriptWidget component snapshots snapshots: renders as expected wit
             />
           </div>
         </Form.Checkbox>
-        <OverLayTrigger
+        <OverlayTrigger
           key="top"
           overlay={
-            <ToolTip
+            <Tooltip
               id="tooltip-top"
             >
               <FormattedMessage
@@ -310,7 +310,7 @@ exports[`TranscriptWidget component snapshots snapshots: renders as expected wit
                 description="Message for show by default checkbox"
                 id="authoring.videoeditor.transcripts.upload.allowDownloadTooltipMessage"
               />
-            </ToolTip>
+            </Tooltip>
           }
           placement="top"
         >
@@ -322,7 +322,7 @@ exports[`TranscriptWidget component snapshots snapshots: renders as expected wit
               }
             }
           />
-        </OverLayTrigger>
+        </OverlayTrigger>
         <ActionRow.Spacer />
       </ActionRow>
       <Form.Checkbox
@@ -535,10 +535,10 @@ exports[`TranscriptWidget component snapshots snapshots: renders as expected wit
             />
           </div>
         </Form.Checkbox>
-        <OverLayTrigger
+        <OverlayTrigger
           key="top"
           overlay={
-            <ToolTip
+            <Tooltip
               id="tooltip-top"
             >
               <FormattedMessage
@@ -546,7 +546,7 @@ exports[`TranscriptWidget component snapshots snapshots: renders as expected wit
                 description="Message for show by default checkbox"
                 id="authoring.videoeditor.transcripts.upload.allowDownloadTooltipMessage"
               />
-            </ToolTip>
+            </Tooltip>
           }
           placement="top"
         >
@@ -558,7 +558,7 @@ exports[`TranscriptWidget component snapshots snapshots: renders as expected wit
               }
             }
           />
-        </OverLayTrigger>
+        </OverlayTrigger>
         <ActionRow.Spacer />
       </ActionRow>
       <Form.Checkbox
@@ -654,10 +654,10 @@ exports[`TranscriptWidget component snapshots snapshots: renders as expected wit
             />
           </div>
         </Form.Checkbox>
-        <OverLayTrigger
+        <OverlayTrigger
           key="top"
           overlay={
-            <ToolTip
+            <Tooltip
               id="tooltip-top"
             >
               <FormattedMessage
@@ -665,7 +665,7 @@ exports[`TranscriptWidget component snapshots snapshots: renders as expected wit
                 description="Message for show by default checkbox"
                 id="authoring.videoeditor.transcripts.upload.allowDownloadTooltipMessage"
               />
-            </ToolTip>
+            </Tooltip>
           }
           placement="top"
         >
@@ -677,7 +677,7 @@ exports[`TranscriptWidget component snapshots snapshots: renders as expected wit
               }
             }
           />
-        </OverLayTrigger>
+        </OverlayTrigger>
         <ActionRow.Spacer />
       </ActionRow>
       <Form.Checkbox
