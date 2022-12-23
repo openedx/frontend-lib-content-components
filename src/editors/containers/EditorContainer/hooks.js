@@ -11,7 +11,7 @@ export const {
   saveBlock,
 } = appHooks;
 
-export const handleSaveClicked = ({ dispatch, getContent, validateEntry }) => {
+export const handleSaveClicked = ({ dispatch, getContent, validateEntry, onClose }) => {
   const destination = useSelector(selectors.app.returnUrl);
   const analytics = useSelector(selectors.app.analytics);
 
@@ -21,6 +21,7 @@ export const handleSaveClicked = ({ dispatch, getContent, validateEntry }) => {
     destination,
     dispatch,
     validateEntry,
+    onClose,
   });
 };
 export const handleCancelClicked = ({ onClose }) => {

@@ -34,6 +34,7 @@ export const saveBlock = ({
   destination,
   dispatch,
   validateEntry,
+  onClose,
 }) => {
   let attemptSave = false;
   if (validateEntry) {
@@ -51,6 +52,7 @@ export const saveBlock = ({
         analytics,
       }),
       content,
+      onClose,
     }));
   }
 };

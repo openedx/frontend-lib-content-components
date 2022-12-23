@@ -39,7 +39,7 @@ export const EditorContainer = ({
       {isInitialized && children}
       <EditorFooter
         onCancel={handleCancelClicked}
-        onSave={hooks.handleSaveClicked({ dispatch, getContent, validateEntry })}
+        onSave={hooks.handleSaveClicked({ dispatch, getContent, validateEntry, onClose })}
         disableSave={!isInitialized}
         saveFailed={hooks.saveFailed()}
       />

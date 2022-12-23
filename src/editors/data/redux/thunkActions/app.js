@@ -58,13 +58,17 @@ export const initialize = (data) => (dispatch) => {
 /**
  * @param {func} onSuccess
  */
-export const saveBlock = ({ content, returnToUnit }) => (dispatch) => {
+export const saveBlock = ({ content, returnToUnit, onClose }) => (dispatch) => {
   dispatch(actions.app.setBlockContent(content));
   dispatch(requests.saveBlock({
     content,
     onSuccess: (response) => {
       dispatch(actions.app.setSaveResponse(response));
-      returnToUnit();
+      if (onClose) {
+        onClose();
+      } else {
+        returnToUnit();
+      }
     },
   }));
 };

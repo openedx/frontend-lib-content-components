@@ -24,6 +24,9 @@ export const hooks = {
   localTitle: ({ dispatch, stopEditing }) => {
     const title = useSelector(selectors.app.displayTitle);
     const [localTitle, setLocalTitle] = module.state.localTitle(title);
+    React.useEffect(() => {
+      setLocalTitle(title);
+    }, [title]);
     return {
       updateTitle: (e) => {
         if (localTitle.length <= 0) {
