@@ -159,10 +159,10 @@ export const uploadThumbnail = ({ thumbnail, videoId, ...rest }) => (dispatch, g
   }));
 };
 
-export const checkTranscripts = ({ videoId, youTubeId, ...rest }) => (dispatch, getState) => {
+export const checkTranscriptsForImport = ({ videoId, youTubeId, ...rest }) => (dispatch, getState) => {
   dispatch(module.networkRequest({
-    requestKey: RequestKeys.checkTranscripts,
-    promise: api.checkTranscripts({
+    requestKey: RequestKeys.checkTranscriptsForImport,
+    promise: api.checkTranscriptsForImport({
       blockId: selectors.app.blockId(getState()),
       videoId,
       youTubeId,
@@ -172,10 +172,10 @@ export const checkTranscripts = ({ videoId, youTubeId, ...rest }) => (dispatch, 
   }));
 };
 
-export const replaceTranscript = ({ youTubeId, ...rest }) => (dispatch, getState) => {
+export const importTranscript = ({ youTubeId, ...rest }) => (dispatch, getState) => {
   dispatch(module.networkRequest({
-    requestKey: RequestKeys.replaceTranscript,
-    promise: api.replaceTranscript({
+    requestKey: RequestKeys.importTranscript,
+    promise: api.importTranscript({
       blockId: selectors.app.blockId(getState()),
       studioEndpointUrl: selectors.app.studioEndpointUrl(getState()),
       youTubeId,
@@ -275,6 +275,6 @@ export default StrictDict({
   updateTranscriptLanguage,
   fetchCourseDetails,
   getTranscriptFile,
-  checkTranscripts,
-  replaceTranscript,
+  checkTranscriptsForImport,
+  importTranscript,
 });

@@ -34,8 +34,8 @@ jest.mock('../../services/cms/api', () => ({
   uploadTranscript: (args) => args,
   deleteTranscript: (args) => args,
   getTranscript: (args) => args,
-  checkTranscripts: (args) => args,
-  replaceTranscript: (args) => args,
+  checkTranscriptsForImport: (args) => args,
+  importTranscript: (args) => args,
 }));
 
 const apiKeys = keyStore(api);
@@ -354,17 +354,17 @@ describe('requests thunkActions module', () => {
         },
       });
     });
-    describe('checkTranscripts', () => {
+    describe('checkTranscriptsForImport', () => {
       const youTubeId = 'SoME yOUtUbEiD As String';
       const videoId = 'SoME VidEOid As String';
       testNetworkRequestAction({
-        action: requests.checkTranscripts,
+        action: requests.checkTranscriptsForImport,
         args: { youTubeId, videoId, ...fetchParams },
-        expectedString: 'with checkTranscripts promise',
+        expectedString: 'with checkTranscriptsForImport promise',
         expectedData: {
           ...fetchParams,
-          requestKey: RequestKeys.checkTranscripts,
-          promise: api.checkTranscripts({
+          requestKey: RequestKeys.checkTranscriptsForImport,
+          promise: api.checkTranscriptsForImport({
             blockId: selectors.app.blockId(testState),
             youTubeId,
             videoId,
@@ -373,16 +373,16 @@ describe('requests thunkActions module', () => {
         },
       });
     });
-    describe('replaceTranscript', () => {
+    describe('importTranscript', () => {
       const youTubeId = 'SoME yOUtUbEiD As String';
       testNetworkRequestAction({
-        action: requests.replaceTranscript,
+        action: requests.importTranscript,
         args: { youTubeId, ...fetchParams },
-        expectedString: 'with replaceTranscript promise',
+        expectedString: 'with importTranscript promise',
         expectedData: {
           ...fetchParams,
-          requestKey: RequestKeys.replaceTranscript,
-          promise: api.replaceTranscript({
+          requestKey: RequestKeys.importTranscript,
+          promise: api.importTranscript({
             blockId: selectors.app.blockId(testState),
             youTubeId,
             studioEndpointUrl: selectors.app.studioEndpointUrl(testState),

@@ -80,7 +80,7 @@ export const TranscriptWidget = ({
   transcripts,
   allowTranscriptDownloads,
   showTranscriptByDefault,
-  transcriptCheckCommand,
+  allowTranscriptImport,
   updateField,
   isUploadError,
   isDeleteError,
@@ -88,7 +88,7 @@ export const TranscriptWidget = ({
   intl,
 }) => {
   const [error] = React.useContext(ErrorContext).transcripts;
-  const [canImportTranscript, setCanImportTranscript] = React.useState(true);
+  const [showImportCard, setShowImportCard] = React.useState(true);
   const fullTextLanguages = module.hooks.transcriptLanguages(transcripts, intl);
   const hasTranscripts = module.hooks.hasTranscripts(transcripts);
 
@@ -156,8 +156,8 @@ export const TranscriptWidget = ({
         ) : (
           <>
             <FormattedMessage {...messages.addFirstTranscript} />
-            {canImportTranscript && transcriptCheckCommand
-              ? <ImportTranscriptCard setOpen={setCanImportTranscript} />
+            {showImportCard && allowTranscriptImport
+              ? <ImportTranscriptCard setOpen={setShowImportCard} />
               : null}
           </>
         )}
@@ -184,7 +184,7 @@ TranscriptWidget.propTypes = {
   transcripts: PropTypes.arrayOf(PropTypes.string).isRequired,
   allowTranscriptDownloads: PropTypes.bool.isRequired,
   showTranscriptByDefault: PropTypes.bool.isRequired,
-  transcriptCheckCommand: PropTypes.bool.isRequired,
+  allowTranscriptImport: PropTypes.bool.isRequired,
   updateField: PropTypes.func.isRequired,
   isUploadError: PropTypes.bool.isRequired,
   isDeleteError: PropTypes.bool.isRequired,
@@ -194,7 +194,7 @@ export const mapStateToProps = (state) => ({
   transcripts: selectors.video.transcripts(state),
   allowTranscriptDownloads: selectors.video.allowTranscriptDownloads(state),
   showTranscriptByDefault: selectors.video.showTranscriptByDefault(state),
-  transcriptCheckCommand: selectors.video.transcriptCheckCommand(state),
+  allowTranscriptImport: selectors.video.allowTranscriptImport(state),
   isUploadError: selectors.requests.isFailed(state, { requestKey: RequestKeys.uploadTranscript }),
   isDeleteError: selectors.requests.isFailed(state, { requestKey: RequestKeys.deleteTranscript }),
 });

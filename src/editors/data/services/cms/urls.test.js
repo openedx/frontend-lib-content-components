@@ -12,7 +12,7 @@ import {
   videoTranscripts,
   downloadVideoHandoutUrl,
   courseDetailsUrl,
-  checkTranscripts,
+  checkTranscriptsForImport,
   replaceTranscript,
 } from './urls';
 
@@ -119,9 +119,9 @@ describe('cms url methods', () => {
         .toEqual(`${studioEndpointUrl}/settings/details/${learningContextId}`);
     });
   });
-  describe('checkTranscripts', () => {
+  describe('checkTranscriptsForImport', () => {
     it('returns url with studioEndpointUrl and parameters', () => {
-      expect(checkTranscripts({ studioEndpointUrl, parameters }))
+      expect(checkTranscriptsForImport({ studioEndpointUrl, parameters }))
         .toEqual(`${studioEndpointUrl}/transcripts/check?data=${parameters}`);
     });
   });

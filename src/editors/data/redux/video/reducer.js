@@ -35,7 +35,7 @@ const initialState = {
     shareAlike: false,
   },
   allowThumbnailUpload: null,
-  transcriptCheckCommand: false,
+  allowTranscriptImport: false,
 };
 
 // eslint-disable-next-line no-unused-vars

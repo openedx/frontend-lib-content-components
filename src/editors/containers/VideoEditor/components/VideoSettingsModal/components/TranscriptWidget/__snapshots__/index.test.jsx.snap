@@ -361,6 +361,66 @@ exports[`TranscriptWidget component snapshots snapshots: renders as expected wit
 </CollapsibleFormWidget>
 `;
 
+exports[`TranscriptWidget component snapshots snapshots: renders as expected with allowTranscriptImport true 1`] = `
+<CollapsibleFormWidget
+  fontSize="x-small"
+  isError={true}
+  subtitle="None"
+  title="Transcripts"
+>
+  <ErrorAlert
+    dismissError={null}
+    hideHeading={true}
+    isError={false}
+  >
+    <FormattedMessage
+      defaultMessage="Failed to upload transcript. Please try again."
+      description="Message presented to user when transcript fails to upload"
+      id="authoring.videoeditor.transcript.error.uploadTranscriptError"
+    />
+  </ErrorAlert>
+  <ErrorAlert
+    dismissError={null}
+    hideHeading={true}
+    isError={false}
+  >
+    <FormattedMessage
+      defaultMessage="Failed to delete transcript. Please try again."
+      description="Message presented to user when transcript fails to delete"
+      id="authoring.videoeditor.transcript.error.deleteTranscriptError"
+    />
+  </ErrorAlert>
+  <Stack
+    gap={3}
+  >
+    <FormattedMessage
+      defaultMessage="Add video transcripts (.srt files only) for improved accessibility."
+      description="Message for adding first transcript"
+      id="authoring.videoeditor.transcripts.upload.firstTranscriptMessage"
+    />
+    <injectIntl(ShimmedIntlComponent)
+      setOpen={[Function]}
+    />
+    <div
+      className="mt-2"
+    >
+      <Button
+        className="text-primary-500 font-weight-bold justify-content-start pl-0"
+        onClick={[Function]}
+        size="sm"
+        variant="link"
+      >
+        <FormattedMessage
+          defaultMessage="Add a transcript"
+          description="Label for upload button"
+          id="authoring.videoeditor.transcripts.upload.label"
+        />
+      </Button>
+    </div>
+  </Stack>
+</CollapsibleFormWidget>
+`;
+
 exports[`TranscriptWidget component snapshots snapshots: renders as expected with default props 1`] = `
 <CollapsibleFormWidget
   fontSize="x-small"
@@ -517,66 +577,6 @@ exports[`TranscriptWidget component snapshots snapshots: renders as expected wit
         </div>
       </Form.Checkbox>
     </Form.Group>
-    <div
-      className="mt-2"
-    >
-      <Button
-        className="text-primary-500 font-weight-bold justify-content-start pl-0"
-        onClick={[Function]}
-        size="sm"
-        variant="link"
-      >
-        <FormattedMessage
-          defaultMessage="Add a transcript"
-          description="Label for upload button"
-          id="authoring.videoeditor.transcripts.upload.label"
-        />
-      </Button>
-    </div>
-  </Stack>
-</CollapsibleFormWidget>
-`;
-
-exports[`TranscriptWidget component snapshots snapshots: renders as expected with transcriptCheckCommand true 1`] = `
-<CollapsibleFormWidget
-  fontSize="x-small"
-  isError={true}
-  subtitle="None"
-  title="Transcripts"
->
-  <ErrorAlert
-    dismissError={null}
-    hideHeading={true}
-    isError={false}
-  >
-    <FormattedMessage
-      defaultMessage="Failed to upload transcript. Please try again."
-      description="Message presented to user when transcript fails to upload"
-      id="authoring.videoeditor.transcript.error.uploadTranscriptError"
-    />
-  </ErrorAlert>
-  <ErrorAlert
-    dismissError={null}
-    hideHeading={true}
-    isError={false}
-  >
-    <FormattedMessage
-      defaultMessage="Failed to delete transcript. Please try again."
-      description="Message presented to user when transcript fails to delete"
-      id="authoring.videoeditor.transcript.error.deleteTranscriptError"
-    />
-  </ErrorAlert>
-  <Stack
-    gap={3}
-  >
-    <FormattedMessage
-      defaultMessage="Add video transcripts (.srt files only) for improved accessibility."
-      description="Message for adding first transcript"
-      id="authoring.videoeditor.transcripts.upload.firstTranscriptMessage"
-    />
-    <injectIntl(ShimmedIntlComponent)
-      setOpen={[Function]}
-    />
     <div
       className="mt-2"
     >

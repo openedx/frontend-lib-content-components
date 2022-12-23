@@ -51,7 +51,7 @@ export const apiMethods = {
       data,
     );
   },
-  checkTranscripts: ({
+  checkTranscriptsForImport: ({
     studioEndpointUrl,
     blockId,
     youTubeId,
@@ -59,13 +59,13 @@ export const apiMethods = {
   }) => {
     const getJSON = `{"locator":"${blockId}","videos":[{"mode":"youtube","video":"${youTubeId}","type":"youtube"},{"mode":"edx_video_id","type":"edx_video_id","video":"${videoId}"}]}`;
     return get(
-      urls.checkTranscripts({
+      urls.checkTranscriptsForImport({
         studioEndpointUrl,
         parameters: encodeURIComponent(getJSON),
       }),
     );
   },
-  replaceTranscript: ({
+  importTranscript: ({
     studioEndpointUrl,
     blockId,
     youTubeId,

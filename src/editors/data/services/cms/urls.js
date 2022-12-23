@@ -55,7 +55,7 @@ export const courseDetailsUrl = ({ studioEndpointUrl, learningContextId }) => (
   `${studioEndpointUrl}/settings/details/${learningContextId}`
 );
 
-export const checkTranscripts = ({ studioEndpointUrl, parameters }) => (
+export const checkTranscriptsForImport = ({ studioEndpointUrl, parameters }) => (
   `${studioEndpointUrl}/transcripts/check?data=${parameters}`
 );
 

@@ -63,13 +63,13 @@ export const loadVideoData = () => (dispatch, getState) => {
   }));
   const youTubeId = parseYoutubeId(videoSource);
   if (youTubeId) {
-    dispatch(requests.checkTranscripts({
+    dispatch(requests.checkTranscriptsForImport({
       videoId,
       youTubeId,
       onSuccess: (response) => {
         if (response.data.command === 'import') {
           dispatch(actions.video.updateField({
-            transcriptCheckCommand: true,
+            allowTranscriptImport: true,
           }));
         }
       },
@@ -245,7 +245,7 @@ export const importTranscript = () => (dispatch, getState) => {
   // Remove the placeholder '' from the unset language from the list of transcripts.
   const transcriptsPlaceholderRemoved = (transcripts === []) ? transcripts : removeItemOnce(transcripts, '');
 
-  dispatch(requests.replaceTranscript({
+  dispatch(requests.importTranscript({
     youTubeId: parseYoutubeId(videoSource),
     onSuccess: (response) => {
       dispatch(actions.video.updateField({

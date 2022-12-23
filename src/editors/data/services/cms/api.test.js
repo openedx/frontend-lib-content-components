@@ -20,7 +20,7 @@ jest.mock('./urls', () => ({
   videoTranscripts: jest.fn().mockName('urls.videoTranscripts'),
   allowThumbnailUpload: jest.fn().mockName('urls.allowThumbnailUpload'),
   thumbnailUpload: jest.fn().mockName('urls.thumbnailUpload'),
-  checkTranscripts: jest.fn().mockName('urls.checkTranscripts'),
+  checkTranscriptsForImport: jest.fn().mockName('urls.checkTranscriptsForImport'),
   replaceTranscript: jest.fn().mockName('urls.replaceTranscript'),
 }));
 
@@ -254,25 +254,25 @@ describe('cms api', () => {
     const language = 'la';
     const videoId = 'sOmeVIDeoiD';
     const youTubeId = 'SOMeyoutUBeid';
-    describe('checkTranscripts', () => {
+    describe('checkTranscriptsForImport', () => {
       const getJSON = `{"locator":"${blockId}","videos":[{"mode":"youtube","video":"${youTubeId}","type":"youtube"},{"mode":"edx_video_id","type":"edx_video_id","video":"${videoId}"}]}`;
-      it('should call get with url.checkTranscripts', () => {
-        apiMethods.checkTranscripts({
+      it('should call get with url.checkTranscriptsForImport', () => {
+        apiMethods.checkTranscriptsForImport({
           studioEndpointUrl,
           blockId,
           videoId,
           youTubeId,
         });
-        expect(get).toHaveBeenCalledWith(urls.checkTranscripts({
+        expect(get).toHaveBeenCalledWith(urls.checkTranscriptsForImport({
           studioEndpointUrl,
           parameters: encodeURIComponent(getJSON),
         }));
       });
     });
-    describe('replaceTranscript', () => {
+    describe('importTranscript', () => {
       const getJSON = `{"locator":"${blockId}","videos":[{"mode":"youtube","video":"${youTubeId}","type":"youtube"}]}`;
       it('should call get with url.replaceTranscript', () => {
-        apiMethods.replaceTranscript({ studioEndpointUrl, blockId, youTubeId });
+        apiMethods.importTranscript({ studioEndpointUrl, blockId, youTubeId });
         expect(get).toHaveBeenCalledWith(urls.replaceTranscript({
           studioEndpointUrl,
           parameters: encodeURIComponent(getJSON),

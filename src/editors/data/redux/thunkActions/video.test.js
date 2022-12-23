@@ -28,8 +28,8 @@ jest.mock('./requests', () => ({
   uploadTranscript: (args) => ({ uploadTranscript: args }),
   getTranscriptFile: (args) => ({ getTranscriptFile: args }),
   updateTranscriptLanguage: (args) => ({ updateTranscriptLanguage: args }),
-  checkTranscripts: (args) => ({ checkTranscripts: args }),
-  replaceTranscript: (args) => ({ replaceTranscript: args }),
+  checkTranscriptsForImport: (args) => ({ checkTranscriptsForImport: args }),
+  importTranscript: (args) => ({ importTranscript: args }),
 }));
 
 jest.mock('../../../utils', () => ({
@@ -49,7 +49,7 @@ const mockThumbnail = 'sOMefILE';
 const mockThumbnailResponse = { data: { image_url: 'soMEimAGEUrL' } };
 const thumbnailUrl = 'soMEimAGEUrL';
 const mockAllowThumbnailUpload = { data: { allowThumbnailUpload: 'soMEbOolEAn' } };
-const mockTranscriptCheckCommand = { data: { command: 'import' } };
+const mockAllowTranscriptImport = { data: { command: 'import' } };
 
 const testMetadata = {
   download_track: 'dOWNlOAdTraCK',
@@ -126,9 +126,9 @@ describe('video thunkActions', () => {
       expect(dispatchedLoad).not.toEqual(undefined);
       expect(dispatchedAction1.allowThumbnailUpload).not.toEqual(undefined);
     });
-    it('dispatches checkTranscripts action', () => {
+    it('dispatches checkTranscriptsForImport action', () => {
       expect(dispatchedLoad).not.toEqual(undefined);
-      expect(dispatchedAction2.checkTranscripts).not.toEqual(undefined);
+      expect(dispatchedAction2.checkTranscriptsForImport).not.toEqual(undefined);
     });
     it('dispatches actions.video.load', () => {
       expect(dispatchedLoad.load).toEqual({
@@ -170,9 +170,9 @@ describe('video thunkActions', () => {
       }));
       dispatch.mockClear();
 
-      dispatchedAction2.checkTranscripts.onSuccess(mockTranscriptCheckCommand);
+      dispatchedAction2.checkTranscriptsForImport.onSuccess(mockAllowTranscriptImport);
       expect(dispatch).toHaveBeenCalledWith(actions.video.updateField({
-        transcriptCheckCommand: true,
+        allowTranscriptImport: true,
       }));
     });
   });
@@ -375,11 +375,11 @@ describe('video thunkActions', () => {
       [[dispatchedAction]] = dispatch.mock.calls;
     });
     it('dispatches uploadTranscript action', () => {
-      expect(dispatchedAction.replaceTranscript).not.toEqual(undefined);
+      expect(dispatchedAction.importTranscript).not.toEqual(undefined);
     });
     it('dispatches actions.video.updateField on success', () => {
       dispatch.mockClear();
-      dispatchedAction.replaceTranscript.onSuccess();
+      dispatchedAction.importTranscript.onSuccess();
       expect(dispatch).toHaveBeenCalledWith(actions.video.updateField(testUpload));
     });
   });
