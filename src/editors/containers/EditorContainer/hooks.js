@@ -38,3 +38,6 @@ export const isInitialized = () => useSelector(selectors.app.isInitialized);
 export const saveFailed = () => useSelector((state) => (
   selectors.requests.isFailed(state, { requestKey: RequestKeys.saveBlock })
 ));
+export const savePending = () => useSelector((state) => (
+  selectors.requests.isPending(state, { requestKey: RequestKeys.saveBlock })
+));
