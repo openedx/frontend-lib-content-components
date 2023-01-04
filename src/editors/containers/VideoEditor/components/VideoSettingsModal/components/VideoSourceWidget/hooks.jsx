@@ -1,49 +1,20 @@
 import { actions } from '../../../../../../data/redux';
-import { isEdxVideo } from '../../../../../../data/services/cms/api';
 
-/**
- * updateVideoId({ dispatch })({e, source})
- * updateVideoId takes the current onBlur event, the current object of the video
- * source, and dispatch  method, and updates the redux value for all the fields to
- * their default values except videoId, fallbackVideos, and handouts.
- * @param {event} e - object for onBlur event
- * @param {func} dispatch - redux dispatch method
- * @param {object} source - object for the Video Source field functions and values
- */
-export const updateVideoId = ({ dispatch }) => ({ e, source }) => {
-  if (source.local !== '') {
-    if (source.formValue !== e.target.value) {
-      source.onBlur(e);
-      let videoId;
-      let videoSource;
-      if (isEdxVideo(source.local)) {
-        videoId = source.local;
-        videoSource = '';
-      } else if (source.local.includes('youtu.be') || source.local.includes('youtube')) {
-        videoId = '';
-        videoSource = source.local;
-      } else {
-        videoId = '';
-        videoSource = source.local;
-      }
-      dispatch(actions.video.updateField({
-        videoId,
-        videoSource,
-        allowVideoDownloads: false,
-        thumbnail: null,
-        transcripts: [],
-        allowTranscriptDownloads: false,
-        showTranscriptByDefault: false,
-        duration: {
-          startTime: '00:00:00',
-          stopTime: '00:00:00',
-          total: '00:00:00',
-        },
-        licenseType: null,
-      }));
-    }
-  }
-};
+export const updateVideoURL = ({ dispatch }) => ({ e }) => dispatch(
+  actions.video.updateField({
+    videoSource: e.target.value
+  })
+);
+
+export const updateVideoId = ({ dispatch }) => ({ e }) => dispatch(
+  actions.video.updateField({
+    videoId: e.target.value
+  })
+);
+
+export const addFallbackVideo = ({ fallbackVideos, dispatch }) => () => dispatch(
+  actions.video.updateField({ fallbackVideos: [...fallbackVideos.formValue, ''] })
+);
 
 /**
  * deleteFallbackVideo({ fallbackVideos, dispatch })(videoUrl)
@@ -67,4 +38,9 @@ export const deleteFallbackVideo = ({ fallbackVideos, dispatch }) => (videoUrl) 
   dispatch(actions.video.updateField({ fallbackVideos: updatedFallbackVideos }));
 };
 
-export default { deleteFallbackVideo };
+export default {
+  updateVideoId,
+  updateVideoURL,
+  addFallbackVideo,
+  deleteFallbackVideo,
+};
