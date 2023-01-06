@@ -4,6 +4,14 @@ import { actions } from '..';
 import { OLXParser } from '../../../containers/ProblemEditor/data/OLXParser';
 import { parseSettings } from '../../../containers/ProblemEditor/data/SettingsParser';
 import { ProblemTypeKeys } from '../../constants/problem';
+import ReactStateOLXParser from '../../../containers/ProblemEditor/data/ReactStateOLXParser';
+
+export const switchToAdvancedEditor = () => (dispatch, getState) => {
+  const state = getState();
+  const reactOLXParser = new ReactStateOLXParser({ problem: state.problem });
+  const rawOlx = reactOLXParser.buildOLX();
+  dispatch(actions.problem.updateField({ problemType: ProblemTypeKeys.ADVANCED, rawOlx }));
+};
 
 export const initializeProblem = (blockValue) => (dispatch) => {
   const rawOLX = _.get(blockValue, 'data.data', {});
@@ -35,4 +43,4 @@ export const initializeProblem = (blockValue) => (dispatch) => {
   }));
 };
 
-export default { initializeProblem };
+export default { initializeProblem, switchToAdvancedEditor };

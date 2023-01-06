@@ -149,6 +149,11 @@ export const messages = {
     defaultMessage: 'Type',
     description: 'Type settings card title',
   },
+  SwitchButtonLabel: {
+    id: 'authoring.problemeditor.settings.switchtoadvancededitor.label',
+    defaultMessage: 'Switch To Advanced Editor',
+    description: 'button to switch to the advanced mode of the editor.',
+  },
 };
 
 export default messages;
