@@ -15,10 +15,16 @@ export const switchToAdvancedEditor = () => (dispatch, getState) => {
 
 export const initializeProblem = (blockValue) => (dispatch) => {
   const rawOLX = _.get(blockValue, 'data.data', {});
-  const olxParser = new OLXParser(rawOLX);
-
-  const parsedProblem = olxParser.getParsedOLXData();
-
+  let olxParser;
+  let parsedProblem;
+  try {
+    olxParser = new OLXParser(rawOLX);
+    parsedProblem = olxParser.getParsedOLXData();
+  } catch {
+    console.error('The Problem Could Not Be Parsed from OLX. redirecting to Advanced editor.');
+    dispatch(actions.problem.load({ problemType: ProblemTypeKeys.ADVANCED, rawOLX }));
+    return;
+  }
   // if problem is blank, enable selection and return.
   if (_.isEmpty(parsedProblem)) {
     dispatch(actions.problem.setEnableTypeSelection());
