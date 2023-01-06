@@ -2,8 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import { formatMessage } from '../../../../../../../testUtils';
-import { actions } from '../../../../../../data/redux';
-import { VideoSourceWidget, mapDispatchToProps } from '.';
+import { VideoSourceWidget } from '.';
 
 jest.mock('../../../../../../data/redux', () => ({
   actions: {
@@ -51,12 +50,6 @@ describe('VideoSourceWidget', () => {
       expect(
         shallow(<VideoSourceWidget {...props} />),
       ).toMatchSnapshot();
-    });
-  });
-  describe('mapDispatchToProps', () => {
-    const dispatch = jest.fn();
-    test('updateField from actions.video.updateField', () => {
-      expect(mapDispatchToProps.updateField).toEqual(dispatch(actions.video.updateField));
     });
   });
 });

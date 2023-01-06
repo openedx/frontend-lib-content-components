@@ -46,10 +46,11 @@ export const VideoSourceWidget = ({
       [widgetHooks.selectorKeys.allowVideoDownloads]: widgetHooks.genericWidget,
     },
   });
-  const updateVideoId = module.updateVideoId({ dispatch });
-  const updateVideoURL = module.updateVideoURL({ dispatch });
-  const deleteFallbackVideo = module.deleteFallbackVideo({ fallbackVideos: fallbackVideos.formValue, dispatch });
-  const addFallbackVideo = module.addFallbackVideo({ fallbackVideos: fallbackVideos.formValue, dispatch });
+  const { updateVideoId, updateVideoURL } = module.sourceHooks({ dispatch });
+  const {
+    addFallbackVideo,
+    deleteFallbackVideo,
+  } = module.fallbackHooks({ fallbackVideos: fallbackVideos.formValue, dispatch });
 
   return (
     <CollapsibleFormWidget
