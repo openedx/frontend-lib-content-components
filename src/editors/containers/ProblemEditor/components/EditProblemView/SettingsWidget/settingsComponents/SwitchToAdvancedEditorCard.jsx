@@ -8,8 +8,6 @@ import { thunkActions } from '../../../../../../data/redux';
 
 export const SwitchToAdvancedEditorCard = ({
   switchToAdvancedEditor,
-  // inject
-  intl,
 }) => (
   <Card>
     <Button

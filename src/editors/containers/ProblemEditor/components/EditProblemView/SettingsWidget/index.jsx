@@ -77,7 +77,7 @@ export const SettingsWidget = ({
                     <MatlabCard matLabApiKey={settings.matLabApiKey} updateSettings={updateSettings} />
                   </Row>
                   <Row className="my-2">
-                    <SwitchToAdvancedEditorCard/>
+                    <SwitchToAdvancedEditorCard />
                   </Row>
                 </Collapsible.Body>
               </Collapsible.Advanced>

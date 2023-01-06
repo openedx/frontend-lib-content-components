@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SwitchToAdvancedEditorCard snapshot snapshot: SwitchToAdvancedEditorCard 1`] = `
+<Card>
+  <Button
+    className="my-3 ml-2"
+    onClick={[MockFunction switchToAdvancedEditor]}
+    size="inline"
+    variant="link"
+  >
+    <FormattedMessage
+      defaultMessage="Switch To Advanced Editor"
+      description="button to switch to the advanced mode of the editor."
+      id="authoring.problemeditor.settings.switchtoadvancededitor.label"
+    />
+  </Button>
+</Card>
+`;
