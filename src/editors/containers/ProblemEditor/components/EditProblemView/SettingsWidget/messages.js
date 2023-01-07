@@ -154,6 +154,21 @@ export const messages = {
     defaultMessage: 'Switch To Advanced Editor',
     description: 'button to switch to the advanced mode of the editor.',
   },
+  ConfirmSwitchMessage: {
+    id: 'authoring.problemeditor.settings.switchtoadvancededitor.message',
+    defaultMessage: 'If you use the advanced editor, this problem will be converted to OLX and you will not be able to return to the simple editor.',
+    description: 'message to confirm that a user wants to use the advanced editor',
+  },
+  ConfirmSwitchMessageTitle: {
+    id: 'authoring.problemeditor.settings.switchtoadvancededitor.message',
+    defaultMessage: 'Convert to OLX?',
+    description: 'message to confirm that a user wants to use the advanced editor',
+  },
+  ConfirmSwitchButtonLabel: {
+    id: 'authoring.problemeditor.settings.switchtoadvancededitor.message',
+    defaultMessage: 'Switch To Advanced Editor',
+    description: 'message to confirm that a user wants to use the advanced editor',
+  },
 };
 
 export default messages;
