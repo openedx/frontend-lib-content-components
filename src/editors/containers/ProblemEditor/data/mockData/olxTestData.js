@@ -565,6 +565,5 @@ export const advancedProblemOlX = {
 </problem>`,
 };
 export const blankProblemOLX = {
-  rawOLX: `<problem>
-  </problem>`,
+  rawOLX: '<problem></problem>',
 };
