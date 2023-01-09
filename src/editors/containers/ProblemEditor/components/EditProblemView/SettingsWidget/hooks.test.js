@@ -18,6 +18,7 @@ jest.mock('../../../../../data/redux', () => ({
     problem: {
       updateSettings: (args) => ({ updateSettings: args }),
       updateField: (args) => ({ updateField: args }),
+      updateAnswer: (args) => ({ updateAnswer: args }),
     },
   },
 }));
@@ -219,7 +220,8 @@ describe('Problem settings hooks', () => {
     test('test onClick', () => {
       const typekey = 'TEXTINPUT';
       const updateField = jest.fn();
-      output = hooks.typeRowHooks(typekey, updateField);
+      const updateAnswer = jest.fn();
+      output = hooks.typeRowHooks({ answers: [], correctAnswerCount: 0, typeKey: typekey, updateField, updateAnswer });
       output.onClick();
       expect(updateField).toHaveBeenCalledWith({ problemType: typekey });
     });
