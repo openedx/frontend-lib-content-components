@@ -83,17 +83,17 @@ export const determineVideoSources = ({
   html5Sources,
 }) => {
   const youtubeUrl = `https://youtu.be/${youtubeId}`;
-  let videoUrl = '';
-  let fallbackVideos = [];
+  let videoUrl;
+  let fallbackVideos;
   if (youtubeId) {
-    [videoUrl, fallbackVideos] = [youtubeUrl, html5Sources ? html5Sources : []];
+    [videoUrl, fallbackVideos] = [youtubeUrl, html5Sources];
   } else if (Array.isArray(html5Sources) && html5Sources[0]) {
     [videoUrl, fallbackVideos] = [html5Sources[0], html5Sources.slice(1)];
   }
   return {
     videoId: edxVideoId,
-    videoUrl,
-    fallbackVideos,
+    videoUrl: videoUrl || '',
+    fallbackVideos: fallbackVideos || [],
   };
 };
 

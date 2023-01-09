@@ -151,7 +151,6 @@ export const apiMethods = {
         metadata: { display_name: title, ...content.settings },
       };
     } else if (blockType === 'video') {
-      console.log('test', content)
       const {
         html5Sources,
         edxVideoId,
@@ -227,8 +226,7 @@ export const processVideoIds = ({
   if (videoUrl) {
     if (module.parseYoutubeId(videoUrl)) {
       youtubeId = module.parseYoutubeId(videoUrl);
-    }
-      else {
+    } else {
       html5Sources.push(videoUrl);
     }
   }
