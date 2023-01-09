@@ -32,7 +32,7 @@ describe('TypeRow', () => {
       expect(typeRowHooks).toHaveBeenCalledWith({
         answers: props.answers,
         correctAnswerCount: props.correctAnswerCount,
-        typeKey, 
+        typeKey,
         updateField: props.updateField,
         updateAnswer: props.updateAnswer,
       });

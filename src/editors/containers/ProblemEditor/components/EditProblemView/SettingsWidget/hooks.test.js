@@ -221,7 +221,13 @@ describe('Problem settings hooks', () => {
       const typekey = 'TEXTINPUT';
       const updateField = jest.fn();
       const updateAnswer = jest.fn();
-      output = hooks.typeRowHooks({ answers: [], correctAnswerCount: 0, typeKey: typekey, updateField, updateAnswer });
+      output = hooks.typeRowHooks({
+        answers: [],
+        correctAnswerCount: 0,
+        typeKey: typekey,
+        updateField,
+        updateAnswer,
+      });
       output.onClick();
       expect(updateField).toHaveBeenCalledWith({ problemType: typekey });
     });
