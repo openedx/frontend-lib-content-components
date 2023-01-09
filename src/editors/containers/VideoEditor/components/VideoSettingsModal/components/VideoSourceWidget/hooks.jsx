@@ -1,8 +1,8 @@
 import { actions } from '../../../../../../data/redux';
 
 export const sourceHooks = ({ dispatch }) => ({
-  updateVideoURL: ({ e }) => dispatch(actions.video.updateField({ videoSource: e.target.value })),
-  updateVideoId: ({ e }) => dispatch(actions.video.updateField({ videoId: e.target.value })),
+  updateVideoURL: ({ e }) => dispatch(actions.video.updateField({ videoSource: e.target.value, videoId: '' })),
+  updateVideoId: ({ e }) => dispatch(actions.video.updateField({ videoId: e.target.value, videoSource: '' })),
 });
 
 export const fallbackHooks = ({ fallbackVideos, dispatch }) => ({

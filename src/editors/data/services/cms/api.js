@@ -151,13 +151,14 @@ export const apiMethods = {
         metadata: { display_name: title, ...content.settings },
       };
     } else if (blockType === 'video') {
+      console.log('test', content)
       const {
         html5Sources,
         edxVideoId,
         youtubeId,
       } = module.processVideoIds({
         videoId: content.videoId,
-        videoSource: content.videoSource,
+        videoUrl: content.videoSource,
         fallbackVideos: content.fallbackVideos,
       });
       response = {
@@ -217,21 +218,19 @@ export const loadImages = (rawImages) => camelizeKeys(rawImages).reduce(
 
 export const processVideoIds = ({
   videoId,
-  videoSource,
+  videoUrl,
   fallbackVideos,
-  edxVideoId,
 }) => {
-  let newEdxVideoId = edxVideoId;
   let youtubeId = '';
   const html5Sources = [];
 
-  // overwrite videoId if source is changed.
-  if (module.isEdxVideo(videoId)) {
-    newEdxVideoId = videoId;
-  } else if (module.parseYoutubeId(videoSource)) {
-    youtubeId = module.parseYoutubeId(videoSource);
-  } else if (videoSource) {
-    html5Sources.push(videoSource);
+  if (videoUrl) {
+    if (module.parseYoutubeId(videoUrl)) {
+      youtubeId = module.parseYoutubeId(videoUrl);
+    }
+      else {
+      html5Sources.push(videoUrl);
+    }
   }
 
   if (fallbackVideos) {
@@ -239,7 +238,7 @@ export const processVideoIds = ({
   }
 
   return {
-    edxVideoId: newEdxVideoId,
+    edxVideoId: videoId,
     html5Sources,
     youtubeId,
   };
