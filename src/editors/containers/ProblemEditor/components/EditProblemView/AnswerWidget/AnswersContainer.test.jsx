@@ -28,7 +28,7 @@ describe('AnswersContainer', () => {
       expect(shallow(<module.AnswersContainer {...props} />)).toMatchSnapshot();
     });
     test('snapshot: renders correctly with answers', () => {
-      expect(shallow(<module.AnswersContainer answers={[{ id: 'a', title: 'sOMetITlE' }, { id: 'b', title: 'sOMetITlE' }]} {...props} />)).toMatchSnapshot();
+      expect(shallow(<module.AnswersContainer answers={[{ id: 'a', title: 'sOMetITlE', correct: true }, { id: 'b', title: 'sOMetITlE', correct: true }]} {...props} />)).toMatchSnapshot();
     });
   });
   describe('mapStateToProps', () => {

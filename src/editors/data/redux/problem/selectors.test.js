@@ -37,5 +37,16 @@ describe('problem selectors unit tests', () => {
         simpleKeys.question,
       ].map(testSimpleSelector);
     });
+    test('simple selector completeState equals the entire state', () => {
+      const { preSelectors, cb } = simpleSelectors[simpleKeys.completeState];
+      expect(preSelectors).toEqual([problemState]);
+      expect(cb({
+        ...testState,
+        [simpleKeys.completeState]: testValue,
+      })).toEqual({
+        ...testState,
+        [simpleKeys.completeState]: testValue,
+      });
+    });
   });
 });
