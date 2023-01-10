@@ -1,5 +1,4 @@
 import _ from 'lodash-es';
-import * as requests from './requests';
 import { actions } from '..';
 import { OLXParser } from '../../../containers/ProblemEditor/data/OLXParser';
 import { parseSettings } from '../../../containers/ProblemEditor/data/SettingsParser';
@@ -32,7 +31,6 @@ export const getDataFromOlx = ({ rawOLX, rawSettings }) => {
     return { problemType: ProblemTypeKeys.ADVANCED, rawOLX, settings: parseSettings(rawSettings) };
   }
   if (parsedProblem?.problemType === ProblemTypeKeys.ADVANCED) {
-    console.log(parsedProblem?.problemType);
     return { problemType: ProblemTypeKeys.ADVANCED, rawOLX, settings: parseSettings(rawSettings) };
   }
   const { settings, ...data } = parsedProblem;
@@ -40,13 +38,12 @@ export const getDataFromOlx = ({ rawOLX, rawSettings }) => {
   if (!_.isEmpty(rawOLX) && !_.isEmpty(data)) {
     return { ...data, rawOLX, settings: parsedSettings };
   }
+  return {};
 };
 
 export const initializeProblem = (blockValue) => (dispatch) => {
-  console.log('Start Here');
   const rawOLX = _.get(blockValue, 'data.data', {});
   const rawSettings = _.get(blockValue, 'data.metadata', {});
-  console.log({ rawOLX, rawSettings });
 
   if (isBlankProblem({ rawOLX })) {
     dispatch(actions.problem.setEnableTypeSelection());
