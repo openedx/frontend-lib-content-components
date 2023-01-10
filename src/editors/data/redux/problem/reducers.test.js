@@ -132,7 +132,7 @@ describe('problem reducer', () => {
             }],
           },
           actions.deleteAnswer(answer),
-          )).toEqual({
+        )).toEqual({
           ...testingState,
           correctAnswerCount: 1,
           answers: [
