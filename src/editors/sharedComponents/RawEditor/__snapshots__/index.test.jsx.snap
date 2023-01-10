@@ -12,17 +12,9 @@ exports[`RawEditor renders as expected with default behavior 1`] = `
   <Alert
     variant="danger"
   >
-    You are using the raw HTML editor.
+    You are using the raw 
+    html
+     editor.
   </Alert>
-  <injectIntl(ShimmedIntlComponent)
-    innerRef={
-      Object {
-        "current": Object {
-          "value": "Ref Value",
-        },
-      }
-    }
-    value="eDiTablE Text"
-  />
 </div>
 `;
