@@ -21,7 +21,6 @@ describe('problem selectors unit tests', () => {
   });
   describe('simpleSelectors', () => {
     const testSimpleSelector = (key) => {
-      console.log(key);
       test(`${key} simpleSelector returns its value from the problem store`, () => {
         const { preSelectors, cb } = simpleSelectors[key];
         expect(preSelectors).toEqual([problemState]);
