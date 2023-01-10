@@ -10,8 +10,8 @@ import { EditorContainer } from '../../../EditorContainer';
 import { selectors } from '../../../../data/redux';
 import ReactStateSettingsParser from '../../data/ReactStateSettingsParser';
 import ReactStateOLXParser from '../../data/ReactStateOLXParser';
-import { AdvanceProblemKeys } from '../../../../data/constants/problem';
 import RawEditor from '../../../../sharedComponents/RawEditor';
+import { ProblemTypeKeys } from '../../../../data/constants/problem';
 
 export const EditProblemView = ({
   problemType,
@@ -28,7 +28,7 @@ export const EditProblemView = ({
     };
   };
 
-  if (Object.values(AdvanceProblemKeys).includes(problemType)) {
+  if (problemType === ProblemTypeKeys.ADVANCED) {
     return (
       <EditorContainer getContent={parseState(problemState)}>
         <RawEditor editorRef={editorRef} lang="xml" content="placeholder" />
