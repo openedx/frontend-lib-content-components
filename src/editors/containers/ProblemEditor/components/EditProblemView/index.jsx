@@ -28,10 +28,29 @@ export const EditProblemView = ({
     };
   };
 
+  const parseAdvancedState = (problem, ref) => () => {
+    const reactSettingsParser = new ReactStateSettingsParser(problem);
+    const rawOLX = ref?.current?.state.doc.toString();
+
+    return {
+      settings: reactSettingsParser.getSettings(),
+      olx: rawOLX,
+    };
+  };
+
   if (problemType === ProblemTypeKeys.ADVANCED) {
     return (
-      <EditorContainer getContent={parseState(problemState)}>
-        <RawEditor editorRef={editorRef} lang="xml" content="placeholder" />
+      <EditorContainer getContent={parseAdvancedState(problemState, editorRef)}>
+        <Container fluid>
+          <Row>
+            <Col xs={9}>
+              <RawEditor editorRef={editorRef} lang="xml" content={problemState.rawOLX} />
+            </Col>
+            <Col xs={3}>
+              <SettingsWidget problemType={problemType} />
+            </Col>
+          </Row>
+        </Container>
       </EditorContainer>
     );
   }

@@ -4,6 +4,7 @@ import { basicSetup } from 'codemirror';
 import { EditorState } from '@codemirror/state';
 import { EditorView } from '@codemirror/view';
 import { html } from '@codemirror/lang-html';
+import { xml } from '@codemirror/lang-xml';
 
 import alphanumericMap from './constants';
 import './index.scss';
@@ -24,12 +25,20 @@ export const cleanHTML = ({ initialText }) => {
   return initialText.replace(translateRegex, translator);
 };
 
-export const createCodeMirrorDomNode = ({ ref, initialText, upstreamRef }) => {
+const CODEMIRROR_LANGUAGES = { HTML: 'html', XML: 'xml' };
+
+export const createCodeMirrorDomNode = ({
+  ref,
+  initialText,
+  upstreamRef,
+  lang,
+}) => {
   useEffect(() => {
+    const languageExtension = lang === CODEMIRROR_LANGUAGES.HTML ? html() : xml();
     const cleanText = cleanHTML({ initialText });
     const newState = EditorState.create({
       doc: cleanText,
-      extensions: [basicSetup, html(), EditorView.lineWrapping],
+      extensions: [basicSetup, languageExtension, EditorView.lineWrapping],
     });
     const view = new EditorView({ state: newState, parent: ref.current });
     // eslint-disable-next-line no-param-reassign
