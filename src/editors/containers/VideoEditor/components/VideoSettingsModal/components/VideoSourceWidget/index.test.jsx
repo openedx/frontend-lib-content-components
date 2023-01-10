@@ -32,8 +32,8 @@ jest.mock('../hooks', () => ({
 
 jest.mock('./hooks', () => ({
   sourceHooks: jest.fn().mockReturnValue({
-    updateVideoId: jest.fn().mockName('updateVideoId'),
-    updateVideoURL: jest.fn().mockName('updateVideoURL'),
+    updateVideoId: (args) => ({ updateVideoId: args }),
+    updateVideoURL: (args) => ({ updateVideoURL: args }),
   }),
   fallbackHooks: jest.fn().mockReturnValue({
     addFallbackVideo: jest.fn().mockName('addFallbackVideo'),
@@ -58,22 +58,23 @@ describe('VideoSourceWidget', () => {
   describe('behavior inspection', () => {
     let el;
     let hook;
-    let e = {
-      target: { value: 'vAlUe' },
-    };
     beforeEach(() => {
       el = shallow(<VideoSourceWidget {...props} />);
       hook = hooks.sourceHooks({ dispatch });
     });
     test('updateVideoId is tied to id field onBlur', () => {
-      const expected = (e) = hook.updateVideoId({ e });
-      expect(el.children().children().at(0)
+      const expected = hook.updateVideoId;
+      expect(el
+        // eslint-disable-next-line
+        .children().at(0).children().at(0).children().at(0)
         .props().onBlur).toEqual(expected);
     });
     test('updateVideoURL is tied to url field onBlur', () => {
-      const expected = (e) = hook.updateVideoURL({ e });
-      expect(el.children().children().at(2)
+      const expected = hook.updateVideoURL;
+      expect(el
+        // eslint-disable-next-line
+        .children().at(0).children().at(0).children().at(2)
         .props().onBlur).toEqual(expected);
     });
-  })
+  });
 });

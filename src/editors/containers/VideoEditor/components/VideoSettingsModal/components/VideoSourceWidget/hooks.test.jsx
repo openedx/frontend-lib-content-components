@@ -30,7 +30,7 @@ describe('VideoEditorHandout hooks', () => {
     });
     describe('updateVideoURL', () => {
       it('dispatches updateField action with new videoSource', () => {
-        hook.updateVideoURL({ e });
+        hook.updateVideoURL(e);
         expect(dispatch).toHaveBeenCalledWith(
           actions.video.updateField({
             videoSource: e.target.value,
@@ -40,7 +40,7 @@ describe('VideoEditorHandout hooks', () => {
     });
     describe('updateVideoId', () => {
       it('dispatches updateField action with new videoId', () => {
-        hook.updateVideoId({ e });
+        hook.updateVideoId(e);
         expect(dispatch).toHaveBeenCalledWith(
           actions.video.updateField({
             videoId: e.target.value,
