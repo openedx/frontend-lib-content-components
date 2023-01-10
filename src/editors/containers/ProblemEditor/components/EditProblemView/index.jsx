@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 
 import { connect } from 'react-redux';
@@ -11,11 +11,14 @@ import { selectors } from '../../../../data/redux';
 import ReactStateSettingsParser from '../../data/ReactStateSettingsParser';
 import ReactStateOLXParser from '../../data/ReactStateOLXParser';
 import { AdvanceProblemKeys } from '../../../../data/constants/problem';
+import RawEditor from '../../../../sharedComponents/RawEditor';
 
 export const EditProblemView = ({
   problemType,
   problemState,
 }) => {
+  const editorRef = useRef(null);
+
   const parseState = (problem) => () => {
     const reactSettingsParser = new ReactStateSettingsParser(problem);
     const reactOLXParser = new ReactStateOLXParser({ problem });
@@ -24,9 +27,15 @@ export const EditProblemView = ({
       olx: reactOLXParser.buildOLX(),
     };
   };
+
   if (Object.values(AdvanceProblemKeys).includes(problemType)) {
-    return `hello raw editor with ${problemType}`;
+    return (
+      <EditorContainer getContent={parseState(problemState)}>
+        <RawEditor editorRef={editorRef} lang="xml" content="placeholder" />
+      </EditorContainer>
+    );
   }
+
   return (
     <EditorContainer getContent={parseState(problemState)}>
       <Container fluid>

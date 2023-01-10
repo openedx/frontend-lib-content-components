@@ -14,10 +14,10 @@ import * as hooks from './hooks';
 export const CodeEditor = ({
   innerRef,
   value,
+  lang,
   // injected
   intl,
 }) => {
-  console.log('******** moved code editor *********');
   const DOMref = useRef();
   const btnRef = useRef();
   hooks.createCodeMirrorDomNode({ ref: DOMref, initialText: value, upstreamRef: innerRef });
@@ -47,6 +47,7 @@ CodeEditor.propTypes = {
   ]).isRequired,
   value: PropTypes.string.isRequired,
   intl: intlShape.isRequired,
+  lang: PropTypes.string.isRequired,
 };
 
 export default injectIntl(CodeEditor);
