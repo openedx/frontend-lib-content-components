@@ -6,7 +6,7 @@ import CodeEditor from '../CodeEditor';
 
 function getValue(content) {
   if (!content) { return null; }
-  if (typeof text === 'string') { return content; }
+  if (typeof content === 'string') { return content; }
   return content.data?.data;
 }
 
