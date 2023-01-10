@@ -19,7 +19,7 @@ import {
 } from '@edx/frontend-platform/i18n';
 
 import * as widgetHooks from '../hooks';
-import * as module from './hooks';
+import * as hooks from './hooks';
 import messages from './messages';
 
 import CollapsibleFormWidget from '../CollapsibleFormWidget';
@@ -46,11 +46,11 @@ export const VideoSourceWidget = ({
       [widgetHooks.selectorKeys.allowVideoDownloads]: widgetHooks.genericWidget,
     },
   });
-  const { updateVideoId, updateVideoURL } = module.sourceHooks({ dispatch });
+  const { updateVideoId, updateVideoURL } = hooks.sourceHooks({ dispatch });
   const {
     addFallbackVideo,
     deleteFallbackVideo,
-  } = module.fallbackHooks({ fallbackVideos: fallbackVideos.formValue, dispatch });
+  } = hooks.fallbackHooks({ fallbackVideos: fallbackVideos.formValue, dispatch });
 
   return (
     <CollapsibleFormWidget

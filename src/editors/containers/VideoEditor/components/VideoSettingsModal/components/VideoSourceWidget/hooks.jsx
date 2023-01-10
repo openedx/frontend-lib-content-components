@@ -8,15 +8,7 @@ export const sourceHooks = ({ dispatch }) => ({
 export const fallbackHooks = ({ fallbackVideos, dispatch }) => ({
   addFallbackVideo: () => dispatch(actions.video.updateField({ fallbackVideos: [...fallbackVideos, ''] })),
   deleteFallbackVideo: (videoUrl) => {
-    const updatedFallbackVideos = [];
-    let firstOccurence = true;
-    fallbackVideos.forEach(item => {
-      if (item === videoUrl && firstOccurence) {
-        firstOccurence = false;
-      } else {
-        updatedFallbackVideos.push(item);
-      }
-    });
+    const updatedFallbackVideos = fallbackVideos.splice(fallbackVideos.indexOf(videoUrl), 1);
     dispatch(actions.video.updateField({ fallbackVideos: updatedFallbackVideos }));
   },
 });
