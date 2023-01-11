@@ -12,4 +12,4 @@ export const dropdown = `<problem>
 </optionresponse>
 </problem>`
 
-export default {dropdown};
+export default dropdown;

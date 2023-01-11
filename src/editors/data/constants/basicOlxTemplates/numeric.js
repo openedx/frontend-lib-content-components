@@ -9,4 +9,4 @@ export const numeric = `<problem>
 </numericalresponse>
 </problem>`
 
-export default {numeric}
+export default numeric;

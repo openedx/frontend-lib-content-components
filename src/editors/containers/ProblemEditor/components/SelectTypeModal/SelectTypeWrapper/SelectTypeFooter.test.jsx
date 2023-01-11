@@ -48,8 +48,8 @@ describe('SelectTypeFooter', () => {
     });
   });
   describe('mapDispatchToProps', () => {
-    test('loads setProblemType from problem.setProblemType actions', () => {
-      expect(module.mapDispatchToProps.setProblemType).toEqual(actions.problem.setProblemType);
+    test('loads setProblemType from problem.updateField actions', () => {
+      expect(module.mapDispatchToProps.updateField).toEqual(actions.problem.updateField);
     });
   });
 });

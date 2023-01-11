@@ -11,4 +11,4 @@ export const singleSelect = `<problem>
     </choicegroup>
 </multiplechoiceresponse>
 </problem>`
-export default {singleSelect}
+export default singleSelect;

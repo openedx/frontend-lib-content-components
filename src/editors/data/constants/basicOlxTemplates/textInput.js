@@ -8,4 +8,4 @@ const textInput =`<problem>
   <textline size="20"/>
 </stringresponse>
 </problem>`
-export default {textInput};
+export default textInput;

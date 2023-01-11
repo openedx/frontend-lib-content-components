@@ -4,9 +4,7 @@ import multiSelect from '../images/multiSelect.png';
 import dropdown from '../images/dropdown.png';
 import numericalInput from '../images/numericalInput.png';
 import textInput from '../images/textInput.png';
-import {
-  circuitSchematic, customGrader, dragAndDrop, formulaResponse, imageResponse, jsInputResponse, problemWithHint,
-} from './advancedOlxTemplates/index';
+import advancedOlxTemplates from './advancedOlxTemplates';
 import basicOlxTemplates from './basicOlxTemplates';
 
 export const ProblemTypeKeys = StrictDict({
@@ -54,7 +52,7 @@ export const ProblemTypes = StrictDict({
     helpLink: 'https://edx.readthedocs.io/projects/edx-partner-course-staff/en/latest/exercises_tools/numerical_input.html',
     next: ProblemTypeKeys.TEXTINPUT,
     prev: ProblemTypeKeys.DROPDOWN,
-    template: basicOlxTemplates.NUMERIC,
+    template: basicOlxTemplates.numeric,
   },
   [ProblemTypeKeys.TEXTINPUT]: {
     title: 'Text Input Problem',
@@ -93,37 +91,37 @@ export const AdvanceProblems = StrictDict({
   [AdvanceProblemKeys.CIRCUITSCHEMATIC]: {
     title: 'Circuit schematic builder',
     status: 'Not supported',
-    template: circuitSchematic,
+    template: advancedOlxTemplates.circuitSchematic,
   },
   [AdvanceProblemKeys.JSINPUT]: {
     title: 'Custom JavaScript display and grading',
     status: '',
-    template: jsInputResponse,
+    template: advancedOlxTemplates.jsInputResponse,
   },
   [AdvanceProblemKeys.CUSTOMGRADER]: {
     title: 'Custom Python-evaluated input',
     status: 'Provisional',
-    template: customGrader,
+    template: advancedOlxTemplates.customGrader,
   },
   [AdvanceProblemKeys.DRAGANDDROP]: {
     title: 'Drag and drop (deprecated version)',
     status: 'Not supported',
-    template: dragAndDrop,
+    template: advancedOlxTemplates.dragAndDrop,
   },
   [AdvanceProblemKeys.IMAGE]: {
     title: 'Image mapped input',
     status: 'Not supported',
-    template: imageResponse,
+    template: advancedOlxTemplates.imageResponse,
   },
   [AdvanceProblemKeys.FORMULA]: {
     title: 'Math expression input',
     status: '',
-    template: formulaResponse,
+    template: advancedOlxTemplates.formulaResponse,
   },
   [AdvanceProblemKeys.PROBLEMWITHHINT]: {
     title: 'Problem with adaptive hint',
     status: 'Not supported',
-    template: problemWithHint,
+    template: advancedOlxTemplates.problemWithHint,
   },
 });
 

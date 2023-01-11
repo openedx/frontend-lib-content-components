@@ -12,4 +12,4 @@
   </checkboxgroup>
 </choiceresponse>
 </problem>`
-export default {multiSelect}
+export default multiSelect;
