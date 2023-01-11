@@ -9,6 +9,8 @@ import { xml } from '@codemirror/lang-xml';
 import alphanumericMap from './constants';
 import './index.scss';
 
+const CODEMIRROR_LANGUAGES = { HTML: 'html', XML: 'xml' };
+
 export const state = {
   showBtnEscapeHTML: (val) => React.useState(val),
 };
@@ -24,8 +26,6 @@ export const cleanHTML = ({ initialText }) => {
   const translator = ($0, $1) => alphanumericMap[$1];
   return initialText.replace(translateRegex, translator);
 };
-
-const CODEMIRROR_LANGUAGES = { HTML: 'html', XML: 'xml' };
 
 export const createCodeMirrorDomNode = ({
   ref,
@@ -44,6 +44,7 @@ export const createCodeMirrorDomNode = ({
     // eslint-disable-next-line no-param-reassign
     upstreamRef.current = view;
     view.focus();
+
     return () => {
       // called on cleanup
       view.destroy();

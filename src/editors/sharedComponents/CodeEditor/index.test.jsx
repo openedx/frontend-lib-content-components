@@ -7,7 +7,7 @@ import { html } from '@codemirror/lang-html';
 import { formatMessage, MockUseState } from '../../../testUtils';
 import alphanumericMap from './constants';
 import * as module from './index';
-import hooks from './hooks';
+import * as hooks from './hooks';
 
 jest.mock('@codemirror/view');
 
@@ -27,6 +27,10 @@ jest.mock('@codemirror/state', () => ({
 
 jest.mock('@codemirror/lang-html', () => ({
   html: jest.fn(),
+}));
+
+jest.mock('@codemirror/lang-xml', () => ({
+  xml: jest.fn(),
 }));
 
 jest.mock('codemirror', () => ({
@@ -91,6 +95,7 @@ describe('CodeEditor', () => {
         ref: {
           current: 'sOmEvAlUe',
         },
+        lang: 'html',
         initialText: 'sOmEhTmL',
         upstreamRef: {
           current: 'sOmEotHERvAlUe',
@@ -119,6 +124,7 @@ describe('CodeEditor', () => {
           innerRef: {
             current: 'sOmEvALUE',
           },
+          lang: 'html',
           value: 'mOcKhTmL',
         };
         jest.spyOn(hooks, 'createCodeMirrorDomNode').mockImplementation(() => ({}));
