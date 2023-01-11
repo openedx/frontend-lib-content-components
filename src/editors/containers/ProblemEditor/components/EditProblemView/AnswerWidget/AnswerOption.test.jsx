@@ -17,7 +17,7 @@ describe('AnswerOption', () => {
     id: 'A',
     title: 'Answer 1',
     correct: true,
-    selectedFeedback : 'some feedback',
+    selectedFeedback: 'some feedback',
   };
   const answerWithSelectedUnselectedFeedback = {
     id: 'A',
@@ -40,7 +40,7 @@ describe('AnswerOption', () => {
       expect(shallow(<AnswerOption {...props} />)).toMatchSnapshot();
     });
     test('snapshot: renders correct option with selected unselected feedback', () => {
-      expect(shallow(<AnswerOption {...props} problemType='choiceresponse' answer={answerWithSelectedUnselectedFeedback} />)).toMatchSnapshot();
+      expect(shallow(<AnswerOption {...props} problemType="choiceresponse" answer={answerWithSelectedUnselectedFeedback} />)).toMatchSnapshot();
     });
   });
   describe('mapStateToProps', () => {
