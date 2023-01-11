@@ -41,15 +41,6 @@ describe('problem reducer', () => {
         });
       });
     });
-    describe('setProblemType', () => {
-      it('sets problemType', () => {
-        const payload = { selected: 'soMePRoblEMtYPe' };
-        expect(reducer(testingState, actions.setProblemType(payload))).toEqual({
-          ...testingState,
-          problemType: 'soMePRoblEMtYPe',
-        });
-      });
-    });
     describe('setEnableTypeSelection', () => {
       it('sets problemType to null', () => {
         expect(reducer(testingState, actions.setEnableTypeSelection())).toEqual({
