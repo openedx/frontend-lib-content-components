@@ -16,7 +16,7 @@ describe('SelectTypeFooter', () => {
     onCancel: jest.fn().mockName('onCancel'),
     selected: null,
     // redux
-    setProblemType: jest.fn().mockName('setProblemType'),
+    updateField: jest.fn().mockName('UpdateField'),
     // inject
     intl: { formatMessage },
   };
@@ -36,7 +36,7 @@ describe('SelectTypeFooter', () => {
         .toEqual(expected);
     });
     test('select behavior is linked to modal onSelect', () => {
-      const expected = hooks.onSelect(props.setProblemType, props.selected);
+      const expected = hooks.onSelect(props.selected, props.updateField);
       expect(el.find(Button).last().props().onClick)
         .toEqual(expected);
     });
@@ -48,7 +48,7 @@ describe('SelectTypeFooter', () => {
     });
   });
   describe('mapDispatchToProps', () => {
-    test('loads setProblemType from problem.updateField actions', () => {
+    test('loads updateField from problem.updateField actions', () => {
       expect(module.mapDispatchToProps.updateField).toEqual(actions.problem.updateField);
     });
   });
