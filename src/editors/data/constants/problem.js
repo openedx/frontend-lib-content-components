@@ -4,13 +4,10 @@ import multiSelect from '../images/multiSelect.png';
 import dropdown from '../images/dropdown.png';
 import numericalInput from '../images/numericalInput.png';
 import textInput from '../images/textInput.png';
-import { circuitSchematic } from './olxTemplates/circuitschematic';
-import { customGrader } from './olxTemplates/customgrader';
-import { dragAndDrop } from './olxTemplates/drag_and_drop';
-import { formulaResponse } from './olxTemplates/formularesponse';
-import { imageResponse } from './olxTemplates/imageresponse';
-import { jsInputResponse } from './olxTemplates/jsinput_response';
-import { problemWithHint } from './olxTemplates/problem_with_hint';
+import {
+  circuitSchematic, customGrader, dragAndDrop, formulaResponse, imageResponse, jsInputResponse, problemWithHint,
+} from './advancedOlxTemplates/index';
+import basicOlxTemplates from './basicOlxTemplates';
 
 export const ProblemTypeKeys = StrictDict({
   SINGLESELECT: 'multiplechoiceresponse',
@@ -29,6 +26,8 @@ export const ProblemTypes = StrictDict({
     helpLink: 'https://edx.readthedocs.io/projects/edx-partner-course-staff/en/latest/exercises_tools/multiple_choice.html',
     prev: ProblemTypeKeys.TEXTINPUT,
     next: ProblemTypeKeys.MULTISELECT,
+    template: basicOlxTemplates.singleSelect,
+
   },
   [ProblemTypeKeys.MULTISELECT]: {
     title: 'Multi Select Problem',
@@ -37,6 +36,7 @@ export const ProblemTypes = StrictDict({
     helpLink: 'https://edx.readthedocs.io/projects/edx-partner-course-staff/en/latest/exercises_tools/checkbox.html',
     next: ProblemTypeKeys.DROPDOWN,
     prev: ProblemTypeKeys.SINGLESELECT,
+    template: basicOlxTemplates.multiSelect,
   },
   [ProblemTypeKeys.DROPDOWN]: {
     title: 'Dropdown Problem',
@@ -45,6 +45,7 @@ export const ProblemTypes = StrictDict({
     helpLink: 'https://edx.readthedocs.io/projects/edx-partner-course-staff/en/latest/exercises_tools/dropdown.html',
     next: ProblemTypeKeys.NUMERIC,
     prev: ProblemTypeKeys.MULTISELECT,
+    template: basicOlxTemplates.dropdown,
   },
   [ProblemTypeKeys.NUMERIC]: {
     title: 'Numeric Response Problem',
@@ -53,6 +54,7 @@ export const ProblemTypes = StrictDict({
     helpLink: 'https://edx.readthedocs.io/projects/edx-partner-course-staff/en/latest/exercises_tools/numerical_input.html',
     next: ProblemTypeKeys.TEXTINPUT,
     prev: ProblemTypeKeys.DROPDOWN,
+    template: basicOlxTemplates.NUMERIC,
   },
   [ProblemTypeKeys.TEXTINPUT]: {
     title: 'Text Input Problem',
@@ -61,6 +63,7 @@ export const ProblemTypes = StrictDict({
     helpLink: 'https://edx.readthedocs.io/projects/edx-partner-course-staff/en/latest/exercises_tools/text_input.html',
     prev: ProblemTypeKeys.NUMERIC,
     next: ProblemTypeKeys.SINGLESELECT,
+    template: basicOlxTemplates.textInput,
   },
   [ProblemTypeKeys.ADVANCED]: {
     title: 'Advanced Problem',
