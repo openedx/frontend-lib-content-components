@@ -26,7 +26,6 @@ export const TypeCard = ({
         <TypeRow
           answers={answers}
           correctAnswerCount={correctAnswerCount}
-          currentType={problemType}
           key={typeKey}
           typeKey={typeKey}
           label={ProblemTypes[typeKey].title}

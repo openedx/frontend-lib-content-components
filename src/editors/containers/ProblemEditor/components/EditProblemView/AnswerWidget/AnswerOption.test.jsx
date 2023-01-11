@@ -8,7 +8,7 @@ describe('AnswerOption', () => {
     id: 'A',
     title: 'Answer 1',
     correct: true,
-    feedback: 'some feedback',
+    selectedFeedback: 'some feedback',
   };
   const answerWithSelectedUnselectedFeedback = {
     id: 'A',

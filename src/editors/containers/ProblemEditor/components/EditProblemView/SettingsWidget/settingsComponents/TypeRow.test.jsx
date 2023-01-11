@@ -9,11 +9,9 @@ jest.mock('../hooks', () => ({
 
 describe('TypeRow', () => {
   const typeKey = 'TEXTINPUT';
-  const currentType = 'multiplechoiceresponse';
   const props = {
     answers: [],
     correctAnswerCount: 0,
-    currentType,
     typeKey,
     label: 'Text Input Problem',
     selected: true,
@@ -34,7 +32,6 @@ describe('TypeRow', () => {
       expect(typeRowHooks).toHaveBeenCalledWith({
         answers: props.answers,
         correctAnswerCount: props.correctAnswerCount,
-        currentType,
         typeKey,
         updateField: props.updateField,
         updateAnswer: props.updateAnswer,

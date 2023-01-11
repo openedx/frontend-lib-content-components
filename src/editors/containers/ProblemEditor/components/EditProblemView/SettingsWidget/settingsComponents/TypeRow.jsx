@@ -7,7 +7,6 @@ import { typeRowHooks } from '../hooks';
 export const TypeRow = ({
   answers,
   correctAnswerCount,
-  currentType,
   typeKey,
   label,
   selected,
@@ -18,7 +17,6 @@ export const TypeRow = ({
   const { onClick } = typeRowHooks({
     answers,
     correctAnswerCount,
-    currentType,
     typeKey,
     updateField,
     updateAnswer,
@@ -44,7 +42,6 @@ TypeRow.propTypes = {
     unselectedFeedback: PropTypes.string,
   })).isRequired,
   correctAnswerCount: PropTypes.number.isRequired,
-  currentType: PropTypes.string.isRequired,
   typeKey: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
   selected: PropTypes.bool.isRequired,

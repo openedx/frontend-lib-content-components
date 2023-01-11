@@ -185,7 +185,6 @@ export const timerCardHooks = (updateSettings) => ({
 export const typeRowHooks = ({
   answers,
   correctAnswerCount,
-  currentType,
   typeKey,
   updateField,
   updateAnswer,
@@ -198,13 +197,6 @@ export const typeRowHooks = ({
         });
       }
     }
-    answers.forEach(answer => {
-      if (typeKey === ProblemTypeKeys.MULTISELECT) {
-        updateAnswer({ ...answer, selectedFeedback: answer.feedback });
-      } else if (currentType === ProblemTypeKeys.MULTISELECT) {
-        updateAnswer({ ...answer, feedback: answer.selectedFeedback });
-      }
-    });
     updateField({ problemType: typeKey });
   };
   return {

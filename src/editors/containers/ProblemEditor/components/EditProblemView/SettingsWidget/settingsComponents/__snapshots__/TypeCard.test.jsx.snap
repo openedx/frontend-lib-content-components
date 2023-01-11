@@ -8,7 +8,6 @@ exports[`TypeCard snapshot snapshot: renders type setting card 1`] = `
   <TypeRow
     answers={Array []}
     correctAnswerCount={0}
-    currentType="stringresponse"
     key="multiplechoiceresponse"
     label="Single Select Problem"
     lastRow={false}
@@ -20,7 +19,6 @@ exports[`TypeCard snapshot snapshot: renders type setting card 1`] = `
   <TypeRow
     answers={Array []}
     correctAnswerCount={0}
-    currentType="stringresponse"
     key="choiceresponse"
     label="Multi Select Problem"
     lastRow={false}
@@ -32,7 +30,6 @@ exports[`TypeCard snapshot snapshot: renders type setting card 1`] = `
   <TypeRow
     answers={Array []}
     correctAnswerCount={0}
-    currentType="stringresponse"
     key="optionresponse"
     label="Dropdown Problem"
     lastRow={false}
@@ -44,7 +41,6 @@ exports[`TypeCard snapshot snapshot: renders type setting card 1`] = `
   <TypeRow
     answers={Array []}
     correctAnswerCount={0}
-    currentType="stringresponse"
     key="numericalresponse"
     label="Numeric Response Problem"
     lastRow={false}
@@ -56,7 +52,6 @@ exports[`TypeCard snapshot snapshot: renders type setting card 1`] = `
   <TypeRow
     answers={Array []}
     correctAnswerCount={0}
-    currentType="stringresponse"
     key="stringresponse"
     label="Text Input Problem"
     lastRow={false}
@@ -68,7 +63,6 @@ exports[`TypeCard snapshot snapshot: renders type setting card 1`] = `
   <TypeRow
     answers={Array []}
     correctAnswerCount={0}
-    currentType="stringresponse"
     key="advanced"
     label="Advanced Problem"
     lastRow={true}

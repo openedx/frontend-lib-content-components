@@ -31,8 +31,7 @@ describe('problem reducer', () => {
         const answer = {
           id: 'A',
           correct: false,
-          feedback: '',
-          selectedFeedback: undefined,
+          selectedFeedback: '',
           title: '',
           unselectedFeedback: undefined,
         };
@@ -85,8 +84,7 @@ describe('problem reducer', () => {
         const answer = {
           id: 'A',
           correct: false,
-          feedback: '',
-          selectedFeedback: undefined,
+          selectedFeedback: '',
           title: '',
           unselectedFeedback: undefined,
         };
