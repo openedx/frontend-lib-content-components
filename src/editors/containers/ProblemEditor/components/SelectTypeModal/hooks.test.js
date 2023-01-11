@@ -51,7 +51,7 @@ describe('SelectTypeModal hooks', () => {
         rawOLX: AdvanceProblems[mockAdvancedSelected],
       });
     });
-    test('setProblemType is called with selected', () => {
+    test('updateField is called with selected on visual propblems', () => {
       module.onSelect(mockSelected, mockUpdateField)();
       const testOlXParser = new OLXParser(ProblemTypes[mockSelected].template);
       const { settings, ...testState } = testOlXParser.getParsedOLXData();
