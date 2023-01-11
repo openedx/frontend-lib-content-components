@@ -16,5 +16,16 @@ exports[`RawEditor renders as expected with default behavior 1`] = `
     html
      editor.
   </Alert>
+  <injectIntl(ShimmedIntlComponent)
+    innerRef={
+      Object {
+        "current": Object {
+          "value": "Ref Value",
+        },
+      }
+    }
+    lang="html"
+    value="eDiTablE Text"
+  />
 </div>
 `;
