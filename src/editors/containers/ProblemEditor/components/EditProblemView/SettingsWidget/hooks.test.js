@@ -217,20 +217,61 @@ describe('Problem settings hooks', () => {
   });
 
   describe('Type row hooks', () => {
-    test('test onClick', () => {
+    const updateField = jest.fn();
+    const updateAnswer = jest.fn();
+    afterEach(() => {
+      jest.clearAllMocks();
+    });
+    test('test onClick to single select', () => {
       const typekey = 'multiplechoiceresponse';
-      const updateField = jest.fn();
-      const updateAnswer = jest.fn();
-      const answers = [{ correct: true, id: 'a' }, { correct: true, id: 'b' }];
+      const currentType = 'choiceresponse';
+      const answers = [{
+        correct: true,
+        id: 'a',
+        selectedFeedback: 'sOMERanDOmsTRinG',
+      },
+      {
+        correct: true,
+        id: 'b',
+      }];
       output = hooks.typeRowHooks({
         answers,
         correctAnswerCount: 2,
+        currentType,
         typeKey: typekey,
         updateField,
         updateAnswer,
       });
       output.onClick();
-      expect(updateAnswer).toHaveBeenCalledWith({ ...answers[1], correct: false });
+      expect(updateAnswer).toHaveBeenNthCalledWith(1, { ...answers[0], correct: false });
+      expect(updateAnswer).toHaveBeenNthCalledWith(2, { ...answers[1], correct: false });
+      expect(updateAnswer).toHaveBeenNthCalledWith(3, { ...answers[0], feedback: 'sOMERanDOmsTRinG' });
+      expect(updateAnswer).toHaveBeenNthCalledWith(4, { ...answers[1], feedback: undefined });
+      expect(updateField).toHaveBeenCalledWith({ problemType: typekey });
+    });
+    test('test onClick to multiple select', () => {
+      const typekey = 'choiceresponse';
+      const currentType = 'textinput';
+      const answers = [{
+        correct: true,
+        id: 'a',
+        feedback: 'sOMERanDOmsTRinG',
+      },
+      {
+        correct: true,
+        id: 'b',
+      }];
+      output = hooks.typeRowHooks({
+        answers,
+        correctAnswerCount: 2,
+        currentType,
+        typeKey: typekey,
+        updateField,
+        updateAnswer,
+      });
+      output.onClick();
+      expect(updateAnswer).toHaveBeenNthCalledWith(1, { ...answers[0], selectedFeedback: 'sOMERanDOmsTRinG' });
+      expect(updateAnswer).toHaveBeenNthCalledWith(2, { ...answers[1], selectedFeedback: undefined });
       expect(updateField).toHaveBeenCalledWith({ problemType: typekey });
     });
   });
