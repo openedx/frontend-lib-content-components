@@ -12,7 +12,7 @@ jest.mock('../../data/ReactStateSettingsParser');
 
 describe('EditProblemView hooks parseState', () => {
   const toStringMock = () => mockRawOLX;
-  const refMock = { current: { state: { doc: { toString: toStringMock } } } }
+  const refMock = { current: { state: { doc: { toString: toStringMock } } } };
 
   test('default problem', () => {
     const res = hooks.parseState('problem', false, refMock)();
