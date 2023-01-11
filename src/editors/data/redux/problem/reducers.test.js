@@ -86,10 +86,11 @@ describe('problem reducer', () => {
           correct: false,
           selectedFeedback: '',
           title: '',
-          unselectedFeedback: undefined,
+          unselectedFeedback: '',
         };
-        expect(reducer(testingState, actions.addAnswer(answer))).toEqual({
+        expect(reducer({ ...testingState, problemType: 'choiceresponse' }, actions.addAnswer())).toEqual({
           ...testingState,
+          problemType: 'choiceresponse',
           answers: [answer],
         });
       });
