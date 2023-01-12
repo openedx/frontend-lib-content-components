@@ -1,11 +1,22 @@
 .problem-answer {
-    padding: 12px;
-    color: #00262B;
-    .problem-answer-title {
-        font-weight: bold;
-    }
+  padding: 12px;
+  color: #00262B;
+  .problem-answer-title {
+    font-weight: bold;
+  }
+  
+  .problem-answer-description {
+    font-size: 0.9rem;
+  }
+}
 
-    .problem-answer-description {
-        font-size: 0.9rem;
+// The paragon icon is missing "fill: currentColor"
+.feedback-icon-button {
+  &:hover {
+    svg {
+      path {
+        fill: #fff;
+      }
     }
+  }
 }

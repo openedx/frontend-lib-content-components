@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import {
   Col, Collapsible, Icon, IconButton, Form, Row,
 } from '@edx/paragon';
-import { AddComment, Delete } from '@edx/paragon/icons';
+import { Feedback, Delete } from '@edx/paragon/icons';
 import { FormattedMessage, injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 
 import messages from './messages';
@@ -135,7 +135,8 @@ export const AnswerOption = ({
         <Col xs={1} className="d-inline-flex mt-1">
           <Collapsible.Trigger>
             <IconButton
-              src={AddComment}
+              src={Feedback}
+              className="feedback-icon-button"
               iconAs={Icon}
               alt={intl.formatMessage(messages.feedbackToggleIconAltText)}
               variant="primary"
