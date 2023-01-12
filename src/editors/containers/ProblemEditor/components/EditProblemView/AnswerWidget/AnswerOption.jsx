@@ -104,54 +104,47 @@ export const AnswerOption = ({
     <Collapsible.Advanced
       open={isFeedbackVisible}
       onToggle={toggleFeedback}
-      className="collapsible-card"
+      className="collapsible-card d-flex flex-row justify-content-between flex-nowrap pb-2 pt-2"
     >
-      <Row className="my-2">
-
-        <Col xs={1}>
-          <Checker
-            hasSingleAnswer={hasSingleAnswer}
-            answer={answer}
-            setAnswer={setAnswer}
-          />
-        </Col>
-
-        <Col xs={10}>
-          <Form.Control
-            as="textarea"
-            rows={1}
-            value={answer.title}
-            onChange={(e) => { setAnswer({ title: e.target.value }); }}
-            placeholder={intl.formatMessage(messages.answerTextboxPlaceholder)}
-          />
-
-          <Collapsible.Body>
-            <div className="bg-dark-100 p-4 mt-3">
-              {displayFeedbackControl(answer)}
-            </div>
-          </Collapsible.Body>
-        </Col>
-
-        <Col xs={1} className="d-inline-flex mt-1">
-          <Collapsible.Trigger>
-            <IconButton
-              src={Feedback}
-              className="feedback-icon-button"
-              iconAs={Icon}
-              alt={intl.formatMessage(messages.feedbackToggleIconAltText)}
-              variant="primary"
-            />
-          </Collapsible.Trigger>
+      <div className="answer-option-flex-item-1 mr-1">
+        <Checker
+          hasSingleAnswer={hasSingleAnswer}
+          answer={answer}
+          setAnswer={setAnswer}
+        />
+      </div>
+      <div className="answer-option-flex-item-2 ml-1">
+        <Form.Control
+          as="textarea"
+          rows={1}
+          value={answer.title}
+          onChange={(e) => { setAnswer({ title: e.target.value }); }}
+          placeholder={intl.formatMessage(messages.answerTextboxPlaceholder)}
+        />
+        <Collapsible.Body>
+          <div className="bg-dark-100 p-4 mt-3">
+            {displayFeedbackControl(answer)}
+          </div>
+        </Collapsible.Body>
+      </div>
+      <div className="answer-option-flex-item-3 d-flex flex-row flex-nowrap">
+        <Collapsible.Trigger>
           <IconButton
-            src={Delete}
+            src={Feedback}
+            className="feedback-icon-button"
             iconAs={Icon}
-            alt={intl.formatMessage(messages.answerDeleteIconAltText)}
-            onClick={removeAnswer}
+            alt={intl.formatMessage(messages.feedbackToggleIconAltText)}
             variant="primary"
           />
-        </Col>
-
-      </Row>
+        </Collapsible.Trigger>
+        <IconButton
+          src={Delete}
+          iconAs={Icon}
+          alt={intl.formatMessage(messages.answerDeleteIconAltText)}
+          onClick={removeAnswer}
+          variant="primary"
+        />
+      </div>
     </Collapsible.Advanced>
   );
 };
