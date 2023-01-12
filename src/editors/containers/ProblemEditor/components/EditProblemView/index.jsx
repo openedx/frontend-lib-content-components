@@ -22,7 +22,6 @@ export const EditProblemView = ({
 
   const getContent = parseState(problemState, isAdvancedProblemType, editorRef);
 
-  console.log(problemState.rawOLX);
   return (
     <EditorContainer getContent={getContent}>
       <Container fluid>
