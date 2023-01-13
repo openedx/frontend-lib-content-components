@@ -5,87 +5,14 @@ import {
   Collapsible, Icon, IconButton, Form,
 } from '@edx/paragon';
 import { Feedback, Delete } from '@edx/paragon/icons';
-import { FormattedMessage, injectIntl, intlShape } from '@edx/frontend-platform/i18n';
+import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 
 import messages from './messages';
 import { selectors } from '../../../../../data/redux';
 import { answerOptionProps } from '../../../../../data/services/cms/types';
+import Checker from '../../../../../sharedComponents/Checker';
+import { FeedbackBox } from '../../../../../sharedComponents/Feedback';
 import * as hooks from './hooks';
-
-const Checker = ({
-  hasSingleAnswer, answer, setAnswer,
-}) => {
-  let CheckerType = Form.Checkbox;
-  if (hasSingleAnswer) {
-    CheckerType = Form.Radio;
-  }
-  return (
-    <CheckerType
-      className="pl-4 mt-3"
-      value={answer.id}
-      onChange={(e) => setAnswer({ correct: e.target.checked })}
-      checked={answer.correct}
-    >
-      {answer.id}
-    </CheckerType>
-  );
-};
-
-const FeedbackControl = ({
-  feedback, onChange, labelMessage, labelMessageBoldUnderline, key, answer, intl,
-}) => (
-  <Form.Group key={key}>
-    <Form.Label className="mb-3">
-      <FormattedMessage
-        {...labelMessage}
-        values={{
-          answerId: answer.id,
-          boldunderline: <b><u><FormattedMessage {...labelMessageBoldUnderline} /></u></b>,
-        }}
-      />
-    </Form.Label>
-    <Form.Control
-      placeholder={intl.formatMessage(messages.feedbackPlaceholder)}
-      value={feedback}
-      onChange={onChange}
-    />
-  </Form.Group>
-);
-
-const FeedbackBox = ({
-  answer, setAnswer, intl,
-}) => {
-  const props = {
-    onChange: (e) => setAnswer({ selectedFeedback: e.target.value }),
-    answer,
-    intl,
-  };
-
-  return (
-    <div className="bg-light-300 p-4 mt-3">
-      <FeedbackControl
-        key={`selectedfeedback-${answer.id}`}
-        feedback={answer.selectedFeedback}
-        labelMessage={messages.selectedFeedbackLabel}
-        labelMessageBoldUnderline={messages.selectedFeedbackLabelBoldUnderlineText}
-        {...props}
-      />
-      <FeedbackControl
-        key={`unselectedfeedback-${answer.id}`}
-        feedback={answer.unselectedFeedback}
-        labelMessage={messages.unSelectedFeedbackLabel}
-        labelMessageBoldUnderline={messages.unSelectedFeedbackLabelBoldUnderlineText}
-        {...props}
-      />
-    </div>
-  );
-};
-FeedbackBox.propTypes = {
-  answer: answerOptionProps.isRequired,
-  setAnswer: PropTypes.func.isRequired,
-  intl: intlShape.isRequired,
-  problemType: PropTypes.string.isRequired,
-};
 
 export const AnswerOption = ({
   answer,
@@ -161,22 +88,6 @@ AnswerOption.propTypes = {
   intl: intlShape.isRequired,
   // redux
   problemType: PropTypes.string.isRequired,
-};
-
-FeedbackControl.propTypes = {
-  feedback: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
-  labelMessage: PropTypes.string.isRequired,
-  labelMessageBoldUnderline: PropTypes.string.isRequired,
-  key: PropTypes.string.isRequired,
-  answer: answerOptionProps.isRequired,
-  intl: intlShape.isRequired,
-};
-
-Checker.propTypes = {
-  hasSingleAnswer: PropTypes.bool.isRequired,
-  answer: answerOptionProps.isRequired,
-  setAnswer: PropTypes.func.isRequired,
 };
 
 export const mapStateToProps = (state) => ({
