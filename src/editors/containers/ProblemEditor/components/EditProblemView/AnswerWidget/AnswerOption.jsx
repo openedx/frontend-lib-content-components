@@ -54,7 +54,7 @@ const FeedbackControl = ({
 );
 
 const FeedbackBox = injectIntl(({
-  answer, problemType, setAnswer, intl,
+  answer, setAnswer, showUnselected, intl,
 }) => {
   const props = {
     onChange: (e) => setAnswer({ selectedFeedback: e.target.value }),
@@ -62,35 +62,35 @@ const FeedbackBox = injectIntl(({
     intl,
   };
 
-  if (problemType !== ProblemTypeKeys.MULTISELECT) {
-    return (
-      <FeedbackControl
-        key={`feedback-${answer.id}`}
-        feedback={answer.selectedFeedback}
-        labelMessage={messages.selectedFeedbackLabel}
-        labelMessageBoldUnderline={messages.selectedFeedbackLabelBoldUnderlineText}
-        {...props}
-      />
-    );
-  }
-
   return (
-    <>
-      <FeedbackControl
-        key={`selectedfeedback-${answer.id}`}
-        feedback={answer.selectedFeedback}
-        labelMessage={messages.selectedFeedbackLabel}
-        labelMessageBoldUnderline={messages.selectedFeedbackLabelBoldUnderlineText}
-        {...props}
-      />
-      <FeedbackControl
-        key={`unselectedfeedback-${answer.id}`}
-        feedback={answer.unselectedFeedback}
-        labelMessage={messages.unSelectedFeedbackLabel}
-        labelMessageBoldUnderline={messages.unSelectedFeedbackLabelBoldUnderlineText}
-        {...props}
-      />
-    </>
+    <div className="bg-light-300 p-4 mt-3">
+      {!showUnselected ? (
+        <FeedbackControl
+          key={`feedback-${answer.id}`}
+          feedback={answer.selectedFeedback}
+          labelMessage={messages.selectedFeedbackLabel}
+          labelMessageBoldUnderline={messages.selectedFeedbackLabelBoldUnderlineText}
+          {...props}
+        />
+      ) : (
+        <>
+          <FeedbackControl
+            key={`selectedfeedback-${answer.id}`}
+            feedback={answer.selectedFeedback}
+            labelMessage={messages.selectedFeedbackLabel}
+            labelMessageBoldUnderline={messages.selectedFeedbackLabelBoldUnderlineText}
+            {...props}
+          />
+          <FeedbackControl
+            key={`unselectedfeedback-${answer.id}`}
+            feedback={answer.unselectedFeedback}
+            labelMessage={messages.unSelectedFeedbackLabel}
+            labelMessageBoldUnderline={messages.unSelectedFeedbackLabelBoldUnderlineText}
+            {...props}
+          />
+        </>
+      )}
+    </div>
   );
 });
 FeedbackBox.propTypes = {
@@ -138,9 +138,13 @@ export const AnswerOption = ({
           placeholder={intl.formatMessage(messages.answerTextboxPlaceholder)}
         />
         <Collapsible.Body>
-          <div className="bg-dark-100 p-4 mt-3">
-            <FeedbackBox problemType={problemType} answer={answer} setAnswer={setAnswer} intl={intl} />
-          </div>
+          <FeedbackBox
+            problemType={problemType}
+            answer={answer}
+            setAnswer={setAnswer}
+            intl={intl}
+            showUnselected={problemType === ProblemTypeKeys.MULTISELECT}
+          />
         </Collapsible.Body>
       </div>
       <div className="answer-option-flex-item-3 d-flex flex-row flex-nowrap">
