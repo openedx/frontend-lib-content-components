@@ -16,9 +16,11 @@
   // The paragon icon path is missing "fill: currentColor"
   .feedback-icon-button {
     &:hover {
-      svg {
-        path {
-          fill: $white;
+      &:not(:focus) {
+        svg {
+          path {
+            fill: $white;
+          }
         }
       }
     }
