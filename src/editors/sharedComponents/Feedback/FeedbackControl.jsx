@@ -7,9 +7,9 @@ import { answerOptionProps } from '../../data/services/cms/types';
 import messages from './messages';
 
 const FeedbackControl = ({
-  feedback, onChange, labelMessage, labelMessageBoldUnderline, key, answer, intl,
+  feedback, onChange, labelMessage, labelMessageBoldUnderline, answer, intl,
 }) => (
-  <Form.Group key={key}>
+  <Form.Group>
     <Form.Label className="mb-3">
       <FormattedMessage
         {...labelMessage}
@@ -31,7 +31,6 @@ FeedbackControl.propTypes = {
   onChange: PropTypes.func.isRequired,
   labelMessage: PropTypes.string.isRequired,
   labelMessageBoldUnderline: PropTypes.string.isRequired,
-  key: PropTypes.string.isRequired,
   answer: answerOptionProps.isRequired,
   intl: intlShape.isRequired,
 };

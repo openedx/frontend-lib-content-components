@@ -6,7 +6,7 @@ import { answerOptionProps } from '../../data/services/cms/types';
 import FeedbackControl from './FeedbackControl';
 import { messages } from './messages';
 
-const FeedbackBox = ({
+export const FeedbackBox = ({
   answer, setAnswer, intl,
 }) => {
   const props = {
@@ -38,7 +38,6 @@ FeedbackBox.propTypes = {
   answer: answerOptionProps.isRequired,
   setAnswer: PropTypes.func.isRequired,
   intl: intlShape.isRequired,
-  problemType: PropTypes.string.isRequired,
 };
 
 export default injectIntl(FeedbackBox);
