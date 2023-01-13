@@ -10,7 +10,6 @@ import { FormattedMessage, injectIntl, intlShape } from '@edx/frontend-platform/
 import messages from './messages';
 import { selectors } from '../../../../../data/redux';
 import { answerOptionProps } from '../../../../../data/services/cms/types';
-import { ProblemTypeKeys } from '../../../../../data/constants/problem';
 import * as hooks from './hooks';
 
 const Checker = ({
@@ -53,8 +52,8 @@ const FeedbackControl = ({
   </Form.Group>
 );
 
-const FeedbackBox = injectIntl(({
-  answer, setAnswer, showUnselected, intl,
+const FeedbackBox = ({
+  answer, setAnswer, intl,
 }) => {
   const props = {
     onChange: (e) => setAnswer({ selectedFeedback: e.target.value }),
@@ -64,40 +63,27 @@ const FeedbackBox = injectIntl(({
 
   return (
     <div className="bg-light-300 p-4 mt-3">
-      {!showUnselected ? (
-        <FeedbackControl
-          key={`feedback-${answer.id}`}
-          feedback={answer.selectedFeedback}
-          labelMessage={messages.selectedFeedbackLabel}
-          labelMessageBoldUnderline={messages.selectedFeedbackLabelBoldUnderlineText}
-          {...props}
-        />
-      ) : (
-        <>
-          <FeedbackControl
-            key={`selectedfeedback-${answer.id}`}
-            feedback={answer.selectedFeedback}
-            labelMessage={messages.selectedFeedbackLabel}
-            labelMessageBoldUnderline={messages.selectedFeedbackLabelBoldUnderlineText}
-            {...props}
-          />
-          <FeedbackControl
-            key={`unselectedfeedback-${answer.id}`}
-            feedback={answer.unselectedFeedback}
-            labelMessage={messages.unSelectedFeedbackLabel}
-            labelMessageBoldUnderline={messages.unSelectedFeedbackLabelBoldUnderlineText}
-            {...props}
-          />
-        </>
-      )}
+      <FeedbackControl
+        key={`selectedfeedback-${answer.id}`}
+        feedback={answer.selectedFeedback}
+        labelMessage={messages.selectedFeedbackLabel}
+        labelMessageBoldUnderline={messages.selectedFeedbackLabelBoldUnderlineText}
+        {...props}
+      />
+      <FeedbackControl
+        key={`unselectedfeedback-${answer.id}`}
+        feedback={answer.unselectedFeedback}
+        labelMessage={messages.unSelectedFeedbackLabel}
+        labelMessageBoldUnderline={messages.unSelectedFeedbackLabelBoldUnderlineText}
+        {...props}
+      />
     </div>
   );
-});
+};
 FeedbackBox.propTypes = {
   answer: answerOptionProps.isRequired,
-  // injected
+  setAnswer: PropTypes.func.isRequired,
   intl: intlShape.isRequired,
-  // redux
   problemType: PropTypes.string.isRequired,
 };
 
@@ -143,7 +129,6 @@ export const AnswerOption = ({
             answer={answer}
             setAnswer={setAnswer}
             intl={intl}
-            showUnselected={problemType === ProblemTypeKeys.MULTISELECT}
           />
         </Collapsible.Body>
       </div>
