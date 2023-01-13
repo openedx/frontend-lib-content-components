@@ -116,6 +116,7 @@ export const AnswerOption = ({
       <div className="answer-option-flex-item-2 ml-1">
         <Form.Control
           as="textarea"
+          className="answer-option-textarea"
           rows={1}
           value={answer.title}
           onChange={(e) => { setAnswer({ title: e.target.value }); }}

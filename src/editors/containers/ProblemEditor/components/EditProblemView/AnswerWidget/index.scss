@@ -1,6 +1,8 @@
+@import '../../../../../../colors.scss';
+
 .problem-answer {
   padding: 12px;
-  color: #00262B;
+
   .problem-answer-title {
     font-weight: bold;
   }
@@ -10,12 +12,12 @@
   }
 }
 
-// The paragon icon is missing "fill: currentColor"
+// The paragon icon path is missing "fill: currentColor"
 .feedback-icon-button {
   &:hover {
     svg {
       path {
-        fill: #fff;
+        fill: $white;
       }
     }
   }
@@ -31,4 +33,22 @@
 
 .answer-option-flex-item-3 {
   flex-basis: 8.33%;
+}
+
+.answer-option-textarea {
+  textarea {
+    border: none;
+
+    &:active, &:hover, &:focus, &:focus-visible {
+      border-right: none;
+      border-left: none;
+      border-bottom: none;
+      border-radius: 0;
+      box-shadow: none;
+    }
+
+    &:focus, &:hover {
+      border-bottom: 1px solid $black;
+    }
+  }
 }
