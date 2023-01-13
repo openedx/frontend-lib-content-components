@@ -2,7 +2,7 @@ import React, { memo } from 'react';
 import { connect, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import {
-  Col, Collapsible, Icon, IconButton, Form, Row,
+  Collapsible, Icon, IconButton, Form,
 } from '@edx/paragon';
 import { Feedback, Delete } from '@edx/paragon/icons';
 import { FormattedMessage, injectIntl, intlShape } from '@edx/frontend-platform/i18n';
@@ -53,6 +53,54 @@ const FeedbackControl = ({
   </Form.Group>
 );
 
+const FeedbackBox = injectIntl(({
+  answer, problemType, setAnswer, intl,
+}) => {
+  const props = {
+    onChange: (e) => setAnswer({ selectedFeedback: e.target.value }),
+    answer,
+    intl,
+  };
+
+  if (problemType !== ProblemTypeKeys.MULTISELECT) {
+    return (
+      <FeedbackControl
+        key={`feedback-${answer.id}`}
+        feedback={answer.selectedFeedback}
+        labelMessage={messages.selectedFeedbackLabel}
+        labelMessageBoldUnderline={messages.selectedFeedbackLabelBoldUnderlineText}
+        {...props}
+      />
+    );
+  }
+
+  return (
+    <>
+      <FeedbackControl
+        key={`selectedfeedback-${answer.id}`}
+        feedback={answer.selectedFeedback}
+        labelMessage={messages.selectedFeedbackLabel}
+        labelMessageBoldUnderline={messages.selectedFeedbackLabelBoldUnderlineText}
+        {...props}
+      />
+      <FeedbackControl
+        key={`unselectedfeedback-${answer.id}`}
+        feedback={answer.unselectedFeedback}
+        labelMessage={messages.unSelectedFeedbackLabel}
+        labelMessageBoldUnderline={messages.unSelectedFeedbackLabelBoldUnderlineText}
+        {...props}
+      />
+    </>
+  );
+});
+FeedbackBox.propTypes = {
+  answer: answerOptionProps.isRequired,
+  // injected
+  intl: intlShape.isRequired,
+  // redux
+  problemType: PropTypes.string.isRequired,
+};
+
 export const AnswerOption = ({
   answer,
   hasSingleAnswer,
@@ -65,40 +113,6 @@ export const AnswerOption = ({
   const removeAnswer = hooks.removeAnswer({ answer, dispatch });
   const setAnswer = hooks.setAnswer({ answer, hasSingleAnswer, dispatch });
   const { isFeedbackVisible, toggleFeedback } = hooks.prepareFeedback(answer);
-
-  const displayFeedbackControl = (answerObject) => {
-    if (problemType !== ProblemTypeKeys.MULTISELECT) {
-      return FeedbackControl({
-        key: `feedback-${answerObject.id}`,
-        feedback: answerObject.selectedFeedback,
-        onChange: (e) => setAnswer({ selectedFeedback: e.target.value }),
-        labelMessage: messages.selectedFeedbackLabel,
-        labelMessageBoldUnderline: messages.selectedFeedbackLabelBoldUnderlineText,
-        answer: answerObject,
-        intl,
-      });
-    }
-    return [
-      FeedbackControl({
-        key: `selectedfeedback-${answerObject.id}`,
-        feedback: answerObject.selectedFeedback,
-        onChange: (e) => setAnswer({ selectedFeedback: e.target.value }),
-        labelMessage: messages.selectedFeedbackLabel,
-        labelMessageBoldUnderline: messages.selectedFeedbackLabelBoldUnderlineText,
-        answer: answerObject,
-        intl,
-      }),
-      FeedbackControl({
-        key: `unselectedfeedback-${answerObject.id}`,
-        feedback: answerObject.unselectedFeedback,
-        onChange: (e) => setAnswer({ unselectedFeedback: e.target.value }),
-        labelMessage: messages.unSelectedFeedbackLabel,
-        labelMessageBoldUnderline: messages.unSelectedFeedbackLabelBoldUnderlineText,
-        answer: answerObject,
-        intl,
-      }),
-    ];
-  };
 
   return (
     <Collapsible.Advanced
@@ -125,7 +139,7 @@ export const AnswerOption = ({
         />
         <Collapsible.Body>
           <div className="bg-dark-100 p-4 mt-3">
-            {displayFeedbackControl(answer)}
+            <FeedbackBox problemType={problemType} answer={answer} setAnswer={setAnswer} intl={intl} />
           </div>
         </Collapsible.Body>
       </div>
