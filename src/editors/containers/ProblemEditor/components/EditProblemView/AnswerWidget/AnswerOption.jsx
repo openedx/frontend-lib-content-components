@@ -104,7 +104,7 @@ export const AnswerOption = ({
     <Collapsible.Advanced
       open={isFeedbackVisible}
       onToggle={toggleFeedback}
-      className="collapsible-card d-flex flex-row justify-content-between flex-nowrap pb-2 pt-2"
+      className="answer-option collapsible-card d-flex flex-row justify-content-between flex-nowrap pb-2 pt-2"
     >
       <div className="answer-option-flex-item-1 mr-1">
         <Checker
@@ -117,6 +117,7 @@ export const AnswerOption = ({
         <Form.Control
           as="textarea"
           className="answer-option-textarea"
+          autoResize
           rows={1}
           value={answer.title}
           onChange={(e) => { setAnswer({ title: e.target.value }); }}
