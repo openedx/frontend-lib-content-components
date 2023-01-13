@@ -19,7 +19,7 @@ const props = {
   labelMessageBoldUnderline: 'msg',
 };
 
-describe('FeedbackBox component', () => {
+describe('FeedbackControl component', () => {
   test('renders', () => {
     expect(shallow(<FeedbackControl {...props} />)).toMatchSnapshot();
   });
