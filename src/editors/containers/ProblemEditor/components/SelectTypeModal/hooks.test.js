@@ -46,7 +46,11 @@ describe('SelectTypeModal hooks', () => {
 
   describe('onSelect', () => {
     test('updateField is called with selected templated if selected is an Advanced Problem', () => {
-      module.onSelect({ selected: mockAdvancedSelected, updateField: mockUpdateField, setBlockTitle: mocksetBlockTitle })();
+      module.onSelect({
+        selected: mockAdvancedSelected,
+        updateField: mockUpdateField,
+        setBlockTitle: mocksetBlockTitle,
+      })();
       expect(mockUpdateField).toHaveBeenCalledWith({
         problemType: ProblemTypeKeys.ADVANCED,
         rawOLX: AdvanceProblems[mockAdvancedSelected].template,
