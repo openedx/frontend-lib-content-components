@@ -43,7 +43,7 @@ export const AnswerOption = ({
       <div className="answer-option-flex-item-2 ml-1">
         <Form.Control
           as="textarea"
-          className="answer-option-textarea"
+          className="answer-option-textarea text-gray-500 small"
           autoResize
           rows={1}
           value={answer.title}
