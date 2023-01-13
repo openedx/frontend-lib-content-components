@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage, intlShape } from '@edx/frontend-platform/i18n';
 import { Form } from '@edx/paragon';
 
-import { answerOptionProps } from '../../data/services/cms/types';
+import { answerOptionProps } from '../../../../../../../data/services/cms/types';
 import messages from './messages';
 
 const FeedbackControl = ({

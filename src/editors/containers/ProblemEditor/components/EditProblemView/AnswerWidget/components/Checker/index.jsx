@@ -11,7 +11,7 @@ const Checker = ({
   }
   return (
     <CheckerType
-      className="pl-4 mt-3"
+      className="pl-4"
       value={answer.id}
       onChange={(e) => setAnswer({ correct: e.target.checked })}
       checked={answer.correct}

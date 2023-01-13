@@ -2,12 +2,12 @@
 
 exports[`AnswerOption render snapshot: renders correct option with feedback 1`] = `
 <Advanced
-  className="answer-option collapsible-card d-flex flex-row justify-content-between flex-nowrap pb-2 pt-2"
+  className="answer-option d-flex flex-row justify-content-between flex-nowrap pb-2 pt-2"
   onToggle={[Function]}
   open={false}
 >
   <div
-    className="answer-option-flex-item-1 mr-1"
+    className="answer-option-flex-item-1 mr-1 d-flex align-items-center"
   >
     <Checker
       answer={
@@ -28,7 +28,7 @@ exports[`AnswerOption render snapshot: renders correct option with feedback 1`] 
     <Form.Control
       as="textarea"
       autoResize={true}
-      className="answer-option-textarea"
+      className="answer-option-textarea text-gray-500 small"
       onChange={[Function]}
       placeholder="Enter an answer"
       rows={1}
@@ -77,12 +77,12 @@ exports[`AnswerOption render snapshot: renders correct option with feedback 1`] 
 
 exports[`AnswerOption render snapshot: renders correct option with selected unselected feedback 1`] = `
 <Advanced
-  className="answer-option collapsible-card d-flex flex-row justify-content-between flex-nowrap pb-2 pt-2"
+  className="answer-option d-flex flex-row justify-content-between flex-nowrap pb-2 pt-2"
   onToggle={[Function]}
   open={false}
 >
   <div
-    className="answer-option-flex-item-1 mr-1"
+    className="answer-option-flex-item-1 mr-1 d-flex align-items-center"
   >
     <Checker
       answer={
@@ -104,7 +104,7 @@ exports[`AnswerOption render snapshot: renders correct option with selected unse
     <Form.Control
       as="textarea"
       autoResize={true}
-      className="answer-option-textarea"
+      className="answer-option-textarea text-gray-500 small"
       onChange={[Function]}
       placeholder="Enter an answer"
       rows={1}

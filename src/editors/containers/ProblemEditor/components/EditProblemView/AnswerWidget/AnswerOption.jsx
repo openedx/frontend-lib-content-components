@@ -10,8 +10,8 @@ import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 import messages from './messages';
 import { selectors } from '../../../../../data/redux';
 import { answerOptionProps } from '../../../../../data/services/cms/types';
-import Checker from '../../../../../sharedComponents/Checker';
-import { FeedbackBox } from '../../../../../sharedComponents/Feedback';
+import Checker from './components/Checker';
+import { FeedbackBox } from './components/Feedback';
 import * as hooks from './hooks';
 
 export const AnswerOption = ({
@@ -31,9 +31,9 @@ export const AnswerOption = ({
     <Collapsible.Advanced
       open={isFeedbackVisible}
       onToggle={toggleFeedback}
-      className="answer-option collapsible-card d-flex flex-row justify-content-between flex-nowrap pb-2 pt-2"
+      className="answer-option d-flex flex-row justify-content-between flex-nowrap pb-2 pt-2"
     >
-      <div className="answer-option-flex-item-1 mr-1">
+      <div className="answer-option-flex-item-1 mr-1 d-flex align-items-center">
         <Checker
           hasSingleAnswer={hasSingleAnswer}
           answer={answer}
