@@ -1,4 +1,9 @@
-export default `@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600;1,700&display=swap");
+const STYLE_ARGS = {
+  surroundingBorder: ['rounded-light'],
+};
+
+const getStyles = ({ surroundingBorder = null }) => (
+  `@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600;1,700&display=swap");
 
 .mce-content-body *[contentEditable=false] {
   cursor: default;
@@ -211,4 +216,8 @@ export default `@import url("https://fonts.googleapis.com/css2?family=Open+Sans:
     background: none;
     color: #3c3c3c;
     padding: 0;
-}`;
+}`);
+
+export { getStyles };
+
+export default getStyles({});
