@@ -3,7 +3,9 @@
 exports[`SettingsWidget snapshot snapshot: renders Settings widget page 1`] = `
 <div>
   <div>
-    <h3>
+    <h3
+      className="h4"
+    >
       <FormattedMessage
         defaultMessage="Settings"
         description="Settings Title"
@@ -14,7 +16,7 @@ exports[`SettingsWidget snapshot snapshot: renders Settings widget page 1`] = `
       <Row>
         <Col>
           <Row
-            className="my-2"
+            className="mb-2"
           >
             <injectIntl(ShimmedIntlComponent)
               problemType="stringresponse"
@@ -94,7 +96,9 @@ exports[`SettingsWidget snapshot snapshot: renders Settings widget page 1`] = `
 exports[`SettingsWidget snapshot snapshot: renders Settings widget page advanced settings visible 1`] = `
 <div>
   <div>
-    <h3>
+    <h3
+      className="h4"
+    >
       <FormattedMessage
         defaultMessage="Settings"
         description="Settings Title"
@@ -105,7 +109,7 @@ exports[`SettingsWidget snapshot snapshot: renders Settings widget page advanced
       <Row>
         <Col>
           <Row
-            className="my-2"
+            className="mb-2"
           >
             <injectIntl(ShimmedIntlComponent)
               problemType="stringresponse"
