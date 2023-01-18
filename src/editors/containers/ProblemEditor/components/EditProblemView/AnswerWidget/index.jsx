@@ -15,7 +15,7 @@ const AnswerWidget = ({
   const problemStaticData = ProblemTypes[problemType];
   return (
     <div>
-      <div className="p-3 text-primary-500">
+      <div className="text-primary-500">
         <div className="h4">
           <FormattedMessage {...messages.answerWidgetTitle} />
         </div>
