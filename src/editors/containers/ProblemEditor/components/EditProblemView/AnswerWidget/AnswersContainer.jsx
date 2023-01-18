@@ -20,7 +20,7 @@ export const AnswersContainer = ({
 }) => {
   const { hasSingleAnswer } = initializeAnswerContainer({ answers, problemType, updateField });
   return (
-    <div className="border rounded py-4 pl-4 pr-3">
+    <div className="border border-light-700 rounded py-4 pl-4 pr-3">
       {answers.map((answer) => (
         <AnswerOption
           key={answer.id}

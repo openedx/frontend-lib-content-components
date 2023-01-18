@@ -6,6 +6,7 @@ import { injectIntl, FormattedMessage } from '@edx/frontend-platform/i18n';
 import * as hooks from '../../../hooks';
 import { selectors, actions } from '../../../../../data/redux';
 import { messages } from './messages';
+import './index.scss';
 
 // This widget should be connected, grab all questions from store, update them as needed.
 export const QuestionWidget = ({
@@ -15,7 +16,7 @@ export const QuestionWidget = ({
   const { editorRef, refReady, setEditorRef } = hooks.prepareEditorRef();
   if (!refReady) { return null; }
   return (
-    <div>
+    <div className="question-widget">
       <div>
         <h1>
           <FormattedMessage {...messages.questionWidgetTitle} />
