@@ -40,7 +40,7 @@ export const SettingsWidget = ({
         <Container>
           <Row>
             <Col>
-              <Row className="my-2">
+              <Row className="mb-2">
                 <TypeCard
                   answers={answers}
                   correctAnswerCount={correctAnswerCount}
