@@ -1,6 +1,6 @@
 /* istanbul ignore file */
 import react from 'react';
-import { StrictDict } from './utils';
+import { StrictDict } from './editors/utils';
 /**
  * Mocked formatMessage provided by react-intl
  */
