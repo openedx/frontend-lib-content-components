@@ -33,7 +33,7 @@ export const SettingsWidget = ({
   const { isAdvancedCardsVisible, showAdvancedCards } = showAdvancedSettingsCards();
   return (
     <div>
-      <div>
+      <div className="h4">
         <h3 className="h4">
           <FormattedMessage {...messages.settingsWidgetTitle} />
         </h3>
