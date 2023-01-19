@@ -2,7 +2,9 @@
 
 exports[`SettingsWidget snapshot snapshot: renders Settings widget page 1`] = `
 <div>
-  <div>
+  <div
+    className="h4"
+  >
     <h3
       className="h4"
     >
@@ -95,7 +97,9 @@ exports[`SettingsWidget snapshot snapshot: renders Settings widget page 1`] = `
 
 exports[`SettingsWidget snapshot snapshot: renders Settings widget page advanced settings visible 1`] = `
 <div>
-  <div>
+  <div
+    className="h4"
+  >
     <h3
       className="h4"
     >

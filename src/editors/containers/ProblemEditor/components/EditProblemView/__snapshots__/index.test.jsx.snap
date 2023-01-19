@@ -5,7 +5,7 @@ exports[`EditorProblemView component renders raw editor 1`] = `
   getContent={[Function]}
 >
   <Container
-    className="mt-3 pl-4 pr-4"
+    className="mt-3 px-4"
     fluid={true}
   >
     <Row>
@@ -39,7 +39,7 @@ exports[`EditorProblemView component renders simple view 1`] = `
   getContent={[Function]}
 >
   <Container
-    className="mt-3 pl-4 pr-4"
+    className="mt-3 px-4"
     fluid={true}
   >
     <Row>
