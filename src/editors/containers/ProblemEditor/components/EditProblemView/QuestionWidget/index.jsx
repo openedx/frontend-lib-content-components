@@ -19,7 +19,6 @@ export const QuestionWidget = ({
     <div className="question-widget">
       <div className="h4">
           <FormattedMessage {...messages.questionWidgetTitle} />
-        </h1>
         <Editor {
           ...hooks.problemEditorConfig({
             setEditorRef,
