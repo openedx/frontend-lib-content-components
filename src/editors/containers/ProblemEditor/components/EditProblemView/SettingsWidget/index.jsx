@@ -36,7 +36,6 @@ export const SettingsWidget = ({
       <div className="h4">
         <h3 className="h4">
           <FormattedMessage {...messages.settingsWidgetTitle} />
-        </h3>
         <Container>
           <Row>
             <Col>
