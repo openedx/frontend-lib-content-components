@@ -18,8 +18,9 @@ export const QuestionWidget = ({
   return (
     <div className="question-widget">
       <div className="h4">
-          <FormattedMessage {...messages.questionWidgetTitle} />
-        <Editor {
+        <FormattedMessage {...messages.questionWidgetTitle} />
+      </div>
+      <Editor {
           ...hooks.problemEditorConfig({
             setEditorRef,
             editorRef,
@@ -27,8 +28,7 @@ export const QuestionWidget = ({
             updateQuestion,
           })
         }
-        />
-      </div>
+      />
     </div>
   );
 };
