@@ -6,19 +6,12 @@ import PropTypes from 'prop-types';
 import messages from '../messages';
 import { thunkActions } from '../../../../../../data/redux';
 import BaseModal from '../../../../../TextEditor/components/BaseModal';
+import { confirmSwitchToAdvancedEditor } from '../hooks';
 
 export const SwitchToAdvancedEditorCard = ({
   switchToAdvancedEditor,
 }) => {
   const [isConfirmOpen, setConfirmOpen] = React.useState(false);
-  const openAdvancedEditor = () => {
-    switchToAdvancedEditor();
-    setConfirmOpen(false);
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth',
-    });
-  };
 
   return (
     <Card>
@@ -28,7 +21,7 @@ export const SwitchToAdvancedEditorCard = ({
         title={(<FormattedMessage {...messages.ConfirmSwitchMessageTitle} />)}
         confirmAction={(
           <Button
-            onClick={openAdvancedEditor}
+            onClick={() => confirmSwitchToAdvancedEditor({ switchToAdvancedEditor, setConfirmOpen })}
           >
             <FormattedMessage {...messages.ConfirmSwitchButtonLabel} />
           </Button>
