@@ -30,10 +30,10 @@ export const ResetCard = ({
         </Hyperlink>
       </div>
       <ButtonGroup size="lg" className="mb-2">
-        <Button variant={showResetButton ? 'outline-primary' : 'primary'} onClick={setResetFalse}>
+        <Button variant={showResetButton ? 'outline-primary' : 'primary'} size="sm" onClick={setResetFalse}>
           <FormattedMessage {...messages.resetSettingsFalse} />
         </Button>
-        <Button variant={showResetButton ? 'primary' : 'outline-primary'} onClick={setResetTrue}>
+        <Button variant={showResetButton ? 'primary' : 'outline-primary'} size="sm" onClick={setResetTrue}>
           <FormattedMessage {...messages.resetSettingsTrue} />
         </Button>
       </ButtonGroup>
