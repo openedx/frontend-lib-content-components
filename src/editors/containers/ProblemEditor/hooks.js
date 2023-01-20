@@ -1,7 +1,6 @@
 import {
   useRef, useCallback, useState, useEffect,
 } from 'react';
-import { ProblemTypeKeys } from '../../data/constants/problem';
 import tinyMCEStyles from '../../data/constants/tinyMCEStyles';
 import { StrictDict } from '../../utils';
 import * as module from './hooks';
@@ -42,4 +41,3 @@ export const prepareEditorRef = () => {
   useEffect(() => setRefReady(true), [setRefReady]);
   return { editorRef, refReady, setEditorRef };
 };
-
