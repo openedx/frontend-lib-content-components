@@ -24,7 +24,7 @@ export const EditProblemView = ({
 
   return (
     <EditorContainer getContent={getContent}>
-      <Container fluid className="mt-3 px-4">
+      <Container fluid className="mt-3">
         <Row>
           <Col xs={9}>
             {isAdvancedProblemType ? (
