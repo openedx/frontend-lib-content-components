@@ -32,7 +32,7 @@ export const SettingsWidget = ({
 }) => {
   const { isAdvancedCardsVisible, showAdvancedCards } = showAdvancedSettingsCards();
   return (
-    <div>
+    <div className="settingsWidget">
       <Container>
         <Row>
           <Col>
@@ -54,9 +54,9 @@ export const SettingsWidget = ({
 
             <Row>
               <Collapsible.Advanced open={!isAdvancedCardsVisible}>
-                <Collapsible.Body className="collapsible-body">
+                <Collapsible.Body className="collapsible-body small">
                   <Button
-                    className="my-3 px-0"
+                    className="my-3 px-0 text-info-500"
                     variant="link"
                     size="inline"
                     onClick={showAdvancedCards}
