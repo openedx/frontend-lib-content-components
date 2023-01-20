@@ -214,4 +214,4 @@ export const confirmSwitchToAdvancedEditor = ({
     top: 0,
     behavior: 'smooth',
   });
-}
+};

@@ -270,7 +270,6 @@ describe('Problem settings hooks', () => {
     test('test onClick', () => {
       const switchToAdvancedEditor = jest.fn();
       const setConfirmOpen = jest.fn();
-      const mockScrollTo = jest.fn();
       window.scrollTo = jest.fn();
       hooks.confirmSwitchToAdvancedEditor({
         switchToAdvancedEditor,
