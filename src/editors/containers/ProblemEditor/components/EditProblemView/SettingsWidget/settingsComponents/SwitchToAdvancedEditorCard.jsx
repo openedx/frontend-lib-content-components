@@ -11,6 +11,15 @@ export const SwitchToAdvancedEditorCard = ({
   switchToAdvancedEditor,
 }) => {
   const [isConfirmOpen, setConfirmOpen] = React.useState(false);
+  const openAdvancedEditor = () => {
+    switchToAdvancedEditor();
+    setConfirmOpen(false);
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+  };
+
   return (
     <Card>
       <BaseModal
@@ -19,7 +28,7 @@ export const SwitchToAdvancedEditorCard = ({
         title={(<FormattedMessage {...messages.ConfirmSwitchMessageTitle} />)}
         confirmAction={(
           <Button
-            onClick={switchToAdvancedEditor}
+            onClick={openAdvancedEditor}
           >
             <FormattedMessage {...messages.ConfirmSwitchButtonLabel} />
           </Button>
