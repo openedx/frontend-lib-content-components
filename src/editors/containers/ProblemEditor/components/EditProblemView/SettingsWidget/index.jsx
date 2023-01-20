@@ -33,13 +33,10 @@ export const SettingsWidget = ({
   const { isAdvancedCardsVisible, showAdvancedCards } = showAdvancedSettingsCards();
   return (
     <div>
-      <div className="h4">
-        <FormattedMessage {...messages.settingsWidgetTitle} />
-      </div>
       <Container>
         <Row>
           <Col>
-            <Row className="mb-3">
+            <Row className="mb-3 settingsCardTopRow">
               <TypeCard
                 answers={answers}
                 correctAnswerCount={correctAnswerCount}
