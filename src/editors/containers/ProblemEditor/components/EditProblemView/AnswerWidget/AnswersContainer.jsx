@@ -6,7 +6,7 @@ import { Add } from '@edx/paragon/icons';
 import { FormattedMessage } from '@edx/frontend-platform/i18n';
 
 import messages from './messages';
-import { useAnswerContainer, isSingleAnswerProblem } from '../../../hooks';
+import { useAnswerContainer, isSingleAnswerProblem } from './hooks';
 import { actions, selectors } from '../../../../../data/redux';
 import { answerOptionProps } from '../../../../../data/services/cms/types';
 import AnswerOption from './AnswerOption';

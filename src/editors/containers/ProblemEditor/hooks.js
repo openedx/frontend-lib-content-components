@@ -43,18 +43,3 @@ export const prepareEditorRef = () => {
   return { editorRef, refReady, setEditorRef };
 };
 
-export const isSingleAnswerProblem = (problemType) => (
-  problemType === ProblemTypeKeys.DROPDOWN || problemType === ProblemTypeKeys.SINGLESELECT
-);
-
-export const useAnswerContainer = ({ answers, updateField }) => {
-  useEffect(() => {
-    let answerCount = 0;
-    answers.forEach(answer => {
-      if (answer.correct) {
-        answerCount += 1;
-      }
-    });
-    updateField({ correctAnswerCount: answerCount });
-  }, []);
-};

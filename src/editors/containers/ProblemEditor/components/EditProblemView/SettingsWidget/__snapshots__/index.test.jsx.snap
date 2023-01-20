@@ -5,93 +5,89 @@ exports[`SettingsWidget snapshot snapshot: renders Settings widget page 1`] = `
   <div
     className="h4"
   >
-    <h3
-      className="h4"
-    >
-      <FormattedMessage
-        defaultMessage="Settings"
-        description="Settings Title"
-        id="authoring.problemeditor.settings.settingsWidgetTitle"
-      />
-    </h3>
-    <Container>
-      <Row>
-        <Col>
-          <Row
-            className="mb-2"
-          >
-            <injectIntl(ShimmedIntlComponent)
-              problemType="stringresponse"
-            />
-          </Row>
-          <Row
-            className="my-2"
-          >
-            <injectIntl(ShimmedIntlComponent) />
-          </Row>
-          <Row
-            className="mt-2"
-          >
-            <injectIntl(ShimmedIntlComponent) />
-          </Row>
-          <Row>
-            <Advanced
-              open={true}
-            >
-              <Body
-                className="collapsible-body"
-              >
-                <Button
-                  className="my-3 ml-2"
-                  size="inline"
-                  variant="link"
-                >
-                  <FormattedMessage
-                    defaultMessage="Show advanced settings"
-                    description="Button text to show advanced settings"
-                    id="authoring.problemeditor.settings.showAdvancedButton"
-                  />
-                </Button>
-              </Body>
-            </Advanced>
-          </Row>
+    <FormattedMessage
+      defaultMessage="Settings"
+      description="Settings Title"
+      id="authoring.problemeditor.settings.settingsWidgetTitle"
+    />
+  </div>
+  <Container>
+    <Row>
+      <Col>
+        <Row
+          className="mb-2"
+        >
+          <injectIntl(ShimmedIntlComponent)
+            problemType="stringresponse"
+          />
+        </Row>
+        <Row
+          className="my-2"
+        >
+          <injectIntl(ShimmedIntlComponent) />
+        </Row>
+        <Row
+          className="mt-2"
+        >
+          <injectIntl(ShimmedIntlComponent) />
+        </Row>
+        <Row>
           <Advanced
-            open={false}
+            open={true}
           >
             <Body
               className="collapsible-body"
             >
-              <Row
-                className="my-2"
+              <Button
+                className="my-3 ml-2"
+                size="inline"
+                variant="link"
               >
-                <injectIntl(ShimmedIntlComponent) />
-              </Row>
-              <Row
-                className="my-2"
-              >
-                <injectIntl(ShimmedIntlComponent) />
-              </Row>
-              <Row
-                className="my-2"
-              >
-                <injectIntl(ShimmedIntlComponent) />
-              </Row>
-              <Row
-                className="my-2"
-              >
-                <injectIntl(ShimmedIntlComponent) />
-              </Row>
-              <Row
-                className="my-2"
-              >
-                <injectIntl(ShimmedIntlComponent) />
-              </Row>
+                <FormattedMessage
+                  defaultMessage="Show advanced settings"
+                  description="Button text to show advanced settings"
+                  id="authoring.problemeditor.settings.showAdvancedButton"
+                />
+              </Button>
             </Body>
           </Advanced>
-        </Col>
-      </Row>
-    </Container>
-  </div>
+        </Row>
+        <Advanced
+          open={false}
+        >
+          <Body
+            className="collapsible-body"
+          >
+            <Row
+              className="my-2"
+            >
+              <injectIntl(ShimmedIntlComponent) />
+            </Row>
+            <Row
+              className="my-2"
+            >
+              <injectIntl(ShimmedIntlComponent) />
+            </Row>
+            <Row
+              className="my-2"
+            >
+              <injectIntl(ShimmedIntlComponent) />
+            </Row>
+            <Row
+              className="my-2"
+            >
+              <injectIntl(ShimmedIntlComponent) />
+            </Row>
+            <Row
+              className="my-2"
+            >
+              <injectIntl(ShimmedIntlComponent) />
+            </Row>
+          </Body>
+        </Advanced>
+      </Col>
+    </Row>
+  </Container>
 </div>
 `;
 
@@ -100,92 +96,88 @@ exports[`SettingsWidget snapshot snapshot: renders Settings widget page advanced
   <div
     className="h4"
   >
-    <h3
-      className="h4"
-    >
-      <FormattedMessage
-        defaultMessage="Settings"
-        description="Settings Title"
-        id="authoring.problemeditor.settings.settingsWidgetTitle"
-      />
-    </h3>
-    <Container>
-      <Row>
-        <Col>
-          <Row
-            className="mb-2"
-          >
-            <injectIntl(ShimmedIntlComponent)
-              problemType="stringresponse"
-            />
-          </Row>
-          <Row
-            className="my-2"
-          >
-            <injectIntl(ShimmedIntlComponent) />
-          </Row>
-          <Row
-            className="mt-2"
-          >
-            <injectIntl(ShimmedIntlComponent) />
-          </Row>
-          <Row>
-            <Advanced
-              open={false}
-            >
-              <Body
-                className="collapsible-body"
-              >
-                <Button
-                  className="my-3 ml-2"
-                  size="inline"
-                  variant="link"
-                >
-                  <FormattedMessage
-                    defaultMessage="Show advanced settings"
-                    description="Button text to show advanced settings"
-                    id="authoring.problemeditor.settings.showAdvancedButton"
-                  />
-                </Button>
-              </Body>
-            </Advanced>
-          </Row>
+    <FormattedMessage
+      defaultMessage="Settings"
+      description="Settings Title"
+      id="authoring.problemeditor.settings.settingsWidgetTitle"
+    />
+  </div>
+  <Container>
+    <Row>
+      <Col>
+        <Row
+          className="mb-2"
+        >
+          <injectIntl(ShimmedIntlComponent)
+            problemType="stringresponse"
+          />
+        </Row>
+        <Row
+          className="my-2"
+        >
+          <injectIntl(ShimmedIntlComponent) />
+        </Row>
+        <Row
+          className="mt-2"
+        >
+          <injectIntl(ShimmedIntlComponent) />
+        </Row>
+        <Row>
           <Advanced
-            open={true}
+            open={false}
           >
             <Body
               className="collapsible-body"
             >
-              <Row
-                className="my-2"
+              <Button
+                className="my-3 ml-2"
+                size="inline"
+                variant="link"
               >
-                <injectIntl(ShimmedIntlComponent) />
-              </Row>
-              <Row
-                className="my-2"
-              >
-                <injectIntl(ShimmedIntlComponent) />
-              </Row>
-              <Row
-                className="my-2"
-              >
-                <injectIntl(ShimmedIntlComponent) />
-              </Row>
-              <Row
-                className="my-2"
-              >
-                <injectIntl(ShimmedIntlComponent) />
-              </Row>
-              <Row
-                className="my-2"
-              >
-                <injectIntl(ShimmedIntlComponent) />
-              </Row>
+                <FormattedMessage
+                  defaultMessage="Show advanced settings"
+                  description="Button text to show advanced settings"
+                  id="authoring.problemeditor.settings.showAdvancedButton"
+                />
+              </Button>
             </Body>
           </Advanced>
-        </Col>
-      </Row>
-    </Container>
-  </div>
+        </Row>
+        <Advanced
+          open={true}
+        >
+          <Body
+            className="collapsible-body"
+          >
+            <Row
+              className="my-2"
+            >
+              <injectIntl(ShimmedIntlComponent) />
+            </Row>
+            <Row
+              className="my-2"
+            >
+              <injectIntl(ShimmedIntlComponent) />
+            </Row>
+            <Row
+              className="my-2"
+            >
+              <injectIntl(ShimmedIntlComponent) />
+            </Row>
+            <Row
+              className="my-2"
+            >
+              <injectIntl(ShimmedIntlComponent) />
+            </Row>
+            <Row
+              className="my-2"
+            >
+              <injectIntl(ShimmedIntlComponent) />
+            </Row>
+          </Body>
+        </Advanced>
+      </Col>
+    </Row>
+  </Container>
 </div>
 `;
