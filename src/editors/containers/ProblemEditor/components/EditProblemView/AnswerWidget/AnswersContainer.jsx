@@ -23,7 +23,7 @@ export const AnswersContainer = ({
   useAnswerContainer({ answers, problemType, updateField });
 
   return (
-    <div className="border border-light-700 rounded py-4 pl-4 pr-3">
+    <div className="answers-container border border-light-700 rounded py-4 pl-4 pr-3">
       {answers.map((answer) => (
         <AnswerOption
           key={answer.id}
@@ -32,7 +32,7 @@ export const AnswersContainer = ({
         />
       ))}
       <Button
-        className="pl-0 text-primary-500"
+        className="pl-0 text-primary-500 add-answer-button"
         iconBefore={Add}
         variant="tertiary"
         onClick={addAnswer}
