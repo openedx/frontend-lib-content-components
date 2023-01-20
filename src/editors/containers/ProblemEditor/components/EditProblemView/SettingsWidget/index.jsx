@@ -39,7 +39,7 @@ export const SettingsWidget = ({
       <Container>
         <Row>
           <Col>
-            <Row className="mb-2">
+            <Row className="mb-3">
               <TypeCard
                 answers={answers}
                 correctAnswerCount={correctAnswerCount}
@@ -48,10 +48,10 @@ export const SettingsWidget = ({
                 updateAnswer={updateAnswer}
               />
             </Row>
-            <Row className="my-2">
+            <Row className="my-3">
               <ScoringCard scoring={settings.scoring} updateSettings={updateSettings} />
             </Row>
-            <Row className="mt-2">
+            <Row className="mt-3">
               <HintsCard hints={settings.hints} updateSettings={updateSettings} />
             </Row>
 
@@ -59,7 +59,7 @@ export const SettingsWidget = ({
               <Collapsible.Advanced open={!isAdvancedCardsVisible}>
                 <Collapsible.Body className="collapsible-body">
                   <Button
-                    className="my-3 ml-2"
+                    className="my-3 px-0"
                     variant="link"
                     size="inline"
                     onClick={showAdvancedCards}
@@ -72,19 +72,19 @@ export const SettingsWidget = ({
 
             <Collapsible.Advanced open={isAdvancedCardsVisible}>
               <Collapsible.Body className="collapsible-body">
-                <Row className="my-2">
+                <Row className="my-3">
                   <ShowAnswerCard showAnswer={settings.showAnswer} updateSettings={updateSettings} />
                 </Row>
-                <Row className="my-2">
+                <Row className="my-3">
                   <ResetCard showResetButton={settings.showResetButton} updateSettings={updateSettings} />
                 </Row>
-                <Row className="my-2">
+                <Row className="my-3">
                   <TimerCard timeBetween={settings.timeBetween} updateSettings={updateSettings} />
                 </Row>
-                <Row className="my-2">
+                <Row className="my-3">
                   <MatlabCard matLabApiKey={settings.matLabApiKey} updateSettings={updateSettings} />
                 </Row>
-                <Row className="my-2">
+                <Row className="my-3">
                   <SwitchToAdvancedEditorCard />
                 </Row>
               </Collapsible.Body>
