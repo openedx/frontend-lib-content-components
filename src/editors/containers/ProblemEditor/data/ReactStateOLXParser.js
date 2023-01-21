@@ -1,22 +1,20 @@
 import _ from 'lodash-es';
-import { XMLParser, XMLBuilder } from 'fast-xml-parser';
+import { XMLBuilder } from 'fast-xml-parser';
 import { ProblemTypeKeys } from '../../../data/constants/problem';
 
 class ReactStateOLXParser {
   constructor(problemState) {
-    const parserOptions = {
+    this.parserOptions = {
       ignoreAttributes: false,
       alwaysCreateTextNode: true,
-      // preserveOrder: true
     };
-    const builderOptions = {
+    this.builderOptions = {
       ignoreAttributes: false,
       attributeNamePrefix: '@_',
       suppressBooleanAttributes: false,
       format: true,
     };
-    this.parser = new XMLParser(parserOptions);
-    this.builder = new XMLBuilder(builderOptions);
+    this.builder = new XMLBuilder(this.builderOptions);
     this.problemState = problemState.problem;
   }
 
@@ -96,42 +94,53 @@ class ReactStateOLXParser {
     return compoundhint;
   }
 
-  addQuestion() {
+  buildOLXWithQuestion(problemObject, problemType) {
+    const olxWithoutQuestion = this.builder.build(problemObject);
+
+    return this.insertQuestionIntoOLX(olxWithoutQuestion, problemType);
+  }
+
+  insertQuestionIntoOLX(olx, tagName) {
     const { question } = this.problemState;
-    const questionObject = this.parser.parse(question);
-    return questionObject;
+
+    const tagPattern = new RegExp(`<${tagName}[^>]*>`);
+    const match = olx.match(tagPattern);
+    const insertIndex = match.index + match[0].length;
+
+    const olxWithQuestion = `${olx.slice(0, insertIndex)}\n${question}${olx.slice(insertIndex)}`;
+
+    return olxWithQuestion;
   }
 
   buildMultiSelectProblem(problemType, widget, option) {
-    const question = this.addQuestion();
     const widgetObject = this.addMultiSelectAnswers(option);
     const demandhint = this.addHints();
     const problemObject = {
       problem: {
         [problemType]: {
-          ...question,
           [widget]: widgetObject,
         },
         ...demandhint,
       },
     };
-    return this.builder.build(problemObject);
+
+    return this.buildOLXWithQuestion(problemObject, problemType);
   }
 
   buildTextInput() {
-    const question = this.addQuestion();
+    const problemType = ProblemTypeKeys.TEXTINPUT;
     const demandhint = this.addHints();
     const answerObject = this.buildTextInputAnswersFeedback();
     const problemObject = {
       problem: {
-        [ProblemTypeKeys.TEXTINPUT]: {
-          ...question,
+        [problemType]: {
           ...answerObject,
         },
         ...demandhint,
       },
     };
-    return this.builder.build(problemObject);
+
+    return this.buildOLXWithQuestion(problemObject, problemType);
   }
 
   buildTextInputAnswersFeedback() {
@@ -175,17 +184,18 @@ class ReactStateOLXParser {
   }
 
   buildNumericInput() {
-    const question = this.addQuestion();
     const demandhint = this.addHints();
     const answerObject = this.buildNumericalResponse();
     const problemObject = {
       problem: {
-        ...question,
         [ProblemTypeKeys.NUMERIC]: answerObject,
         ...demandhint,
       },
     };
-    return this.builder.build(problemObject);
+
+    // Passing 'problem' as problem type, because for this type of problems the question has to be inserted under
+    // <problem> tag, instead of <${problemType}> tag.
+    return this.buildOLXWithQuestion(problemObject, 'problem');
   }
 
   buildNumericalResponse() {

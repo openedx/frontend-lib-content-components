@@ -36,10 +36,11 @@ export class OLXParser {
       alwaysCreateTextNode: true,
       // preserveOrder: true
     };
+    this.olxString = olxString;
     const parser = new XMLParser(options);
-    this.parsedOLX = parser.parse(olxString);
-    if (_.has(this.parsedOLX, 'problem')) {
-      this.problem = this.parsedOLX.problem;
+    const parsedOLX = parser.parse(olxString);
+    if (_.has(parsedOLX, 'problem')) {
+      this.problem = parsedOLX.problem;
     }
   }
 
@@ -274,37 +275,67 @@ export class OLXParser {
   }
 
   parseQuestions(problemType) {
-    const builder = new XMLBuilder();
-    const problemObject = _.get(this.problem, problemType);
-    let questionObject = {};
-    /* TODO: How do we uniquely identify the label and description?
-      In order to parse label and description, there should be two states
-      and settings should be introduced to edit the label and description.
-      In turn editing the settings update the state and then it can be added to
-      the parsed OLX.
-    */
-    const tagMap = {
-      label: 'strong',
-      description: 'em',
+    const getQuestionObject = (parsedOlx) => {
+      const hasNonQuestionKeys = (obj) => !(_.some(nonQuestionKeys, (key) => _.has(obj, key)));
+      const isWhiteSpace = (obj) => _.get(obj, '#text', 'nonemptystring').trim() !== '';
+      const transformIntoQuestionObject = (root) => _.filter(_.filter(root, isWhiteSpace), hasNonQuestionKeys);
+      let questionObject = {};
+
+      // Try to find question within problemType node; odd path because of `preserveOrder` option used for parsing.
+      const problemTypeObject = _.get(
+        _.find(parsedOlx[0].problem, (obj) => _.has(obj, problemType)),
+        problemType,
+        {},
+      );
+      questionObject = transformIntoQuestionObject(problemTypeObject);
+
+      // If haven't found any question nodes, check if question is stored in the problem node.
+      if (_.isEmpty(questionObject)) {
+        questionObject = transformIntoQuestionObject(parsedOlx[0].problem);
+      }
+      return questionObject;
     };
 
-    /* Only numerical response has different ways to generate OLX, test with
-      numericInputWithFeedbackAndHintsOLXException and numericInputWithFeedbackAndHintsOLX
-      shows the different ways the olx can be generated.
-    */
-    if (_.isArray(problemObject)) {
-      questionObject = _.omitBy(problemObject[0], (value, key) => _.includes(nonQuestionKeys, key));
-    } else {
-      questionObject = _.omitBy(problemObject, (value, key) => _.includes(nonQuestionKeys, key));
-    }
-    // Check if problem tag itself will have question and descriptions.
-    if (_.isEmpty(questionObject)) {
-      questionObject = _.omitBy(this.problem, (value, key) => _.includes(nonQuestionKeys, key));
-    }
-    const serializedQuestion = _.mapKeys(questionObject, (value, key) => _.get(tagMap, key, key));
+    const mapQuestionTags = (questionObject) => {
+      /* TODO: How do we uniquely identify the label and description?
+        In order to parse label and description, there should be two states
+        and settings should be introduced to edit the label and description.
+        In turn editing the settings update the state and then it can be added to
+        the parsed OLX.
+      */
+      const tagMap = {
+        label: 'strong',
+        description: 'em',
+      };
 
-    const questionString = builder.build(serializedQuestion);
-    return questionString;
+      return _.map(questionObject, (obj) => _.mapKeys(obj, (value, key) => _.get(tagMap, key, key)));
+    };
+
+    // To be able to generate question's HTML, such that it respects the initial
+    // order of elements and styles stored in the OLX, we parse and build
+    // original `olxString` with `preserveOrder: true`. We parse and build the
+    // question separately, because the JSON structure produced with
+    // `preserveOrder: true` option is more complex and hard to work with, and
+    // since the order of nested elements is not important in other places, we
+    // restrict the complexity of the produced JSON within the scope of this
+    // method.
+    const parser = new XMLParser({
+      preserveOrder: true,
+      trimValues: false,
+      ignoreAttributes: false,
+    });
+    const parsedOlx = parser.parse(this.olxString);
+
+    const questionObject = getQuestionObject(parsedOlx);
+    const serializedQuestion = mapQuestionTags(questionObject);
+
+    const builder = new XMLBuilder({
+      preserveOrder: true,
+      attributeNamePrefix: '@_',
+      ignoreAttributes: false,
+      format: false,
+    });
+    return builder.build(serializedQuestion);
   }
 
   getHints() {
