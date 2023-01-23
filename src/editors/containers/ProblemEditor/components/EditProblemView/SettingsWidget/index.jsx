@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { injectIntl, FormattedMessage } from '@edx/frontend-platform/i18n';
 import { connect } from 'react-redux';
 import {
-  Button, Col, Collapsible, Container, Row,
+  Button, Col, Collapsible, Container, div,
 } from '@edx/paragon';
 import { selectors, actions } from '../../../../../data/redux';
 import ScoringCard from './settingsComponents/ScoringCard';
@@ -32,63 +32,57 @@ export const SettingsWidget = ({
 }) => {
   const { isAdvancedCardsVisible, showAdvancedCards } = showAdvancedSettingsCards();
   return (
-    <div className="settingsWidget">
-      <Container>
-        <Row>
-          <Col>
-            <Row className="mb-3 settingsCardTopRow">
-              <TypeCard
-                answers={answers}
-                correctAnswerCount={correctAnswerCount}
-                problemType={problemType}
-                updateField={updateField}
-                updateAnswer={updateAnswer}
-              />
-            </Row>
-            <Row className="my-3">
-              <ScoringCard scoring={settings.scoring} updateSettings={updateSettings} />
-            </Row>
-            <Row className="mt-3">
-              <HintsCard hints={settings.hints} updateSettings={updateSettings} />
-            </Row>
+    <div className="settingsWidget ml-4">
+      <div className="mb-3 settingsCardTopdiv">
+        <TypeCard
+          answers={answers}
+          correctAnswerCount={correctAnswerCount}
+          problemType={problemType}
+          updateField={updateField}
+          updateAnswer={updateAnswer}
+        />
+      </div>
+      <div className="my-3">
+        <ScoringCard scoring={settings.scoring} updateSettings={updateSettings} />
+      </div>
+      <div className="mt-3">
+        <HintsCard hints={settings.hints} updateSettings={updateSettings} />
+      </div>
 
-            <Row>
-              <Collapsible.Advanced open={!isAdvancedCardsVisible}>
-                <Collapsible.Body className="collapsible-body small">
-                  <Button
-                    className="my-3 px-0 text-info-500"
-                    variant="link"
-                    size="inline"
-                    onClick={showAdvancedCards}
-                  >
-                    <FormattedMessage {...messages.showAdvanceSettingsButtonText} />
-                  </Button>
-                </Collapsible.Body>
-              </Collapsible.Advanced>
-            </Row>
+      <div>
+        <Collapsible.Advanced open={!isAdvancedCardsVisible}>
+          <Collapsible.Body className="collapsible-body small">
+            <Button
+              className="my-3 px-0 text-info-500"
+              variant="link"
+              size="inline"
+              onClick={showAdvancedCards}
+            >
+              <FormattedMessage {...messages.showAdvanceSettingsButtonText} />
+            </Button>
+          </Collapsible.Body>
+        </Collapsible.Advanced>
+      </div>
 
-            <Collapsible.Advanced open={isAdvancedCardsVisible}>
-              <Collapsible.Body className="collapsible-body">
-                <Row className="my-3">
-                  <ShowAnswerCard showAnswer={settings.showAnswer} updateSettings={updateSettings} />
-                </Row>
-                <Row className="my-3">
-                  <ResetCard showResetButton={settings.showResetButton} updateSettings={updateSettings} />
-                </Row>
-                <Row className="my-3">
-                  <TimerCard timeBetween={settings.timeBetween} updateSettings={updateSettings} />
-                </Row>
-                <Row className="my-3">
-                  <MatlabCard matLabApiKey={settings.matLabApiKey} updateSettings={updateSettings} />
-                </Row>
-                <Row className="my-3">
-                  <SwitchToAdvancedEditorCard />
-                </Row>
-              </Collapsible.Body>
-            </Collapsible.Advanced>
-          </Col>
-        </Row>
-      </Container>
+      <Collapsible.Advanced open={isAdvancedCardsVisible}>
+        <Collapsible.Body className="collapsible-body">
+          <div className="my-3">
+            <ShowAnswerCard showAnswer={settings.showAnswer} updateSettings={updateSettings} />
+          </div>
+          <div className="my-3">
+            <ResetCard showResetButton={settings.showResetButton} updateSettings={updateSettings} />
+          </div>
+          <div className="my-3">
+            <TimerCard timeBetween={settings.timeBetween} updateSettings={updateSettings} />
+          </div>
+          <div className="my-3">
+            <MatlabCard matLabApiKey={settings.matLabApiKey} updateSettings={updateSettings} />
+          </div>
+          <div className="my-3">
+            <SwitchToAdvancedEditorCard />
+          </div>
+        </Collapsible.Body>
+      </Collapsible.Advanced>
     </div>
   );
 };
