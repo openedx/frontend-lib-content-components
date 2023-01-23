@@ -18,6 +18,7 @@ export const HintsCard = ({
     <SettingsOption
       title={intl.formatMessage(messages.hintSettingTitle)}
       summary={intl.formatMessage(summary.message, { ...summary.values })}
+      none={!hints.length}
     >
       {hints.map((hint) => (
         <HintRow

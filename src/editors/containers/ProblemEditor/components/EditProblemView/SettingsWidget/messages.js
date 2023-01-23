@@ -36,7 +36,7 @@ export const messages = {
   },
   noHintSummary: {
     id: 'authoring.problemeditor.settings.hint.noHintSummary',
-    defaultMessage: 'No Hints',
+    defaultMessage: 'None',
     description: 'Summary text for no hints',
   },
   hintSummary: {

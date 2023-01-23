@@ -7,6 +7,7 @@ import { showFullCard } from './hooks';
 export const SettingsOption = ({
   title,
   summary,
+  none,
   children,
   className,
 }) => {
@@ -35,7 +36,7 @@ export const SettingsOption = ({
           open={!isCardCollapsed}
         >
           <Collapsible.Body className="collapsible-body">
-            <span className="text-primary-500 small">{summary}</span>
+            <span className={`small ${none ? 'text-gray-500' : 'text-primary-500'}`}>{summary}</span>
           </Collapsible.Body>
         </Collapsible.Advanced>
         <Collapsible.Advanced
@@ -53,10 +54,12 @@ export const SettingsOption = ({
 SettingsOption.propTypes = {
   title: PropTypes.string.isRequired,
   summary: PropTypes.string.isRequired,
+  none: PropTypes.bool,
   className: PropTypes.string,
   children: PropTypes.node.isRequired,
 };
 SettingsOption.defaultProps = {
+  none: false,
   className: '',
 };
 
