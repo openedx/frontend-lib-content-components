@@ -11,11 +11,17 @@
 }
 
 .settingsCardTopRow {
-    margin-top: 30.5px;
+    margin-top: 40px;
 }
 
 .resetCard {
     .resetSettingsButtons {
         width: 100%;
+    }
+}
+
+.hintRow {
+    .flex-grow-1 {
+        flex-grow: 1;
     }
 }

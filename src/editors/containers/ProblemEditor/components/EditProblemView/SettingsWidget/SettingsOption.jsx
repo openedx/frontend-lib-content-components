@@ -30,7 +30,7 @@ export const SettingsOption = ({
           </Collapsible.Trigger>
         </Collapsible.Advanced>
       </Card.Section>
-      <Card.Section className="px-4 py-3">
+      <Card.Section className="px-4 pb-4 pt-3">
         <Collapsible.Advanced
           open={!isCardCollapsed}
         >
