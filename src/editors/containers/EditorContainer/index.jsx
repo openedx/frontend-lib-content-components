@@ -53,14 +53,15 @@ export const EditorContainer = ({
           >
             <TitleHeader isInitialized={isInitialized} />
           </div>
-          <div className="pgn__modal-close-container">
+          
+        </ModalDialog.Title>
+        <div className="pgn__modal-close-container">
             <IconButton
               src={Close}
               iconAs={Icon}
               onClick={openCancelConfirmModal}
             />
           </div>
-        </ModalDialog.Title>
       </ModalDialog.Header>
       <ModalDialog.Body className="pb-6">
         {isInitialized && children}
