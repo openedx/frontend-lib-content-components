@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Button } from '@edx/paragon';
-import { Add } from '@edx/paragon/icons';
 import { FormattedMessage } from '@edx/frontend-platform/i18n';
 
 import messages from './messages';
@@ -10,6 +8,7 @@ import { useAnswerContainer, isSingleAnswerProblem } from './hooks';
 import { actions, selectors } from '../../../../../data/redux';
 import { answerOptionProps } from '../../../../../data/services/cms/types';
 import AnswerOption from './AnswerOption';
+import Button from '../../../../../sharedComponents/Button';
 
 export const AnswersContainer = ({
   problemType,
@@ -32,9 +31,7 @@ export const AnswersContainer = ({
         />
       ))}
       <Button
-        className="pl-0 text-primary-500 add-answer-button"
-        iconBefore={Add}
-        variant="tertiary"
+        variant="add"
         onClick={addAnswer}
       >
         <FormattedMessage {...messages.addAnswerButtonText} />

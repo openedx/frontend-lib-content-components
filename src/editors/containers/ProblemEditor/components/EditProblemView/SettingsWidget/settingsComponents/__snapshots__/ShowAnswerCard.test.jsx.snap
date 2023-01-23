@@ -2,6 +2,7 @@
 
 exports[`ShowAnswerCard snapshot snapshot: show answer setting card 1`] = `
 <SettingsOption
+  className=""
   summary="After Some Number of Attempts"
   title="Show answer"
 >

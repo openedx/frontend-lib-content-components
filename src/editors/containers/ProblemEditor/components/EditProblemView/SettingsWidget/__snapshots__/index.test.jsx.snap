@@ -1,33 +1,26 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`SettingsWidget snapshot snapshot: renders Settings widget page 1`] = `
-<div>
-  <div
-    className="h4"
-  >
-    <FormattedMessage
-      defaultMessage="Settings"
-      description="Settings Title"
-      id="authoring.problemeditor.settings.settingsWidgetTitle"
-    />
-  </div>
+<div
+  className="settingsWidget"
+>
   <Container>
     <Row>
       <Col>
         <Row
-          className="mb-2"
+          className="mb-3 settingsCardTopRow"
         >
           <injectIntl(ShimmedIntlComponent)
             problemType="stringresponse"
           />
         </Row>
         <Row
-          className="my-2"
+          className="my-3"
         >
           <injectIntl(ShimmedIntlComponent) />
         </Row>
         <Row
-          className="mt-2"
+          className="mt-3"
         >
           <injectIntl(ShimmedIntlComponent) />
         </Row>
@@ -36,10 +29,10 @@ exports[`SettingsWidget snapshot snapshot: renders Settings widget page 1`] = `
             open={true}
           >
             <Body
-              className="collapsible-body"
+              className="collapsible-body small"
             >
               <Button
-                className="my-3 ml-2"
+                className="my-3 px-0 text-info-500"
                 size="inline"
                 variant="link"
               >
@@ -59,27 +52,27 @@ exports[`SettingsWidget snapshot snapshot: renders Settings widget page 1`] = `
             className="collapsible-body"
           >
             <Row
-              className="my-2"
+              className="my-3"
             >
               <injectIntl(ShimmedIntlComponent) />
             </Row>
             <Row
-              className="my-2"
+              className="my-3"
             >
               <injectIntl(ShimmedIntlComponent) />
             </Row>
             <Row
-              className="my-2"
+              className="my-3"
             >
               <injectIntl(ShimmedIntlComponent) />
             </Row>
             <Row
-              className="my-2"
+              className="my-3"
             >
               <injectIntl(ShimmedIntlComponent) />
             </Row>
             <Row
-              className="my-2"
+              className="my-3"
             >
               <injectIntl(ShimmedIntlComponent) />
             </Row>
@@ -92,33 +85,26 @@ exports[`SettingsWidget snapshot snapshot: renders Settings widget page 1`] = `
 `;
 
 exports[`SettingsWidget snapshot snapshot: renders Settings widget page advanced settings visible 1`] = `
-<div>
-  <div
-    className="h4"
-  >
-    <FormattedMessage
-      defaultMessage="Settings"
-      description="Settings Title"
-      id="authoring.problemeditor.settings.settingsWidgetTitle"
-    />
-  </div>
+<div
+  className="settingsWidget"
+>
   <Container>
     <Row>
       <Col>
         <Row
-          className="mb-2"
+          className="mb-3 settingsCardTopRow"
         >
           <injectIntl(ShimmedIntlComponent)
             problemType="stringresponse"
           />
         </Row>
         <Row
-          className="my-2"
+          className="my-3"
         >
           <injectIntl(ShimmedIntlComponent) />
         </Row>
         <Row
-          className="mt-2"
+          className="mt-3"
         >
           <injectIntl(ShimmedIntlComponent) />
         </Row>
@@ -127,10 +113,10 @@ exports[`SettingsWidget snapshot snapshot: renders Settings widget page advanced
             open={false}
           >
             <Body
-              className="collapsible-body"
+              className="collapsible-body small"
             >
               <Button
-                className="my-3 ml-2"
+                className="my-3 px-0 text-info-500"
                 size="inline"
                 variant="link"
               >
@@ -150,27 +136,27 @@ exports[`SettingsWidget snapshot snapshot: renders Settings widget page advanced
             className="collapsible-body"
           >
             <Row
-              className="my-2"
+              className="my-3"
             >
               <injectIntl(ShimmedIntlComponent) />
             </Row>
             <Row
-              className="my-2"
+              className="my-3"
             >
               <injectIntl(ShimmedIntlComponent) />
             </Row>
             <Row
-              className="my-2"
+              className="my-3"
             >
               <injectIntl(ShimmedIntlComponent) />
             </Row>
             <Row
-              className="my-2"
+              className="my-3"
             >
               <injectIntl(ShimmedIntlComponent) />
             </Row>
             <Row
-              className="my-2"
+              className="my-3"
             >
               <injectIntl(ShimmedIntlComponent) />
             </Row>

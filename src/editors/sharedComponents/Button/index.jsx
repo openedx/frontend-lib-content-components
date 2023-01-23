@@ -1,17 +1,20 @@
 import React from 'react';
 import { string, node, arrayOf } from 'prop-types';
+import { Button as ParagonButton } from '@edx/paragon';
+import { Add } from '@edx/paragon/icons';
 
 import { getButtonProps } from './hooks';
+import './index.scss';
 
 const Button = ({
   variant, className, text, children, ...props
 }) => (
-  <Button
-    {...getButtonProps({ variant, className })}
+  <ParagonButton
+    {...getButtonProps({ variant, className, Add })}
     {...props}
   >
     {children || text}
-  </Button>
+  </ParagonButton>
 );
 Button.propTypes = {
   variant: string,

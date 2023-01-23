@@ -1,7 +1,7 @@
 import React from 'react';
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 import {
-  Col, Container, Form, Icon, IconButton, Row,
+  Col, Form, Icon, IconButton, Row,
 } from '@edx/paragon';
 import { Delete } from '@edx/paragon/icons';
 import PropTypes from 'prop-types';
@@ -14,7 +14,7 @@ export const HintRow = ({
   // inject
   intl,
 }) => (
-  <Container fluid>
+  <>
     <Row>
       <Col xs={10}>
         <Form.Group>
@@ -36,7 +36,7 @@ export const HintRow = ({
         />
       </Col>
     </Row>
-  </Container>
+  </>
 );
 
 HintRow.propTypes = {

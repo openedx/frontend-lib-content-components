@@ -1,8 +1,10 @@
 /* eslint-disable import/prefer-default-export */
-export const getButtonProps = ({ variant, className }) => {
+export const isVariantAdd = (variant) => variant === 'add';
+
+export const getButtonProps = ({ variant, className, Add }) => {
   const variantClasses = {
-    default: '',
-    add: 'pl-0 text-primary-500 button-variant-add',
+    default: 'shared-button',
+    add: 'shared-button pl-0 text-primary-500 button-variant-add',
   };
   const variantMap = {
     add: 'tertiary',
@@ -10,8 +12,12 @@ export const getButtonProps = ({ variant, className }) => {
   const classes = [variantClasses[variant]];
   if (className) { classes.push(className); }
 
+  const iconProps = {};
+  if (isVariantAdd(variant)) { iconProps.iconBefore = Add; }
+
   return {
     className: classes.join(' '),
     variant: variantMap[variant] || variant,
+    ...iconProps,
   };
 };

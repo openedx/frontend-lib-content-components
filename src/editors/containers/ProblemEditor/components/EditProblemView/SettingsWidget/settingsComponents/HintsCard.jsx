@@ -1,12 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl, FormattedMessage, intlShape } from '@edx/frontend-platform/i18n';
-import { Button } from '@edx/paragon';
-import { Add } from '@edx/paragon/icons';
 import SettingsOption from '../SettingsOption';
 import messages from '../messages';
 import { hintsCardHooks, hintsRowHooks } from '../hooks';
 import HintRow from './HintRow';
+import Button from '../../../../../../sharedComponents/Button';
 
 export const HintsCard = ({
   hints,
@@ -29,10 +28,10 @@ export const HintsCard = ({
         />
       ))}
       <Button
-        className="my-3 ml-2"
-        iconBefore={Add}
-        variant="tertiary"
+        className="m-0 p-0 font-weight-bold"
+        variant="add"
         onClick={handleAdd}
+        size="sm"
       >
         <FormattedMessage {...messages.addHintButtonText} />
       </Button>

@@ -2,6 +2,7 @@
 
 exports[`HintsCard snapshot snapshot: renders hints setting card multiple hints 1`] = `
 <SettingsOption
+  className=""
   summary=" {count, plural, =0 {} other {(+# more)}}"
   title="Hints"
 >
@@ -22,7 +23,8 @@ exports[`HintsCard snapshot snapshot: renders hints setting card multiple hints 
   <Button
     className="my-3 ml-2"
     onClick={[MockFunction hintsCardHooks.handleAdd]}
-    variant="tertiary"
+    text={null}
+    variant="add"
   >
     <FormattedMessage
       defaultMessage="Add hint"
@@ -35,13 +37,15 @@ exports[`HintsCard snapshot snapshot: renders hints setting card multiple hints 
 
 exports[`HintsCard snapshot snapshot: renders hints setting card no hints 1`] = `
 <SettingsOption
+  className=""
   summary="No Hints"
   title="Hints"
 >
   <Button
     className="my-3 ml-2"
     onClick={[MockFunction hintsCardHooks.handleAdd]}
-    variant="tertiary"
+    text={null}
+    variant="add"
   >
     <FormattedMessage
       defaultMessage="Add hint"
@@ -54,6 +58,7 @@ exports[`HintsCard snapshot snapshot: renders hints setting card no hints 1`] = 
 
 exports[`HintsCard snapshot snapshot: renders hints setting card one hint 1`] = `
 <SettingsOption
+  className=""
   summary="hint1 {count, plural, =0 {} other {(+# more)}}"
   title="Hints"
 >
@@ -67,7 +72,8 @@ exports[`HintsCard snapshot snapshot: renders hints setting card one hint 1`] = 
   <Button
     className="my-3 ml-2"
     onClick={[MockFunction hintsCardHooks.handleAdd]}
-    variant="tertiary"
+    text={null}
+    variant="add"
   >
     <FormattedMessage
       defaultMessage="Add hint"

@@ -2,7 +2,7 @@
 
 exports[`SettingsOption render snapshot: renders correct 1`] = `
 <Card
-  className="border border-light-700 shadow-none"
+  className=" settingsOption border border-light-700 shadow-none"
 >
   <Card.Section
     className="settingsCardTitleSection"

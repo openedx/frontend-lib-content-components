@@ -30,19 +30,3 @@
     }
   }
 }
-
-.answers-container {
-  .add-answer-button {
-    &:not(:disabled) {
-      &:not(.disabled) {
-        &:hover, &:active, &:focus {
-          background-color: transparent;
-
-          &:before {
-            display: none;
-          }
-        }
-      }
-    }
-  }
-}
