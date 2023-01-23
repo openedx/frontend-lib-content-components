@@ -20,7 +20,7 @@ export const SettingsOption = ({
           onToggle={toggleCardCollapse}
         >
           <Collapsible.Trigger className="collapsible-trigger d-flex">
-            <span className="flex-grow-1">{title}</span>
+            <span className="flex-grow-1 text-primary-500 x-small">{title}</span>
             <Collapsible.Visible whenClosed>
               <Icon src={KeyboardArrowDown} />
             </Collapsible.Visible>
@@ -35,7 +35,7 @@ export const SettingsOption = ({
           open={!isCardCollapsed}
         >
           <Collapsible.Body className="collapsible-body">
-            <span>{summary}</span>
+            <span className="text-primary-500 small">{summary}</span>
           </Collapsible.Body>
         </Collapsible.Advanced>
         <Collapsible.Advanced
