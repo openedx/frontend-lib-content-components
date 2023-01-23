@@ -47,21 +47,19 @@ export const EditorContainer = ({
         <FormattedMessage {...messages.cancelConfirmDescription} />
       </BaseModal>
       <ModalDialog.Header className="shadow-sm zindex-10">
-        <ModalDialog.Title>
-          <div
-            style={{ margin: 'auto' }}
+        <div className="d-flex flex-row justify-content-between">
+          <h2
+            className="h3 d-flex flex-row align-items-center"
           >
             <TitleHeader isInitialized={isInitialized} />
-          </div>
-          
-        </ModalDialog.Title>
-        <div className="pgn__modal-close-container">
-            <IconButton
-              src={Close}
-              iconAs={Icon}
-              onClick={openCancelConfirmModal}
-            />
-          </div>
+          </h2>
+
+          <IconButton
+            src={Close}
+            iconAs={Icon}
+            onClick={openCancelConfirmModal}
+          />
+        </div>
       </ModalDialog.Header>
       <ModalDialog.Body className="pb-6">
         {isInitialized && children}

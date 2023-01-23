@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import { Icon, IconButton, Truncate } from '@edx/paragon';
-import { Edit } from '@edx/paragon/icons';
+import { EditOutline } from '@edx/paragon/icons';
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 
 import { localTitleHooks } from './hooks';
@@ -44,7 +44,7 @@ export const TitleHeader = ({
     );
   }
   return (
-    <div className="d-flex">
+    <div className="d-flex flex-row align-items-center">
       <Truncate>
         {localTitle}
       </Truncate>
@@ -54,7 +54,7 @@ export const TitleHeader = ({
         className="mr-2"
         onClick={startEditing}
         size="sm"
-        src={Edit}
+        src={EditOutline}
       />
     </div>
   );
