@@ -49,7 +49,7 @@ export const EditorContainer = ({
       <ModalDialog.Header className="shadow-sm zindex-10">
         <ModalDialog.Title>
           <div
-            style={{ height: '44px', margin: 'auto' }}
+            style={{ margin: 'auto' }}
           >
             <TitleHeader isInitialized={isInitialized} />
           </div>
