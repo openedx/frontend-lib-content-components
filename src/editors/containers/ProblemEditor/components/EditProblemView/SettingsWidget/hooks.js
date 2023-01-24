@@ -181,7 +181,6 @@ export const showAnswerCardHooks = (showAnswer, updateSettings) => {
 };
 
 export const timerCardHooks = (updateSettings) => ({
-
   handleChange: (event) => {
     let time = parseInt(event.target.value);
     if (_.isNaN(time)) {
@@ -211,4 +210,16 @@ export const typeRowHooks = ({
   return {
     onClick,
   };
+};
+
+export const confirmSwitchToAdvancedEditor = ({
+  switchToAdvancedEditor,
+  setConfirmOpen,
+}) => {
+  switchToAdvancedEditor();
+  setConfirmOpen(false);
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth',
+  });
 };

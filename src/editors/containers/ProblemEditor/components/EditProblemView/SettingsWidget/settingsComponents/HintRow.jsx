@@ -4,6 +4,7 @@ import {
   ActionRow, Form, Icon, IconButton,
 } from '@edx/paragon';
 import { DeleteOutline } from '@edx/paragon/icons';
+import { DeleteOutline } from '@edx/paragon/icons';
 import PropTypes from 'prop-types';
 import messages from '../messages';
 
