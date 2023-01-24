@@ -26,8 +26,8 @@ export const TypeRow = ({
 
   return (
     <>
-      <Button onClick={onClick} className="d-flex p-0">
-        <span className="flex-grow-1 small text-primary-500">{label}</span>
+      <Button onClick={onClick} className="d-flex p-0 flex-row justify-content-between w-100">
+        <span className="small text-primary-500">{label}</span>
         <span hidden={selected}><Icon src={Check} className="text-success" /></span>
       </Button>
       <hr className={lastRow ? 'd-none' : 'd-block'} />
