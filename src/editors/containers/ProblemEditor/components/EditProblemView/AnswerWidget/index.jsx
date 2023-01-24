@@ -32,7 +32,7 @@ const AnswerWidget = ({
 
 AnswerWidget.propTypes = {
   problemType: PropTypes.string.isRequired,
-  //injected
+  // injected
   intl: intlShape.isRequired,
 };
 export default injectIntl(AnswerWidget);

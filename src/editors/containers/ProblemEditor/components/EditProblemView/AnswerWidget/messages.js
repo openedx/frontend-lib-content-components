@@ -7,7 +7,7 @@ export const messages = {
   answerHelperText: {
     id: 'authoring.problemEditor.answerWidget.answer.answerHelperText',
     defaultMessage: '{helperText}',
-    description: 'Helper text describing how the user should input answers'
+    description: 'Helper text describing how the user should input answers',
   },
   addAnswerButtonText: {
     id: 'authoring.answerwidget.answer.addAnswerButton',

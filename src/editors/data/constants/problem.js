@@ -39,7 +39,7 @@ export const ProblemTypes = StrictDict({
   [ProblemTypeKeys.DROPDOWN]: {
     title: 'Dropdown',
     preview: dropdown,
-    description: 'Eneter your dropdown answers below and select which choice is correct',
+    description: 'Enter your dropdown answers below and select which choice is correct',
     helpLink: 'https://edx.readthedocs.io/projects/edx-partner-course-staff/en/latest/exercises_tools/dropdown.html',
     next: ProblemTypeKeys.NUMERIC,
     prev: ProblemTypeKeys.MULTISELECT,
@@ -57,7 +57,7 @@ export const ProblemTypes = StrictDict({
   [ProblemTypeKeys.TEXTINPUT]: {
     title: 'Text input',
     preview: textInput,
-    description: 'Eneter your text input answers below and select which choices are correct',
+    description: 'Enter your text input answers below and select which choices are correct',
     helpLink: 'https://edx.readthedocs.io/projects/edx-partner-course-staff/en/latest/exercises_tools/text_input.html',
     prev: ProblemTypeKeys.NUMERIC,
     next: ProblemTypeKeys.SINGLESELECT,
