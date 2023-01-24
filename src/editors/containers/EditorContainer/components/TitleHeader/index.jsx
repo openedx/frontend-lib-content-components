@@ -51,7 +51,7 @@ export const TitleHeader = ({
       <IconButton
         alt={intl.formatMessage(messages.editTitleLabel)}
         iconAs={Icon}
-        className="mr-2"
+        className="mx-2"
         onClick={startEditing}
         size="sm"
         src={EditOutline}
