@@ -61,7 +61,6 @@
     "@codemirror/lang-xml": "^6.0.0",
     "@codemirror/state": "^6.0.0",
     "@codemirror/view": "^6.0.0",
-    "@edx/brand": "git+https://git@github.com/edx/brand-edx.org.git#master",
     "@reduxjs/toolkit": "^1.8.1",
     "@tinymce/tinymce-react": "^3.14.0",
     "babel-polyfill": "6.26.0",
