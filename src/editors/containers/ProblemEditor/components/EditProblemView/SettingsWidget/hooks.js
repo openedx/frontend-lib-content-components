@@ -76,7 +76,8 @@ export const hintsRowHooks = (id, hints, updateSettings) => {
   const handleEmptyHint = (event) => {
     const { value } = event.target;
     if (value === '') {
-      handleDelete();
+      const modifiedHints = hints.filter((hint) => (hint.id !== id));
+      updateSettings({ hints: modifiedHints });
     }
   };
 
