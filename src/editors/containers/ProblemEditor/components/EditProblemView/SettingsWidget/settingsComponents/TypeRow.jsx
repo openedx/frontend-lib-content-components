@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Icon } from '@edx/paragon';
+import { Icon } from '@edx/paragon';
 import PropTypes from 'prop-types';
 import { Check } from '@edx/paragon/icons';
 import { typeRowHooks } from '../hooks';

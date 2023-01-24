@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { injectIntl, FormattedMessage } from '@edx/frontend-platform/i18n';
 import { connect } from 'react-redux';
 import {
-  Button, Col, Collapsible, Container, div,
+  Button, Collapsible,
 } from '@edx/paragon';
 import { selectors, actions } from '../../../../../data/redux';
 import ScoringCard from './settingsComponents/ScoringCard';
