@@ -28,7 +28,7 @@ const answerWithOnlyFeedback = {
   id: 'A',
   title: 'Answer 1',
   correct: true,
-  feedback: 'some feedback',
+  selectedFeedback: 'some feedback',
 };
 
 describe('Answer Options Hooks', () => {

@@ -10,7 +10,6 @@ export const FeedbackBox = ({
   answer, setAnswer, intl,
 }) => {
   const props = {
-    onChange: (e) => setAnswer({ selectedFeedback: e.target.value }),
     answer,
     intl,
   };
@@ -22,6 +21,7 @@ export const FeedbackBox = ({
         feedback={answer.selectedFeedback}
         labelMessage={messages.selectedFeedbackLabel}
         labelMessageBoldUnderline={messages.selectedFeedbackLabelBoldUnderlineText}
+        onChange={(e) => setAnswer({ selectedFeedback: e.target.value })}
         {...props}
       />
       <FeedbackControl
@@ -29,6 +29,7 @@ export const FeedbackBox = ({
         feedback={answer.unselectedFeedback}
         labelMessage={messages.unSelectedFeedbackLabel}
         labelMessageBoldUnderline={messages.unSelectedFeedbackLabelBoldUnderlineText}
+        onChange={(e) => setAnswer({ unselectedFeedback: e.target.value })}
         {...props}
       />
     </div>

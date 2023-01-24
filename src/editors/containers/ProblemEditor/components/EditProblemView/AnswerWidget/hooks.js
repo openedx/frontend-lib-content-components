@@ -20,13 +20,13 @@ export const prepareFeedback = (answer) => {
   const [isFeedbackVisible, setIsFeedbackVisible] = module.state.isFeedbackVisible(false);
   useEffect(() => {
     // Show feedback fields if feedback is present
-    const isVisible = !!answer.selectedFeedback || !!answer.unselectedFeedback || !!answer.feedback;
+    const isVisible = !!answer.selectedFeedback || !!answer.unselectedFeedback;
     setIsFeedbackVisible(isVisible);
   }, [answer]);
 
   const toggleFeedback = (open) => {
     // Do not allow to hide if feedback is added
-    if (!!answer.selectedFeedback || !!answer.unselectedFeedback || !!answer.feedback) {
+    if (!!answer.selectedFeedback || !!answer.unselectedFeedback) {
       setIsFeedbackVisible(true);
       return;
     }

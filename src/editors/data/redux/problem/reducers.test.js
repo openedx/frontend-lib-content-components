@@ -33,7 +33,7 @@ describe('problem reducer', () => {
           correct: false,
           selectedFeedback: '',
           title: '',
-          unselectedFeedback: undefined,
+          unselectedFeedback: '',
         };
         expect(reducer(testingState, actions.addAnswer(answer))).toEqual({
           ...testingState,
