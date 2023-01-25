@@ -1,4 +1,7 @@
 import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+
+import { actions } from '../../../../../data/redux';
 import { MockUseState } from '../../../../../../testUtils';
 import { ProblemTypeKeys } from '../../../../../data/constants/problem';
 import * as module from './hooks';
@@ -35,6 +38,31 @@ describe('Answer Options Hooks', () => {
   beforeEach(() => { jest.clearAllMocks(); });
   describe('state hooks', () => {
     state.testGetter(state.keys.isFeedbackVisible);
+  });
+  describe('removeAnswer', () => {
+    test('it dispatches actions.problem.deleteAnswer', () => {
+      const answer = { id: 'A', correct: false };
+      const dispatch = useDispatch();
+      module.removeAnswer({ answer, dispatch })();
+      expect(dispatch).toHaveBeenCalledWith(actions.problem.deleteAnswer({
+        id: answer.id,
+        correct: answer.correct,
+      }));
+    });
+  });
+  describe('setAnswer', () => {
+    test('it dispatches actions.problem.updateAnswer', () => {
+      const answer = { id: 'A' };
+      const hasSingleAnswer = false;
+      const dispatch = useDispatch();
+      const payload = { random: 'string'}
+      module.setAnswer({ answer, hasSingleAnswer, dispatch })(payload);
+      expect(dispatch).toHaveBeenCalledWith(actions.problem.updateAnswer({
+        id: answer.id,
+        hasSingleAnswer,
+        ...payload
+      }));
+    });
   });
   describe('useFeedback hook', () => {
     beforeEach(() => { state.mock(); });
