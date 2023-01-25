@@ -11,7 +11,7 @@ describe('RawEditor', () => {
       },
     },
     content: { data: { data: 'eDiTablE Text' } },
-    lang: 'html'
+    lang: 'html',
   };
   const xmlProps = {
     editorRef: {
@@ -20,16 +20,16 @@ describe('RawEditor', () => {
       },
     },
     content: { data: { data: 'eDiTablE Text' } },
-    lang: 'xml'
+    lang: 'xml',
   };
-  const noContentProps  = {
+  const noContentProps = {
     editorRef: {
       current: {
         value: 'Ref Value',
       },
     },
     content: null,
-    lang: 'html'
+    lang: 'html',
   };
 
   test('renders as expected with default behavior', () => {
