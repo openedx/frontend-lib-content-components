@@ -9,7 +9,7 @@ export const state = StrictDict({
 });
 
 export const removeAnswer = ({ answer, dispatch }) => () => {
-  dispatch(actions.problem.deleteAnswer({ id: answer.id }));
+  dispatch(actions.problem.deleteAnswer({ id: answer.id, correct: answer.correct }));
 };
 
 export const setAnswer = ({ answer, hasSingleAnswer, dispatch }) => (payload) => {
