@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`RawEditor renders as expected with default behavior 1`] = `
-<div>
+<Fragment>
   <Alert
     variant="danger"
   >
@@ -20,5 +20,5 @@ exports[`RawEditor renders as expected with default behavior 1`] = `
     lang="html"
     value="eDiTablE Text"
   />
-</div>
+</Fragment>
 `;
