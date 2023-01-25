@@ -55,12 +55,12 @@ describe('Answer Options Hooks', () => {
       const answer = { id: 'A' };
       const hasSingleAnswer = false;
       const dispatch = useDispatch();
-      const payload = { random: 'string'}
+      const payload = { random: 'string' };
       module.setAnswer({ answer, hasSingleAnswer, dispatch })(payload);
       expect(dispatch).toHaveBeenCalledWith(actions.problem.updateAnswer({
         id: answer.id,
         hasSingleAnswer,
-        ...payload
+        ...payload,
       }));
     });
   });
