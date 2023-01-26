@@ -1,0 +1,45 @@
+import React from 'react';
+import { injectIntl, FormattedMessage, intlShape } from '@edx/frontend-platform/i18n';
+import { Form } from '@edx/paragon';
+import PropTypes from 'prop-types';
+import SettingsOption from '../SettingsOption';
+import messages from '../messages';
+import { generalFeedbackHooks } from '../hooks';
+
+export const GeneralFeedbackCard = ({
+  generalFeedback,
+  updateSettings,
+  // inject
+  intl,
+}) => {
+  const { summary, handleChange } = generalFeedbackHooks(generalFeedback, updateSettings);
+
+  return (
+    <SettingsOption
+      title={intl.formatMessage(messages.matlabSettingTitle)}
+      summary={summary.intl ? intl.formatMessage(summary.message, { ...summary.values }) : summary.message}
+      none={!generalFeedback}
+    >
+      <div className="halfSpacedMessage">
+        <span>
+          <FormattedMessage {...messages.matlabSettingText1} />
+        </span>
+      </div>
+      <Form.Group>
+        <Form.Control
+          value={generalFeedback}
+          onChange={handleChange}
+          floatingLabel={intl.formatMessage(messages.generalFeedbacInputLabel)}
+        />
+      </Form.Group>
+    </SettingsOption>
+  );
+};
+
+GeneralFeedbackCard.propTypes = {
+  generalFeedback: PropTypes.string.isRequired,
+  updateSettings: PropTypes.func.isRequired,
+  intl: intlShape.isRequired,
+};
+
+export default injectIntl(GeneralFeedbackCard);

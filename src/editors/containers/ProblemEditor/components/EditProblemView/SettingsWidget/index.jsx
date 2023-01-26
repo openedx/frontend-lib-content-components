@@ -16,8 +16,10 @@ import TypeCard from './settingsComponents/TypeCard';
 import SwitchToAdvancedEditorCard from './settingsComponents/SwitchToAdvancedEditorCard';
 import messages from './messages';
 import { showAdvancedSettingsCards } from './hooks';
+import GeneralFeedbackCard from './settingsComponents/GeneralFeedbackCard';
 
 import './index.scss';
+import { ProblemTypeKeys } from '../../../../../data/constants/problem';
 
 // This widget should be connected, grab all settings from store, update them as needed.
 export const SettingsWidget = ({
@@ -48,7 +50,17 @@ export const SettingsWidget = ({
       <div className="mt-3">
         <HintsCard hints={settings.hints} updateSettings={updateSettings} />
       </div>
-
+      <div className="mt-3">
+        <GeneralFeedbackCard
+          generalFeedback={'some Feedback'}
+          updateSettings={updateSettings}
+        />
+      </div>
+      { [ProblemTypeKeys.MULTISELECT, ProblemTypeKeys.TEXTINPUT, ProblemTypeKeys.NUMERIC].includes(problemType) && (
+      <div className="mt-3">
+        <GroupFeedbackCard />
+      </div>
+      )}
       <div>
         <Collapsible.Advanced open={!isAdvancedCardsVisible}>
           <Collapsible.Body className="collapsible-body small">
