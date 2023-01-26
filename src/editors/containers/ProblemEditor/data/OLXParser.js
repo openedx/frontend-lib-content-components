@@ -324,6 +324,14 @@ export class OLXParser {
     return hintsObject;
   }
 
+  getSolutionExplanation() {
+    let text = '';
+    if (_.has(this.problem, 'solution')) {
+      text += (_.get(this.problem, 'solution.#text'));
+    }
+    return text || null;
+  }
+
   getFeedback(xmlElement) {
     return _.has(xmlElement, 'correcthint') ? _.get(xmlElement, 'correcthint.#text') : '';
   }
