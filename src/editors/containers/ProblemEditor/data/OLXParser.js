@@ -1,6 +1,7 @@
 // Parse OLX to JavaScript objects.
 /* eslint no-eval: 0 */
 
+import { current } from '@reduxjs/toolkit';
 import { XMLParser, XMLBuilder } from 'fast-xml-parser';
 import _ from 'lodash-es';
 import { ProblemTypeKeys } from '../../../data/constants/problem';
@@ -325,11 +326,32 @@ export class OLXParser {
   }
 
   getSolutionExplanation() {
-    let text = '';
-    if (_.has(this.problem, 'solution')) {
-      text += (_.get(this.problem, 'solution.#text'));
+    const stack = [this.problem.solution];
+    const texts = [];
+    let currentNode;
+
+    while (stack.length) {
+      currentNode = stack.pop();
+      if (Array.isArray(currentNode)) {
+        stack.push(...currentNode);
+      }
+      if (_.isPlainObject(currentNode)) {
+        const text = _.get(currentNode, '#text');
+        if (text) {
+        texts.push(text);
+        if (stack.push(_.omit(currentNode, '#text'));
+        } else {
+          
+        }
+      }
     }
-    return text || null;
+    if (_.has(this.problem, 'solution')) {
+      this.problem.solution.forEach((element) => {
+        if (_.get(element, '#text')) { texts.push(_.get(element, '#text')); }
+
+      })
+    }
+    return texts;
   }
 
   getFeedback(xmlElement) {
