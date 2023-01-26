@@ -64,6 +64,34 @@ describe('Answer Options Hooks', () => {
       }));
     });
   });
+  describe('setSelectedFeedback', () => {
+    test('it dispatches actions.problem.updateAnswer', () => {
+      const answer = { id: 'A' };
+      const hasSingleAnswer = false;
+      const dispatch = useDispatch();
+      const e = { target: { value: 'string' } };
+      module.setSelectedFeedback({ answer, hasSingleAnswer, dispatch })(e);
+      expect(dispatch).toHaveBeenCalledWith(actions.problem.updateAnswer({
+        id: answer.id,
+        hasSingleAnswer,
+        selectedFeedback: e.target.value,
+      }));
+    });
+  });
+  describe('setUnselectedFeedback', () => {
+    test('it dispatches actions.problem.updateAnswer', () => {
+      const answer = { id: 'A' };
+      const hasSingleAnswer = false;
+      const dispatch = useDispatch();
+      const e = { target: { value: 'string' } };
+      module.setUnselectedFeedback({ answer, hasSingleAnswer, dispatch })(e);
+      expect(dispatch).toHaveBeenCalledWith(actions.problem.updateAnswer({
+        id: answer.id,
+        hasSingleAnswer,
+        unselectedFeedback: e.target.value,
+      }));
+    });
+  });
   describe('useFeedback hook', () => {
     beforeEach(() => { state.mock(); });
     afterEach(() => { state.restore(); });

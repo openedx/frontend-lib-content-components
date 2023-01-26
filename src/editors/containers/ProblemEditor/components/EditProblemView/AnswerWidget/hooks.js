@@ -16,6 +16,22 @@ export const setAnswer = ({ answer, hasSingleAnswer, dispatch }) => (payload) =>
   dispatch(actions.problem.updateAnswer({ id: answer.id, hasSingleAnswer, ...payload }));
 };
 
+export const setSelectedFeedback = ({ answer, hasSingleAnswer, dispatch }) => (e) => {
+  dispatch(actions.problem.updateAnswer({
+    id: answer.id,
+    hasSingleAnswer,
+    selectedFeedback: e.target.value,
+  }));
+};
+
+export const setUnselectedFeedback = ({ answer, hasSingleAnswer, dispatch }) => (e) => {
+  dispatch(actions.problem.updateAnswer({
+    id: answer.id,
+    hasSingleAnswer,
+    unselectedFeedback: e.target.value,
+  }));
+};
+
 export const useFeedback = (answer) => {
   const [isFeedbackVisible, setIsFeedbackVisible] = module.state.isFeedbackVisible(false);
   useEffect(() => {
