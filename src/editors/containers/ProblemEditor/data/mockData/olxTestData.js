@@ -46,7 +46,9 @@ export const getCheckboxesOLXWithFeedbackAndHintsOLX = ({ solution = 'simple' })
     value: 'If you add more than one hint, a different hint appears each time learners select the hint button.',
   },
   ],
-  solutionExplanation: 'This is a detailed explanation of the solution.',
+  solutionExplanation: solution === 'simple' ? 'This is a detailed explanation of the solution.' : (
+    'Explanation\n You can form a voltage divider that evenly divides the input voltage with two identically valued resistors, with the sampled voltage taken in between the two.'
+  ),
   data: {
     answers: [
       {

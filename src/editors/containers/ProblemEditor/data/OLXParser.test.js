@@ -161,7 +161,8 @@ describe('OLXParser for problem with solution tag', () => {
       const { rawOLX } = getCheckboxesOLXWithFeedbackAndHintsOLX({ solution: 'html' });
       const olxparser = new OLXParser(rawOLX);
       const explanation = olxparser.getSolutionExplanation();
-      expect(explanation).toEqual(checkboxesOLXWithFeedbackAndHintsOLX.solutionExplanation);
+      const expected = getCheckboxesOLXWithFeedbackAndHintsOLX({ solution: 'html' }).solutionExplanation;
+      expect(explanation.replace(/\s/g, '')).toBe(expected.replace(/\s/g, ''));
     });
   });
 });

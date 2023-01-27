@@ -326,32 +326,30 @@ export class OLXParser {
   }
 
   getSolutionExplanation() {
+    if (!_.has(this.problem, 'solution')) { return null; }
+
     const stack = [this.problem.solution];
     const texts = [];
     let currentNode;
 
     while (stack.length) {
       currentNode = stack.pop();
-      if (Array.isArray(currentNode)) {
+      if (_.isArray(currentNode)) {
         stack.push(...currentNode);
       }
       if (_.isPlainObject(currentNode)) {
         const text = _.get(currentNode, '#text');
         if (text) {
-        texts.push(text);
-        if (stack.push(_.omit(currentNode, '#text'));
-        } else {
-          
+          texts.push(text);
+        }
+        if ((text && Object.keys(currentNode).length > 1) || Object.keys(currentNode).length > 0) {
+          const nodeWithoutText = _.omit(currentNode, '#text');
+          stack.push(...Object.values(nodeWithoutText));
         }
       }
     }
-    if (_.has(this.problem, 'solution')) {
-      this.problem.solution.forEach((element) => {
-        if (_.get(element, '#text')) { texts.push(_.get(element, '#text')); }
 
-      })
-    }
-    return texts;
+    return texts.reverse().join('\n ');
   }
 
   getFeedback(xmlElement) {
