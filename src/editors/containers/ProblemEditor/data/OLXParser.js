@@ -390,6 +390,8 @@ export class OLXParser {
     const problemType = this.getProblemType();
     const hints = this.getHints();
     const question = this.parseQuestions(problemType);
+    const solutionExplanation = this.getSolutionExplanation();
+
     switch (problemType) {
       case ProblemTypeKeys.DROPDOWN:
         answersObject = this.parseMultipleChoiceAnswers(ProblemTypeKeys.DROPDOWN, 'optioninput', 'option');
@@ -424,7 +426,8 @@ export class OLXParser {
       groupFeedbackList = answersObject.groupFeedbackList;
     }
     const { answers } = answersObject;
-    const settings = { hints };
+    const settings = { hints, solutionExplanation };
+
     return {
       question,
       settings,

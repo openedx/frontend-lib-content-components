@@ -36,6 +36,16 @@ class ReactStateOLXParser {
     return demandhint;
   }
 
+  addSolution() {
+    const solutionText = _.get(this.problemState, 'settings.solutionExplanation');
+    const solutionObject = {
+      solution: {
+        '#text': solutionText,
+      },
+    };
+    return solutionObject;
+  }
+
   addMultiSelectAnswers(option) {
     const choice = [];
     let compoundhint = [];
@@ -106,6 +116,8 @@ class ReactStateOLXParser {
     const question = this.addQuestion();
     const widgetObject = this.addMultiSelectAnswers(option);
     const demandhint = this.addHints();
+    const solution = this.addSolution();
+
     const problemObject = {
       problem: {
         [problemType]: {
@@ -113,6 +125,7 @@ class ReactStateOLXParser {
           [widget]: widgetObject,
         },
         ...demandhint,
+        ...solution,
       },
     };
     return this.builder.build(problemObject);
@@ -122,6 +135,8 @@ class ReactStateOLXParser {
     const question = this.addQuestion();
     const demandhint = this.addHints();
     const answerObject = this.buildTextInputAnswersFeedback();
+    const solution = this.addSolution();
+
     const problemObject = {
       problem: {
         [ProblemTypeKeys.TEXTINPUT]: {
@@ -129,6 +144,7 @@ class ReactStateOLXParser {
           ...answerObject,
         },
         ...demandhint,
+        ...solution,
       },
     };
     return this.builder.build(problemObject);
@@ -178,11 +194,14 @@ class ReactStateOLXParser {
     const question = this.addQuestion();
     const demandhint = this.addHints();
     const answerObject = this.buildNumericalResponse();
+    const solution = this.addSolution();
+
     const problemObject = {
       problem: {
         ...question,
         [ProblemTypeKeys.NUMERIC]: answerObject,
         ...demandhint,
+        ...solution,
       },
     };
     return this.builder.build(problemObject);
@@ -255,6 +274,7 @@ class ReactStateOLXParser {
   buildOLX() {
     const { problemType } = this.problemState;
     let problemString = '';
+
     switch (problemType) {
       case ProblemTypeKeys.MULTISELECT:
         problemString = this.buildMultiSelectProblem(ProblemTypeKeys.MULTISELECT, 'checkboxgroup', 'choice');
