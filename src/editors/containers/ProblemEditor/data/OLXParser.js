@@ -1,7 +1,6 @@
 // Parse OLX to JavaScript objects.
 /* eslint no-eval: 0 */
 
-import { current } from '@reduxjs/toolkit';
 import { XMLParser, XMLBuilder } from 'fast-xml-parser';
 import _ from 'lodash-es';
 import { ProblemTypeKeys } from '../../../data/constants/problem';
@@ -325,6 +324,21 @@ export class OLXParser {
     return hintsObject;
   }
 
+  #extractTextAndChildren(node) {
+    const children = [];
+    let text = null;
+
+    if (_.isArray(node)) {
+      children.push(...node);
+    } else if (_.isPlainObject(node)) {
+      text = _.get(node, '#text');
+      const nodeWithoutText = _.omit(node, '#text');
+      children.push(...Object.values(nodeWithoutText));
+    }
+
+    return { text, children };
+  }
+
   getSolutionExplanation() {
     if (!_.has(this.problem, 'solution')) { return null; }
 
@@ -334,19 +348,9 @@ export class OLXParser {
 
     while (stack.length) {
       currentNode = stack.pop();
-      if (_.isArray(currentNode)) {
-        stack.push(...currentNode);
-      }
-      if (_.isPlainObject(currentNode)) {
-        const text = _.get(currentNode, '#text');
-        if (text) {
-          texts.push(text);
-        }
-        if ((text && Object.keys(currentNode).length > 1) || Object.keys(currentNode).length > 0) {
-          const nodeWithoutText = _.omit(currentNode, '#text');
-          stack.push(...Object.values(nodeWithoutText));
-        }
-      }
+      const { text, children } = this.#extractTextAndChildren(currentNode);
+      if (text) { texts.push(text); }
+      stack.push(...children);
     }
 
     return texts.reverse().join('\n ');
