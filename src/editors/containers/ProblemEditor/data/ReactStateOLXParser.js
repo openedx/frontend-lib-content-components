@@ -37,6 +37,8 @@ class ReactStateOLXParser {
   }
 
   addSolution() {
+    if (!_.has(this.problemState, 'settings.solutionExplanation')) { return {}; }
+
     const solutionText = _.get(this.problemState, 'settings.solutionExplanation');
     const solutionObject = {
       solution: {

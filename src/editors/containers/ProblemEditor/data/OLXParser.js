@@ -426,7 +426,8 @@ export class OLXParser {
       groupFeedbackList = answersObject.groupFeedbackList;
     }
     const { answers } = answersObject;
-    const settings = { hints, solutionExplanation };
+    const settings = { hints };
+    if (solutionExplanation) { settings.solutionExplanation = solutionExplanation; }
 
     return {
       question,
