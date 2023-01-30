@@ -280,7 +280,6 @@ export class OLXParser {
       the parsed OLX.
     */
     const tagMap = {
-      label: 'strong',
       description: 'em',
     };
 
