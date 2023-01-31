@@ -2,7 +2,11 @@
 
 ## Motivation
 
-High complexity is in general a concerning problem: It can lead to untested legacy code, a high amount of bugs, bad maintainability, slow development, and so on. These decisions are concrete changes we want to make to reduce complexity in this project.
+High complexity is in general a concerning problem: It can lead to untested legacy code, a high amount of bugs, bad maintainability, slow development, and resistance to change.
+
+We are developing this project now, and complexity needs to be tackled from the start, before it grows too much. The alternative is to ending with a project that is extremely hard to understand and work on.
+
+These decisions are concrete changes we want to make to reduce complexity in this project
 
 ## Decisions
 
