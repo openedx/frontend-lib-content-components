@@ -13,19 +13,22 @@ import ResetCard from './settingsComponents/ResetCard';
 import MatlabCard from './settingsComponents/MatlabCard';
 import TimerCard from './settingsComponents/TimerCard';
 import TypeCard from './settingsComponents/TypeCard';
+import GeneralFeedbackCard from './settingsComponents/GeneralFeedbackCard';
+import GroupFeedbackCard from './settingsComponents/GroupFeedbackCard';
 import SwitchToAdvancedEditorCard from './settingsComponents/SwitchToAdvancedEditorCard';
 import messages from './messages';
 import { showAdvancedSettingsCards } from './hooks';
-import GeneralFeedbackCard from './settingsComponents/GeneralFeedbackCard';
 
 import './index.scss';
 import { ProblemTypeKeys } from '../../../../../data/constants/problem';
+import Randomization from './settingsComponents/Randomization';
 
 // This widget should be connected, grab all settings from store, update them as needed.
 export const SettingsWidget = ({
   problemType,
   // redux
   answers,
+  groupFeedbackList,
   correctAnswerCount,
   settings,
   updateSettings,
@@ -52,13 +55,17 @@ export const SettingsWidget = ({
       </div>
       <div className="mt-3">
         <GeneralFeedbackCard
-          generalFeedback={'some Feedback'}
+          generalFeedback="some Feedback"
           updateSettings={updateSettings}
         />
       </div>
       { [ProblemTypeKeys.MULTISELECT, ProblemTypeKeys.TEXTINPUT, ProblemTypeKeys.NUMERIC].includes(problemType) && (
       <div className="mt-3">
-        <GroupFeedbackCard />
+        <GroupFeedbackCard
+          groupFeedbacks={groupFeedbackList}
+          updateSettings={updateField}
+          answers={answers}
+        />
       </div>
       )}
       <div>
@@ -84,6 +91,13 @@ export const SettingsWidget = ({
           <div className="my-3">
             <ResetCard showResetButton={settings.showResetButton} updateSettings={updateSettings} />
           </div>
+          {
+            problemType === ProblemTypeKeys.ADVANCED && (
+            <div className="my-3">
+              <Randomization randomization={settings.randomization} updateSettings={updateSettings} />
+            </div>
+            )
+          }
           <div className="my-3">
             <TimerCard timeBetween={settings.timeBetween} updateSettings={updateSettings} />
           </div>
@@ -107,6 +121,15 @@ SettingsWidget.propTypes = {
     title: PropTypes.string,
     unselectedFeedback: PropTypes.string,
   })).isRequired,
+  groupFeedbackList: PropTypes.arrayOf(
+    PropTypes.shape(
+      {
+        id: PropTypes.number,
+        feedback: PropTypes.string,
+        answers: PropTypes.arrayOf(PropTypes.string),
+      },
+    ),
+  ).isRequired,
   correctAnswerCount: PropTypes.number.isRequired,
   problemType: PropTypes.string.isRequired,
   updateAnswer: PropTypes.func.isRequired,
@@ -117,6 +140,7 @@ SettingsWidget.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
+  groupFeedbackList: selectors.problem.groupFeedbackList(state),
   settings: selectors.problem.settings(state),
   answers: selectors.problem.answers(state),
   correctAnswerCount: selectors.problem.correctAnswerCount(state),
