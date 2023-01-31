@@ -38,7 +38,7 @@ export const SettingsWidget = ({
   const { isAdvancedCardsVisible, showAdvancedCards } = showAdvancedSettingsCards();
 
   const feedbackCard = () => {
-    if (problemType !== ProblemTypeKeys.ADVANCED) {
+    if (problemType === ProblemTypeKeys.ADVANCED) {
       return (<></>);
     }
     if ([ProblemTypeKeys.MULTISELECT, ProblemTypeKeys.TEXTINPUT, ProblemTypeKeys.NUMERIC].includes(problemType)) {
@@ -59,6 +59,7 @@ export const SettingsWidget = ({
       </div>
     );
   };
+  console.log(feedbackCard());
 
   return (
     <div className="settingsWidget ml-4">
