@@ -53,7 +53,7 @@ describe('Problem settings hooks', () => {
       output = hooks.showFullCard();
     });
     test('test default state is false', () => {
-      expect(output.isCardCollapsed).toBeFalsy();
+      expect(output.isCardCollapsibleOpen).toBeFalsy();
     });
     test('test toggleCardCollapse to true', () => {
       output.toggleCardCollapse();

@@ -21,10 +21,10 @@ export const showAdvancedSettingsCards = () => {
 };
 
 export const showFullCard = () => {
-  const [isCardCollapsed, setIsCardCollapsed] = module.state.cardCollapsed(false);
+  const [isCardCollapsibleOpen, setIsCardCollapsibleOpen] = module.state.cardCollapsed(false);
   return {
-    isCardCollapsed,
-    toggleCardCollapse: () => setIsCardCollapsed(!isCardCollapsed),
+    isCardCollapsibleOpen,
+    toggleCardCollapse: () => setIsCardCollapsibleOpen(!isCardCollapsibleOpen),
   };
 };
 

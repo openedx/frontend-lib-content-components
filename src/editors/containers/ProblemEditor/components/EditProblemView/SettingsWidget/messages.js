@@ -199,6 +199,11 @@ export const messages = {
     defaultMessage: 'Explanation',
     description: 'answer explanation input label',
   },
+  explanationSettingText: {
+    id: 'authoring.problemeditor.settings.showAnswer.explanation.text',
+    defaultMessage: 'Provide an explanation for the correct answer.',
+    description: 'Solution Explanation text',
+  },
 };
 
 export default messages;
