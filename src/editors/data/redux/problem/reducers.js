@@ -14,6 +14,7 @@ const initialState = {
   groupFeedbackList: [],
   additionalAttributes: {},
   settings: {
+    randomization: null,
     scoring: {
       weight: 0,
       attempts: {

@@ -47,6 +47,7 @@ export const parseSettings = (metadata) => {
   }
 
   settings = popuplateItem(settings, 'matlab_api_key', 'matLabApiKey', metadata);
+  settings = popuplateItem(settings, 'rerandomize', 'randomization', metadata);
 
   const scoring = parseScoringSettings(metadata);
   if (!_.isEmpty(scoring)) {
