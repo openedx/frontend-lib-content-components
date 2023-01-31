@@ -1,15 +1,8 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
 import { shallow } from 'enzyme';
-import { act, render, waitFor } from '@testing-library/react';
 import { actions, selectors } from '../../../../../data/redux';
 import { QuestionWidget, mapStateToProps, mapDispatchToProps } from '.';
-import { problemEditorConfig } from '../../../hooks';
-
-// jest.mock('@edx/frontend-platform/i18n', () => ({
-//   FormattedMessage: ({ defaultMessage }) => (<p>{defaultMessage}</p>),
-//   injectIntl: (args) => args,
-// }));
 
 jest.mock('../../../../../data/redux', () => ({
   actions: {
@@ -42,8 +35,6 @@ jest.mock('../../../hooks', () => ({
   })),
   problemEditorConfig: jest.fn(args => ({ problemEditorConfig: args })),
 }));
-
-// jest.mock('../EditorContainer', () => 'EditorContainer');
 
 describe('QuestionWidget', () => {
   const props = {
