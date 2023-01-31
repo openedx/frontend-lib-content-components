@@ -13,11 +13,10 @@ export const GeneralFeedbackCard = ({
   intl,
 }) => {
   const { summary, handleChange } = generalFeedbackHooks(generalFeedback, updateSettings);
-
   return (
     <SettingsOption
       title={intl.formatMessage(messages.generalFeebackSettingTitle)}
-      summary={summary.intl ? intl.formatMessage(summary.message, { ...summary.values }) : summary.message}
+      summary={intl.formatMessage(summary.message, { ...summary.values })}
       none={!generalFeedback}
     >
       <div className="halfSpacedMessage">

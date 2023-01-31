@@ -12,6 +12,7 @@ const initialState = {
   answers: [],
   correctAnswerCount: 0,
   groupFeedbackList: [],
+  generalFeedback:'',
   additionalAttributes: {},
   settings: {
     randomization: null,

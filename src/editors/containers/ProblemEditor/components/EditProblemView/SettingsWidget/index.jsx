@@ -28,6 +28,7 @@ export const SettingsWidget = ({
   problemType,
   // redux
   answers,
+  generalFeedback,
   groupFeedbackList,
   correctAnswerCount,
   settings,
@@ -53,13 +54,12 @@ export const SettingsWidget = ({
     }
     return (
       <div className="mt-3"><GeneralFeedbackCard
-        generalFeedback="some Feedback"
-        updateSettings={updateSettings}
+        generalFeedback={generalFeedback}
+        updateSettings={updateField}
       />
       </div>
     );
   };
-  console.log(feedbackCard());
 
   return (
     <div className="settingsWidget ml-4">
@@ -132,6 +132,7 @@ SettingsWidget.propTypes = {
     title: PropTypes.string,
     unselectedFeedback: PropTypes.string,
   })).isRequired,
+  generalFeedback: PropTypes.string.isRequired,
   groupFeedbackList: PropTypes.arrayOf(
     PropTypes.shape(
       {
@@ -151,6 +152,7 @@ SettingsWidget.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
+  generalFeedback: selectors.problem.generalFeedback(state),
   groupFeedbackList: selectors.problem.groupFeedbackList(state),
   settings: selectors.problem.settings(state),
   answers: selectors.problem.answers(state),

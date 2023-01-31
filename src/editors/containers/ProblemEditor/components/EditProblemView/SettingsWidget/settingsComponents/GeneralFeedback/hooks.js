@@ -8,7 +8,9 @@ export const state = {
 };
 
 export const generalFeedbackHooks = (generalFeedback, updateSettings) => {
-  const [summary, setSummary] = module.state.summary({ message: '', values: {}, intl: false });
+  const [summary, setSummary] = module.state.summary({
+    message: messages.noGeneralFeedbackSummary, values: {}, intl: false,
+  });
 
   useEffect(() => {
     if (_.isEmpty(generalFeedback)) {

@@ -3,6 +3,7 @@
 
 import { XMLParser, XMLBuilder } from 'fast-xml-parser';
 import _ from 'lodash-es';
+import { element } from 'prop-types';
 import { ProblemTypeKeys } from '../../../data/constants/problem';
 
 export const indexToLetterMap = [...Array(26)].map((val, i) => String.fromCharCode(i + 65));
@@ -348,6 +349,24 @@ export class OLXParser {
     return problemType;
   }
 
+  getGeneralFeedback({ answers, problemType }) {
+    /* Feedback is Generalized for a Problem IFF:
+    1. The problem is of Types: Single Select or Dropdown.
+    2. All the problem's incorrect, if Selected answers are equivalent strings, and there is no other feedback.
+    */
+    if (problemType === ProblemTypeKeys.SINGLESELECT || problemType === ProblemTypeKeys.DROPDOWN) {
+      const firstIncorrectAnswerText = answers.find(answer => answer.correct === false).selectedFeedback;
+      const isAllIncorrectSelectedFeedbackTheSame = answers.every(answer => (answer.correct
+        ? true
+        : answer?.selectedFeedback === firstIncorrectAnswerText
+      ));
+      if (isAllIncorrectSelectedFeedbackTheSame) {
+        return firstIncorrectAnswerText;
+      }
+    }
+    return '';
+  }
+
   getParsedOLXData() {
     if (_.isEmpty(this.problem)) {
       return {};
@@ -383,7 +402,8 @@ export class OLXParser {
         // if problem is unset, return null
         return {};
     }
-
+    const generalFeedback = this.getGeneralFeedback({ answers: answersObject.answers, problemType });
+    console.log(generalFeedback);
     if (_.has(answersObject, 'additionalStringAttributes')) {
       additionalAttributes = { ...answersObject.additionalStringAttributes };
     }
@@ -399,6 +419,7 @@ export class OLXParser {
       answers,
       problemType,
       additionalAttributes,
+      generalFeedback,
       groupFeedbackList,
     };
   }
