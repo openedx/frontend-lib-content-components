@@ -75,6 +75,7 @@ export const problemEditorConfig = ({
     content_style: tinyMCEStyles,
     menubar: false,
     branding: false,
+    min_height: 150,
     formats: { label: { inline: 'label' } },
     setup: module.setupCustomBehavior({ updateQuestion }),
     toolbar: `${pluginConfig().toolbar} | customLabelButton`,
