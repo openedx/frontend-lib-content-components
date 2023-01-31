@@ -36,6 +36,30 @@ export const SettingsWidget = ({
   updateAnswer,
 }) => {
   const { isAdvancedCardsVisible, showAdvancedCards } = showAdvancedSettingsCards();
+
+  const feedbackCard = () => {
+    if (problemType !== ProblemTypeKeys.ADVANCED) {
+      return (<></>);
+    }
+    if ([ProblemTypeKeys.MULTISELECT, ProblemTypeKeys.TEXTINPUT, ProblemTypeKeys.NUMERIC].includes(problemType)) {
+      return (
+        <div className="mt-3"><GroupFeedbackCard
+          groupFeedbacks={groupFeedbackList}
+          updateSettings={updateField}
+          answers={answers}
+        />
+        </div>
+      );
+    }
+    return (
+      <div className="mt-3"><GeneralFeedbackCard
+        generalFeedback="some Feedback"
+        updateSettings={updateSettings}
+      />
+      </div>
+    );
+  };
+
   return (
     <div className="settingsWidget ml-4">
       <div className="mb-3 settingsCardTopdiv">
@@ -53,21 +77,7 @@ export const SettingsWidget = ({
       <div className="mt-3">
         <HintsCard hints={settings.hints} updateSettings={updateSettings} />
       </div>
-      <div className="mt-3">
-        <GeneralFeedbackCard
-          generalFeedback="some Feedback"
-          updateSettings={updateSettings}
-        />
-      </div>
-      { [ProblemTypeKeys.MULTISELECT, ProblemTypeKeys.TEXTINPUT, ProblemTypeKeys.NUMERIC].includes(problemType) && (
-      <div className="mt-3">
-        <GroupFeedbackCard
-          groupFeedbacks={groupFeedbackList}
-          updateSettings={updateField}
-          answers={answers}
-        />
-      </div>
-      )}
+      {feedbackCard()}
       <div>
         <Collapsible.Advanced open={!isAdvancedCardsVisible}>
           <Collapsible.Body className="collapsible-body small">
