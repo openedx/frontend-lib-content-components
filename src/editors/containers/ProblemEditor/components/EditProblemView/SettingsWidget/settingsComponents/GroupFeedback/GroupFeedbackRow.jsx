@@ -5,7 +5,7 @@ import {
 } from '@edx/paragon';
 import { DeleteOutline } from '@edx/paragon/icons';
 import PropTypes from 'prop-types';
-import messages from '../messages';
+import messages from './messages';
 
 export const GroupFeedbackRow = ({
   value,
@@ -33,7 +33,6 @@ export const GroupFeedbackRow = ({
             <Form.Checkbox
               value={letter.id}
               checked={value.answers.indexOf(letter.id)}
-              style={{ width: '494px', height: '400px' }}
             >{letter.id}
             </Form.Checkbox>
           ))}

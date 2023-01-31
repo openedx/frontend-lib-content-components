@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl, FormattedMessage, intlShape } from '@edx/frontend-platform/i18n';
-import SettingsOption from '../SettingsOption';
-import messages from '../messages';
-import { groupFeedbackCardHooks, groupFeedbackRowHooks } from '../hooks';
+import SettingsOption from '../../SettingsOption';
+import messages from './messages';
+import { groupFeedbackCardHooks, groupFeedbackRowHooks } from './hooks';
 import GroupFeedbackRow from './GroupFeedbackRow';
-import Button from '../../../../../../sharedComponents/Button';
+import Button from '../../../../../../../sharedComponents/Button';
 
 export const GroupFeedbackCard = ({
   groupFeedbacks,

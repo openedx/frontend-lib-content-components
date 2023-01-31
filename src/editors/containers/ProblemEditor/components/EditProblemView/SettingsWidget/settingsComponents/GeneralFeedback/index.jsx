@@ -2,9 +2,9 @@ import React from 'react';
 import { injectIntl, FormattedMessage, intlShape } from '@edx/frontend-platform/i18n';
 import { Form } from '@edx/paragon';
 import PropTypes from 'prop-types';
-import SettingsOption from '../SettingsOption';
-import messages from '../messages';
-import { generalFeedbackHooks } from '../hooks';
+import SettingsOption from '../../SettingsOption';
+import messages from './messages';
+import { generalFeedbackHooks } from './hooks';
 
 export const GeneralFeedbackCard = ({
   generalFeedback,
@@ -22,7 +22,7 @@ export const GeneralFeedbackCard = ({
     >
       <div className="halfSpacedMessage">
         <span>
-          <FormattedMessage {...messages.matlabSettingText1} />
+          <FormattedMessage {...messages.generalFeedbackDescription} />
         </span>
       </div>
       <Form.Group>
