@@ -7,10 +7,11 @@ import SettingsOption from '../SettingsOption';
 import { ShowAnswerTypes, ShowAnswerTypesKeys } from '../../../../../../data/constants/problem';
 import { selectors } from '../../../../../../data/redux';
 import messages from '../messages';
-import { showAnswerCardHooks } from '../hooks';
+import { useAnswerSettings } from '../hooks';
 
 export const ShowAnswerCard = ({
   showAnswer,
+  solutionExplanation,
   updateSettings,
   // inject
   intl,
@@ -21,8 +22,10 @@ export const ShowAnswerCard = ({
   const {
     handleShowAnswerChange,
     handleAttemptsChange,
+    handleExplanationChange,
     showAttempts,
-  } = showAnswerCardHooks(showAnswer, updateSettings);
+  } = useAnswerSettings(showAnswer, updateSettings);
+
   return (
     <SettingsOption
       title={intl.formatMessage(messages.showAnswerSettingsTitle)}
@@ -65,6 +68,16 @@ export const ShowAnswerCard = ({
           />
         </Form.Group>
         )}
+      <div>
+        Provide an explanation for the correct answer.
+        <Form.Group>
+          <Form.Control
+            value={solutionExplanation}
+            onChange={handleExplanationChange}
+            floatingLabel={intl.formatMessage(messages.explanationInputLabel)}
+          />
+        </Form.Group>
+      </div>
     </SettingsOption>
   );
 };
@@ -73,9 +86,13 @@ ShowAnswerCard.propTypes = {
   intl: intlShape.isRequired,
   // eslint-disable-next-line
   showAnswer: PropTypes.any.isRequired,
+  solutionExplanation: PropTypes.string,
   updateSettings: PropTypes.func.isRequired,
   studioEndpointUrl: PropTypes.string.isRequired,
   learningContextId: PropTypes.string.isRequired,
+};
+ShowAnswerCard.defaultProps = {
+  solutionExplanation: '',
 };
 
 export const mapStateToProps = (state) => ({
