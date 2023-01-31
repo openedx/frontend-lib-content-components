@@ -5,31 +5,8 @@ import { thunkActions, selectors } from '../../data/redux';
 import { RequestKeys } from '../../data/constants/requests';
 import { ProblemEditor, mapStateToProps, mapDispatchToProps } from '.';
 
-// Per https://github.com/tinymce/tinymce-react/issues/91 React unit testing in JSDOM is not supported by tinymce.
-// Consequently, mock the Editor out.
-jest.mock('@tinymce/tinymce-react', () => {
-  const originalModule = jest.requireActual('@tinymce/tinymce-react');
-  return {
-    __esModule: true,
-    ...originalModule,
-    Editor: () => 'TiNYmCE EDitOR',
-  };
-});
-
-jest.mock('../EditorContainer', () => 'EditorContainer');
-
 jest.mock('./components/EditProblemView', () => 'EditProblemView');
 jest.mock('./components/SelectTypeModal', () => 'SelectTypeModal');
-
-jest.mock('./hooks', () => ({
-  editorConfig: jest.fn(args => ({ editorConfig: args })),
-  getContent: jest.fn(args => ({ getContent: args })),
-  prepareEditorRef: jest.fn(() => ({
-    editorRef: { current: { value: 'something' } },
-    refReady: true,
-    setEditorRef: jest.fn().mockName('hooks.prepareEditorRef.setEditorRef'),
-  })),
-}));
 
 jest.mock('react', () => {
   const updateState = jest.fn();
