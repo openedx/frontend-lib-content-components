@@ -3,7 +3,6 @@
 
 import { XMLParser, XMLBuilder } from 'fast-xml-parser';
 import _ from 'lodash-es';
-import { element } from 'prop-types';
 import { ProblemTypeKeys } from '../../../data/constants/problem';
 
 export const indexToLetterMap = [...Array(26)].map((val, i) => String.fromCharCode(i + 65));
@@ -403,7 +402,6 @@ export class OLXParser {
         return {};
     }
     const generalFeedback = this.getGeneralFeedback({ answers: answersObject.answers, problemType });
-    console.log(generalFeedback);
     if (_.has(answersObject, 'additionalStringAttributes')) {
       additionalAttributes = { ...answersObject.additionalStringAttributes };
     }
