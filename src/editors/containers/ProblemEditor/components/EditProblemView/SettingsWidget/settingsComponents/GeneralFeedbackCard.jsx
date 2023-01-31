@@ -16,7 +16,7 @@ export const GeneralFeedbackCard = ({
 
   return (
     <SettingsOption
-      title={intl.formatMessage(messages.matlabSettingTitle)}
+      title={intl.formatMessage(messages.generalFeebackSettingTitle)}
       summary={summary.intl ? intl.formatMessage(summary.message, { ...summary.values }) : summary.message}
       none={!generalFeedback}
     >
@@ -29,7 +29,7 @@ export const GeneralFeedbackCard = ({
         <Form.Control
           value={generalFeedback}
           onChange={handleChange}
-          floatingLabel={intl.formatMessage(messages.generalFeedbacInputLabel)}
+          floatingLabel={intl.formatMessage(messages.generalFeedbackInputLabel)}
         />
       </Form.Group>
     </SettingsOption>
