@@ -220,7 +220,7 @@ describe('Problem settings hooks', () => {
       afterAttempts: 5,
     };
     beforeEach(() => {
-      output = hooks.showAnswerCardHooks(showAnswer, updateSettings);
+      output = hooks.useAnswerSettings(showAnswer, updateSettings);
     });
     test('test handleShowAnswerChange', () => {
       const value = 'always';

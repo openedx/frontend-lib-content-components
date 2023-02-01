@@ -35,7 +35,7 @@ exports[`ShowAnswerCard snapshot snapshot: show answer setting card 1`] = `
   <Form.Group>
     <Form.Control
       as="select"
-      onChange={[MockFunction showAnswerCardHooks.handleShowAnswerChange]}
+      onChange={[MockFunction useAnswerSettings.handleShowAnswerChange]}
       value="after_attempts"
     >
       <option
