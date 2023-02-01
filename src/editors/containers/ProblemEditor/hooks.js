@@ -76,6 +76,7 @@ export const problemEditorConfig = ({
     menubar: false,
     branding: false,
     min_height: 150,
+    placeholder: 'Enter your question',
     formats: { label: { inline: 'label' } },
     setup: module.setupCustomBehavior({ updateQuestion }),
     toolbar: `${pluginConfig().toolbar} | customLabelButton`,
