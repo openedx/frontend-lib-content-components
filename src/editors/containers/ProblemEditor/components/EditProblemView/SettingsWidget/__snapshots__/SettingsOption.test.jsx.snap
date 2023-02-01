@@ -32,33 +32,14 @@ exports[`SettingsOption render snapshot: renders correct 1`] = `
       </Trigger>
     </Advanced>
   </Card.Section>
-  <Card.Section
-    className="px-4 pb-4 pt-3"
+  <CardSection
+    isCardCollapsibleOpen={false}
+    none={false}
+    summary="Settings Option Summary"
   >
-    <Advanced
-      open={true}
-    >
-      <Body
-        className="collapsible-body"
-      >
-        <span
-          className="small text-primary-500"
-        >
-          Settings Option Summary
-        </span>
-      </Body>
-    </Advanced>
-    <Advanced
-      open={false}
-    >
-      <Body
-        className="collapsible-body"
-      >
-        <h1>
-          My test content
-        </h1>
-      </Body>
-    </Advanced>
-  </Card.Section>
+    <h1>
+      My test content
+    </h1>
+  </CardSection>
 </Card>
 `;
