@@ -14,7 +14,7 @@ export const SettingsOption = ({
 
   return (
     <Card className={`${className} settingsOption border border-light-700 shadow-none`}>
-      <Card.Section className="settingsCardTitleSection">
+      <Card.Section className="settingsCardTitleSection" key={`settingsOption-${title}-header`}>
         <Collapsible.Advanced
           open={isCardCollapsibleOpen}
           onToggle={toggleCardCollapse}
@@ -30,7 +30,7 @@ export const SettingsOption = ({
           </Collapsible.Trigger>
         </Collapsible.Advanced>
       </Card.Section>
-      <CardSection {...passThroughProps} isCardCollapsibleOpen={isCardCollapsibleOpen} summary={summary}>
+      <CardSection {...passThroughProps} isCardCollapsibleOpen={isCardCollapsibleOpen} summary={summary} key={`settingsOption-${title}-children`}>
         {children}
       </CardSection>
       {extraSections.map((section, index) => (
