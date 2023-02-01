@@ -2,45 +2,10 @@ import React from 'react';
 import { Collapsible, Icon, Card } from '@edx/paragon';
 import { KeyboardArrowUp, KeyboardArrowDown } from '@edx/paragon/icons';
 import {
-  arrayOf, bool, shape, string, node,
+  arrayOf, shape, string, node,
 } from 'prop-types';
 import { showFullCard } from './hooks';
-
-const BodySection = ({
-  children, none, isCardCollapsibleOpen, summary,
-}) => {
-  const show = isCardCollapsibleOpen || summary;
-  if (!show) { return null; }
-
-  return (
-    <Card.Section className="px-4 pb-4 pt-3">
-      <Collapsible.Advanced
-        open={!isCardCollapsibleOpen}
-      >
-        <Collapsible.Body className="collapsible-body">
-          <span className={`small ${none ? 'text-gray-500' : 'text-primary-500'}`}>{summary}</span>
-        </Collapsible.Body>
-      </Collapsible.Advanced>
-      <Collapsible.Advanced
-        open={isCardCollapsibleOpen}
-      >
-        <Collapsible.Body className="collapsible-body">
-          {children}
-        </Collapsible.Body>
-      </Collapsible.Advanced>
-    </Card.Section>
-  );
-};
-BodySection.propTypes = {
-  none: bool,
-  children: node.isRequired,
-  summary: string,
-  isCardCollapsibleOpen: bool.isRequired,
-};
-BodySection.defaultProps = {
-  none: false,
-  summary: null,
-};
+import CardSection from './CardSection';
 
 export const SettingsOption = ({
   title, className, extraSections, children, summary, ...passThroughProps
@@ -65,16 +30,16 @@ export const SettingsOption = ({
           </Collapsible.Trigger>
         </Collapsible.Advanced>
       </Card.Section>
-      <BodySection {...passThroughProps} isCardCollapsibleOpen={isCardCollapsibleOpen} summary={summary}>
+      <CardSection {...passThroughProps} isCardCollapsibleOpen={isCardCollapsibleOpen} summary={summary}>
         {children}
-      </BodySection>
+      </CardSection>
       {extraSections.map((section, index) => (
         <>
           {isCardCollapsibleOpen && <hr />}
           {/* eslint-disable-next-line react/no-array-index-key */}
-          <BodySection {...passThroughProps} isCardCollapsibleOpen={isCardCollapsibleOpen} key={`settingsOption-${title}-${index}`}>
+          <CardSection {...passThroughProps} isCardCollapsibleOpen={isCardCollapsibleOpen} key={`settingsOption-${title}-${index}`}>
             {section.children}
-          </BodySection>
+          </CardSection>
         </>
       ))}
     </Card>
