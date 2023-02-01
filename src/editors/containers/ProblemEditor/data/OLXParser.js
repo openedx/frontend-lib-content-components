@@ -8,20 +8,20 @@ import { ProblemTypeKeys } from '../../../data/constants/problem';
 export const indexToLetterMap = [...Array(26)].map((val, i) => String.fromCharCode(i + 65));
 
 export const nonQuestionKeys = [
-  'responseparam',
-  'formulaequationinput',
-  'correcthint',
   '@_answer',
-  'optioninput',
+  '@_type',
+  'additional_answer',
   'checkboxgroup',
   'choicegroup',
-  'additional_answer',
-  'stringequalhint',
-  'textline',
-  '@_type',
+  'correcthint',
+  'demandhint',
   'formulaequationinput',
   'numericalresponse',
-  'demandhint',
+  'optioninput',
+  'responseparam',
+  'solution',
+  'stringequalhint',
+  'textline',
 ];
 
 export class OLXParser {
