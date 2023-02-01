@@ -99,11 +99,11 @@ export const getCheckboxesOLXWithFeedbackAndHintsOLX = ({ solution = 'simple' })
       },
     ],
   },
-  question: '<p>You can use this template as a guide to the simple editor markdown and OLX markup to use for checkboxes with hints and feedback problems. Edit this component to replace this template with your own assessment.</p><strong>Add the question text, or prompt, here. This text is required.</strong><em>You can add an optional tip or note related to the prompt like this.</em>',
+  question: '<p>You can use this template as a guide to the simple editor markdown and OLX markup to use for checkboxes with hints and feedback problems. Edit this component to replace this template with your own assessment.</p><label>Add the question text, or prompt, here. This text is required.</label><em>You can add an optional tip or note related to the prompt like this.</em>',
   buildOLX: `<problem>
   <choiceresponse>
     <p>You can use this template as a guide to the simple editor markdown and OLX markup to use for checkboxes with hints and feedback problems. Edit this component to replace this template with your own assessment.</p>
-    <strong>Add the question text, or prompt, here. This text is required.</strong>
+    <label>Add the question text, or prompt, here. This text is required.</label>
     <em>You can add an optional tip or note related to the prompt like this.</em>
     <checkboxgroup>
       <choice correct="true">
@@ -187,11 +187,11 @@ export const dropdownOLXWithFeedbackAndHintsOLX = {
       },
     ],
   },
-  question: '<p>You can use this template as a guide to the simple editor markdown and OLX markup to use for dropdown with hints and feedback problems. Edit this component to replace this template with your own assessment.</p><strong>Add the question text, or prompt, here. This text is required.</strong><em>You can add an optional tip or note related to the prompt like this.</em>',
+  question: '<p>You can use this template as a guide to the simple editor markdown and OLX markup to use for dropdown with hints and feedback problems. Edit this component to replace this template with your own assessment.</p><label>Add the question text, or prompt, here. This text is required.</label><em>You can add an optional tip or note related to the prompt like this.</em>',
   buildOLX: `<problem>
   <optionresponse>
     <p>You can use this template as a guide to the simple editor markdown and OLX markup to use for dropdown with hints and feedback problems. Edit this component to replace this template with your own assessment.</p>
-    <strong>Add the question text, or prompt, here. This text is required.</strong>
+    <label>Add the question text, or prompt, here. This text is required.</label>
     <em>You can add an optional tip or note related to the prompt like this.</em>
     <optioninput>
       <option correct="false">
@@ -260,11 +260,11 @@ export const multipleChoiceWithFeedbackAndHintsOLX = {
       },
     ],
   },
-  question: '<p>You can use this template as a guide to the simple editor markdown and OLX markup to use for multiple choice with hints and feedback problems. Edit this component to replace this template with your own assessment.</p><strong>Add the question text, or prompt, here. This text is required.</strong><em>You can add an optional tip or note related to the prompt like this.</em>',
+  question: '<p>You can use this template as a guide to the simple editor markdown and OLX markup to use for multiple choice with hints and feedback problems. Edit this component to replace this template with your own assessment.</p><label>Add the question text, or prompt, here. This text is required.</label><em>You can add an optional tip or note related to the prompt like this.</em>',
   buildOLX: `<problem>
   <multiplechoiceresponse>
     <p>You can use this template as a guide to the simple editor markdown and OLX markup to use for multiple choice with hints and feedback problems. Edit this component to replace this template with your own assessment.</p>
-    <strong>Add the question text, or prompt, here. This text is required.</strong>
+    <label>Add the question text, or prompt, here. This text is required.</label>
     <em>You can add an optional tip or note related to the prompt like this.</em>
     <choicegroup>
       <choice correct="false">
@@ -326,10 +326,10 @@ export const numericInputWithFeedbackAndHintsOLX = {
       },
     ],
   },
-  question: '<p>You can use this template as a guide to the simple editor markdown and OLX markup to use for numerical input with hints and feedback problems. Edit this component to replace this template with your own assessment.</p><strong>Add the question text, or prompt, here. This text is required.</strong><em>You can add an optional tip or note related to the prompt like this.</em>',
+  question: '<p>You can use this template as a guide to the simple editor markdown and OLX markup to use for numerical input with hints and feedback problems. Edit this component to replace this template with your own assessment.</p><label>Add the question text, or prompt, here. This text is required.</label><em>You can add an optional tip or note related to the prompt like this.</em>',
   buildOLX: `<problem>
   <p>You can use this template as a guide to the simple editor markdown and OLX markup to use for numerical input with hints and feedback problems. Edit this component to replace this template with your own assessment.</p>
-  <strong>Add the question text, or prompt, here. This text is required.</strong>
+  <label>Add the question text, or prompt, here. This text is required.</label>
   <em>You can add an optional tip or note related to the prompt like this.</em>
   <numericalresponse answer="100">
     <responseparam type="tolerance" default="5"></responseparam>
@@ -400,11 +400,11 @@ export const textInputWithFeedbackAndHintsOLX = {
       },
     },
   },
-  question: '<p>You can use this template as a guide to the simple editor markdown and OLX markup to use for text input with hints and feedback problems. Edit this component to replace this template with your own assessment.</p><strong>Add the question text, or prompt, here. This text is required.</strong><em>You can add an optional tip or note related to the prompt like this.</em>',
+  question: '<p>You can use this template as a guide to the simple editor markdown and OLX markup to use for text input with hints and feedback problems. Edit this component to replace this template with your own assessment.</p><label>Add the question text, or prompt, here. This text is required.</label><em>You can add an optional tip or note related to the prompt like this.</em>',
   buildOLX: `<problem>
   <stringresponse answer="the correct answer" type="ci">
     <p>You can use this template as a guide to the simple editor markdown and OLX markup to use for text input with hints and feedback problems. Edit this component to replace this template with your own assessment.</p>
-    <strong>Add the question text, or prompt, here. This text is required.</strong>
+    <label>Add the question text, or prompt, here. This text is required.</label>
     <em>You can add an optional tip or note related to the prompt like this.</em>
     <correcthint>You can specify optional feedback like this, which appears after this answer is submitted.</correcthint>
     <additional_answer answer="optional acceptable variant of the correct answer"></additional_answer>
@@ -479,11 +479,11 @@ export const textInputWithFeedbackAndHintsOLXWithMultipleAnswers = {
       },
     },
   },
-  question: '<p>You can use this template as a guide to the simple editor markdown and OLX markup to use for text input with hints and feedback problems. Edit this component to replace this template with your own assessment.</p><strong>Add the question text, or prompt, here. This text is required.</strong><em>You can add an optional tip or note related to the prompt like this.</em>',
+  question: '<p>You can use this template as a guide to the simple editor markdown and OLX markup to use for text input with hints and feedback problems. Edit this component to replace this template with your own assessment.</p><label>Add the question text, or prompt, here. This text is required.</label><em>You can add an optional tip or note related to the prompt like this.</em>',
   buildOLX: `<problem>
   <stringresponse answer="the correct answer" type="ci">
     <p>You can use this template as a guide to the simple editor markdown and OLX markup to use for text input with hints and feedback problems. Edit this component to replace this template with your own assessment.</p>
-    <strong>Add the question text, or prompt, here. This text is required.</strong>
+    <label>Add the question text, or prompt, here. This text is required.</label>
     <em>You can add an optional tip or note related to the prompt like this.</em>
     <correcthint>You can specify optional feedback like this, which appears after this answer is submitted.</correcthint>
     <additional_answer answer="300">
@@ -558,10 +558,10 @@ export const numericInputWithFeedbackAndHintsOLXException = {
       },
     ],
   },
-  question: '<p>You can use this template as a guide to the simple editor markdown and OLX markup to use for numerical input with hints and feedback problems. Edit this component to replace this template with your own assessment.</p><strong>Add the question text, or prompt, here. This text is required.</strong><em>You can add an optional tip or note related to the prompt like this.</em>',
+  question: '<p>You can use this template as a guide to the simple editor markdown and OLX markup to use for numerical input with hints and feedback problems. Edit this component to replace this template with your own assessment.</p><label>Add the question text, or prompt, here. This text is required.</label><em>You can add an optional tip or note related to the prompt like this.</em>',
   buildOLX: `<problem>
   <p>You can use this template as a guide to the simple editor markdown and OLX markup to use for numerical input with hints and feedback problems. Edit this component to replace this template with your own assessment.</p>
-  <strong>Add the question text, or prompt, here. This text is required.</strong>
+  <label>Add the question text, or prompt, here. This text is required.</label>
   <em>You can add an optional tip or note related to the prompt like this.</em>
   <numericalresponse answer="300">
     <additional_answer answer="100">
@@ -591,6 +591,25 @@ export const advancedProblemOlX = {
   </formularesponse>
 </problem>`,
 };
+export const multipleProblemOlX = {
+  rawOLX: `<problem>
+  <stringresponse answer="correct answer">
+    <textline size="20"/>
+  </stringresponse>
+  <stringresponse answer="other correct answer">
+    <textline size="20"/>
+  </stringresponse>
+</problem>`,
+};
 export const blankProblemOLX = {
   rawOLX: '<problem></problem>',
+};
+export const blankQuestionOLX = {
+  rawOLX: `<problem>
+  <stringresponse type="ci">
+    <additional_answer />
+    <textline size="20"/>
+  </stringresponse>
+</problem>`,
+  question: '',
 };

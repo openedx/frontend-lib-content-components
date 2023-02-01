@@ -9,7 +9,9 @@ import {
   multipleChoiceWithFeedbackAndHintsOLX,
   textInputWithFeedbackAndHintsOLXWithMultipleAnswers,
   advancedProblemOlX,
+  multipleProblemOlX,
   blankProblemOLX,
+  blankQuestionOLX,
 } from './mockData/olxTestData';
 import { ProblemTypeKeys } from '../../../data/constants/problem';
 
@@ -41,6 +43,11 @@ describe('Check OLXParser problem type', () => {
   });
   test('Test Advanced Problem Type', () => {
     const olxparser = new OLXParser(advancedProblemOlX.rawOLX);
+    const problemType = olxparser.getProblemType();
+    expect(problemType).toBe(ProblemTypeKeys.ADVANCED);
+  });
+  test('Test Advanced Problem Type by multiples', () => {
+    const olxparser = new OLXParser(multipleProblemOlX.rawOLX);
     const problemType = olxparser.getProblemType();
     expect(problemType).toBe(ProblemTypeKeys.ADVANCED);
   });
@@ -147,6 +154,12 @@ describe('Check OLXParser for question parsing', () => {
     const olxparser = new OLXParser(numericInputWithFeedbackAndHintsOLXException.rawOLX);
     const question = olxparser.parseQuestions('numericalresponse');
     expect(question).toEqual(numericInputWithFeedbackAndHintsOLXException.question);
+  });
+  test('Test OLX with no question content should have empty string for question', () => {
+    const olxparser = new OLXParser(blankQuestionOLX.rawOLX);
+    const problemType = olxparser.getProblemType();
+    const question = olxparser.parseQuestions(problemType);
+    expect(question).toBe(blankQuestionOLX.question);
   });
 });
 
