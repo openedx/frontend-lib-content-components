@@ -155,7 +155,7 @@ export class OLXParser {
       id: indexToLetterMap[answers.length],
       title: stringresponse['@_answer'],
       correct: true,
-      feedback,
+      selectedFeedback: feedback,
     });
 
     // Parsing additional_answer for string response.
@@ -167,7 +167,7 @@ export class OLXParser {
           id: indexToLetterMap[answers.length],
           title: newAnswer['@_answer'],
           correct: true,
-          feedback: answerFeedback,
+          selectedFeedback: answerFeedback,
         });
       });
     } else {
@@ -176,7 +176,7 @@ export class OLXParser {
         id: indexToLetterMap[answers.length],
         title: additionalAnswer['@_answer'],
         correct: true,
-        feedback: answerFeedback,
+        selectedFeedback: answerFeedback,
       });
     }
 
@@ -188,7 +188,7 @@ export class OLXParser {
           id: indexToLetterMap[answers.length],
           title: newAnswer['@_answer'],
           correct: false,
-          feedback: newAnswer['#text'],
+          selectedFeedback: newAnswer['#text'],
         });
       });
     } else {
@@ -196,7 +196,7 @@ export class OLXParser {
         id: indexToLetterMap[answers.length],
         title: stringEqualHint['@_answer'],
         correct: false,
-        feedback: stringEqualHint['#text'],
+        selectedFeedback: stringEqualHint['#text'],
       });
     }
 
@@ -256,7 +256,7 @@ export class OLXParser {
       id: indexToLetterMap[answers.length + answerOffset],
       title: numericalresponse['@_answer'],
       correct: true,
-      feedback,
+      selectedFeedback: feedback,
       ...responseParam,
     });
 
@@ -269,7 +269,7 @@ export class OLXParser {
           id: indexToLetterMap[answers.length + answerOffset],
           title: newAnswer['@_answer'],
           correct: true,
-          feedback: answerFeedback,
+          selectedFeedback: answerFeedback,
         });
       });
     } else {
@@ -278,14 +278,17 @@ export class OLXParser {
         id: indexToLetterMap[answers.length + answerOffset],
         title: additionalAnswer['@_answer'],
         correct: true,
-        feedback: answerFeedback,
+        selectedFeedback: answerFeedback,
       });
     }
     return answers;
   }
 
   parseQuestions(problemType) {
-    const builder = new XMLBuilder();
+    const options = {
+      ignoreAttributes: false,
+    };
+    const builder = new XMLBuilder(options);
     const problemObject = _.get(this.preservedProblem[0], problemType);
     let questionString;
     /* TODO: How do we uniquely identify the description?
