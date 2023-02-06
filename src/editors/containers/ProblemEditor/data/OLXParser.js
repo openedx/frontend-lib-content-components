@@ -31,15 +31,26 @@ export const nonQuestionKeys = [
 export class OLXParser {
   constructor(olxString) {
     this.problem = {};
+    this.preservedProblem = {};
+    const optionsPreserved = {
+      ignoreAttributes: false,
+      alwaysCreateTextNode: true,
+      preserveOrder: true,
+    };
     const options = {
       ignoreAttributes: false,
       alwaysCreateTextNode: true,
-      // preserveOrder: true
     };
+    // There are two versions of the parsed XLM because the question requires the order of the
+    // parsed data to be preserved. However, all the other widgets need the data grouped by
+    // the wrapping tag.
+    const parserPreserved = new XMLParser(optionsPreserved);
     const parser = new XMLParser(options);
     this.parsedOLX = parser.parse(olxString);
+    this.parsedPreservedOLX = parserPreserved.parse(olxString);
     if (_.has(this.parsedOLX, 'problem')) {
       this.problem = this.parsedOLX.problem;
+      this.preservedProblem = this.parsedPreservedOLX[0].problem;
     }
   }
 
@@ -275,35 +286,46 @@ export class OLXParser {
 
   parseQuestions(problemType) {
     const builder = new XMLBuilder();
-    const problemObject = _.get(this.problem, problemType);
-    let questionObject = {};
-    /* TODO: How do we uniquely identify the label and description?
-      In order to parse label and description, there should be two states
+    const problemObject = _.get(this.preservedProblem[0], problemType);
+    let questionString;
+    /* TODO: How do we uniquely identify the description?
+      In order to parse description, there should be two states
       and settings should be introduced to edit the label and description.
       In turn editing the settings update the state and then it can be added to
       the parsed OLX.
     */
-    const tagMap = {
-      description: 'em',
-    };
-
-    /* Only numerical response has different ways to generate OLX, test with
-      numericInputWithFeedbackAndHintsOLXException and numericInputWithFeedbackAndHintsOLX
-      shows the different ways the olx can be generated.
-    */
-    if (_.isArray(problemObject)) {
-      questionObject = _.omitBy(problemObject[0], (value, key) => _.includes(nonQuestionKeys, key));
+    if (_.isEmpty(problemObject)) {
+      const tagMap = { description: 'em' };
+      const questionObject = _.omitBy(this.problem, (value, key) => _.includes(nonQuestionKeys, key));
+      const serializedQuestion = _.mapKeys(questionObject, (value, key) => _.get(tagMap, key, key));
+      questionString = builder.build(serializedQuestion);
     } else {
-      questionObject = _.omitBy(problemObject, (value, key) => _.includes(nonQuestionKeys, key));
+      const questionObjectPreserved = [];
+      problemObject.forEach(tag => {
+        const tagName = Object.keys(tag)[0];
+        if (!nonQuestionKeys.includes(tagName)) {
+          const subTags = [];
+          Object.values(tag).forEach(value => {
+            if (_.isArray(value)) {
+              const currentSubTag = value[0];
+              subTags.push(currentSubTag);
+            } else {
+              subTags.push(value);
+            }
+          });
+          const updatedTag = {};
+          if (tagName === 'description') {
+            updatedTag.em = subTags;
+          } else {
+            updatedTag[tagName] = subTags;
+          }
+          questionObjectPreserved.push(updatedTag);
+        }
+      });
+      questionString = builder.build({ questionObjectPreserved });
     }
-    // Check if problem tag itself will have question and descriptions.
-    if (_.isEmpty(questionObject)) {
-      questionObject = _.omitBy(this.problem, (value, key) => _.includes(nonQuestionKeys, key));
-    }
-    const serializedQuestion = _.mapKeys(questionObject, (value, key) => _.get(tagMap, key, key));
-
-    const questionString = builder.build(serializedQuestion);
-    return questionString;
+    const parsedQuestion = questionString.replace(/<questionObjectPreserved>|<\/questionObjectPreserved>/gm, '');
+    return parsedQuestion;
   }
 
   getHints() {
