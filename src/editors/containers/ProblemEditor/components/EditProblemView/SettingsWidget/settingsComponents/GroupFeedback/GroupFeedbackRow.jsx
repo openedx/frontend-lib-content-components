@@ -17,20 +17,23 @@ export const GroupFeedbackRow = ({
   // injected
   intl,
 }) => (
-  <ActionRow className="mb-2">
-    <Form.Group as={Col}>
-      <Form.Control
-        value={value.feedback}
-        onChange={handleFeedbackChange}
-        onBlur={handleEmptyFeedback}
-      />
+  <ActionRow className="mb-3">
+    <Col className="px-0">
+      <Row>
+        <Form.Control
+          value={value.feedback}
+          onChange={handleFeedbackChange}
+          onBlur={handleEmptyFeedback}
+        />
+      </Row>
       <Form.CheckboxSet
         onChange={handleAnswersSelectedChange}
         value={value.answers}
       >
-        <Row className="mp-1">
+        <Row>
           {answers.map((letter) => (
             <Form.Checkbox
+              className="mr-1"
               value={letter.id}
               checked={value.answers.indexOf(letter.id)}
             >{letter.id}
@@ -38,14 +41,14 @@ export const GroupFeedbackRow = ({
           ))}
         </Row>
       </Form.CheckboxSet>
-      <ActionRow.Spacer />
-      <IconButton
-        src={DeleteOutline}
-        iconAs={Icon}
-        alt={intl.formatMessage(messages.settingsDeleteIconAltText)}
-        onClick={handleDelete}
-      />
-    </Form.Group>
+    </Col>
+    <ActionRow.Spacer />
+    <IconButton
+      src={DeleteOutline}
+      iconAs={Icon}
+      alt={intl.formatMessage(messages.settingsDeleteIconAltText)}
+      onClick={handleDelete}
+    />
   </ActionRow>
 );
 
