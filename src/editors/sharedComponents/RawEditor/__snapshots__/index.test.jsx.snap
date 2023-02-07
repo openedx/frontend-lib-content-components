@@ -1,7 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`RawEditor renders as expected with content equal to null 1`] = `
-<Fragment>
+<div
+  style={
+    Object {
+      "width": "80%",
+    }
+  }
+>
   <Alert
     variant="danger"
   >
@@ -9,11 +15,13 @@ exports[`RawEditor renders as expected with content equal to null 1`] = `
     html
      editor.
   </Alert>
-</Fragment>
+</div>
 `;
 
 exports[`RawEditor renders as expected with default behavior 1`] = `
-<Fragment>
+<div
+  style={null}
+>
   <Alert
     variant="danger"
   >
@@ -32,11 +40,13 @@ exports[`RawEditor renders as expected with default behavior 1`] = `
     lang="html"
     value="eDiTablE Text"
   />
-</Fragment>
+</div>
 `;
 
 exports[`RawEditor renders as expected with lang equal to xml 1`] = `
-<Fragment>
+<div
+  style={null}
+>
   <injectIntl(ShimmedIntlComponent)
     innerRef={
       Object {
@@ -48,5 +58,5 @@ exports[`RawEditor renders as expected with lang equal to xml 1`] = `
     lang="xml"
     value="eDiTablE Text"
   />
-</Fragment>
+</div>
 `;
