@@ -3,6 +3,7 @@
 exports[`HintsCard snapshot snapshot: renders groupFeedbacks setting card multiple groupFeedbacks 1`] = `
 <SettingsOption
   className=""
+  extraSections={Array []}
   none={false}
   summary=" {count, plural, =0 {} other {(+# more)}}"
   title="Group Feedback"
@@ -77,6 +78,7 @@ exports[`HintsCard snapshot snapshot: renders groupFeedbacks setting card multip
 exports[`HintsCard snapshot snapshot: renders groupFeedbacks setting card no groupFeedbacks 1`] = `
 <SettingsOption
   className=""
+  extraSections={Array []}
   none={true}
   summary="None"
   title="Group Feedback"
@@ -106,6 +108,7 @@ exports[`HintsCard snapshot snapshot: renders groupFeedbacks setting card no gro
 exports[`HintsCard snapshot snapshot: renders groupFeedbacks setting card one groupFeedback 1`] = `
 <SettingsOption
   className=""
+  extraSections={Array []}
   none={false}
   summary="groupFeedback1 {count, plural, =0 {} other {(+# more)}}"
   title="Group Feedback"

@@ -3,6 +3,7 @@
 exports[`RandomizationCard snapshot snapshot: renders reset true setting card 1`] = `
 <SettingsOption
   className=""
+  extraSections={Array []}
   none={false}
   summary="sUmmary"
   title="Randomization"
