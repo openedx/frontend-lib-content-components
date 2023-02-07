@@ -1,0 +1,53 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GroupFeedbackRow snapshot snapshot: renders hints row 1`] = `
+<ActionRow
+  className="mb-3"
+>
+  <Col
+    className="px-0"
+  >
+    <Row>
+      <Form.Control
+        onBlur={[MockFunction handleEmptyFeedback]}
+        onChange={[MockFunction handleFeedbackChange]}
+        value="sOmE FeEDBACK"
+      />
+    </Row>
+    <Component
+      onChange={[MockFunction handleAnswersSelectedChange]}
+      value={
+        Array [
+          "A",
+          "C",
+        ]
+      }
+    >
+      <Row>
+        <Form.Checkbox
+          checked={-1}
+          className="mr-1"
+        />
+        <Form.Checkbox
+          checked={-1}
+          className="mr-1"
+        />
+        <Form.Checkbox
+          checked={-1}
+          className="mr-1"
+        />
+        <Form.Checkbox
+          checked={-1}
+          className="mr-1"
+        />
+      </Row>
+    </Component>
+  </Col>
+  <ActionRow.Spacer />
+  <IconButton
+    alt="Delete answer"
+    iconAs="Icon"
+    onClick={[MockFunction handleDelete]}
+  />
+</ActionRow>
+`;

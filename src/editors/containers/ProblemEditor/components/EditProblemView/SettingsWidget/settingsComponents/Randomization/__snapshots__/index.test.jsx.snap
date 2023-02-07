@@ -21,7 +21,7 @@ exports[`RandomizationCard snapshot snapshot: renders reset true setting card 1`
   <Form.Group>
     <Form.Control
       as="select"
-      onChange={[MockFunction timerCardHooks.handleChange]}
+      onChange={[MockFunction randomizationCardHooks.handleChange]}
       value="sOmE_vAlUE"
     >
       <option

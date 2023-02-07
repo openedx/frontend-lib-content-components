@@ -5,7 +5,7 @@ import {
 } from '@edx/paragon';
 import { DeleteOutline } from '@edx/paragon/icons';
 import PropTypes from 'prop-types';
-import messages from './messages';
+import messages from '../../messages';
 
 export const GroupFeedbackRow = ({
   value,
