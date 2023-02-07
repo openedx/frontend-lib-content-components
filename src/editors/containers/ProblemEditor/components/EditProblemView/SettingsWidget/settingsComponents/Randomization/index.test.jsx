@@ -15,12 +15,12 @@ describe('RandomizationCard', () => {
     intl: { formatMessage },
   };
 
-  const timerCardHooksProps = {
+  const randomizationCardHooksProps = {
     summary: { message: { defaultMessage: 'sUmmary' } },
-    handleChange: jest.fn().mockName('timerCardHooks.handleChange'),
+    handleChange: jest.fn().mockName('randomizationCardHooks.handleChange'),
   };
 
-  useRandomizationSettingStatus.mockReturnValue(timerCardHooksProps);
+  useRandomizationSettingStatus.mockReturnValue(randomizationCardHooksProps);
 
   describe('behavior', () => {
     it(' calls useRandomizationSettingStatus when initialized', () => {
