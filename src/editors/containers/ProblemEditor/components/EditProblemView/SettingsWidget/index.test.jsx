@@ -59,6 +59,12 @@ describe('SettingsWidget', () => {
   });
 
   describe('mapDispatchToProps', () => {
+    test('setBlockTitle from actions.app.setBlockTitle', () => {
+      expect(mapDispatchToProps.setBlockTitle).toEqual(actions.app.setBlockTitle);
+    });
+  });
+
+  describe('mapDispatchToProps', () => {
     test('updateSettings from actions.problem.updateSettings', () => {
       expect(mapDispatchToProps.updateSettings).toEqual(actions.problem.updateSettings);
     });
@@ -67,6 +73,12 @@ describe('SettingsWidget', () => {
   describe('mapDispatchToProps', () => {
     test('updateField from actions.problem.updateField', () => {
       expect(mapDispatchToProps.updateField).toEqual(actions.problem.updateField);
+    });
+  });
+
+  describe('mapDispatchToProps', () => {
+    test('updateAnswer from actions.problem.updateAnswer', () => {
+      expect(mapDispatchToProps.updateAnswer).toEqual(actions.problem.updateAnswer);
     });
   });
 });

@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import _ from 'lodash-es';
 import * as module from './hooks';
 import messages from './messages';
-import { ProblemTypeKeys, ShowAnswerTypesKeys } from '../../../../../data/constants/problem';
+import { ProblemTypeKeys, ProblemTypes, ShowAnswerTypesKeys } from '../../../../../data/constants/problem';
 
 export const state = {
   showAdvanced: (val) => useState(val),
@@ -21,10 +21,10 @@ export const showAdvancedSettingsCards = () => {
 };
 
 export const showFullCard = () => {
-  const [isCardCollapsed, setIsCardCollapsed] = module.state.cardCollapsed(false);
+  const [isCardCollapsibleOpen, setIsCardCollapsibleOpen] = module.state.cardCollapsed(false);
   return {
-    isCardCollapsed,
-    toggleCardCollapse: () => setIsCardCollapsed(!isCardCollapsed),
+    isCardCollapsibleOpen,
+    toggleCardCollapse: () => setIsCardCollapsibleOpen(!isCardCollapsibleOpen),
   };
 };
 
@@ -167,8 +167,9 @@ export const scoringCardHooks = (scoring, updateSettings) => {
   };
 };
 
-export const showAnswerCardHooks = (showAnswer, updateSettings) => {
+export const useAnswerSettings = (showAnswer, updateSettings) => {
   const [showAttempts, setShowAttempts] = module.state.showAttempts(false);
+
   const numberOfAttemptsChoice = [
     ShowAnswerTypesKeys.AFTER_SOME_NUMBER_OF_ATTEMPTS,
     ShowAnswerTypesKeys.AFTER_ALL_ATTEMPTS,
@@ -193,9 +194,14 @@ export const showAnswerCardHooks = (showAnswer, updateSettings) => {
     updateSettings({ showAnswer: { ...showAnswer, afterAttempts: attempts } });
   };
 
+  const handleExplanationChange = (event) => {
+    updateSettings({ solutionExplanation: event.target.value });
+  };
+
   return {
     handleShowAnswerChange,
     handleAttemptsChange,
+    handleExplanationChange,
     showAttempts,
   };
 };
@@ -212,7 +218,10 @@ export const timerCardHooks = (updateSettings) => ({
 
 export const typeRowHooks = ({
   answers,
+  blockTitle,
   correctAnswerCount,
+  problemType,
+  setBlockTitle,
   typeKey,
   updateField,
   updateAnswer,
@@ -224,6 +233,9 @@ export const typeRowHooks = ({
           updateAnswer({ ...answer, correct: false });
         });
       }
+    }
+    if (blockTitle === ProblemTypes[problemType].title) {
+      setBlockTitle(ProblemTypes[typeKey].title);
     }
     updateField({ problemType: typeKey });
   };

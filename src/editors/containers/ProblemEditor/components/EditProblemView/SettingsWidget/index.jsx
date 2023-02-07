@@ -30,8 +30,10 @@ export const SettingsWidget = ({
   answers,
   generalFeedback,
   groupFeedbackList,
+  blockTitle,
   correctAnswerCount,
   settings,
+  setBlockTitle,
   updateSettings,
   updateField,
   updateAnswer,
@@ -66,8 +68,10 @@ export const SettingsWidget = ({
       <div className="mb-3 settingsCardTopdiv">
         <TypeCard
           answers={answers}
+          blockTitle={blockTitle}
           correctAnswerCount={correctAnswerCount}
           problemType={problemType}
+          setBlockTitle={setBlockTitle}
           updateField={updateField}
           updateAnswer={updateAnswer}
         />
@@ -97,7 +101,11 @@ export const SettingsWidget = ({
       <Collapsible.Advanced open={isAdvancedCardsVisible}>
         <Collapsible.Body className="collapsible-body">
           <div className="my-3">
-            <ShowAnswerCard showAnswer={settings.showAnswer} updateSettings={updateSettings} />
+            <ShowAnswerCard
+              showAnswer={settings.showAnswer}
+              updateSettings={updateSettings}
+              solutionExplanation={settings.solutionExplanation}
+            />
           </div>
           <div className="my-3">
             <ResetCard showResetButton={settings.showResetButton} updateSettings={updateSettings} />
@@ -142,8 +150,10 @@ SettingsWidget.propTypes = {
       },
     ),
   ).isRequired,
+  blockTitle: PropTypes.string.isRequired,
   correctAnswerCount: PropTypes.number.isRequired,
   problemType: PropTypes.string.isRequired,
+  setBlockTitle: PropTypes.func.isRequired,
   updateAnswer: PropTypes.func.isRequired,
   updateField: PropTypes.func.isRequired,
   updateSettings: PropTypes.func.isRequired,
@@ -156,10 +166,12 @@ const mapStateToProps = (state) => ({
   groupFeedbackList: selectors.problem.groupFeedbackList(state),
   settings: selectors.problem.settings(state),
   answers: selectors.problem.answers(state),
+  blockTitle: selectors.app.blockTitle(state),
   correctAnswerCount: selectors.problem.correctAnswerCount(state),
 });
 
 export const mapDispatchToProps = {
+  setBlockTitle: actions.app.setBlockTitle,
   updateSettings: actions.problem.updateSettings,
   updateField: actions.problem.updateField,
   updateAnswer: actions.problem.updateAnswer,

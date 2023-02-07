@@ -31,6 +31,7 @@ const initialState = {
       afterAttempts: 0,
     },
     showResetButton: false,
+    solutionExplanation: '',
   },
 };
 

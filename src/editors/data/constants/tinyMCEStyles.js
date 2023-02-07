@@ -98,7 +98,7 @@ const getStyles = () => (
     background: none;
   }
   .mce-content-body {
-      padding: 10px;
+      padding: 0;
       background-color: #fff;
       font-family: 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
       font-size: 16px;
@@ -162,6 +162,7 @@ const getStyles = () => (
   }
   .mce-content-body p {
       margin-bottom: 1.416em;
+      margin-top: 0;
       font-size: 1em;
       line-height: 1.6em !important;
       color: #3c3c3c;
@@ -212,6 +213,20 @@ const getStyles = () => (
       background: none;
       color: #3c3c3c;
       padding: 0;
+  }
+  .mce-content-body[data-mce-placeholder] {
+    position: relative;
+  }
+  .mce-content-body[data-mce-placeholder]:not(.mce-visualblocks)::before {
+    color: rgba(34, 47, 62, 0.7);
+    content: attr(data-mce-placeholder);
+    position: absolute;
+  }
+  .mce-content-body:not([dir=rtl])[data-mce-placeholder]:not(.mce-visualblocks)::before {
+    margin: 0;
+  }
+  .mce-content-body[dir=rtl][data-mce-placeholder]:not(.mce-visualblocks)::before {
+    margin: 0;
   }`
 );
 
