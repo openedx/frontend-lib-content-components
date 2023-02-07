@@ -108,26 +108,6 @@ export const matlabCardHooks = (matLabApiKey, updateSettings) => {
     handleChange,
   };
 };
-export const generalFeedbackHooks = (generalFeedback, updateSettings) => {
-  const [summary, setSummary] = module.state.summary({ message: '', values: {}, intl: false });
-
-  useEffect(() => {
-    if (_.isEmpty(generalFeedback)) {
-      setSummary({ message: messages.noGeneralFeedbackSummary, values: {}, intl: true });
-    } else {
-      setSummary({ message: generalFeedback.substring(0, 25), values: {}, intl: false });
-    }
-  }, [generalFeedback]);
-
-  const handleChange = (event) => {
-    updateSettings({ generalFeedback: event.target.value });
-  };
-
-  return {
-    summary,
-    handleChange,
-  };
-};
 
 export const resetCardHooks = (updateSettings) => {
   const setReset = (value) => {
