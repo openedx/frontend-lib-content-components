@@ -16,7 +16,7 @@ export const GeneralFeedbackCard = ({
   return (
     <SettingsOption
       title={intl.formatMessage(messages.generalFeebackSettingTitle)}
-      summary={intl.formatMessage(summary.message, { ...summary.values })}
+      summary={summary.intl ? intl.formatMessage(summary.message) : summary.message}
       none={!generalFeedback}
     >
       <div className="halfSpacedMessage">

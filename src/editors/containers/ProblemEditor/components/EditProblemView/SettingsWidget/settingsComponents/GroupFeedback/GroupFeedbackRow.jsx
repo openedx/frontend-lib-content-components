@@ -1,7 +1,7 @@
 import React from 'react';
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 import {
-  ActionRow, Form, Icon, IconButton, Col, Row,
+  ActionRow, Form, Icon, IconButton, Row,
 } from '@edx/paragon';
 import { DeleteOutline } from '@edx/paragon/icons';
 import PropTypes from 'prop-types';
