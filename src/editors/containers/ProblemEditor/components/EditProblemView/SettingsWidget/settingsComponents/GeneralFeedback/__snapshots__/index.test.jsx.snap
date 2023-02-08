@@ -5,7 +5,11 @@ exports[`RandomizationCard snapshot snapshot: renders general feedback setting c
   className=""
   extraSections={Array []}
   none={false}
-  summary="sUmmary"
+  summary={
+    Object {
+      "defaultMessage": "sUmmary",
+    }
+  }
   title="General Feedback"
 >
   <div
