@@ -17,39 +17,39 @@ export const GroupFeedbackRow = ({
   // injected
   intl,
 }) => (
-  <ActionRow className="mb-3">
-    <Col className="px-0">
-      <Row>
-        <Form.Control
-          value={value.feedback}
-          onChange={handleFeedbackChange}
-          onBlur={handleEmptyFeedback}
-        />
+
+  <div className="mb-3">
+    <ActionRow className="mb-1">
+      <Form.Control
+        value={value.feedback}
+        onChange={handleFeedbackChange}
+        onBlur={handleEmptyFeedback}
+      />
+      <ActionRow.Spacer />
+      <IconButton
+        src={DeleteOutline}
+        iconAs={Icon}
+        alt={intl.formatMessage(messages.settingsDeleteIconAltText)}
+        onClick={handleDelete}
+      />
+    </ActionRow>
+    <Form.CheckboxSet
+      onChange={handleAnswersSelectedChange}
+      value={value.answers}
+    >
+      <Row className="mx-0">
+        {answers.map((letter) => (
+          <Form.Checkbox
+            className="mr-3"
+            value={letter.id}
+            checked={value.answers.indexOf(letter.id)}
+          >{letter.id}
+          </Form.Checkbox>
+        ))}
       </Row>
-      <Form.CheckboxSet
-        onChange={handleAnswersSelectedChange}
-        value={value.answers}
-      >
-        <Row>
-          {answers.map((letter) => (
-            <Form.Checkbox
-              className="mr-1"
-              value={letter.id}
-              checked={value.answers.indexOf(letter.id)}
-            >{letter.id}
-            </Form.Checkbox>
-          ))}
-        </Row>
-      </Form.CheckboxSet>
-    </Col>
-    <ActionRow.Spacer />
-    <IconButton
-      src={DeleteOutline}
-      iconAs={Icon}
-      alt={intl.formatMessage(messages.settingsDeleteIconAltText)}
-      onClick={handleDelete}
-    />
-  </ActionRow>
+    </Form.CheckboxSet>
+  </div>
+
 );
 
 GroupFeedbackRow.propTypes = {
