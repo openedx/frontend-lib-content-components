@@ -5,7 +5,7 @@ exports[`HintsCard snapshot snapshot: renders groupFeedbacks setting card multip
   className=""
   extraSections={Array []}
   none={false}
-  summary=" {count, plural, =0 {} other {(+# more)}}"
+  summary=""
   title="Group Feedback"
 >
   <FormattedMessage
@@ -110,7 +110,7 @@ exports[`HintsCard snapshot snapshot: renders groupFeedbacks setting card one gr
   className=""
   extraSections={Array []}
   none={false}
-  summary="groupFeedback1 {count, plural, =0 {} other {(+# more)}}"
+  summary="groupFeedback1"
   title="Group Feedback"
 >
   <FormattedMessage

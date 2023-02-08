@@ -6,7 +6,7 @@ export const messages = {
   },
   groupFeedbackSummary: {
     id: 'authoring.problemeditor.settings.GroupFeedbackSummary.message',
-    defaultMessage: '{groupFeedback} {count, plural, =0 {} other {(+# more)}}',
+    defaultMessage: '{groupFeedback}',
     description: 'summary of current feedbacks provided for multiple problems',
   },
   addGroupFeedbackButtonText: {

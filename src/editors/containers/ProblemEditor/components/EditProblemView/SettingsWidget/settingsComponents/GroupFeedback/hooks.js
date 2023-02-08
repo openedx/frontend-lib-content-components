@@ -14,9 +14,10 @@ export const groupFeedbackCardHooks = (groupFeedbacks, updateSettings) => {
     if (groupFeedbacks.length === 0) {
       setSummary({ message: messages.noGroupFeedbackSummary, values: {} });
     } else {
+      const feedbacksInList = groupFeedbacks.map(({ answers, feedback }) => `${answers.toString()} ${feedback}\n`);
       setSummary({
         message: messages.groupFeedbackSummary,
-        values: { groupFeedback: groupFeedbacks[0].feedback, count: (groupFeedbacks.length - 1) },
+        values: { groupFeedback: feedbacksInList },
       });
     }
   }, [groupFeedbacks]);
@@ -44,14 +45,18 @@ export const groupFeedbackRowHooks = ({ id, groupFeedbacks, updateSettings }) =>
     const newAnswers = [...oldGroupFeedback.answers, value];
     const newFeedback = { ...oldGroupFeedback, answers: newAnswers };
     const remainingFeedbacks = groupFeedbacks.filter((item) => (item.id !== id));
-    updateSettings({ groupFeedbackList: [newFeedback, ...remainingFeedbacks] });
+    const updatedFeedbackList = [newFeedback, ...remainingFeedbacks].sort((a, b) => a.id - b.id);
+
+    updateSettings({ groupFeedbackList: updatedFeedbackList });
   };
   const removedSelectedAnswer = ({ value }) => {
     const oldGroupFeedback = groupFeedbacks.find(x => x.id === id);
     const newAnswers = oldGroupFeedback.answers.filter(item => item !== value);
     const newFeedback = { ...oldGroupFeedback, answers: newAnswers };
     const remainingFeedbacks = groupFeedbacks.filter((item) => (item.id !== id));
-    updateSettings({ groupFeedbackList: [newFeedback, ...remainingFeedbacks] });
+    const updatedFeedbackList = [newFeedback, ...remainingFeedbacks].sort((a, b) => a.id - b.id);
+
+    updateSettings({ groupFeedbackList: updatedFeedbackList });
   };
   const handleAnswersSelectedChange = (event) => {
     const { checked, value } = event.target;
