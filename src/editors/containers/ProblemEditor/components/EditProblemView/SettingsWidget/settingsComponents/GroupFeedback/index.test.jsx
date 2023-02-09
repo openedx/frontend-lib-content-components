@@ -40,7 +40,7 @@ describe('HintsCard', () => {
 
       groupFeedbackCardHooks.mockReturnValue(groupFeedbacksCardHooksProps);
       shallow(<GroupFeedbackCard {...props} />);
-      expect(groupFeedbackCardHooks).toHaveBeenCalledWith(groupFeedbacks0, props.updateSettings);
+      expect(groupFeedbackCardHooks).toHaveBeenCalledWith(groupFeedbacks0, props.updateSettings, answers);
     });
   });
 

@@ -14,7 +14,7 @@ export const GroupFeedbackCard = ({
   // inject
   intl,
 }) => {
-  const { summary, handleAdd } = groupFeedbackCardHooks(groupFeedbacks, updateSettings);
+  const { summary, handleAdd } = groupFeedbackCardHooks(groupFeedbacks, updateSettings, answers);
   return (
     <SettingsOption
       title={intl.formatMessage(messages.groupFeedbackSettingTitle)}

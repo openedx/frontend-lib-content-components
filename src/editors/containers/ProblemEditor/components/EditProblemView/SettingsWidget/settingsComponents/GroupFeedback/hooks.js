@@ -7,14 +7,14 @@ export const state = {
   summary: (val) => useState(val),
 };
 
-export const groupFeedbackCardHooks = (groupFeedbacks, updateSettings) => {
+export const groupFeedbackCardHooks = (groupFeedbacks, updateSettings, answers) => {
   const [summary, setSummary] = module.state.summary({ message: messages.noGroupFeedbackSummary, values: {} });
 
   useEffect(() => {
     if (groupFeedbacks.length === 0) {
       setSummary({ message: messages.noGroupFeedbackSummary, values: {} });
     } else {
-      const feedbacksInList = groupFeedbacks.map(({ answers, feedback }) => `${answers.toString()} ${feedback}\n`);
+      const feedbacksInList = groupFeedbacks.map(({ answerslist, feedback }) => `${answerslist.filter((a) => answers.includes(a)).toString} ${feedback}\n`);
       setSummary({
         message: messages.groupFeedbackSummary,
         values: { groupFeedback: feedbacksInList },
