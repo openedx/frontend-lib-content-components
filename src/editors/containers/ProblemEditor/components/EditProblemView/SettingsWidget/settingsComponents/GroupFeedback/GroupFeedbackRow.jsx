@@ -11,7 +11,6 @@ export const GroupFeedbackRow = ({
   value,
   handleAnswersSelectedChange,
   handleFeedbackChange,
-  handleEmptyFeedback,
   handleDelete,
   answers,
   // injected
@@ -23,7 +22,6 @@ export const GroupFeedbackRow = ({
       <Form.Control
         value={value.feedback}
         onChange={handleFeedbackChange}
-        onBlur={handleEmptyFeedback}
       />
       <ActionRow.Spacer />
       <div className="d-flex flex-row flex-nowrap">
@@ -65,7 +63,6 @@ GroupFeedbackRow.propTypes = {
   })).isRequired,
   handleAnswersSelectedChange: PropTypes.func.isRequired,
   handleFeedbackChange: PropTypes.func.isRequired,
-  handleEmptyFeedback: PropTypes.func.isRequired,
   handleDelete: PropTypes.func.isRequired,
   value: PropTypes.shape({
     id: PropTypes.number.isRequired,

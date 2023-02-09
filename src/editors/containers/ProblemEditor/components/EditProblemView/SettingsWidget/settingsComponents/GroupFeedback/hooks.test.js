@@ -88,16 +88,5 @@ describe('groupFeedbackRowHooks', () => {
         { groupFeedbackList: [] },
       );
     });
-    test('altering a feedback to be empty string deletes the row', () => {
-      output.handleEmptyFeedback({ target: { value: '' } });
-      expect(updateSettings).toHaveBeenCalledWith(
-        { groupFeedbackList: [] },
-      );
-    });
-    test('altering a feedback notto be empty string does not delete the row', () => {
-      const mockNewFeedback = 'nEw fEedBack';
-      output.handleEmptyFeedback({ target: { value: mockNewFeedback } });
-      expect(updateSettings).not.toHaveBeenCalled();
-    });
   });
 });

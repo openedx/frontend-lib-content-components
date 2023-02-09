@@ -8,7 +8,6 @@ exports[`GroupFeedbackRow snapshot snapshot: renders hints row 1`] = `
     className="mb-1"
   >
     <Form.Control
-      onBlur={[MockFunction handleEmptyFeedback]}
       onChange={[MockFunction handleFeedbackChange]}
       value="sOmE FeEDBACK"
     />

@@ -84,14 +84,8 @@ export const groupFeedbackRowHooks = ({ id, groupFeedbacks, updateSettings }) =>
     });
     updateSettings({ groupFeedbackList: modifiedGroupFeedback });
   };
-  const handleEmptyFeedback = (event) => {
-    const { value } = event.target;
-    if (value === '') {
-      handleDelete();
-    }
-  };
 
   return {
-    handleAnswersSelectedChange, handleFeedbackChange, handleEmptyFeedback, handleDelete,
+    handleAnswersSelectedChange, handleFeedbackChange, handleDelete,
   };
 };
