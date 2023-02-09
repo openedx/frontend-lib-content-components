@@ -8,12 +8,15 @@ exports[`HintsCard snapshot snapshot: renders groupFeedbacks setting card multip
   summary=""
   title="Group Feedback"
 >
-  <FormattedMessage
+  <div
     className="py-3"
-    defaultMessage="Group feedback will appear when a student selects a specific set of answers."
-    description="label for group feedback input"
-    id="authoring.problemeditor.settings.GroupFeedbackInputLabel"
-  />
+  >
+    <FormattedMessage
+      defaultMessage="Group feedback will appear when a student selects a specific set of answers."
+      description="label for group feedback input"
+      id="authoring.problemeditor.settings.GroupFeedbackInputLabel"
+    />
+  </div>
   <injectIntl(ShimmedIntlComponent)
     answers={
       Array [
@@ -83,12 +86,15 @@ exports[`HintsCard snapshot snapshot: renders groupFeedbacks setting card no gro
   summary="None"
   title="Group Feedback"
 >
-  <FormattedMessage
+  <div
     className="py-3"
-    defaultMessage="Group feedback will appear when a student selects a specific set of answers."
-    description="label for group feedback input"
-    id="authoring.problemeditor.settings.GroupFeedbackInputLabel"
-  />
+  >
+    <FormattedMessage
+      defaultMessage="Group feedback will appear when a student selects a specific set of answers."
+      description="label for group feedback input"
+      id="authoring.problemeditor.settings.GroupFeedbackInputLabel"
+    />
+  </div>
   <Button
     className="m-0 p-0 font-weight-bold"
     onClick={[MockFunction groupFeedbacksCardHooks.handleAdd]}
@@ -113,12 +119,15 @@ exports[`HintsCard snapshot snapshot: renders groupFeedbacks setting card one gr
   summary="groupFeedback1"
   title="Group Feedback"
 >
-  <FormattedMessage
+  <div
     className="py-3"
-    defaultMessage="Group feedback will appear when a student selects a specific set of answers."
-    description="label for group feedback input"
-    id="authoring.problemeditor.settings.GroupFeedbackInputLabel"
-  />
+  >
+    <FormattedMessage
+      defaultMessage="Group feedback will appear when a student selects a specific set of answers."
+      description="label for group feedback input"
+      id="authoring.problemeditor.settings.GroupFeedbackInputLabel"
+    />
+  </div>
   <injectIntl(ShimmedIntlComponent)
     answers={
       Array [

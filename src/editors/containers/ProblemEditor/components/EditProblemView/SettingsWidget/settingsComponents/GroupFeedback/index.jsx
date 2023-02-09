@@ -21,7 +21,9 @@ export const GroupFeedbackCard = ({
       summary={intl.formatMessage(summary.message, { ...summary.values })}
       none={!groupFeedbacks.length}
     >
-      <FormattedMessage {...messages.groupFeedbackInputLabel} className="py-3" />
+      <div className="py-3">
+        <FormattedMessage {...messages.groupFeedbackInputLabel} />
+      </div>
       {groupFeedbacks.map((groupFeedback) => (
         <GroupFeedbackRow
           key={groupFeedback.id}
