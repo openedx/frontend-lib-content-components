@@ -2,16 +2,15 @@
 
 exports[`GroupFeedbackRow snapshot snapshot: renders hints row 1`] = `
 <div
-  className="mb-3"
+  className="mb-4"
 >
   <ActionRow
-    className="mb-1"
+    className="mb-2"
   >
     <Form.Control
       onChange={[MockFunction handleFeedbackChange]}
       value="sOmE FeEDBACK"
     />
-    <ActionRow.Spacer />
     <div
       className="d-flex flex-row flex-nowrap"
     >
@@ -37,19 +36,19 @@ exports[`GroupFeedbackRow snapshot snapshot: renders hints row 1`] = `
     >
       <Form.Checkbox
         checked={-1}
-        className="mr-3 mt-1"
+        className="mr-4 mt-1"
       />
       <Form.Checkbox
         checked={-1}
-        className="mr-3 mt-1"
+        className="mr-4 mt-1"
       />
       <Form.Checkbox
         checked={-1}
-        className="mr-3 mt-1"
+        className="mr-4 mt-1"
       />
       <Form.Checkbox
         checked={-1}
-        className="mr-3 mt-1"
+        className="mr-4 mt-1"
       />
     </Row>
   </Component>

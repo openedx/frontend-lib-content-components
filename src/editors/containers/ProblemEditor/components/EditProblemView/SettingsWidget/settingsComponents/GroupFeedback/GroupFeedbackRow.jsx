@@ -17,13 +17,12 @@ export const GroupFeedbackRow = ({
   intl,
 }) => (
 
-  <div className="mb-3">
-    <ActionRow className="mb-1">
+  <div className="mb-4">
+    <ActionRow className="mb-2">
       <Form.Control
         value={value.feedback}
         onChange={handleFeedbackChange}
       />
-      <ActionRow.Spacer />
       <div className="d-flex flex-row flex-nowrap">
         <IconButton
           src={DeleteOutline}
@@ -41,7 +40,7 @@ export const GroupFeedbackRow = ({
       <Row className="mx-0">
         {answers.map((letter) => (
           <Form.Checkbox
-            className="mr-3 mt-1"
+            className="mr-4 mt-1"
             value={letter.id}
             checked={value.answers.indexOf(letter.id)}
           >{letter.id}

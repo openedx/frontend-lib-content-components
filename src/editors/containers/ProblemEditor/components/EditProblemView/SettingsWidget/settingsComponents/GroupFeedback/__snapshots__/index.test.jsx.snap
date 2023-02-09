@@ -9,7 +9,7 @@ exports[`HintsCard snapshot snapshot: renders groupFeedbacks setting card multip
   title="Group Feedback"
 >
   <FormattedMessage
-    className="mb-3"
+    className="py-3"
     defaultMessage="Group feedback will appear when a student selects a specific set of answers."
     description="label for group feedback input"
     id="authoring.problemeditor.settings.GroupFeedbackInputLabel"
@@ -84,7 +84,7 @@ exports[`HintsCard snapshot snapshot: renders groupFeedbacks setting card no gro
   title="Group Feedback"
 >
   <FormattedMessage
-    className="mb-3"
+    className="py-3"
     defaultMessage="Group feedback will appear when a student selects a specific set of answers."
     description="label for group feedback input"
     id="authoring.problemeditor.settings.GroupFeedbackInputLabel"
@@ -114,7 +114,7 @@ exports[`HintsCard snapshot snapshot: renders groupFeedbacks setting card one gr
   title="Group Feedback"
 >
   <FormattedMessage
-    className="mb-3"
+    className="py-3"
     defaultMessage="Group feedback will appear when a student selects a specific set of answers."
     description="label for group feedback input"
     id="authoring.problemeditor.settings.GroupFeedbackInputLabel"
