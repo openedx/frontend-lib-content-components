@@ -17,7 +17,6 @@ export const groupFeedbackCardHooks = (groupFeedbacks, updateSettings, answersli
       const feedbacksInList = groupFeedbacks.map(({ answers, feedback }) => {
         const answerIDs = answerslist.map((a) => a.id);
         const answersString = answers.filter((value) => answerIDs.includes(value));
-        console.log(answersString);
         return `${answersString} ${feedback}\n`;
       });
       setSummary({
