@@ -26,12 +26,15 @@ export const GroupFeedbackRow = ({
         onBlur={handleEmptyFeedback}
       />
       <ActionRow.Spacer />
-      <IconButton
-        src={DeleteOutline}
-        iconAs={Icon}
-        alt={intl.formatMessage(messages.settingsDeleteIconAltText)}
-        onClick={handleDelete}
-      />
+      <div className="d-flex flex-row flex-nowrap">
+        <IconButton
+          src={DeleteOutline}
+          iconAs={Icon}
+          alt={intl.formatMessage(messages.settingsDeleteIconAltText)}
+          onClick={handleDelete}
+          variant="primary"
+        />
+      </div>
     </ActionRow>
     <Form.CheckboxSet
       onChange={handleAnswersSelectedChange}
@@ -40,7 +43,7 @@ export const GroupFeedbackRow = ({
       <Row className="mx-0">
         {answers.map((letter) => (
           <Form.Checkbox
-            className="mr-3"
+            className="mr-3 mt-1"
             value={letter.id}
             checked={value.answers.indexOf(letter.id)}
           >{letter.id}

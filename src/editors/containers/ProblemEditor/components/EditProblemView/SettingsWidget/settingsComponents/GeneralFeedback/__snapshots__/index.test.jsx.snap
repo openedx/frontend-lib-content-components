@@ -17,7 +17,7 @@ exports[`RandomizationCard snapshot snapshot: renders general feedback setting c
   >
     <span>
       <FormattedMessage
-        defaultMessage="Enter the feedback to appear when a student submits a wrong answer. This will be overrdidden if you add answer-specific feedback."
+        defaultMessage="Enter the feedback to appear when a student submits a wrong answer. This will be overridden if you add answer-specific feedback."
         description="description for general feedback input, clariying useage"
         id="authoring.problemeditor.settings.generalFeedbackInputDescription"
       />
@@ -25,7 +25,7 @@ exports[`RandomizationCard snapshot snapshot: renders general feedback setting c
   </div>
   <Form.Group>
     <Form.Control
-      floatingLabel="Enter the feedback to appear when a student submits a wrong answer. This will be overrdidden if you add answer-specific feedback."
+      floatingLabel="Enter General Feedback"
       onChange={[MockFunction randomizationCardHooks.handleChange]}
       value="sOmE_vAlUE"
     />

@@ -6,12 +6,12 @@ export const messages = {
   },
   generalFeedbackInputLabel: {
     id: 'authoring.problemeditor.settings.generalFeedbackInputLabel',
-    defaultMessage: 'Enter the feedback to appear when a student submits a wrong answer. This will be overrdidden if you add answer-specific feedback.',
+    defaultMessage: 'Enter General Feedback',
     description: 'label for general feedback input describing rules',
   },
   generalFeedbackDescription: {
     id: 'authoring.problemeditor.settings.generalFeedbackInputDescription',
-    defaultMessage: 'Enter the feedback to appear when a student submits a wrong answer. This will be overrdidden if you add answer-specific feedback.',
+    defaultMessage: 'Enter the feedback to appear when a student submits a wrong answer. This will be overridden if you add answer-specific feedback.',
     description: 'description for general feedback input, clariying useage',
   },
   noGeneralFeedbackSummary: {

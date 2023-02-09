@@ -54,7 +54,7 @@ class ReactStateOLXParser {
     let widget = {};
     // eslint-disable-next-line prefer-const
     let { answers, generalFeedback } = this.problemState;
-    // general feedback replaces selected feedback if all inocrrect selected feedback is the same.
+    // general feedback replaces selected feedback if all incorrect selected feedback is the same.
     if (generalFeedback !== ''
     && answers.every(
       answer => (

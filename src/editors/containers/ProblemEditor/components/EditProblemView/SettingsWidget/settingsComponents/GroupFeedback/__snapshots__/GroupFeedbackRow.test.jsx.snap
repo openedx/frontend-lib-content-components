@@ -13,11 +13,16 @@ exports[`GroupFeedbackRow snapshot snapshot: renders hints row 1`] = `
       value="sOmE FeEDBACK"
     />
     <ActionRow.Spacer />
-    <IconButton
-      alt="Delete answer"
-      iconAs="Icon"
-      onClick={[MockFunction handleDelete]}
-    />
+    <div
+      className="d-flex flex-row flex-nowrap"
+    >
+      <IconButton
+        alt="Delete answer"
+        iconAs="Icon"
+        onClick={[MockFunction handleDelete]}
+        variant="primary"
+      />
+    </div>
   </ActionRow>
   <Component
     onChange={[MockFunction handleAnswersSelectedChange]}
@@ -33,19 +38,19 @@ exports[`GroupFeedbackRow snapshot snapshot: renders hints row 1`] = `
     >
       <Form.Checkbox
         checked={-1}
-        className="mr-3"
+        className="mr-3 mt-1"
       />
       <Form.Checkbox
         checked={-1}
-        className="mr-3"
+        className="mr-3 mt-1"
       />
       <Form.Checkbox
         checked={-1}
-        className="mr-3"
+        className="mr-3 mt-1"
       />
       <Form.Checkbox
         checked={-1}
-        className="mr-3"
+        className="mr-3 mt-1"
       />
     </Row>
   </Component>
