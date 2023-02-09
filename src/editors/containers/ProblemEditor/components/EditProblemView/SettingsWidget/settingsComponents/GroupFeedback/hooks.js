@@ -7,20 +7,25 @@ export const state = {
   summary: (val) => useState(val),
 };
 
-export const groupFeedbackCardHooks = (groupFeedbacks, updateSettings, answers) => {
+export const groupFeedbackCardHooks = (groupFeedbacks, updateSettings, answerslist) => {
   const [summary, setSummary] = module.state.summary({ message: messages.noGroupFeedbackSummary, values: {} });
 
   useEffect(() => {
     if (groupFeedbacks.length === 0) {
       setSummary({ message: messages.noGroupFeedbackSummary, values: {} });
     } else {
-      const feedbacksInList = groupFeedbacks.map(({ answerslist, feedback }) => `${answerslist.filter((a) => answers.includes(a)).toString} ${feedback}\n`);
+      const feedbacksInList = groupFeedbacks.map(({ answers, feedback }) => {
+        const answerIDs = answerslist.map((a) => a.id);
+        const answersString = answers.filter((value) => answerIDs.includes(value));
+        console.log(answersString);
+        return `${answersString} ${feedback}\n`;
+      });
       setSummary({
         message: messages.groupFeedbackSummary,
         values: { groupFeedback: feedbacksInList },
       });
     }
-  }, [groupFeedbacks]);
+  }, [groupFeedbacks, answerslist]);
 
   const handleAdd = () => {
     let newId = 0;
