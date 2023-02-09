@@ -2,6 +2,8 @@ import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 
 import { connect } from 'react-redux';
+import { Container } from '@edx/paragon';
+
 import AnswerWidget from './AnswerWidget';
 import SettingsWidget from './SettingsWidget';
 import QuestionWidget from './QuestionWidget';
@@ -24,11 +26,11 @@ export const EditProblemView = ({
 
   return (
     <EditorContainer getContent={getContent}>
-      <div className="editProblemView d-flex flex-row flex-nowrap justify-content-around">
+      <div className="editProblemView d-flex flex-row flex-nowrap justify-content-end">
         {isAdvancedProblemType ? (
-          <div className="mt-4.5">
-            <RawEditor editorRef={editorRef} lang="xml" content={problemState.rawOLX} width={{ width: '75%' }} />
-          </div>
+          <Container size="lg" className="mt-4.5">
+            <RawEditor editorRef={editorRef} lang="xml" content={problemState.rawOLX} />
+          </Container>
         ) : (
           <span className="flex-grow-1">
             <QuestionWidget />

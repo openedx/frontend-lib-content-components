@@ -1,13 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`RawEditor renders as expected with content equal to null 1`] = `
-<div
-  style={
-    Object {
-      "width": "80%",
-    }
-  }
->
+<div>
   <Alert
     variant="danger"
   >
@@ -19,9 +13,7 @@ exports[`RawEditor renders as expected with content equal to null 1`] = `
 `;
 
 exports[`RawEditor renders as expected with default behavior 1`] = `
-<div
-  style={null}
->
+<div>
   <Alert
     variant="danger"
   >
@@ -44,9 +36,7 @@ exports[`RawEditor renders as expected with default behavior 1`] = `
 `;
 
 exports[`RawEditor renders as expected with lang equal to xml 1`] = `
-<div
-  style={null}
->
+<div>
   <injectIntl(ShimmedIntlComponent)
     innerRef={
       Object {

@@ -5,10 +5,11 @@ exports[`EditorProblemView component renders raw editor 1`] = `
   getContent={[Function]}
 >
   <div
-    className="editProblemView d-flex flex-row flex-nowrap justify-content-around"
+    className="editProblemView d-flex flex-row flex-nowrap justify-content-end"
   >
-    <div
+    <Container
       className="mt-4.5"
+      size="lg"
     >
       <RawEditor
         content={null}
@@ -18,13 +19,8 @@ exports[`EditorProblemView component renders raw editor 1`] = `
           }
         }
         lang="xml"
-        width={
-          Object {
-            "width": "75%",
-          }
-        }
       />
-    </div>
+    </Container>
     <span
       className="editProblemView-settingsColumn"
     >
@@ -41,7 +37,7 @@ exports[`EditorProblemView component renders simple view 1`] = `
   getContent={[Function]}
 >
   <div
-    className="editProblemView d-flex flex-row flex-nowrap justify-content-around"
+    className="editProblemView d-flex flex-row flex-nowrap justify-content-end"
   >
     <span
       className="flex-grow-1"

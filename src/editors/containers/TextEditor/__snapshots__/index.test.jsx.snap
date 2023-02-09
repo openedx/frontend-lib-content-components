@@ -251,7 +251,6 @@ exports[`TextEditor snapshots loaded, raw editor 1`] = `
         }
       }
       lang="html"
-      width={null}
     />
   </div>
 </EditorContainer>

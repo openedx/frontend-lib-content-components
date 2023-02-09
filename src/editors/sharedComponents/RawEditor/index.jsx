@@ -14,12 +14,11 @@ export const RawEditor = ({
   editorRef,
   content,
   lang,
-  width,
 }) => {
   const value = getValue(content);
 
   return (
-    <div style={width}>
+    <div>
       {lang === 'xml' ? null : (
         <Alert variant="danger">
           You are using the raw {lang} editor.
@@ -40,7 +39,6 @@ RawEditor.defaultProps = {
   editorRef: null,
   content: null,
   lang: 'html',
-  width: null,
 };
 RawEditor.propTypes = {
   editorRef: PropTypes.oneOfType([
@@ -54,9 +52,6 @@ RawEditor.propTypes = {
     }),
   ]),
   lang: PropTypes.string,
-  width: PropTypes.shape({
-    width: PropTypes.string,
-  }),
 };
 
 export default RawEditor;
