@@ -276,8 +276,7 @@ describe('Problem settings hooks', () => {
       });
       output.onClick();
       expect(setBlockTitle).toHaveBeenCalledWith('Single select');
-      expect(updateAnswer).toHaveBeenNthCalledWith(1, { ...answers[0], correct: false });
-      expect(updateAnswer).toHaveBeenNthCalledWith(2, { ...answers[1], correct: false });
+      expect(updateAnswer).not.toHaveBeenCalled();
       expect(updateField).toHaveBeenCalledWith({ problemType: typekey });
     });
   });

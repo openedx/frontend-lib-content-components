@@ -125,8 +125,14 @@ const problem = createSlice({
         ...payload,
       },
     }),
-    load: (state, { payload }) => ({
+    load: (state, { payload: { settings: { scoring, showAnswer, ...settings }, ...payload } }) => ({
       ...state,
+      settings: {
+        ...state.settings,
+        scoring: { ...state.settings.scoring, ...scoring },
+        showAnswer: { ...state.settings.showAnswer, ...showAnswer },
+        ...settings,
+      },
       ...payload,
     }),
     setEnableTypeSelection: (state) => ({
