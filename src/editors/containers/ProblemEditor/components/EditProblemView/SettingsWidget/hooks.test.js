@@ -250,7 +250,7 @@ describe('Problem settings hooks', () => {
 
   describe('Type row hooks', () => {
     test('test onClick', () => {
-      const typekey = 'multiplechoiceresponse';
+      const typekey = 'optionresponse';
       const problemType = 'choiceresponse';
       const blockTitle = 'Multi-select';
       const setBlockTitle = jest.fn();
@@ -275,8 +275,9 @@ describe('Problem settings hooks', () => {
         updateAnswer,
       });
       output.onClick();
-      expect(setBlockTitle).toHaveBeenCalledWith('Single select');
-      expect(updateAnswer).not.toHaveBeenCalled();
+      expect(setBlockTitle).toHaveBeenCalledWith('Dropdown');
+      expect(updateAnswer).toHaveBeenNthCalledWith(1, { ...answers[0], correct: false });
+      expect(updateAnswer).toHaveBeenNthCalledWith(2, { ...answers[1], correct: false });
       expect(updateField).toHaveBeenCalledWith({ problemType: typekey });
     });
   });
