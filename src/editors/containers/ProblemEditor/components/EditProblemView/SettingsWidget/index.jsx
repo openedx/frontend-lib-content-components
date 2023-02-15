@@ -35,7 +35,7 @@ export const SettingsWidget = ({
   const { isAdvancedCardsVisible, showAdvancedCards } = showAdvancedSettingsCards();
   return (
     <div className="settingsWidget ml-4">
-      <div className="mb-3 settingsCardTopdiv">
+      <div className="mb-3">
         <TypeCard
           answers={answers}
           blockTitle={blockTitle}

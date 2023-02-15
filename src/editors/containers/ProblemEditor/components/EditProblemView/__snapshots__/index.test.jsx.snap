@@ -8,8 +8,8 @@ exports[`EditorProblemView component renders raw editor 1`] = `
     className="editProblemView d-flex flex-row flex-nowrap justify-content-end"
   >
     <Container
-      className="mt-4.5"
-      size="lg"
+      className="advancedEditorTopMargin p-0"
+      fluid={true}
     >
       <RawEditor
         content={null}

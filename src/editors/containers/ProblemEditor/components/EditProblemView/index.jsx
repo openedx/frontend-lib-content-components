@@ -28,7 +28,7 @@ export const EditProblemView = ({
     <EditorContainer getContent={getContent}>
       <div className="editProblemView d-flex flex-row flex-nowrap justify-content-end">
         {isAdvancedProblemType ? (
-          <Container size="lg" className="mt-4.5">
+          <Container fluid className="advancedEditorTopMargin p-0">
             <RawEditor editorRef={editorRef} lang="xml" content={problemState.rawOLX} />
           </Container>
         ) : (
