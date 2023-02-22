@@ -282,6 +282,7 @@ describe('Problem settings hooks', () => {
       expect(setBlockTitle).toHaveBeenCalledWith('Dropdown');
       expect(updateAnswer).toHaveBeenNthCalledWith(1, { ...answers[0], correct: false });
       expect(updateAnswer).toHaveBeenNthCalledWith(2, { ...answers[1], correct: false });
+      expect(updateAnswer).not.toHaveBeenNthCalledWith(3, { ...answers[2], correct: false });
       expect(updateField).toHaveBeenCalledWith({ problemType: typekey });
     });
   });

@@ -207,9 +207,13 @@ export const typeRowHooks = ({
   updateAnswer,
 }) => {
   const onClick = () => {
+    // Dropdown problems can only have one correct answer. When there is more than one correct answer
+    // from a previous problem type, the correct attribute for selected answers need to be set to false.
     if (typeKey === ProblemTypeKeys.DROPDOWN) {
+      // Check that previous problem had greater than one correct answer
       if (correctAnswerCount > 1) {
         answers.forEach(answer => {
+          // Check that the answer.correct is true and update answer.correct to false
           if (answer.correct) {
             updateAnswer({ ...answer, correct: false });
           }
