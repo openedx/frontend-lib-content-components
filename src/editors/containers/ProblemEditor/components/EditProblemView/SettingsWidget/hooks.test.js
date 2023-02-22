@@ -263,6 +263,10 @@ describe('Problem settings hooks', () => {
       {
         correct: true,
         id: 'b',
+      },
+      {
+        correct: false,
+        id: 'c',
       }];
       output = hooks.typeRowHooks({
         answers,

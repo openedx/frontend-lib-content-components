@@ -210,7 +210,9 @@ export const typeRowHooks = ({
     if (typeKey === ProblemTypeKeys.DROPDOWN) {
       if (correctAnswerCount > 1) {
         answers.forEach(answer => {
-          updateAnswer({ ...answer, correct: false });
+          if (answer.correct) {
+            updateAnswer({ ...answer, correct: false });
+          }
         });
       }
     }
