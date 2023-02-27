@@ -19,6 +19,7 @@ exports[`QuestionWidget render snapshot: renders correct default 1`] = `
     editorType="problem"
     isLibrary={null}
     lmsEndpointUrl="sOmEvaLue.cOm"
+    isLibrary={false},
     minHeight={150}
     placeholder="Enter your question"
     setEditorRef={[MockFunction hooks.prepareEditorRef.setEditorRef]}

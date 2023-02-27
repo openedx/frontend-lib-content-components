@@ -13,6 +13,7 @@ jest.mock('../../../../../data/redux', () => ({
   },
   selectors: {
     app: {
+      isLibrary: jest.fn(state => ({ isLibrary: state })),
       lmsEndpointUrl: jest.fn(state => ({ lmsEndpointUrl: state })),
       studioEndpointUrl: jest.fn(state => ({ studioEndpointUrl: state })),
     },
@@ -32,6 +33,7 @@ jest.mock('../../../hooks', () => ({
 
 describe('QuestionWidget', () => {
   const props = {
+    isLibrary: false,
     question: 'This is my question',
     updateQuestion: jest.fn(),
     lmsEndpointUrl: 'sOmEvaLue.cOm',
@@ -46,6 +48,9 @@ describe('QuestionWidget', () => {
   });
   describe('mapStateToProps', () => {
     const testState = { A: 'pple', B: 'anana', C: 'ucumber' };
+    test('isLibrary from app.isLibrary', () => {
+      expect(mapStateToProps(testState).isLibrary).toEqual(selectors.app.isLibrary(testState));
+    });
     test('question from problem.question', () => {
       expect(mapStateToProps(testState).question).toEqual(selectors.problem.question(testState));
     });

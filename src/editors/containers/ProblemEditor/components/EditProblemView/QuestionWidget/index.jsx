@@ -9,8 +9,9 @@ import './index.scss';
 
 import TinyMceWidget from '../../../../../sharedComponents/TinyMceWidget';
 
-// This widget should be connected, grab all questions from store, update them as needed.
 export const QuestionWidget = ({
+  // redux
+  isLibrary,
   question,
   updateQuestion,
   assets,
@@ -30,6 +31,7 @@ export const QuestionWidget = ({
         editorType="problem"
         editorRef={editorRef}
         textValue={question}
+        isLibrary={isLibrary}
         updateQuestion={updateQuestion}
         setEditorRef={setEditorRef}
         minHeight={150}
@@ -42,7 +44,12 @@ export const QuestionWidget = ({
   );
 };
 
+QuestionWidget.defaultProps = {
+  isLibrary: null,
+};
 QuestionWidget.propTypes = {
+  // redux
+  isLibrary: PropTypes.bool,
   lmsEndpointUrl: PropTypes.string.isRequired,
   studioEndpointUrl: PropTypes.string.isRequired,
   assets: PropTypes.shape({}).isRequired,
@@ -52,6 +59,7 @@ QuestionWidget.propTypes = {
   intl: intlShape.isRequired,
 };
 export const mapStateToProps = (state) => ({
+  isLibrary: selectors.app.isLibrary(state),
   question: selectors.problem.question(state),
   lmsEndpointUrl: selectors.app.lmsEndpointUrl(state),
   studioEndpointUrl: selectors.app.studioEndpointUrl(state),
