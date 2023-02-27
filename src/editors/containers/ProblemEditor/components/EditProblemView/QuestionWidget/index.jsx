@@ -20,7 +20,6 @@ export const QuestionWidget = ({
   intl,
 }) => {
   const { editorRef, refReady, setEditorRef } = hooks.prepareEditorRef();
-  console.log(assets);
   if (!refReady) { return null; }
   return (
     <div className="question-widget">
@@ -46,7 +45,7 @@ export const QuestionWidget = ({
 QuestionWidget.propTypes = {
   lmsEndpointUrl: PropTypes.string.isRequired,
   studioEndpointUrl: PropTypes.string.isRequired,
-  assets: PropTypes.shape({}),
+  assets: PropTypes.shape({}).isRequired,
   question: PropTypes.string.isRequired,
   updateQuestion: PropTypes.func.isRequired,
   // injected

@@ -4,7 +4,6 @@ import { shallow } from 'enzyme';
 import { formatMessage } from '../../../testUtils';
 import { actions, selectors } from '../../data/redux';
 import { RequestKeys } from '../../data/constants/requests';
-import { imgModalToggle, sourceCodeModalToggle } from './hooks';
 import { TextEditor, mapStateToProps, mapDispatchToProps } from '.';
 
 // Per https://github.com/tinymce/tinymce-react/issues/91 React unit testing in JSDOM is not supported by tinymce.
@@ -19,8 +18,6 @@ jest.mock('@tinymce/tinymce-react', () => {
 });
 
 jest.mock('../EditorContainer', () => 'EditorContainer');
-// jest.mock('../../sharedComponents/TinyMceEditor', () => 'TinyMceEditor');
-
 
 jest.mock('./hooks', () => ({
   editorConfig: jest.fn(args => ({ editorConfig: args })),

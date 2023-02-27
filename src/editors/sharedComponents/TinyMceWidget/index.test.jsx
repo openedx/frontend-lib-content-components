@@ -1,7 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import { formatMessage } from '../../../testUtils';
 import { imgModalToggle, sourceCodeModalToggle } from './hooks';
 import TinyMceEditor from '.';
 
@@ -16,8 +15,8 @@ jest.mock('@tinymce/tinymce-react', () => {
   };
 });
 
-jest.mock('../../containers/TextEditor/components/ImageUploadModal', () => 'ImageUploadModal');
-jest.mock('../../containers/TextEditor/components/SourceCodeModal', () => 'SourceCodeModal');
+jest.mock('../ImageUploadModal', () => 'ImageUploadModal');
+jest.mock('..//SourceCodeModal', () => 'SourceCodeModal');
 
 jest.mock('./hooks', () => ({
   editorConfig: jest.fn(args => ({ editorConfig: args })),
@@ -78,5 +77,4 @@ describe('TinyMceEditor', () => {
       expect(shallow(<TinyMceEditor {...props} isLibrary />)).toMatchSnapshot();
     });
   });
-
 });

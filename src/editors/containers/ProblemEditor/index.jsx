@@ -19,7 +19,6 @@ export const ProblemEditor = ({
   assets,
   assetsFinished,
 }) => {
-  console.log(assets);
   if (!blockFinished || !studioViewFinished || !assetsFinished) {
     return (
       <div className="text-center p-6">
@@ -38,12 +37,18 @@ export const ProblemEditor = ({
   if (problemType === null) {
     return (<SelectTypeModal onClose={onClose} />);
   }
-  return (<EditProblemView onClose={onClose} assets={assets}/>);
+  return (<EditProblemView onClose={onClose} assets={assets} />);
 };
 
+ProblemEditor.defaultProps = {
+  assetsFinished: null,
+  assets: null,
+};
 ProblemEditor.propTypes = {
   onClose: PropTypes.func.isRequired,
   // redux
+  assetsFinished: PropTypes.bool,
+  assets: PropTypes.shape({}),
   blockFinished: PropTypes.bool.isRequired,
   studioViewFinished: PropTypes.bool.isRequired,
   problemType: PropTypes.string.isRequired,

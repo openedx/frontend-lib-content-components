@@ -35,7 +35,7 @@ export const EditProblemView = ({
           </Container>
         ) : (
           <span className="flex-grow-1">
-            <QuestionWidget assets={assets}/>
+            <QuestionWidget assets={assets} />
             <AnswerWidget problemType={problemType} />
           </span>
         )}
@@ -51,6 +51,7 @@ EditProblemView.propTypes = {
   problemType: PropTypes.string.isRequired,
   // eslint-disable-next-line
   problemState: PropTypes.any.isRequired,
+  assets: PropTypes.shape({}).isRequired,
 };
 
 export const mapStateToProps = (state) => ({

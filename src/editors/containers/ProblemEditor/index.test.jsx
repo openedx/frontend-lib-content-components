@@ -63,10 +63,16 @@ describe('ProblemEditor', () => {
       expect(shallow(<ProblemEditor {...props} assetsFinished />)).toMatchSnapshot();
     });
     test('renders SelectTypeModal', () => {
-      expect(shallow(<ProblemEditor {...props} blockFinished studioViewFinished assetsFinished/>)).toMatchSnapshot();
+      expect(shallow(<ProblemEditor {...props} blockFinished studioViewFinished assetsFinished />)).toMatchSnapshot();
     });
     test('renders EditProblemView', () => {
-      expect(shallow(<ProblemEditor {...props} problemType="multiplechoiceresponse" blockFinished studioViewFinished assetsFinished/>)).toMatchSnapshot();
+      expect(shallow(<ProblemEditor
+        {...props}
+        problemType="multiplechoiceresponse"
+        blockFinished
+        studioViewFinished
+        assetsFinished
+      />)).toMatchSnapshot();
     });
   });
 

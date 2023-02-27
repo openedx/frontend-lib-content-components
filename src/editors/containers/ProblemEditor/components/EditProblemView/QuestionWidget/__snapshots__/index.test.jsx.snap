@@ -15,6 +15,7 @@ exports[`QuestionWidget render snapshot: renders correct default 1`] = `
   </div>
   <TinyMceWidget
     assets={null}
+    editorRef={null}
     editorType="problem"
     isLibrary={null}
     lmsEndpointUrl="sOmEvaLue.cOm"

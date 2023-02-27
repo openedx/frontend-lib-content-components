@@ -72,6 +72,7 @@ export const setupCustomBehavior = ({
   openImgModal,
   openSourceCodeModal,
   setImage,
+  editorType,
 }) => (editor) => {
   // image upload button
   editor.ui.registry.addButton(tinyMCE.buttons.imageUploadButton, {
@@ -122,10 +123,12 @@ export const setupCustomBehavior = ({
     onAction: toggleLabelFormatting,
   });
   editor.on('blur', () => {
-    module.parseContentForLabels({
-      editor,
-      updateQuestion,
-    });
+    if (editorType === 'problem') {
+      module.parseContentForLabels({
+        editor,
+        updateQuestion,
+      });
+    }
   });
 };
 
@@ -183,6 +186,7 @@ export const editorConfig = ({
       imagetools_toolbar: imageToolbar,
       formats: { label: { inline: 'label' } },
       setup: module.setupCustomBehavior({
+        editorType,
         updateQuestion,
         openImgModal,
         openSourceCodeModal,

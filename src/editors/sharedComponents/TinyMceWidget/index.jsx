@@ -19,8 +19,8 @@ import 'tinymce/plugins/autoresize';
 import 'tinymce/plugins/image';
 import 'tinymce/plugins/imagetools';
 
-import ImageUploadModal from '../../containers/TextEditor/components/ImageUploadModal';
-import SourceCodeModal from '../../containers/TextEditor/components/SourceCodeModal';
+import ImageUploadModal from '../ImageUploadModal';
+import SourceCodeModal from '../SourceCodeModal';
 import * as hooks from './hooks';
 
 export const TinyMceWidget = ({
@@ -47,39 +47,40 @@ export const TinyMceWidget = ({
       )}
       {editorType === 'text' ? (
         <SourceCodeModal
-        isOpen={isSourceCodeOpen}
-        close={closeSourceCodeModal}
-        editorRef={editorRef}
+          isOpen={isSourceCodeOpen}
+          close={closeSourceCodeModal}
+          editorRef={editorRef}
         />
       ) : null}
-      <Editor {
-        ...hooks.editorConfig({
-          openImgModal,
-          openSourceCodeModal,
-          editorType,
-          editorRef,
-          isLibrary,
-          images,
-          setSelection: imageSelection.setSelection,
-          clearSelection: imageSelection.clearSelection,
-          ...props,
-        })
-      }/>
+      <Editor
+        {
+          ...hooks.editorConfig({
+            openImgModal,
+            openSourceCodeModal,
+            editorType,
+            editorRef,
+            isLibrary,
+            images,
+            setSelection: imageSelection.setSelection,
+            clearSelection: imageSelection.clearSelection,
+            ...props,
+          })
+        }
+      />
     </>
-  )  
+  );
 };
 TinyMceWidget.defaultProps = {
   isLibrary: null,
-  lmsEndpointUrl: null,
-  studioEndpointUrl: null,
   assets: null,
+  editorType: null,
+  editorRef: null,
 };
 TinyMceWidget.propTypes = {
+  editorType: PropTypes.string,
   isLibrary: PropTypes.bool,
-  // redux
-  lmsEndpointUrl: PropTypes.string,
-  studioEndpointUrl: PropTypes.string,
   assets: PropTypes.shape({}),
+  editorRef: PropTypes.shape({}),
 };
 
 export default TinyMceWidget;
