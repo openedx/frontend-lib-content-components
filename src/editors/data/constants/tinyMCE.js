@@ -25,6 +25,7 @@ export const buttons = StrictDict({
   charmap: 'charmap',
   code: 'code-modified', // use a custom button name, consistently, for our text-only button
   codesample: 'codesample',
+  customLabelButton: 'customLabelButton',
   editImageSettings: 'editimagesettings',
   emoticons: 'emoticons',
   flip: StrictDict({

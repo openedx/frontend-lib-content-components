@@ -16,6 +16,8 @@ import { parseState } from './hooks';
 import './index.scss';
 
 export const EditProblemView = ({
+  assets,
+  // redux
   problemType,
   problemState,
 }) => {
@@ -33,7 +35,7 @@ export const EditProblemView = ({
           </Container>
         ) : (
           <span className="flex-grow-1">
-            <QuestionWidget />
+            <QuestionWidget assets={assets}/>
             <AnswerWidget problemType={problemType} />
           </span>
         )}

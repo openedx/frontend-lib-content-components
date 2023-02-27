@@ -16,8 +16,11 @@ export const ProblemEditor = ({
   studioViewFinished,
   blockValue,
   initializeProblemEditor,
+  assets,
+  assetsFinished,
 }) => {
-  if (!blockFinished || !studioViewFinished) {
+  console.log(assets);
+  if (!blockFinished || !studioViewFinished || !assetsFinished) {
     return (
       <div className="text-center p-6">
         <Spinner
@@ -35,7 +38,7 @@ export const ProblemEditor = ({
   if (problemType === null) {
     return (<SelectTypeModal onClose={onClose} />);
   }
-  return (<EditProblemView onClose={onClose} />);
+  return (<EditProblemView onClose={onClose} assets={assets}/>);
 };
 
 ProblemEditor.propTypes = {
@@ -53,6 +56,8 @@ export const mapStateToProps = (state) => ({
   studioViewFinished: selectors.requests.isFinished(state, { requestKey: RequestKeys.fetchStudioView }),
   problemType: selectors.problem.problemType(state),
   blockValue: selectors.app.blockValue(state),
+  assets: selectors.app.assets(state),
+  assetsFinished: selectors.requests.isFinished(state, { requestKey: RequestKeys.fetchAssets }),
 });
 
 export const mapDispatchToProps = {

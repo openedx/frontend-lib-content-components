@@ -1,61 +1,61 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Editor } from '@tinymce/tinymce-react';
 import { connect } from 'react-redux';
-import { injectIntl, FormattedMessage } from '@edx/frontend-platform/i18n';
+import { injectIntl, FormattedMessage, intlShape } from '@edx/frontend-platform/i18n';
 import * as hooks from '../../../hooks';
 import { selectors, actions } from '../../../../../data/redux';
 import { messages } from './messages';
 import './index.scss';
 
-import 'tinymce';
-import 'tinymce/themes/silver';
-import 'tinymce/skins/ui/oxide/skin.css';
-import 'tinymce/icons/default';
-import 'tinymce/plugins/link';
-import 'tinymce/plugins/lists';
-import 'tinymce/plugins/table';
-import 'tinymce/plugins/hr';
-import 'tinymce/plugins/codesample';
-import 'tinymce/plugins/emoticons';
-import 'tinymce/plugins/emoticons/js/emojis';
-import 'tinymce/plugins/charmap';
-import 'tinymce/plugins/code';
-import 'tinymce/plugins/autoresize';
-import 'tinymce/plugins/image';
-import 'tinymce/plugins/imagetools';
+import TinyMceWidget from '../../../../../sharedComponents/TinyMceWidget';
 
 // This widget should be connected, grab all questions from store, update them as needed.
 export const QuestionWidget = ({
   question,
   updateQuestion,
+  assets,
+  lmsEndpointUrl,
+  studioEndpointUrl,
+  // injected
+  intl,
 }) => {
-  const { refReady, setEditorRef } = hooks.prepareEditorRef();
+  const { editorRef, refReady, setEditorRef } = hooks.prepareEditorRef();
+  console.log(assets);
   if (!refReady) { return null; }
   return (
     <div className="question-widget">
       <div className="h4 mb-3">
         <FormattedMessage {...messages.questionWidgetTitle} />
       </div>
-      <Editor {
-          ...hooks.problemEditorConfig({
-            setEditorRef,
-            question,
-            updateQuestion,
-          })
-        }
+      <TinyMceWidget
+        editorType="problem"
+        editorRef={editorRef}
+        textValue={question}
+        updateQuestion={updateQuestion}
+        setEditorRef={setEditorRef}
+        minHeight={150}
+        placeholder={intl.formatMessage(messages.placeholder)}
+        assets={assets}
+        lmsEndpointUrl={lmsEndpointUrl}
+        studioEndpointUrl={studioEndpointUrl}
       />
     </div>
   );
 };
 
 QuestionWidget.propTypes = {
+  lmsEndpointUrl: PropTypes.string.isRequired,
+  studioEndpointUrl: PropTypes.string.isRequired,
+  assets: PropTypes.shape({}),
   question: PropTypes.string.isRequired,
   updateQuestion: PropTypes.func.isRequired,
+  // injected
+  intl: intlShape.isRequired,
 };
-
 export const mapStateToProps = (state) => ({
   question: selectors.problem.question(state),
+  lmsEndpointUrl: selectors.app.lmsEndpointUrl(state),
+  studioEndpointUrl: selectors.app.studioEndpointUrl(state),
 });
 
 export const mapDispatchToProps = {

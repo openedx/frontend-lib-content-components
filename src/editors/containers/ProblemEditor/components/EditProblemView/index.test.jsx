@@ -6,13 +6,13 @@ import RawEditor from '../../../../sharedComponents/RawEditor';
 
 describe('EditorProblemView component', () => {
   test('renders simple view', () => {
-    const wrapper = shallow(<EditProblemView problemType={ProblemTypeKeys.SINGLESELECT} problemState={{}} />);
+    const wrapper = shallow(<EditProblemView problemType={ProblemTypeKeys.SINGLESELECT} problemState={{}} assets={{}} />);
     expect(wrapper).toMatchSnapshot();
     expect(wrapper.find(AnswerWidget).length).toBe(1);
   });
 
   test('renders raw editor', () => {
-    const wrapper = shallow(<EditProblemView problemType={ProblemTypeKeys.ADVANCED} problemState={{}} />);
+    const wrapper = shallow(<EditProblemView problemType={ProblemTypeKeys.ADVANCED} problemState={{}} assets={{}} />);
     expect(wrapper).toMatchSnapshot();
     expect(wrapper.find(AnswerWidget).length).toBe(0);
     expect(wrapper.find(RawEditor).length).toBe(1);

@@ -1,5 +1,17 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`ProblemEditor snapshots assets not yet loaded, Spinner appears 1`] = `
+<div
+  className="text-center p-6"
+>
+  <Spinner
+    animation="border"
+    className="m-3"
+    screenreadertext="Loading Problem Editor"
+  />
+</div>
+`;
+
 exports[`ProblemEditor snapshots block not yet loaded, Spinner appears 1`] = `
 <div
   className="text-center p-6"
@@ -14,6 +26,7 @@ exports[`ProblemEditor snapshots block not yet loaded, Spinner appears 1`] = `
 
 exports[`ProblemEditor snapshots renders EditProblemView 1`] = `
 <EditProblemView
+  assets={Object {}}
   onClose={[MockFunction props.onClose]}
 />
 `;
