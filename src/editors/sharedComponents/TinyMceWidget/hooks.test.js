@@ -183,7 +183,7 @@ describe('TextEditor hooks', () => {
           const pluginProps = {
             isLibrary: true,
           };
-          output = module.editorConfig({...props, isLibrary: true});
+          output = module.editorConfig({ ...props, isLibrary: true });
           expect(output.init.plugins).toEqual(pluginConfig(pluginProps).plugins);
           expect(output.init.imagetools_toolbar).toEqual(pluginConfig(pluginProps).imageToolbar);
           expect(output.init.toolbar).toEqual(pluginConfig(pluginProps).toolbar);
