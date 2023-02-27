@@ -166,6 +166,52 @@ describe('TextEditor hooks', () => {
           .mockImplementationOnce(setupCustomBehavior);
         output = module.editorConfig(props);
       });
+      describe('text editor plugins and toolbar', () => {
+        test('It configures plugins and toolbars correctly', () => {
+          expect(output.init.plugins).toEqual(pluginConfig({ isLibrary: props.isLibrary }).plugins);
+          expect(output.init.imagetools_toolbar).toEqual(pluginConfig({ isLibrary: props.isLibrary }).imageToolbar);
+          expect(output.init.toolbar).toEqual(pluginConfig({ isLibrary: props.isLibrary }).toolbar);
+          Object.keys(pluginConfig({ isLibrary: props.isLibrary }).config).forEach(key => {
+            expect(output.init[key]).toEqual(pluginConfig({ isLibrary: props.isLibrary }).config[key]);
+          });
+          // Commented out as we investigate whether this is only needed for image proxy
+          // expect(output.init.imagetools_cors_hosts).toMatchObject([props.lmsEndpointUrl]);
+        });
+      });
+      describe('text editor plugins and toolbar for content library', () => {
+        test('It configures plugins and toolbars correctly', () => {
+          const pluginProps = {
+            isLibrary: true,
+          };
+          output = module.editorConfig({...props, isLibrary: true});
+          expect(output.init.plugins).toEqual(pluginConfig(pluginProps).plugins);
+          expect(output.init.imagetools_toolbar).toEqual(pluginConfig(pluginProps).imageToolbar);
+          expect(output.init.toolbar).toEqual(pluginConfig(pluginProps).toolbar);
+          Object.keys(pluginConfig(pluginProps).config).forEach(key => {
+            expect(output.init[key]).toEqual(pluginConfig(pluginProps).config[key]);
+          });
+        });
+      });
+      describe('problem editor plugins and toolbar', () => {
+        test('It configures plugins and toolbars correctly', () => {
+          const pluginProps = {
+            isLibrary: props.isLibrary,
+            editorType: 'problem',
+            placeholder: 'soMEtExT',
+          };
+          output = module.editorConfig({
+            ...props,
+            editorType: 'problem',
+            placeholder: 'soMEtExT',
+          });
+          expect(output.init.plugins).toEqual(pluginConfig(pluginProps).plugins);
+          expect(output.init.imagetools_toolbar).toEqual(pluginConfig(pluginProps).imageToolbar);
+          expect(output.init.toolbar).toEqual(pluginConfig(pluginProps).toolbar);
+          Object.keys(pluginConfig(pluginProps).config).forEach(key => {
+            expect(output.init[key]).toEqual(pluginConfig(pluginProps).config[key]);
+          });
+        });
+      });
       test('It creates an onInit which calls initializeEditor and setEditorRef', () => {
         output.onInit(evt, editor);
         expect(props.setEditorRef).toHaveBeenCalledWith(editor);
@@ -184,17 +230,6 @@ describe('TextEditor hooks', () => {
       //   expect(output.init.plugins).toEqual('autoresize');
       //   expect(output.init.toolbar).toEqual(`${pluginConfig().toolbar} | customLabelButton`);
       // });
-      test('It configures plugins and toolbars correctly', () => {
-        expect(output.init.plugins).toEqual(pluginConfig(props.isLibrary).plugins);
-        expect(output.init.imagetools_toolbar).toEqual(pluginConfig(props.isLibrary).imageToolbar);
-        expect(output.init.toolbar).toEqual(pluginConfig(props.isLibrary).toolbar);
-        Object.keys(pluginConfig(props.isLibrary).config).forEach(key => {
-          expect(output.init[key]).toEqual(pluginConfig(props.isLibrary).config[key]);
-        });
-        // Commented out as we investigate whether this is only needed for image proxy
-        // expect(output.init.imagetools_cors_hosts).toMatchObject([props.lmsEndpointUrl]);
-      });
-
       it('calls setupCustomBehavior on setup', () => {
         expect(output.init.setup).toEqual(
           setupCustomBehavior({

@@ -196,6 +196,7 @@ export const editorConfig = ({
       plugins,
       valid_children: '+body[style]',
       valid_elements: '*[*]',
+      entity_encoding: 'utf-8',
     },
   };
 };
