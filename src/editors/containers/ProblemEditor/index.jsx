@@ -41,7 +41,6 @@ export const ProblemEditor = ({
 
 ProblemEditor.defaultProps = {
   assetsFinished: null,
-  assets: null,
 };
 ProblemEditor.propTypes = {
   onClose: PropTypes.func.isRequired,
