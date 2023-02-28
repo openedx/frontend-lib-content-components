@@ -31,7 +31,7 @@ export const ProblemEditor = ({
     );
   }
   // once data is loaded, init store
-  React.useEffect(() => initializeProblemEditor(blockValue), [blockValue]);
+  React.useEffect(() => initializeProblemEditor(blockValue), []);
   // TODO: INTL MSG, Add LOAD FAILED ERROR using BLOCKFAILED
 
   if (problemType === null) {
