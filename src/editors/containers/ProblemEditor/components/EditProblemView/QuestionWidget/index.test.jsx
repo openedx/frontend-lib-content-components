@@ -16,6 +16,7 @@ jest.mock('../../../../../data/redux', () => ({
       isLibrary: jest.fn(state => ({ isLibrary: state })),
       lmsEndpointUrl: jest.fn(state => ({ lmsEndpointUrl: state })),
       studioEndpointUrl: jest.fn(state => ({ studioEndpointUrl: state })),
+      assets: jest.fn(state => ({ assets: state })),
     },
     problem: {
       question: jest.fn(state => ({ question: state })),
@@ -38,6 +39,7 @@ describe('QuestionWidget', () => {
     updateQuestion: jest.fn(),
     lmsEndpointUrl: 'sOmEvaLue.cOm',
     studioEndpointUrl: 'sOmEoThERvaLue.cOm',
+    assets: {},
     // injected
     intl: { formatMessage },
   };
@@ -50,6 +52,11 @@ describe('QuestionWidget', () => {
     const testState = { A: 'pple', B: 'anana', C: 'ucumber' };
     test('isLibrary from app.isLibrary', () => {
       expect(mapStateToProps(testState).isLibrary).toEqual(selectors.app.isLibrary(testState));
+    });
+    test('assets from app.assets', () => {
+      expect(
+        mapStateToProps(testState).assets,
+      ).toEqual(selectors.app.assets(testState));
     });
     test('question from problem.question', () => {
       expect(mapStateToProps(testState).question).toEqual(selectors.problem.question(testState));

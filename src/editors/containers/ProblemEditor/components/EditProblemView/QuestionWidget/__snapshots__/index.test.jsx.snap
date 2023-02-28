@@ -14,7 +14,7 @@ exports[`QuestionWidget render snapshot: renders correct default 1`] = `
     />
   </div>
   <TinyMceWidget
-    assets={null}
+    assets={Object {}}
     editorRef={null}
     editorType="problem"
     isLibrary={false}

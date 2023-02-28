@@ -26,7 +26,6 @@ exports[`ProblemEditor snapshots block loaded, studio view and assets not yet lo
 
 exports[`ProblemEditor snapshots renders EditProblemView 1`] = `
 <EditProblemView
-  assets={Object {}}
   onClose={[MockFunction props.onClose]}
 />
 `;

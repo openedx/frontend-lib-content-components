@@ -9,14 +9,13 @@ describe('EditorProblemView component', () => {
     const wrapper = shallow(<EditProblemView
       problemType={ProblemTypeKeys.SINGLESELECT}
       problemState={{}}
-      assets={{}}
     />);
     expect(wrapper).toMatchSnapshot();
     expect(wrapper.find(AnswerWidget).length).toBe(1);
   });
 
   test('renders raw editor', () => {
-    const wrapper = shallow(<EditProblemView problemType={ProblemTypeKeys.ADVANCED} problemState={{}} assets={{}} />);
+    const wrapper = shallow(<EditProblemView problemType={ProblemTypeKeys.ADVANCED} problemState={{}} />);
     expect(wrapper).toMatchSnapshot();
     expect(wrapper.find(AnswerWidget).length).toBe(0);
     expect(wrapper.find(RawEditor).length).toBe(1);

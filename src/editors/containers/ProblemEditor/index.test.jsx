@@ -26,7 +26,6 @@ jest.mock('../../data/redux', () => ({
   selectors: {
     app: {
       blockValue: jest.fn(state => ({ blockValue: state })),
-      assets: jest.fn(state => ({ assets: state })),
     },
     problem: {
       problemType: jest.fn(state => ({ problemType: state })),
@@ -46,7 +45,6 @@ describe('ProblemEditor', () => {
     blockFinished: false,
     studioViewFinished: false,
     initializeProblemEditor: jest.fn().mockName('args.intializeProblemEditor'),
-    assets: {},
     assetsFinished: false,
   };
   describe('snapshots', () => {
@@ -82,11 +80,6 @@ describe('ProblemEditor', () => {
       expect(
         mapStateToProps(testState).blockValue,
       ).toEqual(selectors.app.blockValue(testState));
-    });
-    test('assets from app.assets', () => {
-      expect(
-        mapStateToProps(testState).assets,
-      ).toEqual(selectors.app.assets(testState));
     });
     test('problemType from problem.problemType', () => {
       expect(

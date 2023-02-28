@@ -16,7 +16,6 @@ export const ProblemEditor = ({
   studioViewFinished,
   blockValue,
   initializeProblemEditor,
-  assets,
   assetsFinished,
 }) => {
   if (!blockFinished || !studioViewFinished || !assetsFinished) {
@@ -37,7 +36,7 @@ export const ProblemEditor = ({
   if (problemType === null) {
     return (<SelectTypeModal onClose={onClose} />);
   }
-  return (<EditProblemView onClose={onClose} assets={assets} />);
+  return (<EditProblemView onClose={onClose} />);
 };
 
 ProblemEditor.defaultProps = {
@@ -48,7 +47,6 @@ ProblemEditor.propTypes = {
   onClose: PropTypes.func.isRequired,
   // redux
   assetsFinished: PropTypes.bool,
-  assets: PropTypes.shape({}),
   blockFinished: PropTypes.bool.isRequired,
   studioViewFinished: PropTypes.bool.isRequired,
   problemType: PropTypes.string.isRequired,
@@ -61,7 +59,6 @@ export const mapStateToProps = (state) => ({
   studioViewFinished: selectors.requests.isFinished(state, { requestKey: RequestKeys.fetchStudioView }),
   problemType: selectors.problem.problemType(state),
   blockValue: selectors.app.blockValue(state),
-  assets: selectors.app.assets(state),
   assetsFinished: selectors.requests.isFinished(state, { requestKey: RequestKeys.fetchAssets }),
 });
 

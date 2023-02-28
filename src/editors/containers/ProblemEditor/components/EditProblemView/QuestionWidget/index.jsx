@@ -46,19 +46,21 @@ export const QuestionWidget = ({
 
 QuestionWidget.defaultProps = {
   isLibrary: null,
+  assets: null,
 };
 QuestionWidget.propTypes = {
   // redux
   isLibrary: PropTypes.bool,
   lmsEndpointUrl: PropTypes.string.isRequired,
   studioEndpointUrl: PropTypes.string.isRequired,
-  assets: PropTypes.shape({}).isRequired,
+  assets: PropTypes.shape({}),
   question: PropTypes.string.isRequired,
   updateQuestion: PropTypes.func.isRequired,
   // injected
   intl: intlShape.isRequired,
 };
 export const mapStateToProps = (state) => ({
+  assets: selectors.app.assets(state),
   isLibrary: selectors.app.isLibrary(state),
   question: selectors.problem.question(state),
   lmsEndpointUrl: selectors.app.lmsEndpointUrl(state),

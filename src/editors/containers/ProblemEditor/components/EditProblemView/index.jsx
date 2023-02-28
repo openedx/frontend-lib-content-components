@@ -16,7 +16,6 @@ import { parseState } from './hooks';
 import './index.scss';
 
 export const EditProblemView = ({
-  assets,
   // redux
   problemType,
   problemState,
@@ -35,7 +34,7 @@ export const EditProblemView = ({
           </Container>
         ) : (
           <span className="flex-grow-1">
-            <QuestionWidget assets={assets} />
+            <QuestionWidget />
             <AnswerWidget problemType={problemType} />
           </span>
         )}
@@ -51,7 +50,6 @@ EditProblemView.propTypes = {
   problemType: PropTypes.string.isRequired,
   // eslint-disable-next-line
   problemState: PropTypes.any.isRequired,
-  assets: PropTypes.shape({}).isRequired,
 };
 
 export const mapStateToProps = (state) => ({
