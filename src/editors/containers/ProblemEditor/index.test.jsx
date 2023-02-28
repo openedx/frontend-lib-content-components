@@ -53,13 +53,13 @@ describe('ProblemEditor', () => {
     test('renders as expected with default behavior', () => {
       expect(shallow(<ProblemEditor {...props} />)).toMatchSnapshot();
     });
-    test('block not yet loaded, Spinner appears', () => {
+    test('block loaded, studio view and assets not yet loaded, Spinner appears', () => {
       expect(shallow(<ProblemEditor {...props} blockFinished />)).toMatchSnapshot();
     });
-    test('studio view not yet loaded, Spinner appears', () => {
+    test('studio view loaded, block and assets not yet loaded, Spinner appears', () => {
       expect(shallow(<ProblemEditor {...props} studioViewFinished />)).toMatchSnapshot();
     });
-    test('assets not yet loaded, Spinner appears', () => {
+    test('assets loaded, block and studio view not yet loaded, Spinner appears', () => {
       expect(shallow(<ProblemEditor {...props} assetsFinished />)).toMatchSnapshot();
     });
     test('renders SelectTypeModal', () => {

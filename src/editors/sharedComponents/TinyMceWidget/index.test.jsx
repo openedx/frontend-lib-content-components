@@ -1,6 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-
+import SourceCodeModal from '../SourceCodeModal';
+import ImageUploadModal from '../ImageUploadModal';
 import { imgModalToggle, sourceCodeModalToggle } from './hooks';
 import TinyMceEditor from '.';
 
@@ -16,7 +17,7 @@ jest.mock('@tinymce/tinymce-react', () => {
 });
 
 jest.mock('../ImageUploadModal', () => 'ImageUploadModal');
-jest.mock('..//SourceCodeModal', () => 'SourceCodeModal');
+jest.mock('../SourceCodeModal', () => 'SourceCodeModal');
 
 jest.mock('./hooks', () => ({
   editorConfig: jest.fn(args => ({ editorConfig: args })),
@@ -37,15 +38,6 @@ jest.mock('./hooks', () => ({
   })),
   filterAssets: jest.fn(() => [{ staTICUrl: '/assets/sOmEaSsET' }]),
 }));
-
-jest.mock('react', () => {
-  const updateState = jest.fn();
-  return {
-    ...jest.requireActual('react'),
-    updateState,
-    useState: jest.fn(val => ([{ state: val }, jest.fn().mockName('setState')])),
-  };
-});
 
 describe('TinyMceEditor', () => {
   const props = {
@@ -71,10 +63,14 @@ describe('TinyMceEditor', () => {
       expect(shallow(<TinyMceEditor {...props} />)).toMatchSnapshot();
     });
     test('SourcecodeModal is not rendered', () => {
-      expect(shallow(<TinyMceEditor {...props} editorType="problem" />)).toMatchSnapshot();
+      const wrapper = shallow(<TinyMceEditor {...props} editorType="problem" />);
+      expect(wrapper).toMatchSnapshot();
+      expect(wrapper.find(SourceCodeModal).length).toBe(0);
     });
     test('ImageUploadModal is not rendered', () => {
-      expect(shallow(<TinyMceEditor {...props} isLibrary />)).toMatchSnapshot();
+      const wrapper = shallow(<TinyMceEditor {...props} isLibrary />);
+      expect(wrapper).toMatchSnapshot();
+      expect(wrapper.find(ImageUploadModal).length).toBe(0);
     });
   });
 });
