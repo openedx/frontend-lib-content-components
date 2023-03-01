@@ -1,26 +1,22 @@
 import React, { useState } from 'react';
 import { Editor } from '@tinymce/tinymce-react';
 import { Form } from '@edx/paragon';
+import PropTypes from 'prop-types';
 
-const GeneralEditor = ({ placeholder, config }) => {
-  const [engineState, setEngineState] = useState(placeholder);
-  const updateEngineText = (content) => {
-    setEngineState(content);
-  };
+export const ExpandableTextArea = ({ value, onChange, configOverrides }) => {
+  /*
+    usage:
 
+    const [value, setValue] = useState('Something');
   return (
-    <Editor
-      apiKey="qagffr3pkuv17a8on1afax661irst1hbr4e6tbv888sz91jc"
-      init={config.init}
-      onInit={config.onInit}
-      initialValue={placeholder}
-      value={engineState}
-      onEditorChange={updateEngineText}
+    < ExpandableTextArea
+        value={value}
+        onChange = (newContent) => setValue(newContent)
     />
-  );
-};
 
-export const ExpandableTextArea = ({ value }) => {
+  );
+    */
+
   const ref = React.useRef();
 
   const showEditor = () => {
@@ -39,6 +35,31 @@ export const ExpandableTextArea = ({ value }) => {
     }
   };
 
+  const config = {
+    init: {
+      setup: (editor) => {
+        ref.current = editor;
+        editor.on('init', (e) => {
+          console.log('The Editor has initialized.');
+          editor.hide();
+        });
+        editor.on('blur', (e) => {
+          e.stopImmediatePropagation();
+          console.log('The Editor has Blurred.');
+          editor.hide();
+          setEdit(false);
+        });
+      },
+      height: 500,
+      menubar: 'file edit view',
+      plugins: [
+        'searchreplace visualblocks code fullscreen',
+        'insertdatetime media table paste code help wordcount',
+      ],
+    },
+    onInit: {},
+  };
+
   return (
     <>
       {!edit && (
@@ -48,35 +69,24 @@ export const ExpandableTextArea = ({ value }) => {
         />
       )}
       <div style={{ display: edit ? 'block' : 'none' }}>
-        <GeneralEditor
-          placeholder="Editor 1"
-          config={{
-            init: {
-              setup: (editor) => {
-                ref.current = editor;
-                editor.on('init', (e) => {
-                  console.log('The Editor has initialized.');
-                  editor.hide();
-                });
-                editor.on('blur', (e) => {
-                  e.stopImmediatePropagation();
-                  console.log('The Editor has Blurred.');
-                  editor.hide();
-                  setEdit(false);
-                });
-              },
-              height: 500,
-              menubar: 'file edit view',
-              plugins: [
-                'searchreplace visualblocks code fullscreen',
-                'insertdatetime media table paste code help wordcount',
-              ],
-            },
-          }}
+        <Editor
+          init={config.init}
+          onInit={config.onInit}
+          initialValue={value}
+          value={value}
+          onEditorChange={onChange}
         />
       </div>
     </>
   );
 };
+
+ExpandableTextArea.propTypes = {
+    value: PropTypes.string,
+    onChange: PropTypes.func,
+    configOverrides: PropTypes.object,
+  };
+
+
 
 export default ExpandableTextArea;
