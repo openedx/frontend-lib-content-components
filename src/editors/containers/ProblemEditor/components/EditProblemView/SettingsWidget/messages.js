@@ -181,7 +181,8 @@ export const messages = {
   },
   ConfirmSwitchMessage: {
     id: 'authoring.problemeditor.settings.switchtoadvancededitor.message',
-    defaultMessage: 'If you use the advanced editor, this problem will be converted to OLX and you will not be able to return to the simple editor.',
+    defaultMessage: `If you use the advanced editor, this problem will be converted to OLX and you will not be able to return to the simple editor.
+      Any changes made after the last Save action will be lost when converting to OLX.`,
     description: 'message to confirm that a user wants to use the advanced editor',
   },
   ConfirmSwitchMessageTitle: {
