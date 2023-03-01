@@ -16,6 +16,7 @@ import RawEditor from '../../sharedComponents/RawEditor';
 import * as hooks from './hooks';
 import messages from './messages';
 import TinyMceWidget from '../../sharedComponents/TinyMceWidget';
+import ExpandableTextArea from '../../sharedComponents/ExpandableTextArea';
 
 export const TextEditor = ({
   onClose,
@@ -83,6 +84,8 @@ export const TextEditor = ({
             </div>
           ) : (selectEditor())}
       </div>
+
+      <ExpandableTextArea value="Devil" />
 
     </EditorContainer>
   );
