@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Editor } from '@tinymce/tinymce-react';
 
@@ -19,6 +20,7 @@ import 'tinymce/plugins/autoresize';
 import 'tinymce/plugins/image';
 import 'tinymce/plugins/imagetools';
 
+import { selectors } from '../../data/redux';
 import ImageUploadModal from '../ImageUploadModal';
 import SourceCodeModal from '../SourceCodeModal';
 import * as hooks from './hooks';
@@ -27,7 +29,10 @@ export const TinyMceWidget = ({
   editorType,
   editorRef,
   assets,
+  // redux
   isLibrary,
+  lmsEndpointUrl,
+  studioEndpointUrl,
   ...props
 }) => {
   const { isImgOpen, openImgModal, closeImgModal } = hooks.imgModalToggle();
@@ -42,6 +47,7 @@ export const TinyMceWidget = ({
           close={closeImgModal}
           editorRef={editorRef}
           images={images}
+          editorType={editorType}
           {...imageSelection}
         />
       )}
@@ -60,6 +66,8 @@ export const TinyMceWidget = ({
             editorType,
             editorRef,
             isLibrary,
+            lmsEndpointUrl,
+            studioEndpointUrl,
             images,
             setSelection: imageSelection.setSelection,
             clearSelection: imageSelection.clearSelection,
@@ -72,15 +80,25 @@ export const TinyMceWidget = ({
 };
 TinyMceWidget.defaultProps = {
   isLibrary: null,
-  assets: null,
   editorType: null,
   editorRef: null,
+  lmsEndpointUrl: null,
+  studioEndpointUrl: null,
 };
 TinyMceWidget.propTypes = {
   editorType: PropTypes.string,
   isLibrary: PropTypes.bool,
-  assets: PropTypes.shape({}),
+  assets: PropTypes.shape({}).isRequired,
   editorRef: PropTypes.shape({}),
+  lmsEndpointUrl: PropTypes.string,
+  studioEndpointUrl: PropTypes.string,
 };
 
-export default TinyMceWidget;
+// should we call these items for
+export const mapStateToProps = (state) => ({
+  lmsEndpointUrl: selectors.app.lmsEndpointUrl(state),
+  studioEndpointUrl: selectors.app.studioEndpointUrl(state),
+  isLibrary: selectors.app.isLibrary(state),
+});
+
+export default (connect(mapStateToProps)(TinyMceWidget));

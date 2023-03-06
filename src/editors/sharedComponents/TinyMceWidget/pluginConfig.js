@@ -8,9 +8,11 @@ const pluginConfig = ({ isLibrary, placeholder, editorType }) => {
   const imageTools = isLibrary ? '' : plugins.imagetools;
   const imageUploadButton = isLibrary ? '' : buttons.imageUploadButton;
   const editImageSettings = isLibrary ? '' : buttons.editImageSettings;
-  const codePlugin = editorType === 'problem' ? '' : plugins.code;
-  const codeButton = editorType === 'problem' ? '' : buttons.code;
-  const labelButton = editorType === 'problem' ? buttons.customLabelButton : '';
+  const codePlugin = editorType !== 'text' ? '' : plugins.code;
+  const codeButton = editorType !== 'text' ? '' : buttons.code;
+  const labelButton = editorType === 'question' ? buttons.customLabelButton : '';
+  const inline = editorType === 'expandable';
+  const toolbarStickyOffset = editorType === 'expandable' ? 0 : 76;
 
   return (
     StrictDict({
@@ -58,11 +60,13 @@ const pluginConfig = ({ isLibrary, placeholder, editorType }) => {
         branding: false,
         height: '100%',
         menubar: false,
+        toolbar_mode: 'sliding',
         toolbar_sticky: true,
-        toolbar_sticky_offset: 76,
+        toolbar_sticky_offset: toolbarStickyOffset,
         relative_urls: true,
         convert_urls: false,
         placeholder,
+        inline,
       },
     })
   );

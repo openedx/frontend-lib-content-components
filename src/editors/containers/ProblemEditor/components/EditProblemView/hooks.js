@@ -8,12 +8,12 @@ export const parseState = ({
   isAdvanced,
   ref,
   assets,
+  lmsEndpointUrl,
 }) => () => {
   const reactSettingsParser = new ReactStateSettingsParser(problem);
   const reactOLXParser = new ReactStateOLXParser({ problem });
-  const reactBuiltOlx = setAssetToStaticUrl({ editorValue: reactOLXParser.buildOLX(), assets });
+  const reactBuiltOlx = setAssetToStaticUrl({ editorValue: reactOLXParser.buildOLX(), assets, lmsEndpointUrl });
   const rawOLX = ref?.current?.state.doc.toString();
-
   return {
     settings: reactSettingsParser.getSettings(),
     olx: isAdvanced ? rawOLX : reactBuiltOlx,
