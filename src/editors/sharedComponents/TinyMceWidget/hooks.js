@@ -1,21 +1,23 @@
-import { useState } from 'react';
+import {
+  useState,
+  useRef,
+  useCallback,
+  useEffect,
+} from 'react';
 import tinyMCEStyles from '../../data/constants/tinyMCEStyles';
 import { StrictDict } from '../../utils';
 import pluginConfig from './pluginConfig';
 import * as module from './hooks';
 import tinyMCE from '../../data/constants/tinyMCE';
 
-import * as appHooks from '../../hooks';
-
-export const { nullMethod, navigateCallback, navigateTo } = appHooks;
-
 export const state = StrictDict({
   isImageModalOpen: (val) => useState(val),
   isSourceCodeModalOpen: (val) => useState(val),
   imageSelection: (val) => useState(val),
+  refReady: (val) => useState(val),
 });
 
-export const parseContentForLabels = ({ editor, updateQuestion }) => {
+export const parseContentForLabels = ({ editor, updateContent }) => {
   let content = editor.getContent();
   if (content && content?.length > 0) {
     const parsedLabels = content.split(/<label>|<\/label>/gm);
@@ -43,10 +45,16 @@ export const parseContentForLabels = ({ editor, updateQuestion }) => {
       }
     });
   }
-  updateQuestion(content);
+  updateContent(content);
 };
 
-export const replaceStaticwithAsset = (editor, imageUrls) => {
+export const replaceStaticwithAsset = ({
+  editor,
+  imageUrls,
+  editorType,
+  lmsEndpointUrl,
+  updateContent,
+}) => {
   const content = editor.getContent();
   const imageSrcs = content.split('src="');
   imageSrcs.forEach(src => {
@@ -56,24 +64,32 @@ export const replaceStaticwithAsset = (editor, imageUrls) => {
       imageUrls.forEach((url) => {
         if (imgName === url.displayName) {
           staticFullUrl = url.staticFullUrl;
+          if (editorType === 'expandable') {
+            staticFullUrl = `${lmsEndpointUrl}${url.staticFullUrl}`;
+          }
         }
       });
       if (staticFullUrl) {
         const currentSrc = src.substring(0, src.indexOf('"'));
         const updatedContent = content.replace(currentSrc, staticFullUrl);
-        editor.setContent(updatedContent);
+        if (editorType === 'expandable') {
+          updateContent(updatedContent);
+        } else {
+          editor.setContent(updatedContent);
+        }
       }
     }
   });
 };
 
 export const setupCustomBehavior = ({
-  updateQuestion,
+  updateContent,
   openImgModal,
   openSourceCodeModal,
   setImage,
   editorType,
   imageUrls,
+  lmsEndpointUrl,
 }) => (editor) => {
   // image upload button
   editor.ui.registry.addButton(tinyMCE.buttons.imageUploadButton, {
@@ -122,17 +138,32 @@ export const setupCustomBehavior = ({
     tooltip: 'Apply a "Question" label to specific text, recognized by screen readers. Recommended to improve accessibility.',
     onAction: toggleLabelFormatting,
   });
-  editor.on('blur', () => {
-    if (editorType === 'problem') {
+  if (editorType === 'expandable') {
+    editor.on('init', () => {
+      module.replaceStaticwithAsset({
+        editor,
+        imageUrls,
+        editorType,
+        lmsEndpointUrl,
+        updateContent,
+      });
+    });
+    editor.on('blur', () => {
+      const content = editor.getContent();
+      updateContent(content);
+    });
+  }
+  if (editorType === 'question') {
+    editor.on('blur', () => {
       module.parseContentForLabels({
         editor,
-        updateQuestion,
+        updateContent,
       });
-    }
-  });
+    });
+  }
   editor.on('ExecCommand', (e) => {
     if (e.command === 'mceFocus') {
-      module.replaceStaticwithAsset(editor, imageUrls);
+      module.replaceStaticwithAsset({ editor, imageUrls });
     }
     if (e.command === 'RemoveFormat') {
       editor.formatter.remove('blockquote');
@@ -157,8 +188,9 @@ export const editorConfig = ({
   openImgModal,
   openSourceCodeModal,
   setSelection,
-  updateQuestion,
+  updateContent,
   minHeight,
+  disabled,
 }) => {
   const {
     toolbar,
@@ -187,19 +219,32 @@ export const editorConfig = ({
       formats: { label: { inline: 'label' } },
       setup: module.setupCustomBehavior({
         editorType,
-        updateQuestion,
+        updateContent,
         openImgModal,
         openSourceCodeModal,
+        lmsEndpointUrl,
         setImage: setSelection,
         imageUrls: module.fetchImageUrls(images),
       }),
       toolbar,
+      fixed_toolbar_container: editorType === 'expandable' ? '#expandable-mce-toolbar' : null,
       plugins,
       valid_children: '+body[style]',
       valid_elements: '*[*]',
       entity_encoding: 'utf-8',
     },
+    // disabled,
   };
+};
+
+export const prepareEditorRef = () => {
+  const editorRef = useRef(null);
+  const setEditorRef = useCallback((ref) => {
+    editorRef.current = ref;
+  }, []);
+  const [refReady, setRefReady] = module.state.refReady(false);
+  useEffect(() => setRefReady(true), []);
+  return { editorRef, refReady, setEditorRef };
 };
 
 export const imgModalToggle = () => {
@@ -243,22 +288,27 @@ export const filterAssets = ({ assets }) => {
   return images;
 };
 
-export const setAssetToStaticUrl = ({ editorValue, assets }) => {
+export const setAssetToStaticUrl = ({ editorValue, assets, lmsEndpointUrl }) => {
   /* For assets to remain usable across course instances, we convert their url to be course-agnostic.
    * For example, /assets/course/<asset hash>/filename gets converted to /static/filename. This is
    * important for rerunning courses and importing/exporting course as the /static/ part of the url
    * allows the asset to be mapped to the new course run.
   */
-  let content = editorValue;
+
+  // TODO: should probably move this to when the assets are being looped through in the off chance that
+  // some of the text in the editor contains the lmsEndpointUrl
+  const regExLmsEndpointUrl = RegExp(lmsEndpointUrl, 'g');
+  let content = editorValue.replace(regExLmsEndpointUrl, '');
+
   const assetUrls = [];
   const assetsList = Object.values(assets);
   assetsList.forEach(asset => {
     assetUrls.push({ portableUrl: asset.portableUrl, displayName: asset.displayName });
   });
-  const assetSrcs = typeof content === 'string' ? content.split(/(src="|href=")/g) : [];
+  const assetSrcs = typeof content === 'string' ? content.split(/(src="|src=&quot;|href="|href=&quot)/g) : [];
   assetSrcs.forEach(src => {
     if (src.startsWith('/asset') && assetUrls.length > 0) {
-      const assetBlockName = src.substring(src.indexOf('@') + 1, src.indexOf('"'));
+      const assetBlockName = src.substring(src.indexOf('@') + 1, src.search(/("|&quot;)/));
       const nameFromEditorSrc = assetBlockName.substring(assetBlockName.indexOf('@') + 1);
       const nameFromStudioSrc = assetBlockName.substring(assetBlockName.indexOf('/') + 1);
       let portableUrl;
@@ -269,7 +319,7 @@ export const setAssetToStaticUrl = ({ editorValue, assets }) => {
         }
       });
       if (portableUrl) {
-        const currentSrc = src.substring(0, src.indexOf('"'));
+        const currentSrc = src.substring(0, src.search(/("|&quot;)/));
         const updatedContent = content.replace(currentSrc, portableUrl);
         content = updatedContent;
       }
