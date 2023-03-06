@@ -1,5 +1,4 @@
 export TRANSIFEX_RESOURCE = frontend-lib-content-components
-transifex_resource = frontend-lib-content-components
 transifex_langs = "ar,fr,es_419,zh_CN"
 
 transifex_utils = ./node_modules/.bin/transifex-utils.js
