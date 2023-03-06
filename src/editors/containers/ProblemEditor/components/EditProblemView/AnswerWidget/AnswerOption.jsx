@@ -5,11 +5,10 @@ import {
   Collapsible,
   Icon,
   IconButton,
-  Form,
+  // Form,
 } from '@edx/paragon';
 import { FeedbackOutline, DeleteOutline } from '@edx/paragon/icons';
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
-
 import messages from './messages';
 import { selectors } from '../../../../../data/redux';
 import { answerOptionProps } from '../../../../../data/services/cms/types';
@@ -17,8 +16,10 @@ import Checker from './components/Checker';
 import { FeedbackBox } from './components/Feedback';
 import * as hooks from './hooks';
 import { ProblemTypeKeys } from '../../../../../data/constants/problem';
+import ExpandableTextArea from '../../../../../sharedComponents/ExpandableTextArea';
 
 export const AnswerOption = ({
+  assets,
   answer,
   hasSingleAnswer,
   // injected
@@ -29,10 +30,10 @@ export const AnswerOption = ({
   const dispatch = useDispatch();
   const removeAnswer = hooks.removeAnswer({ answer, dispatch });
   const setAnswer = hooks.setAnswer({ answer, hasSingleAnswer, dispatch });
+  const setAnswerTitle = hooks.setAnswerTitle({ answer, hasSingleAnswer, dispatch });
   const setSelectedFeedback = hooks.setSelectedFeedback({ answer, hasSingleAnswer, dispatch });
   const setUnselectedFeedback = hooks.setUnselectedFeedback({ answer, hasSingleAnswer, dispatch });
   const { isFeedbackVisible, toggleFeedback } = hooks.useFeedback(answer);
-
   return (
     <Collapsible.Advanced
       open={isFeedbackVisible}
@@ -48,7 +49,7 @@ export const AnswerOption = ({
         />
       </div>
       <div className="ml-1 flex-grow-1">
-        <Form.Control
+        {/* <Form.Control
           as="textarea"
           className="answer-option-textarea text-gray-500 small"
           autoResize
@@ -56,7 +57,15 @@ export const AnswerOption = ({
           value={answer.title}
           onChange={(e) => { setAnswer({ title: e.target.value }); }}
           placeholder={intl.formatMessage(messages.answerTextboxPlaceholder)}
-        />
+        /> */}
+          <ExpandableTextArea
+            assets={assets}
+            value={answer.title}
+            setContent={setAnswerTitle}
+            placeholder={intl.formatMessage(messages.answerTextboxPlaceholder)}
+            // disabled
+            error
+          />
         <Collapsible.Body>
           <FeedbackBox
             problemType={problemType}

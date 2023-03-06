@@ -11,6 +11,7 @@ import AnswerOption from './AnswerOption';
 import Button from '../../../../../sharedComponents/Button';
 
 export const AnswersContainer = ({
+  assets,
   problemType,
   // Redux
   answers,
@@ -28,6 +29,7 @@ export const AnswersContainer = ({
           key={answer.id}
           hasSingleAnswer={hasSingleAnswer}
           answer={answer}
+          assets={assets}
         />
       ))}
       <Button
