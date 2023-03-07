@@ -21,7 +21,6 @@ export const ExpandableTextArea = ({
         setEditorRef={setEditorRef}
         updateContent={setContent}
         placeholder={placeholder}
-        minHeight={150}
         {...props}
       />
     </div>

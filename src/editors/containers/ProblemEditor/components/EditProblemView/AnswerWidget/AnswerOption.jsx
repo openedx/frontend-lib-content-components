@@ -55,17 +55,15 @@ export const AnswerOption = ({
           autoResize
           rows={1}
           value={answer.title}
-          onChange={(e) => { setAnswer({ title: e.target.value }); }}
+          onChange={(e) => { setAnswerTitle(e.target.value }}
           placeholder={intl.formatMessage(messages.answerTextboxPlaceholder)}
         /> */}
-          <ExpandableTextArea
-            assets={assets}
-            value={answer.title}
-            setContent={setAnswerTitle}
-            placeholder={intl.formatMessage(messages.answerTextboxPlaceholder)}
-            // disabled
-            error
-          />
+        <ExpandableTextArea
+          assets={assets}
+          value={answer.title}
+          setContent={setAnswerTitle}
+          placeholder={intl.formatMessage(messages.answerTextboxPlaceholder)}
+        />
         <Collapsible.Body>
           <FeedbackBox
             problemType={problemType}

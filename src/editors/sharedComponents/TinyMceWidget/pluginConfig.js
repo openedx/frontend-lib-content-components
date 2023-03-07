@@ -12,7 +12,8 @@ const pluginConfig = ({ isLibrary, placeholder, editorType }) => {
   const codeButton = editorType !== 'text' ? '' : buttons.code;
   const labelButton = editorType === 'question' ? buttons.customLabelButton : '';
   const inline = editorType === 'expandable';
-  const toolbarStickyOffset = editorType === 'expandable' ? 0 : 76;
+  const toolbar = editorType !== 'expandable';
+  const quickToolbar = editorType === 'expandable' ? plugins.quickBars : '';
 
   return (
     StrictDict({
@@ -28,9 +29,10 @@ const pluginConfig = ({ isLibrary, placeholder, editorType }) => {
         plugins.autoresize,
         image,
         imageTools,
+        quickToolbar,
       ].join(' '),
       menubar: false,
-      toolbar: mapToolbars([
+      toolbar: toolbar ? mapToolbars([
         [buttons.undo, buttons.redo],
         [buttons.formatSelect],
         [labelButton],
@@ -50,11 +52,51 @@ const pluginConfig = ({ isLibrary, placeholder, editorType }) => {
         [imageUploadButton, buttons.link, buttons.unlink, buttons.blockQuote, buttons.codeBlock],
         [buttons.table, buttons.emoticons, buttons.charmap, buttons.hr],
         [buttons.removeFormat, codeButton],
-      ]),
+      ]) : false,
       imageToolbar: mapToolbars([
         // [buttons.rotate.left, buttons.rotate.right],
         // [buttons.flip.horiz, buttons.flip.vert],
         [editImageSettings],
+      ]),
+      quickbarsInsertToolbar: mapToolbars([
+        [buttons.undo, buttons.redo],
+        [buttons.formatSelect],
+        [buttons.bold, buttons.italic, buttons.underline, buttons.foreColor, buttons.backColor],
+        [
+          buttons.align.left,
+          buttons.align.center,
+          buttons.align.right,
+          buttons.align.justify,
+        ],
+        [
+          buttons.bullist,
+          buttons.numlist,
+          buttons.outdent,
+          buttons.indent,
+        ],
+        [imageUploadButton, buttons.quickLink, buttons.blockQuote, buttons.codeBlock],
+        [buttons.table, buttons.emoticons, buttons.charmap],
+        [buttons.removeFormat],
+      ]),
+      quickbarsSelectionToolbar: mapToolbars([
+        [buttons.undo, buttons.redo],
+        [buttons.formatSelect],
+        [buttons.bold, buttons.italic, buttons.underline, buttons.foreColor, buttons.backColor],
+        [
+          buttons.align.left,
+          buttons.align.center,
+          buttons.align.right,
+          buttons.align.justify,
+        ],
+        [
+          buttons.bullist,
+          buttons.numlist,
+          buttons.outdent,
+          buttons.indent,
+        ],
+        [imageUploadButton, buttons.quickLink, buttons.blockQuote, buttons.codeBlock],
+        [buttons.table, buttons.emoticons, buttons.charmap],
+        [buttons.removeFormat],
       ]),
       config: {
         branding: false,
@@ -62,7 +104,7 @@ const pluginConfig = ({ isLibrary, placeholder, editorType }) => {
         menubar: false,
         toolbar_mode: 'sliding',
         toolbar_sticky: true,
-        toolbar_sticky_offset: toolbarStickyOffset,
+        toolbar_sticky_offset: 76,
         relative_urls: true,
         convert_urls: false,
         placeholder,

@@ -19,6 +19,7 @@ import 'tinymce/plugins/code';
 import 'tinymce/plugins/autoresize';
 import 'tinymce/plugins/image';
 import 'tinymce/plugins/imagetools';
+import 'tinymce/plugins/quickbars';
 
 import { selectors } from '../../data/redux';
 import ImageUploadModal from '../ImageUploadModal';

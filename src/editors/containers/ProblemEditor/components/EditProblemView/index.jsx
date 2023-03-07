@@ -18,7 +18,7 @@ export const EditProblemView = ({
   problemType,
   problemState,
   assets,
-  lmsEndpointUrl
+  lmsEndpointUrl,
 }) => {
   const editorRef = useRef(null);
   const isAdvancedProblemType = problemType === ProblemTypeKeys.ADVANCED;

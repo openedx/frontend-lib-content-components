@@ -197,6 +197,8 @@ export const editorConfig = ({
     config,
     plugins,
     imageToolbar,
+    quickbarsInsertToolbar,
+    quickbarsSelectionToolbar,
   } = pluginConfig({ isLibrary, placeholder, editorType });
   return {
     onInit: (evt, editor) => {
@@ -226,14 +228,15 @@ export const editorConfig = ({
         setImage: setSelection,
         imageUrls: module.fetchImageUrls(images),
       }),
+      quickbars_insert_toolbar: quickbarsInsertToolbar,
+      quickbars_selection_toolbar: quickbarsSelectionToolbar,
       toolbar,
-      fixed_toolbar_container: editorType === 'expandable' ? '#expandable-mce-toolbar' : null,
       plugins,
       valid_children: '+body[style]',
       valid_elements: '*[*]',
       entity_encoding: 'utf-8',
     },
-    // disabled,
+    disabled,
   };
 };
 
