@@ -200,6 +200,7 @@ export const editorConfig = ({
     quickbarsInsertToolbar,
     quickbarsSelectionToolbar,
   } = pluginConfig({ isLibrary, placeholder, editorType });
+
   return {
     onInit: (evt, editor) => {
       setEditorRef(editor);

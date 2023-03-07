@@ -19,7 +19,6 @@ import { ProblemTypeKeys } from '../../../../../data/constants/problem';
 import ExpandableTextArea from '../../../../../sharedComponents/ExpandableTextArea';
 
 export const AnswerOption = ({
-  assets,
   answer,
   hasSingleAnswer,
   // injected
@@ -59,7 +58,6 @@ export const AnswerOption = ({
           placeholder={intl.formatMessage(messages.answerTextboxPlaceholder)}
         /> */}
         <ExpandableTextArea
-          assets={assets}
           value={answer.title}
           setContent={setAnswerTitle}
           placeholder={intl.formatMessage(messages.answerTextboxPlaceholder)}

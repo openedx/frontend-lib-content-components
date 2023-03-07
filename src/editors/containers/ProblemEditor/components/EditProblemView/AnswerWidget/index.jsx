@@ -8,7 +8,6 @@ import AnswersContainer from './AnswersContainer';
 
 // This widget should be connected, grab all answers from store, update them as needed.
 const AnswerWidget = ({
-  assets,
   // Redux
   problemType,
   // injected
@@ -25,7 +24,7 @@ const AnswerWidget = ({
           {intl.formatMessage(messages.answerHelperText, { helperText: problemStaticData.description })}
         </div>
       </div>
-      <AnswersContainer problemType={problemType} assets={assets} />
+      <AnswersContainer problemType={problemType} />
     </div>
   );
 };

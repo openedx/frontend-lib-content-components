@@ -52,7 +52,6 @@ export const TextEditor = ({
         minHeight={500}
         height="100%"
         initializeEditor={initializeEditor}
-        assets={assets}
       />
     );
   };

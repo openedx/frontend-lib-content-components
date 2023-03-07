@@ -13,7 +13,7 @@ const pluginConfig = ({ isLibrary, placeholder, editorType }) => {
   const labelButton = editorType === 'question' ? buttons.customLabelButton : '';
   const inline = editorType === 'expandable';
   const toolbar = editorType !== 'expandable';
-  const quickToolbar = editorType === 'expandable' ? plugins.quickBars : '';
+  const quickToolbar = editorType === 'expandable' ? plugins.quickbars : '';
 
   return (
     StrictDict({

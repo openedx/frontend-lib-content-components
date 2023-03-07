@@ -29,8 +29,8 @@ import * as hooks from './hooks';
 export const TinyMceWidget = ({
   editorType,
   editorRef,
-  assets,
   // redux
+  assets,
   isLibrary,
   lmsEndpointUrl,
   studioEndpointUrl,
@@ -85,11 +85,12 @@ TinyMceWidget.defaultProps = {
   editorRef: null,
   lmsEndpointUrl: null,
   studioEndpointUrl: null,
+  assets: null,
 };
 TinyMceWidget.propTypes = {
   editorType: PropTypes.string,
   isLibrary: PropTypes.bool,
-  assets: PropTypes.shape({}).isRequired,
+  assets: PropTypes.shape({}),
   editorRef: PropTypes.shape({}),
   lmsEndpointUrl: PropTypes.string,
   studioEndpointUrl: PropTypes.string,
@@ -97,6 +98,7 @@ TinyMceWidget.propTypes = {
 
 // should we call these items for
 export const mapStateToProps = (state) => ({
+  assets: selectors.app.assets(state),
   lmsEndpointUrl: selectors.app.lmsEndpointUrl(state),
   studioEndpointUrl: selectors.app.studioEndpointUrl(state),
   isLibrary: selectors.app.isLibrary(state),

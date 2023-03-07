@@ -10,7 +10,6 @@ import TinyMceWidget from '../../../../../sharedComponents/TinyMceWidget';
 import { prepareEditorRef } from '../../../../../sharedComponents/TinyMceWidget/hooks';
 
 export const QuestionWidget = ({
-  assets,
   // redux
   question,
   updateQuestion,
@@ -32,14 +31,12 @@ export const QuestionWidget = ({
         setEditorRef={setEditorRef}
         minHeight={150}
         placeholder={intl.formatMessage(messages.placeholder)}
-        assets={assets}
       />
     </div>
   );
 };
 
 QuestionWidget.propTypes = {
-  assets: PropTypes.shape({}).isRequired,
   // redux
   question: PropTypes.string.isRequired,
   updateQuestion: PropTypes.func.isRequired,

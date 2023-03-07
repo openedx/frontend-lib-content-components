@@ -40,8 +40,8 @@ export const EditProblemView = ({
           </Container>
         ) : (
           <span className="flex-grow-1">
-            <QuestionWidget assets={assets} />
-            <AnswerWidget problemType={problemType} assets={assets} />
+            <QuestionWidget />
+            <AnswerWidget problemType={problemType} />
           </span>
         )}
         <span className="editProblemView-settingsColumn">
