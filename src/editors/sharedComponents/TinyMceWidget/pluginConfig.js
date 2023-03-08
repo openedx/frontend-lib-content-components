@@ -58,7 +58,7 @@ const pluginConfig = ({ isLibrary, placeholder, editorType }) => {
         // [buttons.flip.horiz, buttons.flip.vert],
         [editImageSettings],
       ]),
-      quickbarsInsertToolbar: mapToolbars([
+      quickbarsInsertToolbar: toolbar ? false : mapToolbars([
         [buttons.undo, buttons.redo],
         [buttons.formatSelect],
         [buttons.bold, buttons.italic, buttons.underline, buttons.foreColor],
@@ -70,7 +70,7 @@ const pluginConfig = ({ isLibrary, placeholder, editorType }) => {
         [imageUploadButton, buttons.blockQuote, buttons.codeBlock],
         [buttons.table, buttons.emoticons, buttons.charmap, buttons.removeFormat],
       ]),
-      quickbarsSelectionToolbar: mapToolbars([
+      quickbarsSelectionToolbar: toolbar ? false : mapToolbars([
         [buttons.undo, buttons.redo],
         [buttons.formatSelect],
         [buttons.bold, buttons.italic, buttons.underline, buttons.foreColor],

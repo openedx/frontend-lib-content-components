@@ -23,18 +23,12 @@ export const parseContentForLabels = ({ editor, updateContent }) => {
     const parsedLabels = content.split(/<label>|<\/label>/gm);
     let updatedContent;
     parsedLabels.forEach((label, i) => {
-      let updatedLabel = label;
       if (!label.startsWith('<') && !label.endsWith('>')) {
         let previousLabel = parsedLabels[i - 1];
         let nextLabel = parsedLabels[i + 1];
         if (!previousLabel.endsWith('<p>')) {
           previousLabel = `${previousLabel}</p><p>`;
           updatedContent = content.replace(parsedLabels[i - 1], previousLabel);
-          content = updatedContent;
-        }
-        if (previousLabel.endsWith('</p>') && !label.startWith('<p>')) {
-          updatedLabel = `<p>${label}`;
-          updatedContent = content.replace(label, updatedLabel);
           content = updatedContent;
         }
         if (!nextLabel.startsWith('</p>')) {

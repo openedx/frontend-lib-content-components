@@ -5,6 +5,14 @@ import { keyStore } from '../../utils';
 import pluginConfig from './pluginConfig';
 import * as module from './hooks';
 
+jest.mock('react', () => ({
+  ...jest.requireActual('react'),
+  createRef: jest.fn(val => ({ ref: val })),
+  useRef: jest.fn(val => ({ current: val })),
+  useEffect: jest.fn(),
+  useCallback: (cb, prereqs) => ({ cb, prereqs }),
+}));
+
 const state = new MockUseState(module);
 const moduleKeys = keyStore(module);
 
@@ -189,6 +197,8 @@ describe('TinyMceEditor hooks', () => {
           expect(output.init.plugins).toEqual(pluginConfig(pluginProps).plugins);
           expect(output.init.imagetools_toolbar).toEqual(pluginConfig(pluginProps).imageToolbar);
           expect(output.init.toolbar).toEqual(pluginConfig(pluginProps).toolbar);
+          expect(output.init.quickbars_insert_toolbar).toEqual(pluginConfig(pluginProps).quickbarsInsertToolbar);
+          expect(output.init.quickbars_selection_toolbar).toEqual(pluginConfig(pluginProps).quickbarsSelectionToolbar);
           Object.keys(pluginConfig(pluginProps).config).forEach(key => {
             expect(output.init[key]).toEqual(pluginConfig(pluginProps).config[key]);
           });
@@ -209,6 +219,8 @@ describe('TinyMceEditor hooks', () => {
           expect(output.init.plugins).toEqual(pluginConfig(pluginProps).plugins);
           expect(output.init.imagetools_toolbar).toEqual(pluginConfig(pluginProps).imageToolbar);
           expect(output.init.toolbar).toEqual(pluginConfig(pluginProps).toolbar);
+          expect(output.init.quickbars_insert_toolbar).toEqual(pluginConfig(pluginProps).quickbarsInsertToolbar);
+          expect(output.init.quickbars_selection_toolbar).toEqual(pluginConfig(pluginProps).quickbarsSelectionToolbar);
           Object.keys(pluginConfig(pluginProps).config).forEach(key => {
             expect(output.init[key]).toEqual(pluginConfig(pluginProps).config[key]);
           });
@@ -230,8 +242,8 @@ describe('TinyMceEditor hooks', () => {
           expect(output.init.plugins).toEqual(pluginConfig(pluginProps).plugins);
           expect(output.init.imagetools_toolbar).toEqual(pluginConfig(pluginProps).imageToolbar);
           expect(output.init.toolbar).toEqual(pluginConfig(pluginProps).toolbar);
-          expect(output.init.quickInsertToolbar).toEqual(pluginConfig(pluginProps).quickInsertToolbar);
-          expect(output.init.quickInsertToolbar).toEqual(pluginConfig(pluginProps).quickSelectionToolbar);
+          expect(output.init.quickbars_insert_toolbar).toEqual(pluginConfig(pluginProps).quickbarsInsertToolbar);
+          expect(output.init.quickbars_selection_toolbar).toEqual(pluginConfig(pluginProps).quickbarsSelectionToolbar);
           Object.keys(pluginConfig(pluginProps).config).forEach(key => {
             expect(output.init[key]).toEqual(pluginConfig(pluginProps).config[key]);
           });
@@ -263,6 +275,19 @@ describe('TinyMceEditor hooks', () => {
             lmsEndpointUrl: props.lmsEndpointUrl,
           }),
         );
+      });
+    });
+
+    describe('filterAssets', () => {
+      const emptyAssets = {};
+      const assets = { sOmEaSsET: { contentType: 'image/' } };
+      test('returns an empty array', () => {
+        const emptyFilterAssets = module.filterAssets({ assets: emptyAssets });
+        expect(emptyFilterAssets).toEqual([]);
+      });
+      test('returns filtered array of images', () => {
+        const FilteredAssets = module.filterAssets({ assets });
+        expect(FilteredAssets).toEqual([{ contentType: 'image/' }]);
       });
     });
 
