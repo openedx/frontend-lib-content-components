@@ -7,35 +7,46 @@ import './index.scss';
 export const ExpandableTextArea = ({
   value,
   setContent,
-  placeholder,
+  error,
+  errorMessage,
   ...props
 }) => {
   const { editorRef, setEditorRef } = prepareEditorRef();
 
   return (
-    <div className="expandable-mce">
-      <TinyMceWidget
-        textValue={value}
-        editorRef={editorRef}
-        editorType="expandable"
-        setEditorRef={setEditorRef}
-        updateContent={setContent}
-        placeholder={placeholder}
-        {...props}
-      />
-    </div>
+    <>
+      <div className="expandable-mce error">
+        <TinyMceWidget
+          textValue={value}
+          editorRef={editorRef}
+          editorType="expandable"
+          setEditorRef={setEditorRef}
+          updateContent={setContent}
+          {...props}
+        />
+      </div>
+      {error && (
+        <div className="text-danger-500 x-small">
+          {props.errorMessage}
+        </div>
+      )}
+    </>
   );
 };
 
 ExpandableTextArea.defaultProps = {
   value: null,
   placeholder: null,
+  error: false,
+  errorMessage: null,
 };
 
 ExpandableTextArea.propTypes = {
   value: PropTypes.string,
   setContent: PropTypes.func.isRequired,
   placeholder: PropTypes.string,
+  error: PropTypes.bool,
+  errorMessage: PropTypes.string,
 };
 
 export default ExpandableTextArea;

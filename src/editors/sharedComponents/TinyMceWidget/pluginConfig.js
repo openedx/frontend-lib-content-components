@@ -8,12 +8,12 @@ const pluginConfig = ({ isLibrary, placeholder, editorType }) => {
   const imageTools = isLibrary ? '' : plugins.imagetools;
   const imageUploadButton = isLibrary ? '' : buttons.imageUploadButton;
   const editImageSettings = isLibrary ? '' : buttons.editImageSettings;
-  const codePlugin = editorType !== 'text' ? '' : plugins.code;
-  const codeButton = editorType !== 'text' ? '' : buttons.code;
+  const codePlugin = editorType === 'text' ? plugins.code : '';
+  const codeButton = editorType === 'text' ? buttons.code : '';
   const labelButton = editorType === 'question' ? buttons.customLabelButton : '';
+  const quickToolbar = editorType === 'expandable' ? plugins.quickbars : '';
   const inline = editorType === 'expandable';
   const toolbar = editorType !== 'expandable';
-  const quickToolbar = editorType === 'expandable' ? plugins.quickbars : '';
 
   return (
     StrictDict({
@@ -61,42 +61,26 @@ const pluginConfig = ({ isLibrary, placeholder, editorType }) => {
       quickbarsInsertToolbar: mapToolbars([
         [buttons.undo, buttons.redo],
         [buttons.formatSelect],
-        [buttons.bold, buttons.italic, buttons.underline, buttons.foreColor, buttons.backColor],
+        [buttons.bold, buttons.italic, buttons.underline, buttons.foreColor],
         [
-          buttons.align.left,
-          buttons.align.center,
-          buttons.align.right,
           buttons.align.justify,
-        ],
-        [
           buttons.bullist,
           buttons.numlist,
-          buttons.outdent,
-          buttons.indent,
         ],
-        [imageUploadButton, buttons.quickLink, buttons.blockQuote, buttons.codeBlock],
-        [buttons.table, buttons.emoticons, buttons.charmap],
-        [buttons.removeFormat],
+        [imageUploadButton, buttons.blockQuote, buttons.codeBlock],
+        [buttons.table, buttons.emoticons, buttons.charmap, buttons.removeFormat],
       ]),
       quickbarsSelectionToolbar: mapToolbars([
         [buttons.undo, buttons.redo],
         [buttons.formatSelect],
-        [buttons.bold, buttons.italic, buttons.underline, buttons.foreColor, buttons.backColor],
+        [buttons.bold, buttons.italic, buttons.underline, buttons.foreColor],
         [
-          buttons.align.left,
-          buttons.align.center,
-          buttons.align.right,
           buttons.align.justify,
-        ],
-        [
           buttons.bullist,
           buttons.numlist,
-          buttons.outdent,
-          buttons.indent,
         ],
-        [imageUploadButton, buttons.quickLink, buttons.blockQuote, buttons.codeBlock],
-        [buttons.table, buttons.emoticons, buttons.charmap],
-        [buttons.removeFormat],
+        [imageUploadButton, buttons.blockQuote, buttons.codeBlock],
+        [buttons.table, buttons.emoticons, buttons.charmap, buttons.removeFormat],
       ]),
       config: {
         branding: false,

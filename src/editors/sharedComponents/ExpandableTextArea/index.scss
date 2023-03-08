@@ -1,16 +1,22 @@
-.expandable-mce *[contentEditable=true] {
-  padding: 10px;
-  outline: 1px solid #707070;
-  &:focus, &:active {
-    outline: 2px solid #000;
-  }
-  &:disabled {
-    outline: 1px solid #D7D3D1,
-  }
+.expandable-mce {
+
   .error {
     outline: 2px solid #CA3A2F;
   }
-  p {
-    margin: 0;
+  .mce-content-body {
+    padding: 10px;
+    p {
+      margin: 0;
+    }
+  }
+  
+  *[contentEditable=false] {
+    outline: 1px solid #D7D3D1;
+  }
+  *[contentEditable=true] {
+    outline: 1px solid #707070;
+    &:focus, &:active {
+      outline: 2px solid #000;
+    }
   }
 }

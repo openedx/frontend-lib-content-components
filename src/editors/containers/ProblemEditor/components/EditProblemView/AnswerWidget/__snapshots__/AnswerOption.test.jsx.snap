@@ -26,13 +26,11 @@ exports[`AnswerOption render snapshot: renders correct option with feedback 1`] 
   <div
     className="ml-1 flex-grow-1"
   >
-    <Form.Control
-      as="textarea"
-      autoResize={true}
-      className="answer-option-textarea text-gray-500 small"
-      onChange={[Function]}
+    <ExpandableTextArea
+      error={false}
+      errorMessage={null}
       placeholder="Enter an answer"
-      rows={1}
+      setContent={[Function]}
       value="Answer 1"
     />
     <Body>
@@ -102,13 +100,11 @@ exports[`AnswerOption render snapshot: renders correct option with numeric input
   <div
     className="ml-1 flex-grow-1"
   >
-    <Form.Control
-      as="textarea"
-      autoResize={true}
-      className="answer-option-textarea text-gray-500 small"
-      onChange={[Function]}
+    <ExpandableTextArea
+      error={false}
+      errorMessage={null}
       placeholder="Enter an answer"
-      rows={1}
+      setContent={[Function]}
       value="Answer 1"
     />
     <Body>
@@ -179,13 +175,11 @@ exports[`AnswerOption render snapshot: renders correct option with selected unse
   <div
     className="ml-1 flex-grow-1"
   >
-    <Form.Control
-      as="textarea"
-      autoResize={true}
-      className="answer-option-textarea text-gray-500 small"
-      onChange={[Function]}
+    <ExpandableTextArea
+      error={false}
+      errorMessage={null}
       placeholder="Enter an answer"
-      rows={1}
+      setContent={[Function]}
       value="Answer 1"
     />
     <Body>
