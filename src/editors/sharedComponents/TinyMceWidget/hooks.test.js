@@ -117,7 +117,13 @@ describe('TinyMceEditor hooks', () => {
         const lmsEndpointUrl = 'sOmEvaLue.cOm';
         const editorType = 'expandable';
         const updateContent = jest.fn();
-        module.replaceStaticwithAsset({ editor, imageUrls, editorType, lmsEndpointUrl, updateContent });
+        module.replaceStaticwithAsset({
+          editor,
+          imageUrls,
+          editorType,
+          lmsEndpointUrl,
+          updateContent,
+        });
         expect(editor.getContent).toHaveBeenCalled();
         expect(updateContent).toHaveBeenCalled();
       });
