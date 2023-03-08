@@ -55,12 +55,13 @@ export const replaceStaticwithAsset = ({
   lmsEndpointUrl,
   updateContent,
 }) => {
-  const content = editor.getContent();
+  let content = editor.getContent();
   const imageSrcs = content.split('src="');
   imageSrcs.forEach(src => {
+    const currentContent = content;
+    let staticFullUrl;
     if (src.startsWith('/static/') && imageUrls.length > 0) {
       const imgName = src.substring(8, src.indexOf('"'));
-      let staticFullUrl;
       imageUrls.forEach((url) => {
         if (imgName === url.displayName) {
           staticFullUrl = url.staticFullUrl;
@@ -71,15 +72,15 @@ export const replaceStaticwithAsset = ({
       });
       if (staticFullUrl) {
         const currentSrc = src.substring(0, src.indexOf('"'));
-        const updatedContent = content.replace(currentSrc, staticFullUrl);
-        if (editorType === 'expandable') {
-          updateContent(updatedContent);
-        } else {
-          editor.setContent(updatedContent);
-        }
+        content = currentContent.replace(currentSrc, staticFullUrl);
       }
     }
   });
+  if (editorType === 'expandable') {
+    updateContent(content);
+  } else {
+    editor.setContent(content);
+  }
 };
 
 export const setupCustomBehavior = ({

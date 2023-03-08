@@ -103,13 +103,23 @@ describe('TinyMceEditor hooks', () => {
     });
 
     describe('replaceStaticwithAsset', () => {
-      test('it calls getContent and setContent', () => {
+      test('it calls getContent and setContent for text editor', () => {
         const editor = { getContent: jest.fn(() => '<img src="/static/soMEImagEURl1.jpeg"/>'), setContent: jest.fn() };
         const imageUrls = [{ staticFullUrl: '/assets/soMEImagEURl1.jpeg', displayName: 'soMEImagEURl1.jpeg' }];
         const lmsEndpointUrl = 'sOmEvaLue.cOm';
         module.replaceStaticwithAsset({ editor, imageUrls, lmsEndpointUrl });
         expect(editor.getContent).toHaveBeenCalled();
         expect(editor.setContent).toHaveBeenCalled();
+      });
+      test('it calls getContent and updateContent for expandable editor', () => {
+        const editor = { getContent: jest.fn(() => '<img src="/static/soMEImagEURl1.jpeg"/>') };
+        const imageUrls = [{ staticFullUrl: '/assets/soMEImagEURl1.jpeg', displayName: 'soMEImagEURl1.jpeg' }];
+        const lmsEndpointUrl = 'sOmEvaLue.cOm';
+        const editorType = 'expandable';
+        const updateContent = jest.fn();
+        module.replaceStaticwithAsset({ editor, imageUrls, editorType, lmsEndpointUrl, updateContent });
+        expect(editor.getContent).toHaveBeenCalled();
+        expect(updateContent).toHaveBeenCalled();
       });
     });
     describe('setAssetToStaticUrl', () => {
