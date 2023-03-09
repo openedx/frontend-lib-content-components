@@ -1,10 +1,7 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import { injectIntl } from '@edx/frontend-platform/i18n';
-
-import { selectors } from '../../data/redux';
 import tinyMCEKeys from '../../data/constants/tinyMCE';
 import ImageSettingsModal from './ImageSettingsModal';
 import SelectImageModal from './SelectImageModal';
@@ -87,7 +84,6 @@ export const ImageUploadModal = ({
   setSelection,
   images,
   editorType,
-  // redux
   lmsEndpointUrl,
 }) => {
   if (selection) {
@@ -147,10 +143,4 @@ ImageUploadModal.propTypes = {
   editorType: PropTypes.string,
 };
 
-export const mapStateToProps = (state) => ({
-  lmsEndpointUrl: selectors.app.lmsEndpointUrl(state),
-});
-
-export const mapDispatchToProps = {};
-
-export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(ImageUploadModal));
+export default injectIntl(ImageUploadModal);

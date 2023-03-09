@@ -49,6 +49,7 @@ export const TinyMceWidget = ({
           editorRef={editorRef}
           images={images}
           editorType={editorType}
+          lmsEndpointUrl={lmsEndpointUrl}
           {...imageSelection}
         />
       )}

@@ -30,16 +30,19 @@ export const parseContentForLabels = ({ editor, updateContent }) => {
           previousLabel = `${previousLabel}</p><p>`;
           updatedContent = content.replace(parsedLabels[i - 1], previousLabel);
           content = updatedContent;
+          updateContent(content);
         }
         if (!nextLabel.startsWith('</p>')) {
           nextLabel = `</p><p>${nextLabel}`;
           updatedContent = content.replace(parsedLabels[i + 1], nextLabel);
           content = updatedContent;
+          updateContent(content);
         }
       }
     });
+  } else {
+    updateContent(content);
   }
-  updateContent(content);
 };
 
 export const replaceStaticwithAsset = ({
@@ -67,14 +70,14 @@ export const replaceStaticwithAsset = ({
       if (staticFullUrl) {
         const currentSrc = src.substring(0, src.indexOf('"'));
         content = currentContent.replace(currentSrc, staticFullUrl);
+        if (editorType === 'expandable') {
+          updateContent(content);
+        } else {
+          editor.setContent(content);
+        }
       }
     }
   });
-  if (editorType === 'expandable') {
-    updateContent(content);
-  } else {
-    editor.setContent(content);
-  }
 };
 
 export const setupCustomBehavior = ({
@@ -157,7 +160,7 @@ export const setupCustomBehavior = ({
     });
   }
   editor.on('ExecCommand', (e) => {
-    if (e.command === 'mceFocus') {
+    if (editorType === 'text' && e.command === 'mceFocus') {
       module.replaceStaticwithAsset({ editor, imageUrls });
     }
     if (e.command === 'RemoveFormat') {
@@ -195,7 +198,6 @@ export const editorConfig = ({
     quickbarsInsertToolbar,
     quickbarsSelectionToolbar,
   } = pluginConfig({ isLibrary, placeholder, editorType });
-
   return {
     onInit: (evt, editor) => {
       setEditorRef(editor);
