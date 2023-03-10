@@ -48,20 +48,21 @@ export const AnswerOption = ({
         />
       </div>
       <div className="ml-1 flex-grow-1">
+        <ExpandableTextArea
+          value={answer.title}
+          setContent={setAnswerTitle}
+          placeholder={intl.formatMessage(messages.answerTextboxPlaceholder)}
+          id={`answer-${answer.id}`}
+        />
         {/* <Form.Control
           as="textarea"
           className="answer-option-textarea text-gray-500 small"
           autoResize
           rows={1}
           value={answer.title}
-          onChange={(e) => { setAnswerTitle(e.target.value }}
+          onChange={(e) => { setAnswerTitle(e.target.value) }}
           placeholder={intl.formatMessage(messages.answerTextboxPlaceholder)}
         /> */}
-        <ExpandableTextArea
-          value={answer.title}
-          setContent={setAnswerTitle}
-          placeholder={intl.formatMessage(messages.answerTextboxPlaceholder)}
-        />
         <Collapsible.Body>
           <FeedbackBox
             problemType={problemType}

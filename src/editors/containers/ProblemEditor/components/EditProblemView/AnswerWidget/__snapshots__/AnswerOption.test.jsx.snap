@@ -29,6 +29,7 @@ exports[`AnswerOption render snapshot: renders correct option with feedback 1`] 
     <ExpandableTextArea
       error={false}
       errorMessage={null}
+      id="answer-A"
       placeholder="Enter an answer"
       setContent={[Function]}
       value="Answer 1"
@@ -103,6 +104,7 @@ exports[`AnswerOption render snapshot: renders correct option with numeric input
     <ExpandableTextArea
       error={false}
       errorMessage={null}
+      id="answer-A"
       placeholder="Enter an answer"
       setContent={[Function]}
       value="Answer 1"
@@ -178,6 +180,7 @@ exports[`AnswerOption render snapshot: renders correct option with selected unse
     <ExpandableTextArea
       error={false}
       errorMessage={null}
+      id="answer-A"
       placeholder="Enter an answer"
       setContent={[Function]}
       value="Answer 1"

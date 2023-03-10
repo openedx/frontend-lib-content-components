@@ -29,6 +29,8 @@ import * as hooks from './hooks';
 export const TinyMceWidget = ({
   editorType,
   editorRef,
+  disabled,
+  id,
   // redux
   assets,
   isLibrary,
@@ -50,6 +52,7 @@ export const TinyMceWidget = ({
           images={images}
           editorType={editorType}
           lmsEndpointUrl={lmsEndpointUrl}
+          // bookmark={editorRef.current.selection.getBookmark()}
           {...imageSelection}
         />
       )}
@@ -61,6 +64,8 @@ export const TinyMceWidget = ({
         />
       ) : null}
       <Editor
+        id={id}
+        disabled={disabled}
         {
           ...hooks.editorConfig({
             openImgModal,
@@ -87,6 +92,8 @@ TinyMceWidget.defaultProps = {
   lmsEndpointUrl: null,
   studioEndpointUrl: null,
   assets: null,
+  id: null,
+  disabled: false,
 };
 TinyMceWidget.propTypes = {
   editorType: PropTypes.string,
@@ -95,6 +102,8 @@ TinyMceWidget.propTypes = {
   editorRef: PropTypes.shape({}),
   lmsEndpointUrl: PropTypes.string,
   studioEndpointUrl: PropTypes.string,
+  id: PropTypes.string,
+  disabled: PropTypes.bool,
 };
 
 // should we call these items for

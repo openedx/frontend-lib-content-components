@@ -12,7 +12,6 @@ import { prepareEditorRef } from '../../../../../sharedComponents/TinyMceWidget/
 export const QuestionWidget = ({
   // redux
   question,
-  updateQuestion,
   // injected
   intl,
 }) => {
@@ -24,10 +23,10 @@ export const QuestionWidget = ({
         <FormattedMessage {...messages.questionWidgetTitle} />
       </div>
       <TinyMceWidget
+        id="question"
         editorType="question"
         editorRef={editorRef}
         textValue={question}
-        updateContent={updateQuestion}
         setEditorRef={setEditorRef}
         minHeight={150}
         placeholder={intl.formatMessage(messages.placeholder)}
@@ -39,7 +38,6 @@ export const QuestionWidget = ({
 QuestionWidget.propTypes = {
   // redux
   question: PropTypes.string.isRequired,
-  updateQuestion: PropTypes.func.isRequired,
   // injected
   intl: intlShape.isRequired,
 };

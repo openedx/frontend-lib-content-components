@@ -146,18 +146,6 @@ export const setupCustomBehavior = ({
         updateContent,
       });
     });
-    editor.on('blur', () => {
-      const content = editor.getContent();
-      updateContent(content);
-    });
-  }
-  if (editorType === 'question') {
-    editor.on('blur', () => {
-      module.parseContentForLabels({
-        editor,
-        updateContent,
-      });
-    });
   }
   editor.on('ExecCommand', (e) => {
     if (editorType === 'text' && e.command === 'mceFocus') {
@@ -188,7 +176,6 @@ export const editorConfig = ({
   setSelection,
   updateContent,
   minHeight,
-  disabled,
 }) => {
   const {
     toolbar,
@@ -234,7 +221,6 @@ export const editorConfig = ({
       valid_elements: '*[*]',
       entity_encoding: 'utf-8',
     },
-    disabled,
   };
 };
 

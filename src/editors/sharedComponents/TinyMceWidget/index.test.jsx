@@ -59,6 +59,8 @@ describe('TinyMceWidget', () => {
     assets: { sOmEaSsET: { staTICUrl: '/assets/sOmEaSsET' } },
     lmsEndpointUrl: 'sOmEvaLue.cOm',
     studioEndpointUrl: 'sOmEoThERvaLue.cOm',
+    disabled: false,
+    id: 'sOMeiD',
   };
   describe('snapshots', () => {
     imgModalToggle.mockReturnValue({

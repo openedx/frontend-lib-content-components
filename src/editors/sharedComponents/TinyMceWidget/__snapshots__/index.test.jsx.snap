@@ -14,6 +14,7 @@ exports[`TinyMceWidget snapshots ImageUploadModal is not rendered 1`] = `
     isOpen={false}
   />
   <Editor
+    disabled={false}
     editorConfig={
       Object {
         "clearSelection": [MockFunction hooks.selectedImage.clearSelection],
@@ -36,6 +37,7 @@ exports[`TinyMceWidget snapshots ImageUploadModal is not rendered 1`] = `
         "studioEndpointUrl": "sOmEoThERvaLue.cOm",
       }
     }
+    id="sOMeiD"
   />
 </Fragment>
 `;
@@ -66,6 +68,7 @@ exports[`TinyMceWidget snapshots SourcecodeModal is not rendered 1`] = `
     setSelection={[MockFunction hooks.selectedImage.setSelection]}
   />
   <Editor
+    disabled={false}
     editorConfig={
       Object {
         "clearSelection": [MockFunction hooks.selectedImage.clearSelection],
@@ -88,6 +91,7 @@ exports[`TinyMceWidget snapshots SourcecodeModal is not rendered 1`] = `
         "studioEndpointUrl": "sOmEoThERvaLue.cOm",
       }
     }
+    id="sOMeiD"
   />
 </Fragment>
 `;
@@ -129,6 +133,7 @@ exports[`TinyMceWidget snapshots renders as expected with default behavior 1`] =
     isOpen={false}
   />
   <Editor
+    disabled={false}
     editorConfig={
       Object {
         "clearSelection": [MockFunction hooks.selectedImage.clearSelection],
@@ -151,6 +156,7 @@ exports[`TinyMceWidget snapshots renders as expected with default behavior 1`] =
         "studioEndpointUrl": "sOmEoThERvaLue.cOm",
       }
     }
+    id="sOMeiD"
   />
 </Fragment>
 `;
