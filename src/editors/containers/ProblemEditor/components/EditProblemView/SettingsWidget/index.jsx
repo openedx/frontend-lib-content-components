@@ -15,6 +15,7 @@ import TimerCard from './settingsComponents/TimerCard';
 import TypeCard from './settingsComponents/TypeCard';
 import GeneralFeedbackCard from './settingsComponents/GeneralFeedback/index';
 import GroupFeedbackCard from './settingsComponents/GroupFeedback/index';
+import CorrectAnswerFeedbackCard from './settingsComponents/CorrectAnswerFeedbackCard';
 import SwitchToAdvancedEditorCard from './settingsComponents/SwitchToAdvancedEditorCard';
 import messages from './messages';
 import { showAdvancedSettingsCards } from './hooks';
@@ -30,6 +31,7 @@ export const SettingsWidget = ({
   answers,
   generalFeedback,
   groupFeedbackList,
+  correctAnswerFeedback,
   blockTitle,
   correctAnswerCount,
   settings,
@@ -43,6 +45,17 @@ export const SettingsWidget = ({
   const feedbackCard = () => {
     if (problemType === ProblemTypeKeys.ADVANCED) {
       return (<></>);
+    }
+    if (problemType === ProblemTypeKeys.NUMERIC) {
+      return (
+        <div className="mt-3">
+          <CorrectAnswerFeedbackCard
+            correctAnswerFeedback={correctAnswerFeedback}
+            updateSettings={updateField}
+            answers={answers}
+          />
+        </div>
+      );
     }
     if ([ProblemTypeKeys.MULTISELECT, ProblemTypeKeys.TEXTINPUT, ProblemTypeKeys.NUMERIC].includes(problemType)) {
       return (
@@ -154,6 +167,7 @@ SettingsWidget.propTypes = {
       },
     ),
   ).isRequired,
+  correctAnswerFeedback: PropTypes.string.isRequired,
   blockTitle: PropTypes.string.isRequired,
   correctAnswerCount: PropTypes.number.isRequired,
   problemType: PropTypes.string.isRequired,

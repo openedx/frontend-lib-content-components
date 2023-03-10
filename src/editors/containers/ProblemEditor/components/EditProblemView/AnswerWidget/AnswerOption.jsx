@@ -10,13 +10,13 @@ import {
 import { FeedbackOutline, DeleteOutline } from '@edx/paragon/icons';
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 
-import messages from './messages';
 import { selectors } from '../../../../../data/redux';
+import { ProblemTypeKeys } from '../../../../../data/constants/problem';
 import { answerOptionProps } from '../../../../../data/services/cms/types';
 import Checker from './components/Checker';
 import { FeedbackBox } from './components/Feedback';
 import * as hooks from './hooks';
-import { ProblemTypeKeys } from '../../../../../data/constants/problem';
+import messages from './messages';
 
 export const AnswerOption = ({
   answer,
@@ -57,25 +57,33 @@ export const AnswerOption = ({
           onChange={(e) => { setAnswer({ title: e.target.value }); }}
           placeholder={intl.formatMessage(messages.answerTextboxPlaceholder)}
         />
-        <Collapsible.Body>
-          <FeedbackBox
-            problemType={problemType}
-            answer={answer}
-            setSelectedFeedback={setSelectedFeedback}
-            setUnselectedFeedback={setUnselectedFeedback}
-            intl={intl}
-          />
-        </Collapsible.Body>
+        {problemType !== ProblemTypeKeys.NUMERIC
+          ? (
+            <Collapsible.Body>
+              <FeedbackBox
+                problemType={problemType}
+                answer={answer}
+                setSelectedFeedback={setSelectedFeedback}
+                setUnselectedFeedback={setUnselectedFeedback}
+                intl={intl}
+              />
+            </Collapsible.Body>
+          )
+          : null}
       </div>
       <div className="d-flex flex-row flex-nowrap">
-        <Collapsible.Trigger>
-          <IconButton
-            src={FeedbackOutline}
-            iconAs={Icon}
-            alt={intl.formatMessage(messages.feedbackToggleIconAltText)}
-            variant="primary"
-          />
-        </Collapsible.Trigger>
+        {problemType !== ProblemTypeKeys.NUMERIC
+          ? (
+            <Collapsible.Trigger>
+              <IconButton
+                src={FeedbackOutline}
+                iconAs={Icon}
+                alt={intl.formatMessage(messages.feedbackToggleIconAltText)}
+                variant="primary"
+              />
+            </Collapsible.Trigger>
+          )
+          : null}
         <IconButton
           src={DeleteOutline}
           iconAs={Icon}

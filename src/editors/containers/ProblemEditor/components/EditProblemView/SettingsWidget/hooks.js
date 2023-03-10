@@ -28,6 +28,27 @@ export const showFullCard = () => {
   };
 };
 
+export const correctAnswerFeedbackHooks = (correctAnswerFeedback, updateSettings) => {
+  const [summary, setSummary] = module.state.summary({ message: '', values: {}, intl: false });
+
+  useEffect(() => {
+    if (_.isEmpty(correctAnswerFeedback)) {
+      setSummary({ message: messages.noCorrectAnswerFeedbackSummary, values: {}, intl: true });
+    } else {
+      setSummary({ message: correctAnswerFeedback, values: {}, intl: false });
+    }
+  }, [correctAnswerFeedback]);
+
+  const handleChange = (event) => {
+    updateSettings({ correctAnswerFeedback: event.target.value });
+  };
+
+  return {
+    summary,
+    handleChange,
+  };
+};
+
 export const hintsCardHooks = (hints, updateSettings) => {
   const [summary, setSummary] = module.state.summary({ message: messages.noHintSummary, values: {} });
 

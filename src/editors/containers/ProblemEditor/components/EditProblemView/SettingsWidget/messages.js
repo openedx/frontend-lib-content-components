@@ -19,6 +19,26 @@ export const messages = {
     defaultMessage: 'Set a default value in advanced settings',
     description: 'Advanced settings link text',
   },
+  correctAnswerFeedbackSettingTitle: {
+    id: 'authoring.problemeditor.settings.correctAnswerFeedback.title',
+    defaultMessage: 'Correct Answer Feedback',
+    description: 'Correct Answer Feedback settings card title',
+  },
+  correctAnswerFeedbackSettingText: {
+    id: 'authoring.problemeditor.settings.correctAnswerFeedback.text',
+    defaultMessage: 'Enter the feedback to appear when a student submits a correct answer.',
+    description: 'Correct Answer Feedback settings card text',
+  },
+  correctAnswerFeedbackInputLabel: {
+    id: 'authoring.problemeditor.settings.correctAnswerFeedback.inputLabel',
+    defaultMessage: 'Feedback message',
+    description: 'Correct Answer Feedback text input label',
+  },
+  noCorrectAnswerFeedbackSummary: {
+    id: 'authoring.problemeditor.settings.correctAnswerFeedback.noSummary',
+    defaultMessage: 'None',
+    description: 'Summary text for no correct answer feedback',
+  },
   hintSettingTitle: {
     id: 'authoring.problemeditor.settings.hint.title',
     defaultMessage: 'Hints',

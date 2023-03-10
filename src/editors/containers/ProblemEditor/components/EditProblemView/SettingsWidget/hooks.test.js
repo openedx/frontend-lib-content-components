@@ -62,6 +62,35 @@ describe('Problem settings hooks', () => {
     });
   });
 
+  describe('Correct Answer Feedback card hooks', () => {
+    test('test useEffect triggers set summary', () => {
+      const feedback = 'cORrECtAnSWerfeEdBacK';
+      hooks.correctAnswerFeedbackHooks(feedback, updateSettings);
+      expect(state.setState[state.keys.summary]).not.toHaveBeenCalled();
+      const [cb, prereqs] = useEffect.mock.calls[0];
+      expect(prereqs).toStrictEqual([feedback]);
+      cb();
+      expect(state.setState[state.keys.summary])
+        .toHaveBeenCalledWith({ message: feedback, values: {}, intl: false });
+    });
+    test('test useEffect triggers set summary no key', () => {
+      hooks.correctAnswerFeedbackHooks('', updateSettings);
+      expect(state.setState[state.keys.summary]).not.toHaveBeenCalled();
+      const [cb, prereqs] = useEffect.mock.calls[0];
+      expect(prereqs).toStrictEqual(['']);
+      cb();
+      expect(state.setState[state.keys.summary])
+        .toHaveBeenCalledWith({ message: messages.noCorrectAnswerFeedbackSummary, values: {}, intl: true });
+    });
+    test('test handleChange', () => {
+      const feedback = 'CORrECtanSWerfEEdBacK';
+      const value = 'nEwFeeDBAck';
+      output = hooks.correctAnswerFeedbackHooks(feedback, updateSettings);
+      output.handleChange({ target: { value } });
+      expect(updateSettings).toHaveBeenCalledWith({ correctAnswerFeedback: value });
+    });
+  });
+
   describe('Hint card hooks', () => {
     test('test useEffect triggers set hints summary no hint', () => {
       const hints = [];

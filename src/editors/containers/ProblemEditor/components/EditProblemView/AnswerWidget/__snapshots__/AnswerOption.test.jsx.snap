@@ -111,37 +111,10 @@ exports[`AnswerOption render snapshot: renders correct option with numeric input
       rows={1}
       value="Answer 1"
     />
-    <Body>
-      <injectIntl(ShimmedIntlComponent)
-        answer={
-          Object {
-            "correct": true,
-            "id": "A",
-            "selectedFeedback": "some feedback",
-            "title": "Answer 1",
-          }
-        }
-        intl={
-          Object {
-            "formatMessage": [Function],
-          }
-        }
-        problemType="numericalresponse"
-        setSelectedFeedback={[Function]}
-        setUnselectedFeedback={[Function]}
-      />
-    </Body>
   </div>
   <div
     className="d-flex flex-row flex-nowrap"
   >
-    <Trigger>
-      <IconButton
-        alt="Toggle feedback"
-        iconAs="Icon"
-        variant="primary"
-      />
-    </Trigger>
     <IconButton
       alt="Delete answer"
       iconAs="Icon"

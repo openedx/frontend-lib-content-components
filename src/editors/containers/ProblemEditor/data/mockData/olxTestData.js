@@ -314,8 +314,8 @@ export const numericInputWithFeedbackAndHintsOLX = {
 <description>You can add an optional tip or note related to the prompt like this. </description>
 <responseparam type="tolerance" default="5"/>
   <formulaequationinput/>
+  <additional_answer answer="200"></additional_answer>
   <correcthint>You can specify optional feedback like this, which appears after this answer is submitted.</correcthint>
-  <additional_answer answer="200"><correcthint>You can specify optional feedback like this, which appears after this answer is submitted.</correcthint></additional_answer>
 </numericalresponse>
 <demandhint>
   <hint>You can add an optional hint like this. Problems that have a hint include a hint button, and this text appears the first time learners select the button.</hint>
@@ -337,16 +337,15 @@ export const numericInputWithFeedbackAndHintsOLX = {
         id: 'A',
         title: '100',
         correct: true,
-        selectedFeedback: 'You can specify optional feedback like this, which appears after this answer is submitted.',
         tolerance: '5',
       },
       {
         id: 'B',
         title: '200',
         correct: true,
-        selectedFeedback: 'You can specify optional feedback like this, which appears after this answer is submitted.',
       },
     ],
+    correctAnswerFeedback: 'You can specify optional feedback like this, which appears after this answer is submitted.',
   },
   question: '<p>You can use this template as a guide to the simple editor markdown and OLX markup to use for numerical input with hints and feedback problems. Edit this component to replace this template with your own assessment.</p><label>Add the question text, or prompt, here. This text is required.</label><em>You can add an optional tip or note related to the prompt like this.</em>',
   buildOLX: `<problem>
@@ -355,11 +354,9 @@ export const numericInputWithFeedbackAndHintsOLX = {
   <em>You can add an optional tip or note related to the prompt like this.</em>
   <numericalresponse answer="100">
     <responseparam type="tolerance" default="5"></responseparam>
-    <correcthint>You can specify optional feedback like this, which appears after this answer is submitted.</correcthint>
-    <additional_answer answer="200">
-      <correcthint>You can specify optional feedback like this, which appears after this answer is submitted.</correcthint>
-    </additional_answer>
+    <additional_answer answer="200"></additional_answer>
     <formulaequationinput></formulaequationinput>
+    <correcthint>You can specify optional feedback like this, which appears after this answer is submitted.</correcthint>
   </numericalresponse>
   <demandhint>
     <hint>You can add an optional hint like this. Problems that have a hint include a hint button, and this text appears the first time learners select the button.</hint>

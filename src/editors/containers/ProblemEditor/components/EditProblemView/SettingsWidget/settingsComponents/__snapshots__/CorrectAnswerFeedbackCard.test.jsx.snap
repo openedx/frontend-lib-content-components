@@ -1,0 +1,59 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CorrectAnswerFeedbackCard snapshot snapshot: renders correct answer feedback setting card 1`] = `
+<SettingsOption
+  className=""
+  extraSections={Array []}
+  none={false}
+  summary="SomEFeEdbacK"
+  title="Correct Answer Feedback"
+>
+  <div
+    className="halfSpacedMessage"
+  >
+    <span>
+      <FormattedMessage
+        defaultMessage="Enter the feedback to appear when a student submits a correct answer."
+        description="Correct Answer Feedback settings card text"
+        id="authoring.problemeditor.settings.correctAnswerFeedback.text"
+      />
+    </span>
+  </div>
+  <Form.Group>
+    <Form.Control
+      floatingLabel="Feedback message"
+      onChange={[MockFunction correctAnswerFeedbackHooks.handleChange]}
+      value="SomEFeEdbacK"
+    />
+  </Form.Group>
+</SettingsOption>
+`;
+
+exports[`CorrectAnswerFeedbackCard snapshot snapshot: renders correct answer feedback setting card no key 1`] = `
+<SettingsOption
+  className=""
+  extraSections={Array []}
+  none={true}
+  summary="None"
+  title="Correct Answer Feedback"
+>
+  <div
+    className="halfSpacedMessage"
+  >
+    <span>
+      <FormattedMessage
+        defaultMessage="Enter the feedback to appear when a student submits a correct answer."
+        description="Correct Answer Feedback settings card text"
+        id="authoring.problemeditor.settings.correctAnswerFeedback.text"
+      />
+    </span>
+  </div>
+  <Form.Group>
+    <Form.Control
+      floatingLabel="Feedback message"
+      onChange={[MockFunction correctAnswerFeedbackHooks.handleChange]}
+      value=""
+    />
+  </Form.Group>
+</SettingsOption>
+`;

@@ -274,8 +274,8 @@ class ReactStateOLXParser {
     let answerObject = {};
     const additionalAnswers = [];
     let firstCorrectAnswerParsed = false;
+    const correcthint = this.problemState?.correctAnswerFeedback;
     answers.forEach((answer) => {
-      const correcthint = this.getAnswerHints(answer);
       if (this.hasAttributeWithValue(answer, 'title')) {
         if (answer.correct && !firstCorrectAnswerParsed) {
           firstCorrectAnswerParsed = true;
@@ -291,12 +291,10 @@ class ReactStateOLXParser {
           answerObject = {
             '@_answer': answer.title,
             ...responseParam,
-            ...correcthint,
           };
         } else if (answer.correct && firstCorrectAnswerParsed) {
           additionalAnswers.push({
             '@_answer': answer.title,
-            ...correcthint,
           });
         }
       }
@@ -307,6 +305,7 @@ class ReactStateOLXParser {
       formulaequationinput: {
         '#text': '',
       },
+      correcthint,
     };
     return answerObject;
   }

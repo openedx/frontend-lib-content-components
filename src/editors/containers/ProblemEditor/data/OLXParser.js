@@ -226,7 +226,6 @@ export class OLXParser {
 
   parseNumericResponse() {
     const { numericalresponse } = this.problem;
-    let answerFeedback = '';
     const answers = [];
     let responseParam = {};
     // TODO: UI needs to be added to support adding tolerence in numeric response.
@@ -242,7 +241,6 @@ export class OLXParser {
       id: indexToLetterMap[answers.length],
       title: numericalresponse['@_answer'],
       correct: true,
-      selectedFeedback: feedback,
       ...responseParam,
     });
 
@@ -250,24 +248,20 @@ export class OLXParser {
     const additionalAnswer = _.get(numericalresponse, 'additional_answer', []);
     if (_.isArray(additionalAnswer)) {
       additionalAnswer.forEach((newAnswer) => {
-        answerFeedback = this.getFeedback(newAnswer);
         answers.push({
           id: indexToLetterMap[answers.length],
           title: newAnswer['@_answer'],
           correct: true,
-          selectedFeedback: answerFeedback,
         });
       });
     } else {
-      answerFeedback = this.getFeedback(additionalAnswer);
       answers.push({
         id: indexToLetterMap[answers.length],
         title: additionalAnswer['@_answer'],
         correct: true,
-        selectedFeedback: answerFeedback,
       });
     }
-    return { answers };
+    return { answers, correctAnswerFeedback: feedback };
   }
 
   parseQuestions(problemType) {
@@ -400,6 +394,7 @@ export class OLXParser {
     let answersObject = {};
     let additionalAttributes = {};
     let groupFeedbackList = [];
+    let correctAnswerFeedback = '';
     const problemType = this.getProblemType();
     const hints = this.getHints();
     const question = this.parseQuestions(problemType);
@@ -434,9 +429,11 @@ export class OLXParser {
     if (_.has(answersObject, 'additionalStringAttributes')) {
       additionalAttributes = { ...answersObject.additionalStringAttributes };
     }
-
     if (_.has(answersObject, 'groupFeedbackList')) {
       groupFeedbackList = answersObject.groupFeedbackList;
+    }
+    if (_.has(answersObject, 'correctAnswerFeedback')) {
+      correctAnswerFeedback = answersObject.correctAnswerFeedback;
     }
     const { answers } = answersObject;
     const settings = { hints };
@@ -450,6 +447,7 @@ export class OLXParser {
       additionalAttributes,
       generalFeedback,
       groupFeedbackList,
+      correctAnswerFeedback,
     };
   }
 }

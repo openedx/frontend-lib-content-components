@@ -64,6 +64,14 @@ describe('SettingsWidget', () => {
       showAdvancedSettingsCards.mockReturnValue(showAdvancedSettingsCardsProps);
       expect(shallow(<SettingsWidget problemType={ProblemTypeKeys.ADVANCED} {...props} />)).toMatchSnapshot();
     });
+    test('snapshot: renders Settings widget for Numeric Input with correct widgets', () => {
+      const showAdvancedSettingsCardsProps = {
+        isAdvancedCardsVisible: false,
+        setResetTrue: jest.fn().mockName('showAdvancedSettingsCards.setResetTrue'),
+      };
+      showAdvancedSettingsCards.mockReturnValue(showAdvancedSettingsCardsProps);
+      expect(shallow(<SettingsWidget problemType={ProblemTypeKeys.NUMERIC} {...props} />)).toMatchSnapshot();
+    });
   });
 
   describe('mapDispatchToProps', () => {
