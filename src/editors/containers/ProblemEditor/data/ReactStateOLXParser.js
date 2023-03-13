@@ -4,6 +4,10 @@ import { ProblemTypeKeys } from '../../../data/constants/problem';
 
 class ReactStateOLXParser {
   constructor(problemState) {
+    const parserOptions = {
+      ignoreAttributes: false,
+      alwaysCreateTextNode: true,
+    };
     const questionParserOptions = {
       ignoreAttributes: false,
       alwaysCreateTextNode: true,
@@ -23,6 +27,7 @@ class ReactStateOLXParser {
       format: true,
     };
     this.questionParser = new XMLParser(questionParserOptions);
+    this.parser = new XMLParser(parserOptions);
     this.builder = new XMLBuilder(builderOptions);
     this.questionBuilder = new XMLBuilder(questionBuilderOptions);
     this.editorObject = problemState.editorObject;
@@ -47,11 +52,11 @@ class ReactStateOLXParser {
 
   addSolution() {
     if (!_.has(this.problemState, 'settings.solutionExplanation')) { return {}; }
-
-    const solutionText = _.get(this.problemState, 'settings.solutionExplanation');
+    const { solution } = this.editorObject;
+    const parsedSolution = this.parser.parse(solution);
     const solutionObject = {
       solution: {
-        '#text': solutionText,
+        ...parsedSolution,
       },
     };
     return solutionObject;
@@ -134,7 +139,8 @@ class ReactStateOLXParser {
   }
 
   addQuestion() {
-    const { question } = this.editorObject || this.problemState;
+    const question = this.editorObject?.question || this.problemState?.question;
+    // const question = this.editorObject?.question || '';
     const questionObject = this.questionParser.parse(question);
     return questionObject;
   }

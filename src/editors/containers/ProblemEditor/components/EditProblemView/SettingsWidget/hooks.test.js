@@ -235,7 +235,7 @@ describe('Problem settings hooks', () => {
     });
     test('handleExplanationChange should update settings', () => {
       const value = 'explanation';
-      output.handleExplanationChange({ target: { value } });
+      output.handleExplanationChange(value);
       expect(updateSettings).toHaveBeenCalledWith({ solutionExplanation: value });
     });
   });

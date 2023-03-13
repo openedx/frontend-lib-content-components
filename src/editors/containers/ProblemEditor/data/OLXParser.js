@@ -315,38 +315,16 @@ export class OLXParser {
     return hintsObject;
   }
 
-  #extractTextAndChildren(node) {
-    const children = [];
-    let text = null;
-
-    if (_.isArray(node)) {
-      children.push(...node);
-    } else if (_.isPlainObject(node)) {
-      text = _.get(node, '#text');
-      const nodeWithoutText = _.omit(node, '#text');
-      children.push(...Object.values(nodeWithoutText));
-    }
-
-    return { text, children };
-  }
-
   getSolutionExplanation(problemType) {
     if (!_.has(this.problem, `${problemType}.solution`)) { return null; }
 
+    const options = {
+      ignoreAttributes: false,
+    };
+    const builder = new XMLBuilder(options);
     const solution = _.get(this.problem, `${problemType}.solution`);
-
-    const stack = [solution];
-    const texts = [];
-    let currentNode;
-
-    while (stack.length) {
-      currentNode = stack.pop();
-      const { text, children } = this.#extractTextAndChildren(currentNode);
-      if (text) { texts.push(text); }
-      stack.push(...children);
-    }
-
-    return texts.reverse().join('\n ');
+    const solutionString = builder.build(solution);
+    return solutionString;
   }
 
   getFeedback(xmlElement) {

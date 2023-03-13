@@ -1,4 +1,4 @@
-export const getCheckboxesOLXWithFeedbackAndHintsOLX = ({ solution = 'simple' }) => ({
+export const getCheckboxesOLXWithFeedbackAndHintsOLX = () => ({
   rawOLX: `<problem>
   <choiceresponse>
     <p>You can use this template as a guide to the simple editor markdown and OLX markup to use for checkboxes with hints and feedback problems. Edit this component to replace this template with your own assessment.</p>
@@ -18,8 +18,7 @@ export const getCheckboxesOLXWithFeedbackAndHintsOLX = ({ solution = 'simple' })
       <compoundhint value="A B D">You can specify optional feedback for a combination of answers which appears after the specified set of answers is submitted.</compoundhint>
       <compoundhint value="A B C D">You can specify optional feedback for one, several, or all answer combinations.</compoundhint>
     </checkboxgroup>
-    ${solution === 'simple' ? '<solution>This is a detailed explanation of the solution.</solution>' : (
-    `<solution>
+    <solution>
         <div class="detailed-solution">
             <p>Explanation</p>
             <p>
@@ -27,10 +26,9 @@ export const getCheckboxesOLXWithFeedbackAndHintsOLX = ({ solution = 'simple' })
                 voltage with two identically valued resistors, with the sampled
                 voltage taken in between the two.
             </p>
-            <p><img src="/static/images/voltage_divider.png" alt=""/></p>
+            <p><img src="/static/images/voltage_divider.png" alt=""></img></p>
          </div>
-      </solution>`
-  )}
+      </solution>
   </choiceresponse>
   <demandhint>
     <hint>You can add an optional hint like this. Problems that have a hint include a hint button, and this text appears the first time learners select the button.</hint>
@@ -47,9 +45,15 @@ export const getCheckboxesOLXWithFeedbackAndHintsOLX = ({ solution = 'simple' })
       value: 'If you add more than one hint, a different hint appears each time learners select the hint button.',
     },
   ],
-  solutionExplanation: solution === 'simple' ? 'This is a detailed explanation of the solution.' : (
-    'Explanation\n You can form a voltage divider that evenly divides the input voltage with two identically valued resistors, with the sampled voltage taken in between the two.'
-  ),
+  solutionExplanation: `<div class="detailed-solution">
+  <p>Explanation</p>
+  <p>
+      You can form a voltage divider that evenly divides the input
+      voltage with two identically valued resistors, with the sampled
+      voltage taken in between the two.
+  </p>
+  <p><img src="/static/images/voltage_divider.png" alt=""></img></p>
+</div>`,
   data: {
     answers: [
       {
@@ -119,16 +123,17 @@ an incorrect answer        <choicehint selected="true">You can specify optional 
       <compoundhint value="A B D">You can specify optional feedback for a combination of answers which appears after the specified set of answers is submitted.</compoundhint>
       <compoundhint value="A B C D">You can specify optional feedback for one, several, or all answer combinations.</compoundhint>
     </checkboxgroup>
-    ${solution === 'simple'
-    ? '<solution>This is a detailed explanation of the solution.</solution>'
-    : (
-      `<solution>
-          Explanation\n
+      <solution>
+      <div class="detailed-solution">
+      <p>Explanation</p>
+      <p>
           You can form a voltage divider that evenly divides the input
           voltage with two identically valued resistors, with the sampled
           voltage taken in between the two.
-      </solution>`
-    )}
+      </p>
+      <p><img src="/static/images/voltage_divider.png" alt=""></img></p>
+    </div>
+      </solution>
   </choiceresponse>
   <demandhint>
     <hint>You can add an optional hint like this. Problems that have a hint include a hint button, and this text appears the first time learners select the button.</hint>

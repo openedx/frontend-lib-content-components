@@ -174,8 +174,8 @@ export const useAnswerSettings = (showAnswer, updateSettings) => {
     updateSettings({ showAnswer: { ...showAnswer, afterAttempts: attempts } });
   };
 
-  const handleExplanationChange = (event) => {
-    updateSettings({ solutionExplanation: event.target.value });
+  const handleExplanationChange = (content) => {
+    updateSettings({ solutionExplanation: content });
   };
 
   return {

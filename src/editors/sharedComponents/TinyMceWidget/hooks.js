@@ -57,12 +57,18 @@ export const replaceStaticwithAsset = ({
   imageSrcs.forEach(src => {
     const currentContent = content;
     let staticFullUrl;
-    if (src.startsWith('/static/') && imageUrls.length > 0) {
-      const imgName = src.substring(8, src.indexOf('"'));
+    const isStatic = src.startsWith('/static/');
+    const isExpandableAsset = src.startsWith('/assets/') && editorType === 'expandable';
+    if ((isStatic || isExpandableAsset) && imageUrls.length > 0) {
+      const assetSrc = src.substring(0, src.indexOf('"'));
+      const assetName = assetSrc.replace(/\/assets\/.+[^/]\//g, '');
+      const staticName = assetSrc.substring(8);
       imageUrls.forEach((url) => {
-        if (imgName === url.displayName) {
+        if (isExpandableAsset && assetName === url.displayName) {
+          staticFullUrl = `${lmsEndpointUrl}${url.staticFullUrl}`;
+        } else if (staticName === url.displayName) {
           staticFullUrl = url.staticFullUrl;
-          if (editorType === 'expandable') {
+          if (isExpandableAsset) {
             staticFullUrl = `${lmsEndpointUrl}${url.staticFullUrl}`;
           }
         }
