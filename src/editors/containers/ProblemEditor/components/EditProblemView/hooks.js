@@ -12,6 +12,15 @@ export const fetchEditorContent = ({ format }) => {
         const { answers } = editorObject;
         const answerId = id.substring(id.indexOf('-') + 1);
         editorObject.answers = { ...answers, [answerId]: editor.getContent({ format }) };
+      } else if (id.includes('Feedback')) {
+        const { selectedFeedback, unselectedFeedback } = editorObject;
+        const feedbackId = id.substring(id.indexOf('-') + 1);
+        if (id.startsWith('selected')) {
+          editorObject.selectedFeedback = { ...selectedFeedback, [feedbackId]: editor.getContent({ format }) };
+        }
+        if (id.startsWith('unselected')) {
+          editorObject.unselectedFeedback = { ...unselectedFeedback, [feedbackId]: editor.getContent({ format }) };
+        }
       } else {
         editorObject[id] = editor.getContent();
       }

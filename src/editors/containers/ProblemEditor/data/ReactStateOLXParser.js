@@ -51,8 +51,8 @@ class ReactStateOLXParser {
   }
 
   addSolution() {
-    if (!_.has(this.problemState, 'settings.solutionExplanation')) { return {}; }
     const { solution } = this.editorObject;
+    if (!solution || solution.length <= 0) { return {}; }
     const parsedSolution = this.parser.parse(solution);
     const solutionObject = {
       solution: {
@@ -67,9 +67,15 @@ class ReactStateOLXParser {
     let compoundhint = [];
     let widget = {};
     // eslint-disable-next-line prefer-const
-    let { answers, generalFeedback } = this.problemState;
+    let { answers, problemType } = this.problemState;
     const answerTitles = this.editorObject?.answers;
-    // general feedback replaces selected feedback if all incorrect selected feedback is the same.
+    const { selectedFeedback, unselectedFeedback } = this.editorObject;
+    /* todo */
+    /*
+      * the logic for general  feedback is ot current being used.
+      * when component is updated will need to return to this code.
+      * general feedback replaces selected feedback if all incorrect selected feedback is the same.
+      * ******************************************
     if (generalFeedback !== ''
     && answers.every(
       answer => (
@@ -82,34 +88,46 @@ class ReactStateOLXParser {
         ? { ...answer, selectedFeedback: generalFeedback }
         : answer));
     }
+    */
     answers.forEach((answer) => {
       const feedback = [];
       let singleAnswer = {};
-      const title = answerTitles ? answerTitles[answer.id] : answer.title;
-      if (this.hasAttributeWithValue(answer, 'title')) {
-        if (this.hasAttributeWithValue(answer, 'selectedFeedback')) {
+      const title = answerTitles ? this.parser.parse(answerTitles[answer.id]) : { '#text': answer.title };
+      const currentSelectedFeedback = selectedFeedback ? selectedFeedback[answer.id] : null;
+      const currentUnselectedFeedback = unselectedFeedback ? unselectedFeedback[answer.id] : null;
+      let isEmpty;
+      if (answerTitles) {
+        isEmpty = Object.keys(title)?.length <= 0;
+      } else {
+        isEmpty = title['#text']?.length <= 0;
+      }
+      if (title && !isEmpty) {
+        if (currentSelectedFeedback && problemType === ProblemTypeKeys.MULTISELECT) {
+          const parsedSelectedFeedback = this.parser.parse(currentSelectedFeedback);
           feedback.push({
-            '#text': _.get(answer, 'selectedFeedback'),
+            ...parsedSelectedFeedback,
             '@_selected': true,
           });
         }
-        if (this.hasAttributeWithValue(answer, 'unselectedFeedback')) {
+        if (currentSelectedFeedback && problemType !== ProblemTypeKeys.MULTISELECT) {
+          const parsedSelectedFeedback = this.parser.parse(currentSelectedFeedback);
           feedback.push({
-            '#text': _.get(answer, 'unselectedFeedback'),
-            '@_selected': false,
+            ...parsedSelectedFeedback,
           });
         }
-        if (this.hasAttributeWithValue(answer, 'feedback')) {
+        if (currentUnselectedFeedback && problemType === ProblemTypeKeys.MULTISELECT) {
+          const parsedUnselectedFeedback = this.parser.parse(currentUnselectedFeedback);
           feedback.push({
-            '#text': _.get(answer, 'feedback'),
+            ...parsedUnselectedFeedback,
+            '@_selected': false,
           });
         }
         if (feedback.length) {
           singleAnswer[`${option}hint`] = feedback;
         }
         singleAnswer = {
-          '#text': title,
           '@_correct': answer.correct,
+          ...title,
           ...singleAnswer,
         };
         choice.push(singleAnswer);
@@ -210,30 +228,30 @@ class ReactStateOLXParser {
 
   buildTextInputAnswersFeedback() {
     const { answers } = this.problemState;
-    const answerTitles = this.editorObject?.answers;
+    const { selectedFeedback } = this.editorObject;
     let answerObject = {};
     const additionAnswers = [];
     const wrongAnswers = [];
     let firstCorrectAnswerParsed = false;
     answers.forEach((answer) => {
-      const correcthint = this.getAnswerHints(answer);
+      const correcthint = this.getAnswerHints(selectedFeedback[answer.id]);
       if (this.hasAttributeWithValue(answer, 'title')) {
-        const title = answerTitles ? answerTitles[answer.id] : answer.title;
         if (answer.correct && firstCorrectAnswerParsed) {
           additionAnswers.push({
-            '@_answer': title,
+            '@_answer': answer.title,
             ...correcthint,
           });
         } else if (answer.correct && !firstCorrectAnswerParsed) {
           firstCorrectAnswerParsed = true;
           answerObject = {
-            '@_answer': title,
+            '@_answer': answer.title,
             ...correcthint,
           };
         } else if (!answer.correct) {
+          const wronghint = correcthint.correcthint;
           wrongAnswers.push({
-            '@_answer': title,
-            '#text': answer.selectedFeedback,
+            '@_answer': answer.title,
+            ...wronghint,
           });
         }
       }
@@ -277,14 +295,13 @@ class ReactStateOLXParser {
 
   buildNumericalResponse() {
     const { answers } = this.problemState;
-    const answerTitles = this.editorObject?.answers;
+    const { selectedFeedback } = this.editorObject;
     let answerObject = {};
     const additionalAnswers = [];
     let firstCorrectAnswerParsed = false;
     answers.forEach((answer) => {
-      const correcthint = this.getAnswerHints(answer);
+      const correcthint = this.getAnswerHints(selectedFeedback[answer.id]);
       if (this.hasAttributeWithValue(answer, 'title')) {
-        const title = answerTitles ? answerTitles[answer.id] : answer.title;
         if (answer.correct && !firstCorrectAnswerParsed) {
           firstCorrectAnswerParsed = true;
           let responseParam = {};
@@ -297,13 +314,13 @@ class ReactStateOLXParser {
             };
           }
           answerObject = {
-            '@_answer': title,
+            '@_answer': answer.title,
             ...responseParam,
             ...correcthint,
           };
         } else if (answer.correct && firstCorrectAnswerParsed) {
           additionalAnswers.push({
-            '@_answer': title,
+            '@_answer': answer.title,
             ...correcthint,
           });
         }
@@ -319,13 +336,13 @@ class ReactStateOLXParser {
     return answerObject;
   }
 
-  getAnswerHints(elementObject) {
-    const feedback = elementObject?.selectedFeedback;
+  getAnswerHints(feedback) {
     let correcthint = {};
     if (feedback !== undefined && feedback !== '') {
+      const parsedFeedback = this.parser.parse(feedback);
       correcthint = {
         correcthint: {
-          '#text': feedback,
+          ...parsedFeedback,
         },
       };
     }

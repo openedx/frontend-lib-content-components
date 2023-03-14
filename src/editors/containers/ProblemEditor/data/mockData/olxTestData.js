@@ -5,16 +5,16 @@ export const getCheckboxesOLXWithFeedbackAndHintsOLX = () => ({
   <label>Add the question text, or prompt, here. This text is required.</label>
   <description>You can add an optional tip or note related to the prompt like this.</description>
   <checkboxgroup>
-      <choice correct="true">a correct answer
-        <choicehint selected="true">You can specify optional feedback that appears after the learner selects and submits this answer.</choicehint>
-        <choicehint selected="false">You can specify optional feedback that appears after the learner clears and submits this answer.</choicehint>
+      <choice correct="true"><p>a correct answer</p>
+        <choicehint selected="true"><p>You can specify optional feedback that appears after the learner selects and submits this answer.</p></choicehint>
+        <choicehint selected="false"><p>You can specify optional feedback that appears after the learner clears and submits this answer.</p></choicehint>
   </choice>
-      <choice correct="false">an incorrect answer</choice>
-      <choice correct="false">an incorrect answer
-        <choicehint selected="true">You can specify optional feedback for none, all, or a subset of the answers.</choicehint>
-        <choicehint selected="false">You can specify optional feedback for selected answers, cleared answers, or both.</choicehint>
+      <choice correct="false"><p>an incorrect answer</p></choice>
+      <choice correct="false"><p>an incorrect answer</p>
+        <choicehint selected="true"><p>You can specify optional feedback for none, all, or a subset of the answers.</p></choicehint>
+        <choicehint selected="false"><p>You can specify optional feedback for selected answers, cleared answers, or both.</p></choicehint>
   </choice>
-      <choice correct="true">a correct answer</choice>
+      <choice correct="true"><p>a correct answer</p></choice>
       <compoundhint value="A B D">You can specify optional feedback for a combination of answers which appears after the specified set of answers is submitted.</compoundhint>
       <compoundhint value="A B C D">You can specify optional feedback for one, several, or all answer combinations.</compoundhint>
     </checkboxgroup>
@@ -58,26 +58,26 @@ export const getCheckboxesOLXWithFeedbackAndHintsOLX = () => ({
     answers: [
       {
         id: 'A',
-        title: 'a correct answer',
+        title: '<p>a correct answer</p>',
         correct: true,
-        selectedFeedback: 'You can specify optional feedback that appears after the learner selects and submits this answer.',
-        unselectedFeedback: 'You can specify optional feedback that appears after the learner clears and submits this answer.',
+        selectedFeedback: '<p>You can specify optional feedback that appears after the learner selects and submits this answer.</p>',
+        unselectedFeedback: '<p>You can specify optional feedback that appears after the learner clears and submits this answer.</p>',
       },
       {
         id: 'B',
-        title: 'an incorrect answer',
+        title: '<p>an incorrect answer</p>',
         correct: false,
       },
       {
         id: 'C',
-        title: 'an incorrect answer',
+        title: '<p>an incorrect answer</p>',
         correct: false,
-        selectedFeedback: 'You can specify optional feedback for none, all, or a subset of the answers.',
-        unselectedFeedback: 'You can specify optional feedback for selected answers, cleared answers, or both.',
+        selectedFeedback: '<p>You can specify optional feedback for none, all, or a subset of the answers.</p>',
+        unselectedFeedback: '<p>You can specify optional feedback for selected answers, cleared answers, or both.</p>',
       },
       {
         id: 'D',
-        title: 'a correct answer',
+        title: '<p>a correct answer</p>',
         correct: true,
       },
     ],
@@ -111,15 +111,15 @@ export const getCheckboxesOLXWithFeedbackAndHintsOLX = () => ({
     <em>You can add an optional tip or note related to the prompt like this.</em>
     <checkboxgroup>
       <choice correct="true">
-a correct answer        <choicehint selected="true">You can specify optional feedback that appears after the learner selects and submits this answer.</choicehint>
-        <choicehint selected="false">You can specify optional feedback that appears after the learner clears and submits this answer.</choicehint>
+<p>a correct answer </p>       <choicehint selected="true"><p>You can specify optional feedback that appears after the learner selects and submits this answer.</p></choicehint>
+        <choicehint selected="false"><p>You can specify optional feedback that appears after the learner clears and submits this answer.</p></choicehint>
       </choice>
-      <choice correct="false">an incorrect answer</choice>
+      <choice correct="false"><p>an incorrect answer</p></choice>
       <choice correct="false">
-an incorrect answer        <choicehint selected="true">You can specify optional feedback for none, all, or a subset of the answers.</choicehint>
-        <choicehint selected="false">You can specify optional feedback for selected answers, cleared answers, or both.</choicehint>
+<p>an incorrect answer</p>        <choicehint selected="true"><p>You can specify optional feedback for none, all, or a subset of the answers.</p></choicehint>
+        <choicehint selected="false"><p>You can specify optional feedback for selected answers, cleared answers, or both.</p></choicehint>
       </choice>
-      <choice correct="true">a correct answer</choice>
+      <choice correct="true"><p>a correct answer</p></choice>
       <compoundhint value="A B D">You can specify optional feedback for a combination of answers which appears after the specified set of answers is submitted.</compoundhint>
       <compoundhint value="A B C D">You can specify optional feedback for one, several, or all answer combinations.</compoundhint>
     </checkboxgroup>
@@ -172,10 +172,10 @@ export const dropdownOLXWithFeedbackAndHintsOLX = {
 <label>Add the question text, or prompt, here. This text is required.</label>
 <description>You can add an optional tip or note related to the prompt like this. </description>
 <optioninput>
-    <option correct="false">an incorrect answer <optionhint>You can specify optional feedback like this, which appears after this answer is submitted.</optionhint>
+    <option correct="false">an incorrect answer <optionhint><p>You can specify optional feedback like this, which appears after this answer is submitted.</p></optionhint>
 </option>
     <option correct="true">the correct answer</option>
-    <option correct="false">an incorrect answer <optionhint>You can specify optional feedback for none, a subset, or all of the answers.</optionhint>
+    <option correct="false">an incorrect answer <optionhint><p>You can specify optional feedback for none, a subset, or all of the answers.</p></optionhint>
 </option>
   </optioninput>
 </optionresponse>
@@ -199,7 +199,7 @@ export const dropdownOLXWithFeedbackAndHintsOLX = {
         id: 'A',
         title: 'an incorrect answer',
         correct: false,
-        feedback: 'You can specify optional feedback like this, which appears after this answer is submitted.',
+        selectedFeedback: '<p>You can specify optional feedback like this, which appears after this answer is submitted.</p>',
       },
       {
         id: 'B',
@@ -210,7 +210,7 @@ export const dropdownOLXWithFeedbackAndHintsOLX = {
         id: 'C',
         title: 'an incorrect answer',
         correct: false,
-        feedback: 'You can specify optional feedback for none, a subset, or all of the answers.',
+        selectedFeedback: '<p>You can specify optional feedback for none, a subset, or all of the answers.</p>',
       },
     ],
   },
@@ -222,11 +222,11 @@ export const dropdownOLXWithFeedbackAndHintsOLX = {
     <em>You can add an optional tip or note related to the prompt like this.</em>
     <optioninput>
       <option correct="false">
-an incorrect answer        <optionhint>You can specify optional feedback like this, which appears after this answer is submitted.</optionhint>
+an incorrect answer        <optionhint><p>You can specify optional feedback like this, which appears after this answer is submitted.</p></optionhint>
       </option>
       <option correct="true">the correct answer</option>
       <option correct="false">
-an incorrect answer        <optionhint>You can specify optional feedback for none, a subset, or all of the answers.</optionhint>
+an incorrect answer        <optionhint><p>You can specify optional feedback for none, a subset, or all of the answers.</p></optionhint>
       </option>
     </optioninput>
   </optionresponse>
@@ -245,10 +245,10 @@ export const multipleChoiceWithFeedbackAndHintsOLX = {
 <label>Add the question text, or prompt, here. This text is required.</label>
 <description>You can add an optional tip or note related to the prompt like this. </description>
 <choicegroup type="MultipleChoice">
-    <choice correct="false">an incorrect answer <choicehint>You can specify optional feedback like this, which appears after this answer is submitted.</choicehint>
+    <choice correct="false"><p>an incorrect answer</p><choicehint><p>You can specify optional feedback like this, which appears after this answer is submitted.</p></choicehint>
 </choice>
-    <choice correct="true">the correct answer</choice>
-    <choice correct="false">an incorrect answer <choicehint>You can specify optional feedback for none, a subset, or all of the answers.</choicehint>
+    <choice correct="true"><p>the correct answer</p></choice>
+    <choice correct="false"><p>an incorrect answer</p><choicehint><p>You can specify optional feedback for none, a subset, or all of the answers.</></choicehint>
 </choice>
   </choicegroup>
 </multiplechoiceresponse>
@@ -270,20 +270,20 @@ export const multipleChoiceWithFeedbackAndHintsOLX = {
     answers: [
       {
         id: 'A',
-        title: 'an incorrect answer',
+        title: '<p>an incorrect answer</p>',
         correct: false,
-        feedback: 'You can specify optional feedback like this, which appears after this answer is submitted.',
+        selectedFeedback: '<p>You can specify optional feedback like this, which appears after this answer is submitted.</p>',
       },
       {
         id: 'B',
-        title: 'the correct answer',
+        title: '<p>the correct answer</p>',
         correct: true,
       },
       {
         id: 'C',
-        title: 'an incorrect answer',
+        title: '<p>an incorrect answer</p>',
         correct: false,
-        feedback: 'You can specify optional feedback for none, a subset, or all of the answers.',
+        selectedFeedback: '<p>You can specify optional feedback for none, a subset, or all of the answers.</p>',
       },
     ],
   },
@@ -295,11 +295,11 @@ export const multipleChoiceWithFeedbackAndHintsOLX = {
     <em>You can add an optional tip or note related to the prompt like this.</em>
     <choicegroup>
       <choice correct="false">
-an incorrect answer        <choicehint>You can specify optional feedback like this, which appears after this answer is submitted.</choicehint>
+<p>an incorrect answer</p>        <choicehint><p>You can specify optional feedback like this, which appears after this answer is submitted.</p></choicehint>
       </choice>
-      <choice correct="true">the correct answer</choice>
+      <choice correct="true"><p>the correct answer</p></choice>
       <choice correct="false">
-an incorrect answer        <choicehint>You can specify optional feedback for none, a subset, or all of the answers.</choicehint>
+<p>an incorrect answer </p>       <choicehint><p>You can specify optional feedback for none, a subset, or all of the answers.</p></choicehint>
       </choice>
     </choicegroup>
   </multiplechoiceresponse>
@@ -319,8 +319,8 @@ export const numericInputWithFeedbackAndHintsOLX = {
 <description>You can add an optional tip or note related to the prompt like this. </description>
 <responseparam type="tolerance" default="5"/>
   <formulaequationinput/>
-  <correcthint>You can specify optional feedback like this, which appears after this answer is submitted.</correcthint>
-  <additional_answer answer="200"><correcthint>You can specify optional feedback like this, which appears after this answer is submitted.</correcthint></additional_answer>
+  <correcthint><p>You can specify optional feedback like this, which appears after this answer is submitted.</p></correcthint>
+  <additional_answer answer="200"><correcthint><p>You can specify optional feedback like this, which appears after this answer is submitted.</p></correcthint></additional_answer>
 </numericalresponse>
 <demandhint>
   <hint>You can add an optional hint like this. Problems that have a hint include a hint button, and this text appears the first time learners select the button.</hint>
@@ -342,14 +342,14 @@ export const numericInputWithFeedbackAndHintsOLX = {
         id: 'A',
         title: '100',
         correct: true,
-        selectedFeedback: 'You can specify optional feedback like this, which appears after this answer is submitted.',
+        selectedFeedback: '<p>You can specify optional feedback like this, which appears after this answer is submitted.</p>',
         tolerance: '5',
       },
       {
         id: 'B',
         title: '200',
         correct: true,
-        selectedFeedback: 'You can specify optional feedback like this, which appears after this answer is submitted.',
+        selectedFeedback: '<p>You can specify optional feedback like this, which appears after this answer is submitted.</p>',
       },
     ],
   },
@@ -360,9 +360,9 @@ export const numericInputWithFeedbackAndHintsOLX = {
   <em>You can add an optional tip or note related to the prompt like this.</em>
   <numericalresponse answer="100">
     <responseparam type="tolerance" default="5"></responseparam>
-    <correcthint>You can specify optional feedback like this, which appears after this answer is submitted.</correcthint>
+    <correcthint><p>You can specify optional feedback like this, which appears after this answer is submitted.</p></correcthint>
     <additional_answer answer="200">
-      <correcthint>You can specify optional feedback like this, which appears after this answer is submitted.</correcthint>
+      <correcthint><p>You can specify optional feedback like this, which appears after this answer is submitted.</p></correcthint>
     </additional_answer>
     <formulaequationinput></formulaequationinput>
   </numericalresponse>
@@ -380,9 +380,9 @@ export const textInputWithFeedbackAndHintsOLX = {
   <p>You can use this template as a guide to the simple editor markdown and OLX markup to use for text input with hints and feedback problems. Edit this component to replace this template with your own assessment.</p>
 <label>Add the question text, or prompt, here. This text is required.</label>
 <description>You can add an optional tip or note related to the prompt like this. </description>
-<correcthint>You can specify optional feedback like this, which appears after this answer is submitted.</correcthint>
+<correcthint><p>You can specify optional feedback like this, which appears after this answer is submitted.</p></correcthint>
   <additional_answer answer="optional acceptable variant of the correct answer"/>
-  <stringequalhint answer="optional incorrect answer such as a frequent misconception">You can specify optional feedback for none, a subset, or all of the answers.</stringequalhint>
+  <stringequalhint answer="optional incorrect answer such as a frequent misconception"><p>You can specify optional feedback for none, a subset, or all of the answers.</p></stringequalhint>
   <textline size="20"/>
 </stringresponse>
 <demandhint>
@@ -405,7 +405,7 @@ export const textInputWithFeedbackAndHintsOLX = {
         id: 'A',
         title: 'the correct answer',
         correct: true,
-        selectedFeedback: 'You can specify optional feedback like this, which appears after this answer is submitted.',
+        selectedFeedback: '<p>You can specify optional feedback like this, which appears after this answer is submitted.</p>',
       },
       {
         id: 'B',
@@ -417,7 +417,7 @@ export const textInputWithFeedbackAndHintsOLX = {
         id: 'C',
         title: 'optional incorrect answer such as a frequent misconception',
         correct: false,
-        selectedFeedback: 'You can specify optional feedback for none, a subset, or all of the answers.',
+        selectedFeedback: '<p>You can specify optional feedback for none, a subset, or all of the answers.</p>',
       },
     ],
     additionalStringAttributes: {
@@ -433,9 +433,9 @@ export const textInputWithFeedbackAndHintsOLX = {
     <p>You can use this template as a guide to the simple editor markdown and OLX markup to use for text input with hints and feedback problems. Edit this component to replace this template with your own assessment.</p>
     <label>Add the question text, or prompt, here. This text is required.</label>
     <em>You can add an optional tip or note related to the prompt like this.</em>
-    <correcthint>You can specify optional feedback like this, which appears after this answer is submitted.</correcthint>
+    <correcthint><p>You can specify optional feedback like this, which appears after this answer is submitted.</p></correcthint>
     <additional_answer answer="optional acceptable variant of the correct answer"></additional_answer>
-    <stringequalhint answer="optional incorrect answer such as a frequent misconception">You can specify optional feedback for none, a subset, or all of the answers.</stringequalhint>
+    <stringequalhint answer="optional incorrect answer such as a frequent misconception"><p>You can specify optional feedback for none, a subset, or all of the answers.</p></stringequalhint>
     <textline size="20"></textline>
   </stringresponse>
   <demandhint>
@@ -512,14 +512,14 @@ export const textInputWithFeedbackAndHintsOLXWithMultipleAnswers = {
     <p>You can use this template as a guide to the simple editor markdown and OLX markup to use for text input with hints and feedback problems. Edit this component to replace this template with your own assessment.</p>
     <label>Add the question text, or prompt, here. This text is required.</label>
     <em>You can add an optional tip or note related to the prompt like this.</em>
-    <correcthint>You can specify optional feedback like this, which appears after this answer is submitted.</correcthint>
+    <correcthint><p>You can specify optional feedback like this, which appears after this answer is submitted.</p></correcthint>
     <additional_answer answer="300">
-      <correcthint>You can specify optional feedback like this, which appears after this answer is submitted.</correcthint>
+      <correcthint><p>You can specify optional feedback like this, which appears after this answer is submitted.</p></correcthint>
     </additional_answer>
     <additional_answer answer="400">
-      <correcthint>You can specify optional feedback like this, which appears after this answer is submitted.</correcthint>
+      <correcthint><p>You can specify optional feedback like this, which appears after this answer is submitted.</p></correcthint>
     </additional_answer>
-    <stringequalhint answer="optional incorrect answer such as a frequent misconception">You can specify optional feedback for none, a subset, or all of the answers.</stringequalhint>
+    <stringequalhint answer="optional incorrect answer such as a frequent misconception"><p>You can specify optional feedback for none, a subset, or all of the answers.</p></stringequalhint>
     <textline size="20"></textline>
   </stringresponse>
   <demandhint>
