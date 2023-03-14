@@ -4,6 +4,7 @@ import _ from 'lodash-es';
 import * as module from './hooks';
 import messages from './messages';
 import { ProblemTypeKeys, ProblemTypes, ShowAnswerTypesKeys } from '../../../../../data/constants/problem';
+import { fetchEditorContent } from '../hooks';
 
 export const state = {
   showAdvanced: (val) => useState(val),
@@ -206,24 +207,54 @@ export const typeRowHooks = ({
   updateField,
   updateAnswer,
 }) => {
+  const richTextProblems = [ProblemTypeKeys.SINGLESELECT, ProblemTypeKeys.MULTISELECT];
+
   const clearPreviouslySelectedAnswers = () => {
+    let currentAnswerTitles;
+    if (richTextProblems.includes(problemType)) {
+      currentAnswerTitles = fetchEditorContent({ format: 'text' }).answers;
+    }
     answers.forEach(answer => {
+      const title = currentAnswerTitles ? currentAnswerTitles[answer.id] : answer.title;
       if (answer.correct) {
-        updateAnswer({ ...answer, correct: false });
+        updateAnswer({ ...answer, title, correct: false });
+      } else {
+        updateAnswer({ ...answer, title });
       }
     });
   };
+
   const updateAnswersToCorrect = () => {
+    let currentAnswerTitles;
+    if (richTextProblems.includes(problemType)) {
+      currentAnswerTitles = fetchEditorContent({ format: 'text' }).answers;
+    }
     answers.forEach(answer => {
-      updateAnswer({ ...answer, correct: true });
+      const title = currentAnswerTitles ? currentAnswerTitles[answer.id] : answer.title;
+      updateAnswer({ ...answer, title, correct: true });
     });
   };
+
+  const convertToPlainText = () => {
+    const currentAnswerTitles = fetchEditorContent({ format: 'text' }).answers;
+    answers.forEach(answer => {
+      updateAnswer({ ...answer, title: currentAnswerTitles[answer.id] });
+    });
+  };
+
   const onClick = () => {
+    // Numeric, text, and dropdowns cannot render HTML as answer values, so if switching from a single select
+    // or multi-select problem the rich text needs to covert to plain text
+    if (typeKey === ProblemTypeKeys.TEXTINPUT && richTextProblems.includes(problemType)) {
+      convertToPlainText();
+    }
     // Dropdown problems can only have one correct answer. When there is more than one correct answer
     // from a previous problem type, the correct attribute for selected answers need to be set to false.
     if (typeKey === ProblemTypeKeys.DROPDOWN) {
       if (correctAnswerCount > 1) {
         clearPreviouslySelectedAnswers();
+      } else if (richTextProblems.includes(problemType)) {
+        convertToPlainText();
       }
     }
     // Numeric input problems can only have correct answers. Switch all answers to correct when switching
@@ -231,6 +262,7 @@ export const typeRowHooks = ({
     if (typeKey === ProblemTypeKeys.NUMERIC) {
       updateAnswersToCorrect();
     }
+
     if (blockTitle === ProblemTypes[problemType].title) {
       setBlockTitle(ProblemTypes[typeKey].title);
     }

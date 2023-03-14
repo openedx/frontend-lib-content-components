@@ -3,7 +3,7 @@ import ReactStateSettingsParser from '../../data/ReactStateSettingsParser';
 import ReactStateOLXParser from '../../data/ReactStateOLXParser';
 import { setAssetToStaticUrl } from '../../../../sharedComponents/TinyMceWidget/hooks';
 
-export const fetchEditorContent = () => {
+export const fetchEditorContent = ({ format }) => {
   const editorObject = {};
   const EditorsArray = window.tinymce.editors;
   Object.entries(EditorsArray).forEach(([id, editor]) => {
@@ -11,7 +11,7 @@ export const fetchEditorContent = () => {
       if (id.startsWith('answer')) {
         const { answers } = editorObject;
         const answerId = id.substring(id.indexOf('-') + 1);
-        editorObject.answers = { ...answers, [answerId]: editor.getContent() };
+        editorObject.answers = { ...answers, [answerId]: editor.getContent({ format }) };
       } else {
         editorObject[id] = editor.getContent();
       }
@@ -27,7 +27,7 @@ export const parseState = ({
   assets,
   lmsEndpointUrl,
 }) => () => {
-  const editorObject = fetchEditorContent();
+  const editorObject = fetchEditorContent({ format: '' });
   const reactSettingsParser = new ReactStateSettingsParser(problem);
   const reactOLXParser = new ReactStateOLXParser({ problem, editorObject });
   const reactBuiltOlx = setAssetToStaticUrl({ editorValue: reactOLXParser.buildOLX(), assets, lmsEndpointUrl });
