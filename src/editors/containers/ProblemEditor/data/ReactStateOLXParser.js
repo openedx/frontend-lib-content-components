@@ -36,11 +36,14 @@ class ReactStateOLXParser {
 
   addHints() {
     const hintsArray = [];
-    const hints = _.get(this.problemState, 'settings.hints', []);
-    hints.forEach(element => {
-      hintsArray.push({
-        '#text': element.value,
-      });
+    const { hints } = this.editorObject;
+    hints.forEach(hint => {
+      if (hint.length > 0) {
+        const parsedHint = this.parser.parse(hint);
+        hintsArray.push({
+          ...parsedHint,
+        });
+      }
     });
     const demandhint = {
       demandhint: {

@@ -27,6 +27,10 @@ export const checkboxesWithFeedbackAndHints = {
     C: '<p>You can specify optional feedback for selected answers, cleared answers, or both.</p>',
     D: '',
   },
+  hints: [
+    '<p>You can add an optional hint like this. Problems that have a hint include a hint button, and this text appears the first time learners select the button.</p>',
+    '<p>If you add more than one hint, a different hint appears each time learners select the hint button.</p>',
+  ],
 };
 
 export const dropdownWithFeedbackAndHints = {
@@ -36,6 +40,10 @@ export const dropdownWithFeedbackAndHints = {
     B: '',
     C: '<p>You can specify optional feedback for none, a subset, or all of the answers.</p>',
   },
+  hints: [
+    '<p>You can add an optional hint like this. Problems that have a hint include a hint button, and this text appears the first time learners select the button.</p>',
+    '<p>If you add more than one hint, a different hint appears each time learners select the hint button.</p>',
+  ],
   question: '<p>You can use this template as a guide to the simple editor markdown and OLX markup to use for dropdown with hints and feedback problems. Edit this component to replace this template with your own assessment.</p><label>Add the question text, or prompt, here. This text is required.</label><em>You can add an optional tip or note related to the prompt like this.</em>',
 };
 
@@ -52,6 +60,10 @@ export const multipleChoiceWithFeedbackAndHints = {
     B: '',
     C: '<p>You can specify optional feedback for none, a subset, or all of the answers.</p>',
   },
+  hints: [
+    '<p>You can add an optional hint like this. Problems that have a hint include a hint button, and this text appears the first time learners select the button.</p>',
+    '<p>If you add more than one hint, a different hint appears each time learners select the hint button.</p>',
+  ],
 };
 
 export const numericInputWithFeedbackAndHints = {
@@ -60,6 +72,10 @@ export const numericInputWithFeedbackAndHints = {
     A: '<p>You can specify optional feedback like this, which appears after this answer is submitted.</p>',
     B: '<p>You can specify optional feedback like this, which appears after this answer is submitted.</p>',
   },
+  hints: [
+    '<p>You can add an optional hint like this. Problems that have a hint include a hint button, and this text appears the first time learners select the button.</p>',
+    '<p>If you add more than one hint, a different hint appears each time learners select the hint button.</p>',
+  ],
   question: '<p>You can use this template as a guide to the simple editor markdown and OLX markup to use for numerical input with hints and feedback problems. Edit this component to replace this template with your own assessment.</p><label>Add the question text, or prompt, here. This text is required.</label><em>You can add an optional tip or note related to the prompt like this.</em>',
 };
 
@@ -70,6 +86,10 @@ export const textInputWithFeedbackAndHints = {
     B: '',
     C: '<p>You can specify optional feedback for none, a subset, or all of the answers.</p>',
   },
+  hints: [
+    '<p>You can add an optional hint like this. Problems that have a hint include a hint button, and this text appears the first time learners select the button.</p>',
+    '<p>If you add more than one hint, a different hint appears each time learners select the hint button.</p>',
+  ],
   question: '<p>You can use this template as a guide to the simple editor markdown and OLX markup to use for text input with hints and feedback problems. Edit this component to replace this template with your own assessment.</p><label>Add the question text, or prompt, here. This text is required.</label><em>You can add an optional tip or note related to the prompt like this.</em>',
 };
 
@@ -81,5 +101,9 @@ export const textInputWithFeedbackAndHintsWithMultipleAnswers = {
     C: '<p>You can specify optional feedback like this, which appears after this answer is submitted.</p>',
     D: '<p>You can specify optional feedback for none, a subset, or all of the answers.</p>',
   },
+  hints: [
+    '<p>You can add an optional hint like this. Problems that have a hint include a hint button, and this text appears the first time learners select the button.</p>',
+    '<p>If you add more than one hint, a different hint appears each time learners select the hint button.</p>',
+  ],
   question: '<p>You can use this template as a guide to the simple editor markdown and OLX markup to use for text input with hints and feedback problems. Edit this component to replace this template with your own assessment.</p><label>Add the question text, or prompt, here. This text is required.</label><em>You can add an optional tip or note related to the prompt like this.</em>',
 };

@@ -338,15 +338,17 @@ export class OLXParser {
       const hint = _.get(this.problem, 'demandhint.hint');
       if (_.isArray(hint)) {
         hint.forEach(element => {
+          const hintValue = this.builder.build(element);
           hintsObject.push({
             id: hintsObject.length,
-            value: element['#text'],
+            value: hintValue,
           });
         });
       } else {
+        const hintValue = this.builder.build(hint);
         hintsObject.push({
           id: hintsObject.length,
-          value: hint['#text'],
+          value: hintValue,
         });
       }
     }

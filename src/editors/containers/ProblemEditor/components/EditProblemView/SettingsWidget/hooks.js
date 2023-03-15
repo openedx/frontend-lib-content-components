@@ -21,11 +21,17 @@ export const showAdvancedSettingsCards = () => {
   };
 };
 
-export const showFullCard = () => {
-  const [isCardCollapsibleOpen, setIsCardCollapsibleOpen] = module.state.cardCollapsed(false);
+export const showFullCard = (hasExpandableTextArea) => {
+  const [isCardCollapsibleOpen, setIsCardCollapsibleOpen] = module.state.cardCollapsed(hasExpandableTextArea);
   return {
     isCardCollapsibleOpen,
-    toggleCardCollapse: () => setIsCardCollapsibleOpen(!isCardCollapsibleOpen),
+    toggleCardCollapse: () => {
+      if (hasExpandableTextArea) {
+        setIsCardCollapsibleOpen(true);
+      } else {
+        setIsCardCollapsibleOpen(!isCardCollapsibleOpen);
+      }
+    },
   };
 };
 
@@ -58,8 +64,7 @@ export const hintsCardHooks = (hints, updateSettings) => {
 };
 
 export const hintsRowHooks = (id, hints, updateSettings) => {
-  const handleChange = (event) => {
-    const { value } = event.target;
+  const handleChange = (value) => {
     const modifiedHints = hints.map(hint => {
       if (hint.id === id) {
         return { ...hint, value };
@@ -74,18 +79,9 @@ export const hintsRowHooks = (id, hints, updateSettings) => {
     updateSettings({ hints: modifiedHints });
   };
 
-  const handleEmptyHint = (event) => {
-    const { value } = event.target;
-    if (value === '') {
-      const modifiedHints = hints.filter((hint) => (hint.id !== id));
-      updateSettings({ hints: modifiedHints });
-    }
-  };
-
   return {
     handleChange,
     handleDelete,
-    handleEmptyHint,
   };
 };
 

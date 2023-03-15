@@ -1,28 +1,28 @@
 import React from 'react';
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 import {
-  ActionRow, Form, Icon, IconButton,
+  ActionRow, Icon, IconButton,
 } from '@edx/paragon';
 import { DeleteOutline } from '@edx/paragon/icons';
 import PropTypes from 'prop-types';
 import messages from '../messages';
+import ExpandableTextArea from '../../../../../../sharedComponents/ExpandableTextArea';
 
 export const HintRow = ({
   value,
   handleChange,
   handleDelete,
-  handleEmptyHint,
+  id,
   // injected
   intl,
 }) => (
   <ActionRow className="mb-4">
-    <Form.Control
+    <ExpandableTextArea
       value={value}
-      onChange={handleChange}
-      onBlur={handleEmptyHint}
-      floatingLabel={intl.formatMessage(messages.hintInputLabel)}
+      setContent={handleChange}
+      placeholder={intl.formatMessage(messages.hintInputLabel)}
+      id={`hint-${id}`}
     />
-    <ActionRow.Spacer />
     <IconButton
       src={DeleteOutline}
       iconAs={Icon}
@@ -36,7 +36,7 @@ HintRow.propTypes = {
   value: PropTypes.string.isRequired,
   handleChange: PropTypes.func.isRequired,
   handleDelete: PropTypes.func.isRequired,
-  handleEmptyHint: PropTypes.func.isRequired,
+  id: PropTypes.string.isRequired,
   // injected
   intl: intlShape.isRequired,
 };

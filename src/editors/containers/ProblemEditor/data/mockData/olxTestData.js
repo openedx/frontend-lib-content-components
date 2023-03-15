@@ -31,18 +31,18 @@ export const getCheckboxesOLXWithFeedbackAndHintsOLX = () => ({
       </solution>
   </choiceresponse>
   <demandhint>
-    <hint>You can add an optional hint like this. Problems that have a hint include a hint button, and this text appears the first time learners select the button.</hint>
-    <hint>If you add more than one hint, a different hint appears each time learners select the hint button.</hint>
+    <hint><p>You can add an optional hint like this. Problems that have a hint include a hint button, and this text appears the first time learners select the button.</p></hint>
+    <hint><p>If you add more than one hint, a different hint appears each time learners select the hint button.</p></hint>
   </demandhint>
   </problem>`,
   hints: [
     {
       id: 0,
-      value: 'You can add an optional hint like this. Problems that have a hint include a hint button, and this text appears the first time learners select the button.',
+      value: '<p>You can add an optional hint like this. Problems that have a hint include a hint button, and this text appears the first time learners select the button.</p>',
     },
     {
       id: 1,
-      value: 'If you add more than one hint, a different hint appears each time learners select the hint button.',
+      value: '<p>If you add more than one hint, a different hint appears each time learners select the hint button.</p>',
     },
   ],
   solutionExplanation: `<div class="detailed-solution">
@@ -136,8 +136,8 @@ export const getCheckboxesOLXWithFeedbackAndHintsOLX = () => ({
       </solution>
   </choiceresponse>
   <demandhint>
-    <hint>You can add an optional hint like this. Problems that have a hint include a hint button, and this text appears the first time learners select the button.</hint>
-    <hint>If you add more than one hint, a different hint appears each time learners select the hint button.</hint>
+    <hint><p>You can add an optional hint like this. Problems that have a hint include a hint button, and this text appears the first time learners select the button.</p></hint>
+    <hint><p>If you add more than one hint, a different hint appears each time learners select the hint button.</p></hint>
   </demandhint>
 </problem>
 `,
@@ -180,17 +180,17 @@ export const dropdownOLXWithFeedbackAndHintsOLX = {
   </optioninput>
 </optionresponse>
 <demandhint>
-  <hint>You can add an optional hint like this. Problems that have a hint include a hint button, and this text appears the first time learners select the button.</hint>
-  <hint>If you add more than one hint, a different hint appears each time learners select the hint button.</hint>
+  <hint><p>You can add an optional hint like this. Problems that have a hint include a hint button, and this text appears the first time learners select the button.</p></hint>
+  <hint><p>If you add more than one hint, a different hint appears each time learners select the hint button.</p></hint>
 </demandhint>
 </problem>`,
   hints: [{
     id: 0,
-    value: 'You can add an optional hint like this. Problems that have a hint include a hint button, and this text appears the first time learners select the button.',
+    value: '<p>You can add an optional hint like this. Problems that have a hint include a hint button, and this text appears the first time learners select the button.</p>',
   },
   {
     id: 1,
-    value: 'If you add more than one hint, a different hint appears each time learners select the hint button.',
+    value: '<p>If you add more than one hint, a different hint appears each time learners select the hint button.</p>',
   },
   ],
   data: {
@@ -231,8 +231,8 @@ an incorrect answer        <optionhint><p>You can specify optional feedback for 
     </optioninput>
   </optionresponse>
   <demandhint>
-    <hint>You can add an optional hint like this. Problems that have a hint include a hint button, and this text appears the first time learners select the button.</hint>
-    <hint>If you add more than one hint, a different hint appears each time learners select the hint button.</hint>
+    <hint><p>You can add an optional hint like this. Problems that have a hint include a hint button, and this text appears the first time learners select the button.</p></hint>
+    <hint><p>If you add more than one hint, a different hint appears each time learners select the hint button.</p></hint>
   </demandhint>
 </problem>
 `,
@@ -253,17 +253,17 @@ export const multipleChoiceWithFeedbackAndHintsOLX = {
   </choicegroup>
 </multiplechoiceresponse>
 <demandhint>
-  <hint>You can add an optional hint like this. Problems that have a hint include a hint button, and this text appears the first time learners select the button.</hint>
-  <hint>If you add more than one hint, a different hint appears each time learners select the hint button.</hint>
+  <hint><p>You can add an optional hint like this. Problems that have a hint include a hint button, and this text appears the first time learners select the button.</p></hint>
+  <hint><p>If you add more than one hint, a different hint appears each time learners select the hint button.</p></hint>
 </demandhint>
 </problem>`,
   hints: [{
     id: 0,
-    value: 'You can add an optional hint like this. Problems that have a hint include a hint button, and this text appears the first time learners select the button.',
+    value: '<p>You can add an optional hint like this. Problems that have a hint include a hint button, and this text appears the first time learners select the button.</p>',
   },
   {
     id: 1,
-    value: 'If you add more than one hint, a different hint appears each time learners select the hint button.',
+    value: '<p>If you add more than one hint, a different hint appears each time learners select the hint button.</p>',
   },
   ],
   data: {
@@ -304,8 +304,8 @@ export const multipleChoiceWithFeedbackAndHintsOLX = {
     </choicegroup>
   </multiplechoiceresponse>
   <demandhint>
-    <hint>You can add an optional hint like this. Problems that have a hint include a hint button, and this text appears the first time learners select the button.</hint>
-    <hint>If you add more than one hint, a different hint appears each time learners select the hint button.</hint>
+    <hint><p>You can add an optional hint like this. Problems that have a hint include a hint button, and this text appears the first time learners select the button.</p></hint>
+    <hint><p>If you add more than one hint, a different hint appears each time learners select the hint button.</p></hint>
   </demandhint>
 </problem>
 `,
@@ -323,17 +323,17 @@ export const numericInputWithFeedbackAndHintsOLX = {
   <additional_answer answer="200"><correcthint><p>You can specify optional feedback like this, which appears after this answer is submitted.</p></correcthint></additional_answer>
 </numericalresponse>
 <demandhint>
-  <hint>You can add an optional hint like this. Problems that have a hint include a hint button, and this text appears the first time learners select the button.</hint>
-  <hint>If you add more than one hint, a different hint appears each time learners select the hint button.</hint>
+  <hint><p>You can add an optional hint like this. Problems that have a hint include a hint button, and this text appears the first time learners select the button.</p></hint>
+  <hint><p>If you add more than one hint, a different hint appears each time learners select the hint button.</p></hint>
 </demandhint>
 </problem>`,
   hints: [{
     id: 0,
-    value: 'You can add an optional hint like this. Problems that have a hint include a hint button, and this text appears the first time learners select the button.',
+    value: '<p>You can add an optional hint like this. Problems that have a hint include a hint button, and this text appears the first time learners select the button.</p>',
   },
   {
     id: 1,
-    value: 'If you add more than one hint, a different hint appears each time learners select the hint button.',
+    value: '<p>If you add more than one hint, a different hint appears each time learners select the hint button.</p>',
   },
   ],
   data: {
@@ -367,8 +367,8 @@ export const numericInputWithFeedbackAndHintsOLX = {
     <formulaequationinput></formulaequationinput>
   </numericalresponse>
   <demandhint>
-    <hint>You can add an optional hint like this. Problems that have a hint include a hint button, and this text appears the first time learners select the button.</hint>
-    <hint>If you add more than one hint, a different hint appears each time learners select the hint button.</hint>
+    <hint><p>You can add an optional hint like this. Problems that have a hint include a hint button, and this text appears the first time learners select the button.</p></hint>
+    <hint><p>If you add more than one hint, a different hint appears each time learners select the hint button.</p></hint>
   </demandhint>
 </problem>
 `,
@@ -386,17 +386,17 @@ export const textInputWithFeedbackAndHintsOLX = {
   <textline size="20"/>
 </stringresponse>
 <demandhint>
-  <hint>You can add an optional hint like this. Problems that have a hint include a hint button, and this text appears the first time learners select the button.</hint>
-  <hint>If you add more than one hint, a different hint appears each time learners select the hint button.</hint>
+  <hint><p>You can add an optional hint like this. Problems that have a hint include a hint button, and this text appears the first time learners select the button.</p></hint>
+  <hint><p>If you add more than one hint, a different hint appears each time learners select the hint button.</p></hint>
 </demandhint>
 </problem>`,
   hints: [{
     id: 0,
-    value: 'You can add an optional hint like this. Problems that have a hint include a hint button, and this text appears the first time learners select the button.',
+    value: '<p>You can add an optional hint like this. Problems that have a hint include a hint button, and this text appears the first time learners select the button.</p>',
   },
   {
     id: 1,
-    value: 'If you add more than one hint, a different hint appears each time learners select the hint button.',
+    value: '<p>If you add more than one hint, a different hint appears each time learners select the hint button.</p>',
   },
   ],
   data: {
@@ -439,8 +439,8 @@ export const textInputWithFeedbackAndHintsOLX = {
     <textline size="20"></textline>
   </stringresponse>
   <demandhint>
-    <hint>You can add an optional hint like this. Problems that have a hint include a hint button, and this text appears the first time learners select the button.</hint>
-    <hint>If you add more than one hint, a different hint appears each time learners select the hint button.</hint>
+    <hint><p>You can add an optional hint like this. Problems that have a hint include a hint button, and this text appears the first time learners select the button.</p></hint>
+    <hint><p>If you add more than one hint, a different hint appears each time learners select the hint button.</p></hint>
   </demandhint>
 </problem>
 `,
@@ -459,17 +459,17 @@ export const textInputWithFeedbackAndHintsOLXWithMultipleAnswers = {
   <textline size="20"/>
 </stringresponse>
 <demandhint>
-  <hint>You can add an optional hint like this. Problems that have a hint include a hint button, and this text appears the first time learners select the button.</hint>
-  <hint>If you add more than one hint, a different hint appears each time learners select the hint button.</hint>
+  <hint><p>You can add an optional hint like this. Problems that have a hint include a hint button, and this text appears the first time learners select the button.</p></hint>
+  <hint><p>If you add more than one hint, a different hint appears each time learners select the hint button.</p></hint>
 </demandhint>
 </problem>`,
   hints: [{
     id: 0,
-    value: 'You can add an optional hint like this. Problems that have a hint include a hint button, and this text appears the first time learners select the button.',
+    value: '<p>You can add an optional hint like this. Problems that have a hint include a hint button, and this text appears the first time learners select the button.</p>',
   },
   {
     id: 1,
-    value: 'If you add more than one hint, a different hint appears each time learners select the hint button.',
+    value: '<p>If you add more than one hint, a different hint appears each time learners select the hint button.</p>',
   },
   ],
   data: {
@@ -523,8 +523,8 @@ export const textInputWithFeedbackAndHintsOLXWithMultipleAnswers = {
     <textline size="20"></textline>
   </stringresponse>
   <demandhint>
-    <hint>You can add an optional hint like this. Problems that have a hint include a hint button, and this text appears the first time learners select the button.</hint>
-    <hint>If you add more than one hint, a different hint appears each time learners select the hint button.</hint>
+    <hint><p>You can add an optional hint like this. Problems that have a hint include a hint button, and this text appears the first time learners select the button.</p></hint>
+    <hint><p>If you add more than one hint, a different hint appears each time learners select the hint button.</p></hint>
   </demandhint>
 </problem>
 `,

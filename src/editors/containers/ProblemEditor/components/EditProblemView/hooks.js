@@ -4,7 +4,7 @@ import ReactStateOLXParser from '../../data/ReactStateOLXParser';
 import { setAssetToStaticUrl } from '../../../../sharedComponents/TinyMceWidget/hooks';
 
 export const fetchEditorContent = ({ format }) => {
-  const editorObject = {};
+  const editorObject = { hints: [] };
   const EditorsArray = window.tinymce.editors;
   Object.entries(EditorsArray).forEach(([id, editor]) => {
     if (Number.isNaN(parseInt(id))) {
@@ -21,6 +21,9 @@ export const fetchEditorContent = ({ format }) => {
         if (id.startsWith('unselected')) {
           editorObject.unselectedFeedback = { ...unselectedFeedback, [feedbackId]: editor.getContent({ format }) };
         }
+      } else if (id.startsWith('hint')) {
+        const { hints } = editorObject;
+        hints.push(editor.getContent({ format }));
       } else {
         editorObject[id] = editor.getContent();
       }

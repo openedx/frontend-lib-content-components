@@ -107,15 +107,11 @@ describe('Problem settings hooks', () => {
       output = hooks.hintsRowHooks(2, hints, updateSettings);
     });
     test('test handleChange', () => {
-      output.handleChange({ target: { value } });
+      output.handleChange(value);
       expect(updateSettings).toHaveBeenCalledWith({ hints: [hint1, modifiedHint] });
     });
     test('test handleDelete', () => {
       output.handleDelete();
-      expect(updateSettings).toHaveBeenCalledWith({ hints: [hint1] });
-    });
-    test('test handleEmptyHint', () => {
-      output.handleEmptyHint({ target: { value: '' } });
       expect(updateSettings).toHaveBeenCalledWith({ hints: [hint1] });
     });
   });

@@ -4,12 +4,14 @@ exports[`HintRow snapshot snapshot: renders hints row 1`] = `
 <ActionRow
   className="mb-4"
 >
-  <Form.Control
-    floatingLabel="Hint"
-    onChange={[MockFunction]}
+  <ExpandableTextArea
+    error={false}
+    errorMessage={null}
+    id="hint-undefined"
+    placeholder="Hint"
+    setContent={[MockFunction]}
     value="hint_1"
   />
-  <ActionRow.Spacer />
   <IconButton
     alt="Delete answer"
     iconAs="Icon"
