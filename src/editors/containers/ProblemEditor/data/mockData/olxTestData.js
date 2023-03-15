@@ -15,8 +15,8 @@ export const getCheckboxesOLXWithFeedbackAndHintsOLX = () => ({
         <choicehint selected="false"><p>You can specify optional feedback for selected answers, cleared answers, or both.</p></choicehint>
   </choice>
       <choice correct="true"><p>a correct answer</p></choice>
-      <compoundhint value="A B D">You can specify optional feedback for a combination of answers which appears after the specified set of answers is submitted.</compoundhint>
-      <compoundhint value="A B C D">You can specify optional feedback for one, several, or all answer combinations.</compoundhint>
+      <compoundhint value="A B D"><p>You can specify optional feedback for a combination of answers which appears after the specified set of answers is submitted.</p></compoundhint>
+      <compoundhint value="A B C D"><p>You can specify optional feedback for one, several, or all answer combinations.</p></compoundhint>
     </checkboxgroup>
     <solution>
         <div class="detailed-solution">
@@ -89,7 +89,7 @@ export const getCheckboxesOLXWithFeedbackAndHintsOLX = () => ({
           'B',
           'D',
         ],
-        feedback: 'You can specify optional feedback for a combination of answers which appears after the specified set of answers is submitted.',
+        feedback: '<p>You can specify optional feedback for a combination of answers which appears after the specified set of answers is submitted.</p>',
       },
       {
         id: 1,
@@ -99,7 +99,7 @@ export const getCheckboxesOLXWithFeedbackAndHintsOLX = () => ({
           'C',
           'D',
         ],
-        feedback: 'You can specify optional feedback for one, several, or all answer combinations.',
+        feedback: '<p>You can specify optional feedback for one, several, or all answer combinations.</p>',
       },
     ],
   },
@@ -120,8 +120,8 @@ export const getCheckboxesOLXWithFeedbackAndHintsOLX = () => ({
         <choicehint selected="false"><p>You can specify optional feedback for selected answers, cleared answers, or both.</p></choicehint>
       </choice>
       <choice correct="true"><p>a correct answer</p></choice>
-      <compoundhint value="A B D">You can specify optional feedback for a combination of answers which appears after the specified set of answers is submitted.</compoundhint>
-      <compoundhint value="A B C D">You can specify optional feedback for one, several, or all answer combinations.</compoundhint>
+      <compoundhint value="A B D"><p>You can specify optional feedback for a combination of answers which appears after the specified set of answers is submitted.</p></compoundhint>
+      <compoundhint value="A B C D"><p>You can specify optional feedback for one, several, or all answer combinations.</p></compoundhint>
     </checkboxgroup>
       <solution>
       <div class="detailed-solution">

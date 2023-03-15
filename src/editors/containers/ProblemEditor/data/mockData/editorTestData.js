@@ -31,6 +31,10 @@ export const checkboxesWithFeedbackAndHints = {
     '<p>You can add an optional hint like this. Problems that have a hint include a hint button, and this text appears the first time learners select the button.</p>',
     '<p>If you add more than one hint, a different hint appears each time learners select the hint button.</p>',
   ],
+  groupFeedback: {
+    0: '<p>You can specify optional feedback for a combination of answers which appears after the specified set of answers is submitted.</p>',
+    1: '<p>You can specify optional feedback for one, several, or all answer combinations.</p>',
+  },
 };
 
 export const dropdownWithFeedbackAndHints = {

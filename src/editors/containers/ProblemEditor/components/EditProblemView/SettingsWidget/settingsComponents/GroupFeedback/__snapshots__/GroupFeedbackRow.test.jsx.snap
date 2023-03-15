@@ -7,8 +7,12 @@ exports[`GroupFeedbackRow snapshot snapshot: renders hints row 1`] = `
   <ActionRow
     className="mb-2"
   >
-    <Form.Control
+    <ExpandableTextArea
+      error={false}
+      errorMessage={null}
+      id="groupFeedback-0"
       onChange={[MockFunction handleFeedbackChange]}
+      placeholder={null}
       value="sOmE FeEDBACK"
     />
     <div

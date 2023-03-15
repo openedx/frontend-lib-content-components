@@ -6,6 +6,7 @@ import {
 import { DeleteOutline } from '@edx/paragon/icons';
 import PropTypes from 'prop-types';
 import messages from '../../messages';
+import ExpandableTextArea from '../../../../../../../sharedComponents/ExpandableTextArea';
 
 export const GroupFeedbackRow = ({
   value,
@@ -13,15 +14,17 @@ export const GroupFeedbackRow = ({
   handleFeedbackChange,
   handleDelete,
   answers,
+  id,
   // injected
   intl,
 }) => (
 
   <div className="mb-4">
     <ActionRow className="mb-2">
-      <Form.Control
+      <ExpandableTextArea
         value={value.feedback}
         onChange={handleFeedbackChange}
+        id={`groupFeedback-${id}`}
       />
       <div className="d-flex flex-row flex-nowrap">
         <IconButton
@@ -69,6 +72,7 @@ GroupFeedbackRow.propTypes = {
     answers: PropTypes.arrayOf(PropTypes.string),
     feedback: PropTypes.string,
   }).isRequired,
+  id: PropTypes.string.isRequired,
   // injected
   intl: intlShape.isRequired,
 };

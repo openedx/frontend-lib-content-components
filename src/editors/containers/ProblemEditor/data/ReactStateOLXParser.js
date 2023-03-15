@@ -96,8 +96,8 @@ class ReactStateOLXParser {
       const feedback = [];
       let singleAnswer = {};
       const title = answerTitles ? this.parser.parse(answerTitles[answer.id]) : { '#text': answer.title };
-      const currentSelectedFeedback = selectedFeedback ? selectedFeedback[answer.id] : null;
-      const currentUnselectedFeedback = unselectedFeedback ? unselectedFeedback[answer.id] : null;
+      const currentSelectedFeedback = selectedFeedback?.[answer.id] || null;
+      const currentUnselectedFeedback = unselectedFeedback?.[answer.id] || null;
       let isEmpty;
       if (answerTitles) {
         isEmpty = Object.keys(title)?.length <= 0;
@@ -150,9 +150,12 @@ class ReactStateOLXParser {
   addGroupFeedbackList() {
     const compoundhint = [];
     const { groupFeedbackList } = this.problemState;
+    const { groupFeedback } = this.editorObject;
     groupFeedbackList.forEach((element) => {
+      const feedbackString = groupFeedback?.[element.id];
+      const parsedFeedback = this.parser.parse(feedbackString);
       compoundhint.push({
-        '#text': element.feedback,
+        ...parsedFeedback,
         '@_value': element.answers.join(' '),
       });
     });
@@ -237,7 +240,7 @@ class ReactStateOLXParser {
     const wrongAnswers = [];
     let firstCorrectAnswerParsed = false;
     answers.forEach((answer) => {
-      const correcthint = this.getAnswerHints(selectedFeedback[answer.id]);
+      const correcthint = this.getAnswerHints(selectedFeedback?.[answer.id]);
       if (this.hasAttributeWithValue(answer, 'title')) {
         if (answer.correct && firstCorrectAnswerParsed) {
           additionAnswers.push({
@@ -303,7 +306,7 @@ class ReactStateOLXParser {
     const additionalAnswers = [];
     let firstCorrectAnswerParsed = false;
     answers.forEach((answer) => {
-      const correcthint = this.getAnswerHints(selectedFeedback[answer.id]);
+      const correcthint = this.getAnswerHints(selectedFeedback?.[answer.id]);
       if (this.hasAttributeWithValue(answer, 'title')) {
         if (answer.correct && !firstCorrectAnswerParsed) {
           firstCorrectAnswerParsed = true;

@@ -142,7 +142,6 @@ export const apiMethods = {
         metadata: { display_name: title },
       };
     } else if (blockType === 'problem') {
-      // console.log(type);
       response = {
         data: content.olx,
         category: blockType,

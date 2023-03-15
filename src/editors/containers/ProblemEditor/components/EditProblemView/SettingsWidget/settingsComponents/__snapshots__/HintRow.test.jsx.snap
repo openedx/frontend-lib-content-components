@@ -7,7 +7,7 @@ exports[`HintRow snapshot snapshot: renders hints row 1`] = `
   <ExpandableTextArea
     error={false}
     errorMessage={null}
-    id="hint-undefined"
+    id="hint-0"
     placeholder="Hint"
     setContent={[MockFunction]}
     value="hint_1"

@@ -28,6 +28,16 @@ export const nonQuestionKeys = [
   'textline',
 ];
 
+export const stripNonTextTags = ({ input, tag }) => {
+  const stripedTags = {};
+  Object.entries(input).forEach(([key, value]) => {
+    if (key !== tag) {
+      stripedTags[key] = value;
+    }
+  });
+  return stripedTags;
+};
+
 export class OLXParser {
   constructor(olxString) {
     this.problem = {};
@@ -76,12 +86,7 @@ export class OLXParser {
       choice.forEach((element, index) => {
         let title = element['#text'];
         if (isComplexAnswer) {
-          const answerTitle = {};
-          Object.entries(element).forEach(([key, value]) => {
-            if (key !== `${option}hint`) {
-              answerTitle[key] = value;
-            }
-          });
+          const answerTitle = stripNonTextTags({ input: element, tag: `${option}hint` });
           title = this.builder.build(answerTitle);
         }
         const correct = eval(element['@_correct'].toLowerCase());
@@ -99,12 +104,7 @@ export class OLXParser {
     } else {
       let title = choice['#text'];
       if (isComplexAnswer) {
-        const answerTitle = {};
-        Object.entries(choice).forEach(([key, value]) => {
-          if (key !== `${option}hint`) {
-            answerTitle[key] = value;
-          }
-        });
+        const answerTitle = stripNonTextTags({ input: choice, tag: `${option}hint` });
         title = this.builder.build(answerTitle);
       }
       const feedback = this.getAnswerFeedback(choice, `${option}hint`);
@@ -159,17 +159,19 @@ export class OLXParser {
       const groupFeedbackArray = choices.compoundhint;
       if (_.isArray(groupFeedbackArray)) {
         groupFeedbackArray.forEach((element) => {
+          const parsedFeedback = stripNonTextTags({ input: element, tag: '@_value' });
           groupFeedback.push({
             id: groupFeedback.length,
             answers: element['@_value'].split(' '),
-            feedback: element['#text'],
+            feedback: this.builder.build(parsedFeedback),
           });
         });
       } else {
+        const parsedFeedback = stripNonTextTags({ input: groupFeedbackArray, tag: '@_value' });
         groupFeedback.push({
           id: groupFeedback.length,
           answers: groupFeedbackArray['@_value'].split(' '),
-          feedback: groupFeedbackArray['#text'],
+          feedback: this.builder.build(parsedFeedback),
         });
       }
     }
@@ -216,12 +218,7 @@ export class OLXParser {
     const stringEqualHint = _.get(stringresponse, 'stringequalhint', []);
     if (_.isArray(stringEqualHint)) {
       stringEqualHint.forEach((newAnswer) => {
-        const parsedFeedback = {};
-        Object.entries(newAnswer).forEach(([key, value]) => {
-          if (key !== '@_answer') {
-            parsedFeedback[key] = value;
-          }
-        });
+        const parsedFeedback = stripNonTextTags({ input: newAnswer, tag: '@_answer' });
         answerFeedback = this.builder.build(parsedFeedback);
         answers.push({
           id: indexToLetterMap[answers.length],
@@ -231,12 +228,7 @@ export class OLXParser {
         });
       });
     } else {
-      const parsedFeedback = {};
-      Object.entries(stringEqualHint).forEach(([key, value]) => {
-        if (key !== '@_answer') {
-          parsedFeedback[key] = value;
-        }
-      });
+      const parsedFeedback = stripNonTextTags({ input: stringEqualHint, tag: '@_answer' });
       answerFeedback = this.builder.build(parsedFeedback);
       answers.push({
         id: indexToLetterMap[answers.length],
