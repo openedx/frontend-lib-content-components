@@ -3,6 +3,7 @@ import { StrictDict } from '../../../../../utils';
 import * as module from './hooks';
 import { actions } from '../../../../../data/redux';
 import { ProblemTypeKeys } from '../../../../../data/constants/problem';
+import { fetchEditorContent } from '../hooks';
 
 export const state = StrictDict({
   isFeedbackVisible: (val) => useState(val),
@@ -46,7 +47,9 @@ export const useFeedback = (answer) => {
 
   const toggleFeedback = (open) => {
     // Do not allow to hide if feedback is added
-    if (!!answer.selectedFeedback || !!answer.unselectedFeedback) {
+    const { selectedFeedback, unselectedFeedback } = fetchEditorContent({ format: '' });
+
+    if (!!selectedFeedback?.[answer.id] || !!unselectedFeedback?.[answer.id]) {
       setIsFeedbackVisible(true);
       return;
     }
