@@ -137,7 +137,7 @@ class ReactStateOLXParser {
       }
     });
     widget = { [option]: choice };
-    if (_.has(this.problemState, 'groupFeedbackList')) {
+    if (_.has(this.problemState, 'groupFeedbackList') && problemType === ProblemTypeKeys.MULTISELECT) {
       compoundhint = this.addGroupFeedbackList();
       widget = {
         ...widget,
@@ -163,8 +163,7 @@ class ReactStateOLXParser {
   }
 
   addQuestion() {
-    const question = this.editorObject?.question || this.problemState?.question;
-    // const question = this.editorObject?.question || '';
+    const { question } = this.editorObject;
     const questionObject = this.questionParser.parse(question);
     return questionObject;
   }

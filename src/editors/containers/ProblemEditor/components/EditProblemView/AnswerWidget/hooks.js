@@ -17,8 +17,17 @@ export const setAnswer = ({ answer, hasSingleAnswer, dispatch }) => (payload) =>
   dispatch(actions.problem.updateAnswer({ id: answer.id, hasSingleAnswer, ...payload }));
 };
 
-export const setAnswerTitle = ({ answer, hasSingleAnswer, dispatch }) => (updatedTitle) => {
-  dispatch(actions.problem.updateAnswer({ id: answer.id, hasSingleAnswer, title: updatedTitle }));
+export const setAnswerTitle = ({
+  answer,
+  hasSingleAnswer,
+  dispatch,
+  problemType,
+}) => (updatedTitle) => {
+  let title = updatedTitle;
+  if ([ProblemTypeKeys.TEXTINPUT, ProblemTypeKeys.NUMERIC, ProblemTypeKeys.DROPDOWN].includes(problemType)) {
+    title = updatedTitle.target.value;
+  }
+  dispatch(actions.problem.updateAnswer({ id: answer.id, hasSingleAnswer, title }));
 };
 
 export const setSelectedFeedback = ({ answer, hasSingleAnswer, dispatch }) => (e) => {

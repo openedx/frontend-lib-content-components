@@ -29,7 +29,12 @@ export const AnswerOption = ({
   const dispatch = useDispatch();
   const removeAnswer = hooks.removeAnswer({ answer, dispatch });
   const setAnswer = hooks.setAnswer({ answer, hasSingleAnswer, dispatch });
-  const setAnswerTitle = hooks.setAnswerTitle({ answer, hasSingleAnswer, dispatch });
+  const setAnswerTitle = hooks.setAnswerTitle({
+    answer,
+    hasSingleAnswer,
+    dispatch,
+    problemType,
+  });
   const setSelectedFeedback = hooks.setSelectedFeedback({ answer, hasSingleAnswer, dispatch });
   const setUnselectedFeedback = hooks.setUnselectedFeedback({ answer, hasSingleAnswer, dispatch });
   const { isFeedbackVisible, toggleFeedback } = hooks.useFeedback(answer);
@@ -62,7 +67,7 @@ export const AnswerOption = ({
             autoResize
             rows={1}
             value={answer.title}
-            onChange={(e) => setAnswerTitle(e.target.value)}
+            onChange={setAnswerTitle}
             placeholder={intl.formatMessage(messages.answerTextboxPlaceholder)}
           />
         )}
