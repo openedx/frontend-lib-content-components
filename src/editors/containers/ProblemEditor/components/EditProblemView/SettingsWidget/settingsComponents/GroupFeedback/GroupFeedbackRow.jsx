@@ -1,7 +1,7 @@
 import React from 'react';
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 import {
-  ActionRow, Form, Icon, IconButton, Row,
+  ActionRow, Container, Form, Icon, IconButton, Row,
 } from '@edx/paragon';
 import { DeleteOutline } from '@edx/paragon/icons';
 import PropTypes from 'prop-types';
@@ -21,20 +21,20 @@ export const GroupFeedbackRow = ({
 
   <div className="mb-4">
     <ActionRow className="mb-2">
-      <ExpandableTextArea
-        value={value.feedback}
-        onChange={handleFeedbackChange}
-        id={`groupFeedback-${id}`}
-      />
-      <div className="d-flex flex-row flex-nowrap">
-        <IconButton
-          src={DeleteOutline}
-          iconAs={Icon}
-          alt={intl.formatMessage(messages.settingsDeleteIconAltText)}
-          onClick={handleDelete}
-          variant="primary"
+      <Container fluid className="p-0">
+        <ExpandableTextArea
+          value={value.feedback}
+          onChange={handleFeedbackChange}
+          id={`groupFeedback-${id}`}
         />
-      </div>
+      </Container>
+      <IconButton
+        src={DeleteOutline}
+        iconAs={Icon}
+        alt={intl.formatMessage(messages.settingsDeleteIconAltText)}
+        onClick={handleDelete}
+        variant="primary"
+      />
     </ActionRow>
     <Form.CheckboxSet
       onChange={handleAnswersSelectedChange}

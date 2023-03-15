@@ -1,7 +1,10 @@
 import React from 'react';
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 import {
-  ActionRow, Icon, IconButton,
+  ActionRow,
+  Container,
+  Icon,
+  IconButton,
 } from '@edx/paragon';
 import { DeleteOutline } from '@edx/paragon/icons';
 import PropTypes from 'prop-types';
@@ -17,12 +20,14 @@ export const HintRow = ({
   intl,
 }) => (
   <ActionRow className="mb-4">
-    <ExpandableTextArea
-      value={value}
-      setContent={handleChange}
-      placeholder={intl.formatMessage(messages.hintInputLabel)}
-      id={`hint-${id}`}
-    />
+    <Container fluid className="p-0">
+      <ExpandableTextArea
+        value={value}
+        setContent={handleChange}
+        placeholder={intl.formatMessage(messages.hintInputLabel)}
+        id={`hint-${id}`}
+      />
+    </Container>
     <IconButton
       src={DeleteOutline}
       iconAs={Icon}

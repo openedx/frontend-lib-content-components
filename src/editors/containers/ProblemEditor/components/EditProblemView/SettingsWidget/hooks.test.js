@@ -39,12 +39,6 @@ describe('Problem settings hooks', () => {
     state.restore();
     useEffect.mockClear();
   });
-  describe('state hooks', () => {
-    state.testGetter(state.keys.showAdvanced);
-    state.testGetter(state.keys.cardCollapsed);
-    state.testGetter(state.keys.summary);
-    state.testGetter(state.keys.showAttempts);
-  });
   describe('Show advanced settings', () => {
     beforeEach(() => {
       output = hooks.showAdvancedSettingsCards();

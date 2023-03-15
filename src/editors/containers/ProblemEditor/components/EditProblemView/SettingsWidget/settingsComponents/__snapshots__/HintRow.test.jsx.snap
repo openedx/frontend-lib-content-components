@@ -4,14 +4,19 @@ exports[`HintRow snapshot snapshot: renders hints row 1`] = `
 <ActionRow
   className="mb-4"
 >
-  <ExpandableTextArea
-    error={false}
-    errorMessage={null}
-    id="hint-0"
-    placeholder="Hint"
-    setContent={[MockFunction]}
-    value="hint_1"
-  />
+  <Container
+    className="p-0"
+    fluid={true}
+  >
+    <ExpandableTextArea
+      error={false}
+      errorMessage={null}
+      id="hint-0"
+      placeholder="Hint"
+      setContent={[MockFunction]}
+      value="hint_1"
+    />
+  </Container>
   <IconButton
     alt="Delete answer"
     iconAs="Icon"
