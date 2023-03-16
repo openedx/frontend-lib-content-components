@@ -3,6 +3,10 @@ import { initializeProblem, switchToAdvancedEditor } from './problem';
 import { checkboxesOLXWithFeedbackAndHintsOLX, advancedProblemOlX, blankProblemOLX } from '../../../containers/ProblemEditor/data/mockData/olxTestData';
 import { ProblemTypeKeys } from '../../constants/problem';
 
+const mockOlx = 'SOmEVALue';
+const mockBuildOlx = jest.fn(() => mockOlx);
+jest.mock('../../../containers/ProblemEditor/data/ReactStateOLXParser', () => jest.fn().mockImplementation(() => ({ buildOLX: mockBuildOlx })));
+
 jest.mock('..', () => ({
   actions: {
     problem: {
@@ -15,8 +19,13 @@ jest.mock('..', () => ({
 
 describe('problem thunkActions', () => {
   let dispatch;
+  let getState;
   beforeEach(() => {
     dispatch = jest.fn((action) => ({ dispatch: action }));
+    getState = jest.fn(() => ({
+      problem: {
+      },
+    }));
   });
   test('initializeProblem visual Problem :', () => {
     const blockValue = { data: { data: checkboxesOLXWithFeedbackAndHintsOLX.rawOLX } };
@@ -34,9 +43,9 @@ describe('problem thunkActions', () => {
     expect(dispatch).toHaveBeenCalledWith(actions.problem.setEnableTypeSelection());
   });
   test('switchToAdvancedEditor visual Problem', () => {
-    switchToAdvancedEditor()(dispatch);
+    switchToAdvancedEditor()(dispatch, getState);
     expect(dispatch).toHaveBeenCalledWith(
-      actions.problem.updateField({ problemType: ProblemTypeKeys.ADVANCED }),
+      actions.problem.updateField({ problemType: ProblemTypeKeys.ADVANCED, rawOLX: mockOlx }),
     );
   });
 });
