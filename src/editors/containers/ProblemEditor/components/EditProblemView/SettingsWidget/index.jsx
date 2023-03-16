@@ -21,6 +21,7 @@ import { showAdvancedSettingsCards } from './hooks';
 import './index.scss';
 import { ProblemTypeKeys } from '../../../../../data/constants/problem';
 import Randomization from './settingsComponents/Randomization';
+import ToleranceCard from './settingsComponents/Tolerance';
 
 // This widget should be connected, grab all settings from store, update them as needed.
 export const SettingsWidget = ({
@@ -116,6 +117,17 @@ export const SettingsWidget = ({
           <div className="my-3">
             <MatlabCard matLabApiKey={settings.matLabApiKey} updateSettings={updateSettings} />
           </div>
+          {ProblemTypeKeys.NUMERIC === problemType
+          && (
+          <div className="my-3">
+            <ToleranceCard
+              updateSettings={updateSettings}
+              answers={answers}
+              tolerance={{ type: 'percent', value: 5 }}
+            />
+          </div>
+          )}
+
           <div className="my-3">
             <SwitchToAdvancedEditorCard problemType={problemType} />
           </div>
