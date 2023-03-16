@@ -274,7 +274,6 @@ describe('Problem settings hooks', () => {
         c: 'testC',
       },
     });
-
     beforeEach(() => {
       jest.clearAllMocks();
       jest.spyOn(editHooks, moduleKeys.fetchEditorContent)
@@ -287,6 +286,25 @@ describe('Problem settings hooks', () => {
       expect(typeRowProps.updateAnswer).toHaveBeenNthCalledWith(1, { ...typeRowProps.answers[0], correct: false, title: 'testA' });
       expect(typeRowProps.updateAnswer).toHaveBeenNthCalledWith(2, { ...typeRowProps.answers[1], correct: false, title: 'testB' });
       expect(typeRowProps.updateAnswer).toHaveBeenNthCalledWith(3, { ...typeRowProps.answers[2], correct: false, title: 'testC' });
+      expect(typeRowProps.updateField).toHaveBeenCalledWith({ problemType: ProblemTypeKeys.DROPDOWN });
+    });
+
+    test('test onClick Multi-select to Dropdown with one correct answer', () => {
+      const oneAnswerTypeRowProps = {
+        ...typeRowProps,
+        correctAnswerCount: 1,
+        answers: [
+          { correct: true, id: 'a', title: '<p>testA</p>' },
+          { correct: false, id: 'b', title: '<p>testB</p>' },
+          { correct: false, id: 'c', title: '<p>testC</p>' },
+        ],
+      };
+      output = hooks.typeRowHooks(oneAnswerTypeRowProps);
+      output.onClick();
+      expect(typeRowProps.setBlockTitle).toHaveBeenCalledWith(ProblemTypes[ProblemTypeKeys.DROPDOWN].title);
+      expect(typeRowProps.updateAnswer).toHaveBeenNthCalledWith(1, { ...oneAnswerTypeRowProps.answers[0], title: 'testA' });
+      expect(typeRowProps.updateAnswer).toHaveBeenNthCalledWith(2, { ...oneAnswerTypeRowProps.answers[1], title: 'testB' });
+      expect(typeRowProps.updateAnswer).toHaveBeenNthCalledWith(3, { ...oneAnswerTypeRowProps.answers[2], title: 'testC' });
       expect(typeRowProps.updateField).toHaveBeenCalledWith({ problemType: ProblemTypeKeys.DROPDOWN });
     });
     test('test onClick Multi-select to Numeric', () => {

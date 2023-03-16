@@ -211,7 +211,7 @@ export const typeRowHooks = ({
       currentAnswerTitles = fetchEditorContent({ format: 'text' }).answers;
     }
     answers.forEach(answer => {
-      const title = currentAnswerTitles ? currentAnswerTitles[answer.id] : answer.title;
+      const title = currentAnswerTitles?.[answer.id] || answer.title;
       if (answer.correct) {
         updateAnswer({ ...answer, title, correct: false });
       } else {

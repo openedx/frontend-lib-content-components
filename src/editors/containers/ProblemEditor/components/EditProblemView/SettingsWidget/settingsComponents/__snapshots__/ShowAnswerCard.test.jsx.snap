@@ -29,7 +29,7 @@ exports[`ShowAnswerCard snapshot snapshot: show answer setting card 1`] = `
       },
     ]
   }
-  hasExpandableTextArea={false}
+  hasExpandableTextArea={true}
   summary="After Some Number of Attempts"
   title="Show answer"
 >

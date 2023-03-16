@@ -221,6 +221,7 @@ export const editorConfig = ({
       }),
       quickbars_insert_toolbar: quickbarsInsertToolbar,
       quickbars_selection_toolbar: quickbarsSelectionToolbar,
+      quickbars_image_toolbar: false,
       toolbar,
       plugins,
       valid_children: '+body[style]',

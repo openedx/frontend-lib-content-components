@@ -90,6 +90,7 @@ export const ShowAnswerCard = ({
       title={intl.formatMessage(messages.showAnswerSettingsTitle)}
       summary={intl.formatMessage(ShowAnswerTypes[showAnswer.on])}
       extraSections={[{ children: explanationSection }]}
+      hasExpandableTextArea
     >
       {showAnswerSection}
     </SettingsOption>
