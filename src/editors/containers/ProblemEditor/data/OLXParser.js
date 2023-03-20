@@ -442,11 +442,15 @@ export class OLXParser {
     const { answers } = answersObject;
     const settings = { hints };
     if (ProblemTypeKeys.NUMERIC === problemType && _.has(answersObject, 'tolerance')) {
+      console.log(answersObject);
       if (!answersObject.tolernace) {
+        console.log('None--object');
         settings.tolerance = { value: null, type: 'None' };
       } else if (answersObject.tolerance.includes('%')) {
+        console.log('Percent--object');
         settings.tolerance = { value: answersObject.tolerance.slice(0, -1), type: 'Percent' };
       } else {
+        console.log('Number--object');
         settings.tolerance = { value: answersObject.tolerance, type: 'Number' };
       }
     }

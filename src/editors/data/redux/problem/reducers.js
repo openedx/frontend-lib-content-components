@@ -34,7 +34,7 @@ const initialState = {
     solutionExplanation: '',
     tolerance: {
       value: null,
-      type: 'none',
+      type: 'None',
     },
   },
 };
