@@ -62,7 +62,7 @@ describe('problem thunkActions', () => {
   test('switchToAdvancedEditor visual Problem', () => {
     module.switchToAdvancedEditor()(dispatch, getState);
     expect(dispatch).toHaveBeenCalledWith(
-      actions.problem.updateField({ problemType: ProblemTypeKeys.ADVANCED, rawOlx: mockOlx }),
+      actions.problem.updateField({ problemType: ProblemTypeKeys.ADVANCED, rawOLX: mockOlx }),
     );
   });
   describe('fetchAdvanceSettings', () => {
