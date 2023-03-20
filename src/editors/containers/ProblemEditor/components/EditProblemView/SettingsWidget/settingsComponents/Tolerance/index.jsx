@@ -10,16 +10,23 @@ export const isAnswerRangeSet = ({ answers }) =>
   // TODO: for TNL 10258
   false;
 
-export const handleToleranceTypeChange = ({ updateSettings, tolerance }) => (event) => {
-  if (!isAnswerRangeSet) {
-    const newTolerance = { type: event.target.value, ...tolerance };
+export const handleToleranceTypeChange = ({ updateSettings, tolerance, answers }) => (event) => {
+  if (!isAnswerRangeSet(answers)) {
+    let value;
+    if (event.target.value === ToleranceTypes.none.type) {
+      value = null;
+    } else {
+      value = tolerance.value || 0;
+    }
+    const newTolerance = { type: event.target.value, value };
     updateSettings({ tolerance: newTolerance });
   }
 };
 
-export const handleToleranceValueChange = ({ updateSettings, tolerance }) => (event) => {
-  if (!isAnswerRangeSet) {
-    const newTolerance = { value: event.target.value, ...tolerance };
+export const handleToleranceValueChange = ({ updateSettings, tolerance, answers }) => (event) => {
+
+  if (!isAnswerRangeSet(answers)) {
+    const newTolerance = { value: event.target.value, type: tolerance.type };
     updateSettings({ tolerance: newTolerance });
   }
 };
@@ -44,12 +51,14 @@ export const ToleranceCard = ({
   // inject
   intl,
 }) => {
+  console.log(tolerance);
   const canEdit = isAnswerRangeSet({ answers });
+  const summary = getSummary({ tolerance, intl });
 
   return (
     <SettingsOption
       title={intl.formatMessage(messages.toleranceSettingTitle)}
-      summary={getSummary({ tolerance, intl })}
+      summary={summary}
       none={!tolerance}
     >
       { canEdit
@@ -68,26 +77,30 @@ export const ToleranceCard = ({
       <Form.Group className="pb-0 mb-0">
         <Form.Control
           as="select"
-          value={tolerance.type}
-          onChange={handleToleranceTypeChange({ updateSettings, tolerance })}
+          onChange={handleToleranceTypeChange({ updateSettings, tolerance, answers })}
           disabled={canEdit}
         >
-          {Object.keys(ToleranceTypes).map((toleranceType) => (
-            <option
-              key={toleranceType.value}
-              value={toleranceType.value}
-            >
-              {intl.formatMessage(ToleranceTypes[toleranceType].message)}
-            </option>
-          ))}
+          {Object.keys(ToleranceTypes).map((toleranceType) => {
+            console.log(toleranceType);
+            console.log(tolerance.type === toleranceType);
+            return (
+              <option
+                key={toleranceType.type}
+                value={toleranceType.type}
+                selected={tolerance.type === toleranceType}
+              >
+                {intl.formatMessage(ToleranceTypes[toleranceType].message)}
+              </option>
+            );
+          })}
         </Form.Control>
-        { !!tolerance?.type && !canEdit
+        { tolerance?.type !== ToleranceTypes.none.type && !canEdit
           && (
           <Form.Control
             className="mt-4"
             type="number"
             value={tolerance.value}
-            onChange={handleToleranceValueChange({ updateSettings, tolerance })}
+            onChange={handleToleranceValueChange({ updateSettings, tolerance, answers })}
             floatingLabel={intl.formatMessage(messages.toleranceValueInputLabel)}
           />
           )}

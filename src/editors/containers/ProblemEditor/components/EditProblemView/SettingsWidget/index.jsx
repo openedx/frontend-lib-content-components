@@ -123,7 +123,7 @@ export const SettingsWidget = ({
             <ToleranceCard
               updateSettings={updateSettings}
               answers={answers}
-              tolerance={{ type: 'percent', value: 5 }}
+              tolerance={settings.tolerance}
             />
           </div>
           )}

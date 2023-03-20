@@ -3,17 +3,16 @@ import messages from './messages';
 
 export const ToleranceTypes = {
   percent: {
-    value: 'percentage',
+    type: 'Percent',
     message: messages.typesPercentage,
   },
   number: {
-    value: 'number',
+    type: 'Number',
     message: messages.typesNumber,
 
   },
   none: {
-    value: null,
+    type: 'None',
     message: messages.typesNone,
   },
 };
-

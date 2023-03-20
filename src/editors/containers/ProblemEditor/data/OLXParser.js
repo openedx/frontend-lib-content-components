@@ -438,8 +438,18 @@ export class OLXParser {
     if (_.has(answersObject, 'groupFeedbackList')) {
       groupFeedbackList = answersObject.groupFeedbackList;
     }
+
     const { answers } = answersObject;
     const settings = { hints };
+    if (ProblemTypeKeys.NUMERIC === problemType && _.has(answersObject, 'tolerance')) {
+      if (!answersObject.tolernace) {
+        settings.tolerance = { value: null, type: 'None' };
+      } else if (answersObject.tolerance.includes('%')) {
+        settings.tolerance = { value: answersObject.tolerance.slice(0, -1), type: 'Percent' };
+      } else {
+        settings.tolerance = { value: answersObject.tolerance, type: 'Number' };
+      }
+    }
     if (solutionExplanation) { settings.solutionExplanation = solutionExplanation; }
 
     return {

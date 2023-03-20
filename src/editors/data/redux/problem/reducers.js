@@ -32,6 +32,10 @@ const initialState = {
     },
     showResetButton: false,
     solutionExplanation: '',
+    tolerance: {
+      value: null,
+      type: 'none',
+    },
   },
 };
 

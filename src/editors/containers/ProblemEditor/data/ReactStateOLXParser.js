@@ -271,6 +271,7 @@ class ReactStateOLXParser {
 
   buildNumericalResponse() {
     const { answers } = this.problemState;
+    const { tolerance } = this.problemState.settings;
     const answerTitles = this.editorObject?.answers;
     let answerObject = {};
     const additionalAnswers = [];
@@ -282,11 +283,11 @@ class ReactStateOLXParser {
         if (answer.correct && !firstCorrectAnswerParsed) {
           firstCorrectAnswerParsed = true;
           let responseParam = {};
-          if (_.has(answer, 'tolerance')) {
+          if (tolerance?.value) {
             responseParam = {
               responseparam: {
                 '@_type': 'tolerance',
-                '@_default': _.get(answer, 'tolerance', 0),
+                '@_default': `${tolerance.value}${tolerance.type === 'Number' ? '' : '?'}`,
               },
             };
           }
