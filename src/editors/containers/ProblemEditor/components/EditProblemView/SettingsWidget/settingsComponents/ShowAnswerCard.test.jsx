@@ -23,6 +23,7 @@ describe('ShowAnswerCard', () => {
     on: 'after_attempts',
     afterAttempts: 5,
     updateSettings: jest.fn().mockName('args.updateSettings'),
+    defaultValue: 'finished',
     intl: { formatMessage },
   };
   const props = {

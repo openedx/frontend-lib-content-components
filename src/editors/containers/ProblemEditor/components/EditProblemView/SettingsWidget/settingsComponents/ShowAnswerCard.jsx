@@ -13,6 +13,7 @@ export const ShowAnswerCard = ({
   showAnswer,
   solutionExplanation,
   updateSettings,
+  defaultValue,
   // inject
   intl,
   // redux
@@ -34,7 +35,7 @@ export const ShowAnswerCard = ({
         </span>
       </div>
       <div className="pb-4">
-        <Hyperlink destination={`${studioEndpointUrl}/settings/advanced/${learningContextId}`} target="_blank">
+        <Hyperlink destination={`${studioEndpointUrl}/settings/advanced/${learningContextId}#showanswer`} target="_blank">
           <FormattedMessage {...messages.advancedSettingsLinkText} />
         </Hyperlink>
       </div>
@@ -44,14 +45,20 @@ export const ShowAnswerCard = ({
           value={showAnswer.on}
           onChange={handleShowAnswerChange}
         >
-          {Object.values(ShowAnswerTypesKeys).map((answerType) => (
-            <option
-              key={answerType}
-              value={answerType}
-            >
-              {intl.formatMessage(ShowAnswerTypes[answerType])}
-            </option>
-          ))}
+          {Object.values(ShowAnswerTypesKeys).map((answerType) => {
+            let optionDisplayName = ShowAnswerTypes[answerType];
+            if (answerType === defaultValue) {
+              optionDisplayName = { ...optionDisplayName, defaultMessage: `${optionDisplayName.defaultMessage} (Default)` };
+            }
+            return (
+              <option
+                key={answerType}
+                value={answerType}
+              >
+                {intl.formatMessage(optionDisplayName)}
+              </option>
+            );
+          })}
         </Form.Control>
       </Form.Group>
       {showAttempts
@@ -104,6 +111,7 @@ ShowAnswerCard.propTypes = {
   updateSettings: PropTypes.func.isRequired,
   studioEndpointUrl: PropTypes.string.isRequired,
   learningContextId: PropTypes.string.isRequired,
+  defaultValue: PropTypes.string.isRequired,
 };
 ShowAnswerCard.defaultProps = {
   solutionExplanation: '',

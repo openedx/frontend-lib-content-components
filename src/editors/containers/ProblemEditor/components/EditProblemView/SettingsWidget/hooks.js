@@ -10,6 +10,7 @@ export const state = {
   cardCollapsed: (val) => useState(val),
   summary: (val) => useState(val),
   showAttempts: (val) => useState(val),
+  local: (val) => useState(val),
 };
 
 export const showAdvancedSettingsCards = () => {
@@ -120,17 +121,33 @@ export const resetCardHooks = (updateSettings) => {
   };
 };
 
-export const scoringCardHooks = (scoring, updateSettings) => {
+export const scoringCardHooks = (scoring, updateSettings, defaultValue) => {
+  const [local, setLocal] = module.state.local(scoring.attempts.number);
   const handleMaxAttemptChange = (event) => {
     let unlimitedAttempts = false;
     let attemptNumber = parseInt(event.target.value);
+    const { value } = event.target;
     if (_.isNaN(attemptNumber)) {
-      attemptNumber = '';
-      unlimitedAttempts = true;
+      if (value?.startsWith(defaultValue)) {
+        attemptNumber = value.replace(' (Default)');
+      } else {
+        attemptNumber = '';
+        unlimitedAttempts = true;
+      }
     } else if (attemptNumber < 0) {
       attemptNumber = 0;
     }
     updateSettings({ scoring: { ...scoring, attempts: { number: attemptNumber, unlimited: unlimitedAttempts } } });
+  };
+
+  const handleOnChange = (event) => {
+    let newMaxAttempt = event.target.value;
+    if (newMaxAttempt === defaultValue || newMaxAttempt === '') {
+      newMaxAttempt = `${defaultValue} (Default)`;
+    } else if (newMaxAttempt < 0) {
+      newMaxAttempt = 0;
+    }
+    setLocal(newMaxAttempt);
   };
 
   const handleWeightChange = (event) => {
@@ -142,7 +159,9 @@ export const scoringCardHooks = (scoring, updateSettings) => {
   };
 
   return {
+    local,
     handleMaxAttemptChange,
+    handleOnChange,
     handleWeightChange,
   };
 };

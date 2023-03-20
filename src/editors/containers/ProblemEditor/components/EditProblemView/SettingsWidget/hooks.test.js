@@ -169,8 +169,9 @@ describe('Problem settings hooks', () => {
         number: 5,
       },
     };
+    const defaultValue = 1;
     beforeEach(() => {
-      output = hooks.scoringCardHooks(scoring, updateSettings);
+      output = hooks.scoringCardHooks(scoring, updateSettings, defaultValue);
     });
     test('test handleMaxAttemptChange', () => {
       const value = 6;
@@ -190,11 +191,11 @@ describe('Problem settings hooks', () => {
       expect(updateSettings)
         .toHaveBeenCalledWith({ scoring: { ...scoring, attempts: { number: '', unlimited: true } } });
     });
-    test('test handleMaxAttemptChange set attempts to empty string', () => {
-      const value = '';
+    test('test handleMaxAttemptChange set attempts to default value', () => {
+      const value = '1 (Default)';
       output.handleMaxAttemptChange({ target: { value } });
       expect(updateSettings)
-        .toHaveBeenCalledWith({ scoring: { ...scoring, attempts: { number: '', unlimited: true } } });
+        .toHaveBeenCalledWith({ scoring: { ...scoring, attempts: { number: 1, unlimited: false } } });
     });
     test('test handleMaxAttemptChange set attempts to non-numeric value', () => {
       const value = 'abc';
@@ -207,6 +208,36 @@ describe('Problem settings hooks', () => {
       output.handleMaxAttemptChange({ target: { value } });
       expect(updateSettings)
         .toHaveBeenCalledWith({ scoring: { ...scoring, attempts: { number: 0, unlimited: false } } });
+    });
+    test('test handleOnChange', () => {
+      const value = 6;
+      output.handleOnChange({ target: { value } });
+      expect(state.setState[state.keys.local]).toHaveBeenCalledWith(value);
+    });
+    test('test handleOnChange set attempts to zero', () => {
+      const value = 0;
+      output.handleOnChange({ target: { value } });
+      expect(state.setState[state.keys.local]).toHaveBeenCalledWith(value);
+    });
+    test('test handleOnChange set attempts to default value from empty string', () => {
+      const value = '';
+      output.handleOnChange({ target: { value } });
+      expect(state.setState[state.keys.local]).toHaveBeenCalledWith('1 (Default)');
+    });
+    test('test handleOnChange set attempts to default value', () => {
+      const value = 1;
+      output.handleOnChange({ target: { value } });
+      expect(state.setState[state.keys.local]).toHaveBeenCalledWith('1 (Default)');
+    });
+    test('test handleOnChange set attempts to non-numeric value', () => {
+      const value = 'abc';
+      output.handleOnChange({ target: { value } });
+      expect(state.setState[state.keys.local]).toHaveBeenCalledWith(value);
+    });
+    test('test handleOnChange set attempts to negative value', () => {
+      const value = -1;
+      output.handleOnChange({ target: { value } });
+      expect(state.setState[state.keys.local]).toHaveBeenCalledWith(0);
     });
     test('test handleWeightChange', () => {
       const value = 2;
