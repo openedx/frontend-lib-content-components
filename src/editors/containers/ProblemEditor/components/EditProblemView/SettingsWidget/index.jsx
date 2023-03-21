@@ -13,6 +13,7 @@ import ResetCard from './settingsComponents/ResetCard';
 import MatlabCard from './settingsComponents/MatlabCard';
 import TimerCard from './settingsComponents/TimerCard';
 import TypeCard from './settingsComponents/TypeCard';
+import ToleranceCard from './settingsComponents/Tolerance';
 import GroupFeedbackCard from './settingsComponents/GroupFeedback/index';
 import SwitchToAdvancedEditorCard from './settingsComponents/SwitchToAdvancedEditorCard';
 import messages from './messages';
@@ -116,6 +117,16 @@ export const SettingsWidget = ({
           <div className="my-3">
             <MatlabCard matLabApiKey={settings.matLabApiKey} updateSettings={updateSettings} />
           </div>
+          {ProblemTypeKeys.NUMERIC === problemType
+          && (
+          <div className="my-3">
+            <ToleranceCard
+              updateSettings={updateSettings}
+              answers={answers}
+              tolerance={settings.tolerance}
+            />
+          </div>
+          )}
           <div className="my-3">
             <SwitchToAdvancedEditorCard problemType={problemType} />
           </div>
