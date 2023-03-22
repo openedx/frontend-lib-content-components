@@ -20,7 +20,7 @@ export const handleToleranceTypeChange = ({ updateSettings, tolerance, answers }
     } else {
       value = tolerance.value || 0;
     }
-    const newTolerance = { type: event.target.value, value };
+    const newTolerance = { type: ToleranceTypes[Object.keys(ToleranceTypes)[event.target.selectedIndex]].type, value };
     updateSettings({ tolerance: newTolerance });
   }
 };

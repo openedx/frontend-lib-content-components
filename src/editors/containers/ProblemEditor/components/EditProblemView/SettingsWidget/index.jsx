@@ -66,6 +66,16 @@ export const SettingsWidget = ({
           updateAnswer={updateAnswer}
         />
       </div>
+      {ProblemTypeKeys.NUMERIC === problemType
+          && (
+          <div className="my-3">
+            <ToleranceCard
+              updateSettings={updateSettings}
+              answers={answers}
+              tolerance={settings.tolerance}
+            />
+          </div>
+          )}
       <div className="my-3">
         <ScoringCard scoring={settings.scoring} updateSettings={updateSettings} />
       </div>
@@ -117,16 +127,6 @@ export const SettingsWidget = ({
           <div className="my-3">
             <MatlabCard matLabApiKey={settings.matLabApiKey} updateSettings={updateSettings} />
           </div>
-          {ProblemTypeKeys.NUMERIC === problemType
-          && (
-          <div className="my-3">
-            <ToleranceCard
-              updateSettings={updateSettings}
-              answers={answers}
-              tolerance={settings.tolerance}
-            />
-          </div>
-          )}
           <div className="my-3">
             <SwitchToAdvancedEditorCard problemType={problemType} />
           </div>
