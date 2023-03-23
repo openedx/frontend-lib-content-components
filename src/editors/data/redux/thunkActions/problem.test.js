@@ -18,7 +18,7 @@ jest.mock('..', () => ({
 }));
 
 jest.mock('./requests', () => ({
-  fetchAdvanceSettings: (args) => ({ fetchAdvanceSettings: args }),
+  fetchAdvancedSettings: (args) => ({ fetchAdvanceSettings: args }),
 }));
 
 const blockValue = {
@@ -59,20 +59,20 @@ describe('problem thunkActions', () => {
   });
   describe('fetchAdvanceSettings', () => {
     it('dispatches fetchAdvanceSettings action', () => {
-      module.fetchAdvanceSettings({ rawOLX, rawSettings })(dispatch);
+      module.fetchAdvancedSettings({ rawOLX, rawSettings })(dispatch);
       [[dispatchedAction]] = dispatch.mock.calls;
       expect(dispatchedAction.fetchAdvanceSettings).not.toEqual(undefined);
     });
     it('dispatches actions.problem.updateField and loadProblem on success', () => {
       dispatch.mockClear();
-      module.fetchAdvanceSettings({ rawOLX, rawSettings })(dispatch);
+      module.fetchAdvancedSettings({ rawOLX, rawSettings })(dispatch);
       [[dispatchedAction]] = dispatch.mock.calls;
       dispatchedAction.fetchAdvanceSettings.onSuccess({ data: { key: 'test', max_attempts: 1 } });
       expect(dispatch).toHaveBeenCalledWith(actions.problem.load());
     });
     it('calls loadProblem on failure', () => {
       dispatch.mockClear();
-      module.fetchAdvanceSettings({ rawOLX, rawSettings })(dispatch);
+      module.fetchAdvancedSettings({ rawOLX, rawSettings })(dispatch);
       [[dispatchedAction]] = dispatch.mock.calls;
       dispatchedAction.fetchAdvanceSettings.onFailure();
       expect(dispatch).toHaveBeenCalledWith(actions.problem.load());

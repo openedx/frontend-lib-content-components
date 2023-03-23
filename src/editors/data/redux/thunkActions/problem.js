@@ -53,9 +53,9 @@ export const loadProblem = ({ rawOLX, rawSettings, defaultSettings }) => (dispat
   }
 };
 
-export const fetchAdvanceSettings = ({ rawOLX, rawSettings }) => (dispatch) => {
+export const fetchAdvancedSettings = ({ rawOLX, rawSettings }) => (dispatch) => {
   const advancedProblemSettingKeys = ['max_attempts', 'showanswer', 'show_reset_button'];
-  dispatch(requests.fetchAdvanceSettings({
+  dispatch(requests.fetchAdvancedSettings({
     onSuccess: (response) => {
       const defaultSettings = {};
       Object.entries(response.data).forEach(([key, value]) => {
@@ -73,7 +73,7 @@ export const fetchAdvanceSettings = ({ rawOLX, rawSettings }) => (dispatch) => {
 export const initializeProblem = (blockValue) => (dispatch) => {
   const rawOLX = _.get(blockValue, 'data.data', {});
   const rawSettings = _.get(blockValue, 'data.metadata', {});
-  dispatch(fetchAdvanceSettings({ rawOLX, rawSettings }));
+  dispatch(fetchAdvancedSettings({ rawOLX, rawSettings }));
 };
 
-export default { initializeProblem, switchToAdvancedEditor, fetchAdvanceSettings };
+export default { initializeProblem, switchToAdvancedEditor, fetchAdvancedSettings };

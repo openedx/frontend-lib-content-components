@@ -176,13 +176,13 @@ describe('Problem settings hooks', () => {
     beforeEach(() => {
       output = hooks.scoringCardHooks(scoring, updateSettings, defaultValue);
     });
-    test('test handleUnlimitedChange checked', () => {
+    test('test handleUnlimitedChange sets attempts.unlimited to true when checked', () => {
       output.handleUnlimitedChange({ target: { checked: true } });
       expect(state.setState[state.keys.attemptDisplayValue]).toHaveBeenCalledWith('');
       expect(updateSettings)
         .toHaveBeenCalledWith({ scoring: { ...scoring, attempts: { number: '', unlimited: true } } });
     });
-    test('test handleUnlimitedChange unchecked', () => {
+    test('test handleUnlimitedChange sets attempts.unlimited to false when unchecked', () => {
       output.handleUnlimitedChange({ target: { checked: false } });
       expect(state.setState[state.keys.attemptDisplayValue]).toHaveBeenCalledWith(`${defaultValue} (Default)`);
       expect(updateSettings)
