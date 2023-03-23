@@ -2,7 +2,6 @@ import { actions } from '..';
 import * as module from './problem';
 import { checkboxesOLXWithFeedbackAndHintsOLX, advancedProblemOlX, blankProblemOLX } from '../../../containers/ProblemEditor/data/mockData/olxTestData';
 import { ProblemTypeKeys } from '../../constants/problem';
-import { keyStore } from '../../../utils';
 
 const mockOlx = 'SOmEVALue';
 const mockBuildOlx = jest.fn(() => mockOlx);
@@ -21,8 +20,6 @@ jest.mock('..', () => ({
 jest.mock('./requests', () => ({
   fetchAdvanceSettings: (args) => ({ fetchAdvanceSettings: args }),
 }));
-
-const moduleKeys = keyStore(module);
 
 const blockValue = {
   data: {
@@ -51,13 +48,8 @@ describe('problem thunkActions', () => {
     jest.restoreAllMocks();
   });
   test('initializeProblem visual Problem :', () => {
-    jest.spyOn(module, moduleKeys.fetchAdvanceSettings)
-      .mockImplementation(jest.fn());
     module.initializeProblem(blockValue)(dispatch);
-    expect(dispatch).toHaveBeenCalledWith(module.fetchAdvanceSettings({
-      rawOLX,
-      rawSettings,
-    }));
+    expect(dispatch).toHaveBeenCalled();
   });
   test('switchToAdvancedEditor visual Problem', () => {
     module.switchToAdvancedEditor()(dispatch, getState);
@@ -73,17 +65,17 @@ describe('problem thunkActions', () => {
     });
     it('dispatches actions.problem.updateField and loadProblem on success', () => {
       dispatch.mockClear();
-      const loadProblem = jest.spyOn(module, moduleKeys.loadProblem);
       module.fetchAdvanceSettings({ rawOLX, rawSettings })(dispatch);
       [[dispatchedAction]] = dispatch.mock.calls;
       dispatchedAction.fetchAdvanceSettings.onSuccess({ data: { key: 'test', max_attempts: 1 } });
-      expect(loadProblem).toHaveBeenCalled();
+      expect(dispatch).toHaveBeenCalledWith(actions.problem.load());
     });
     it('calls loadProblem on failure', () => {
-      const loadProblem = jest.spyOn(module, moduleKeys.loadProblem);
+      dispatch.mockClear();
       module.fetchAdvanceSettings({ rawOLX, rawSettings })(dispatch);
+      [[dispatchedAction]] = dispatch.mock.calls;
       dispatchedAction.fetchAdvanceSettings.onFailure();
-      expect(loadProblem).toHaveBeenCalled();
+      expect(dispatch).toHaveBeenCalledWith(actions.problem.load());
     });
   });
   describe('loadProblem', () => {

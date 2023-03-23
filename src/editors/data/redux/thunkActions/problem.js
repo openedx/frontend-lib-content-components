@@ -7,7 +7,6 @@ import { ProblemTypeKeys } from '../../constants/problem';
 import ReactStateOLXParser from '../../../containers/ProblemEditor/data/ReactStateOLXParser';
 import { blankProblemOLX } from '../../../containers/ProblemEditor/data/mockData/olxTestData';
 import { camelizeKeys } from '../../../utils';
-import * as module from './problem';
 import { fetchEditorContent } from '../../../containers/ProblemEditor/components/EditProblemView/hooks';
 
 export const switchToAdvancedEditor = () => (dispatch, getState) => {
@@ -47,15 +46,15 @@ export const getDataFromOlx = ({ rawOLX, rawSettings }) => {
 };
 
 export const loadProblem = ({ rawOLX, rawSettings, defaultSettings }) => (dispatch) => {
-  if (module.isBlankProblem({ rawOLX })) {
+  if (isBlankProblem({ rawOLX })) {
     dispatch(actions.problem.setEnableTypeSelection(camelizeKeys(defaultSettings)));
   } else {
-    dispatch(actions.problem.load(module.getDataFromOlx({ rawOLX, rawSettings })));
+    dispatch(actions.problem.load(getDataFromOlx({ rawOLX, rawSettings })));
   }
 };
 
 export const fetchAdvanceSettings = ({ rawOLX, rawSettings }) => (dispatch) => {
-  const advancedProblemSettingKeys = ['max_attempts', 'showanswer', 'show_reset_button', ' matlab_api_key'];
+  const advancedProblemSettingKeys = ['max_attempts', 'showanswer', 'show_reset_button'];
   dispatch(requests.fetchAdvanceSettings({
     onSuccess: (response) => {
       const defaultSettings = {};
@@ -65,16 +64,16 @@ export const fetchAdvanceSettings = ({ rawOLX, rawSettings }) => (dispatch) => {
         }
       });
       dispatch(actions.problem.updateField({ defaultSettings: camelizeKeys(defaultSettings) }));
-      module.loadProblem({ rawOLX, rawSettings, defaultSettings })(dispatch);
+      loadProblem({ rawOLX, rawSettings, defaultSettings })(dispatch);
     },
-    onFailure: () => { module.loadProblem({ rawOLX, rawSettings, defaultSettings: {} })(dispatch); },
+    onFailure: () => { loadProblem({ rawOLX, rawSettings, defaultSettings: {} })(dispatch); },
   }));
 };
 
 export const initializeProblem = (blockValue) => (dispatch) => {
   const rawOLX = _.get(blockValue, 'data.data', {});
   const rawSettings = _.get(blockValue, 'data.metadata', {});
-  dispatch(module.fetchAdvanceSettings({ rawOLX, rawSettings }));
+  dispatch(fetchAdvanceSettings({ rawOLX, rawSettings }));
 };
 
 export default { initializeProblem, switchToAdvancedEditor, fetchAdvanceSettings };
