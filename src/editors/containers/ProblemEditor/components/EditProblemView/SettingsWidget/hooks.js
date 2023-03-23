@@ -136,18 +136,18 @@ export const scoringCardHooks = (scoring, updateSettings, defaultValue) => {
     let attemptNumber = parseInt(event.target.value);
     const { value } = event.target;
     if (_.isNaN(attemptNumber)) {
-      if (value?.startsWith(defaultValue)) {
-        const attemptNumberStr = value.replace(' (Default)');
-        attemptNumber = parseInt(attemptNumberStr);
-      } else if (value === '') {
+     if (value === '') {
         attemptNumber = defaultValue;
         setAttemptDisplayValue(`${defaultValue} (Default)`);
       } else {
         attemptNumber = '';
         unlimitedAttempts = true;
       }
-    } else if (attemptNumber < 0) {
-      attemptNumber = 0;
+    } else if (attemptNumber <= 0) {
+        attemptNumber = 0;
+    } else if (attemptNumber === defaultValue) {
+      const attemptNumberStr = value.replace(' (Default)');
+      attemptNumber = parseInt(attemptNumberStr);
     }
     updateSettings({ scoring: { ...scoring, attempts: { number: attemptNumber, unlimited: unlimitedAttempts } } });
   };

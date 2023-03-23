@@ -218,6 +218,13 @@ describe('Problem settings hooks', () => {
       expect(updateSettings)
         .toHaveBeenCalledWith({ scoring: { ...scoring, attempts: { number: '', unlimited: true } } });
     });
+    test('test handleMaxAttemptChange set attempts to empty value', () => {
+      const value = '';
+      output.handleMaxAttemptChange({ target: { value } });
+      expect(state.setState[state.keys.attemptDisplayValue]).toHaveBeenCalledWith(`${defaultValue} (Default)`);
+      expect(updateSettings)
+        .toHaveBeenCalledWith({ scoring: { ...scoring, attempts: { number: 1, unlimited: false } } });
+    });
     test('test handleMaxAttemptChange set attempts to negative value', () => {
       const value = -1;
       output.handleMaxAttemptChange({ target: { value } });
