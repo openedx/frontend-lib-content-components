@@ -136,7 +136,7 @@ export const scoringCardHooks = (scoring, updateSettings, defaultValue) => {
     let attemptNumber = parseInt(event.target.value);
     const { value } = event.target;
     if (_.isNaN(attemptNumber)) {
-     if (value === '') {
+      if (value === '') {
         attemptNumber = defaultValue;
         setAttemptDisplayValue(`${defaultValue} (Default)`);
       } else {
@@ -144,7 +144,7 @@ export const scoringCardHooks = (scoring, updateSettings, defaultValue) => {
         unlimitedAttempts = true;
       }
     } else if (attemptNumber <= 0) {
-        attemptNumber = 0;
+      attemptNumber = 0;
     } else if (attemptNumber === defaultValue) {
       const attemptNumberStr = value.replace(' (Default)');
       attemptNumber = parseInt(attemptNumberStr);
