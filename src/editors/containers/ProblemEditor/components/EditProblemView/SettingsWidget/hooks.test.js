@@ -176,6 +176,18 @@ describe('Problem settings hooks', () => {
     beforeEach(() => {
       output = hooks.scoringCardHooks(scoring, updateSettings, defaultValue);
     });
+    test('test handleUnlimitedChange checked', () => {
+      output.handleUnlimitedChange({ target: { checked: true } });
+      expect(state.setState[state.keys.attemptDisplayValue]).toHaveBeenCalledWith('');
+      expect(updateSettings)
+        .toHaveBeenCalledWith({ scoring: { ...scoring, attempts: { number: '', unlimited: true } } });
+    });
+    test('test handleUnlimitedChange unchecked', () => {
+      output.handleUnlimitedChange({ target: { checked: false } });
+      expect(state.setState[state.keys.attemptDisplayValue]).toHaveBeenCalledWith(`${defaultValue} (Default)`);
+      expect(updateSettings)
+        .toHaveBeenCalledWith({ scoring: { ...scoring, attempts: { number: defaultValue, unlimited: false } } });
+    });
     test('test handleMaxAttemptChange', () => {
       const value = 6;
       output.handleMaxAttemptChange({ target: { value } });
@@ -215,32 +227,32 @@ describe('Problem settings hooks', () => {
     test('test handleOnChange', () => {
       const value = 6;
       output.handleOnChange({ target: { value } });
-      expect(state.setState[state.keys.local]).toHaveBeenCalledWith(value);
+      expect(state.setState[state.keys.attemptDisplayValue]).toHaveBeenCalledWith(value);
     });
     test('test handleOnChange set attempts to zero', () => {
       const value = 0;
       output.handleOnChange({ target: { value } });
-      expect(state.setState[state.keys.local]).toHaveBeenCalledWith(value);
+      expect(state.setState[state.keys.attemptDisplayValue]).toHaveBeenCalledWith(value);
     });
     test('test handleOnChange set attempts to default value from empty string', () => {
       const value = '';
       output.handleOnChange({ target: { value } });
-      expect(state.setState[state.keys.local]).toHaveBeenCalledWith('1 (Default)');
+      expect(state.setState[state.keys.attemptDisplayValue]).toHaveBeenCalledWith('');
     });
     test('test handleOnChange set attempts to default value', () => {
       const value = 1;
       output.handleOnChange({ target: { value } });
-      expect(state.setState[state.keys.local]).toHaveBeenCalledWith('1 (Default)');
+      expect(state.setState[state.keys.attemptDisplayValue]).toHaveBeenCalledWith('1 (Default)');
     });
     test('test handleOnChange set attempts to non-numeric value', () => {
-      const value = 'abc';
+      const value = '';
       output.handleOnChange({ target: { value } });
-      expect(state.setState[state.keys.local]).toHaveBeenCalledWith(value);
+      expect(state.setState[state.keys.attemptDisplayValue]).toHaveBeenCalledWith(value);
     });
     test('test handleOnChange set attempts to negative value', () => {
       const value = -1;
       output.handleOnChange({ target: { value } });
-      expect(state.setState[state.keys.local]).toHaveBeenCalledWith(0);
+      expect(state.setState[state.keys.attemptDisplayValue]).toHaveBeenCalledWith(0);
     });
     test('test handleWeightChange', () => {
       const value = 2;

@@ -34,10 +34,10 @@ exports[`ScoringCard snapshot snapshot: scoring setting card 1`] = `
   </Form.Group>
   <Form.Group>
     <Form.Control
+      disabled={false}
       floatingLabel="Attempts"
       onBlur={[MockFunction scoringCardHooks.handleMaxAttemptChange]}
       onChange={[MockFunction scoringCardHooks.handleOnChange]}
-      value={5}
     />
     <Form.Control.Feedback>
       <FormattedMessage
@@ -46,6 +46,20 @@ exports[`ScoringCard snapshot snapshot: scoring setting card 1`] = `
         id="authoring.problemeditor.settings.scoring.attempts.hint"
       />
     </Form.Control.Feedback>
+    <Form.Checkbox
+      checked={false}
+      className="mt-3 decoration-control-label"
+    >
+      <div
+        className="small"
+      >
+        <FormattedMessage
+          defaultMessage="Unlimited attempts"
+          description="Label for unlimited attempts checkbox"
+          id="authoring.problemeditor.settings.scoring.attempts.unlimitedCheckbox"
+        />
+      </div>
+    </Form.Checkbox>
   </Form.Group>
   <Hyperlink
     destination="undefined/settings/advanced/undefined#max_attempts"
@@ -94,10 +108,10 @@ exports[`ScoringCard snapshot snapshot: scoring setting card max attempts 1`] = 
   </Form.Group>
   <Form.Group>
     <Form.Control
+      disabled={true}
       floatingLabel="Attempts"
       onBlur={[MockFunction scoringCardHooks.handleMaxAttemptChange]}
       onChange={[MockFunction scoringCardHooks.handleOnChange]}
-      value={5}
     />
     <Form.Control.Feedback>
       <FormattedMessage
@@ -106,6 +120,20 @@ exports[`ScoringCard snapshot snapshot: scoring setting card max attempts 1`] = 
         id="authoring.problemeditor.settings.scoring.attempts.hint"
       />
     </Form.Control.Feedback>
+    <Form.Checkbox
+      checked={true}
+      className="mt-3 decoration-control-label"
+    >
+      <div
+        className="small"
+      >
+        <FormattedMessage
+          defaultMessage="Unlimited attempts"
+          description="Label for unlimited attempts checkbox"
+          id="authoring.problemeditor.settings.scoring.attempts.unlimitedCheckbox"
+        />
+      </div>
+    </Form.Checkbox>
   </Form.Group>
   <Hyperlink
     destination="undefined/settings/advanced/undefined#max_attempts"
@@ -154,10 +182,10 @@ exports[`ScoringCard snapshot snapshot: scoring setting card zero zero weight 1`
   </Form.Group>
   <Form.Group>
     <Form.Control
+      disabled={false}
       floatingLabel="Attempts"
       onBlur={[MockFunction scoringCardHooks.handleMaxAttemptChange]}
       onChange={[MockFunction scoringCardHooks.handleOnChange]}
-      value={5}
     />
     <Form.Control.Feedback>
       <FormattedMessage
@@ -166,6 +194,20 @@ exports[`ScoringCard snapshot snapshot: scoring setting card zero zero weight 1`
         id="authoring.problemeditor.settings.scoring.attempts.hint"
       />
     </Form.Control.Feedback>
+    <Form.Checkbox
+      checked={false}
+      className="mt-3 decoration-control-label"
+    >
+      <div
+        className="small"
+      >
+        <FormattedMessage
+          defaultMessage="Unlimited attempts"
+          description="Label for unlimited attempts checkbox"
+          id="authoring.problemeditor.settings.scoring.attempts.unlimitedCheckbox"
+        />
+      </div>
+    </Form.Checkbox>
   </Form.Group>
   <Hyperlink
     destination="undefined/settings/advanced/undefined#max_attempts"

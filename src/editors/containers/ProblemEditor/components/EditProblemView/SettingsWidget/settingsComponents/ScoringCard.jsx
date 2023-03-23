@@ -19,10 +19,11 @@ export const ScoringCard = ({
   learningContextId,
 }) => {
   const {
+    handleUnlimitedChange,
     handleMaxAttemptChange,
     handleWeightChange,
     handleOnChange,
-    local,
+    attemptDisplayValue,
   } = scoringCardHooks(scoring, updateSettings, defaultValue);
 
   const getScoringSummary = (weight, attempts, unlimited) => {
@@ -56,14 +57,24 @@ export const ScoringCard = ({
       </Form.Group>
       <Form.Group>
         <Form.Control
-          value={local}
+          value={attemptDisplayValue}
           onChange={handleOnChange}
           onBlur={handleMaxAttemptChange}
           floatingLabel={intl.formatMessage(messages.scoringAttemptsInputLabel)}
+          disabled={scoring.attempts.unlimited}
         />
         <Form.Control.Feedback>
           <FormattedMessage {...messages.attemptsHint} />
         </Form.Control.Feedback>
+        <Form.Checkbox
+          className="mt-3 decoration-control-label"
+          checked={scoring.attempts.unlimited}
+          onChange={handleUnlimitedChange}
+        >
+          <div className="small">
+            <FormattedMessage {...messages.unlimitedAttemptsCheckboxLabel} />
+          </div>
+        </Form.Checkbox>
       </Form.Group>
       <Hyperlink destination={`${studioEndpointUrl}/settings/advanced/${learningContextId}#max_attempts`} target="_blank">
         <FormattedMessage {...messages.advancedSettingsLinkText} />

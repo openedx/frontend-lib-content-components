@@ -19,10 +19,3 @@
         width: 100%;
     }
 }
-.scoringCard{
-    .defaultAttempts {
-        input::after{
-            content: '(Default)';
-        }
-    }
-}

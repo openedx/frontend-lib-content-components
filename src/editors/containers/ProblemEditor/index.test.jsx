@@ -48,6 +48,7 @@ describe('ProblemEditor', () => {
     studioViewFinished: false,
     initializeProblemEditor: jest.fn().mockName('args.intializeProblemEditor'),
     assetsFinished: false,
+    advanceSettingsFinished: false,
   };
   describe('snapshots', () => {
     test('renders as expected with default behavior', () => {
@@ -62,17 +63,27 @@ describe('ProblemEditor', () => {
     test('assets loaded, block and studio view not yet loaded, Spinner appears', () => {
       expect(shallow(<ProblemEditor {...props} assetsFinished />)).toMatchSnapshot();
     });
+    test('advanceSettings loaded, block and studio view not yet loaded, Spinner appears', () => {
+      expect(shallow(<ProblemEditor {...props} advanceSettingsFinished />)).toMatchSnapshot();
+    });
     test('block failed, message appears', () => {
       expect(shallow(<ProblemEditor
         {...props}
         blockFinished
         studioViewFinished
         assetsFinished
+        advanceSettingsFinished
         blockFailed
       />)).toMatchSnapshot();
     });
     test('renders SelectTypeModal', () => {
-      expect(shallow(<ProblemEditor {...props} blockFinished studioViewFinished assetsFinished />)).toMatchSnapshot();
+      expect(shallow(<ProblemEditor
+        {...props}
+        blockFinished
+        studioViewFinished
+        assetsFinished
+        advanceSettingsFinished
+      />)).toMatchSnapshot();
     });
     test('renders EditProblemView', () => {
       expect(shallow(<ProblemEditor
@@ -82,6 +93,7 @@ describe('ProblemEditor', () => {
         blockFailed
         studioViewFinished
         assetsFinished
+        advanceSettingsFinished
       />)).toMatchSnapshot();
     });
   });
@@ -112,6 +124,11 @@ describe('ProblemEditor', () => {
       expect(
         mapStateToProps(testState).assetsFinished,
       ).toEqual(selectors.requests.isFinished(testState, { requestKey: RequestKeys.fetchAssets }));
+    });
+    test('advanceSettingsFinished from requests.isFinished', () => {
+      expect(
+        mapStateToProps(testState).advanceSettingsFinished,
+      ).toEqual(selectors.requests.isFinished(testState, { requestKey: RequestKeys.fetchAdvanceSettings }));
     });
   });
   describe('mapDispatchToProps', () => {

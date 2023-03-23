@@ -19,6 +19,7 @@ export const ProblemEditor = ({
   blockValue,
   initializeProblemEditor,
   assetsFinished,
+  advanceSettingsFinished,
 }) => {
   React.useEffect(() => {
     if (blockFinished && studioViewFinished && assetsFinished && !blockFailed) {
@@ -26,7 +27,7 @@ export const ProblemEditor = ({
     }
   }, [blockFinished, studioViewFinished, assetsFinished, blockFailed]);
 
-  if (!blockFinished || !studioViewFinished || !assetsFinished) {
+  if (!blockFinished || !studioViewFinished || !assetsFinished || !advanceSettingsFinished) {
     return (
       <div className="text-center p-6">
         <Spinner
@@ -59,6 +60,7 @@ ProblemEditor.propTypes = {
   onClose: PropTypes.func.isRequired,
   // redux
   assetsFinished: PropTypes.bool,
+  advanceSettingsFinished: PropTypes.bool.isRequired,
   blockFinished: PropTypes.bool.isRequired,
   blockFailed: PropTypes.bool.isRequired,
   studioViewFinished: PropTypes.bool.isRequired,
@@ -74,6 +76,7 @@ export const mapStateToProps = (state) => ({
   problemType: selectors.problem.problemType(state),
   blockValue: selectors.app.blockValue(state),
   assetsFinished: selectors.requests.isFinished(state, { requestKey: RequestKeys.fetchAssets }),
+  advanceSettingsFinished: selectors.requests.isFinished(state, { requestKey: RequestKeys.fetchAdvanceSettings }),
 });
 
 export const mapDispatchToProps = {

@@ -1,5 +1,17 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`ProblemEditor snapshots advanceSettings loaded, block and studio view not yet loaded, Spinner appears 1`] = `
+<div
+  className="text-center p-6"
+>
+  <Spinner
+    animation="border"
+    className="m-3"
+    screenreadertext="Loading Problem Editor"
+  />
+</div>
+`;
+
 exports[`ProblemEditor snapshots assets loaded, block and studio view not yet loaded, Spinner appears 1`] = `
 <div
   className="text-center p-6"
