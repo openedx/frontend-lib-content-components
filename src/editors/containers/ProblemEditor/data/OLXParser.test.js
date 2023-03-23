@@ -123,6 +123,7 @@ describe('Check OLXParser for answer parsing', () => {
     try {
       olxparser.parseMultipleChoiceAnswers('choiceresponse', 'checkboxgroup', 'choice');
     } catch (e) {
+      expect(e).toBeInstanceOf(Error);
       expect(e.message).toBe('Misc Tags, reverting to Advanced Editor');
     }
   });
