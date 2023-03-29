@@ -1,4 +1,6 @@
-export const messages = {
+import { defineMessages } from '@edx/frontend-platform/i18n';
+
+const messages = defineMessages({
   answerWidgetTitle: {
     id: 'authoring.answerwidget.answer.answerWidgetTitle',
     defaultMessage: 'Answers',
@@ -54,6 +56,7 @@ export const messages = {
     defaultMessage: 'is not selected',
     description: 'Bold & underlined text for feedback if option is not selected',
   },
+
   addAnswerRangeButtonText: {
     id: 'authoring.answerwidget.answer.addAnswerRangeButton',
     defaultMessage: 'Add Answer Range',
@@ -69,7 +72,6 @@ export const messages = {
     defaultMessage: 'Enter min and max values separated by a comma. Use a bracket to include the number next to it in the range, or a parenthesis to exclude the number. For example, to identify the correct answers as 5, 6, or 7, but not 8, specify [5,8).',
     description: 'Helper text describing usage of answer ranges',
   },
-
-};
+});
 
 export default messages;
