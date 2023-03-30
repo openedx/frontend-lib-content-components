@@ -59,7 +59,7 @@ const messages = defineMessages({
 
   addAnswerRangeButtonText: {
     id: 'authoring.answerwidget.answer.addAnswerRangeButton',
-    defaultMessage: 'Add Answer Range',
+    defaultMessage: 'Add answer range',
     description: 'Button text to add a range of answers',
   },
   answerRangeTextboxPlaceholder: {
