@@ -120,6 +120,14 @@ describe('ImageSettingsModal hooks', () => {
           },
         );
       });
+      it('calculates new dimensions proportionally and correctly when lock is active', () => {
+        expect(hooks.getValidDimensions({
+          dimensions: { width: 1517, height: 803 },
+          local: { width: 758, height: 803 },
+          isLocked: true,
+          lockDims: { width: 1517, height: 803 }, // divided by gcd. gcd is 1 in this case, so min height is 803. This leads to the test failing.
+        })).toEqual({ width: 758, height: 401 });
+      });
     });
     describe('dimensionLockHooks', () => {
       beforeEach(() => {

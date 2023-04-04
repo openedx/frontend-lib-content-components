@@ -47,16 +47,16 @@ export const getValidDimensions = ({
 }) => {
   if (!isLocked || checkEqual(local, dimensions)) {
     return local;
-  }
+  } // if lock is not active, just return new dimensions. If lock is active, but dimensions have not changed, also just return new dimensions.
   const out = {};
   let iter;
-  const isMin = dimensions.height === lockDims.height;
+  const isMin = dimensions.height === lockDims.height; // isMin is true if height is same as lock height.
 
   const keys = (local.height !== dimensions.height)
     ? { changed: dimKeys.height, other: dimKeys.width }
-    : { changed: dimKeys.width, other: dimKeys.height };
+    : { changed: dimKeys.width, other: dimKeys.height }; // changed key is value of local height if that has changed, otherwise width.
 
-  const direction = local[keys.changed] > dimensions[keys.changed] ? 1 : -1;
+  const direction = local[keys.changed] > dimensions[keys.changed] ? 1 : -1; // direction positive if changed dimension is increased.
 
   // don't move down if already at minimum size
   if (direction < 0 && isMin) { return dimensions; }

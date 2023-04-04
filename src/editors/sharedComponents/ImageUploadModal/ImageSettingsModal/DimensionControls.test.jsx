@@ -38,4 +38,7 @@ describe('DimensionControls', () => {
       expect(el).toMatchSnapshot();
     });
   });
+  describe('renders with initial dimensions', () => {
+
+  })
 });
