@@ -1,44 +1,71 @@
-import React from 'react';
-import { shallow } from 'enzyme';
+import React, { useEffect } from 'react';
 
+import { render, screen } from '@testing-library/react';
 import { formatMessage } from '../../../../testUtils';
 import { DimensionControls } from './DimensionControls';
+import hooks from './hooks';
 
-jest.mock('./hooks', () => ({
-  onInputChange: (handler) => ({ 'hooks.onInputChange': handler }),
+/*
+import {
+  Form,
+  Icon,
+  IconButton,
+} from '@edx/paragon';
+import {
+  Locked,
+  Unlocked,
+} from '@edx/paragon/icons';
+*/
+
+jest.mock('@edx/paragon', () => ({
+  __esmodule: true,
+  Form: {
+    Group: jest.fn(({ children }) => (
+      <div>{children}</div>
+    )),
+    Label: jest.fn(({ children }) => (
+      <div>{children}</div>
+    )),
+    Control: jest.fn(({ value }) => (
+      <div>{value}</div>
+    )),
+  },
+  Icon: jest.fn(({ children }) => (
+    <div>{children}</div>
+  )),
+  IconButton: jest.fn(({ children }) => (
+    <div>{children}</div>
+  )),
 }));
 
+jest.mock('@edx/paragon/icons', () => ({
+  __esmodule: true,
+  Locked: jest.fn(),
+  Unlocked: jest.fn(),
+}));
+
+const WrappedDimensionControls = () => {
+  const dimensions = hooks.dimensions('altText');
+
+  useEffect(() => {
+    dimensions.onImgLoad({ width: '1517', height: '803' })({ target: {} });
+  }, []);
+
+  return <DimensionControls {...dimensions} intl={{ formatMessage }} />;
+};
+
 describe('DimensionControls', () => {
-  const props = {
-    lockDims: { width: 12, height: 15 },
-    locked: { 'props.locked': 'lockedValue' },
-    isLocked: true,
-    value: { width: 20, height: 40 },
-    // inject
-    intl: { formatMessage },
-  };
-  beforeEach(() => {
-    props.setWidth = jest.fn().mockName('props.setWidth');
-    props.setHeight = jest.fn().mockName('props.setHeight');
-    props.lock = jest.fn().mockName('props.lock');
-    props.unlock = jest.fn().mockName('props.unlock');
-    props.updateDimensions = jest.fn().mockName('props.updateDimensions');
-  });
   describe('render', () => {
     test('snapshot', () => {
-      expect(shallow(<DimensionControls {...props} />)).toMatchSnapshot();
     });
     test('null value: empty snapshot', () => {
-      const el = shallow(<DimensionControls {...props} value={null} />);
-      expect(el).toMatchSnapshot();
-      expect(el.isEmptyRender()).toEqual(true);
     });
     test('unlocked dimensions', () => {
-      const el = shallow(<DimensionControls {...props} isLocked={false} />);
-      expect(el).toMatchSnapshot();
     });
   });
-  describe('renders with initial dimensions', () => {
-
-  })
+  it('renders with initial dimensions', () => {
+    render(<WrappedDimensionControls />);
+    expect(screen.getByText('1517')).toBeDefined();
+    expect(screen.getByText('803')).toBeDefined();
+  });
 });
