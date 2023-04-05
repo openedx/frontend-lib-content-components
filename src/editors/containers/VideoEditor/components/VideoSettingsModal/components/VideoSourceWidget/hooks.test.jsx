@@ -152,4 +152,23 @@ describe('VideoEditorHandout hooks', () => {
       });
     });
   });
+  describe('videoIdChangeAlert', () => {
+    beforeEach(() => {
+      state.mock();
+    });
+    afterEach(() => {
+      state.restore();
+    });
+    test('showVideoChangeAlert: state values', () => {
+      expect(hooks.videoIdChangeAlert().videoIdChangeAlert.show).toEqual(false);
+    });
+    test('showVideoChangeAlert setters: set', () => {
+      hooks.videoIdChangeAlert().videoIdChangeAlert.set();
+      expect(state.setState[state.keys.showVideoIdChangeAlert]).toHaveBeenCalledWith(true);
+    });
+    test('showVideoChangeAlert setters: dismiss', () => {
+      hooks.videoIdChangeAlert().videoIdChangeAlert.dismiss();
+      expect(state.setState[state.keys.showVideoIdChangeAlert]).toHaveBeenCalledWith(false);
+    });
+  });
 });
