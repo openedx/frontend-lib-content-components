@@ -98,29 +98,29 @@ describe('VideoEditorHandout hooks', () => {
     });
     describe('updateVideoId', () => {
       it('dispatches updateField action with new videoId', () => {
-        hook.updateVideoId(e);
+        hook.updateVideoId({ target: { value: 'newVideoId' } });
         expect(dispatch).toHaveBeenCalledWith(
           actions.video.updateField({
             videoId: e.target.value,
           }),
         );
       });
-      // it('dispatches updateField action and calls update', () => {
-      //   hook.updateVideoId(e);
-      //   expect(dispatch).toHaveBeenCalledWith(
-      //     actions.video.updateField({
-      //       videoId: e.target.value,
-      //     }),
-      //   );
-      // });
-      // it('dispatches updateField action with new videoId', () => {
-      //   hook.updateVideoId(e);
-      //   expect(dispatch).toHaveBeenCalledWith(
-      //     actions.video.updateField({
-      //       videoId: e.target.value,
-      //     }),
-      //   );
-      // });
+      it('dispatches updateField action with empty string', () => {
+        hook.updateVideoId({ target: { value: '' } });
+        expect(dispatch).toHaveBeenCalledWith(
+          actions.video.updateField({
+            videoId: e.target.value,
+          }),
+        );
+      });
+      it('dispatches updateField action with previousVideoId', () => {
+        hook.updateVideoId({ target: { value: 'soMEvALuE' } });
+        expect(dispatch).toHaveBeenCalledWith(
+          actions.video.updateField({
+            videoId: e.target.value,
+          }),
+        );
+      });
     });
   });
 
