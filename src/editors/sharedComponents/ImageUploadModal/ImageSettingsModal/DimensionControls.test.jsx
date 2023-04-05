@@ -1,17 +1,10 @@
 import React, { useEffect } from 'react';
+import { shallow } from 'enzyme';
 
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { formatMessage } from '../../../../testUtils';
 import { DimensionControls } from './DimensionControls';
 import hooks from './hooks';
-
-/*
-onImgLoad: (selection) => ({ target: img }) => {
-  const imageDims = { height: img.naturalHeight, width: img.naturalWidth };
-  setAll(selection.height ? selection : imageDims);
-  initializeLock(imageDims);
-},
-*/
 
 jest.mock('@edx/paragon', () => ({
   __esmodule: true,
@@ -63,11 +56,38 @@ const UnlockedDimensionControls = () => {
 
 describe('DimensionControls', () => {
   describe('render', () => {
-    test('snapshot', () => {
-    });
-    test('null value: empty snapshot', () => {
-    });
-    test('unlocked dimensions', () => {
+    describe('snapshots', () => {
+      const props = {
+        lockDims: { width: 12, height: 15 },
+        locked: { 'props.locked': 'lockedValue' },
+        isLocked: true,
+        value: { width: 20, height: 40 },
+        // inject
+        intl: { formatMessage },
+      };
+      beforeEach(() => {
+        jest.spyOn(hooks, 'onInputChange').mockImplementation((handler) => ({ 'hooks.onInputChange': handler }));
+        props.setWidth = jest.fn().mockName('props.setWidth');
+        props.setHeight = jest.fn().mockName('props.setHeight');
+        props.lock = jest.fn().mockName('props.lock');
+        props.unlock = jest.fn().mockName('props.unlock');
+        props.updateDimensions = jest.fn().mockName('props.updateDimensions');
+      });
+      afterEach(() => {
+        jest.spyOn(hooks, 'onInputChange').mockRestore();
+      });
+      test('snapshot', () => {
+        expect(shallow(<DimensionControls {...props} />)).toMatchSnapshot();
+      });
+      test('null value: empty snapshot', () => {
+        const el = shallow(<DimensionControls {...props} value={null} />);
+        expect(el).toMatchSnapshot();
+        expect(el.isEmptyRender()).toEqual(true);
+      });
+      test('unlocked dimensions', () => {
+        const el = shallow(<DimensionControls {...props} isLocked={false} />);
+        expect(el).toMatchSnapshot();
+      });
     });
   });
   it('renders with initial dimensions', () => {
