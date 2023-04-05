@@ -1,7 +1,15 @@
 import { dispatch } from 'react-redux';
 import { actions } from '../../../../../../data/redux';
+import { MockUseState } from '../../../../../../../testUtils';
 import * as requests from '../../../../../../data/redux/thunkActions/requests';
 import * as hooks from './hooks';
+
+jest.mock('react', () => ({
+  ...jest.requireActual('react'),
+  useRef: jest.fn(val => ({ current: val })),
+  useEffect: jest.fn(),
+  useCallback: (cb, prereqs) => ({ cb, prereqs }),
+}));
 
 jest.mock('react-redux', () => {
   const dispatchFn = jest.fn();
@@ -25,16 +33,24 @@ jest.mock('../../../../../../data/redux/thunkActions/requests', () => ({
   checkTranscriptsForImport: jest.fn(),
 }));
 
+const state = new MockUseState(hooks);
+
 const youtubeId = 'yOuTuBEiD';
 const youtubeUrl = `https://youtu.be/${youtubeId}`;
 
 describe('VideoEditorHandout hooks', () => {
   let hook;
-
+  describe('state hooks', () => {
+    state.testGetter(state.keys.showVideoIdChangeAlert);
+  });
   describe('sourceHooks', () => {
     const e = { target: { value: 'soMEvALuE' } };
     beforeEach(() => {
-      hook = hooks.sourceHooks({ dispatch });
+      hook = hooks.sourceHooks({
+        dispatch,
+        previousVideoId: 'soMEvALuE',
+        videoIdChangeAlert: { set: jest.fn() },
+      });
     });
     afterEach(() => {
       jest.clearAllMocks();
@@ -89,6 +105,22 @@ describe('VideoEditorHandout hooks', () => {
           }),
         );
       });
+      // it('dispatches updateField action and calls update', () => {
+      //   hook.updateVideoId(e);
+      //   expect(dispatch).toHaveBeenCalledWith(
+      //     actions.video.updateField({
+      //       videoId: e.target.value,
+      //     }),
+      //   );
+      // });
+      // it('dispatches updateField action with new videoId', () => {
+      //   hook.updateVideoId(e);
+      //   expect(dispatch).toHaveBeenCalledWith(
+      //     actions.video.updateField({
+      //       videoId: e.target.value,
+      //     }),
+      //   );
+      // });
     });
   });
 
