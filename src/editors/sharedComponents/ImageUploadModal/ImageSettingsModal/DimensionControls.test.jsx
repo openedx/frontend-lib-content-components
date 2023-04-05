@@ -34,7 +34,7 @@ const UnlockedDimensionControls = () => {
 describe('DimensionControls', () => {
   describe('render', () => {
     const props = {
-      lockDims: { width: 12, height: 15 },
+      lockAspectRatio: { width: 4, height: 5 },
       locked: { 'props.locked': 'lockedValue' },
       isLocked: true,
       value: { width: 20, height: 40 },
