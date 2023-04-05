@@ -1,4 +1,4 @@
-2. Feature-based Application Organization
+6. Feature-based Application Organization
 -----------------------------------------
 
 Status
