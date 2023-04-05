@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react';
 import { shallow } from 'enzyme';
+import * as paragon from '@edx/paragon';
+import * as icons from '@edx/paragon/icons';
 
 import {
   fireEvent, render, screen, waitFor,
@@ -7,33 +9,6 @@ import {
 import { formatMessage } from '../../../../testUtils';
 import { DimensionControls } from './DimensionControls';
 import hooks from './hooks';
-
-jest.mock('@edx/paragon', () => ({
-  __esmodule: true,
-  Form: {
-    Group: jest.fn(({ children }) => (
-      <div>{children}</div>
-    )),
-    Label: jest.fn(({ children }) => (
-      <div>{children}</div>
-    )),
-    Control: jest.fn(({ value, onChange, onBlur }) => (
-      <><h5>{value}</h5><input className="formControl" onChange={onChange} onBlur={onBlur} value={value} /></>
-    )),
-  },
-  Icon: jest.fn(({ children }) => (
-    <div>{children}</div>
-  )),
-  IconButton: jest.fn(({ children }) => (
-    <div>{children}</div>
-  )),
-}));
-
-jest.mock('@edx/paragon/icons', () => ({
-  __esmodule: true,
-  Locked: jest.fn(),
-  Unlocked: jest.fn(),
-}));
 
 const WrappedDimensionControls = () => {
   const dimensions = hooks.dimensions('altText');
@@ -91,6 +66,35 @@ describe('DimensionControls', () => {
     });
   });
   describe('component tests for dimensions', () => {
+    beforeEach(() => {
+      paragon.Form.Group = jest.fn().mockImplementation(({ children }) => (
+        <div>{children}</div>
+      ));
+      paragon.Form.Label = jest.fn().mockImplementation(({ children }) => (
+        <div>{children}</div>
+      ));
+      paragon.Icon = jest.fn().mockImplementation(({ children }) => (
+        <div>{children}</div>
+      ));
+      paragon.IconButton = jest.fn().mockImplementation(({ children }) => (
+        <div>{children}</div>
+      ));
+      paragon.Form.Control = jest.fn().mockImplementation(({ value, onChange, onBlur }) => (
+        <input className="formControl" onChange={onChange} onBlur={onBlur} value={value} />
+      ));
+      icons.Locked = jest.fn().mockImplementation(() => {});
+      icons.Unlocked = jest.fn().mockImplementation(() => {});
+    });
+    afterEach(() => {
+      paragon.Form.Group.mockRestore();
+      paragon.Form.Label.mockRestore();
+      paragon.Form.Control.mockRestore();
+      paragon.Icon.mockRestore();
+      paragon.IconButton.mockRestore();
+      icons.Locked.mockRestore();
+      icons.Unlocked.mockRestore();
+    });
+
     it('renders with initial dimensions', () => {
       const { container } = render(<WrappedDimensionControls />);
       const widthInput = container.querySelector('.formControl');
