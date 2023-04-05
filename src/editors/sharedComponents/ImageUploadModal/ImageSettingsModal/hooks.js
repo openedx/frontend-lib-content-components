@@ -68,6 +68,11 @@ export const getValidDimensions = ({
   out[keys.changed] = Math.round(iter * lockDims[keys.changed]);
   out[keys.other] = Math.round(out[keys.changed] * (lockDims[keys.other] / lockDims[keys.changed]));
 
+  console.log('dimensions: ', dimensions);
+  console.log('local: ', local);
+  console.log('isLocked: ', isLocked);
+  console.log('lockDims: ', lockDims);
+  console.log('out: ', out);
   return out;
 };
 
@@ -88,6 +93,10 @@ export const dimensionLockHooks = () => {
   const [isLocked, setIsLocked] = module.state.isLocked(true);
 
   const initializeLock = ({ width, height }) => {
+    console.log('initializeLock: ');
+    console.log(width);
+    console.log(height);
+
     // find minimum viable increment
     let gcd = module.findGcd(width, height);
     if ([width, height].some(v => !Number.isInteger(v / gcd))) {
