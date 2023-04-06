@@ -41,15 +41,16 @@ export const hooks = {
   }) => (
     settings,
   ) => {
+    const newSelection = module.hooks.imgTag({
+      settings,
+      selection,
+      lmsEndpointUrl,
+      editorType,
+    });
     editorRef.current.execCommand(
       tinyMCEKeys.commands.insertContent,
       false,
-      module.hooks.imgTag({
-        settings,
-        selection,
-        lmsEndpointUrl,
-        editorType,
-      }),
+      newSelection,
     );
     setSelection(null);
     close();
@@ -70,7 +71,7 @@ export const hooks = {
       lmsEndpointUrl,
       editorType,
     });
-    return `<img ${propsString(props)} />`;
+    return `<img ${propsString(props)} style="height: ${props.height}px !important; width: ${props.width}px !important;" />`;
   },
 };
 
