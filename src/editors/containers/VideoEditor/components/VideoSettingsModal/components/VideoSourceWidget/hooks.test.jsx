@@ -49,7 +49,7 @@ describe('VideoEditorHandout hooks', () => {
       hook = hooks.sourceHooks({
         dispatch,
         previousVideoId: 'soMEvALuE',
-        videoIdChangeAlert: { set: jest.fn() },
+        setAlert: jest.fn(),
       });
     });
     afterEach(() => {
@@ -159,14 +159,14 @@ describe('VideoEditorHandout hooks', () => {
     afterEach(() => {
       state.restore();
     });
-    test('showVideoChangeAlert: state values', () => {
+    test('showVideoIdChangeAlert: state values', () => {
       expect(hooks.videoIdChangeAlert().videoIdChangeAlert.show).toEqual(false);
     });
-    test('showVideoChangeAlert setters: set', () => {
+    test('showVideoIdChangeAlert setters: set', () => {
       hooks.videoIdChangeAlert().videoIdChangeAlert.set();
       expect(state.setState[state.keys.showVideoIdChangeAlert]).toHaveBeenCalledWith(true);
     });
-    test('showVideoChangeAlert setters: dismiss', () => {
+    test('showVideoIdChangeAlert setters: dismiss', () => {
       hooks.videoIdChangeAlert().videoIdChangeAlert.dismiss();
       expect(state.setState[state.keys.showVideoIdChangeAlert]).toHaveBeenCalledWith(false);
     });

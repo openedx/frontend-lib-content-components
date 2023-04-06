@@ -56,7 +56,7 @@ export const VideoSourceWidget = ({
   const { updateVideoId, updateVideoURL } = hooks.sourceHooks({
     dispatch,
     previousVideoId: videoId.formValue,
-    videoIdChangeAlert,
+    setAlert: videoIdChangeAlert.set,
   });
   const {
     addFallbackVideo,

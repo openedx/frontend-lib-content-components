@@ -88,8 +88,7 @@ describe('VideoSourceWidget', () => {
     let el;
     let hook;
     beforeEach(() => {
-      const videoIdChangeAlert = { set: jest.fn() };
-      hook = hooks.sourceHooks({ dispatch, previousVideoId: 'someVideoId', videoIdChangeAlert });
+      hook = hooks.sourceHooks({ dispatch, previousVideoId: 'someVideoId', setAlert: jest.fn() });
       el = shallow(<VideoSourceWidget {...props} />);
     });
     test('updateVideoId is tied to id field onBlur', () => {

@@ -7,7 +7,7 @@ export const state = {
   showVideoIdChangeAlert: (args) => React.useState(args),
 };
 
-export const sourceHooks = ({ dispatch, previousVideoId, videoIdChangeAlert }) => ({
+export const sourceHooks = ({ dispatch, previousVideoId, setAlert }) => ({
   updateVideoURL: (e, videoId) => {
     const videoUrl = e.target.value;
     dispatch(actions.video.updateField({ videoSource: videoUrl }));
@@ -30,7 +30,7 @@ export const sourceHooks = ({ dispatch, previousVideoId, videoIdChangeAlert }) =
   updateVideoId: (e) => {
     const updatedVideoId = e.target.value;
     if (previousVideoId !== updatedVideoId && updatedVideoId) {
-      videoIdChangeAlert.set();
+      setAlert();
     }
     dispatch(actions.video.updateField({ videoId: updatedVideoId }));
   },
