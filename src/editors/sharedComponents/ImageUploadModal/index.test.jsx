@@ -38,7 +38,7 @@ describe('ImageUploadModal', () => {
           selection,
           lmsEndpointUrl: 'sOmE',
         });
-        expect(output).toEqual(`<img ${module.propsString(args.expected)} />`);
+        expect(output).toEqual(`<img ${module.propsString(args.expected)} style="height: 1619px !important; width: 2022px !important;" />`);
       };
       test('It returns a html string which matches an image tag', () => {
         testImgTag({ settings, expected });
