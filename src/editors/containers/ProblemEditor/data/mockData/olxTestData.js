@@ -386,7 +386,7 @@ export const numericInputWithFeedbackAndHintsOLX = {
 
 export const numericInputWithAnswerRangeOLX = {
   rawOLX: `<problem>
-<numericalresponse answer="[32,-1.3)">
+<numericalresponse answer="[3/2,-1.3)">
   <p>You can use this template as a guide to the simple editor markdown and OLX markup to use for numerical input with hints and feedback problems. Edit this component to replace this template with your own assessment.</p>
 <label>Add the question text, or prompt, here. This text is required.</label>
 <description>You can add an optional tip or note related to the prompt like this. </description>
@@ -409,7 +409,7 @@ export const numericInputWithAnswerRangeOLX = {
   <p>You can use this template as a guide to the simple editor markdown and OLX markup to use for numerical input with hints and feedback problems. Edit this component to replace this template with your own assessment.</p>
   <label>Add the question text, or prompt, here. This text is required.</label>
   <em>You can add an optional tip or note related to the prompt like this.</em>
-  <numericalresponse answer="(-1.3,32]">
+  <numericalresponse answer="(-1.3,3/2]">
     <formulaequationinput></formulaequationinput>
   </numericalresponse>
 </problem>
