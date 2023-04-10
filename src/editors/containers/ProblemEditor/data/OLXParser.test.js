@@ -74,6 +74,18 @@ describe('Check OLXParser problem type', () => {
   });
 });
 
+describe('OLX Parser settings attributes on problem tags', () => {
+  test('OLX with attributes on the problem tags should error out', () => {
+    const olxparser = new OLXParser(labelDescriptionQuestionOLX.rawOLX);
+    try {
+      olxparser.getParsedOLXData();
+    } catch (e) {
+      expect(e).toBeInstanceOf(Error);
+      expect(e.message).toBe('Misc Attributes asscoiated with problem, opening in advanced editor');
+    }
+  });
+});
+
 describe('Check OLXParser hints', () => {
   test('Test checkbox hints', () => {
     const olxparser = new OLXParser(checkboxesOLXWithFeedbackAndHintsOLX.rawOLX);

@@ -455,6 +455,11 @@ export class OLXParser {
     if (_.isEmpty(this.problem)) {
       return {};
     }
+
+    if (Object.keys(this.problem).some((key) => key.indexOf('@_') !== -1)) {
+      throw new Error('Misc Attributes asscoiated with problem, opening in advanced editor');
+    }
+
     let answersObject = {};
     let additionalAttributes = {};
     let groupFeedbackList = [];
