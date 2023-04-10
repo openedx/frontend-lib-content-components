@@ -17,6 +17,7 @@ import {
   styledQuestionOLX,
   shuffleProblemOLX,
   scriptProblemOlX,
+  labelDescriptionQuestionOLX,
 } from './mockData/olxTestData';
 import { ProblemTypeKeys } from '../../../data/constants/problem';
 
@@ -197,6 +198,12 @@ describe('Check OLXParser for question parsing', () => {
     const problemType = olxparser.getProblemType();
     const question = olxparser.parseQuestions(problemType);
     expect(question).toBe(styledQuestionOLX.question);
+  });
+  test('Test OLX content with labels and descriptions inside reponse tag should parse correctly, appending the label/description to the question', () => {
+    const olxparser = new OLXParser(labelDescriptionQuestionOLX.rawOLX);
+    const problemType = olxparser.getProblemType();
+    const question = olxparser.parseQuestions(problemType);
+    expect(question).toBe(labelDescriptionQuestionOLX.question);
   });
 });
 
