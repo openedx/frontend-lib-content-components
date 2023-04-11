@@ -1,6 +1,7 @@
 import { StrictDict } from '../../../utils';
 
 import { RequestKeys } from '../../constants/requests';
+// eslint-disable-next-line import/no-cycle
 import { actions, selectors } from '..';
 import api, { loadImages } from '../../services/cms/api';
 

@@ -1,4 +1,5 @@
 import _ from 'lodash-es';
+// eslint-disable-next-line import/no-cycle
 import { actions } from '..';
 import { OLXParser } from '../../../containers/ProblemEditor/data/OLXParser';
 import { parseSettings } from '../../../containers/ProblemEditor/data/SettingsParser';
