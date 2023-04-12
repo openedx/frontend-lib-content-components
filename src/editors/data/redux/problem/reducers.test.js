@@ -29,8 +29,22 @@ describe('problem reducer', () => {
     ].map(args => setterTest(...args));
     describe('setEnableTypeSelection', () => {
       it('sets given problemType to null', () => {
-        expect(reducer(testingState, actions.setEnableTypeSelection())).toEqual({
+        const payload = {
+          maxAttempts: 1,
+          showanswer: 'finished',
+          showResetButton: false,
+        };
+        expect(reducer(testingState, actions.setEnableTypeSelection(payload))).toEqual({
           ...testingState,
+          settings: {
+            ...testingState.settings,
+            scoring: {
+              ...testingState.settings.scoring,
+              attempts: { number: 1, unlimited: false },
+            },
+            showAnswer: { ...testingState.settings.showAnswer, on: payload.showanswer },
+            ...payload.showResetButton,
+          },
           problemType: null,
         });
       });
@@ -42,6 +56,7 @@ describe('problem reducer', () => {
           correct: false,
           selectedFeedback: '',
           title: '',
+          isAnswerRange: false,
           unselectedFeedback: '',
         };
         expect(reducer(testingState, actions.addAnswer(answer))).toEqual({
@@ -77,6 +92,7 @@ describe('problem reducer', () => {
         correct: false,
         selectedFeedback: '',
         title: '',
+        isAnswerRange: false,
         unselectedFeedback: '',
       };
       it('sets answers', () => {
@@ -102,6 +118,26 @@ describe('problem reducer', () => {
         });
       });
     });
+
+    describe('addAnswerRange', () => {
+      const answerRange = {
+        id: 'A',
+        correct: true,
+        selectedFeedback: '',
+        title: '',
+        isAnswerRange: true,
+        unselectedFeedback: '',
+      };
+      it('sets answerRange', () => {
+        expect(reducer({ ...testingState, problemType: ProblemTypeKeys.NUMERIC }, actions.addAnswerRange())).toEqual({
+          ...testingState,
+          correctAnswerCount: 1,
+          problemType: ProblemTypeKeys.NUMERIC,
+          answers: [answerRange],
+        });
+      });
+    });
+
     describe('updateAnswer', () => {
       it('sets answers, as well as setting the correctAnswerCount ', () => {
         const answer = { id: 'A', correct: true };
@@ -146,6 +182,39 @@ describe('problem reducer', () => {
               id: 'A',
               correct: true,
             }],
+        });
+      });
+      it('if you delete an answer range, it will be replaced with a blank answer', () => {
+        const answer = {
+          id: 'A',
+          correct: true,
+          selectedFeedback: '',
+          title: '',
+          isAnswerRange: false,
+          unselectedFeedback: '',
+        };
+        const answerRange = {
+          id: 'A',
+          correct: false,
+          selectedFeedback: '',
+          title: '',
+          isAnswerRange: true,
+          unselectedFeedback: '',
+        };
+
+        expect(reducer(
+          {
+            ...testingState,
+            problemType: ProblemTypeKeys.NUMERIC,
+            correctAnswerCount: 1,
+            answers: [{ ...answerRange }],
+          },
+          actions.deleteAnswer(answer),
+        )).toEqual({
+          ...testingState,
+          problemType: ProblemTypeKeys.NUMERIC,
+          correctAnswerCount: 1,
+          answers: [{ ...answer }],
         });
       });
     });

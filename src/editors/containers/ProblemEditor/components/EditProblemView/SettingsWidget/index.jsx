@@ -13,6 +13,7 @@ import ResetCard from './settingsComponents/ResetCard';
 import MatlabCard from './settingsComponents/MatlabCard';
 import TimerCard from './settingsComponents/TimerCard';
 import TypeCard from './settingsComponents/TypeCard';
+import ToleranceCard from './settingsComponents/Tolerance';
 import GroupFeedbackCard from './settingsComponents/GroupFeedback/index';
 import SwitchToAdvancedEditorCard from './settingsComponents/SwitchToAdvancedEditorCard';
 import messages from './messages';
@@ -35,6 +36,7 @@ export const SettingsWidget = ({
   updateSettings,
   updateField,
   updateAnswer,
+  defaultSettings,
 }) => {
   const { isAdvancedCardsVisible, showAdvancedCards } = showAdvancedSettingsCards();
 
@@ -66,8 +68,22 @@ export const SettingsWidget = ({
           updateAnswer={updateAnswer}
         />
       </div>
+      {ProblemTypeKeys.NUMERIC === problemType
+          && (
+          <div className="my-3">
+            <ToleranceCard
+              updateSettings={updateSettings}
+              answers={answers}
+              tolerance={settings.tolerance}
+            />
+          </div>
+          )}
       <div className="my-3">
-        <ScoringCard scoring={settings.scoring} updateSettings={updateSettings} />
+        <ScoringCard
+          scoring={settings.scoring}
+          defaultValue={defaultSettings.maxAttempts}
+          updateSettings={updateSettings}
+        />
       </div>
       <div className="mt-3">
         <HintsCard problemType={problemType} hints={settings.hints} updateSettings={updateSettings} />
@@ -93,17 +109,13 @@ export const SettingsWidget = ({
           <div className="my-3">
             <ShowAnswerCard
               showAnswer={settings.showAnswer}
+              defaultValue={defaultSettings.showanswer}
               updateSettings={updateSettings}
-              solutionExplanation={settings.solutionExplanation}
             />
           </div>
-          {
-            problemType !== ProblemTypeKeys.ADVANCED && (
-            <div className="my-3">
-              <ResetCard showResetButton={settings.showResetButton} updateSettings={updateSettings} />
-            </div>
-            )
-          }
+          <div className="my-3">
+            <ResetCard showResetButton={settings.showResetButton} updateSettings={updateSettings} />
+          </div>
           {
             problemType === ProblemTypeKeys.ADVANCED && (
             <div className="my-3">
@@ -150,6 +162,11 @@ SettingsWidget.propTypes = {
   updateAnswer: PropTypes.func.isRequired,
   updateField: PropTypes.func.isRequired,
   updateSettings: PropTypes.func.isRequired,
+  defaultSettings: PropTypes.shape({
+    maxAttempts: PropTypes.number,
+    showanswer: PropTypes.string,
+    showReseButton: PropTypes.bool,
+  }).isRequired,
   // eslint-disable-next-line
   settings: PropTypes.any.isRequired,
 };
@@ -160,6 +177,7 @@ const mapStateToProps = (state) => ({
   answers: selectors.problem.answers(state),
   blockTitle: selectors.app.blockTitle(state),
   correctAnswerCount: selectors.problem.correctAnswerCount(state),
+  defaultSettings: selectors.problem.defaultSettings(state),
 });
 
 export const mapDispatchToProps = {

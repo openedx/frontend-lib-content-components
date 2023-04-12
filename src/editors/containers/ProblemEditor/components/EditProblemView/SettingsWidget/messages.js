@@ -1,4 +1,7 @@
-export const messages = {
+import { defineMessages } from '@edx/frontend-platform/i18n';
+
+const messages = defineMessages({
+
   settingsWidgetTitle: {
     id: 'authoring.problemeditor.settings.settingsWidgetTitle',
     defaultMessage: 'Settings',
@@ -114,6 +117,11 @@ export const messages = {
     defaultMessage: '{attempts, plural, =1 {# attempt} other {# attempts}}',
     description: 'Summary text for number of attempts',
   },
+  unlimitedAttemptsCheckboxLabel: {
+    id: 'authoring.problemeditor.settings.scoring.attempts.unlimitedCheckbox',
+    defaultMessage: 'Unlimited attempts',
+    description: 'Label for unlimited attempts checkbox',
+  },
   weightSummary: {
     id: 'authoring.problemeditor.settings.scoring.weight',
     defaultMessage: '{weight, plural, =0 {Ungraded} other {# points}}',
@@ -179,23 +187,18 @@ export const messages = {
     defaultMessage: 'Switch to advanced editor',
     description: 'button to switch to the advanced mode of the editor.',
   },
-  ConfirmSwitchMessageOne: {
-    id: 'authoring.problemeditor.settings.switchtoadvancededitor.message.one',
-    defaultMessage: 'If you use the advanced editor, \r this problem will be converted to OLX and you will not be able to return to the simple editor.',
-    description: 'message to confirm that a user wants to use the advanced editor part 1',
-  },
-  ConfirmSwitchMessageTwo: {
-    id: 'authoring.problemeditor.settings.switchtoadvancededitor.message.two',
-    defaultMessage: 'Any changes made after the last Save action will be lost when converting to OLX.',
-    description: 'message to confirm that a user wants to use the advanced editor part 2',
+  ConfirmSwitchMessage: {
+    id: 'authoring.problemeditor.settings.switchtoadvancededitor.ConfirmSwitchMessage',
+    defaultMessage: 'If you use the advanced editor, this problem will be converted to OLX and you will not be able to return to the simple editor.',
+    description: 'message to confirm that a user wants to use the advanced editor',
   },
   ConfirmSwitchMessageTitle: {
-    id: 'authoring.problemeditor.settings.switchtoadvancededitor.message',
+    id: 'authoring.problemeditor.settings.switchtoadvancededitor.ConfirmSwitchMessageTitle',
     defaultMessage: 'Convert to OLX?',
     description: 'message to confirm that a user wants to use the advanced editor',
   },
   ConfirmSwitchButtonLabel: {
-    id: 'authoring.problemeditor.settings.switchtoadvancededitor.message',
+    id: 'authoring.problemeditor.settings.switchtoadvancededitor.ConfirmSwitchButtonLabel',
     defaultMessage: 'Switch to advanced editor',
     description: 'message to confirm that a user wants to use the advanced editor',
   },
@@ -209,5 +212,6 @@ export const messages = {
     defaultMessage: 'Provide an explanation for the correct answer.',
     description: 'Solution Explanation text',
   },
-};
+});
+
 export default messages;

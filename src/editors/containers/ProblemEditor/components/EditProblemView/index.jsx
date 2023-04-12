@@ -12,6 +12,7 @@ import { ProblemTypeKeys } from '../../../../data/constants/problem';
 
 import { parseState } from './hooks';
 import './index.scss';
+import ExplanationWidget from './ExplanationWidget';
 
 export const EditProblemView = ({
   // redux
@@ -39,8 +40,9 @@ export const EditProblemView = ({
             <RawEditor editorRef={editorRef} lang="xml" content={problemState.rawOLX} />
           </Container>
         ) : (
-          <span className="flex-grow-1">
+          <span className="flex-grow-1 mb-5">
             <QuestionWidget />
+            <ExplanationWidget />
             <AnswerWidget problemType={problemType} />
           </span>
         )}

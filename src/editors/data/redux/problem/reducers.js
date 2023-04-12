@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { indexToLetterMap } from '../../../containers/ProblemEditor/data/OLXParser';
 import { StrictDict } from '../../../utils';
 import { ProblemTypeKeys, ShowAnswerTypesKeys } from '../../constants/problem';
+import { ToleranceTypes } from '../../../containers/ProblemEditor/components/EditProblemView/SettingsWidget/settingsComponents/Tolerance/constants';
 
 const nextAlphaId = (lastId) => String.fromCharCode(lastId.charCodeAt(0) + 1);
 const initialState = {
@@ -14,10 +15,11 @@ const initialState = {
   groupFeedbackList: [],
   generalFeedback: '',
   additionalAttributes: {},
+  defaultSettings: {},
   settings: {
     randomization: null,
     scoring: {
-      weight: 0,
+      weight: 1,
       attempts: {
         unlimited: true,
         number: '',
@@ -32,6 +34,10 @@ const initialState = {
     },
     showResetButton: false,
     solutionExplanation: '',
+    tolerance: {
+      value: null,
+      type: ToleranceTypes.none.type,
+    },
   },
 };
 
@@ -79,8 +85,24 @@ const problem = createSlice({
     deleteAnswer: (state, { payload }) => {
       const { id, correct } = payload;
       if (state.answers.length <= 1) {
+        if (state.answers.length > 0 && state.answers[0].isAnswerRange) {
+          return {
+            ...state,
+            correctAnswerCount: 1,
+            answers: [{
+              id: 'A',
+              title: '',
+              selectedFeedback: '',
+              unselectedFeedback: '',
+              correct: state.problemType === ProblemTypeKeys.NUMERIC,
+              isAnswerRange: false,
+            },
+            ],
+          };
+        }
         return state;
       }
+
       let { correctAnswerCount } = state;
       if (correct) {
         correctAnswerCount -= 1;
@@ -109,6 +131,7 @@ const problem = createSlice({
         selectedFeedback: '',
         unselectedFeedback: '',
         correct: state.problemType === ProblemTypeKeys.NUMERIC,
+        isAnswerRange: false,
       };
       let { correctAnswerCount } = state;
       if (state.problemType === ProblemTypeKeys.NUMERIC) {
@@ -125,6 +148,24 @@ const problem = createSlice({
         answers,
       };
     },
+    addAnswerRange: (state) => {
+      // As you may only have one answer range at a time, overwrite the answer object.
+      const newOption = {
+        id: 'A',
+        title: '',
+        selectedFeedback: '',
+        unselectedFeedback: '',
+        correct: state.problemType === ProblemTypeKeys.NUMERIC,
+        isAnswerRange: true,
+      };
+      const correctAnswerCount = 1;
+      return {
+        ...state,
+        correctAnswerCount,
+        answers: [newOption],
+      };
+    },
+
     updateSettings: (state, { payload }) => ({
       ...state,
       settings: {
@@ -142,10 +183,23 @@ const problem = createSlice({
       },
       ...payload,
     }),
-    setEnableTypeSelection: (state) => ({
-      ...state,
-      problemType: null,
-    }),
+    setEnableTypeSelection: (state, { payload }) => {
+      const { maxAttempts, showanswer, showResetButton } = payload;
+      const attempts = { number: maxAttempts, unlimited: false };
+      if (!maxAttempts) {
+        attempts.unlimited = true;
+      }
+      return {
+        ...state,
+        settings: {
+          ...state.settings,
+          scoring: { ...state.settings.scoring, attempts },
+          showAnswer: { ...state.settings.showAnswer, on: showanswer },
+          ...showResetButton,
+        },
+        problemType: null,
+      };
+    },
   },
 });
 

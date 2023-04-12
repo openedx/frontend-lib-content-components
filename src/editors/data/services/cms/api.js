@@ -21,7 +21,7 @@ export const apiMethods = {
   fetchCourseDetails: ({ studioEndpointUrl, learningContextId }) => get(
     urls.courseDetailsUrl({ studioEndpointUrl, learningContextId }),
   ),
-  fetchAdvanceSettings: ({ studioEndpointUrl, learningContextId }) => get(
+  fetchAdvancedSettings: ({ studioEndpointUrl, learningContextId }) => get(
     urls.courseAdvanceSettings({ studioEndpointUrl, learningContextId }),
   ),
   uploadAsset: ({
@@ -137,7 +137,6 @@ export const apiMethods = {
         metadata: { display_name: title },
       };
     } else if (blockType === 'problem') {
-      // console.log(type);
       response = {
         data: content.olx,
         category: blockType,

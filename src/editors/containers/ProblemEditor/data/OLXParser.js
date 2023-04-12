@@ -28,6 +28,38 @@ export const nonQuestionKeys = [
   'textline',
 ];
 
+export const responseKeys = [
+  'multiplechoiceresponse',
+  'numericalresponse',
+  'optionresponse',
+  'stringresponse',
+  'choiceresponse',
+  'multiplechoiceresponse',
+  'truefalseresponse',
+  'optionresponse',
+  'numericalresponse',
+  'stringresponse',
+  'customresponse',
+  'symbolicresponse',
+  'coderesponse',
+  'externalresponse',
+  'formularesponse',
+  'schematicresponse',
+  'imageresponse',
+  'annotationresponse',
+  'choicetextresponse',
+];
+
+export const stripNonTextTags = ({ input, tag }) => {
+  const stripedTags = {};
+  Object.entries(input).forEach(([key, value]) => {
+    if (key !== tag) {
+      stripedTags[key] = value;
+    }
+  });
+  return stripedTags;
+};
+
 export class OLXParser {
   constructor(olxString) {
     this.problem = {};
@@ -37,15 +69,19 @@ export class OLXParser {
       alwaysCreateTextNode: true,
       preserveOrder: true,
     };
-    const options = {
+    const parserOptions = {
       ignoreAttributes: false,
       alwaysCreateTextNode: true,
+    };
+    const builderOptions = {
+      ignoreAttributes: false,
     };
     // There are two versions of the parsed XLM because the question requires the order of the
     // parsed data to be preserved. However, all the other widgets need the data grouped by
     // the wrapping tag.
     const questionParser = new XMLParser(questionOptions);
-    const parser = new XMLParser(options);
+    const parser = new XMLParser(parserOptions);
+    this.builder = new XMLBuilder(builderOptions);
     this.parsedOLX = parser.parse(olxString);
     this.parsedQuestionOLX = questionParser.parse(olxString);
     if (_.has(this.parsedOLX, 'problem')) {
@@ -58,7 +94,12 @@ export class OLXParser {
     const answers = [];
     let data = {};
     const widget = _.get(this.problem, `${problemType}.${widgetName}`);
+    const permissableTags = ['choice', '@_type', 'compoundhint', 'option', '#text'];
+    if (_.keys(widget).some((tag) => !permissableTags.includes(tag))) {
+      throw new Error('Misc Tags, reverting to Advanced Editor');
+    }
     const choice = _.get(widget, option);
+    const isComplexAnswer = [ProblemTypeKeys.SINGLESELECT, ProblemTypeKeys.MULTISELECT].includes(problemType);
     if (_.isEmpty(choice)) {
       answers.push(
         {
@@ -69,25 +110,34 @@ export class OLXParser {
       );
     } else if (_.isArray(choice)) {
       choice.forEach((element, index) => {
-        const title = element['#text'];
+        let title = element['#text'];
+        if (isComplexAnswer) {
+          const answerTitle = stripNonTextTags({ input: element, tag: `${option}hint` });
+          title = this.builder.build(answerTitle);
+        }
         const correct = eval(element['@_correct'].toLowerCase());
         const id = indexToLetterMap[index];
         const feedback = this.getAnswerFeedback(element, `${option}hint`);
         answers.push(
           {
             id,
-            title,
             correct,
+            title,
             ...feedback,
           },
         );
       });
     } else {
+      let title = choice['#text'];
+      if (isComplexAnswer) {
+        const answerTitle = stripNonTextTags({ input: choice, tag: `${option}hint` });
+        title = this.builder.build(answerTitle);
+      }
       const feedback = this.getAnswerFeedback(choice, `${option}hint`);
       answers.push({
-        title: choice['#text'],
         correct: eval(choice['@_correct'].toLowerCase()),
         id: indexToLetterMap[answers.length],
+        title,
         ...feedback,
       });
     }
@@ -104,7 +154,7 @@ export class OLXParser {
 
   getAnswerFeedback(choice, hintKey) {
     let feedback = {};
-    let feedbackKeys = 'feedback';
+    let feedbackKeys = 'selectedFeedback';
     if (_.has(choice, hintKey)) {
       const answerFeedback = choice[hintKey];
       if (_.isArray(answerFeedback)) {
@@ -114,7 +164,7 @@ export class OLXParser {
           }
           feedback = {
             ...feedback,
-            [feedbackKeys]: element['#text'],
+            [feedbackKeys]: this.builder.build(element),
           };
         });
       } else {
@@ -122,7 +172,7 @@ export class OLXParser {
           feedbackKeys = eval(answerFeedback['@_selected'].toLowerCase()) ? 'selectedFeedback' : 'unselectedFeedback';
         }
         feedback = {
-          [feedbackKeys]: answerFeedback['#text'],
+          [feedbackKeys]: this.builder.build(answerFeedback),
         };
       }
     }
@@ -135,17 +185,19 @@ export class OLXParser {
       const groupFeedbackArray = choices.compoundhint;
       if (_.isArray(groupFeedbackArray)) {
         groupFeedbackArray.forEach((element) => {
+          const parsedFeedback = stripNonTextTags({ input: element, tag: '@_value' });
           groupFeedback.push({
             id: groupFeedback.length,
             answers: element['@_value'].split(' '),
-            feedback: element['#text'],
+            feedback: this.builder.build(parsedFeedback),
           });
         });
       } else {
+        const parsedFeedback = stripNonTextTags({ input: groupFeedbackArray, tag: '@_value' });
         groupFeedback.push({
           id: groupFeedback.length,
           answers: groupFeedbackArray['@_value'].split(' '),
-          feedback: groupFeedbackArray['#text'],
+          feedback: this.builder.build(parsedFeedback),
         });
       }
     }
@@ -192,19 +244,23 @@ export class OLXParser {
     const stringEqualHint = _.get(stringresponse, 'stringequalhint', []);
     if (_.isArray(stringEqualHint)) {
       stringEqualHint.forEach((newAnswer) => {
+        const parsedFeedback = stripNonTextTags({ input: newAnswer, tag: '@_answer' });
+        answerFeedback = this.builder.build(parsedFeedback);
         answers.push({
           id: indexToLetterMap[answers.length],
           title: newAnswer['@_answer'],
           correct: false,
-          selectedFeedback: newAnswer['#text'],
+          selectedFeedback: answerFeedback,
         });
       });
     } else {
+      const parsedFeedback = stripNonTextTags({ input: stringEqualHint, tag: '@_answer' });
+      answerFeedback = this.builder.build(parsedFeedback);
       answers.push({
         id: indexToLetterMap[answers.length],
         title: stringEqualHint['@_answer'],
         correct: false,
-        selectedFeedback: stringEqualHint['#text'],
+        selectedFeedback: answerFeedback,
       });
     }
 
@@ -229,7 +285,6 @@ export class OLXParser {
     let answerFeedback = '';
     const answers = [];
     let responseParam = {};
-    // TODO: UI needs to be added to support adding tolerence in numeric response.
     const feedback = this.getFeedback(numericalresponse);
     if (_.has(numericalresponse, 'responseparam')) {
       const type = _.get(numericalresponse, 'responseparam.@_type');
@@ -238,11 +293,13 @@ export class OLXParser {
         [type]: defaultValue,
       };
     }
+    const isAnswerRange = /[([]\d*,\d*[)\]]/gm.test(numericalresponse['@_answer']);
     answers.push({
       id: indexToLetterMap[answers.length],
       title: numericalresponse['@_answer'],
       correct: true,
       selectedFeedback: feedback,
+      isAnswerRange,
       ...responseParam,
     });
 
@@ -265,6 +322,7 @@ export class OLXParser {
         title: additionalAnswer['@_answer'],
         correct: true,
         selectedFeedback: answerFeedback,
+        isAnswerRange: false,
       });
     }
     return { answers };
@@ -277,17 +335,25 @@ export class OLXParser {
     };
     const builder = new XMLBuilder(options);
     const problemArray = _.get(this.questionData[0], problemType) || this.questionData;
-    /* TODO: How do we uniquely identify the description?
-      In order to parse description, there should be two states
-      and settings should be introduced to edit the label and description.
-      In turn editing the settings update the state and then it can be added to
-      the parsed OLX.
-    */
+
     const questionArray = [];
     problemArray.forEach(tag => {
       const tagName = Object.keys(tag)[0];
       if (!nonQuestionKeys.includes(tagName)) {
+        if (tagName === 'script') {
+          throw new Error('Script Tag, reverting to Advanced Editor');
+        }
         questionArray.push(tag);
+      } else if (responseKeys.includes(tagName)) {
+        /* <label> and <description> tags often are both valid olx as siblings or children of response type tags.
+         They, however, do belong in the question, so we append them to the question.
+        */
+        tag[tagName].forEach(subTag => {
+          const subTagName = Object.keys(subTag)[0];
+          if (subTagName === 'label' || subTagName === 'description') {
+            questionArray.push(subTag);
+          }
+        });
       }
     });
     const questionString = builder.build(questionArray);
@@ -300,57 +366,58 @@ export class OLXParser {
       const hint = _.get(this.problem, 'demandhint.hint');
       if (_.isArray(hint)) {
         hint.forEach(element => {
+          const hintValue = this.builder.build(element);
           hintsObject.push({
             id: hintsObject.length,
-            value: element['#text'],
+            value: hintValue,
           });
         });
       } else {
+        const hintValue = this.builder.build(hint);
         hintsObject.push({
           id: hintsObject.length,
-          value: hint['#text'],
+          value: hintValue,
         });
       }
     }
     return hintsObject;
   }
 
-  #extractTextAndChildren(node) {
-    const children = [];
-    let text = null;
-
-    if (_.isArray(node)) {
-      children.push(...node);
-    } else if (_.isPlainObject(node)) {
-      text = _.get(node, '#text');
-      const nodeWithoutText = _.omit(node, '#text');
-      children.push(...Object.values(nodeWithoutText));
-    }
-
-    return { text, children };
-  }
-
   getSolutionExplanation(problemType) {
-    if (!_.has(this.problem, `${problemType}.solution`)) { return null; }
-
-    const solution = _.get(this.problem, `${problemType}.solution`);
-
-    const stack = [solution];
-    const texts = [];
-    let currentNode;
-
-    while (stack.length) {
-      currentNode = stack.pop();
-      const { text, children } = this.#extractTextAndChildren(currentNode);
-      if (text) { texts.push(text); }
-      stack.push(...children);
+    if (!_.has(this.problem, `${problemType}.solution`) && !_.has(this.problem, 'solution')) { return null; }
+    let solution = _.get(this.problem, `${problemType}.solution`, null) || _.get(this.problem, 'solution', null);
+    const wrapper = Object.keys(solution)[0];
+    if (Object.keys(solution).length === 1 && wrapper === 'div') {
+      const parsedSolution = {};
+      Object.entries(solution.div).forEach(([key, value]) => {
+        if (key.indexOf('@_' === -1)) {
+          // The redundant "explanation" title should be removed.
+          // If the key is a paragraph or h2, and the text of either the first or only item is "Explanation."
+          if (
+            (key === 'p' || key === 'h2')
+            && (_.get(value, '#text', null) === 'Explanation'
+            || (_.isArray(value) && _.get(value[0], '#text', null) === 'Explanation'))
+          ) {
+            if (_.isArray(value)) {
+              value.shift();
+              parsedSolution[key] = value;
+            }
+          } else {
+            parsedSolution[key] = value;
+          }
+        }
+      });
+      solution = parsedSolution;
     }
-
-    return texts.reverse().join('\n ');
+    const solutionString = this.builder.build(solution);
+    return solutionString;
   }
 
   getFeedback(xmlElement) {
-    return _.has(xmlElement, 'correcthint') ? _.get(xmlElement, 'correcthint.#text') : '';
+    if (!_.has(xmlElement, 'correcthint')) { return ''; }
+    const feedback = _.get(xmlElement, 'correcthint');
+    const feedbackString = this.builder.build(feedback);
+    return feedbackString;
   }
 
   getProblemType() {
@@ -397,6 +464,11 @@ export class OLXParser {
     if (_.isEmpty(this.problem)) {
       return {};
     }
+
+    if (Object.keys(this.problem).some((key) => key.indexOf('@_') !== -1)) {
+      throw new Error('Misc Attributes asscoiated with problem, opening in advanced editor');
+    }
+
     let answersObject = {};
     let additionalAttributes = {};
     let groupFeedbackList = [];
@@ -440,6 +512,16 @@ export class OLXParser {
     }
     const { answers } = answersObject;
     const settings = { hints };
+    if (ProblemTypeKeys.NUMERIC === problemType && _.has(answers[0], 'tolerance')) {
+      const toleranceValue = answers[0].tolerance;
+      if (!toleranceValue || toleranceValue.length === 0) {
+        settings.tolerance = { value: null, type: 'None' };
+      } else if (toleranceValue.includes('%')) {
+        settings.tolerance = { value: parseInt(toleranceValue.slice(0, -1)), type: 'Percent' };
+      } else {
+        settings.tolerance = { value: parseInt(toleranceValue), type: 'Number' };
+      }
+    }
     if (solutionExplanation) { settings.solutionExplanation = solutionExplanation; }
 
     return {

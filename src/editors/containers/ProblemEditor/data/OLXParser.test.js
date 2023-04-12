@@ -15,6 +15,9 @@ import {
   blankProblemOLX,
   blankQuestionOLX,
   styledQuestionOLX,
+  shuffleProblemOLX,
+  scriptProblemOlX,
+  labelDescriptionQuestionOLX,
 } from './mockData/olxTestData';
 import { ProblemTypeKeys } from '../../../data/constants/problem';
 
@@ -71,6 +74,18 @@ describe('Check OLXParser problem type', () => {
   });
 });
 
+describe('OLX Parser settings attributes on problem tags', () => {
+  test('OLX with attributes on the problem tags should error out', () => {
+    const olxparser = new OLXParser(labelDescriptionQuestionOLX.rawOLX);
+    try {
+      olxparser.getParsedOLXData();
+    } catch (e) {
+      expect(e).toBeInstanceOf(Error);
+      expect(e.message).toBe('Misc Attributes asscoiated with problem, opening in advanced editor');
+    }
+  });
+});
+
 describe('Check OLXParser hints', () => {
   test('Test checkbox hints', () => {
     const olxparser = new OLXParser(checkboxesOLXWithFeedbackAndHintsOLX.rawOLX);
@@ -110,6 +125,23 @@ describe('Check OLXParser for answer parsing', () => {
     const answer = olxparser.parseMultipleChoiceAnswers('choiceresponse', 'checkboxgroup', 'choice');
     expect(answer).toEqual(checkboxesOLXWithFeedbackAndHintsOLX.data);
   });
+
+  test('Test checkbox answer', () => {
+    const olxparser = new OLXParser(checkboxesOLXWithFeedbackAndHintsOLX.rawOLX);
+    const answer = olxparser.parseMultipleChoiceAnswers('choiceresponse', 'checkboxgroup', 'choice');
+    expect(answer).toEqual(checkboxesOLXWithFeedbackAndHintsOLX.data);
+  });
+
+  test('Test checkboxs with extraneous tags error out', () => {
+    const olxparser = new OLXParser(shuffleProblemOLX.rawOLX);
+    try {
+      olxparser.parseMultipleChoiceAnswers('choiceresponse', 'checkboxgroup', 'choice');
+    } catch (e) {
+      expect(e).toBeInstanceOf(Error);
+      expect(e.message).toBe('Misc Tags, reverting to Advanced Editor');
+    }
+  });
+
   test('Test dropdown answer', () => {
     const olxparser = new OLXParser(dropdownOLXWithFeedbackAndHintsOLX.rawOLX);
     const answer = olxparser.parseMultipleChoiceAnswers('optionresponse', 'optioninput', 'option');
@@ -163,6 +195,10 @@ describe('Check OLXParser for question parsing', () => {
     const question = olxparser.parseQuestions('numericalresponse');
     expect(question).toEqual(numericInputWithFeedbackAndHintsOLX.question);
   });
+  test('Test Advanced Problem Type by script tag', () => {
+    const olxparser = new OLXParser(scriptProblemOlX.rawOLX);
+    expect(() => olxparser.parseQuestions('numericalresponse')).toThrow(new Error('Script Tag, reverting to Advanced Editor'));
+  });
   test('Test OLX with no question content should have empty string for question', () => {
     const olxparser = new OLXParser(blankQuestionOLX.rawOLX);
     const problemType = olxparser.getProblemType();
@@ -175,22 +211,22 @@ describe('Check OLXParser for question parsing', () => {
     const question = olxparser.parseQuestions(problemType);
     expect(question).toBe(styledQuestionOLX.question);
   });
+  test('Test OLX content with labels and descriptions inside reponse tag should parse correctly, appending the label/description to the question', () => {
+    const olxparser = new OLXParser(labelDescriptionQuestionOLX.rawOLX);
+    const problemType = olxparser.getProblemType();
+    const question = olxparser.parseQuestions(problemType);
+    expect(question).toBe(labelDescriptionQuestionOLX.question);
+  });
 });
 
 describe('OLXParser for problem with solution tag', () => {
   describe('for checkbox questions', () => {
-    test('should parse simple text', () => {
-      const olxparser = new OLXParser(checkboxesOLXWithFeedbackAndHintsOLX.rawOLX);
-      const problemType = olxparser.getProblemType();
-      const explanation = olxparser.getSolutionExplanation(problemType);
-      expect(explanation).toEqual(checkboxesOLXWithFeedbackAndHintsOLX.solutionExplanation);
-    });
     test('should parse text in p tags', () => {
-      const { rawOLX } = getCheckboxesOLXWithFeedbackAndHintsOLX({ solution: 'html' });
+      const { rawOLX } = getCheckboxesOLXWithFeedbackAndHintsOLX();
       const olxparser = new OLXParser(rawOLX);
       const problemType = olxparser.getProblemType();
       const explanation = olxparser.getSolutionExplanation(problemType);
-      const expected = getCheckboxesOLXWithFeedbackAndHintsOLX({ solution: 'html' }).solutionExplanation;
+      const expected = getCheckboxesOLXWithFeedbackAndHintsOLX().solutionExplanation;
       expect(explanation.replace(/\s/g, '')).toBe(expected.replace(/\s/g, ''));
     });
   });
