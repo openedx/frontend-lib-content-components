@@ -15,7 +15,9 @@ jest.mock('@edx/frontend-platform/i18n', () => ({
   intlShape: {},
 }));
 
-jest.mock('./AnswerOption', () => () => <div>MockAnswerOption</div>);
+jest.mock('./AnswerOption', () => function () {
+  return <div>MockAnswerOption</div>;
+});
 
 jest.mock('../../../../../data/redux', () => ({
   actions: {

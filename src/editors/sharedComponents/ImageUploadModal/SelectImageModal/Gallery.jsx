@@ -71,7 +71,7 @@ Gallery.defaultProps = {
 Gallery.propTypes = {
   galleryIsEmpty: PropTypes.bool.isRequired,
   searchIsEmpty: PropTypes.bool.isRequired,
-  displayList: PropTypes.arrayOf(PropTypes.object).isRequired,
+  displayList: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   highlighted: PropTypes.string,
   onHighlightChange: PropTypes.func.isRequired,
   // injected
