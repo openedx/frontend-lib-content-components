@@ -67,14 +67,28 @@ export class OLXParser {
     const questionOptions = {
       ignoreAttributes: false,
       alwaysCreateTextNode: true,
+      numberParseOptions: {
+        leadingZeros: false,
+        hex: false,
+      },
       preserveOrder: true,
+      processEntities: false,
     };
     const parserOptions = {
       ignoreAttributes: false,
       alwaysCreateTextNode: true,
+      numberParseOptions: {
+        leadingZeros: false,
+        hex: false,
+      },
+      processEntities: false,
     };
     const builderOptions = {
       ignoreAttributes: false,
+      numberParseOptions: {
+        leadingZeros: false,
+        hex: false,
+      },
       processEntities: false,
     };
     // There are two versions of the parsed XLM because the question requires the order of the
@@ -332,6 +346,10 @@ export class OLXParser {
   parseQuestions(problemType) {
     const options = {
       ignoreAttributes: false,
+      numberParseOptions: {
+        leadingZeros: false,
+        hex: false,
+      },
       preserveOrder: true,
       processEntities: false,
     };
@@ -463,6 +481,7 @@ export class OLXParser {
   }
 
   getParsedOLXData() {
+    console.log('test', this.parsedOLX)
     if (_.isEmpty(this.problem)) {
       return {};
     }
