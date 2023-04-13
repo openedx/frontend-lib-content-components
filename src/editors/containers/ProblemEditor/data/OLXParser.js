@@ -481,7 +481,6 @@ export class OLXParser {
   }
 
   getParsedOLXData() {
-    console.log('test', this.parsedOLX)
     if (_.isEmpty(this.problem)) {
       return {};
     }
