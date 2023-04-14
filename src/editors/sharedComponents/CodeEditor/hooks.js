@@ -28,26 +28,28 @@ export const cleanHTML = ({ initialText }) => {
   return initialText.replace(translateRegex, translator);
 };
 
-export const xmlSyntaxChecker = (textArr) => {
+export const syntaxChecker = ({ textArr, lang }) => {
   const diagnostics = [];
-  const docString = textArr.join('\n');
-  const xmlDoc = `<?xml version="1.0" encoding="UTF-8"?> ${docString}`;
+  if (lang === 'xml') {
+    const docString = textArr.join('\n');
+    const xmlDoc = `<?xml version="1.0" encoding="UTF-8"?> ${docString}`;
 
-  try {
-    xmlChecker.check(xmlDoc);
-  } catch (error) {
-    let errorStart = 0;
-    for (let i = 0; i < error.line - 1; i++) {
-      errorStart += textArr[i].length;
+    try {
+      xmlChecker.check(xmlDoc);
+    } catch (error) {
+      let errorStart = 0;
+      for (let i = 0; i < error.line - 1; i++) {
+        errorStart += textArr[i].length;
+      }
+      const errorLine = error.line;
+      const errorEnd = errorStart + textArr[errorLine - 1].length;
+      diagnostics.push({
+        from: errorStart,
+        to: errorEnd,
+        severity: 'error',
+        message: `${error.name}: ${error.message}`,
+      });
     }
-    const errorLine = error.line;
-    const errorEnd = errorStart + textArr[errorLine - 1].length;
-    diagnostics.push({
-      from: errorStart,
-      to: errorEnd,
-      severity: 'error',
-      message: `${error.name}: ${error.message}`,
-    });
   }
   return diagnostics;
 };
@@ -68,12 +70,8 @@ export const createCodeMirrorDomNode = ({
         languageExtension,
         EditorView.lineWrapping,
         linter((view) => {
-          let diagnostics = [];
-          if (lang === 'xml') {
-            const textArr = view.docView.view.viewState.state.doc.text;
-            diagnostics = xmlSyntaxChecker(textArr);
-          }
-          return diagnostics;
+          const textArr = view.docView.view.viewState.state.doc.text;
+          return syntaxChecker({ textArr, lang });
         }),
       ],
     });
