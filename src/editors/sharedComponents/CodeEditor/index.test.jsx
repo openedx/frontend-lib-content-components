@@ -116,20 +116,20 @@ describe('CodeEditor', () => {
   });
   describe('xmlSyntaxChecker', () => {
     it('returns empty array', () => {
-      const textArr = ['<problem>','<p>','this is some text','</p>','</problem>'];
+      const textArr = ['<problem>', '<p>', 'this is some text', '</p>', '</problem>'];
       const diagnostics = hooks.xmlSyntaxChecker(textArr);
       expect(diagnostics).toEqual([]);
     });
     it('returns an array with error object', () => {
-      const textArr = ['<problem>','<p>','<p>','this is some text','</p>','</problem>'];
+      const textArr = ['<problem>', '<p>', '<p>', 'this is some text', '</p>', '</problem>'];
       const expectedDiagnostics = hooks.xmlSyntaxChecker(textArr);
       const diagnostics = [{
         from: 9,
         to: 12,
         severity: 'error',
-        message: `SyntaxError: Expected that start and end tag must be identical but "<" found.`
+        message: 'SyntaxError: Expected that start and end tag must be identical but "<" found.',
       }];
-      expect(expectedDiagnostics).toEqual(diagnostics)
+      expect(expectedDiagnostics).toEqual(diagnostics);
     });
   });
   describe('Component', () => {
