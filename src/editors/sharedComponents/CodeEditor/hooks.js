@@ -28,10 +28,9 @@ export const cleanHTML = ({ initialText }) => {
   return initialText.replace(translateRegex, translator);
 };
 
-const xmlSyntaxChecker = (view) => {
+export const xmlSyntaxChecker = (textArr) => {
   const diagnostics = [];
-  const doc = view.docView.view.viewState.state.doc.text;
-  const docString = doc.join('\n');
+  const docString = textArr.join('\n');
   const xmlDoc = `<?xml version="1.0" encoding="UTF-8"?> ${docString}`;
 
   try {
@@ -39,10 +38,10 @@ const xmlSyntaxChecker = (view) => {
   } catch (error) {
     let errorStart = 0;
     for (let i = 0; i < error.line - 1; i++) {
-      errorStart += doc[i].length;
+      errorStart += textArr[i].length;
     }
     const errorLine = error.line;
-    const errorEnd = errorStart + doc[errorLine - 1].length;
+    const errorEnd = errorStart + textArr[errorLine - 1].length;
     diagnostics.push({
       from: errorStart,
       to: errorEnd,
@@ -71,7 +70,8 @@ export const createCodeMirrorDomNode = ({
         linter((view) => {
           let diagnostics = [];
           if (lang === 'xml') {
-            diagnostics = xmlSyntaxChecker(view);
+            const textArr = view.docView.view.viewState.state.doc.text;
+            diagnostics = xmlSyntaxChecker(textArr);
           }
           return diagnostics;
         }),
