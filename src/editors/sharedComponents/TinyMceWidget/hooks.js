@@ -90,7 +90,6 @@ export const setupCustomBehavior = ({
   updateContent,
   openImgModal,
   openSourceCodeModal,
-  setImage,
   editorType,
   imageUrls,
   lmsEndpointUrl,
@@ -105,7 +104,7 @@ export const setupCustomBehavior = ({
   editor.ui.registry.addButton(tinyMCE.buttons.editImageSettings, {
     icon: 'image',
     tooltip: 'Edit Image Settings',
-    onAction: module.openModalWithSelectedImage({ editor, setImage, openImgModal }),
+    onAction: () => { openImgModal(); },
   });
   // overriding the code plugin's icon with 'HTML' text
   editor.ui.registry.addButton(tinyMCE.buttons.code, {
@@ -262,14 +261,7 @@ export const sourceCodeModalToggle = (editorRef) => {
   };
 };
 
-export const openModalWithSelectedImage = ({ editor, setImage, openImgModal }) => () => {
-  const imgHTML = editor.selection.getNode();
-  setImage({
-    externalUrl: imgHTML.src,
-    altText: imgHTML.alt,
-    width: imgHTML.width,
-    height: imgHTML.height,
-  });
+export const openModalWithSelectedImage = ({ openImgModal }) => () => {
   openImgModal();
 };
 

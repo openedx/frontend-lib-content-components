@@ -52,7 +52,12 @@ export const hooks = {
       false,
       newSelection,
     );
-    setSelection(null);
+    setSelection({
+      externalUrl: selection.externalUrl,
+      altText: settings.altText,
+      width: settings.dimensions.width,
+      height: settings.dimensions.height,
+    });
     close();
   },
   onClose: ({ clearSelection, close }) => () => {
