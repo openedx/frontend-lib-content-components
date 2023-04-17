@@ -10,15 +10,12 @@ exports[`RandomizationCard snapshot snapshot: renders reset true setting card 1`
   title="Randomization"
 >
   <div
-    className="halfSpacedMessage"
+    className="mb-3"
   >
-    <span>
-      <FormattedMessage
-        defaultMessage="Defines when to randomize the variables specified in the associated Python script. For problems that do not randomize values, specify \\"Never\\"."
-        description="Description of Possibilities for value in Randomization widget"
-        id="authoring.problemeditor.settings.randomization.SettingText"
-      />
-    </span>
+    {randomization, select,
+      null {No Python based randomization is present in this problem.}
+      other {Defines when to randomize the variables specified in the associated Python script. For problems that do not randomize values, specify "Never".}
+    }
   </div>
   <Form.Group>
     <Form.Control
