@@ -28,6 +28,28 @@ export const nonQuestionKeys = [
   'textline',
 ];
 
+export const responseKeys = [
+  'multiplechoiceresponse',
+  'numericalresponse',
+  'optionresponse',
+  'stringresponse',
+  'choiceresponse',
+  'multiplechoiceresponse',
+  'truefalseresponse',
+  'optionresponse',
+  'numericalresponse',
+  'stringresponse',
+  'customresponse',
+  'symbolicresponse',
+  'coderesponse',
+  'externalresponse',
+  'formularesponse',
+  'schematicresponse',
+  'imageresponse',
+  'annotationresponse',
+  'choicetextresponse',
+];
+
 export const stripNonTextTags = ({ input, tag }) => {
   const stripedTags = {};
   Object.entries(input).forEach(([key, value]) => {
@@ -45,14 +67,29 @@ export class OLXParser {
     const questionOptions = {
       ignoreAttributes: false,
       alwaysCreateTextNode: true,
+      numberParseOptions: {
+        leadingZeros: false,
+        hex: false,
+      },
       preserveOrder: true,
+      processEntities: false,
     };
     const parserOptions = {
       ignoreAttributes: false,
       alwaysCreateTextNode: true,
+      numberParseOptions: {
+        leadingZeros: false,
+        hex: false,
+      },
+      processEntities: false,
     };
     const builderOptions = {
       ignoreAttributes: false,
+      numberParseOptions: {
+        leadingZeros: false,
+        hex: false,
+      },
+      processEntities: false,
     };
     // There are two versions of the parsed XLM because the question requires the order of the
     // parsed data to be preserved. However, all the other widgets need the data grouped by
@@ -309,16 +346,16 @@ export class OLXParser {
   parseQuestions(problemType) {
     const options = {
       ignoreAttributes: false,
+      numberParseOptions: {
+        leadingZeros: false,
+        hex: false,
+      },
       preserveOrder: true,
+      processEntities: false,
     };
     const builder = new XMLBuilder(options);
     const problemArray = _.get(this.questionData[0], problemType) || this.questionData;
-    /* TODO: How do we uniquely identify the description?
-      In order to parse description, there should be two states
-      and settings should be introduced to edit the label and description.
-      In turn editing the settings update the state and then it can be added to
-      the parsed OLX.
-    */
+
     const questionArray = [];
     problemArray.forEach(tag => {
       const tagName = Object.keys(tag)[0];
@@ -327,6 +364,16 @@ export class OLXParser {
           throw new Error('Script Tag, reverting to Advanced Editor');
         }
         questionArray.push(tag);
+      } else if (responseKeys.includes(tagName)) {
+        /* <label> and <description> tags often are both valid olx as siblings or children of response type tags.
+         They, however, do belong in the question, so we append them to the question.
+        */
+        tag[tagName].forEach(subTag => {
+          const subTagName = Object.keys(subTag)[0];
+          if (subTagName === 'label' || subTagName === 'description') {
+            questionArray.push(subTag);
+          }
+        });
       }
     });
     const questionString = builder.build(questionArray);
@@ -357,18 +404,27 @@ export class OLXParser {
   }
 
   getSolutionExplanation(problemType) {
-    if (!_.has(this.problem, `${problemType}.solution`)) { return null; }
-
-    let solution = _.get(this.problem, `${problemType}.solution`);
+    if (!_.has(this.problem, `${problemType}.solution`) && !_.has(this.problem, 'solution')) { return null; }
+    let solution = _.get(this.problem, `${problemType}.solution`, null) || _.get(this.problem, 'solution', null);
     const wrapper = Object.keys(solution)[0];
     if (Object.keys(solution).length === 1 && wrapper === 'div') {
       const parsedSolution = {};
       Object.entries(solution.div).forEach(([key, value]) => {
-        if (key !== '@_class') {
-          if (key === 'p') {
-            value.shift();
+        if (key.indexOf('@_' === -1)) {
+          // The redundant "explanation" title should be removed.
+          // If the key is a paragraph or h2, and the text of either the first or only item is "Explanation."
+          if (
+            (key === 'p' || key === 'h2')
+            && (_.get(value, '#text', null) === 'Explanation'
+            || (_.isArray(value) && _.get(value[0], '#text', null) === 'Explanation'))
+          ) {
+            if (_.isArray(value)) {
+              value.shift();
+              parsedSolution[key] = value;
+            }
+          } else {
+            parsedSolution[key] = value;
           }
-          parsedSolution[key] = value;
         }
       });
       solution = parsedSolution;
@@ -428,6 +484,11 @@ export class OLXParser {
     if (_.isEmpty(this.problem)) {
       return {};
     }
+
+    if (Object.keys(this.problem).some((key) => key.indexOf('@_') !== -1)) {
+      throw new Error('Misc Attributes asscoiated with problem, opening in advanced editor');
+    }
+
     let answersObject = {};
     let additionalAttributes = {};
     let groupFeedbackList = [];

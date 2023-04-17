@@ -31,8 +31,8 @@ export const checkboxesWithFeedbackAndHints = {
     '<p>If you add more than one hint, a different hint appears each time learners select the hint button.</p>',
   ],
   groupFeedback: {
-    0: '<p>You can specify optional feedback for a combination of answers which appears after the specified set of answers is submitted.</p>',
-    1: '<p>You can specify optional feedback for one, several, or all answer combinations.</p>',
+    0: 'You can specify optional feedback for a combination of answers which appears after the specified set of answers is submitted.',
+    1: 'You can specify optional feedback for one, several, or all answer combinations.',
   },
 };
 
@@ -82,6 +82,12 @@ export const numericInputWithFeedbackAndHints = {
   question: '<p>You can use this template as a guide to the simple editor markdown and OLX markup to use for numerical input with hints and feedback problems. Edit this component to replace this template with your own assessment.</p><label>Add the question text, or prompt, here. This text is required.</label><em>You can add an optional tip or note related to the prompt like this.</em>',
 };
 
+export const numericInputWithAnswerRange = {
+  solution: '',
+  hints: [],
+  question: '<p>You can use this template as a guide to the simple editor markdown and OLX markup to use for numerical input with hints and feedback problems. Edit this component to replace this template with your own assessment.</p><label>Add the question text, or prompt, here. This text is required.</label><em>You can add an optional tip or note related to the prompt like this.</em>',
+};
+
 export const textInputWithFeedbackAndHints = {
   solution: '',
   selectedFeedback: {
@@ -109,4 +115,16 @@ export const textInputWithFeedbackAndHintsWithMultipleAnswers = {
     '<p>If you add more than one hint, a different hint appears each time learners select the hint button.</p>',
   ],
   question: '<p>You can use this template as a guide to the simple editor markdown and OLX markup to use for text input with hints and feedback problems. Edit this component to replace this template with your own assessment.</p><label>Add the question text, or prompt, here. This text is required.</label><em>You can add an optional tip or note related to the prompt like this.</em>',
+};
+
+export const numberParseTest = {
+  solution: '',
+  answers: {
+    A: `<span style="font-family: 'courier new', courier;"><strong>0x10</strong></span>`, // eslint-disable-line
+    B: `<span style="font-family: 'courier new', courier;"><strong>0x0f</strong></span>`, // eslint-disable-line
+    C: `<span style="font-family: 'courier new', courier;"><strong>0x07</strong></span>`, // eslint-disable-line
+    D: `<span style="font-family: 'courier new', courier;"><strong>0009</strong></span>`, // eslint-disable-line
+  },
+  hints: [],
+  question: '<p>What is the content of the register x2 after executing the following three lines of instructions?</p>',
 };
