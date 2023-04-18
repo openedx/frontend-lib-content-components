@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useRef } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Editor } from '@tinymce/tinymce-react';
@@ -43,6 +43,11 @@ export const TinyMceWidget = ({
   const { isSourceCodeOpen, openSourceCodeModal, closeSourceCodeModal } = hooks.sourceCodeModalToggle(editorRef);
   const images = hooks.filterAssets({ assets });
   const imageSelection = hooks.selectedImage(null);
+  const content = useRef();
+  if (!content && textValue) {
+    content.current = textValue;
+  }
+
   return (
     <>
       {isLibrary ? null : (
@@ -77,6 +82,7 @@ export const TinyMceWidget = ({
             studioEndpointUrl,
             images,
             textValue,
+            content,
             ...imageSelection,
             ...props,
           })

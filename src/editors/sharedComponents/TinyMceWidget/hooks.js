@@ -95,6 +95,7 @@ export const setupCustomBehavior = ({
   setImage,
   lmsEndpointUrl,
   textValue,
+  content,
   selection,
 }) => (editor) => {
   // image upload button
@@ -108,7 +109,7 @@ export const setupCustomBehavior = ({
     icon: 'image',
     tooltip: 'Edit Image Settings',
     onAction: module.openModalWithSelectedImage({
-      editor, selection, setImage, openImgModal, textValue,
+      editor, selection, setImage, openImgModal, textValue, content,
     }),
   });
   // overriding the code plugin's icon with 'HTML' text
@@ -195,8 +196,10 @@ export const editorConfig = ({
   selection,
   setSelection,
   updateContent,
+  content,
   minHeight,
 }) => {
+  console.log('textValue: ', textValue);
   const {
     toolbar,
     config,
@@ -232,6 +235,7 @@ export const editorConfig = ({
         lmsEndpointUrl,
         setImage: setSelection,
         selection,
+        content,
         textValue,
         imageUrls: module.fetchImageUrls(images),
       }),
@@ -279,17 +283,19 @@ export const sourceCodeModalToggle = (editorRef) => {
 };
 
 export const openModalWithSelectedImage = ({
-  editor, textValue, selection, setImage, openImgModal,
+  editor, textValue, content, selection, setImage, openImgModal,
 }) => () => {
-  debugger;
-    const imgHTML = editor.selection.getNode();
+  if (!selection) {
+    const tinyMceHTML = editor.selection.getNode();
+    debugger;
 
     setImage({
-      externalUrl: imgHTML.src,
-      altText: imgHTML.alt,
-      width: imgHTML.width,
-      height: imgHTML.height,
+      externalUrl: tinyMceHTML.src,
+      altText: tinyMceHTML.alt,
+      width: tinyMceHTML.width,
+      height: tinyMceHTML.height,
     });
+  }
 
   openImgModal();
 };
