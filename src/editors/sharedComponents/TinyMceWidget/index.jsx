@@ -31,6 +31,7 @@ export const TinyMceWidget = ({
   editorRef,
   disabled,
   id,
+  textValue, // editor content
   // redux
   assets,
   isLibrary,
@@ -75,8 +76,8 @@ export const TinyMceWidget = ({
             lmsEndpointUrl,
             studioEndpointUrl,
             images,
-            setSelection: imageSelection.setSelection,
-            clearSelection: imageSelection.clearSelection,
+            textValue,
+            ...imageSelection,
             ...props,
           })
         }
@@ -93,6 +94,7 @@ TinyMceWidget.defaultProps = {
   assets: null,
   id: null,
   disabled: false,
+  textValue: undefined,
 };
 TinyMceWidget.propTypes = {
   editorType: PropTypes.string,
@@ -103,6 +105,7 @@ TinyMceWidget.propTypes = {
   studioEndpointUrl: PropTypes.string,
   id: PropTypes.string,
   disabled: PropTypes.bool,
+  textValue: PropTypes.string,
 };
 
 export const mapStateToProps = (state) => ({
