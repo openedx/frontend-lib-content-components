@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`RandomizationCard snapshot snapshot: renders reset true setting card 1`] = `
+exports[`RandomizationCard snapshot snapshot: renders randonmization setting card with randomization defined 1`] = `
 <SettingsOption
   className=""
   extraSections={Array []}
@@ -46,6 +46,40 @@ exports[`RandomizationCard snapshot snapshot: renders reset true setting card 1`
         value="per_student"
       >
         Per Student
+      </option>
+    </Form.Control>
+  </Form.Group>
+</SettingsOption>
+`;
+
+exports[`RandomizationCard snapshot snapshot: renders randonmization setting card with randomization null 1`] = `
+<SettingsOption
+  className=""
+  extraSections={Array []}
+  hasExpandableTextArea={false}
+  none={true}
+  summary="sUmmary"
+  title="Randomization"
+>
+  <div
+    className="mb-3"
+  >
+    {randomization, select,
+      null {No Python based randomization is present in this problem.}
+      other {Defines when to randomize the variables specified in the associated Python script. For problems that do not randomize values, specify "Never".}
+    }
+  </div>
+  <Form.Group>
+    <Form.Control
+      as="select"
+      onChange={[MockFunction randomizationCardHooks.handleChange]}
+      value={null}
+    >
+      <option
+        key="notApplicable"
+        value={null}
+      >
+        Not Applicable
       </option>
     </Form.Control>
   </Form.Group>
