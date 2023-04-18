@@ -95,6 +95,7 @@ export const setupCustomBehavior = ({
   setImage,
   lmsEndpointUrl,
   textValue,
+  selection,
 }) => (editor) => {
   // image upload button
   editor.ui.registry.addButton(tinyMCE.buttons.imageUploadButton, {
@@ -107,7 +108,7 @@ export const setupCustomBehavior = ({
     icon: 'image',
     tooltip: 'Edit Image Settings',
     onAction: module.openModalWithSelectedImage({
-      editor, setImage, openImgModal, textValue,
+      editor, selection, setImage, openImgModal, textValue,
     }),
   });
   // overriding the code plugin's icon with 'HTML' text
@@ -230,6 +231,8 @@ export const editorConfig = ({
         openSourceCodeModal,
         lmsEndpointUrl,
         setImage: setSelection,
+        selection,
+        textValue,
         imageUrls: module.fetchImageUrls(images),
       }),
       quickbars_insert_toolbar: quickbarsInsertToolbar,
@@ -275,8 +278,10 @@ export const sourceCodeModalToggle = (editorRef) => {
   };
 };
 
-export const openModalWithSelectedImage = ({ editor, setImage, openImgModal }) => () => {
-  if (!imageSelected) {
+export const openModalWithSelectedImage = ({
+  editor, textValue, selection, setImage, openImgModal,
+}) => () => {
+  debugger;
     const imgHTML = editor.selection.getNode();
 
     setImage({
@@ -285,7 +290,6 @@ export const openModalWithSelectedImage = ({ editor, setImage, openImgModal }) =
       width: imgHTML.width,
       height: imgHTML.height,
     });
-  }
 
   openImgModal();
 };
