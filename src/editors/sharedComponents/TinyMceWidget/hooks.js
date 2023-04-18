@@ -92,6 +92,7 @@ export const setupCustomBehavior = ({
   openSourceCodeModal,
   editorType,
   imageUrls,
+  setImage,
   lmsEndpointUrl,
 }) => (editor) => {
   // image upload button
@@ -160,6 +161,19 @@ export const setupCustomBehavior = ({
       editor.formatter.remove('blockquote');
       editor.formatter.remove('label');
     }
+  });
+  editor.on('ObjectResized', (e) => {
+    // Get the new dimensions of the resized image
+    const newWidth = e.target.clientWidth;
+    const newHeight = e.target.clientHeight;
+    debugger;
+
+    setImage({
+      // externalUrl: selection.externalUrl,
+      // altText: settings.altText,
+      width: newWidth,
+      height: newHeight,
+    })
   });
 };
 
