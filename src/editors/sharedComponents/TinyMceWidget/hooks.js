@@ -163,17 +163,13 @@ export const setupCustomBehavior = ({
     }
   });
   editor.on('ObjectResized', (e) => {
-    // Get the new dimensions of the resized image
-    const newWidth = e.target.clientWidth;
-    const newHeight = e.target.clientHeight;
-    debugger;
-
+    const imgHTML = editor.selection.getNode();
     setImage({
-      // externalUrl: selection.externalUrl,
-      // altText: settings.altText,
-      width: newWidth,
-      height: newHeight,
-    })
+      externalUrl: imgHTML.src,
+      altText: imgHTML.alt,
+      width: e.width,
+      height: e.height,
+    });
   });
 };
 
