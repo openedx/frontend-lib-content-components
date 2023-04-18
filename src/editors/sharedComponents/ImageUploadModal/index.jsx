@@ -76,7 +76,7 @@ export const hooks = {
       lmsEndpointUrl,
       editorType,
     });
-    return `<img ${propsString(props)} style="height: ${props.height}px !important; width: ${props.width}px !important;" />`;
+    return `<img ${propsString(props)} />`;
   },
 };
 
