@@ -295,6 +295,7 @@ export const getSelectedImageFromHtmlString = (htmlString, selectedImageSrc) => 
 export const openModalWithSelectedImage = ({
   editor, textValue, selection, images, setImage, openImgModal,
 }) => () => {
+  console.log('current images: ', images.current);
   const tinyMceHTML = editor.selection.getNode();
 
   const selectedImage = images.current.find(image => image.src === tinyMceHTML.src);

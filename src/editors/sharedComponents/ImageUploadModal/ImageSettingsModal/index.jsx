@@ -28,6 +28,7 @@ export const ImageSettingsModal = ({
   isOpen,
   returnToSelection,
   saveToEditor,
+  images,
   selection,
   // inject
   intl,

@@ -33,6 +33,7 @@ export const imgProps = ({
 export const hooks = {
   createSaveCallback: ({
     close,
+    images,
     editorRef,
     editorType,
     setSelection,
@@ -52,12 +53,21 @@ export const hooks = {
       false,
       newSelection,
     );
-    setSelection({
+    const newImage = {
       externalUrl: selection.externalUrl,
       altText: settings.altText,
       width: settings.dimensions.width,
       height: settings.dimensions.height,
+    };
+    setSelection(newImage);
+    let foundMatch = false;
+    images.current = images.current.map((image) => {
+      const matchRegex = /asset-v1.(.*).type.(.*).block.(.*)/;
+      const isMatch = JSON.stringify(image.id.match(matchRegex).slice(1)) === JSON.stringify(selection.externalUrl.match(matchRegex).slice(1));
+      if (isMatch) { foundMatch = true; return { ...image, width: settings.dimensions.width, height: settings.dimensions.height }; }
+      return image;
     });
+    if (!foundMatch) { images.current = [...images.current, newImage]; }
     close();
   },
   onClose: ({ clearSelection, close }) => () => {
@@ -93,14 +103,17 @@ export const ImageUploadModal = ({
   lmsEndpointUrl,
 }) => {
   if (selection) {
+    console.log('image upload modal | selection: ', selection);
     return (
       <ImageSettingsModal
         {...{
           isOpen,
           close: module.hooks.onClose({ clearSelection, close }),
           selection,
+          images,
           saveToEditor: module.hooks.createSaveCallback({
             close,
+            images,
             editorRef,
             editorType,
             selection,
