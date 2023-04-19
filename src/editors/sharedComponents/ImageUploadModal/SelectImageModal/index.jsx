@@ -41,7 +41,7 @@ export const SelectImageModal = ({
     galleryProps,
     searchSortProps,
     selectBtnProps,
-  } = hooks.imgHooks({ setSelection, clearSelection, images });
+  } = hooks.imgHooks({ setSelection, clearSelection, images: images.current });
 
   return (
     <BaseModal

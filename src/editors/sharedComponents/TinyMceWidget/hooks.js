@@ -92,12 +92,14 @@ export const setupCustomBehavior = ({
   openSourceCodeModal,
   editorType,
   imageUrls,
+  images,
   setImage,
   lmsEndpointUrl,
   textValue,
   content,
   selection,
 }) => (editor) => {
+  console.log('setupCustomBehavior | textValue: ', textValue);
   // image upload button
   editor.ui.registry.addButton(tinyMCE.buttons.imageUploadButton, {
     icon: 'image',
@@ -109,7 +111,7 @@ export const setupCustomBehavior = ({
     icon: 'image',
     tooltip: 'Edit Image Settings',
     onAction: module.openModalWithSelectedImage({
-      editor, selection, setImage, openImgModal, textValue, content,
+      editor, images, selection, setImage, openImgModal, textValue, content,
     }),
   });
   // overriding the code plugin's icon with 'HTML' text
@@ -193,13 +195,11 @@ export const editorConfig = ({
   initializeEditor,
   openImgModal,
   openSourceCodeModal,
-  selection,
   setSelection,
   updateContent,
   content,
   minHeight,
 }) => {
-  console.log('textValue: ', textValue);
   const {
     toolbar,
     config,
@@ -234,8 +234,8 @@ export const editorConfig = ({
         openSourceCodeModal,
         lmsEndpointUrl,
         setImage: setSelection,
-        selection,
         content,
+        images,
         textValue,
         imageUrls: module.fetchImageUrls(images),
       }),
@@ -282,20 +282,30 @@ export const sourceCodeModalToggle = (editorRef) => {
   };
 };
 
-export const openModalWithSelectedImage = ({
-  editor, textValue, content, selection, setImage, openImgModal,
-}) => () => {
-  if (!selection) {
-    const tinyMceHTML = editor.selection.getNode();
-    debugger;
+export const stringToFragment = (htmlString) => document.createRange().createContextualFragment(htmlString);
 
-    setImage({
-      externalUrl: tinyMceHTML.src,
-      altText: tinyMceHTML.alt,
-      width: tinyMceHTML.width,
-      height: tinyMceHTML.height,
-    });
-  }
+export const getSelectedImageFromHtmlString = (htmlString, selectedImageSrc) => {
+  const images = stringToFragment(htmlString);
+
+  return images?.find?.((img) => (
+    img?.src?.replace?.(/.*\/assets\//, '') === selectedImageSrc?.replace?.(/.*\/assets\//, '')
+  ));
+};
+
+export const openModalWithSelectedImage = ({
+  editor, textValue, selection, images, setImage, openImgModal,
+}) => () => {
+  const tinyMceHTML = editor.selection.getNode();
+
+  const selectedImage = images.current.find(image => image.src === tinyMceHTML.src);
+  console.log('openModalWithSelectedImage | selectedImage: ', selectedImage);
+
+  setImage({
+    externalUrl: tinyMceHTML.src,
+    altText: tinyMceHTML.alt,
+    width: selectedImage?.width,
+    height: selectedImage?.height,
+  });
 
   openImgModal();
 };
@@ -351,7 +361,7 @@ export const setAssetToStaticUrl = ({ editorValue, assets, lmsEndpointUrl }) => 
 
 export const fetchImageUrls = (images) => {
   const imageUrls = [];
-  images.forEach(image => {
+  images.current.forEach(image => {
     imageUrls.push({ staticFullUrl: image.staticFullUrl, displayName: image.displayName });
   });
   return imageUrls;
