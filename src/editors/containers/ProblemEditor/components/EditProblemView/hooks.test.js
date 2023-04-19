@@ -1,3 +1,4 @@
+import { ProblemTypeKeys } from '../../../../data/constants/problem';
 import * as hooks from './hooks';
 
 const mockRawOLX = 'rawOLX';
@@ -70,6 +71,83 @@ describe('EditProblemView hooks parseState', () => {
         assets: {},
       })();
       expect(res.olx).toBe(mockRawOLX);
+    });
+  });
+  describe('checkNoAnswers', () => {
+    const openNoAnswerModal = jest.fn();
+    describe('hasNoTitle', () => {
+      const problem = {
+        problemType: ProblemTypeKeys.NUMERIC,
+      };
+      beforeEach(() => {
+        jest.clearAllMocks();
+      });
+      it('returns true for numerical problem with empty title', () => {
+        const expected = hooks.checkForNoAnswers({
+          openNoAnswerModal,
+          problem: {
+            ...problem,
+            answers: [{ id: 'A', title: '', correct: true }],
+          },
+        });
+        expect(openNoAnswerModal).toHaveBeenCalled();
+        expect(expected).toEqual(true);
+      });
+      it('returns false for numerical problem with title', () => {
+        const expected = hooks.checkForNoAnswers({
+          openNoAnswerModal,
+          problem: {
+            ...problem,
+            answers: [{ id: 'A', title: 'sOmevALUe', correct: true }],
+          },
+        });
+        expect(openNoAnswerModal).not.toHaveBeenCalled();
+        expect(expected).toEqual(false);
+      });
+    });
+    describe('hasNoCorrectAnswer', () => {
+      const problem = {
+        problemType: ProblemTypeKeys.SINGLESELECT,
+      };
+      beforeEach(() => {
+        jest.clearAllMocks();
+      });
+      it('returns true for single select problem with empty title', () => {
+        window.tinymce.editors = { 'answer-A': { getContent: () => '' } };
+        const expected = hooks.checkForNoAnswers({
+          openNoAnswerModal,
+          problem: {
+            ...problem,
+            answers: [{ id: 'A', title: '', correct: true }],
+          },
+        });
+        expect(openNoAnswerModal).toHaveBeenCalled();
+        expect(expected).toEqual(true);
+      });
+      it('returns true for single select with title but no correct answer', () => {
+        window.tinymce.editors = { 'answer-A': { getContent: () => 'sOmevALUe' } };
+        const expected = hooks.checkForNoAnswers({
+          openNoAnswerModal,
+          problem: {
+            ...problem,
+            answers: [{ id: 'A', title: 'sOmevALUe', correct: false }],
+          },
+        });
+        expect(openNoAnswerModal).toHaveBeenCalled();
+        expect(expected).toEqual(true);
+      });
+      it('returns true for single select with title and correct answer', () => {
+        window.tinymce.editors = { 'answer-A': { getContent: () => 'sOmevALUe' } };
+        const expected = hooks.checkForNoAnswers({
+          openNoAnswerModal,
+          problem: {
+            ...problem,
+            answers: [{ id: 'A', title: 'sOmevALUe', correct: true }],
+          },
+        });
+        expect(openNoAnswerModal).not.toHaveBeenCalled();
+        expect(expected).toEqual(false);
+      });
     });
   });
 });
