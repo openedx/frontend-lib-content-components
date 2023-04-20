@@ -1,5 +1,6 @@
 import { ProblemTypeKeys } from '../../../../data/constants/problem';
 import * as hooks from './hooks';
+import { MockUseState } from '../../../../../testUtils';
 
 const mockRawOLX = 'rawOLX';
 const mockBuiltOLX = 'builtOLX';
@@ -10,6 +11,44 @@ jest.mock('../../data/ReactStateOLXParser', () => (
   }))
 ));
 jest.mock('../../data/ReactStateSettingsParser');
+
+const hookState = new MockUseState(hooks);
+
+describe('noAnswerModalToggle', () => {
+  const hookKey = hookState.keys.isNoAnswerModalOpen;
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+  describe('state hook', () => {
+    hookState.testGetter(hookKey);
+  });
+  describe('using state', () => {
+    beforeEach(() => {
+      hookState.mock();
+    });
+    afterEach(() => {
+      hookState.restore();
+    });
+
+    describe('noAnswerModalToggle', () => {
+      let hook;
+      beforeEach(() => {
+        hook = hooks.noAnswerModalToggle();
+      });
+      test('isNoAnswerModalOpen: state value', () => {
+        expect(hook.isNoAnswerModalOpen).toEqual(hookState.stateVals[hookKey]);
+      });
+      test('openCancelConfirmModal: calls setter with true', () => {
+        hook.openNoAnswerModal();
+        expect(hookState.setState[hookKey]).toHaveBeenCalledWith(true);
+      });
+      test('closeCancelConfirmModal: calls setter with false', () => {
+        hook.closeNoAnswerModal();
+        expect(hookState.setState[hookKey]).toHaveBeenCalledWith(false);
+      });
+    });
+  });
+});
 
 describe('EditProblemView hooks parseState', () => {
   describe('fetchEditorContent', () => {
