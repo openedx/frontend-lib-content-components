@@ -116,3 +116,29 @@ export const checkForNoAnswers = ({ openNoAnswerModal, problem }) => {
   }
   return false;
 };
+
+export const getContent = ({
+  problemState,
+  openNoAnswerModal,
+  isAdvancedProblemType,
+  editorRef,
+  assets,
+  lmsEndpointUrl,
+}) => {
+  const problem = problemState;
+  const hasNoAnswers = checkForNoAnswers({
+    problem,
+    openNoAnswerModal,
+  });
+  if (!hasNoAnswers) {
+    const data = parseState({
+      isAdvanced: isAdvancedProblemType,
+      ref: editorRef,
+      problem,
+      assets,
+      lmsEndpointUrl,
+    })();
+    return data;
+  }
+  return null;
+};

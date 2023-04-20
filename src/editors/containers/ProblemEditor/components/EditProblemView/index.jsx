@@ -17,7 +17,7 @@ import { selectors } from '../../../../data/redux';
 import RawEditor from '../../../../sharedComponents/RawEditor';
 import { ProblemTypeKeys } from '../../../../data/constants/problem';
 
-import { parseState, noAnswerModalToggle, checkForNoAnswers } from './hooks';
+import { parseState, noAnswerModalToggle, getContent } from './hooks';
 import './index.scss';
 import messages from './messages';
 
@@ -40,27 +40,15 @@ export const EditProblemView = ({
   const { isNoAnswerModalOpen, openNoAnswerModal, closeNoAnswerModal } = noAnswerModalToggle();
   const dispatch = useDispatch();
 
-  const getContent = () => {
-    const problem = problemState;
-    const hasNoAnswers = checkForNoAnswers({
-      problem,
-      openNoAnswerModal,
-    });
-    if (!hasNoAnswers) {
-      const data = parseState({
-        isAdvanced: isAdvancedProblemType,
-        ref: editorRef,
-        problem,
-        assets,
-        lmsEndpointUrl,
-      })();
-      return data;
-    }
-    return null;
-  };
-
   return (
-    <EditorContainer getContent={getContent}>
+    <EditorContainer getContent={() => getContent({
+      problemState,
+      openNoAnswerModal,
+      isAdvancedProblemType,
+      editorRef,
+      assets,
+      lmsEndpointUrl,
+    })}>
       <AlertModal
         title={intl.formatMessage(messages.noAnswerModalTitle)}
         isOpen={isNoAnswerModalOpen}

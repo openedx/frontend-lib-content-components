@@ -5,6 +5,9 @@ import { MockUseState } from '../../../../../testUtils';
 const mockRawOLX = 'rawOLX';
 const mockBuiltOLX = 'builtOLX';
 
+const toStringMock = () => mockRawOLX;
+const refMock = { current: { state: { doc: { toString: toStringMock } } } };
+
 jest.mock('../../data/ReactStateOLXParser', () => (
   jest.fn().mockImplementation(() => ({
     buildOLX: () => mockBuiltOLX,
@@ -90,8 +93,6 @@ describe('EditProblemView hooks parseState', () => {
     });
   });
   describe('parseState', () => {
-    const toStringMock = () => mockRawOLX;
-    const refMock = { current: { state: { doc: { toString: toStringMock } } } };
 
     test('default problem', () => {
       const res = hooks.parseState({
@@ -187,6 +188,42 @@ describe('EditProblemView hooks parseState', () => {
         expect(openNoAnswerModal).not.toHaveBeenCalled();
         expect(expected).toEqual(false);
       });
+    });
+  });
+  describe('getContent', () => {
+    const problemState = { problemType: ProblemTypeKeys.NUMERIC, answers:[{ id: 'A', title: 'problem', correct: true }] };
+    const isAdvancedProblem = false;
+    const assets = {};
+    const lmsEndpointUrl = 'someUrl';
+    const editorRef = refMock;
+    const openNoAnswerModal = jest.fn();
+
+    test('default save and returns parseState data', () => {
+      const content = hooks.getContent({
+        problemState,
+        isAdvancedProblem,
+        editorRef,
+        assets,
+        lmsEndpointUrl,
+        openNoAnswerModal,
+      });
+      expect(content).toEqual({
+        olx: 'builtOLX',
+        settings: undefined,
+      });
+    });
+    test('returns null', () => {
+      const problem = {...problemState, answers: [{ id: 'A', title: '', correct: true }] }
+      const content = hooks.getContent({
+        problemState: problem,
+        isAdvancedProblem,
+        editorRef,
+        assets,
+        lmsEndpointUrl,
+        openNoAnswerModal,
+      });
+      expect(openNoAnswerModal).toHaveBeenCalled();
+      expect(content).toEqual(null);
     });
   });
 });
