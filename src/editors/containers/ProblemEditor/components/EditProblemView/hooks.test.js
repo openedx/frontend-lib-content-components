@@ -93,7 +93,6 @@ describe('EditProblemView hooks parseState', () => {
     });
   });
   describe('parseState', () => {
-
     test('default problem', () => {
       const res = hooks.parseState({
         problem: 'problem',
@@ -191,7 +190,7 @@ describe('EditProblemView hooks parseState', () => {
     });
   });
   describe('getContent', () => {
-    const problemState = { problemType: ProblemTypeKeys.NUMERIC, answers:[{ id: 'A', title: 'problem', correct: true }] };
+    const problemState = { problemType: ProblemTypeKeys.NUMERIC, answers: [{ id: 'A', title: 'problem', correct: true }] };
     const isAdvancedProblem = false;
     const assets = {};
     const lmsEndpointUrl = 'someUrl';
@@ -213,7 +212,7 @@ describe('EditProblemView hooks parseState', () => {
       });
     });
     test('returns null', () => {
-      const problem = {...problemState, answers: [{ id: 'A', title: '', correct: true }] }
+      const problem = { ...problemState, answers: [{ id: 'A', title: '', correct: true }] };
       const content = hooks.getContent({
         problemState: problem,
         isAdvancedProblem,

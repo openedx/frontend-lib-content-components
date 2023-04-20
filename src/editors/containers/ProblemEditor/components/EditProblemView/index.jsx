@@ -41,14 +41,16 @@ export const EditProblemView = ({
   const dispatch = useDispatch();
 
   return (
-    <EditorContainer getContent={() => getContent({
-      problemState,
-      openNoAnswerModal,
-      isAdvancedProblemType,
-      editorRef,
-      assets,
-      lmsEndpointUrl,
-    })}>
+    <EditorContainer
+      getContent={() => getContent({
+        problemState,
+        openNoAnswerModal,
+        isAdvancedProblemType,
+        editorRef,
+        assets,
+        lmsEndpointUrl,
+      })}
+    >
       <AlertModal
         title={intl.formatMessage(messages.noAnswerModalTitle)}
         isOpen={isNoAnswerModalOpen}
