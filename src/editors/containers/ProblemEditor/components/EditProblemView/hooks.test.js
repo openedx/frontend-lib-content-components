@@ -152,12 +152,12 @@ describe('EditProblemView hooks parseState', () => {
         jest.clearAllMocks();
       });
       it('returns true for single select problem with empty title', () => {
-        window.tinymce.editors = { 'answer-A': { getContent: () => '' } };
+        window.tinymce.editors = { 'answer-A': { getContent: () => '' }, 'answer-B': { getContent: () => 'sOmevALUe' } };
         const expected = hooks.checkForNoAnswers({
           openNoAnswerModal,
           problem: {
             ...problem,
-            answers: [{ id: 'A', title: '', correct: true }],
+            answers: [{ id: 'A', title: '', correct: true }, { id: 'B', title: 'sOmevALUe', correct: false }],
           },
         });
         expect(openNoAnswerModal).toHaveBeenCalled();
@@ -169,7 +169,7 @@ describe('EditProblemView hooks parseState', () => {
           openNoAnswerModal,
           problem: {
             ...problem,
-            answers: [{ id: 'A', title: 'sOmevALUe', correct: false }],
+            answers: [{ id: 'A', title: 'sOmevALUe', correct: false }, { id: 'B', title: '', correct: false }],
           },
         });
         expect(openNoAnswerModal).toHaveBeenCalled();

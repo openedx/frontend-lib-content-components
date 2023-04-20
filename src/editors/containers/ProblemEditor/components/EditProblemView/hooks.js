@@ -70,13 +70,14 @@ export const parseState = ({
 };
 
 export const checkForNoAnswers = ({ openNoAnswerModal, problem }) => {
+  const simpleTextAreaProblems = [ProblemTypeKeys.DROPDOWN, ProblemTypeKeys.NUMERIC, ProblemTypeKeys.TEXTINPUT];
   const editorObject = fetchEditorContent({ format: '' });
   const { problemType } = problem;
   const { answers } = problem;
+  const answerTitles = simpleTextAreaProblems.includes(problemType) ? {} : editorObject.answers;
+
   const hasTitle = () => {
-    const simpleTextAreaProblems = [ProblemTypeKeys.DROPDOWN, ProblemTypeKeys.NUMERIC, ProblemTypeKeys.TEXTINPUT];
     const titles = [];
-    const answerTitles = simpleTextAreaProblems.includes(problemType) ? {} : editorObject.answers;
     answers.forEach(answer => {
       const title = simpleTextAreaProblems.includes(problemType) ? answer.title : answerTitles[answer.id];
       if (title.length > 0) {
@@ -92,8 +93,11 @@ export const checkForNoAnswers = ({ openNoAnswerModal, problem }) => {
   const hasNoCorrectAnswer = () => {
     let correctAnswer;
     answers.forEach(answer => {
-      if (answer.correct && hasTitle()) {
-        correctAnswer = true;
+      if (answer.correct) {
+        const title = simpleTextAreaProblems.includes(problemType) ? answer.title : answerTitles[answer.id];
+        if (title.length > 0) {
+          correctAnswer = true;
+        }
       }
     });
     if (correctAnswer) {
