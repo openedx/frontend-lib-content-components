@@ -282,13 +282,21 @@ export const sourceCodeModalToggle = (editorRef) => {
   };
 };
 
+export const imageMatchRegex = /asset-v1.(.*).type.(.*).block.(.*)/;
+
+export const matchImageStringsByIdentifiers = (a, b) => {
+  if (!a || !b || !(typeof a === 'string') || !(typeof b === 'string')) { return null; }
+  return JSON.stringify(a.match(imageMatchRegex).slice(1)) === JSON.stringify(b.match(imageMatchRegex).slice(1));
+};
+
 export const stringToFragment = (htmlString) => document.createRange().createContextualFragment(htmlString);
 
-export const getSelectedImageFromHtmlString = (htmlString, selectedImageSrc) => {
-  const images = stringToFragment(htmlString);
+export const getImageFromHtmlString = (htmlString, imageSrc) => {
+  debugger;
+  const images = stringToFragment(htmlString)?.firstChild?.querySelectorAll('img') || [];
 
-  return images?.find?.((img) => (
-    img?.src?.replace?.(/.*\/assets\//, '') === selectedImageSrc?.replace?.(/.*\/assets\//, '')
+  return Array.from(images).find((img) => (
+    matchImageStringsByIdentifiers(img.src || '', imageSrc)
   ));
 };
 

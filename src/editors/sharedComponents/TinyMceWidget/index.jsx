@@ -42,11 +42,20 @@ export const TinyMceWidget = ({
   const { isImgOpen, openImgModal, closeImgModal } = hooks.imgModalToggle();
   const { isSourceCodeOpen, openSourceCodeModal, closeSourceCodeModal } = hooks.sourceCodeModalToggle(editorRef);
 
-  const imagesWithDimensions = hooks.filterAssets({ assets }).map?.((image) => {
-    const imageFragment = hooks.getSelectedImageFromHtmlString(textValue, image.src);
-    return { ...image, width: imageFragment?.width, height: imageFragment?.height };
-  });
-  const images = useRef(imagesWithDimensions);
+  const images = useRef([]);
+
+  useEffect(() => {
+    const imagesWithDimensions = hooks.filterAssets({ assets }).map((image) => {
+      console.log('useEffect | textValue: ', textValue);
+      const imageFragment = hooks.getImageFromHtmlString(textValue, image.url);
+      console.log('imageFragment: ', imageFragment);
+      return { ...image, width: imageFragment?.width, height: imageFragment?.height };
+    });
+    images.current = imagesWithDimensions;
+  }, []);
+
+  console.log('assets: ', hooks.filterAssets({ assets }));
+  console.log('textValue: ', textValue);
 
   const imageSelection = hooks.selectedImage(null);
 

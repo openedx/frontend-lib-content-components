@@ -104,6 +104,7 @@ export const ImageUploadModal = ({
 }) => {
   if (selection) {
     console.log('image upload modal | selection: ', selection);
+    console.log('image upload modal | images: ', images);
     return (
       <ImageSettingsModal
         {...{
