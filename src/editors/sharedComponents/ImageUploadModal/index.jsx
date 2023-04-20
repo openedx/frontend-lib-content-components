@@ -6,6 +6,7 @@ import tinyMCEKeys from '../../data/constants/tinyMCE';
 import ImageSettingsModal from './ImageSettingsModal';
 import SelectImageModal from './SelectImageModal';
 import * as module from '.';
+import { matchImageStringsByIdentifiers } from '../TinyMceWidget/hooks';
 
 export const propsString = (props) => (
   Object.keys(props).map((key) => `${key}="${props[key]}"`).join(' ')
@@ -62,8 +63,7 @@ export const hooks = {
     setSelection(newImage);
     let foundMatch = false;
     images.current = images.current.map((image) => {
-      const matchRegex = /asset-v1.(.*).type.(.*).block.(.*)/;
-      const isMatch = JSON.stringify(image.id.match(matchRegex).slice(1)) === JSON.stringify(selection.externalUrl.match(matchRegex).slice(1));
+      const isMatch = matchImageStringsByIdentifiers(image.id, selection.externalUrl);
       if (isMatch) { foundMatch = true; return { ...image, width: settings.dimensions.width, height: settings.dimensions.height }; }
       return image;
     });

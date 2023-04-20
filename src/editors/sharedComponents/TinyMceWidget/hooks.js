@@ -292,7 +292,6 @@ export const matchImageStringsByIdentifiers = (a, b) => {
 export const stringToFragment = (htmlString) => document.createRange().createContextualFragment(htmlString);
 
 export const getImageFromHtmlString = (htmlString, imageSrc) => {
-  debugger;
   const images = stringToFragment(htmlString)?.firstChild?.querySelectorAll('img') || [];
 
   return Array.from(images).find((img) => (
@@ -306,7 +305,7 @@ export const openModalWithSelectedImage = ({
   console.log('current images: ', images.current);
   const tinyMceHTML = editor.selection.getNode();
 
-  const selectedImage = images.current.find(image => image.src === tinyMceHTML.src);
+  const selectedImage = images.current.find(image => matchImageStringsByIdentifiers(image.id, tinyMceHTML.src));
   console.log('openModalWithSelectedImage | selectedImage: ', selectedImage);
 
   setImage({
