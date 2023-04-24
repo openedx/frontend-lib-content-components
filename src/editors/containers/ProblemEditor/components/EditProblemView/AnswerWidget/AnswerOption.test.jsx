@@ -26,6 +26,20 @@ describe('AnswerOption', () => {
     selectedFeedback: 'selected feedback',
     unselectedFeedback: 'unselected feedback',
   };
+  const numericAnswer = {
+    id: 'A',
+    title: '45',
+    correct: true,
+    selectedFeedback: 'selected feedback',
+    unselectedFeedback: 'unselected feedback',
+  };
+  const nonNumericAnswer = {
+    id: 'A',
+    title: 'Answer 1',
+    correct: true,
+    selectedFeedback: 'selected feedback',
+    unselectedFeedback: 'unselected feedback',
+  };
   const answerRange = {
     id: 'A',
     title: 'Answer 1',
@@ -50,11 +64,14 @@ describe('AnswerOption', () => {
     test('snapshot: renders correct option with selected unselected feedback', () => {
       expect(shallow(<AnswerOption {...props} problemType="choiceresponse" answer={answerWithSelectedUnselectedFeedback} />)).toMatchSnapshot();
     });
-    test('snapshot: renders correct option with numeric input problem', () => {
-      expect(shallow(<AnswerOption {...props} problemType="numericalresponse" />)).toMatchSnapshot();
+    test('snapshot: renders correct option with numeric input problem, with no errors', () => {
+      expect(shallow(<AnswerOption {...props} problemType="numericalresponse" answer={numericAnswer} />)).toMatchSnapshot();
     });
     test('snapshot: renders correct option with numeric input problem and answer range', () => {
       expect(shallow(<AnswerOption {...props} problemType="numericalresponse" answer={answerRange} />)).toMatchSnapshot();
+    });
+    test('snapshot: renders error for non-number answers for numerical response problems', () => {
+      expect(shallow(<AnswerOption {...props} problemType="numericalresponse" answer={nonNumericAnswer} />)).toMatchSnapshot();
     });
   });
 

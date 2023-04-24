@@ -39,6 +39,14 @@ export const AnswerOption = ({
   const setUnselectedFeedback = hooks.setUnselectedFeedback({ answer, hasSingleAnswer, dispatch });
   const { isFeedbackVisible, toggleFeedback } = hooks.useFeedback(answer);
 
+  const isNumeric = (str) => {
+    if (typeof str !== 'string') { return false; } // we only process strings!
+    // use type coercion to parse the _entirety_ of the string (`parseFloat` alone does not do this)...
+    return !Number.isNaN(str)
+    // ...and ensure strings of whitespace fail
+     && !Number.isNaN(parseFloat(str));
+  };
+
   const getInputArea = () => {
     if ([ProblemTypeKeys.SINGLESELECT, ProblemTypeKeys.MULTISELECT].includes(problemType)) {
       return (
@@ -50,7 +58,7 @@ export const AnswerOption = ({
         />
       );
     }
-    if (problemType !== ProblemTypeKeys.NUMERIC || !answer.isAnswerRange) {
+    if (problemType !== ProblemTypeKeys.NUMERIC) {
       return (
         <Form.Control
           as="textarea"
@@ -61,6 +69,31 @@ export const AnswerOption = ({
           onChange={setAnswerTitle}
           placeholder={intl.formatMessage(messages.answerTextboxPlaceholder)}
         />
+      );
+    }
+    if (!answer.isAnswerRange) {
+      return (
+        <Form.Group
+          isInvalid={!isNumeric(answer.title) && !!answer.title}
+        >
+          {
+            !isNumeric(answer.title) && !!answer.title
+&& (
+<Form.Control.Feedback type="invalid">
+  <FormattedMessage {...messages.notANumberHelperText} />
+</Form.Control.Feedback>
+)
+          }
+          <Form.Control
+            as="textarea"
+            className="answer-option-textarea text-gray-500 small"
+            autoResize
+            rows={1}
+            value={answer.title}
+            onChange={setAnswerTitle}
+            placeholder={intl.formatMessage(messages.answerTextboxPlaceholder)}
+          />
+        </Form.Group>
       );
     }
     // Return Answer Range View

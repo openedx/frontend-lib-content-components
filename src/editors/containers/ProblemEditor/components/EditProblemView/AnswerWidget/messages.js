@@ -72,6 +72,11 @@ const messages = defineMessages({
     defaultMessage: 'Enter min and max values separated by a comma. Use a bracket to include the number next to it in the range, or a parenthesis to exclude the number. For example, to identify the correct answers as 5, 6, or 7, but not 8, specify [5,8).',
     description: 'Helper text describing usage of answer ranges',
   },
+  notANumberHelperText: {
+    id: 'authoring.answerwidget.answer.notANumberHelperText',
+    defaultMessage: 'Numeric answers must be numbers.',
+    description: 'Feedback given to author when a numeric answer is not a number.',
+  },
 });
 
 export default messages;
