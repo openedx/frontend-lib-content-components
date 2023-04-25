@@ -292,18 +292,23 @@ export const matchImageStringsByIdentifiers = (a, b) => {
 export const stringToFragment = (htmlString) => document.createRange().createContextualFragment(htmlString);
 
 export const getImageFromHtmlString = (htmlString, imageSrc) => {
-  const images = stringToFragment(htmlString)?.firstChild?.querySelectorAll('img') || [];
+  const images = stringToFragment(htmlString)?.querySelectorAll('img') || [];
+  console.log('getImageFromHtmlString | htmlString: ', htmlString);
+  console.log('getImageFromHtmlString | images: ', images);
 
-  return Array.from(images).find((img) => (
-    matchImageStringsByIdentifiers(img.src || '', imageSrc)
-  ));
+  return Array.from(images).find((img) => {
+    console.log('getImageFromHtmlString | img: ', img);
+    console.log('getImageFromHtmlString | imageSrc: ', imageSrc);
+    return matchImageStringsByIdentifiers(img.src || '', imageSrc);
+});
 };
 
 export const openModalWithSelectedImage = ({
   editor, textValue, selection, images, setImage, openImgModal,
 }) => () => {
-  console.log('current images: ', images.current);
+  console.log('openModalWithSelectedImage | current images: ', images.current);
   const tinyMceHTML = editor.selection.getNode();
+  console.log('openModalWithSelectedImage | tinyMceHTML: ', tinyMceHTML);
 
   const selectedImage = images.current.find(image => matchImageStringsByIdentifiers(image.id, tinyMceHTML.src));
   console.log('openModalWithSelectedImage | selectedImage: ', selectedImage);

@@ -49,25 +49,34 @@ export const hooks = {
       lmsEndpointUrl,
       editorType,
     });
+
     editorRef.current.execCommand(
       tinyMCEKeys.commands.insertContent,
       false,
       newSelection,
     );
+
     const newImage = {
       externalUrl: selection.externalUrl,
       altText: settings.altText,
       width: settings.dimensions.width,
       height: settings.dimensions.height,
     };
+
     setSelection(newImage);
     let foundMatch = false;
-    images.current = images.current.map((image) => {
-      const isMatch = matchImageStringsByIdentifiers(image.id, selection.externalUrl);
-      if (isMatch) { foundMatch = true; return { ...image, width: settings.dimensions.width, height: settings.dimensions.height }; }
-      return image;
-    });
-    if (!foundMatch) { images.current = [...images.current, newImage]; }
+
+    // images.current = images.current.map((image) => {
+    //   const isMatch = matchImageStringsByIdentifiers(image.id, selection.externalUrl);
+    //   if (isMatch) {
+    //     foundMatch = true; return { ...image, width: settings.dimensions.width, height: settings.dimensions.height };
+    //   }
+    //   return image;
+    // });
+    // if (!foundMatch) { 
+      images.current = [...images.current, newImage];
+    //  }
+
     close();
   },
   onClose: ({ clearSelection, close }) => () => {

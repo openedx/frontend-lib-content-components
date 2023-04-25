@@ -9,6 +9,7 @@ const config = createConfig('eslint', {
     'react-hooks/rules-of-hooks': 'off',
     'react-hooks/exhaustive-deps': 'off',
     'radix': 'off',
+    "no-param-reassign": ["error", { "props": false }],
   },
 });
 
