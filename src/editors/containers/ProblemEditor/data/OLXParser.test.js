@@ -18,6 +18,8 @@ import {
   shuffleProblemOLX,
   scriptProblemOlX,
   labelDescriptionQuestionOLX,
+  htmlEntityTestOLX,
+  numberParseTestOLX,
 } from './mockData/olxTestData';
 import { ProblemTypeKeys } from '../../../data/constants/problem';
 
@@ -229,5 +231,19 @@ describe('OLXParser for problem with solution tag', () => {
       const expected = getCheckboxesOLXWithFeedbackAndHintsOLX().solutionExplanation;
       expect(explanation.replace(/\s/g, '')).toBe(expected.replace(/\s/g, ''));
     });
+  });
+});
+
+describe('Check OLXParser for proper encoding', () => {
+  it('should not encode html entities', () => {
+    const olxparser = new OLXParser(htmlEntityTestOLX.rawOLX);
+    const problemType = olxparser.getProblemType();
+    const question = olxparser.parseQuestions(problemType);
+    expect(question).toBe(htmlEntityTestOLX.question);
+  });
+  it('should not parse hex numbers and leading zeros', () => {
+    const olxparser = new OLXParser(numberParseTestOLX.rawOLX);
+    const answer = olxparser.parseMultipleChoiceAnswers('multiplechoiceresponse', 'choicegroup', 'choice');
+    expect(answer).toEqual(numberParseTestOLX.data);
   });
 });

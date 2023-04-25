@@ -8,10 +8,18 @@ class ReactStateOLXParser {
     const parserOptions = {
       ignoreAttributes: false,
       alwaysCreateTextNode: true,
+      numberParseOptions: {
+        leadingZeros: false,
+        hex: false,
+      },
     };
     const questionParserOptions = {
       ignoreAttributes: false,
       alwaysCreateTextNode: true,
+      numberParseOptions: {
+        leadingZeros: false,
+        hex: false,
+      },
       preserveOrder: true,
     };
     const questionBuilderOptions = {
@@ -19,6 +27,10 @@ class ReactStateOLXParser {
       attributeNamePrefix: '@_',
       suppressBooleanAttributes: false,
       format: true,
+      numberParseOptions: {
+        leadingZeros: false,
+        hex: false,
+      },
       preserveOrder: true,
     };
     const builderOptions = {
@@ -26,6 +38,10 @@ class ReactStateOLXParser {
       attributeNamePrefix: '@_',
       suppressBooleanAttributes: false,
       format: true,
+      numberParseOptions: {
+        leadingZeros: false,
+        hex: false,
+      },
     };
     this.questionParser = new XMLParser(questionParserOptions);
     this.parser = new XMLParser(parserOptions);
@@ -172,6 +188,22 @@ class ReactStateOLXParser {
   addQuestion() {
     const { question } = this.editorObject;
     const questionObject = this.questionParser.parse(question);
+    /* Removes block tags like <p> or <h1> that surround the <label> format.
+      Block tags are required by tinyMCE but have adverse effect on css in studio.
+      */
+    questionObject.forEach((tag, ind) => {
+      const tagName = Object.keys(tag)[0];
+      let label = null;
+      tag[tagName].forEach(subTag => {
+        const subTagName = Object.keys(subTag)[0];
+        if (subTagName === 'label') {
+          label = subTag;
+        }
+      });
+      if (label) {
+        questionObject[ind] = label;
+      }
+    });
     return questionObject;
   }
 
