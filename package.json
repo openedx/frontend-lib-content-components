@@ -83,7 +83,7 @@
     "video.js": "^7.18.1"
   },
   "peerDependencies": {
-    "@edx/frontend-platform": ">1.15.0",
+    "@edx/frontend-platform": "^4.0.0",
     "@edx/paragon": "^20.27.0",
     "prop-types": "^15.5.10",
     "react": "^16.14.0",
