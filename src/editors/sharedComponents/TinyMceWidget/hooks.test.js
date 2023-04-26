@@ -151,7 +151,7 @@ describe('TinyMceEditor hooks', () => {
 
     describe('editorConfig', () => {
       const props = {
-        textValue: null,
+        editorContentHtml: null,
         editorType: 'text',
         lmsEndpointUrl: 'sOmEuRl.cOm',
         studioEndpointUrl: 'sOmEoThEruRl.cOm',
@@ -258,9 +258,9 @@ describe('TinyMceEditor hooks', () => {
         expect(output.initialValue).toBe('');
       });
       test('It sets the blockvalue to be the blockvalue if nonempty', () => {
-        const textValue = 'SomE hTML content';
-        output = module.editorConfig({ ...props, textValue });
-        expect(output.initialValue).toBe(textValue);
+        const editorContentHtml = 'SomE hTML content';
+        output = module.editorConfig({ ...props, editorContentHtml });
+        expect(output.initialValue).toBe(editorContentHtml);
       });
 
       it('calls setupCustomBehavior on setup', () => {

@@ -17,6 +17,25 @@ export const state = StrictDict({
   refReady: (val) => useState(val),
 });
 
+export const addImagesAndDimensionsToRef = ({ images, assets, editorContentHtml }) => {
+  const imagesWithDimensions = module.filterAssets({ assets }).map((image) => {
+    const imageFragment = module.getImageFromHtmlString(editorContentHtml, image.url);
+    return { ...image, width: imageFragment?.width, height: imageFragment?.height };
+  });
+
+  images.current = imagesWithDimensions;
+};
+
+export const useImages = ({ assets, editorContentHtml }) => {
+  const images = useRef([]);
+
+  useEffect(() => {
+    module.addImagesAndDimensionsToRef({ images, assets, editorContentHtml });
+  }, []);
+
+  return { imagesRef: images };
+};
+
 export const parseContentForLabels = ({ editor, updateContent }) => {
   let content = editor.getContent();
   if (content && content?.length > 0) {
@@ -95,11 +114,11 @@ export const setupCustomBehavior = ({
   images,
   setImage,
   lmsEndpointUrl,
-  textValue,
+  editorContentHtml,
   content,
   selection,
 }) => (editor) => {
-  console.log('setupCustomBehavior | textValue: ', textValue);
+  console.log('setupCustomBehavior | editorContentHtml: ', editorContentHtml);
   // image upload button
   editor.ui.registry.addButton(tinyMCE.buttons.imageUploadButton, {
     icon: 'image',
@@ -111,7 +130,7 @@ export const setupCustomBehavior = ({
     icon: 'image',
     tooltip: 'Edit Image Settings',
     onAction: module.openModalWithSelectedImage({
-      editor, images, selection, setImage, openImgModal, textValue, content,
+      editor, images, selection, setImage, openImgModal, editorContentHtml, content,
     }),
   });
   // overriding the code plugin's icon with 'HTML' text
@@ -186,7 +205,7 @@ export const removeProtocolFromUrl = (url) => url.replace(/^https?:\/\//, '');
 export const editorConfig = ({
   editorType,
   setEditorRef,
-  textValue,
+  editorContentHtml,
   images,
   lmsEndpointUrl,
   studioEndpointUrl,
@@ -215,7 +234,7 @@ export const editorConfig = ({
         initializeEditor();
       }
     },
-    initialValue: textValue || '',
+    initialValue: editorContentHtml || '',
     init: {
       ...config,
       skin: false,
@@ -236,7 +255,7 @@ export const editorConfig = ({
         setImage: setSelection,
         content,
         images,
-        textValue,
+        editorContentHtml,
         imageUrls: module.fetchImageUrls(images),
       }),
       quickbars_insert_toolbar: quickbarsInsertToolbar,
@@ -304,7 +323,7 @@ export const getImageFromHtmlString = (htmlString, imageSrc) => {
 };
 
 export const openModalWithSelectedImage = ({
-  editor, textValue, selection, images, setImage, openImgModal,
+  editor, editorContentHtml, selection, images, setImage, openImgModal,
 }) => () => {
   console.log('openModalWithSelectedImage | current images: ', images.current);
   const tinyMceHTML = editor.selection.getNode();

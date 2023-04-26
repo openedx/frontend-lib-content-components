@@ -31,7 +31,7 @@ export const TinyMceWidget = ({
   editorRef,
   disabled,
   id,
-  textValue, // editor content
+  editorContentHtml, // editorContent in html form
   // redux
   assets,
   isLibrary,
@@ -41,21 +41,7 @@ export const TinyMceWidget = ({
 }) => {
   const { isImgOpen, openImgModal, closeImgModal } = hooks.imgModalToggle();
   const { isSourceCodeOpen, openSourceCodeModal, closeSourceCodeModal } = hooks.sourceCodeModalToggle(editorRef);
-
-  const images = useRef([]);
-
-  useEffect(() => {
-    const imagesWithDimensions = hooks.filterAssets({ assets }).map((image) => {
-      console.log('useEffect | textValue: ', textValue);
-      const imageFragment = hooks.getImageFromHtmlString(textValue, image.url);
-      console.log('imageFragment: ', imageFragment);
-      return { ...image, width: imageFragment?.width, height: imageFragment?.height };
-    });
-    images.current = imagesWithDimensions;
-  }, []);
-
-  console.log('assets: ', hooks.filterAssets({ assets }));
-  console.log('textValue: ', textValue);
+  const { imagesRef } = hooks.useImages({ assets, editorContentHtml });
 
   const imageSelection = hooks.selectedImage(null);
 
@@ -66,7 +52,7 @@ export const TinyMceWidget = ({
           isOpen={isImgOpen}
           close={closeImgModal}
           editorRef={editorRef}
-          images={images}
+          images={imagesRef}
           editorType={editorType}
           lmsEndpointUrl={lmsEndpointUrl}
           {...imageSelection}
@@ -91,8 +77,8 @@ export const TinyMceWidget = ({
             isLibrary,
             lmsEndpointUrl,
             studioEndpointUrl,
-            images,
-            textValue,
+            images: imagesRef,
+            editorContentHtml,
             ...imageSelection,
             ...props,
           })
@@ -110,7 +96,7 @@ TinyMceWidget.defaultProps = {
   assets: null,
   id: null,
   disabled: false,
-  textValue: undefined,
+  editorContentHtml: undefined,
 };
 TinyMceWidget.propTypes = {
   editorType: PropTypes.string,
@@ -121,7 +107,7 @@ TinyMceWidget.propTypes = {
   studioEndpointUrl: PropTypes.string,
   id: PropTypes.string,
   disabled: PropTypes.bool,
-  textValue: PropTypes.string,
+  editorContentHtml: PropTypes.string,
 };
 
 export const mapStateToProps = (state) => ({
