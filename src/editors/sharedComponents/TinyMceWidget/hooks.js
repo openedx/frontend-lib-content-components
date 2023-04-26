@@ -327,7 +327,7 @@ export const getImageFromHtmlString = (htmlString, imageSrc) => {
     console.log('getImageFromHtmlString | img: ', img);
     console.log('getImageFromHtmlString | imageSrc: ', imageSrc);
     return matchImageStringsByIdentifiers(img.src || '', imageSrc);
-});
+  });
 };
 
 export const openModalWithSelectedImage = ({
@@ -414,4 +414,32 @@ export const selectedImage = (val) => {
     selection,
     setSelection,
   };
+};
+
+/**
+ * updateImageDimensions
+ *
+ * Updates one images' dimensions in an array by identifying one image via a url string match
+ * that includes asset-v1, type, and block. Returns a new array.
+ *
+ * @param {Object[]} images - [{ id, ...other }]
+ * @param {string} url
+ * @param {number} width
+ * @param {number} height
+ *
+ * @returns {Object} { result, foundMatch }
+ */
+export const updateImageDimensions = ({
+  images, url, width, height,
+}) => {
+  let foundMatch = false;
+  const result = images.map((image) => {
+    const isMatch = matchImageStringsByIdentifiers(image.id, url);
+    if (isMatch) {
+      foundMatch = true;
+      return { ...image, width, height };
+    }
+    return image;
+  });
+  return { result, foundMatch };
 };

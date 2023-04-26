@@ -6,7 +6,7 @@ import tinyMCEKeys from '../../data/constants/tinyMCE';
 import ImageSettingsModal from './ImageSettingsModal';
 import SelectImageModal from './SelectImageModal';
 import * as module from '.';
-import { matchImageStringsByIdentifiers } from '../TinyMceWidget/hooks';
+import { updateImageDimensions } from '../TinyMceWidget/hooks';
 
 export const propsString = (props) => (
   Object.keys(props).map((key) => `${key}="${props[key]}"`).join(' ')
@@ -56,22 +56,20 @@ export const hooks = {
       newSelection,
     );
 
+    const { height, width } = settings.dimensions;
+
     const newImage = {
       externalUrl: selection.externalUrl,
       altText: settings.altText,
-      width: settings.dimensions.width,
-      height: settings.dimensions.height,
+      width,
+      height,
     };
 
-    let foundMatch = false;
-
-    images.current = images.current.map((image) => {
-      const isMatch = matchImageStringsByIdentifiers(image.id, selection.externalUrl);
-      if (isMatch) {
-        foundMatch = true; return { ...image, width: settings.dimensions.width, height: settings.dimensions.height };
-      }
-      return image;
+    const { result: updatedImages, foundMatch } = updateImageDimensions({
+      images: images.current, url: selection.externalUrl, height, width,
     });
+    images.current = updatedImages;
+
     if (!foundMatch) {
       images.current = [...images.current, newImage];
     }
@@ -112,8 +110,6 @@ export const ImageUploadModal = ({
   lmsEndpointUrl,
 }) => {
   if (selection) {
-    console.log('image upload modal | selection: ', selection);
-    console.log('image upload modal | images: ', images);
     return (
       <ImageSettingsModal
         {...{
