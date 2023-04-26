@@ -63,20 +63,21 @@ export const hooks = {
       height: settings.dimensions.height,
     };
 
-    setSelection(newImage);
+
     let foundMatch = false;
 
-    // images.current = images.current.map((image) => {
-    //   const isMatch = matchImageStringsByIdentifiers(image.id, selection.externalUrl);
-    //   if (isMatch) {
-    //     foundMatch = true; return { ...image, width: settings.dimensions.width, height: settings.dimensions.height };
-    //   }
-    //   return image;
-    // });
-    // if (!foundMatch) { 
+    images.current = images.current.map((image) => {
+      const isMatch = matchImageStringsByIdentifiers(image.id, selection.externalUrl);
+      if (isMatch) {
+        foundMatch = true; return { ...image, width: settings.dimensions.width, height: settings.dimensions.height };
+      }
+      return image;
+    });
+    if (!foundMatch) {
       images.current = [...images.current, newImage];
-    //  }
+    }
 
+    setSelection(newImage);
     close();
   },
   onClose: ({ clearSelection, close }) => () => {
