@@ -188,20 +188,20 @@ export const setupCustomBehavior = ({
     }
   });
   // after resizing an image in the editor, synchronize React state and ref
-  editor.on('ObjectResized', (e) => {
-    const imgHTML = editor.selection.getNode();
-    images.current = images.current.map((image) => {
-      const isMatch = module.matchImageStringsByIdentifiers(image.id, imgHTML.src);
-      if (!isMatch) { return image; }
+  editor.on('ObjectResized', () => {
+    const {
+      src, alt, width, height,
+    } = editor.selection.getNode();
 
-      return { ...image, width: imgHTML.width, height: imgHTML.height };
-    });
+    images.current = module.updateImageDimensions({
+      images: images.current, url: src, width, height,
+    }).result;
 
     setImage({
-      externalUrl: imgHTML.src,
-      altText: imgHTML.alt,
-      width: e.width,
-      height: e.height,
+      externalUrl: src,
+      altText: alt,
+      width,
+      height,
     });
   });
 };
@@ -309,8 +309,21 @@ export const sourceCodeModalToggle = (editorRef) => {
   };
 };
 
+/**
+ * const imageMatchRegex
+ *
+ * Image urls and ids used in the TinyMceEditor vary wildly, with different base urls,
+ * different lengths and constituent parts, and replacement of some "/" with "@".
+ * Common are the keys "asset-v1", "type", and "block", each holding a value after some separator.
+ * This regex captures only the values for these keys using capture groups, which can be used for matching.
+ */
 export const imageMatchRegex = /asset-v1.(.*).type.(.*).block.(.*)/;
 
+/**
+ * function matchImageStringsByIdentifiers
+ *
+ * matches two strings by comparing their regex capture groups using the `imageMatchRegex`
+ */
 export const matchImageStringsByIdentifiers = (a, b) => {
   if (!a || !b || !(typeof a === 'string') || !(typeof b === 'string')) { return null; }
   return JSON.stringify(a.match(imageMatchRegex).slice(1)) === JSON.stringify(b.match(imageMatchRegex).slice(1));
@@ -417,7 +430,7 @@ export const selectedImage = (val) => {
 };
 
 /**
- * updateImageDimensions
+ * function updateImageDimensions
  *
  * Updates one images' dimensions in an array by identifying one image via a url string match
  * that includes asset-v1, type, and block. Returns a new array.
@@ -433,6 +446,7 @@ export const updateImageDimensions = ({
   images, url, width, height,
 }) => {
   let foundMatch = false;
+
   const result = images.map((image) => {
     const isMatch = matchImageStringsByIdentifiers(image.id, url);
     if (isMatch) {
@@ -441,5 +455,6 @@ export const updateImageDimensions = ({
     }
     return image;
   });
+
   return { result, foundMatch };
 };
