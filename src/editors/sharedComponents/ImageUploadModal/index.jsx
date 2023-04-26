@@ -63,7 +63,6 @@ export const hooks = {
       height: settings.dimensions.height,
     };
 
-
     let foundMatch = false;
 
     images.current = images.current.map((image) => {

@@ -118,7 +118,6 @@ export const setupCustomBehavior = ({
   content,
   selection,
 }) => (editor) => {
-  console.log('setupCustomBehavior | editorContentHtml: ', editorContentHtml);
   // image upload button
   editor.ui.registry.addButton(tinyMCE.buttons.imageUploadButton, {
     icon: 'image',
@@ -188,8 +187,16 @@ export const setupCustomBehavior = ({
       editor.formatter.remove('label');
     }
   });
+  // after resizing an image in the editor, synchronize React state and ref
   editor.on('ObjectResized', (e) => {
     const imgHTML = editor.selection.getNode();
+    images.current = images.current.map((image) => {
+      const isMatch = module.matchImageStringsByIdentifiers(image.id, imgHTML.src);
+      if (!isMatch) { return image; }
+
+      return { ...image, width: imgHTML.width, height: imgHTML.height };
+    });
+
     setImage({
       externalUrl: imgHTML.src,
       altText: imgHTML.alt,
@@ -227,6 +234,7 @@ export const editorConfig = ({
     quickbarsInsertToolbar,
     quickbarsSelectionToolbar,
   } = pluginConfig({ isLibrary, placeholder, editorType });
+
   return {
     onInit: (evt, editor) => {
       setEditorRef(editor);
