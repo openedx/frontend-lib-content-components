@@ -21,6 +21,23 @@ const settings = {
   },
 };
 
+const mockImage = {
+  displayName: 'DALL·E 2023-03-10.png',
+  contentType: 'image/png',
+  dateAdded: 1682009100000,
+  url: '/asset-v1:TestX+Test01+Test0101+type@asset+block@DALL_E_2023-03-10.png',
+  externalUrl: 'http://localhost:18000/asset-v1:TestX+Test01+Test0101+type@asset+block@DALL_E_2023-03-10.png',
+  portableUrl: '/static/DALL_E_2023-03-10.png',
+  thumbnail: '/asset-v1:TestX+Test01+Test0101+type@thumbnail+block@DALL_E_2023-03-10.jpg',
+  locked: false,
+  staticFullUrl: '/assets/courseware/v1/af2bf9ac70804e54c534107160a8e51e/asset-v1:TestX+Test01+Test0101+type@asset+block@DALL_E_2023-03-10.png',
+  id: 'asset-v1:TestX+Test01+Test0101+type@asset+block@DALL_E_2023-03-10.png',
+  width: 100,
+  height: 150,
+};
+
+const mockImagesRef = { current: [mockImage] };
+
 describe('ImageUploadModal', () => {
   describe('hooks', () => {
     describe('imgTag', () => {
@@ -38,7 +55,7 @@ describe('ImageUploadModal', () => {
           selection,
           lmsEndpointUrl: 'sOmE',
         });
-        expect(output).toEqual(`<img ${module.propsString(args.expected)} style="height: 1619px !important; width: 2022px !important;" />`);
+        expect(output).toEqual(`<img ${module.propsString(args.expected)} />`);
       };
       test('It returns a html string which matches an image tag', () => {
         testImgTag({ settings, expected });
@@ -55,12 +72,13 @@ describe('ImageUploadModal', () => {
       const execCommandMock = jest.fn();
       const editorRef = { current: { some: 'dATa', execCommand: execCommandMock } };
       const setSelection = jest.fn();
-      const selection = jest.fn();
+      const selection = { externalUrl: 'sOmEuRl.cOm' };
       const lmsEndpointUrl = 'sOmE';
+      const images = mockImagesRef;
       let output;
       beforeEach(() => {
         output = module.hooks.createSaveCallback({
-          close, editorRef, setSelection, selection, lmsEndpointUrl,
+          close, settings, images, editorRef, setSelection, selection, lmsEndpointUrl,
         });
       });
       afterEach(() => {
@@ -78,7 +96,12 @@ describe('ImageUploadModal', () => {
           false,
           { selection, settings, lmsEndpointUrl },
         );
-        expect(setSelection).toBeCalledWith(null);
+        expect(setSelection).toBeCalledWith({
+          altText: settings.altText,
+          externalUrl: selection.externalUrl,
+          width: settings.dimensions.width,
+          height: settings.dimensions.height,
+        });
         expect(close).toBeCalled();
       });
     });
