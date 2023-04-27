@@ -31,50 +31,61 @@ export const imgProps = ({
   };
 };
 
+export const saveToEditor = ({
+  settings, selection, lmsEndpointUrl, editorType, editorRef,
+}) => {
+  const newImgTag = module.hooks.imgTag({
+    settings,
+    selection,
+    lmsEndpointUrl,
+    editorType,
+  });
+
+  editorRef.current.execCommand(
+    tinyMCEKeys.commands.insertContent,
+    false,
+    newImgTag,
+  );
+};
+
+export const updateImagesRef = ({
+  images, selection, height, width, newImage,
+}) => {
+  const { result: mappedImages, foundMatch: imageAlreadyExists } = updateImageDimensions({
+    images: images.current, url: selection.externalUrl, height, width,
+  });
+
+  images.current = imageAlreadyExists ? mappedImages : [...images.current, newImage];
+};
+
+export const updateReactState = ({
+  settings, selection, setSelection, images,
+}) => {
+  const { height, width } = settings.dimensions;
+  const newImage = {
+    externalUrl: selection.externalUrl,
+    altText: settings.altText,
+    width,
+    height,
+  };
+
+  updateImagesRef({
+    images, selection, height, width, newImage,
+  });
+
+  setSelection(newImage);
+};
+
 export const hooks = {
   createSaveCallback: ({
     close,
-    images,
-    editorRef,
-    editorType,
-    setSelection,
-    selection,
-    lmsEndpointUrl,
+    ...args
   }) => (
     settings,
   ) => {
-    const newSelection = module.hooks.imgTag({
-      settings,
-      selection,
-      lmsEndpointUrl,
-      editorType,
-    });
+    saveToEditor({ settings, ...args });
+    updateReactState({ settings, ...args });
 
-    editorRef.current.execCommand(
-      tinyMCEKeys.commands.insertContent,
-      false,
-      newSelection,
-    );
-
-    const { height, width } = settings.dimensions;
-
-    const newImage = {
-      externalUrl: selection.externalUrl,
-      altText: settings.altText,
-      width,
-      height,
-    };
-
-    const { result: updatedImages, foundMatch } = updateImageDimensions({
-      images: images.current, url: selection.externalUrl, height, width,
-    });
-    images.current = updatedImages;
-
-    if (!foundMatch) {
-      images.current = [...images.current, newImage];
-    }
-
-    setSelection(newImage);
     close();
   },
   onClose: ({ clearSelection, close }) => () => {
