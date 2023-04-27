@@ -114,9 +114,6 @@ export const setupCustomBehavior = ({
   images,
   setImage,
   lmsEndpointUrl,
-  editorContentHtml,
-  content,
-  selection,
 }) => (editor) => {
   // image upload button
   editor.ui.registry.addButton(tinyMCE.buttons.imageUploadButton, {
@@ -129,7 +126,7 @@ export const setupCustomBehavior = ({
     icon: 'image',
     tooltip: 'Edit Image Settings',
     onAction: module.openModalWithSelectedImage({
-      editor, images, selection, setImage, openImgModal, editorContentHtml, content,
+      editor, images, setImage, openImgModal,
     }),
   });
   // overriding the code plugin's icon with 'HTML' text
@@ -263,7 +260,6 @@ export const editorConfig = ({
         setImage: setSelection,
         content,
         images,
-        editorContentHtml,
         imageUrls: module.fetchImageUrls(images),
       }),
       quickbars_insert_toolbar: quickbarsInsertToolbar,
@@ -333,25 +329,18 @@ export const stringToFragment = (htmlString) => document.createRange().createCon
 
 export const getImageFromHtmlString = (htmlString, imageSrc) => {
   const images = stringToFragment(htmlString)?.querySelectorAll('img') || [];
-  console.log('getImageFromHtmlString | htmlString: ', htmlString);
-  console.log('getImageFromHtmlString | images: ', images);
 
   return Array.from(images).find((img) => {
-    console.log('getImageFromHtmlString | img: ', img);
-    console.log('getImageFromHtmlString | imageSrc: ', imageSrc);
     return matchImageStringsByIdentifiers(img.src || '', imageSrc);
   });
 };
 
 export const openModalWithSelectedImage = ({
-  editor, editorContentHtml, selection, images, setImage, openImgModal,
+  editor, images, setImage, openImgModal,
 }) => () => {
-  console.log('openModalWithSelectedImage | current images: ', images.current);
   const tinyMceHTML = editor.selection.getNode();
-  console.log('openModalWithSelectedImage | tinyMceHTML: ', tinyMceHTML);
 
   const selectedImage = images.current.find(image => matchImageStringsByIdentifiers(image.id, tinyMceHTML.src));
-  console.log('openModalWithSelectedImage | selectedImage: ', selectedImage);
 
   setImage({
     externalUrl: tinyMceHTML.src,

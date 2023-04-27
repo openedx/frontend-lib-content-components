@@ -106,6 +106,11 @@ export const hooks = {
     });
     return `<img ${propsString(props)} />`;
   },
+  updateReactState,
+  updateImagesRef,
+  saveToEditor,
+  imgProps,
+  propsString,
 };
 
 export const ImageUploadModal = ({
