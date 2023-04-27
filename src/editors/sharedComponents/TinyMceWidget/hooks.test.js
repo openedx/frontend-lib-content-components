@@ -20,11 +20,28 @@ let hook;
 let output;
 
 const mockNode = {
-  src: 'sOmEuRl.cOm',
+  src: 'http://localhost:18000/asset-v1:TestX+Test01+Test0101+type@asset+block/DALL_E_2023-03-10.png',
   alt: 'aLt tExt',
   width: 2022,
   height: 1619,
 };
+
+const mockImage = {
+  displayName: 'DALL·E 2023-03-10.png',
+  contentType: 'image/png',
+  dateAdded: 1682009100000,
+  url: '/asset-v1:TestX+Test01+Test0101+type@asset+block@DALL_E_2023-03-10.png',
+  externalUrl: 'http://localhost:18000/asset-v1:TestX+Test01+Test0101+type@asset+block@DALL_E_2023-03-10.png',
+  portableUrl: '/static/DALL_E_2023-03-10.png',
+  thumbnail: '/asset-v1:TestX+Test01+Test0101+type@thumbnail+block@DALL_E_2023-03-10.jpg',
+  locked: false,
+  staticFullUrl: '/assets/courseware/v1/af2bf9ac70804e54c534107160a8e51e/asset-v1:TestX+Test01+Test0101+type@asset+block@DALL_E_2023-03-10.png',
+  id: 'asset-v1:TestX+Test01+Test0101+type@asset+block@DALL_E_2023-03-10.png',
+  width: 100,
+  height: 150,
+};
+
+const mockImagesRef = { current: [mockImage] };
 
 describe('TinyMceEditor hooks', () => {
   beforeEach(() => {
@@ -62,6 +79,7 @@ describe('TinyMceEditor hooks', () => {
         const setupCodeFormatting = expect.any(Function);
         jest.spyOn(module, moduleKeys.openModalWithSelectedImage)
           .mockImplementationOnce(mockOpenModalWithImage);
+
         output = module.setupCustomBehavior({
           editorType,
           updateContent,
@@ -155,12 +173,13 @@ describe('TinyMceEditor hooks', () => {
         editorType: 'text',
         lmsEndpointUrl: 'sOmEuRl.cOm',
         studioEndpointUrl: 'sOmEoThEruRl.cOm',
-        images: [{ staTICUrl: '/assets/sOmEuiMAge' }],
+        images: mockImagesRef,
         isLibrary: false,
       };
       const evt = 'fakeEvent';
       const editor = 'myEditor';
       const setupCustomBehavior = args => ({ setupCustomBehavior: args });
+
       beforeEach(() => {
         props.setEditorRef = jest.fn();
         props.openImgModal = jest.fn();
@@ -171,6 +190,7 @@ describe('TinyMceEditor hooks', () => {
           .mockImplementationOnce(setupCustomBehavior);
         output = module.editorConfig(props);
       });
+
       describe('text editor plugins and toolbar', () => {
         test('It configures plugins and toolbars correctly', () => {
           const pluginProps = {
@@ -272,6 +292,7 @@ describe('TinyMceEditor hooks', () => {
             openSourceCodeModal: props.openSourceCodeModal,
             setImage: props.setSelection,
             imageUrls: module.fetchImageUrls(props.images),
+            images: mockImagesRef,
             lmsEndpointUrl: props.lmsEndpointUrl,
           }),
         );
@@ -329,20 +350,29 @@ describe('TinyMceEditor hooks', () => {
     });
 
     describe('openModalWithSelectedImage', () => {
-      test('image is set to be value stored in editor, modal is opened', () => {
-        const setImage = jest.fn();
-        const openImgModal = jest.fn();
-        const editor = { selection: { getNode: () => mockNode } };
-        module.openModalWithSelectedImage({ editor, openImgModal, setImage })();
+      const setImage = jest.fn();
+      const openImgModal = jest.fn();
+      const editor = { selection: { getNode: () => mockNode } };
+
+      beforeEach(() => {
+        module.openModalWithSelectedImage({
+          editor, images: mockImagesRef, openImgModal, setImage,
+        })();
+      });
+
+      test('updates React state for selected image to be value stored in editor, adding dimensions from images ref', () => {
         expect(setImage).toHaveBeenCalledWith({
           externalUrl: mockNode.src,
           altText: mockNode.alt,
-          width: mockNode.width,
-          height: mockNode.height,
+          width: mockImage.width,
+          height: mockImage.height,
         });
+      });
+      test('opens image setting modal', () => {
         expect(openImgModal).toHaveBeenCalled();
       });
     });
+
     describe('selectedImage hooks', () => {
       const val = { a: 'VaLUe' };
       beforeEach(() => {

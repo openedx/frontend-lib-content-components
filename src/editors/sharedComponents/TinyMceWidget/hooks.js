@@ -322,7 +322,9 @@ export const imageMatchRegex = /asset-v1.(.*).type.(.*).block.(.*)/;
  */
 export const matchImageStringsByIdentifiers = (a, b) => {
   if (!a || !b || !(typeof a === 'string') || !(typeof b === 'string')) { return null; }
-  return JSON.stringify(a.match(imageMatchRegex).slice(1)) === JSON.stringify(b.match(imageMatchRegex).slice(1));
+  const matchA = JSON.stringify(a.match(imageMatchRegex)?.slice?.(1));
+  const matchB = JSON.stringify(b.match(imageMatchRegex)?.slice?.(1));
+  return matchA && matchA === matchB;
 };
 
 export const stringToFragment = (htmlString) => document.createRange().createContextualFragment(htmlString);
