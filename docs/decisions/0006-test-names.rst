@@ -49,3 +49,8 @@ When running tests, they will be concatenated to the test name. An example: ::
 
 
 This results in the full meaningful sentence: "calculator add() function with invalid settings should throw a descriptive error".
+
+Further reading:
+----------------
+
+https://learn.microsoft.com/en-us/dotnet/core/testing/unit-testing-best-practices
