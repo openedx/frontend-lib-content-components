@@ -11,6 +11,23 @@ import SearchSort from './SearchSort';
 import hooks from './hooks';
 import { SelectImageModal, mapStateToProps, mapDispatchToProps } from '.';
 
+const mockImage = {
+  displayName: 'DALL·E 2023-03-10.png',
+  contentType: 'image/png',
+  dateAdded: 1682009100000,
+  url: '/asset-v1:TestX+Test01+Test0101+type@asset+block@DALL_E_2023-03-10.png',
+  externalUrl: 'http://localhost:18000/asset-v1:TestX+Test01+Test0101+type@asset+block@DALL_E_2023-03-10.png',
+  portableUrl: '/static/DALL_E_2023-03-10.png',
+  thumbnail: '/asset-v1:TestX+Test01+Test0101+type@thumbnail+block@DALL_E_2023-03-10.jpg',
+  locked: false,
+  staticFullUrl: '/assets/courseware/v1/af2bf9ac70804e54c534107160a8e51e/asset-v1:TestX+Test01+Test0101+type@asset+block@DALL_E_2023-03-10.png',
+  id: 'asset-v1:TestX+Test01+Test0101+type@asset+block@DALL_E_2023-03-10.png',
+  width: 100,
+  height: 150,
+};
+
+const mockImagesRef = { current: [mockImage] };
+
 jest.mock('../../BaseModal', () => 'BaseModal');
 jest.mock('../../FileInput', () => 'FileInput');
 jest.mock('./Gallery', () => 'Gallery');
@@ -57,6 +74,7 @@ describe('SelectImageModal', () => {
       close: jest.fn().mockName('props.close'),
       setSelection: jest.fn().mockName('props.setSelection'),
       clearSelection: jest.fn().mockName('props.clearSelection'),
+      images: mockImagesRef,
       intl: { formatMessage },
       inputIsLoading: false,
     };
