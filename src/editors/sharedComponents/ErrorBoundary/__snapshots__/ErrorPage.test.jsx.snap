@@ -1,0 +1,102 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Editor Page rendered correctly with expected unitData defined 1`] = `
+<Container
+  className="py-5 justify-content-center align-items-start text-center"
+  fluid={true}
+>
+  <Row>
+    <Col>
+      <p
+        className="text-muted"
+      >
+        An unexpected error occurred. Please click the button below to refresh the page.
+      </p>
+      <Row
+        className="justify-content-center"
+      >
+        <Button
+          className="mr-2"
+          onClick={[Function]}
+          variant="outline-primary"
+        >
+          {unitUrl, select,
+      null {Return to course outline}
+      other {Return to unit page}
+    }
+        </Button>
+        <Button
+          className="ml-2"
+          onClick={[Function]}
+        >
+          Try again
+        </Button>
+      </Row>
+    </Col>
+  </Row>
+</Container>
+`;
+
+exports[`Editor Page rendered with courseId and studioEndpointUrl defined should only have two buttons (return to studio and try again) 1`] = `
+<Container
+  className="py-5 justify-content-center align-items-start text-center"
+  fluid={true}
+>
+  <Row>
+    <Col>
+      <p
+        className="text-muted"
+      >
+        An unexpected error occurred. Please click the button below to refresh the page.
+      </p>
+      <Row
+        className="justify-content-center"
+      >
+        <Button
+          className="mr-2"
+          onClick={[Function]}
+          variant="outline-primary"
+        >
+          {unitUrl, select,
+      null {Return to course outline}
+      other {Return to unit page}
+    }
+        </Button>
+        <Button
+          className="ml-2"
+          onClick={[Function]}
+        >
+          Try again
+        </Button>
+      </Row>
+    </Col>
+  </Row>
+</Container>
+`;
+
+exports[`Editor Page rendered with empty props should only have one button (try again) 1`] = `
+<Container
+  className="py-5 justify-content-center align-items-start text-center"
+  fluid={true}
+>
+  <Row>
+    <Col>
+      <p
+        className="text-muted"
+      >
+        An unexpected error occurred. Please click the button below to refresh the page.
+      </p>
+      <Row
+        className="justify-content-center"
+      >
+        <Button
+          className="ml-2"
+          onClick={[Function]}
+        >
+          Try again
+        </Button>
+      </Row>
+    </Col>
+  </Row>
+</Container>
+`;

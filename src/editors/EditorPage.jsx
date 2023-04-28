@@ -14,9 +14,8 @@ export const EditorPage = ({
   studioEndpointUrl,
   onClose,
 }) => (
-    <Provider store={store}>
-        <ErrorBoundary {...{ courseId, studioEndpointUrl }}>
-
+  <Provider store={store}>
+    <ErrorBoundary {...{ courseId, studioEndpointUrl }}>
       <Editor
         {...{
           onClose,
@@ -27,9 +26,8 @@ export const EditorPage = ({
           studioEndpointUrl,
         }}
       />
-  </ErrorBoundary>
-
-    </Provider>
+    </ErrorBoundary>
+  </Provider>
 );
 EditorPage.defaultProps = {
   blockId: null,

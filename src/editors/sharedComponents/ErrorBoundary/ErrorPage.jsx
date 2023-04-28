@@ -27,9 +27,9 @@ export const ErrorPage = ({
   const unitUrl = unitData?.data ? `${studioEndpointUrl}/container/${unitData?.data.ancestors[0].id}` : null;
   const handleReturnToStudio = () => {
     if (unitUrl) {
-      return navigateTo(unitUrl);
+      navigateTo(unitUrl);
     } else {
-      return navigateTo(courseOutlineUrl);
+      navigateTo(courseOutlineUrl);
     }
   };
 
@@ -46,11 +46,11 @@ export const ErrorPage = ({
             </div>
           )}
           <Row className="justify-content-center">
-            {courseId && studioEndpointUrl &&
+            {courseId && studioEndpointUrl && (
               <Button className="mr-2" variant="outline-primary" onClick={handleReturnToStudio}>
                 {intl.formatMessage(messages.returnToStudioPageLabel, { unitUrl })}
               </Button>
-            }
+            )}
             <Button className="ml-2" onClick={() => global.location.reload()}>
               {intl.formatMessage(messages.unexpectedErrorButtonLabel)}
             </Button>

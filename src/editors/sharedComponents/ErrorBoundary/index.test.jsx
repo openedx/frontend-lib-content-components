@@ -27,7 +27,7 @@ describe('ErrorBoundary', () => {
     expect(element.text()).toEqual('Yay');
   });
 
-  fit('should render ErrorPage if it has an error', () => {
+  it('should render ErrorPage if it has an error', () => {
     const ExplodingComponent = () => {
       throw new Error('booyah');
     };
