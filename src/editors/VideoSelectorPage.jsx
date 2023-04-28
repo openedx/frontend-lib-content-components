@@ -2,7 +2,7 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import PropTypes from 'prop-types';
 import ErrorBoundary from './sharedComponents/ErrorBoundary';
-import { VideoSelector } from './VideoSelector';
+import VideoSelector from './VideoSelector';
 import store from './data/store';
 
 const VideoSelectorPage = ({
@@ -10,8 +10,9 @@ const VideoSelectorPage = ({
   lmsEndpointUrl,
   studioEndpointUrl,
 }) => (
-  <ErrorBoundary>
     <Provider store={store}>
+        <ErrorBoundary {...{ courseId, studioEndpointUrl }}>
+
       <VideoSelector
         {...{
           learningContextId: courseId,
@@ -19,8 +20,9 @@ const VideoSelectorPage = ({
           studioEndpointUrl,
         }}
       />
+        </ErrorBoundary>
+
     </Provider>
-  </ErrorBoundary>
 );
 
 VideoSelectorPage.defaultProps = {

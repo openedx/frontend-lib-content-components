@@ -16,7 +16,9 @@ import ErrorPage from './ErrorPage';
 export default class ErrorBoundary extends Component {
   constructor(props) {
     super(props);
-    this.state = { hasError: false };
+    this.state = {
+      hasError: false,
+    };
   }
 
   static getDerivedStateFromError() {
@@ -30,7 +32,12 @@ export default class ErrorBoundary extends Component {
 
   render() {
     if (this.state.hasError) {
-      return <ErrorPage />;
+      return (
+        <ErrorPage
+          courseId={this.props.courseId}
+          studioEndpointUrl={this.props.studioEndpointUrl}
+        />
+      );
     }
 
     return this.props.children;
@@ -39,8 +46,12 @@ export default class ErrorBoundary extends Component {
 
 ErrorBoundary.propTypes = {
   children: PropTypes.node,
+  courseId: PropTypes.string,
+  studioEndpointUrl: PropTypes.string,
 };
 
 ErrorBoundary.defaultProps = {
   children: null,
+  courseId: null,
+  studioEndpointUrl: null,
 };
