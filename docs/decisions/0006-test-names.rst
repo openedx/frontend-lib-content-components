@@ -40,6 +40,7 @@ When running tests, they will be concatenated to the test name. An example: ::
         // The scenario / context under which it's being tested
         describe('with invalid settings', () => {
           ...
+          // The expected behavior when the scenario is invoked
           it('should throw a descriptive error', () => {
             ...
           }
