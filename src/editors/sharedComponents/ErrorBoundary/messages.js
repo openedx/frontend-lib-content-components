@@ -11,13 +11,15 @@ const messages = defineMessages({
     defaultMessage: 'Try again',
     description: 'text for button that tries to reload the app by refreshing the page',
   },
-  returnToStudioPageLabel: {
+  returnToUnitPageLabel: {
+    id: 'unexpected.error.returnToUnitPage.button.text',
+    defaultMessage: 'Return to unit page',
+    description: 'Text for button that navigates back to the unit page',
+  },
+  returnToCourseOutlineLabel: {
     id: 'unexpected.error.returnToCourseOutline.button.text',
-    defaultMessage: `{unitUrl, select,
-      null {Return to course outline}
-      other {Return to unit page}
-    }`,
-    description: 'Text for button that navigates back to the course outline or unit page depending on value of unitUrl',
+    defaultMessage: 'Return to course outline',
+    description: 'Text for button that navigates back to the course outline',
   },
 });
 

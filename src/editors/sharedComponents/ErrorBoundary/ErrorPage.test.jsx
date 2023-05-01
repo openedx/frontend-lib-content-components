@@ -2,7 +2,8 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { selectors } from '../../data/redux';
 import { formatMessage } from '../../../testUtils';
-import { ErrorPage, mapStateToProps } from './ErrorPage';
+import { navigateTo } from '../../hooks';
+import { ErrorPage, mapStateToProps, handleReturnToStudio } from './ErrorPage';
 
 jest.mock('../../data/redux', () => ({
   selectors: {
@@ -21,6 +22,7 @@ describe('Editor Page', () => {
   const passedProps = {
     courseId: 'course-v1:edX+DemoX+Demo_Course',
     studioEndpointUrl: 'fakeurl.com',
+    message: 'cUStomMEssagE',
     intl: { formatMessage },
   };
   const unitData = {
@@ -38,18 +40,32 @@ describe('Editor Page', () => {
     });
   });
 
-  describe('rendered with courseId and studioEndpointUrl defined', () => {
-    it('should only have two buttons (return to studio and try again)', () => {
-      const wrapper = shallow(<ErrorPage {...passedProps} />);
-      const firstButtonText = wrapper.find('Button').at(0).text();
-      const secondButtonText = wrapper.find('Button').at(1).text();
-      expect(wrapper).toMatchSnapshot();
-      expect(firstButtonText).toBeDefined();
-      expect(secondButtonText).toEqual('Try again');
+  describe('rendered with pass through props defined', () => {
+    const wrapper = shallow(<ErrorPage {...passedProps} />);
+    describe('shows two buttons', () => {
+      it('the first button should correspond to returning to the course outline', () => {
+        const firstButtonText = wrapper.find('Button').at(0).text();
+        const secondButtonText = wrapper.find('Button').at(1).text();
+        expect(wrapper).toMatchSnapshot();
+        expect(firstButtonText).toEqual('Return to course outline');
+        expect(secondButtonText).toEqual('Try again');
+      });
+      it('the first button should correspond to returning to the unit page', () => {
+        const returnToUnitPageWrapper = shallow(<ErrorPage {...passedProps} unitData={unitData} />);
+        expect(returnToUnitPageWrapper).toMatchSnapshot();
+        const firstButtonText = returnToUnitPageWrapper.find('Button').at(0).text();
+        const secondButtonText = returnToUnitPageWrapper.find('Button').at(1).text();
+        expect(returnToUnitPageWrapper).toMatchSnapshot();
+        expect(firstButtonText).toEqual('Return to unit page');
+        expect(secondButtonText).toEqual('Try again');
+      });
     });
-  });
-  test('rendered correctly with expected unitData defined', () => {
-    expect(shallow(<ErrorPage {...passedProps} unitData={unitData} />)).toMatchSnapshot();
+    it('should have custom message', () => {
+      const wrapper = shallow(<ErrorPage {...passedProps} />);
+      const customMessageText = wrapper.find('div').children().at(0).text();
+      expect(wrapper).toMatchSnapshot();
+      expect(customMessageText).toEqual('cUStomMEssagE');
+    });
   });
   describe('mapStateToProps() function', () => {
     const testState = { A: 'pple', B: 'anana', C: 'ucumber' };

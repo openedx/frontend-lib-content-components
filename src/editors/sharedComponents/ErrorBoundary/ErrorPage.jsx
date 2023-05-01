@@ -25,13 +25,6 @@ export const ErrorPage = ({
 }) => {
   const courseOutlineUrl = `${studioEndpointUrl}/course/${courseId}`;
   const unitUrl = unitData?.data ? `${studioEndpointUrl}/container/${unitData?.data.ancestors[0].id}` : null;
-  const handleReturnToStudio = () => {
-    if (unitUrl) {
-      navigateTo(unitUrl);
-    } else {
-      navigateTo(courseOutlineUrl);
-    }
-  };
 
   return (
     <Container fluid className="py-5 justify-content-center align-items-start text-center">
@@ -46,11 +39,15 @@ export const ErrorPage = ({
             </div>
           )}
           <Row className="justify-content-center">
-            {courseId && studioEndpointUrl && (
-              <Button className="mr-2" variant="outline-primary" onClick={handleReturnToStudio}>
-                {intl.formatMessage(messages.returnToStudioPageLabel, { unitUrl })}
+            {courseId && (unitUrl ? (
+              <Button className="mr-2" variant="outline-primary" onClick={() => navigateTo(unitUrl)}>
+                {intl.formatMessage(messages.returnToUnitPageLabel)}
               </Button>
-            )}
+            ) : (
+              <Button className="mr-2" variant="outline-primary" onClick={() => navigateTo(courseOutlineUrl)}>
+                {intl.formatMessage(messages.returnToCourseOutlineLabel)}
+              </Button>
+            ))}
             <Button className="ml-2" onClick={() => global.location.reload()}>
               {intl.formatMessage(messages.unexpectedErrorButtonLabel)}
             </Button>
