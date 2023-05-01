@@ -2,8 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { selectors } from '../../data/redux';
 import { formatMessage } from '../../../testUtils';
-import { navigateTo } from '../../hooks';
-import { ErrorPage, mapStateToProps, handleReturnToStudio } from './ErrorPage';
+import { ErrorPage, mapStateToProps } from './ErrorPage';
 
 jest.mock('../../data/redux', () => ({
   selectors: {
@@ -61,7 +60,6 @@ describe('Editor Page', () => {
       });
     });
     it('should have custom message', () => {
-      const wrapper = shallow(<ErrorPage {...passedProps} />);
       const customMessageText = wrapper.find('div').children().at(0).text();
       expect(wrapper).toMatchSnapshot();
       expect(customMessageText).toEqual('cUStomMEssagE');

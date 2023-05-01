@@ -21,8 +21,6 @@ export const ProblemEditor = ({
   assetsFinished,
   advancedSettingsFinished,
 }) => {
-  throw new Error('booyah');
-
   React.useEffect(() => {
     if (blockFinished && studioViewFinished && assetsFinished && !blockFailed) {
       initializeProblemEditor(blockValue);
