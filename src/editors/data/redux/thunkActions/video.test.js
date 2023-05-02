@@ -110,6 +110,10 @@ describe('video thunkActions', () => {
         videoId: 'videOiD',
         fallbackVideos: 'fALLbACKvIDeos',
       });
+      jest.spyOn(thunkActions, thunkActionsKeys.parseVideoSharingSetting).mockReturnValue({
+        level: 'course',
+        value: true,
+      });
       jest.spyOn(thunkActions, thunkActionsKeys.parseLicense).mockReturnValue([
         'liCENSEtyPe',
         {
@@ -146,6 +150,10 @@ describe('video thunkActions', () => {
         videoId: 'videOiD',
         fallbackVideos: 'fALLbACKvIDeos',
         allowVideoDownloads: testMetadata.download_video,
+        allowVideoSharing: {
+          level: 'course',
+          value: true,
+        },
         transcripts: testMetadata.transcripts,
         allowTranscriptDownloads: testMetadata.download_track,
         showTranscriptByDefault: testMetadata.show_captions,
@@ -180,7 +188,6 @@ describe('video thunkActions', () => {
         videoSharingEnabledForCourse: mockVideoFeatures.data.videoSharingEnabled,
       }));
       dispatch.mockClear();
-
       dispatchedAction2.checkTranscriptsForImport.onSuccess(mockAllowTranscriptImport);
       expect(dispatch).toHaveBeenCalledWith(actions.video.updateField({
         allowTranscriptImport: true,
@@ -347,6 +354,55 @@ describe('video thunkActions', () => {
         },
         '4.0',
       ]);
+    });
+  });
+  describe('parseVideoShareSetting', () => {
+    describe('has no course setting or block setting for video sharing', () => {
+      it('should return an object with level equal to block and value equal to null', () => {
+        const videoSharingSetting = thunkActions.parseVideoSharingSetting({
+          courseSetting: null,
+          blockSetting: null,
+        });
+        expect(videoSharingSetting).toEqual({ level: 'block', value: null });
+      });
+    });
+    describe('has no course setting and block setting defined for video sharing', () => {
+      it('should return an object with level equal to block and value equal to true', () => {
+        const videoSharingSetting = thunkActions.parseVideoSharingSetting({
+          courseSetting: null,
+          blockSetting: true,
+        });
+        expect(videoSharingSetting).toEqual({ level: 'block', value: true });
+      });
+    });
+    describe('has course setting defined for video sharing', () => {
+      describe('course setting equals all-on', () => {
+        it('should return an object with level equal to course and value equal to true', () => {
+          const videoSharingSetting = thunkActions.parseVideoSharingSetting({
+            courseSetting: 'all-on',
+            blockSetting: true,
+          });
+          expect(videoSharingSetting).toEqual({ level: 'course', value: true });
+        });
+      });
+      describe('course setting equals all-off', () => {
+        it('should return an object with level equal to course and value equal to false', () => {
+          const videoSharingSetting = thunkActions.parseVideoSharingSetting({
+            courseSetting: 'all-off',
+            blockSetting: true,
+          });
+          expect(videoSharingSetting).toEqual({ level: 'course', value: false });
+        });
+      });
+      describe('course setting equals per-video', () => {
+        it('should return an object with level equal to block and value equal to block setting', () => {
+          const videoSharingSetting = thunkActions.parseVideoSharingSetting({
+            courseSetting: 'per-video',
+            blockSetting: false,
+          });
+          expect(videoSharingSetting).toEqual({ level: 'block', value: false });
+        });
+      });
     });
   });
   describe('uploadHandout', () => {
