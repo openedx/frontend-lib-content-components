@@ -13,7 +13,7 @@ exports[`Video Selector Page snapshots rendering correctly with expected Input 1
   }
 >
   <ErrorBoundary
-    courseId="course-v1:edX+DemoX+Demo_Course"
+    learningContextId="course-v1:edX+DemoX+Demo_Course"
     studioEndpointUrl="fakeurl.com"
   >
     <VideoSelector
@@ -38,7 +38,7 @@ exports[`Video Selector Page snapshots rendering with props to null 1`] = `
   }
 >
   <ErrorBoundary
-    courseId={null}
+    learningContextId={null}
     studioEndpointUrl={null}
   >
     <VideoSelector

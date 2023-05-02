@@ -14,12 +14,12 @@ jest.mock('../../data/redux', () => ({
 
 describe('Editor Page', () => {
   const emptyProps = {
-    courseId: null,
+    learningContextId: null,
     studioEndpointUrl: null,
     intl: { formatMessage },
   };
   const passedProps = {
-    courseId: 'course-v1:edX+DemoX+Demo_Course',
+    learningContextId: 'course-v1:edX+DemoX+Demo_Course',
     studioEndpointUrl: 'fakeurl.com',
     message: 'cUStomMEssagE',
     intl: { formatMessage },

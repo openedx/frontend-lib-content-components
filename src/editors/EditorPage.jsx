@@ -15,7 +15,12 @@ export const EditorPage = ({
   onClose,
 }) => (
   <Provider store={store}>
-    <ErrorBoundary {...{ courseId, studioEndpointUrl }}>
+    <ErrorBoundary
+      {...{
+        learningContextId: courseId,
+        studioEndpointUrl,
+      }}
+    >
       <Editor
         {...{
           onClose,

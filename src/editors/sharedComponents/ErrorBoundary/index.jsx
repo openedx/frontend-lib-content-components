@@ -34,7 +34,7 @@ export default class ErrorBoundary extends Component {
     if (this.state.hasError) {
       return (
         <ErrorPage
-          courseId={this.props.courseId}
+          learningContextId={this.props.learningContextId}
           studioEndpointUrl={this.props.studioEndpointUrl}
         />
       );
@@ -46,12 +46,12 @@ export default class ErrorBoundary extends Component {
 
 ErrorBoundary.propTypes = {
   children: PropTypes.node,
-  courseId: PropTypes.string,
+  learningContextId: PropTypes.string,
   studioEndpointUrl: PropTypes.string,
 };
 
 ErrorBoundary.defaultProps = {
   children: null,
-  courseId: null,
+  learningContextId: null,
   studioEndpointUrl: null,
 };

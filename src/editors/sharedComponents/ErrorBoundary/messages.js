@@ -16,9 +16,9 @@ const messages = defineMessages({
     defaultMessage: 'Return to unit page',
     description: 'Text for button that navigates back to the unit page',
   },
-  returnToCourseOutlineLabel: {
+  returnToOutlineLabel: {
     id: 'unexpected.error.returnToCourseOutline.button.text',
-    defaultMessage: 'Return to course outline',
+    defaultMessage: 'Return to {outlineType} outline',
     description: 'Text for button that navigates back to the course outline',
   },
 });

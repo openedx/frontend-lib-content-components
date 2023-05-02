@@ -17,13 +17,14 @@ import { selectors } from '../../data/redux';
 export const ErrorPage = ({
   message,
   studioEndpointUrl,
-  courseId,
+  learningContextId,
   // redux
   unitData,
   // injected
   intl,
 }) => {
-  const courseOutlineUrl = `${studioEndpointUrl}/course/${courseId}`;
+  const outlineType = learningContextId?.startsWith('library-v1') ? 'library' : 'course';
+  const outlineUrl = `${studioEndpointUrl}/${outlineType}/${learningContextId}`;
   const unitUrl = unitData?.data ? `${studioEndpointUrl}/container/${unitData?.data.ancestors[0].id}` : null;
 
   return (
@@ -39,13 +40,13 @@ export const ErrorPage = ({
             </div>
           )}
           <Row className="justify-content-center">
-            {courseId && (unitUrl ? (
+            {learningContextId && (unitUrl && outlineType !== 'library' ? (
               <Button className="mr-2" variant="outline-primary" onClick={() => navigateTo(unitUrl)}>
                 {intl.formatMessage(messages.returnToUnitPageLabel)}
               </Button>
             ) : (
-              <Button className="mr-2" variant="outline-primary" onClick={() => navigateTo(courseOutlineUrl)}>
-                {intl.formatMessage(messages.returnToCourseOutlineLabel)}
+              <Button className="mr-2" variant="outline-primary" onClick={() => navigateTo(outlineUrl)}>
+                {intl.formatMessage(messages.returnToOutlineLabel, { outlineType })}
               </Button>
             ))}
             <Button className="ml-2" onClick={() => global.location.reload()}>
@@ -60,7 +61,7 @@ export const ErrorPage = ({
 
 ErrorPage.propTypes = {
   message: PropTypes.string,
-  courseId: PropTypes.string.isRequired,
+  learningContextId: PropTypes.string.isRequired,
   studioEndpointUrl: PropTypes.string.isRequired,
   // redux
   unitData: PropTypes.shape({

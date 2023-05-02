@@ -11,7 +11,12 @@ const VideoSelectorPage = ({
   studioEndpointUrl,
 }) => (
   <Provider store={store}>
-    <ErrorBoundary {...{ courseId, studioEndpointUrl }}>
+    <ErrorBoundary
+      {...{
+        learningContextId: courseId,
+        studioEndpointUrl,
+      }
+    }>
       <VideoSelector
         {...{
           learningContextId: courseId,
