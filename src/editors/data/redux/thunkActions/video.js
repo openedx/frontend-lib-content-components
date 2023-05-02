@@ -28,7 +28,7 @@ export const loadVideoData = () => (dispatch, getState) => {
     level: 'course',
   });
   const allowVideoSharing = module.parseVideoSharingSetting({
-    courseSetting: null,
+    courseSetting: blockValueData?.video_sharing_options,
     blockSetting: rawVideoData.public_access,
   });
   dispatch(actions.video.load({
