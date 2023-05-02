@@ -15,8 +15,8 @@ const VideoSelectorPage = ({
       {...{
         learningContextId: courseId,
         studioEndpointUrl,
-      }
-    }>
+      }}
+    >
       <VideoSelector
         {...{
           learningContextId: courseId,
