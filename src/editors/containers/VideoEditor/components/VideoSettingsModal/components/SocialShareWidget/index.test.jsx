@@ -25,6 +25,7 @@ jest.mock('../../../../../../data/redux', () => ({
     video: {
       allowVideoSharing: jest.fn(state => ({ allowVideoSharing: state })),
       videoSharingEnabledForCourse: jest.fn(state => ({ videoSharingEnabledForCourse: state })),
+      videoSharingLearnMoreLink: jest.fn(state => ({ videoSharingLearnMoreLink: state })),
     },
   },
 }));
@@ -38,6 +39,7 @@ describe('SocialShareWidget', () => {
       level: 'block',
       value: false,
     },
+    videoSharingLearnMoreLink: 'sOMeURl.cOM',
     updateField: jest.fn().mockName('args.updateField'),
   };
 
@@ -167,6 +169,11 @@ describe('SocialShareWidget', () => {
       expect(
         mapStateToProps(testState).videoSharingEnabledForCourse,
       ).toEqual(selectors.video.videoSharingEnabledForCourse(testState));
+    });
+    test('videoSharingLearnMoreLink from video.videoSharingLearnMoreLink', () => {
+      expect(
+        mapStateToProps(testState).videoSharingLearnMoreLink,
+      ).toEqual(selectors.video.videoSharingLearnMoreLink(testState));
     });
   });
   describe('mapDispatchToProps', () => {

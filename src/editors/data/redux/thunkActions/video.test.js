@@ -53,7 +53,6 @@ const mockAllowTranscriptImport = { data: { command: 'import' } };
 const mockVideoFeatures = {
   data: {
     allowThumbnailUpload: 'soMEbOolEAn',
-    videoSharingEnabled: 'someBOoOoOlean',
   },
 };
 
@@ -69,6 +68,10 @@ const testMetadata = {
   start_time: 0,
   transcripts: ['do', 're', 'mi'],
   thumbnail: 'thuMBNaIl',
+};
+const videoSharingData = {
+  video_sharing_doc_url: 'SomEUrL.Com',
+  video_sharing_options: 'OpTIOns',
 };
 const testState = {
   transcripts: ['la'],
@@ -92,7 +95,7 @@ describe('video thunkActions', () => {
     getState = jest.fn(() => ({
       app: {
         blockId: 'soMEBloCk',
-        blockValue: { data: { metadata: { ...testMetadata } } },
+        blockValue: { data: { metadata: { ...testMetadata }, ...videoSharingData } },
         studioEndpointUrl: 'soMEeNDPoiNT',
         courseDetails: { data: { license: null } },
         studioView: { data: { html: 'sOMeHTml' } },
@@ -154,6 +157,8 @@ describe('video thunkActions', () => {
           level: 'course',
           value: true,
         },
+        videoSharingLearnMoreLink: videoSharingData.video_sharing_doc_url,
+        videoSharingEnableForCourse: videoSharingData.video_sharing_enabled,
         transcripts: testMetadata.transcripts,
         allowTranscriptDownloads: testMetadata.download_track,
         showTranscriptByDefault: testMetadata.show_captions,
@@ -185,7 +190,6 @@ describe('video thunkActions', () => {
       dispatchedAction1.fetchVideoFeatures.onSuccess(mockVideoFeatures);
       expect(dispatch).toHaveBeenCalledWith(actions.video.updateField({
         allowThumbnailUpload: mockVideoFeatures.data.allowThumbnailUpload,
-        videoSharingEnabledForCourse: mockVideoFeatures.data.videoSharingEnabled,
       }));
       dispatch.mockClear();
       dispatchedAction2.checkTranscriptsForImport.onSuccess(mockAllowTranscriptImport);

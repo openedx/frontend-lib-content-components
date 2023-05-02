@@ -24,6 +24,7 @@ export const SocialShareWidget = ({
   // redux
   allowVideoSharing,
   videoSharingEnabledForCourse,
+  videoSharingLearnMoreLink,
   updateField,
 }) => {
   const isSetByCourse = allowVideoSharing.level === 'course';
@@ -67,7 +68,7 @@ export const SocialShareWidget = ({
         </div>
       )}
       <div className="mt-3">
-        <Hyperlink className="text-primary-500" destination="#" target="_blank">
+        <Hyperlink className="text-primary-500" destination={videoSharingLearnMoreLink} target="_blank">
           {intl.formatMessage(messages.learnMoreLinkLabel)}
         </Hyperlink>
       </div>
@@ -92,11 +93,13 @@ SocialShareWidget.propTypes = {
     value: PropTypes.bool.isRequired,
   }),
   videoSharingEnabledForCourse: PropTypes.bool,
+  videoSharingLearnMoreLink: PropTypes.string.isRequired,
   updateField: PropTypes.func.isRequired,
 };
 
 export const mapStateToProps = (state) => ({
   allowVideoSharing: selectors.video.allowVideoSharing(state),
+  videoSharingLearnMoreLink: selectors.video.videoSharingLearnMoreLink(state),
   videoSharingEnabledForCourse: selectors.video.videoSharingEnabledForCourse(state),
 });
 

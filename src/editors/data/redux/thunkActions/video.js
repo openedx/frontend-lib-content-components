@@ -8,7 +8,8 @@ import { parseYoutubeId } from '../../services/cms/api';
 
 export const loadVideoData = () => (dispatch, getState) => {
   const state = getState();
-  const rawVideoData = state.app.blockValue.data.metadata ? state.app.blockValue.data.metadata : {};
+  const blockValueData = state.app.blockValue.data;
+  const rawVideoData = blockValueData.metadata ? blockValueData.metadata : {};
   const courseData = state.app.courseDetails.data ? state.app.courseDetails.data : {};
   const studioView = state.app.studioView?.data?.html;
   const {
@@ -27,16 +28,17 @@ export const loadVideoData = () => (dispatch, getState) => {
     level: 'course',
   });
   const allowVideoSharing = module.parseVideoSharingSetting({
-    courseSetting: courseData?.allowVideoSharing,
+    courseSetting: blockValueData?.video_sharing_options,
     blockSetting: rawVideoData.public_access,
   });
-
   dispatch(actions.video.load({
     videoSource: videoUrl || '',
     videoId,
     fallbackVideos,
     allowVideoDownloads: rawVideoData.download_video,
     allowVideoSharing,
+    videoSharingLearnMoreLink: blockValueData?.video_sharing_doc_url,
+    videoSharingEnabledForCourse: blockValueData?.video_sharing_enabled,
     transcripts,
     allowTranscriptDownloads: rawVideoData.download_track,
     showTranscriptByDefault: rawVideoData.show_captions,
@@ -65,7 +67,6 @@ export const loadVideoData = () => (dispatch, getState) => {
   dispatch(requests.fetchVideoFeatures({
     onSuccess: (response) => dispatch(actions.video.updateField({
       allowThumbnailUpload: response.data.allowThumbnailUpload,
-      videoSharingEnabledForCourse: response.data.videoSharingEnabled,
     })),
   }));
   const youTubeId = parseYoutubeId(videoUrl);

@@ -37,7 +37,7 @@ exports[`SocialShareWidget rendered with videoSharingEnabled true and allowVideo
   >
     <Hyperlink
       className="text-primary-500"
-      destination="#"
+      destination="sOMeURl.cOM"
       target="_blank"
     >
       Learn more about social sharing
@@ -83,7 +83,7 @@ exports[`SocialShareWidget rendered with videoSharingEnabled true and allowVideo
   >
     <Hyperlink
       className="text-primary-500"
-      destination="#"
+      destination="sOMeURl.cOM"
       target="_blank"
     >
       Learn more about social sharing
