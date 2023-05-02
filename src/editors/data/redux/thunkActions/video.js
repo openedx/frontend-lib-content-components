@@ -28,7 +28,7 @@ export const loadVideoData = () => (dispatch, getState) => {
     level: 'course',
   });
   const allowVideoSharing = module.parseVideoSharingSetting({
-    courseSetting: blockValueData?.video_sharing_options,
+    courseSetting: null,
     blockSetting: rawVideoData.public_access,
   });
   dispatch(actions.video.load({
@@ -106,19 +106,16 @@ export const determineVideoSources = ({
 };
 
 export const parseVideoSharingSetting = ({ courseSetting, blockSetting }) => {
-  if (courseSetting) {
-    switch (courseSetting) {
-      case 'all-on':
-        return { level: 'course', value: true };
-      case 'all-off':
-        return { level: 'course', value: false };
-      case 'per-video':
-        return { level: 'block', value: blockSetting };
-      default:
-        break;
-    }
+  switch (courseSetting) {
+    case 'all-on':
+      return { level: 'course', value: true };
+    case 'all-off':
+      return { level: 'course', value: false };
+    case 'per-video':
+      return { level: 'block', value: blockSetting };
+    default:
+      return { level: 'block', value: blockSetting };
   }
-  return { level: 'block', value: blockSetting };
 };
 
 export const parseTranscripts = ({ transcriptsData }) => {
