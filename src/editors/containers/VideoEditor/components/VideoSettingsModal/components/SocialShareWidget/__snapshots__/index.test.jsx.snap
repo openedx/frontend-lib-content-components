@@ -1,7 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`SocialShareWidget rendered with videoSharingEnabled false should return null 1`] = `""`;
-
 exports[`SocialShareWidget rendered with videoSharingEnabled false with default props should return null 1`] = `""`;
 
 exports[`SocialShareWidget rendered with videoSharingEnabled false with videoSharingEnabledForAll false and isLibrary true should return null 1`] = `""`;
@@ -99,5 +97,3 @@ exports[`SocialShareWidget rendered with videoSharingEnabled true and allowVideo
   </div>
 </injectIntl(ShimmedIntlComponent)>
 `;
-
-exports[`SocialShareWidget rendered with with videoSharingEnabled false should return null 1`] = `""`;
