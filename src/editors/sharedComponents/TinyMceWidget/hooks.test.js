@@ -391,5 +391,33 @@ describe('TinyMceEditor hooks', () => {
         expect(hook.setSelection).toHaveBeenCalledWith(null);
       });
     });
+    describe('imageMatchRegex', () => {
+      it('should match a valid image url using "@" separators', () => {
+        expect(
+          'http://localhost:18000/asset-v1:TestX+Test01+Test0101+type@asset+block@image-name.png',
+        ).toMatch(module.imageMatchRegex);
+      });
+      it('should match a url including the keywords "asset-v1", "type", "block" in that order', () => {
+        expect(
+          'https://some.completely/made.up///url-with.?!keywords/asset-v1:Some-asset-key?type=some.type.key!block@image-name.png',
+        ).toMatch(module.imageMatchRegex);
+      });
+      it('should not match a url excluding the keyword "asset-v1"', () => {
+        expect(
+          'https://some.completely/made.up///url-with.?!keywords/Some-asset-key?type=some.type.key!block@image-name.png',
+        ).not.toMatch(module.imageMatchRegex);
+      });
+      it('should match an identifier including the keywords "asset-v1", "type", "block" using "/" separators', () => {
+        expect(
+          'asset-v1:TestX+Test01+Test0101+type/asset+block/image-name.png',
+        ).toMatch(module.imageMatchRegex);
+      });
+      it('should capture values for the keys "asset-v1", "type", "block"', () => {
+        const match = 'asset-v1:TestX+Test01+Test0101+type/asset+block/image-name.png'.match(module.imageMatchRegex);
+        expect(match[1]).toBe('TestX+Test01+Test0101');
+        expect(match[2]).toBe('asset');
+        expect(match[3]).toBe('image-name.png');
+      });
+    });
   });
 });
