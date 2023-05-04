@@ -419,5 +419,24 @@ describe('TinyMceEditor hooks', () => {
         expect(match[3]).toBe('image-name.png');
       });
     });
+
+    describe('matchImageStringsByIdentifiers', () => {
+      it('should be true for an image url and identifier that have the same values for asset-v1, type, and block', () => {
+        const url = 'http://localhost:18000/asset-v1:TestX+Test01+Test0101+type@asset+block@image-name.png';
+        const id = 'asset-v1:TestX+Test01+Test0101+type/asset+block/image-name.png';
+        expect(module.matchImageStringsByIdentifiers(url, id)).toBe(true);
+      });
+      it('should be false for an image url and identifier that have different values for block', () => {
+        const url = 'http://localhost:18000/asset-v1:TestX+Test01+Test0101+type@asset+block@image-name.png';
+        const id = 'asset-v1:TestX+Test01+Test0101+type/asset+block/different-image-name.png';
+        expect(module.matchImageStringsByIdentifiers(url, id)).toBe(false);
+      });
+      it('should return null if it doesnt receive two strings as input', () => {
+        expect(module.matchImageStringsByIdentifiers(['a'], { b: 'c ' })).toBe(null);
+      });
+      it('should return undefined if the strings dont match the regex at all', () => {
+        expect(module.matchImageStringsByIdentifiers('wrong-url', 'blub')).toBe(undefined);
+      });
+    });
   });
 });
