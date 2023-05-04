@@ -549,13 +549,13 @@ describe('cms api', () => {
     });
   });
   describe('checkMockApi', () => {
-    const env = process.env;
+    const envTemp = process.env;
     beforeEach(() => {
       jest.resetModules();
-      process.env = { ...env };
+      process.env = { ...envTemp };
     });
     afterEach(() => {
-      process.env = env;
+      process.env = envTemp;
     });
     describe('if REACT_APP_DEVGALLERY is true', () => {
       it('should return the mockApi version of a call when it exists', () => {
@@ -569,8 +569,8 @@ describe('cms api', () => {
     });
     describe('if REACT_APP_DEVGALLERY is not true', () => {
       it('should return the appropriate call', () => {
-        expect(api.checkMockApi('fetchBlockById')).toEqual(api.apiMethods.fetchBlockById);
-      })
+        expect(api.checkMockApi('fetchBlockById')).toEqual(apiMethods.fetchBlockById);
+      });
     });
   });
   describe('fetchVideoFeatures', () => {
