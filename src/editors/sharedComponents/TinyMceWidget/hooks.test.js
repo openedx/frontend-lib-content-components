@@ -66,7 +66,7 @@ describe('TinyMceEditor hooks', () => {
         const openSourceCodeModal = jest.fn();
         const setImage = jest.fn();
         const updateContent = jest.fn();
-        const editorType = 'SOmeEDitor';
+        const editorType = 'expandable';
         const lmsEndpointUrl = 'sOmEvaLue.cOm';
         const editor = {
           ui: { registry: { addButton, addToggleButton, addIcon } },
@@ -106,6 +106,7 @@ describe('TinyMceEditor hooks', () => {
           }],
         ]);
         expect(openImgModal).not.toHaveBeenCalled();
+        expect(editor.on).toHaveBeenCalled();
       });
     });
 
