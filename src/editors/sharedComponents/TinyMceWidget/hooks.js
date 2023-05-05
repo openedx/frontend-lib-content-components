@@ -17,23 +17,23 @@ export const state = StrictDict({
   refReady: (val) => useState(val),
 });
 
-export const addImagesAndDimensionsToRef = ({ images, assets, editorContentHtml }) => {
+export const addImagesAndDimensionsToRef = ({ imagesRef, assets, editorContentHtml }) => {
   const imagesWithDimensions = module.filterAssets({ assets }).map((image) => {
     const imageFragment = module.getImageFromHtmlString(editorContentHtml, image.url);
     return { ...image, width: imageFragment?.width, height: imageFragment?.height };
   });
 
-  images.current = imagesWithDimensions;
+  imagesRef.current = imagesWithDimensions;
 };
 
 export const useImages = ({ assets, editorContentHtml }) => {
-  const images = useRef([]);
+  const imagesRef = useRef([]);
 
   useEffect(() => {
-    module.addImagesAndDimensionsToRef({ images, assets, editorContentHtml });
+    module.addImagesAndDimensionsToRef({ imagesRef, assets, editorContentHtml });
   }, []);
 
-  return { imagesRef: images };
+  return { imagesRef };
 };
 
 export const parseContentForLabels = ({ editor, updateContent }) => {
@@ -334,9 +334,7 @@ export const stringToFragment = (htmlString) => document.createRange().createCon
 export const getImageFromHtmlString = (htmlString, imageSrc) => {
   const images = stringToFragment(htmlString)?.querySelectorAll('img') || [];
 
-  return Array.from(images).find((img) => {
-    return matchImageStringsByIdentifiers(img.src || '', imageSrc);
-  });
+  return Array.from(images).find((img) => matchImageStringsByIdentifiers(img.src || '', imageSrc));
 };
 
 export const openModalWithSelectedImage = ({

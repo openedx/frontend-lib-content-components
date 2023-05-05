@@ -26,6 +26,9 @@ const mockNode = {
   height: 1619,
 };
 
+const initialContentHeight = 150;
+const initialContentWidth = 100;
+
 const mockImage = {
   displayName: 'DALL·E 2023-03-10.png',
   contentType: 'image/png',
@@ -37,9 +40,24 @@ const mockImage = {
   locked: false,
   staticFullUrl: '/assets/courseware/v1/af2bf9ac70804e54c534107160a8e51e/asset-v1:TestX+Test01+Test0101+type@asset+block@DALL_E_2023-03-10.png',
   id: 'asset-v1:TestX+Test01+Test0101+type@asset+block@DALL_E_2023-03-10.png',
-  width: 100,
-  height: 150,
+  width: initialContentWidth,
+  height: initialContentHeight,
 };
+
+const mockAssets = {
+  [mockImage.id]: mockImage,
+};
+
+const mockEditorContentHtml = `
+  <p>
+    <img
+      src="/assets/courseware/v1/7b41573468a356ca8dc975158e388386/asset-v1:TestX+Test01+Test0101+type@asset+block/DALL_E_2023-03-10.png"
+      alt=""
+      width="${initialContentWidth}"
+      height="${initialContentHeight}">
+    </img>
+  </p>
+`;
 
 const mockImagesRef = { current: [mockImage] };
 
@@ -436,6 +454,23 @@ describe('TinyMceEditor hooks', () => {
       });
       it('should return undefined if the strings dont match the regex at all', () => {
         expect(module.matchImageStringsByIdentifiers('wrong-url', 'blub')).toBe(undefined);
+      });
+    });
+
+    describe('addImagesAndDimensionsToRef', () => {
+      it('should add images to ref', () => {
+        const imagesRef = { current: null };
+        const assets = { ...mockAssets, height: undefined, width: undefined };
+        module.addImagesAndDimensionsToRef(
+          {
+            imagesRef,
+            assets,
+            editorContentHtml: mockEditorContentHtml,
+          },
+        );
+        expect(imagesRef.current).toEqual([mockImage]);
+        expect(imagesRef.current[0].width).toBe(initialContentWidth);
+        expect(imagesRef.current[0].height).toBe(initialContentHeight);
       });
     });
   });
