@@ -10,6 +10,9 @@ jest.mock('../../../../../data/redux', () => ({
       problemType: jest.fn(state => ({ problemType: state })),
     },
   },
+  thunkActions: {
+    video: jest.fn(),
+  },
 }));
 
 describe('AnswerOption', () => {
@@ -25,6 +28,14 @@ describe('AnswerOption', () => {
     correct: true,
     selectedFeedback: 'selected feedback',
     unselectedFeedback: 'unselected feedback',
+  };
+  const answerRange = {
+    id: 'A',
+    title: 'Answer 1',
+    correct: true,
+    selectedFeedback: 'selected feedback',
+    unselectedFeedback: 'unselected feedback',
+    isAnswerRange: true,
   };
 
   const props = {
@@ -42,7 +53,14 @@ describe('AnswerOption', () => {
     test('snapshot: renders correct option with selected unselected feedback', () => {
       expect(shallow(<AnswerOption {...props} problemType="choiceresponse" answer={answerWithSelectedUnselectedFeedback} />)).toMatchSnapshot();
     });
+    test('snapshot: renders correct option with numeric input problem', () => {
+      expect(shallow(<AnswerOption {...props} problemType="numericalresponse" />)).toMatchSnapshot();
+    });
+    test('snapshot: renders correct option with numeric input problem and answer range', () => {
+      expect(shallow(<AnswerOption {...props} problemType="numericalresponse" answer={answerRange} />)).toMatchSnapshot();
+    });
   });
+
   describe('mapStateToProps', () => {
     const testState = { A: 'pple', B: 'anana', C: 'ucumber' };
     test('problemType from problem.problemType', () => {

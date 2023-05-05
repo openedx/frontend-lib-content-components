@@ -1,49 +1,47 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Editor } from '@tinymce/tinymce-react';
 import { connect } from 'react-redux';
-import { injectIntl, FormattedMessage } from '@edx/frontend-platform/i18n';
-import * as hooks from '../../../hooks';
-import { selectors, actions } from '../../../../../data/redux';
-import { messages } from './messages';
-import './index.scss';
+import { injectIntl, FormattedMessage, intlShape } from '@edx/frontend-platform/i18n';
+import { selectors } from '../../../../../data/redux';
+import messages from './messages';
 
-// This widget should be connected, grab all questions from store, update them as needed.
+import TinyMceWidget from '../../../../../sharedComponents/TinyMceWidget';
+import { prepareEditorRef } from '../../../../../sharedComponents/TinyMceWidget/hooks';
+
 export const QuestionWidget = ({
+  // redux
   question,
-  updateQuestion,
+  // injected
+  intl,
 }) => {
-  const { editorRef, refReady, setEditorRef } = hooks.prepareEditorRef();
+  const { editorRef, refReady, setEditorRef } = prepareEditorRef();
   if (!refReady) { return null; }
   return (
-    <div className="question-widget">
-      <div className="h4">
+    <div className="tinyMceWidget">
+      <div className="h4 mb-3">
         <FormattedMessage {...messages.questionWidgetTitle} />
       </div>
-      <Editor {
-          ...hooks.problemEditorConfig({
-            setEditorRef,
-            editorRef,
-            question,
-            updateQuestion,
-          })
-        }
+      <TinyMceWidget
+        id="question"
+        editorType="question"
+        editorRef={editorRef}
+        textValue={question}
+        setEditorRef={setEditorRef}
+        minHeight={150}
+        placeholder={intl.formatMessage(messages.placeholder)}
       />
     </div>
   );
 };
 
 QuestionWidget.propTypes = {
+  // redux
   question: PropTypes.string.isRequired,
-  updateQuestion: PropTypes.func.isRequired,
+  // injected
+  intl: intlShape.isRequired,
 };
-
 export const mapStateToProps = (state) => ({
   question: selectors.problem.question(state),
 });
 
-export const mapDispatchToProps = {
-  updateQuestion: actions.problem.updateQuestion,
-};
-
-export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(QuestionWidget));
+export default injectIntl(connect(mapStateToProps)(QuestionWidget));

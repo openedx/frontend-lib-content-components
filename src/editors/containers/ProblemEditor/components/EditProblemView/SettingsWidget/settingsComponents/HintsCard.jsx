@@ -1,24 +1,30 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl, FormattedMessage, intlShape } from '@edx/frontend-platform/i18n';
-import { Button } from '@edx/paragon';
-import { Add } from '@edx/paragon/icons';
 import SettingsOption from '../SettingsOption';
+import { ProblemTypeKeys } from '../../../../../../data/constants/problem';
 import messages from '../messages';
 import { hintsCardHooks, hintsRowHooks } from '../hooks';
 import HintRow from './HintRow';
+import Button from '../../../../../../sharedComponents/Button';
 
 export const HintsCard = ({
   hints,
+  problemType,
   updateSettings,
   // inject
   intl,
 }) => {
   const { summary, handleAdd } = hintsCardHooks(hints, updateSettings);
+
+  if (problemType === ProblemTypeKeys.ADVANCED) { return null; }
+
   return (
     <SettingsOption
       title={intl.formatMessage(messages.hintSettingTitle)}
       summary={intl.formatMessage(summary.message, { ...summary.values })}
+      none={!hints.length}
+      hasExpandableTextArea
     >
       {hints.map((hint) => (
         <HintRow
@@ -29,10 +35,10 @@ export const HintsCard = ({
         />
       ))}
       <Button
-        className="my-3 ml-2"
-        iconBefore={Add}
-        variant="tertiary"
+        className="m-0 p-0 font-weight-bold"
+        variant="add"
         onClick={handleAdd}
+        size="sm"
       >
         <FormattedMessage {...messages.addHintButtonText} />
       </Button>
@@ -46,6 +52,7 @@ HintsCard.propTypes = {
     id: PropTypes.string.isRequired,
     value: PropTypes.string.isRequired,
   })).isRequired,
+  problemType: PropTypes.string.isRequired,
   updateSettings: PropTypes.func.isRequired,
 };
 

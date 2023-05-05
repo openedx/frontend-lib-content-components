@@ -2,11 +2,14 @@
 
 exports[`ShowAnswerCard snapshot snapshot: show answer setting card 1`] = `
 <SettingsOption
+  className=""
+  extraSections={Array []}
+  hasExpandableTextArea={false}
   summary="After Some Number of Attempts"
   title="Show answer"
 >
   <div
-    className="halfSpacedMessage"
+    className="pb-2"
   >
     <span>
       <FormattedMessage
@@ -17,10 +20,10 @@ exports[`ShowAnswerCard snapshot snapshot: show answer setting card 1`] = `
     </span>
   </div>
   <div
-    className="spacedMessage"
+    className="pb-4"
   >
     <Hyperlink
-      destination="SoMEeNDpOinT/settings/advanced/sOMEcouRseId"
+      destination="SoMEeNDpOinT/settings/advanced/sOMEcouRseId#showanswer"
       target="_blank"
     >
       <FormattedMessage
@@ -30,10 +33,12 @@ exports[`ShowAnswerCard snapshot snapshot: show answer setting card 1`] = `
       />
     </Hyperlink>
   </div>
-  <Form.Group>
+  <Form.Group
+    className="pb-0 mb-0"
+  >
     <Form.Control
       as="select"
-      onChange={[MockFunction showAnswerCardHooks.handleShowAnswerChange]}
+      onChange={[MockFunction useAnswerSettings.handleShowAnswerChange]}
       value="after_attempts"
     >
       <option
@@ -64,7 +69,7 @@ exports[`ShowAnswerCard snapshot snapshot: show answer setting card 1`] = `
         key="finished"
         value="finished"
       >
-        Finished
+        Finished (Default)
       </option>
       <option
         key="correct_or_past_due"

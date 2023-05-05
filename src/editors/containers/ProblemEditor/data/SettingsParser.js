@@ -1,6 +1,6 @@
 import _ from 'lodash-es';
 
-import { ShowAnswerTypes } from '../../../data/constants/problem';
+import { ShowAnswerTypes, RandomizationTypesKeys } from '../../../data/constants/problem';
 
 export const popuplateItem = (parentObject, itemName, statekey, metadata) => {
   let parent = parentObject;
@@ -15,14 +15,15 @@ export const parseScoringSettings = (metadata) => {
   let scoring = {};
 
   let attempts = popuplateItem({}, 'max_attempts', 'number', metadata);
-  if (!_.isEmpty(attempts)) {
-    let unlimited = true;
-    if (attempts.number > 0) {
-      unlimited = false;
+  if (_.isEmpty(attempts) || _.isNaN(attempts.number)) {
+    attempts = { unlimited: true, number: '' };
+  } else {
+    attempts.unlimited = false;
+    if (attempts.number < 0) {
+      attempts.number = 0;
     }
-    attempts = { ...attempts, unlimited };
-    scoring = { ...scoring, attempts };
   }
+  scoring = { ...scoring, attempts };
 
   scoring = popuplateItem(scoring, 'weight', 'weight', metadata);
 
@@ -60,8 +61,13 @@ export const parseSettings = (metadata) => {
   if (!_.isEmpty(showAnswer)) {
     settings = { ...settings, showAnswer };
   }
+
+  const randomizationType = _.get(metadata, 'rerandomize', {});
+  if (!_.isEmpty(randomizationType) && Object.values(RandomizationTypesKeys).includes(randomizationType)) {
+    settings = popuplateItem(settings, 'rerandomize', 'randomization', metadata);
+  }
+
   settings = popuplateItem(settings, 'show_reset_button', 'showResetButton', metadata);
   settings = popuplateItem(settings, 'submission_wait_seconds', 'timeBetween', metadata);
-
   return settings;
 };

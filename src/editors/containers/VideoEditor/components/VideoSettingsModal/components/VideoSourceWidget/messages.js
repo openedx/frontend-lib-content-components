@@ -1,4 +1,7 @@
-export const messages = {
+import { defineMessages } from '@edx/frontend-platform/i18n';
+
+const messages = defineMessages({
+
   titleLabel: {
     id: 'authoring.videoeditor.videoSource.title.label',
     defaultMessage: 'Video source',
@@ -24,6 +27,11 @@ export const messages = {
     defaultMessage: `The URL for your video. This can be a YouTube URL, or a link
     to an .mp4, .ogg, or .webm video file hosted elsewhere on the internet.`,
     description: 'Feedback for video URL field',
+  },
+  videoIdChangeAlert: {
+    id: 'authoring.videoeditor.videoIdChangeAlert.message',
+    defaultMessage: 'The Video ID field has changed, please check the Video URL and fallback URL values and update them if necessary.',
+    description: 'Body message for the alert that appears when the video id has been changed.',
   },
   fallbackVideoTitle: {
     id: 'authoring.videoeditor.videoSource.fallbackVideo.title',
@@ -53,18 +61,31 @@ export const messages = {
     defaultMessage: 'Allow video downloads',
     description: 'Label for allow video downloads checkbox',
   },
-  tooltipMessage: {
-    id: 'authoring.videoeditor.videoSource.fallbackVideo.allowDownloadTooltipMessage',
+  allowDownloadTooltipMessage: {
+    id: 'authoring.videoeditor.videoSource.allowDownloadTooltipMessage',
     defaultMessage: `Allow learners to download versions of this video in
     different formats if they cannot use the edX video player or do not have
     access to YouTube.`,
     description: 'Message for allow video downloads checkbox',
   },
+  allowVideoSharingCheckboxLabel: {
+    id: 'authoring.videoeditor.videoSource.allowVideoSharingCheckboxLabel',
+    defaultMessage: 'Allow this video to be shared on social media.',
+    description: 'Label for allow shareable video checkbox',
+  },
+  allowVideoSharingTooltipMessage: {
+    id: 'authoring.videoeditor.videoSource.allowVideoSharingTooltipMessage',
+    defaultMessage: `Allow learners to share this video publicly on social media.
+    The video will be viewable by anyone, they will not need to enroll in the course
+    or even have an edX account. Links to the course about page and to enroll in the 
+    course will appear alongside the video.`,
+    description: 'Message for allow shareable video checkbox',
+  },
   addButtonLabel: {
-    id: 'authoring.videoeditor.videoSource.fallbackVideo.allowDownloadTooltipMessage',
+    id: 'authoring.videoeditor.videoSource.fallbackVideo.addButtonLabel',
     defaultMessage: 'Add a video URL',
     description: 'Label for add a video URL button',
   },
-};
+});
 
 export default messages;

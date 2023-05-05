@@ -10,6 +10,13 @@ const initialState = {
     '',
   ],
   allowVideoDownloads: false,
+  allowVideoSharing: {
+    level: 'block',
+    value: false,
+  },
+  videoSharingEnabledForAll: false,
+  videoSharingEnabledForCourse: false,
+  videoSharingLearnMoreLink: '',
   thumbnail: null,
   transcripts: [],
   allowTranscriptDownloads: false,

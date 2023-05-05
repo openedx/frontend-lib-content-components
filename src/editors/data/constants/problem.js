@@ -20,7 +20,8 @@ export const ProblemTypes = StrictDict({
   [ProblemTypeKeys.SINGLESELECT]: {
     title: 'Single select',
     preview: singleSelect,
-    description: 'Specify one correct answer from a list of possible options',
+    previewDescription: 'Learners must select the correct answer from a list of possible options.',
+    description: 'Enter your single select answers below and select which choices are correct. Learners must choose one correct answer.',
     helpLink: 'https://edx.readthedocs.io/projects/edx-partner-course-staff/en/latest/exercises_tools/multiple_choice.html',
     prev: ProblemTypeKeys.TEXTINPUT,
     next: ProblemTypeKeys.MULTISELECT,
@@ -30,7 +31,8 @@ export const ProblemTypes = StrictDict({
   [ProblemTypeKeys.MULTISELECT]: {
     title: 'Multi-select',
     preview: multiSelect,
-    description: 'Specify one or more correct answers from a list of possible options.',
+    previewDescription: 'Learners must select all correct answers from a list of possible options.',
+    description: 'Enter your multi select answers below and select which choices are correct. Learners must choose all correct answers.',
     helpLink: 'https://edx.readthedocs.io/projects/edx-partner-course-staff/en/latest/exercises_tools/checkbox.html',
     next: ProblemTypeKeys.DROPDOWN,
     prev: ProblemTypeKeys.SINGLESELECT,
@@ -39,7 +41,8 @@ export const ProblemTypes = StrictDict({
   [ProblemTypeKeys.DROPDOWN]: {
     title: 'Dropdown',
     preview: dropdown,
-    description: 'Specify one correct answer from a list of possible options, selected in a dropdown menu.',
+    previewDescription: 'Learners must select the correct answer from a list of possible options',
+    description: 'Enter your dropdown answers below and select which choice is correct. Learners must select one correct answer.',
     helpLink: 'https://edx.readthedocs.io/projects/edx-partner-course-staff/en/latest/exercises_tools/dropdown.html',
     next: ProblemTypeKeys.NUMERIC,
     prev: ProblemTypeKeys.MULTISELECT,
@@ -48,7 +51,8 @@ export const ProblemTypes = StrictDict({
   [ProblemTypeKeys.NUMERIC]: {
     title: 'Numerical input',
     preview: numericalInput,
-    description: 'Specify one or more correct numeric answers, submitted in a response field.',
+    previewDescription: 'Specify one or more correct numeric answers, submitted in a response field.',
+    description: 'Enter correct numerical input answers below. Learners must enter one correct answer.',
     helpLink: 'https://edx.readthedocs.io/projects/edx-partner-course-staff/en/latest/exercises_tools/numerical_input.html',
     next: ProblemTypeKeys.TEXTINPUT,
     prev: ProblemTypeKeys.DROPDOWN,
@@ -57,7 +61,8 @@ export const ProblemTypes = StrictDict({
   [ProblemTypeKeys.TEXTINPUT]: {
     title: 'Text input',
     preview: textInput,
-    description: 'Specify one or more correct text answers, including numbers and special characters, submitted in a response field.',
+    previewDescription: 'Specify one or more correct text answers, including numbers and special characters, submitted in a response field.',
+    description: 'Enter your text input answers below and select which choices are correct. Learners must enter one correct answer.',
     helpLink: 'https://edx.readthedocs.io/projects/edx-partner-course-staff/en/latest/exercises_tools/text_input.html',
     prev: ProblemTypeKeys.NUMERIC,
     next: ProblemTypeKeys.SINGLESELECT,
@@ -182,5 +187,32 @@ export const ShowAnswerTypes = StrictDict({
   [ShowAnswerTypesKeys.ATTEMPTED_NO_PAST_DUE]: {
     id: 'authoring.problemeditor.settings.showanswertype.attempted_no_past_due',
     defaultMessage: 'Attempted',
+  },
+});
+
+export const RandomizationTypesKeys = StrictDict({
+  NEVER: 'never',
+  ALWAYS: 'always',
+  ONRESET: 'on_reset',
+  PERSTUDENT: 'per_student',
+});
+export const RandomizationTypes = StrictDict({
+  [RandomizationTypesKeys.ALWAYS]:
+        {
+          id: 'authoring.problemeditor.settings.RandomizationTypes.always',
+          defaultMessage: 'Always',
+        },
+  [RandomizationTypesKeys.NEVER]:
+    {
+      id: 'authoring.problemeditor.settings.RandomizationTypes.never',
+      defaultMessage: 'Never',
+    },
+  [RandomizationTypesKeys.ONRESET]: {
+    id: 'authoring.problemeditor.settings.RandomizationTypes.onreset',
+    defaultMessage: 'On Reset',
+  },
+  [RandomizationTypesKeys.PERSTUDENT]: {
+    id: 'authoring.problemeditor.settings.RandomizationTypes.perstudent',
+    defaultMessage: 'Per Student',
   },
 });

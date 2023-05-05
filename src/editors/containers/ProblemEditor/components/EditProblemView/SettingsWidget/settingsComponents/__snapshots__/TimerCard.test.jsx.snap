@@ -2,6 +2,9 @@
 
 exports[`TimerCard snapshot snapshot: renders reset true setting card 1`] = `
 <SettingsOption
+  className=""
+  extraSections={Array []}
+  hasExpandableTextArea={false}
   summary="5 seconds"
   title="Time between attempts"
 >
@@ -18,7 +21,7 @@ exports[`TimerCard snapshot snapshot: renders reset true setting card 1`] = `
   </div>
   <Form.Group>
     <Form.Control
-      floatingLabel="Attempts"
+      floatingLabel="Seconds"
       onChange={[MockFunction timerCardHooks.handleChange]}
       type="number"
       value={5}

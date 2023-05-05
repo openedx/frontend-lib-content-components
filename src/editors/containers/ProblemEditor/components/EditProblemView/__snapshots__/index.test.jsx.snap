@@ -4,33 +4,74 @@ exports[`EditorProblemView component renders raw editor 1`] = `
 <injectIntl(ShimmedIntlComponent)
   getContent={[Function]}
 >
-  <Container
-    className="mt-3 px-4"
-    fluid={true}
+  <Component
+    footerNode={
+      <ActionRow>
+        <Button
+          onClick={[Function]}
+          variant="tertiary"
+        >
+          <FormattedMessage
+            defaultMessage="Cancel"
+            description="Label for cancel button in the no answer modal"
+            id="authoring.problemEditor.editProblemView.noAnswerModal.cancelButton.label"
+          />
+        </Button>
+        <Button
+          onClick={[Function]}
+        >
+          <FormattedMessage
+            defaultMessage="Ok"
+            description="Label for save button in the no answer modal"
+            id="authoring.problemEditor.editProblemView.noAnswerModal.saveButton.label"
+          />
+        </Button>
+      </ActionRow>
+    }
+    isOpen={false}
+    onClose={[Function]}
+    title="No answer specified"
   >
-    <Row>
-      <Col
-        xs={9}
-      >
-        <RawEditor
-          content={null}
-          editorRef={
-            Object {
-              "current": null,
-            }
+    <div>
+      <FormattedMessage
+        defaultMessage="Are you sure you want to exit the editor?"
+        description="Question in body of no answer modal"
+        id="authoring.problemEditor.editProblemView.noAnswerModal.body.question"
+      />
+    </div>
+    <div>
+      <FormattedMessage
+        defaultMessage="No correct answer has been specified."
+        description="Explanation in body of no answer modal"
+        id="authoring.problemEditor.editProblemView.noAnswerModal.body.explanation"
+      />
+    </div>
+  </Component>
+  <div
+    className="editProblemView d-flex flex-row flex-nowrap justify-content-end"
+  >
+    <Container
+      className="advancedEditorTopMargin p-0"
+      fluid={true}
+    >
+      <RawEditor
+        content={null}
+        editorRef={
+          Object {
+            "current": null,
           }
-          lang="xml"
-        />
-      </Col>
-      <Col
-        xs={3}
-      >
-        <injectIntl(ShimmedIntlComponent)
-          problemType="advanced"
-        />
-      </Col>
-    </Row>
-  </Container>
+        }
+        lang="xml"
+      />
+    </Container>
+    <span
+      className="editProblemView-settingsColumn"
+    >
+      <injectIntl(ShimmedIntlComponent)
+        problemType="advanced"
+      />
+    </span>
+  </div>
 </injectIntl(ShimmedIntlComponent)>
 `;
 
@@ -38,27 +79,68 @@ exports[`EditorProblemView component renders simple view 1`] = `
 <injectIntl(ShimmedIntlComponent)
   getContent={[Function]}
 >
-  <Container
-    className="mt-3 px-4"
-    fluid={true}
+  <Component
+    footerNode={
+      <ActionRow>
+        <Button
+          onClick={[Function]}
+          variant="tertiary"
+        >
+          <FormattedMessage
+            defaultMessage="Cancel"
+            description="Label for cancel button in the no answer modal"
+            id="authoring.problemEditor.editProblemView.noAnswerModal.cancelButton.label"
+          />
+        </Button>
+        <Button
+          onClick={[Function]}
+        >
+          <FormattedMessage
+            defaultMessage="Ok"
+            description="Label for save button in the no answer modal"
+            id="authoring.problemEditor.editProblemView.noAnswerModal.saveButton.label"
+          />
+        </Button>
+      </ActionRow>
+    }
+    isOpen={false}
+    onClose={[Function]}
+    title="No answer specified"
   >
-    <Row>
-      <Col
-        xs={9}
-      >
-        <injectIntl(ShimmedIntlComponent) />
-        <AnswerWidget
-          problemType="multiplechoiceresponse"
-        />
-      </Col>
-      <Col
-        xs={3}
-      >
-        <injectIntl(ShimmedIntlComponent)
-          problemType="multiplechoiceresponse"
-        />
-      </Col>
-    </Row>
-  </Container>
+    <div>
+      <FormattedMessage
+        defaultMessage="Are you sure you want to exit the editor?"
+        description="Question in body of no answer modal"
+        id="authoring.problemEditor.editProblemView.noAnswerModal.body.question"
+      />
+    </div>
+    <div>
+      <FormattedMessage
+        defaultMessage="No correct answer has been specified."
+        description="Explanation in body of no answer modal"
+        id="authoring.problemEditor.editProblemView.noAnswerModal.body.explanation"
+      />
+    </div>
+  </Component>
+  <div
+    className="editProblemView d-flex flex-row flex-nowrap justify-content-end"
+  >
+    <span
+      className="flex-grow-1 mb-5"
+    >
+      <injectIntl(ShimmedIntlComponent) />
+      <injectIntl(ShimmedIntlComponent) />
+      <injectIntl(ShimmedIntlComponent)
+        problemType="multiplechoiceresponse"
+      />
+    </span>
+    <span
+      className="editProblemView-settingsColumn"
+    >
+      <injectIntl(ShimmedIntlComponent)
+        problemType="multiplechoiceresponse"
+      />
+    </span>
+  </div>
 </injectIntl(ShimmedIntlComponent)>
 `;

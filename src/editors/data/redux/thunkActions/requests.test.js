@@ -27,15 +27,17 @@ jest.mock('../../services/cms/api', () => ({
   fetchCourseDetails: (args) => args,
   saveBlock: (args) => args,
   fetchAssets: ({ id, url }) => ({ id, url }),
+  fetchVideos: ({ id, url }) => ({ id, url }),
   uploadAsset: (args) => args,
   loadImages: jest.fn(),
-  allowThumbnailUpload: (args) => args,
   uploadThumbnail: (args) => args,
   uploadTranscript: (args) => args,
   deleteTranscript: (args) => args,
   getTranscript: (args) => args,
   checkTranscriptsForImport: (args) => args,
   importTranscript: (args) => args,
+  fetchVideoFeatures: (args) => args,
+  uploadVideo: (args) => args,
 }));
 
 const apiKeys = keyStore(api);
@@ -265,6 +267,32 @@ describe('requests thunkActions module', () => {
         expect(loadImages).toHaveBeenCalledWith({ fetchAssets: expectedArgs });
       });
     });
+    describe('fetchVideos', () => {
+      const expectedArgs = {
+        studioEndpointUrl: selectors.app.studioEndpointUrl(testState),
+        learningContextId: selectors.app.learningContextId(testState),
+      };
+      let fetchVideos;
+      let dispatchedAction;
+      beforeEach(() => {
+        fetchVideos = jest.fn((args) => new Promise((resolve) => {
+          resolve({ data: { videos: { fetchVideos: args } } });
+        }));
+        jest.spyOn(api, apiKeys.fetchVideos).mockImplementationOnce(fetchVideos);
+        requests.fetchVideos({ ...fetchParams, onSuccess, onFailure })(dispatch, () => testState);
+        [[dispatchedAction]] = dispatch.mock.calls;
+      });
+      it('dispatches networkRequest', () => {
+        expect(dispatchedAction.networkRequest).not.toEqual(undefined);
+      });
+      test('forwards onSuccess and onFailure', () => {
+        expect(dispatchedAction.networkRequest.onSuccess).toEqual(onSuccess);
+        expect(dispatchedAction.networkRequest.onFailure).toEqual(onFailure);
+      });
+      test('api.fetchVideos promise called with studioEndpointUrl and learningContextId', () => {
+        expect(fetchVideos).toHaveBeenCalledWith(expectedArgs);
+      });
+    });
     describe('saveBlock', () => {
       const content = 'SoME HtMl CoNtent As String';
       testNetworkRequestAction({
@@ -297,20 +325,6 @@ describe('requests thunkActions module', () => {
           promise: api.uploadAsset({
             learningContextId: selectors.app.learningContextId(testState),
             asset,
-            studioEndpointUrl: selectors.app.studioEndpointUrl(testState),
-          }),
-        },
-      });
-    });
-    describe('allowThumbnailUpload', () => {
-      testNetworkRequestAction({
-        action: requests.allowThumbnailUpload,
-        args: { ...fetchParams },
-        expectedString: 'with allowThumbnailUpload promise',
-        expectedData: {
-          ...fetchParams,
-          requestKey: RequestKeys.allowThumbnailUpload,
-          promise: api.allowThumbnailUpload({
             studioEndpointUrl: selectors.app.studioEndpointUrl(testState),
           }),
         },
@@ -458,6 +472,38 @@ describe('requests thunkActions module', () => {
             videoId,
             language,
             studioEndpointUrl: selectors.app.studioEndpointUrl(testState),
+          }),
+        },
+      });
+    });
+    describe('fetchVideoFeatures', () => {
+      testNetworkRequestAction({
+        action: requests.fetchVideoFeatures,
+        args: { ...fetchParams },
+        expectedString: 'with fetchVideoFeatures promise',
+        expectedData: {
+          ...fetchParams,
+          requestKey: RequestKeys.fetchVideoFeatures,
+          promise: api.fetchVideoFeatures({
+            studioEndpointUrl: selectors.app.studioEndpointUrl(testState),
+            learningContextId: selectors.app.learningContextId(testState),
+          }),
+        },
+      });
+    });
+    describe('uploadVideo', () => {
+      const data = { files: [{ file_name: 'video.mp4', content_type: 'mp4' }] };
+      testNetworkRequestAction({
+        action: requests.uploadVideo,
+        args: { ...fetchParams, data },
+        expectedString: 'with uploadVideo promise',
+        expectedData: {
+          ...fetchParams,
+          requestKey: RequestKeys.uploadVideo,
+          promise: api.uploadVideo({
+            studioEndpointUrl: selectors.app.studioEndpointUrl(testState),
+            learningContextId: selectors.app.learningContextId(testState),
+            data,
           }),
         },
       });

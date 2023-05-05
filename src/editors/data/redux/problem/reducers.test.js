@@ -1,4 +1,5 @@
 import { initialState, actions, reducer } from './reducers';
+import { ProblemTypeKeys } from '../../constants/problem';
 
 const testingState = {
   ...initialState,
@@ -26,6 +27,28 @@ describe('problem reducer', () => {
     [
       ['updateQuestion', 'question'],
     ].map(args => setterTest(...args));
+    describe('setEnableTypeSelection', () => {
+      it('sets given problemType to null', () => {
+        const payload = {
+          maxAttempts: 1,
+          showanswer: 'finished',
+          showResetButton: false,
+        };
+        expect(reducer(testingState, actions.setEnableTypeSelection(payload))).toEqual({
+          ...testingState,
+          settings: {
+            ...testingState.settings,
+            scoring: {
+              ...testingState.settings.scoring,
+              attempts: { number: 1, unlimited: false },
+            },
+            showAnswer: { ...testingState.settings.showAnswer, on: payload.showanswer },
+            ...payload.showResetButton,
+          },
+          problemType: null,
+        });
+      });
+    });
     describe('load', () => {
       it('sets answers', () => {
         const answer = {
@@ -33,7 +56,8 @@ describe('problem reducer', () => {
           correct: false,
           selectedFeedback: '',
           title: '',
-          unselectedFeedback: undefined,
+          isAnswerRange: false,
+          unselectedFeedback: '',
         };
         expect(reducer(testingState, actions.addAnswer(answer))).toEqual({
           ...testingState,
@@ -63,21 +87,57 @@ describe('problem reducer', () => {
       });
     });
     describe('addAnswer', () => {
+      const answer = {
+        id: 'A',
+        correct: false,
+        selectedFeedback: '',
+        title: '',
+        isAnswerRange: false,
+        unselectedFeedback: '',
+      };
       it('sets answers', () => {
-        const answer = {
-          id: 'A',
-          correct: false,
-          selectedFeedback: '',
-          title: '',
-          unselectedFeedback: '',
-        };
         expect(reducer({ ...testingState, problemType: 'choiceresponse' }, actions.addAnswer())).toEqual({
           ...testingState,
           problemType: 'choiceresponse',
           answers: [answer],
         });
       });
+      it('sets answers for numeric input', () => {
+        const numericTestState = {
+          ...testingState,
+          problemType: ProblemTypeKeys.NUMERIC,
+          correctAnswerCount: 0,
+        };
+        expect(reducer(numericTestState, actions.addAnswer())).toEqual({
+          ...numericTestState,
+          correctAnswerCount: 1,
+          answers: [{
+            ...answer,
+            correct: true,
+          }],
+        });
+      });
     });
+
+    describe('addAnswerRange', () => {
+      const answerRange = {
+        id: 'A',
+        correct: true,
+        selectedFeedback: '',
+        title: '',
+        isAnswerRange: true,
+        unselectedFeedback: '',
+      };
+      it('sets answerRange', () => {
+        expect(reducer({ ...testingState, problemType: ProblemTypeKeys.NUMERIC }, actions.addAnswerRange())).toEqual({
+          ...testingState,
+          correctAnswerCount: 1,
+          problemType: ProblemTypeKeys.NUMERIC,
+          answers: [answerRange],
+        });
+      });
+    });
+
     describe('updateAnswer', () => {
       it('sets answers, as well as setting the correctAnswerCount ', () => {
         const answer = { id: 'A', correct: true };
@@ -99,7 +159,7 @@ describe('problem reducer', () => {
     });
     describe('deleteAnswer', () => {
       it('sets answers, as well as setting the correctAnswerCount ', () => {
-        const answer = { id: 'A' };
+        const answer = { id: 'A', correct: false };
         expect(reducer(
           {
             ...testingState,
@@ -122,6 +182,39 @@ describe('problem reducer', () => {
               id: 'A',
               correct: true,
             }],
+        });
+      });
+      it('if you delete an answer range, it will be replaced with a blank answer', () => {
+        const answer = {
+          id: 'A',
+          correct: true,
+          selectedFeedback: '',
+          title: '',
+          isAnswerRange: false,
+          unselectedFeedback: '',
+        };
+        const answerRange = {
+          id: 'A',
+          correct: false,
+          selectedFeedback: '',
+          title: '',
+          isAnswerRange: true,
+          unselectedFeedback: '',
+        };
+
+        expect(reducer(
+          {
+            ...testingState,
+            problemType: ProblemTypeKeys.NUMERIC,
+            correctAnswerCount: 1,
+            answers: [{ ...answerRange }],
+          },
+          actions.deleteAnswer(answer),
+        )).toEqual({
+          ...testingState,
+          problemType: ProblemTypeKeys.NUMERIC,
+          correctAnswerCount: 1,
+          answers: [{ ...answer }],
         });
       });
     });

@@ -41,7 +41,7 @@ export const checklistWithFeebackHints = {
           'B',
           'D',
         ],
-        feedback: 'You can specify optional feedback for a combination of answers which appears after the specified set of answers is submitted.',
+        selectedFeedback: 'You can specify optional feedback for a combination of answers which appears after the specified set of answers is submitted.',
       },
       {
         id: 4,
@@ -51,7 +51,7 @@ export const checklistWithFeebackHints = {
           'C',
           'D',
         ],
-        feedback: 'You can specify optional feedback for one, several, or all answer combinations.',
+        selectedFeedback: 'You can specify optional feedback for one, several, or all answer combinations.',
       },
     ],
     settings: {
@@ -114,19 +114,19 @@ export const dropdownWithFeedbackHints = {
         id: 'A',
         title: 'an incorrect answer',
         correct: false,
-        feedback: 'You can specify optional feedback like this, which appears after this answer is submitted.',
+        selectedFeedback: 'You can specify optional feedback like this, which appears after this answer is submitted.',
       },
       {
         id: 'B',
         title: 'the correct answer',
         correct: true,
-        feedback: '',
+        selectedFeedback: '',
       },
       {
         id: 'C',
         title: 'an incorrect answer',
         correct: false,
-        feedback: 'You can specify optional feedback for none, a subset, or all of the answers.',
+        selectedFeedback: 'You can specify optional feedback for none, a subset, or all of the answers.',
       },
     ],
     groupFeedbackList: [],
@@ -186,19 +186,19 @@ export const numericWithHints = {
       {
         id: 'A',
         title: '100 +-5',
-        feedback: 'You can specify optional feedback like this, which appears after this answer is submitted.',
+        selectedFeedback: 'You can specify optional feedback like this, which appears after this answer is submitted.',
         correct: true,
       },
       {
         id: 'B',
         title: '90 +-5',
-        feedback: 'You can specify optional feedback like this, which appears after this answer is submitted.',
+        selectedFeedback: 'You can specify optional feedback like this, which appears after this answer is submitted.',
         correct: true,
       },
       {
         id: 'C',
         title: '60 +-5',
-        feedback: 'You can specify optional feedback like this, which appears after this answer is submitted.',
+        selectedFeedback: 'You can specify optional feedback like this, which appears after this answer is submitted.',
         correct: false,
       },
     ],
@@ -217,7 +217,7 @@ export const numericWithHints = {
       scoring: {
         weight: 2.5,
         attempts: {
-          unlimited: true,
+          unlimited: false,
           number: 0,
         },
       },
@@ -257,19 +257,19 @@ export const textInputWithHints = {
       {
         id: 'A',
         title: 'the correct answer',
-        feedback: 'You can specify optional feedback like this, which appears after this answer is submitted.',
+        selectedFeedback: 'You can specify optional feedback like this, which appears after this answer is submitted.',
         correct: true,
       },
       {
         id: 'B',
         title: 'optional acceptable variant of the correct answer',
-        feedback: '',
+        selectedFeedback: '',
         correct: true,
       },
       {
         id: 'C',
         title: 'optional incorrect answer such as a frequent misconception',
-        feedback: 'You can specify optional feedback for none, a subset, or all of the answers.',
+        selectedFeedback: 'You can specify optional feedback for none, a subset, or all of the answers.',
         correct: false,
       },
     ],
@@ -288,7 +288,7 @@ export const textInputWithHints = {
       scoring: {
         weight: 2.5,
         attempts: {
-          unlimited: true,
+          unlimited: false,
           number: 0,
         },
       },
@@ -315,7 +315,7 @@ not=optional incorrect answer such as a frequent misconception {{You can specify
   },
 };
 
-export const sigleSelectWithHints = {
+export const singleSelectWithHints = {
   state: {
     rawOLX: '<problem>\n<p>You can use this template as a guide to the simple editor markdown and OLX markup to use for checkboxes with hints and feedback problems. Edit this component to replace this template with your own assessment.</p>\n\n<label>Add the question text, or prompt, here. This text is required.</label>\n<description>You can add an optional tip or note related to the prompt like this.</description>\n<multiplechoiceresponse>\n  <choicegroup type="MultipleChoice">\n    <choice correct="true">a correct answer <choicehint>selected: You can specify optional feedback that appears after the learner selects and submits this answer. }, { unselected: You can specify optional feedback that appears after the learner clears and submits this answer.</choicehint></choice>\n    <choice correct="false">an incorrect answer</choice>\n    <choice correct="false">an incorrect answer <choicehint>selected: You can specify optional feedback for none, all, or a subset of the answers. }, { unselected: You can specify optional feedback for selected answers, cleared answers, or both.</choicehint></choice>\n    <choice correct="false">an incorrect answer again</choice>\n  </choicegroup>\n</multiplechoiceresponse>\n<choiceresponse>\n  <checkboxgroup>\n    <compoundhint value="A B D">You can specify optional feedback for a combination of answers which appears after the specified set of answers is submitted.</compoundhint>\n    <compoundhint value="A B C D">You can specify optional feedback for one, several, or all answer combinations.</compoundhint>\n  </checkboxgroup>\n</choiceresponse>\n\n\n<demandhint>\n  <hint>You can add an optional hint like this. Problems that have a hint include a hint button, and this text appears the first time learners select the button.</hint>\n  <hint>If you add more than one hint, a different hint appears each time learners select the hint button.</hint>\n</demandhint>\n</problem>',
     problemType: 'SINGLESELECT',
@@ -325,25 +325,25 @@ export const sigleSelectWithHints = {
         id: 'A',
         title: 'a correct answer',
         correct: true,
-        feedback: 'Some new feedback',
+        selectedFeedback: 'Some new feedback',
       },
       {
         id: 'B',
         title: 'an incorrect answer',
         correct: false,
-        feedback: '',
+        selectedFeedback: '',
       },
       {
         id: 'C',
         title: 'an incorrect answer',
         correct: false,
-        feedback: 'Wrong feedback',
+        selectedFeedback: 'Wrong feedback',
       },
       {
         id: 'D',
         title: 'an incorrect answer again',
         correct: false,
-        feedback: '',
+        selectedFeedback: '',
       },
     ],
     groupFeedbackList: [],
@@ -359,10 +359,9 @@ export const sigleSelectWithHints = {
         },
       ],
       scoring: {
-        weight: 0,
         attempts: {
           unlimited: true,
-          number: 0,
+          number: '',
         },
       },
       timeBetween: 0,
@@ -385,5 +384,40 @@ export const sigleSelectWithHints = {
 ||You can add an optional hint like this. Problems that have a hint include a hint button, and this text appears the first time learners select the button.||
 ||If you add more than one hint, a different hint appears each time learners select the hint button.||
 `,
+  },
+};
+
+export const negativeAttempts = {
+  state: {
+    rawOLX: '<problem>\n    <numericalresponse answer="100">\n        <responseparam type="tolerance" default="5"/>\n        <formulaequationinput/>\n    </numericalresponse>\n</problem>\n',
+    problemType: 'TEXTINPUT',
+    question: '',
+    answers: [
+      {
+        id: 'A',
+        title: '100 +-5',
+        correct: true,
+      },
+    ],
+    groupFeedbackList: [],
+    settings: {
+      scoring: {
+        weight: 2.5,
+        attempts: {
+          unlimited: false,
+          number: 0,
+        },
+      },
+    },
+  },
+  metadata: {
+    markdown: `
+=100 +-5 {{You can specify optional feedback like this, which appears after this answer is submitted.}}
+`,
+    weight: 2.5,
+    max_attempts: -1,
+    rerandomize: 'invalid_input',
+    showanswer: 'invalid_input',
+    attempts_before_showanswer_button: 2,
   },
 };

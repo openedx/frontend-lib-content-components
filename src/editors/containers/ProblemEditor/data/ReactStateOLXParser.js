@@ -1,32 +1,69 @@
 import _ from 'lodash-es';
 import { XMLParser, XMLBuilder } from 'fast-xml-parser';
 import { ProblemTypeKeys } from '../../../data/constants/problem';
+import { ToleranceTypes } from '../components/EditProblemView/SettingsWidget/settingsComponents/Tolerance/constants';
 
 class ReactStateOLXParser {
   constructor(problemState) {
     const parserOptions = {
       ignoreAttributes: false,
       alwaysCreateTextNode: true,
-      // preserveOrder: true
+      numberParseOptions: {
+        leadingZeros: false,
+        hex: false,
+      },
+    };
+    const questionParserOptions = {
+      ignoreAttributes: false,
+      alwaysCreateTextNode: true,
+      numberParseOptions: {
+        leadingZeros: false,
+        hex: false,
+      },
+      preserveOrder: true,
+    };
+    const questionBuilderOptions = {
+      ignoreAttributes: false,
+      attributeNamePrefix: '@_',
+      suppressBooleanAttributes: false,
+      format: true,
+      numberParseOptions: {
+        leadingZeros: false,
+        hex: false,
+      },
+      preserveOrder: true,
     };
     const builderOptions = {
       ignoreAttributes: false,
       attributeNamePrefix: '@_',
       suppressBooleanAttributes: false,
       format: true,
+      numberParseOptions: {
+        leadingZeros: false,
+        hex: false,
+      },
     };
+    this.questionParser = new XMLParser(questionParserOptions);
     this.parser = new XMLParser(parserOptions);
     this.builder = new XMLBuilder(builderOptions);
+    this.questionBuilder = new XMLBuilder(questionBuilderOptions);
+    this.editorObject = problemState.editorObject;
     this.problemState = problemState.problem;
   }
 
   addHints() {
     const hintsArray = [];
-    const hints = _.get(this.problemState, 'settings.hints', []);
-    hints.forEach(element => {
-      hintsArray.push({
-        '#text': element.value,
-      });
+    const { hints } = this.editorObject;
+    if (hints.length < 1) {
+      return {};
+    }
+    hints.forEach(hint => {
+      if (hint.length > 0) {
+        const parsedHint = this.parser.parse(hint);
+        hintsArray.push({
+          ...parsedHint,
+        });
+      }
     });
     const demandhint = {
       demandhint: {
@@ -36,45 +73,97 @@ class ReactStateOLXParser {
     return demandhint;
   }
 
+  addSolution() {
+    const { solution } = this.editorObject;
+    if (!solution || solution.length <= 0) { return {}; }
+    const solutionTitle = { '#text': 'Explanation' };
+    const parsedSolution = this.parser.parse(solution);
+    const paragraphs = parsedSolution.p;
+    const withWrapper = _.isArray(paragraphs) ? [solutionTitle, ...paragraphs] : [solutionTitle, paragraphs];
+    const solutionObject = {
+      solution: {
+        div: {
+          '@_class': 'detailed-solution',
+          p: withWrapper,
+        },
+      },
+    };
+    return solutionObject;
+  }
+
   addMultiSelectAnswers(option) {
     const choice = [];
     let compoundhint = [];
     let widget = {};
-    const { answers } = this.problemState;
+    // eslint-disable-next-line prefer-const
+    let { answers, problemType } = this.problemState;
+    const answerTitles = this.editorObject?.answers;
+    const { selectedFeedback, unselectedFeedback } = this.editorObject;
+    /* todo */
+    /*
+      * the logic for general  feedback is ot current being used.
+      * when component is updated will need to return to this code.
+      * general feedback replaces selected feedback if all incorrect selected feedback is the same.
+      * ******************************************
+    if (generalFeedback !== ''
+    && answers.every(
+      answer => (
+        answer.correct
+          ? true
+          : answer?.selectedFeedback === answers.find(a => a.correct === false).selectedFeedback
+      ),
+    )) {
+      answers = answers.map(answer => (!answer?.correct
+        ? { ...answer, selectedFeedback: generalFeedback }
+        : answer));
+    }
+    */
     answers.forEach((answer) => {
       const feedback = [];
       let singleAnswer = {};
-      if (this.hasAttributeWithValue(answer, 'title')) {
-        if (this.hasAttributeWithValue(answer, 'selectedFeedback')) {
+      const title = answerTitles ? this.parser.parse(answerTitles[answer.id]) : { '#text': answer.title };
+      const currentSelectedFeedback = selectedFeedback?.[answer.id] || null;
+      const currentUnselectedFeedback = unselectedFeedback?.[answer.id] || null;
+      let isEmpty;
+      if (answerTitles) {
+        isEmpty = Object.keys(title)?.length <= 0;
+      } else {
+        isEmpty = title['#text']?.length <= 0;
+      }
+      if (title && !isEmpty) {
+        if (currentSelectedFeedback && problemType === ProblemTypeKeys.MULTISELECT) {
+          const parsedSelectedFeedback = this.parser.parse(currentSelectedFeedback);
           feedback.push({
-            '#text': _.get(answer, 'selectedFeedback'),
+            ...parsedSelectedFeedback,
             '@_selected': true,
           });
         }
-        if (this.hasAttributeWithValue(answer, 'unselectedFeedback')) {
+        if (currentSelectedFeedback && problemType !== ProblemTypeKeys.MULTISELECT) {
+          const parsedSelectedFeedback = this.parser.parse(currentSelectedFeedback);
           feedback.push({
-            '#text': _.get(answer, 'unselectedFeedback'),
-            '@_selected': false,
+            ...parsedSelectedFeedback,
           });
         }
-        if (this.hasAttributeWithValue(answer, 'feedback')) {
+        if (currentUnselectedFeedback && problemType === ProblemTypeKeys.MULTISELECT) {
+          const parsedUnselectedFeedback = this.parser.parse(currentUnselectedFeedback);
           feedback.push({
-            '#text': _.get(answer, 'feedback'),
+            ...parsedUnselectedFeedback,
+            '@_selected': false,
           });
         }
         if (feedback.length) {
           singleAnswer[`${option}hint`] = feedback;
         }
         singleAnswer = {
-          '#text': answer.title,
           '@_correct': answer.correct,
+          ...title,
           ...singleAnswer,
         };
         choice.push(singleAnswer);
       }
     });
     widget = { [option]: choice };
-    if (_.has(this.problemState, 'groupFeedbackList')) {
+    if (_.has(this.problemState, 'groupFeedbackList') && problemType === ProblemTypeKeys.MULTISELECT) {
       compoundhint = this.addGroupFeedbackList();
       widget = {
         ...widget,
@@ -97,8 +186,24 @@ class ReactStateOLXParser {
   }
 
   addQuestion() {
-    const { question } = this.problemState;
-    const questionObject = this.parser.parse(question);
+    const { question } = this.editorObject;
+    const questionObject = this.questionParser.parse(question);
+    /* Removes block tags like <p> or <h1> that surround the <label> format.
+      Block tags are required by tinyMCE but have adverse effect on css in studio.
+      */
+    questionObject.forEach((tag, ind) => {
+      const tagName = Object.keys(tag)[0];
+      let label = null;
+      tag[tagName].forEach(subTag => {
+        const subTagName = Object.keys(subTag)[0];
+        if (subTagName === 'label') {
+          label = subTag;
+        }
+      });
+      if (label) {
+        questionObject[ind] = label;
+      }
+    });
     return questionObject;
   }
 
@@ -106,42 +211,74 @@ class ReactStateOLXParser {
     const question = this.addQuestion();
     const widgetObject = this.addMultiSelectAnswers(option);
     const demandhint = this.addHints();
+    const solution = this.addSolution();
+
     const problemObject = {
       problem: {
         [problemType]: {
-          ...question,
           [widget]: widgetObject,
+          ...solution,
         },
         ...demandhint,
       },
     };
-    return this.builder.build(problemObject);
+
+    const problem = this.builder.build(problemObject);
+    const questionString = this.questionBuilder.build(question);
+    let problemTypeTag;
+    switch (problemType) {
+      case ProblemTypeKeys.MULTISELECT:
+        [problemTypeTag] = problem.match(/<choiceresponse>|<choiceresponse.[^>]+>/);
+        break;
+      case ProblemTypeKeys.DROPDOWN:
+        [problemTypeTag] = problem.match(/<optionresponse>|<optionresponse.[^>]+>/);
+        break;
+      case ProblemTypeKeys.SINGLESELECT:
+        [problemTypeTag] = problem.match(/<multiplechoiceresponse>|<multiplechoiceresponse.[^>]+>/);
+        break;
+      default:
+        break;
+    }
+    const updatedString = `${problemTypeTag}\n${questionString}`;
+    const problemString = problem.replace(problemTypeTag, updatedString);
+
+    return problemString;
   }
 
   buildTextInput() {
     const question = this.addQuestion();
     const demandhint = this.addHints();
     const answerObject = this.buildTextInputAnswersFeedback();
+    const solution = this.addSolution();
+
     const problemObject = {
       problem: {
         [ProblemTypeKeys.TEXTINPUT]: {
-          ...question,
           ...answerObject,
+          ...solution,
         },
         ...demandhint,
       },
     };
-    return this.builder.build(problemObject);
+
+    const problem = this.builder.build(problemObject);
+    const questionString = this.questionBuilder.build(question);
+    const [problemTypeTag] = problem.match(/<stringresponse>|<stringresponse.[^>]+>/);
+    const updatedString = `${problemTypeTag}\n${questionString}`;
+    const problemString = problem.replace(problemTypeTag, updatedString);
+
+    return problemString;
   }
 
   buildTextInputAnswersFeedback() {
     const { answers } = this.problemState;
+    const { selectedFeedback } = this.editorObject;
     let answerObject = {};
     const additionAnswers = [];
     const wrongAnswers = [];
     let firstCorrectAnswerParsed = false;
     answers.forEach((answer) => {
-      const correcthint = this.getAnswerHints(answer);
+      const correcthint = this.getAnswerHints(selectedFeedback?.[answer.id]);
       if (this.hasAttributeWithValue(answer, 'title')) {
         if (answer.correct && firstCorrectAnswerParsed) {
           additionAnswers.push({
@@ -155,9 +292,10 @@ class ReactStateOLXParser {
             ...correcthint,
           };
         } else if (!answer.correct) {
+          const wronghint = correcthint.correcthint;
           wrongAnswers.push({
             '@_answer': answer.title,
-            '#text': answer.feedback,
+            ...wronghint,
           });
         }
       }
@@ -178,48 +316,94 @@ class ReactStateOLXParser {
     const question = this.addQuestion();
     const demandhint = this.addHints();
     const answerObject = this.buildNumericalResponse();
+    const solution = this.addSolution();
+
     const problemObject = {
       problem: {
-        ...question,
-        [ProblemTypeKeys.NUMERIC]: answerObject,
+        [ProblemTypeKeys.NUMERIC]: {
+          ...answerObject,
+          ...solution,
+        },
         ...demandhint,
       },
     };
-    return this.builder.build(problemObject);
+
+    const problem = this.builder.build(problemObject);
+    const questionString = this.questionBuilder.build(question);
+    const [problemTypeTag] = problem.match(/<numericalresponse>|<numericalresponse.[^>]+>/);
+    const updatedString = `${questionString}\n${problemTypeTag}`;
+    const problemString = problem.replace(problemTypeTag, updatedString);
+
+    return problemString;
   }
 
   buildNumericalResponse() {
     const { answers } = this.problemState;
+    const { tolerance } = this.problemState.settings;
+    const { selectedFeedback } = this.editorObject;
     let answerObject = {};
     const additionalAnswers = [];
     let firstCorrectAnswerParsed = false;
-    /*
-    TODO: Need to figure out how to add multiple numericalresponse,
-    the parser right now converts all the other right answers into
-    additional answers.
-    */
     answers.forEach((answer) => {
-      const correcthint = this.getAnswerHints(answer);
+      const correcthint = this.getAnswerHints(selectedFeedback?.[answer.id]);
       if (this.hasAttributeWithValue(answer, 'title')) {
+        let { title } = answer;
+        if (title.startsWith('(') || title.startsWith('[')) {
+          const parsedRange = title.split(',');
+          const [rawLowerBound, rawUpperBound] = parsedRange;
+          let lowerBoundInt;
+          let lowerBoundFraction;
+          let upperBoundInt;
+          let upperBoundFraction;
+          if (rawLowerBound.includes('/')) {
+            lowerBoundFraction = rawLowerBound.replace(/[^0-9-/]/gm, '');
+            const [numerator, denominator] = lowerBoundFraction.split('/');
+            const lowerBoundFloat = Number(numerator) / Number(denominator);
+            lowerBoundInt = lowerBoundFloat;
+          } else {
+            // these regex replaces remove everything that is not a decimal or positive/negative numer
+            lowerBoundInt = Number(rawLowerBound.replace(/[^0-9-.]/gm, ''));
+          }
+          if (rawUpperBound.includes('/')) {
+            upperBoundFraction = rawUpperBound.replace(/[^0-9-/]/gm, '');
+            const [numerator, denominator] = upperBoundFraction.split('/');
+            const upperBoundFloat = Number(numerator) / Number(denominator);
+            upperBoundInt = upperBoundFloat;
+          } else {
+            // these regex replaces remove everything that is not a decimal or positive/negative numer
+            upperBoundInt = Number(rawUpperBound.replace(/[^0-9-.]/gm, ''));
+          }
+          if (lowerBoundInt > upperBoundInt) {
+            const lowerBoundChar = rawUpperBound[rawUpperBound.length - 1] === ']' ? '[' : '(';
+            const upperBoundChar = rawLowerBound[0] === '[' ? ']' : ')';
+            if (lowerBoundFraction) {
+              lowerBoundInt = lowerBoundFraction;
+            }
+            if (upperBoundFraction) {
+              upperBoundInt = upperBoundFraction;
+            }
+            title = `${lowerBoundChar}${upperBoundInt},${lowerBoundInt}${upperBoundChar}`;
+          }
+        }
         if (answer.correct && !firstCorrectAnswerParsed) {
           firstCorrectAnswerParsed = true;
           let responseParam = {};
-          if (_.has(answer, 'tolerance')) {
+          if (tolerance?.value) {
             responseParam = {
               responseparam: {
                 '@_type': 'tolerance',
-                '@_default': _.get(answer, 'tolerance', 0),
+                '@_default': `${tolerance.value}${tolerance.type === ToleranceTypes.number.type ? '' : '%'}`,
               },
             };
           }
           answerObject = {
-            '@_answer': answer.title,
+            '@_answer': title,
             ...responseParam,
             ...correcthint,
           };
         } else if (answer.correct && firstCorrectAnswerParsed) {
           additionalAnswers.push({
-            '@_answer': answer.title,
+            '@_answer': title,
             ...correcthint,
           });
         }
@@ -235,13 +419,13 @@ class ReactStateOLXParser {
     return answerObject;
   }
 
-  getAnswerHints(elementObject) {
-    const feedback = elementObject?.feedback;
+  getAnswerHints(feedback) {
     let correcthint = {};
     if (feedback !== undefined && feedback !== '') {
+      const parsedFeedback = this.parser.parse(feedback);
       correcthint = {
         correcthint: {
-          '#text': feedback,
+          ...parsedFeedback,
         },
       };
     }
@@ -249,12 +433,13 @@ class ReactStateOLXParser {
   }
 
   hasAttributeWithValue(obj, attr) {
-    return _.has(obj, attr) && _.get(obj, attr, '').trim() !== '';
+    return _.has(obj, attr) && _.get(obj, attr, '').toString().trim() !== '';
   }
 
   buildOLX() {
     const { problemType } = this.problemState;
     let problemString = '';
+
     switch (problemType) {
       case ProblemTypeKeys.MULTISELECT:
         problemString = this.buildMultiSelectProblem(ProblemTypeKeys.MULTISELECT, 'checkboxgroup', 'choice');

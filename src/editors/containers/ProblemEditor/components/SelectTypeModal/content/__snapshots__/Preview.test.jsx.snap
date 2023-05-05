@@ -33,7 +33,7 @@ exports[`Preview snapshots snapshots: renders as expected with problemType is ch
   <div
     className="mb-3"
   >
-    Specify one or more correct answers from a list of possible options.
+    Learners must select all correct answers from a list of possible options.
   </div>
   <Hyperlink
     destination="https://edx.readthedocs.io/projects/edx-partner-course-staff/en/latest/exercises_tools/checkbox.html"
@@ -79,7 +79,7 @@ exports[`Preview snapshots snapshots: renders as expected with problemType is mu
   <div
     className="mb-3"
   >
-    Specify one correct answer from a list of possible options
+    Learners must select the correct answer from a list of possible options.
   </div>
   <Hyperlink
     destination="https://edx.readthedocs.io/projects/edx-partner-course-staff/en/latest/exercises_tools/multiple_choice.html"
@@ -171,7 +171,7 @@ exports[`Preview snapshots snapshots: renders as expected with problemType is op
   <div
     className="mb-3"
   >
-    Specify one correct answer from a list of possible options, selected in a dropdown menu.
+    Learners must select the correct answer from a list of possible options
   </div>
   <Hyperlink
     destination="https://edx.readthedocs.io/projects/edx-partner-course-staff/en/latest/exercises_tools/dropdown.html"

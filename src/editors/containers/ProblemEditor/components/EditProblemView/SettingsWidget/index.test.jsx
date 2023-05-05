@@ -9,10 +9,27 @@ jest.mock('./hooks', () => ({
   showAdvancedSettingsCards: jest.fn(),
 }));
 
+jest.mock('./settingsComponents/GeneralFeedback', () => 'GeneralFeedback');
+jest.mock('./settingsComponents/GroupFeedback', () => 'GroupFeedback');
+jest.mock('./settingsComponents/Randomization', () => 'Randomization');
+jest.mock('./settingsComponents/HintsCard', () => 'HintsCard');
+jest.mock('./settingsComponents/MatlabCard', () => 'MatlabCard');
+jest.mock('./settingsComponents/ResetCard', () => 'ResetCard');
+jest.mock('./settingsComponents/ScoringCard', () => 'ScoringCard');
+jest.mock('./settingsComponents/ShowAnswerCard', () => 'ShowAnswerCard');
+jest.mock('./settingsComponents/SwitchToAdvancedEditorCard', () => 'SwitchToAdvancedEditorCard');
+jest.mock('./settingsComponents/TimerCard', () => 'TimerCard');
+jest.mock('./settingsComponents/TypeCard', () => 'TypeCard');
+
 describe('SettingsWidget', () => {
   const props = {
     problemType: ProblemTypeKeys.TEXTINPUT,
     settings: {},
+    defaultSettings: {
+      maxAttempts: 2,
+      showanswer: 'finished',
+      showResetButton: false,
+    },
   };
 
   describe('behavior', () => {
@@ -44,6 +61,20 @@ describe('SettingsWidget', () => {
       showAdvancedSettingsCards.mockReturnValue(showAdvancedSettingsCardsProps);
       expect(shallow(<SettingsWidget {...props} />)).toMatchSnapshot();
     });
+    test('snapshot: renders Settings widget for Advanced Problem with correct widgets', () => {
+      const showAdvancedSettingsCardsProps = {
+        isAdvancedCardsVisible: true,
+        setResetTrue: jest.fn().mockName('showAdvancedSettingsCards.setResetTrue'),
+      };
+      showAdvancedSettingsCards.mockReturnValue(showAdvancedSettingsCardsProps);
+      expect(shallow(<SettingsWidget problemType={ProblemTypeKeys.ADVANCED} {...props} />)).toMatchSnapshot();
+    });
+  });
+
+  describe('mapDispatchToProps', () => {
+    test('setBlockTitle from actions.app.setBlockTitle', () => {
+      expect(mapDispatchToProps.setBlockTitle).toEqual(actions.app.setBlockTitle);
+    });
   });
 
   describe('mapDispatchToProps', () => {
@@ -55,6 +86,12 @@ describe('SettingsWidget', () => {
   describe('mapDispatchToProps', () => {
     test('updateField from actions.problem.updateField', () => {
       expect(mapDispatchToProps.updateField).toEqual(actions.problem.updateField);
+    });
+  });
+
+  describe('mapDispatchToProps', () => {
+    test('updateAnswer from actions.problem.updateAnswer', () => {
+      expect(mapDispatchToProps.updateAnswer).toEqual(actions.problem.updateAnswer);
     });
   });
 });

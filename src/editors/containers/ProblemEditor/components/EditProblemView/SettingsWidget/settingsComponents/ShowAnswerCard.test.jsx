@@ -3,10 +3,10 @@ import { shallow } from 'enzyme';
 import { formatMessage } from '../../../../../../../testUtils';
 import { selectors } from '../../../../../../data/redux';
 import { ShowAnswerCard, mapStateToProps, mapDispatchToProps } from './ShowAnswerCard';
-import { showAnswerCardHooks } from '../hooks';
+import { useAnswerSettings } from '../hooks';
 
 jest.mock('../hooks', () => ({
-  showAnswerCardHooks: jest.fn(),
+  useAnswerSettings: jest.fn(),
 }));
 
 jest.mock('../../../../../../data/redux', () => ({
@@ -15,6 +15,9 @@ jest.mock('../../../../../../data/redux', () => ({
       studioEndpointUrl: jest.fn(state => ({ studioEndpointUrl: state })),
       learningContextId: jest.fn(state => ({ learningContextId: state })),
     },
+  },
+  thunkActions: {
+    video: jest.fn(),
   },
 }));
 
@@ -27,6 +30,7 @@ describe('ShowAnswerCard', () => {
   };
   const props = {
     showAnswer,
+    defaultValue: 'finished',
     // injected
     intl: { formatMessage },
     // redux
@@ -34,17 +38,17 @@ describe('ShowAnswerCard', () => {
     learningContextId: 'sOMEcouRseId',
   };
 
-  const showAnswerCardHooksProps = {
-    handleShowAnswerChange: jest.fn().mockName('showAnswerCardHooks.handleShowAnswerChange'),
-    handleAttemptsChange: jest.fn().mockName('showAnswerCardHooks.handleAttemptsChange'),
+  const useAnswerSettingsProps = {
+    handleShowAnswerChange: jest.fn().mockName('useAnswerSettings.handleShowAnswerChange'),
+    handleAttemptsChange: jest.fn().mockName('useAnswerSettings.handleAttemptsChange'),
   };
 
-  showAnswerCardHooks.mockReturnValue(showAnswerCardHooksProps);
+  useAnswerSettings.mockReturnValue(useAnswerSettingsProps);
 
   describe('behavior', () => {
-    it(' calls showAnswerCardHooks when initialized', () => {
+    it(' calls useAnswerSettings when initialized', () => {
       shallow(<ShowAnswerCard {...props} />);
-      expect(showAnswerCardHooks).toHaveBeenCalledWith(showAnswer, props.updateSettings);
+      expect(useAnswerSettings).toHaveBeenCalledWith(showAnswer, props.updateSettings);
     });
   });
 

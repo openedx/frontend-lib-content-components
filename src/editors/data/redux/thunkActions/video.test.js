@@ -30,6 +30,7 @@ jest.mock('./requests', () => ({
   updateTranscriptLanguage: (args) => ({ updateTranscriptLanguage: args }),
   checkTranscriptsForImport: (args) => ({ checkTranscriptsForImport: args }),
   importTranscript: (args) => ({ importTranscript: args }),
+  fetchVideoFeatures: (args) => ({ fetchVideoFeatures: args }),
 }));
 
 jest.mock('../../../utils', () => ({
@@ -48,8 +49,13 @@ const mockFilename = 'soMEtRANscRipT.srt';
 const mockThumbnail = 'sOMefILE';
 const mockThumbnailResponse = { data: { image_url: 'soMEimAGEUrL' } };
 const thumbnailUrl = 'soMEimAGEUrL';
-const mockAllowThumbnailUpload = { data: { allowThumbnailUpload: 'soMEbOolEAn' } };
 const mockAllowTranscriptImport = { data: { command: 'import' } };
+const mockVideoFeatures = {
+  data: {
+    allowThumbnailUpload: 'soMEbOolEAn',
+    videoSharingEnabled: 'soMEbOolEAn',
+  },
+};
 
 const testMetadata = {
   download_track: 'dOWNlOAdTraCK',
@@ -63,6 +69,10 @@ const testMetadata = {
   start_time: 0,
   transcripts: ['do', 're', 'mi'],
   thumbnail: 'thuMBNaIl',
+};
+const videoSharingData = {
+  video_sharing_doc_url: 'SomEUrL.Com',
+  video_sharing_options: 'OpTIOns',
 };
 const testState = {
   transcripts: ['la'],
@@ -86,7 +96,7 @@ describe('video thunkActions', () => {
     getState = jest.fn(() => ({
       app: {
         blockId: 'soMEBloCk',
-        blockValue: { data: { metadata: { ...testMetadata } } },
+        blockValue: { data: { metadata: { ...testMetadata }, ...videoSharingData } },
         studioEndpointUrl: 'soMEeNDPoiNT',
         courseDetails: { data: { license: null } },
         studioView: { data: { html: 'sOMeHTml' } },
@@ -104,6 +114,10 @@ describe('video thunkActions', () => {
         videoId: 'videOiD',
         fallbackVideos: 'fALLbACKvIDeos',
       });
+      jest.spyOn(thunkActions, thunkActionsKeys.parseVideoSharingSetting).mockReturnValue({
+        level: 'course',
+        value: true,
+      });
       jest.spyOn(thunkActions, thunkActionsKeys.parseLicense).mockReturnValue([
         'liCENSEtyPe',
         {
@@ -117,14 +131,18 @@ describe('video thunkActions', () => {
         testMetadata.transcripts,
       );
       thunkActions.loadVideoData()(dispatch, getState);
-      [[dispatchedLoad], [dispatchedAction1], [dispatchedAction2]] = dispatch.mock.calls;
+      [
+        [dispatchedLoad],
+        [dispatchedAction1],
+        [dispatchedAction2],
+      ] = dispatch.mock.calls;
     });
     afterEach(() => {
       jest.restoreAllMocks();
     });
-    it('dispatches allowThumbnailUpload action', () => {
+    it('dispatches fetchVideoFeatures action', () => {
       expect(dispatchedLoad).not.toEqual(undefined);
-      expect(dispatchedAction1.allowThumbnailUpload).not.toEqual(undefined);
+      expect(dispatchedAction1.fetchVideoFeatures).not.toEqual(undefined);
     });
     it('dispatches checkTranscriptsForImport action', () => {
       expect(dispatchedLoad).not.toEqual(undefined);
@@ -136,6 +154,12 @@ describe('video thunkActions', () => {
         videoId: 'videOiD',
         fallbackVideos: 'fALLbACKvIDeos',
         allowVideoDownloads: testMetadata.download_video,
+        allowVideoSharing: {
+          level: 'course',
+          value: true,
+        },
+        videoSharingLearnMoreLink: videoSharingData.video_sharing_doc_url,
+        videoSharingEnableForCourse: videoSharingData.video_sharing_enabled,
         transcripts: testMetadata.transcripts,
         allowTranscriptDownloads: testMetadata.download_track,
         showTranscriptByDefault: testMetadata.show_captions,
@@ -164,12 +188,12 @@ describe('video thunkActions', () => {
     });
     it('dispatches actions.video.updateField on success', () => {
       dispatch.mockClear();
-      dispatchedAction1.allowThumbnailUpload.onSuccess(mockAllowThumbnailUpload);
+      dispatchedAction1.fetchVideoFeatures.onSuccess(mockVideoFeatures);
       expect(dispatch).toHaveBeenCalledWith(actions.video.updateField({
-        allowThumbnailUpload: mockAllowThumbnailUpload.data.allowThumbnailUpload,
+        allowThumbnailUpload: mockVideoFeatures.data.allowThumbnailUpload,
+        videoSharingEnabledForAll: mockVideoFeatures.data.videoSharingEnabled,
       }));
       dispatch.mockClear();
-
       dispatchedAction2.checkTranscriptsForImport.onSuccess(mockAllowTranscriptImport);
       expect(dispatch).toHaveBeenCalledWith(actions.video.updateField({
         allowTranscriptImport: true,
@@ -336,6 +360,55 @@ describe('video thunkActions', () => {
         },
         '4.0',
       ]);
+    });
+  });
+  describe('parseVideoShareSetting', () => {
+    describe('has no course setting or block setting for video sharing', () => {
+      it('should return an object with level equal to block and value equal to null', () => {
+        const videoSharingSetting = thunkActions.parseVideoSharingSetting({
+          courseSetting: null,
+          blockSetting: null,
+        });
+        expect(videoSharingSetting).toEqual({ level: 'block', value: null });
+      });
+    });
+    describe('has no course setting and block setting defined for video sharing', () => {
+      it('should return an object with level equal to block and value equal to true', () => {
+        const videoSharingSetting = thunkActions.parseVideoSharingSetting({
+          courseSetting: null,
+          blockSetting: true,
+        });
+        expect(videoSharingSetting).toEqual({ level: 'block', value: true });
+      });
+    });
+    describe('has course setting defined for video sharing', () => {
+      describe('course setting equals all-on', () => {
+        it('should return an object with level equal to course and value equal to true', () => {
+          const videoSharingSetting = thunkActions.parseVideoSharingSetting({
+            courseSetting: 'all-on',
+            blockSetting: true,
+          });
+          expect(videoSharingSetting).toEqual({ level: 'course', value: true });
+        });
+      });
+      describe('course setting equals all-off', () => {
+        it('should return an object with level equal to course and value equal to false', () => {
+          const videoSharingSetting = thunkActions.parseVideoSharingSetting({
+            courseSetting: 'all-off',
+            blockSetting: true,
+          });
+          expect(videoSharingSetting).toEqual({ level: 'course', value: false });
+        });
+      });
+      describe('course setting equals per-video', () => {
+        it('should return an object with level equal to block and value equal to block setting', () => {
+          const videoSharingSetting = thunkActions.parseVideoSharingSetting({
+            courseSetting: 'per-video',
+            blockSetting: false,
+          });
+          expect(videoSharingSetting).toEqual({ level: 'block', value: false });
+        });
+      });
     });
   });
   describe('uploadHandout', () => {

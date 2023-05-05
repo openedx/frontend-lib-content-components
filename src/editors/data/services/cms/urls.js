@@ -3,7 +3,7 @@ export const libraryV1 = ({ studioEndpointUrl, learningContextId }) => (
 );
 
 export const unit = ({ studioEndpointUrl, unitUrl }) => (
-  `${studioEndpointUrl}/container/${unitUrl.data.ancestors[0].id}`
+  `${studioEndpointUrl}/container/${unitUrl.data.ancestors[0]?.id}`
 );
 
 export const returnUrl = ({ studioEndpointUrl, unitUrl, learningContextId }) => {
@@ -29,10 +29,6 @@ export const blockStudioView = ({ studioEndpointUrl, blockId }) => (
 
 export const courseAssets = ({ studioEndpointUrl, learningContextId }) => (
   `${studioEndpointUrl}/assets/${learningContextId}/?page_size=500`
-);
-
-export const allowThumbnailUpload = ({ studioEndpointUrl }) => (
-  `${studioEndpointUrl}/video_images_upload_enabled`
 );
 
 export const thumbnailUpload = ({ studioEndpointUrl, learningContextId, videoId }) => (
@@ -65,4 +61,12 @@ export const replaceTranscript = ({ studioEndpointUrl, parameters }) => (
 
 export const courseAdvanceSettings = ({ studioEndpointUrl, learningContextId }) => (
   `${studioEndpointUrl}/api/contentstore/v0/advanced_settings/${learningContextId}`
+);
+
+export const videoFeatures = ({ studioEndpointUrl, learningContextId }) => (
+  `${studioEndpointUrl}/video_features/${learningContextId}`
+);
+
+export const courseVideos = ({ studioEndpointUrl, learningContextId }) => (
+  `${studioEndpointUrl}/videos/${learningContextId}`
 );

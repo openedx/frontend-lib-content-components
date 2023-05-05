@@ -5,6 +5,7 @@ exports[`EditorContainer component render snapshot: initialized. enable save and
   className="position-relative zindex-0"
 >
   <BaseModal
+    bodyStyle={null}
     close={[MockFunction closeCancelConfirmModal]}
     confirmAction={
       <Button
@@ -25,6 +26,8 @@ exports[`EditorContainer component render snapshot: initialized. enable save and
       </Button>
     }
     footerAction={null}
+    headerComponent={null}
+    isFullscreenScroll={true}
     isOpen={false}
     size="md"
     title="Exit the editor?"
@@ -38,29 +41,22 @@ exports[`EditorContainer component render snapshot: initialized. enable save and
   <ModalDialog.Header
     className="shadow-sm zindex-10"
   >
-    <ModalDialog.Title>
-      <div
-        style={
-          Object {
-            "height": "44px",
-            "margin": "auto",
-          }
-        }
+    <div
+      className="d-flex flex-row justify-content-between"
+    >
+      <h2
+        className="h3 col pl-0"
       >
         <injectIntl(ShimmedIntlComponent)
           isInitialized={true}
         />
-      </div>
-      <div
-        className="pgn__modal-close-container"
-      >
-        <IconButton
-          iconAs="Icon"
-          onClick={[MockFunction openCancelConfirmModal]}
-          src={[MockFunction icons.Close]}
-        />
-      </div>
-    </ModalDialog.Title>
+      </h2>
+      <IconButton
+        iconAs="Icon"
+        onClick={[MockFunction openCancelConfirmModal]}
+        src={[MockFunction icons.Close]}
+      />
+    </div>
   </ModalDialog.Header>
   <ModalDialog.Body
     className="pb-6"
@@ -90,6 +86,7 @@ exports[`EditorContainer component render snapshot: not initialized. disable sav
   className="position-relative zindex-0"
 >
   <BaseModal
+    bodyStyle={null}
     close={[MockFunction closeCancelConfirmModal]}
     confirmAction={
       <Button
@@ -110,6 +107,8 @@ exports[`EditorContainer component render snapshot: not initialized. disable sav
       </Button>
     }
     footerAction={null}
+    headerComponent={null}
+    isFullscreenScroll={true}
     isOpen={false}
     size="md"
     title="Exit the editor?"
@@ -123,29 +122,22 @@ exports[`EditorContainer component render snapshot: not initialized. disable sav
   <ModalDialog.Header
     className="shadow-sm zindex-10"
   >
-    <ModalDialog.Title>
-      <div
-        style={
-          Object {
-            "height": "44px",
-            "margin": "auto",
-          }
-        }
+    <div
+      className="d-flex flex-row justify-content-between"
+    >
+      <h2
+        className="h3 col pl-0"
       >
         <injectIntl(ShimmedIntlComponent)
           isInitialized={false}
         />
-      </div>
-      <div
-        className="pgn__modal-close-container"
-      >
-        <IconButton
-          iconAs="Icon"
-          onClick={[MockFunction openCancelConfirmModal]}
-          src={[MockFunction icons.Close]}
-        />
-      </div>
-    </ModalDialog.Title>
+      </h2>
+      <IconButton
+        iconAs="Icon"
+        onClick={[MockFunction openCancelConfirmModal]}
+        src={[MockFunction icons.Close]}
+      />
+    </div>
   </ModalDialog.Header>
   <ModalDialog.Body
     className="pb-6"

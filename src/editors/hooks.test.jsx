@@ -1,10 +1,11 @@
 import { useEffect } from 'react';
 
 import { sendTrackEvent } from '@edx/frontend-platform/analytics';
-import analyticsEvt from './data/constants/analyticsEvt';
 
+import analyticsEvt from './data/constants/analyticsEvt';
+import { RequestKeys } from './data/constants/requests';
+import { actions, thunkActions } from './data/redux';
 import { keyStore } from './utils';
-import { thunkActions } from './data/redux';
 import * as hooks from './hooks';
 
 jest.mock('react', () => ({
@@ -15,15 +16,15 @@ jest.mock('react', () => ({
 }));
 
 jest.mock('./data/redux', () => ({
+  actions: {
+    requests: {
+      clearRequest: (args) => ({ clearRequest: args }),
+    },
+  },
   thunkActions: {
     app: {
       initialize: (args) => ({ initializeApp: args }),
       saveBlock: (args) => ({ saveBlock: args }),
-    },
-  },
-  selectors: {
-    app: {
-      returnUrl: jest.fn(),
     },
   },
 }));
@@ -108,13 +109,27 @@ describe('hooks', () => {
   });
 
   describe('saveBlock', () => {
-    it('dispatches thunkActions.app.saveBlock with navigateCallback, and passed content', () => {
-      const navigateCallback = (args) => ({ navigateCallback: args });
-      const dispatch = jest.fn();
-      const destination = 'uRLwhENsAved';
-      const analytics = 'dATAonEveNT';
-      const content = 'myContent';
+    const navigateCallback = (args) => ({ navigateCallback: args });
+    const dispatch = jest.fn();
+    const destination = 'uRLwhENsAved';
+    const analytics = 'dATAonEveNT';
+
+    beforeEach(() => {
+      jest.clearAllMocks();
       jest.spyOn(hooks, hookKeys.navigateCallback).mockImplementationOnce(navigateCallback);
+    });
+    it('returns null when content is null', () => {
+      const content = null;
+      const expected = hooks.saveBlock({
+        content,
+        destination,
+        analytics,
+        dispatch,
+      });
+      expect(expected).toEqual(undefined);
+    });
+    it('dispatches thunkActions.app.saveBlock with navigateCallback, and passed content', () => {
+      const content = 'myContent';
       hooks.saveBlock({
         content,
         destination,
@@ -128,6 +143,16 @@ describe('hooks', () => {
           analytics,
         }),
         content,
+      }));
+    });
+  });
+
+  describe('clearSaveError', () => {
+    it('dispatches actions.requests.clearRequest with saveBlock requestKey', () => {
+      const dispatch = jest.fn();
+      hooks.clearSaveError({ dispatch })();
+      expect(dispatch).toHaveBeenCalledWith(actions.requests.clearRequest({
+        requestKey: RequestKeys.saveBlock,
       }));
     });
   });

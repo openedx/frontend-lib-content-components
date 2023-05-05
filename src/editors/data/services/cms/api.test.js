@@ -1,5 +1,6 @@
 import * as utils from '../../../utils';
 import * as api from './api';
+import * as mockApi from './mockApi';
 import * as urls from './urls';
 import { get, post, deleteObject } from './utils';
 
@@ -21,7 +22,16 @@ jest.mock('./urls', () => ({
   allowThumbnailUpload: jest.fn().mockName('urls.allowThumbnailUpload'),
   thumbnailUpload: jest.fn().mockName('urls.thumbnailUpload'),
   checkTranscriptsForImport: jest.fn().mockName('urls.checkTranscriptsForImport'),
+  courseDetailsUrl: jest.fn().mockName('urls.courseDetailsUrl'),
+  courseAdvanceSettings: jest.fn().mockName('urls.courseAdvanceSettings'),
   replaceTranscript: jest.fn().mockName('urls.replaceTranscript'),
+  videoFeatures: jest.fn().mockName('urls.videoFeatures'),
+  courseVideos: jest.fn().mockName('urls.courseVideos'),
+  videoUpload: jest.fn()
+    .mockName('urls.courseVideos')
+    .mockImplementation(
+      ({ studioEndpointUrl, learningContextId }) => `${studioEndpointUrl}/some_video_upload_url/${learningContextId}`,
+    ),
 }));
 
 jest.mock('./utils', () => ({
@@ -72,6 +82,27 @@ describe('cms api', () => {
       });
     });
 
+    describe('fetchCourseDetails', () => {
+      it('should call get with url.courseDetailsUrl', () => {
+        apiMethods.fetchCourseDetails({ learningContextId, studioEndpointUrl });
+        expect(get).toHaveBeenCalledWith(urls.courseDetailsUrl({ studioEndpointUrl, learningContextId }));
+      });
+    });
+
+    describe('fetchVideos', () => {
+      it('should call get with url.courseVideos', () => {
+        apiMethods.fetchVideos({ learningContextId, studioEndpointUrl });
+        expect(get).toHaveBeenCalledWith(urls.courseVideos({ studioEndpointUrl, learningContextId }));
+      });
+    });
+
+    describe('fetchAdvancedSettings', () => {
+      it('should call get with url.courseAdvanceSettings', () => {
+        apiMethods.fetchAdvancedSettings({ learningContextId, studioEndpointUrl });
+        expect(get).toHaveBeenCalledWith(urls.courseAdvanceSettings({ studioEndpointUrl, learningContextId }));
+      });
+    });
+
     describe('normalizeContent', () => {
       test('return value for blockType: html', () => {
         const content = 'Im baby palo santo ugh celiac fashion axe. La croix lo-fi venmo whatever. Beard man braid migas single-origin coffee forage ramps.';
@@ -95,6 +126,10 @@ describe('cms api', () => {
           videoSource: 'viDeOSouRCE',
           fallbackVideos: 'FalLBacKVidEOs',
           allowVideoDownloads: 'alLOwViDeodownLOads',
+          allowVideoSharing: {
+            level: 'sOMeStRInG',
+            value: 'alloWviDeOshArinG',
+          },
           thumbnail: 'THUmbNaIL',
           transcripts: 'traNScRiPts',
           allowTranscriptDownloads: 'aLloWTRaNScriPtdoWnlOADS',
@@ -131,6 +166,7 @@ describe('cms api', () => {
           metadata: {
             display_name: title,
             download_video: content.allowVideoDownloads,
+            public_access: content.allowVideoSharing.value,
             edx_video_id: edxVideoId,
             html5_sources: html5Sources,
             youtube_id_1_0: youtubeId,
@@ -192,6 +228,20 @@ describe('cms api', () => {
         );
       });
     });
+
+    describe('uploadVideo', () => {
+      it('should call post with urls.courseVideos and data', () => {
+        const data = { files: [{ file_name: 'video.mp4', content_type: 'mp4' }] };
+
+        apiMethods.uploadVideo({ data, studioEndpointUrl, learningContextId });
+
+        expect(urls.courseVideos).toHaveBeenCalledWith({ studioEndpointUrl, learningContextId });
+        expect(post).toHaveBeenCalledWith(
+          urls.courseVideos({ studioEndpointUrl, learningContextId }),
+          data,
+        );
+      });
+    });
   });
   describe('loadImage', () => {
     it('loads incoming image data, replacing the dateAdded with a date field', () => {
@@ -241,12 +291,6 @@ describe('cms api', () => {
           urls.thumbnailUpload({ studioEndpointUrl, learningContextId, videoId }),
           mockFormdata,
         );
-      });
-    });
-    describe('allowThumbnailUpload', () => {
-      it('should call get with url.allowThumbnailUpload', () => {
-        apiMethods.allowThumbnailUpload({ studioEndpointUrl });
-        expect(get).toHaveBeenCalledWith(urls.allowThumbnailUpload({ studioEndpointUrl }));
       });
     });
   });
@@ -502,6 +546,38 @@ describe('cms api', () => {
       const licenseType = 'all-rights-reserved';
       const licenseDetails = {};
       expect(api.processLicense(licenseType, licenseDetails)).toEqual('all-rights-reserved');
+    });
+  });
+  describe('checkMockApi', () => {
+    const envTemp = process.env;
+    beforeEach(() => {
+      jest.resetModules();
+      process.env = { ...envTemp };
+    });
+    afterEach(() => {
+      process.env = envTemp;
+    });
+    describe('if REACT_APP_DEVGALLERY is true', () => {
+      it('should return the mockApi version of a call when it exists', () => {
+        process.env.REACT_APP_DEVGALLERY = true;
+        expect(api.checkMockApi('fetchBlockById')).toEqual(mockApi.fetchBlockById);
+      });
+      it('should return an empty mock when the call does not exist', () => {
+        process.env.REACT_APP_DEVGALLERY = true;
+        expect(api.checkMockApi('someRAnDomThINg')).toEqual(mockApi.emptyMock);
+      });
+    });
+    describe('if REACT_APP_DEVGALLERY is not true', () => {
+      it('should return the appropriate call', () => {
+        expect(api.checkMockApi('fetchBlockById')).toEqual(apiMethods.fetchBlockById);
+      });
+    });
+  });
+  describe('fetchVideoFeatures', () => {
+    it('should call get with url.videoFeatures', () => {
+      const args = { studioEndpointUrl, learningContextId };
+      apiMethods.fetchVideoFeatures({ ...args });
+      expect(get).toHaveBeenCalledWith(urls.videoFeatures({ ...args }));
     });
   });
 });

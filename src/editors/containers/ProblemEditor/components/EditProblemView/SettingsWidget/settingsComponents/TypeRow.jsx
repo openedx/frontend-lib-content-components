@@ -1,22 +1,30 @@
 import React from 'react';
-import { Container, Icon } from '@edx/paragon';
+import { Icon } from '@edx/paragon';
 import PropTypes from 'prop-types';
 import { Check } from '@edx/paragon/icons';
 import { typeRowHooks } from '../hooks';
 
+import Button from '../../../../../../sharedComponents/Button';
+
 export const TypeRow = ({
   answers,
+  blockTitle,
   correctAnswerCount,
   typeKey,
   label,
   selected,
+  problemType,
   lastRow,
+  setBlockTitle,
   updateField,
   updateAnswer,
 }) => {
   const { onClick } = typeRowHooks({
     answers,
+    blockTitle,
     correctAnswerCount,
+    problemType,
+    setBlockTitle,
     typeKey,
     updateField,
     updateAnswer,
@@ -24,10 +32,10 @@ export const TypeRow = ({
 
   return (
     <>
-      <Container size="xl" onClick={onClick} role="button" className="d-flex" fluid>
-        <span className="flex-grow-1">{label}</span>
+      <Button onClick={onClick} className="d-flex p-0 flex-row justify-content-between w-100">
+        <span className="small text-primary-500">{label}</span>
         <span hidden={selected}><Icon src={Check} className="text-success" /></span>
-      </Container>
+      </Button>
       <hr className={lastRow ? 'd-none' : 'd-block'} />
     </>
   );
@@ -41,11 +49,14 @@ TypeRow.propTypes = {
     title: PropTypes.string,
     unselectedFeedback: PropTypes.string,
   })).isRequired,
+  blockTitle: PropTypes.string.isRequired,
   correctAnswerCount: PropTypes.number.isRequired,
   typeKey: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
   selected: PropTypes.bool.isRequired,
   lastRow: PropTypes.bool.isRequired,
+  problemType: PropTypes.string.isRequired,
+  setBlockTitle: PropTypes.func.isRequired,
   updateAnswer: PropTypes.func.isRequired,
   updateField: PropTypes.func.isRequired,
 };

@@ -6,12 +6,12 @@ import {
   Icon, ModalDialog, IconButton, Button,
 } from '@edx/paragon';
 import { Close } from '@edx/paragon/icons';
-
 import { injectIntl, intlShape, FormattedMessage } from '@edx/frontend-platform/i18n';
+
+import BaseModal from '../../sharedComponents/BaseModal';
 import EditorFooter from './components/EditorFooter';
 import TitleHeader from './components/TitleHeader';
 import * as hooks from './hooks';
-import BaseModal from '../TextEditor/components/BaseModal';
 import messages from './messages';
 
 export const EditorContainer = ({
@@ -47,28 +47,25 @@ export const EditorContainer = ({
         <FormattedMessage {...messages.cancelConfirmDescription} />
       </BaseModal>
       <ModalDialog.Header className="shadow-sm zindex-10">
-        <ModalDialog.Title>
-          <div
-            style={{ height: '44px', margin: 'auto' }}
-          >
+        <div className="d-flex flex-row justify-content-between">
+          <h2 className="h3 col pl-0">
             <TitleHeader isInitialized={isInitialized} />
-          </div>
-          <div className="pgn__modal-close-container">
-            <IconButton
-              src={Close}
-              iconAs={Icon}
-              onClick={openCancelConfirmModal}
-            />
-          </div>
-        </ModalDialog.Title>
+          </h2>
+          <IconButton
+            src={Close}
+            iconAs={Icon}
+            onClick={openCancelConfirmModal}
+          />
+        </div>
       </ModalDialog.Header>
       <ModalDialog.Body className="pb-6">
         {isInitialized && children}
       </ModalDialog.Body>
       <EditorFooter
+        clearSaveFailed={hooks.clearSaveError({ dispatch })}
+        disableSave={!isInitialized}
         onCancel={openCancelConfirmModal}
         onSave={hooks.handleSaveClicked({ dispatch, getContent, validateEntry })}
-        disableSave={!isInitialized}
         saveFailed={hooks.saveFailed()}
       />
     </div>

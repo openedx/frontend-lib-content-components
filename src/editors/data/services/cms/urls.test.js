@@ -6,7 +6,6 @@ import {
   blockAncestor,
   blockStudioView,
   courseAssets,
-  allowThumbnailUpload,
   thumbnailUpload,
   downloadVideoTranscriptURL,
   videoTranscripts,
@@ -14,6 +13,9 @@ import {
   courseDetailsUrl,
   checkTranscriptsForImport,
   replaceTranscript,
+  courseAdvanceSettings,
+  videoFeatures,
+  courseVideos,
 } from './urls';
 
 describe('cms url methods', () => {
@@ -83,12 +85,6 @@ describe('cms url methods', () => {
         .toEqual(`${studioEndpointUrl}/assets/${learningContextId}/?page_size=500`);
     });
   });
-  describe('allowThumbnailUpload', () => {
-    it('returns url with studioEndpointUrl', () => {
-      expect(allowThumbnailUpload({ studioEndpointUrl }))
-        .toEqual(`${studioEndpointUrl}/video_images_upload_enabled`);
-    });
-  });
   describe('thumbnailUpload', () => {
     it('returns url with studioEndpointUrl, learningContextId, and videoId', () => {
       expect(thumbnailUpload({ studioEndpointUrl, learningContextId, videoId }))
@@ -129,6 +125,24 @@ describe('cms url methods', () => {
     it('returns url with studioEndpointUrl and parameters', () => {
       expect(replaceTranscript({ studioEndpointUrl, parameters }))
         .toEqual(`${studioEndpointUrl}/transcripts/replace?data=${parameters}`);
+    });
+  });
+  describe('courseAdvanceSettings', () => {
+    it('returns url with studioEndpointUrl and learningContextId', () => {
+      expect(courseAdvanceSettings({ studioEndpointUrl, learningContextId }))
+        .toEqual(`${studioEndpointUrl}/api/contentstore/v0/advanced_settings/${learningContextId}`);
+    });
+  });
+  describe('videoFeatures', () => {
+    it('returns url with studioEndpointUrl and learningContextId', () => {
+      expect(videoFeatures({ studioEndpointUrl, learningContextId }))
+        .toEqual(`${studioEndpointUrl}/video_features/${learningContextId}`);
+    });
+  });
+  describe('courseVideos', () => {
+    it('returns url with studioEndpointUrl and learningContextId', () => {
+      expect(courseVideos({ studioEndpointUrl, learningContextId }))
+        .toEqual(`${studioEndpointUrl}/videos/${learningContextId}`);
     });
   });
 });

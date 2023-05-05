@@ -4,24 +4,31 @@ import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 
 import { answerOptionProps } from '../../../../../../../data/services/cms/types';
 import FeedbackControl from './FeedbackControl';
-import { messages } from './messages';
+import messages from './messages';
+import { ProblemTypeKeys } from '../../../../../../../data/constants/problem';
 
 export const FeedbackBox = ({
-  answer, setAnswer, intl,
+  answer,
+  problemType,
+  setSelectedFeedback,
+  setUnselectedFeedback,
+  // injected
+  intl,
 }) => {
   const props = {
-    onChange: (e) => setAnswer({ selectedFeedback: e.target.value }),
     answer,
     intl,
   };
 
-  return (
-    <div className="bg-light-300 p-4 mt-3 rounded">
+  return ((problemType === ProblemTypeKeys.MULTISELECT) ? (
+    <div className="bg-light-300 p-4 mt-3 rounded text-primary-500">
       <FeedbackControl
         key={`selectedfeedback-${answer.id}`}
         feedback={answer.selectedFeedback}
         labelMessage={messages.selectedFeedbackLabel}
         labelMessageBoldUnderline={messages.selectedFeedbackLabelBoldUnderlineText}
+        onChange={setSelectedFeedback}
+        type="selected"
         {...props}
       />
       <FeedbackControl
@@ -29,14 +36,31 @@ export const FeedbackBox = ({
         feedback={answer.unselectedFeedback}
         labelMessage={messages.unSelectedFeedbackLabel}
         labelMessageBoldUnderline={messages.unSelectedFeedbackLabelBoldUnderlineText}
+        onChange={setUnselectedFeedback}
+        type="unselected"
         {...props}
       />
     </div>
-  );
+  ) : (
+    <div className="bg-light-300 p-4 mt-3 rounded text-primary-500">
+      <FeedbackControl
+        key={`selectedfeedback-${answer.id}`}
+        feedback={answer.selectedFeedback}
+        labelMessage={messages.selectedFeedbackLabel}
+        labelMessageBoldUnderline={messages.selectedFeedbackLabelBoldUnderlineText}
+        onChange={setSelectedFeedback}
+        type="selected"
+        {...props}
+      />
+    </div>
+  ));
 };
 FeedbackBox.propTypes = {
   answer: answerOptionProps.isRequired,
+  problemType: PropTypes.string.isRequired,
   setAnswer: PropTypes.func.isRequired,
+  setSelectedFeedback: PropTypes.func.isRequired,
+  setUnselectedFeedback: PropTypes.func.isRequired,
   intl: intlShape.isRequired,
 };
 

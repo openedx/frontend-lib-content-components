@@ -3,7 +3,7 @@ import * as urls from './urls';
 import { get, post, deleteObject } from './utils';
 import * as module from './api';
 import * as mockApi from './mockApi';
-import { durationFromValue } from '../../../containers/VideoEditor/components/VideoSettingsModal/components/duration';
+import { durationStringFromValue } from '../../../containers/VideoEditor/components/VideoSettingsModal/components/DurationWidget/hooks';
 
 export const apiMethods = {
   fetchBlockById: ({ blockId, studioEndpointUrl }) => get(
@@ -18,10 +18,13 @@ export const apiMethods = {
   fetchAssets: ({ learningContextId, studioEndpointUrl }) => get(
     urls.courseAssets({ studioEndpointUrl, learningContextId }),
   ),
+  fetchVideos: ({ studioEndpointUrl, learningContextId }) => get(
+    urls.courseVideos({ studioEndpointUrl, learningContextId }),
+  ),
   fetchCourseDetails: ({ studioEndpointUrl, learningContextId }) => get(
     urls.courseDetailsUrl({ studioEndpointUrl, learningContextId }),
   ),
-  fetchAdvanceSettings: ({ studioEndpointUrl, learningContextId }) => get(
+  fetchAdvancedSettings: ({ studioEndpointUrl, learningContextId }) => get(
     urls.courseAdvanceSettings({ studioEndpointUrl, learningContextId }),
   ),
   uploadAsset: ({
@@ -36,11 +39,6 @@ export const apiMethods = {
       data,
     );
   },
-  allowThumbnailUpload: ({
-    studioEndpointUrl,
-  }) => get(
-    urls.allowThumbnailUpload({ studioEndpointUrl }),
-  ),
   uploadThumbnail: ({
     studioEndpointUrl,
     learningContextId,
@@ -168,6 +166,7 @@ export const apiMethods = {
         metadata: {
           display_name: title,
           download_video: content.allowVideoDownloads,
+          public_access: content.allowVideoSharing.value,
           edx_video_id: edxVideoId,
           html5_sources: html5Sources,
           youtube_id_1_0: youtubeId,
@@ -176,8 +175,8 @@ export const apiMethods = {
           track: '', // TODO Downloadable Transcript URL. Backend expects a file name, for example: "something.srt"
           show_captions: content.showTranscriptByDefault,
           handout: content.handout,
-          start_time: durationFromValue(content.duration.startTime),
-          end_time: durationFromValue(content.duration.stopTime),
+          start_time: durationStringFromValue(content.duration.startTime),
+          end_time: durationStringFromValue(content.duration.stopTime),
           license: module.processLicense(content.licenseType, content.licenseDetails),
         },
       };
@@ -202,6 +201,20 @@ export const apiMethods = {
       learningContextId,
       title,
     }),
+  ),
+  fetchVideoFeatures: ({
+    studioEndpointUrl,
+    learningContextId,
+  }) => get(
+    urls.videoFeatures({ studioEndpointUrl, learningContextId }),
+  ),
+  uploadVideo: ({
+    data,
+    studioEndpointUrl,
+    learningContextId,
+  }) => post(
+    urls.courseVideos({ studioEndpointUrl, learningContextId }),
+    data,
   ),
 };
 
@@ -275,7 +288,7 @@ export const processLicense = (licenseType, licenseDetails) => {
 
 export const checkMockApi = (key) => {
   if (process.env.REACT_APP_DEVGALLERY) {
-    return mockApi[key];
+    return mockApi[key] ? mockApi[key] : mockApi.emptyMock;
   }
   return module.apiMethods[key];
 };

@@ -8,11 +8,14 @@ import { actions, selectors } from '../../../../../data/redux';
 import * as module from './AnswersContainer';
 
 import { AnswersContainer as AnswersContainerWithoutHOC } from './AnswersContainer';
+import { ProblemTypeKeys } from '../../../../../data/constants/problem';
 
 jest.mock('@edx/frontend-platform/i18n', () => ({
   FormattedMessage: ({ defaultMessage }) => (<p>{defaultMessage}</p>),
+  defineMessages: m => m,
   injectIntl: (args) => args,
   intlShape: {},
+  getLocale: jest.fn(),
 }));
 
 jest.mock('./AnswerOption', () => () => <div>MockAnswerOption</div>);
@@ -52,8 +55,79 @@ describe('AnswersContainer', () => {
         )).toMatchSnapshot();
       });
     });
+    test('snapshot: numeric problems: answer range/answer select button: empty', () => {
+      act(() => {
+        const emptyAnswerProps = {
+          problemType: ProblemTypeKeys.NUMERIC,
+          answers: [],
+          updateField: jest.fn(),
+          addAnswer: jest.fn(),
+          addAnswerRange: jest.fn(),
+        };
+        expect(shallow(
+          <module.AnswersContainer
+            {...emptyAnswerProps}
+          />,
+        )).toMatchSnapshot();
+      });
+    });
+    test('snapshot: numeric problems: answer range/answer select button: Range disables the additon of more adds', () => {
+      act(() => {
+        const answerRangeProps = {
+          problemType: ProblemTypeKeys.NUMERIC,
+          answers: [{
+            id: 'A',
+            title: 'Answer 1',
+            correct: true,
+            selectedFeedback: 'selected feedback',
+            unselectedFeedback: 'unselected feedback',
+            isAnswerRange: true,
+          }],
+          updateField: jest.fn(),
+          addAnswer: jest.fn(),
+          addAnswerRange: jest.fn(),
+        };
+        expect(shallow(
+          <module.AnswersContainer
+            {...answerRangeProps}
+          />,
+        )).toMatchSnapshot();
+      });
+    });
+    test('snapshot: numeric problems: answer range/answer select button: multiple answers disables range.', () => {
+      act(() => {
+        const answersProps = {
+          problemType: ProblemTypeKeys.NUMERIC,
+          answers: [{
+            id: 'A',
+            title: 'Answer 1',
+            correct: true,
+            selectedFeedback: 'selected feedback',
+            unselectedFeedback: 'unselected feedback',
+            isAnswerRange: false,
+          },
+          {
+            id: 'B',
+            title: 'Answer 1',
+            correct: true,
+            selectedFeedback: 'selected feedback',
+            unselectedFeedback: 'unselected feedback',
+            isAnswerRange: false,
+          },
+          ],
+          updateField: jest.fn(),
+          addAnswer: jest.fn(),
+          addAnswerRange: jest.fn(),
+        };
+        expect(shallow(
+          <module.AnswersContainer
+            {...answersProps}
+          />,
+        )).toMatchSnapshot();
+      });
+    });
 
-    test('with react-testing-library', async () => {
+    test('useAnswerContainer', async () => {
       let container = null;
       await act(async () => {
         const wrapper = render(
