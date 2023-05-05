@@ -14,7 +14,6 @@ export const QuestionWidget = ({
   // injected
   intl,
 }) => {
-  console.log('QuestionWidget | question: ', question)
   const { editorRef, refReady, setEditorRef } = prepareEditorRef();
   if (!refReady) { return null; }
   return (
