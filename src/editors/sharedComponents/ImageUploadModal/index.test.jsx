@@ -5,6 +5,7 @@ import { keyStore } from '../../utils';
 import tinyMCEKeys from '../../data/constants/tinyMCE';
 
 import * as module from '.';
+import * as tinyMceHooks from '../TinyMceWidget/hooks';
 
 jest.mock('./ImageSettingsModal', () => 'ImageSettingsModal');
 jest.mock('./SelectImageModal', () => 'SelectImageModal');
@@ -36,9 +37,13 @@ const mockImage = {
   height: 150,
 };
 
-const mockImagesRef = { current: [mockImage] };
+let mockImagesRef = { current: [mockImage] };
 
 describe('ImageUploadModal', () => {
+  beforeEach(() => {
+    mockImagesRef = { current: [mockImage] };
+  });
+
   describe('hooks', () => {
     describe('imgTag', () => {
       const selection = { externalUrl: 'sOmEuRl.cOm' };
@@ -68,6 +73,7 @@ describe('ImageUploadModal', () => {
       });
     });
     describe('createSaveCallback', () => {
+      const updateImageDimensionsSpy = jest.spyOn(tinyMceHooks, 'updateImageDimensions');
       const close = jest.fn();
       const execCommandMock = jest.fn();
       const editorRef = { current: { some: 'dATa', execCommand: execCommandMock } };
@@ -76,6 +82,13 @@ describe('ImageUploadModal', () => {
       const lmsEndpointUrl = 'sOmE';
       const images = mockImagesRef;
       let output;
+      const newImage = {
+        altText: settings.altText,
+        externalUrl: selection.externalUrl,
+        width: settings.dimensions.width,
+        height: settings.dimensions.height,
+      };
+
       beforeEach(() => {
         output = module.hooks.createSaveCallback({
           close, settings, images, editorRef, setSelection, selection, lmsEndpointUrl,
@@ -84,26 +97,38 @@ describe('ImageUploadModal', () => {
       afterEach(() => {
         jest.clearAllMocks();
       });
-      test('It creates a callback, that when called, inserts to the editor, sets the selection to be null, and calls close', () => {
-        jest.spyOn(module.hooks, hookKeys.imgTag)
-          .mockImplementationOnce((props) => ({ selection, settings: props.settings, lmsEndpointUrl }));
-        expect(execCommandMock).not.toBeCalled();
-        expect(setSelection).not.toBeCalled();
-        expect(close).not.toBeCalled();
-        output(settings);
-        expect(execCommandMock).toBeCalledWith(
-          tinyMCEKeys.commands.insertContent,
-          false,
-          { selection, settings, lmsEndpointUrl },
-        );
-        expect(setSelection).toBeCalledWith({
-          altText: settings.altText,
-          externalUrl: selection.externalUrl,
-          width: settings.dimensions.width,
-          height: settings.dimensions.height,
-        });
-        expect(close).toBeCalled();
-      });
+      test(
+        `It creates a callback, that when called, inserts to the editor, sets the selection to the current element,
+        adds new image to the images ref, and calls close`,
+        () => {
+          jest.spyOn(module.hooks, hookKeys.imgTag)
+            .mockImplementationOnce((props) => ({ selection, settings: props.settings, lmsEndpointUrl }));
+
+          expect(execCommandMock).not.toBeCalled();
+          expect(setSelection).not.toBeCalled();
+          expect(close).not.toBeCalled();
+          expect(images.current).toEqual([mockImage]);
+
+          output(settings);
+
+          expect(execCommandMock).toBeCalledWith(
+            tinyMCEKeys.commands.insertContent,
+            false,
+            { selection, settings, lmsEndpointUrl },
+          );
+          expect(setSelection).toBeCalledWith(newImage);
+          expect(updateImageDimensionsSpy.mock.calls.length).toBe(1);
+          expect(updateImageDimensionsSpy).toBeCalledWith({
+            images: [mockImage],
+            url: selection.externalUrl,
+            width: settings.dimensions.width,
+            height: settings.dimensions.height,
+          });
+          expect(updateImageDimensionsSpy.mock.results[0].value.foundMatch).toBe(false);
+          expect(images.current).toEqual([mockImage, newImage]);
+          expect(close).toBeCalled();
+        },
+      );
     });
     describe('onClose', () => {
       it('takes and calls clearSelection and close callbacks', () => {
