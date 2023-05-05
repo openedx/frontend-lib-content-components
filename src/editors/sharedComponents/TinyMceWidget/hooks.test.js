@@ -19,13 +19,17 @@ const moduleKeys = keyStore(module);
 let hook;
 let output;
 
+const editorImageWidth = 2022;
+const editorImageHeight = 1619;
+
 const mockNode = {
   src: 'http://localhost:18000/asset-v1:TestX+Test01+Test0101+type@asset+block/DALL_E_2023-03-10.png',
   alt: 'aLt tExt',
-  width: 2022,
-  height: 1619,
+  width: editorImageWidth,
+  height: editorImageHeight,
 };
 
+const mockEditorWithSelection = { selection: { getNode: () => mockNode } };
 const initialContentHeight = 150;
 const initialContentWidth = 100;
 
@@ -64,6 +68,7 @@ const mockImagesRef = { current: [mockImage] };
 describe('TinyMceEditor hooks', () => {
   beforeEach(() => {
     jest.clearAllMocks();
+    mockImagesRef.current = [mockImage];
   });
   describe('state hooks', () => {
     state.testGetter(state.keys.isImageModalOpen);
@@ -371,7 +376,7 @@ describe('TinyMceEditor hooks', () => {
     describe('openModalWithSelectedImage', () => {
       const setImage = jest.fn();
       const openImgModal = jest.fn();
-      const editor = { selection: { getNode: () => mockNode } };
+      const editor = mockEditorWithSelection;
 
       beforeEach(() => {
         module.openModalWithSelectedImage({
@@ -471,6 +476,55 @@ describe('TinyMceEditor hooks', () => {
         expect(imagesRef.current).toEqual([mockImage]);
         expect(imagesRef.current[0].width).toBe(initialContentWidth);
         expect(imagesRef.current[0].height).toBe(initialContentHeight);
+      });
+    });
+
+    describe('getImageResizeHandler', () => {
+      const setImage = jest.fn();
+
+      it('sets image ref and state to new width', () => {
+        expect(mockImagesRef.current[0].width).toBe(initialContentWidth);
+        module.getImageResizeHandler({ editor: mockEditorWithSelection, imagesRef: mockImagesRef, setImage })();
+
+        expect(setImage).toHaveBeenCalledTimes(1);
+        expect(setImage).toHaveBeenCalledWith(expect.objectContaining({ width: editorImageWidth }));
+        expect(mockImagesRef.current[0].width).not.toBe(initialContentWidth);
+        expect(mockImagesRef.current[0].width).toBe(editorImageWidth);
+      });
+    });
+
+    describe('updateImageDimensions', () => {
+      const unchangedImg = {
+        id: 'asset-v1:TestX+Test01+Test0101+type@asset+block@unchanged-image.png',
+        width: 3,
+        height: 5,
+      };
+      const images = [
+        mockImage,
+        unchangedImg,
+      ];
+
+      it('updates dimensions of correct image in images array', () => {
+        const { result, foundMatch } = module.updateImageDimensions({
+          images, url: mockNode.src, width: 123, height: 321,
+        });
+        const imageToHaveBeenUpdated = result.find(img => img.id === mockImage.id);
+        const imageToHaveBeenUnchanged = result.find(img => img.id === unchangedImg.id);
+
+        expect(imageToHaveBeenUpdated.width).toBe(123);
+        expect(imageToHaveBeenUpdated.height).toBe(321);
+        expect(imageToHaveBeenUnchanged.width).toBe(3);
+        expect(imageToHaveBeenUnchanged.height).toBe(5);
+
+        expect(foundMatch).toBe(true);
+      });
+
+      it('does not update images if id is not found', () => {
+        const { result, foundMatch } = module.updateImageDimensions({
+          images, url: 'not_found', width: 123, height: 321,
+        });
+        expect(result.find(img => img.width === 123 || img.height === 321)).toBeFalsy();
+        expect(foundMatch).toBe(false);
       });
     });
   });

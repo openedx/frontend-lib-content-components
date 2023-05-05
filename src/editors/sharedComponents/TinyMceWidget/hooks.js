@@ -105,6 +105,23 @@ export const replaceStaticwithAsset = ({
   });
 };
 
+export const getImageResizeHandler = ({ editor, imagesRef, setImage }) => () => {
+  const {
+    src, alt, width, height,
+  } = editor.selection.getNode();
+
+  imagesRef.current = module.updateImageDimensions({
+    images: imagesRef.current, url: src, width, height,
+  }).result;
+
+  setImage({
+    externalUrl: src,
+    altText: alt,
+    width,
+    height,
+  });
+};
+
 export const setupCustomBehavior = ({
   updateContent,
   openImgModal,
@@ -187,22 +204,7 @@ export const setupCustomBehavior = ({
     }
   });
   // after resizing an image in the editor, synchronize React state and ref
-  editor.on('ObjectResized', () => {
-    const {
-      src, alt, width, height,
-    } = editor.selection.getNode();
-
-    images.current = module.updateImageDimensions({
-      images: images.current, url: src, width, height,
-    }).result;
-
-    setImage({
-      externalUrl: src,
-      altText: alt,
-      width,
-      height,
-    });
-  });
+  editor.on('ObjectResized', getImageResizeHandler({ editor, imagesRef: images, setImage }));
 };
 
 // imagetools_cors_hosts needs a protocol-sanatized url
@@ -439,7 +441,8 @@ export const updateImageDimensions = ({
   let foundMatch = false;
 
   const result = images.map((image) => {
-    const isMatch = matchImageStringsByIdentifiers(image.id, url);
+    const imageIdentifier = image.id || image.url || image.src || image.externalUrl;
+    const isMatch = matchImageStringsByIdentifiers(imageIdentifier, url);
     if (isMatch) {
       foundMatch = true;
       return { ...image, width, height };
