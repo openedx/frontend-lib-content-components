@@ -43,10 +43,34 @@ describe('Answer Options Hooks', () => {
     state.testGetter(state.keys.isFeedbackVisible);
   });
   describe('removeAnswer', () => {
-    test('it dispatches actions.problem.deleteAnswer', () => {
-      const answer = { id: 'A', correct: false };
-      const dispatch = useDispatch();
-      module.removeAnswer({ answer, dispatch })();
+    const answers = [
+      { id: 'A', title: 'atitle', correct: false },
+      { id: 'B', title: 'btitle', correct: false },
+      { id: 'C', title: 'ctitle', correct: false },
+    ];
+    const answer = { id: 'A', correct: false };
+    const problemType = 'multiplechoiceresponse';
+    const dispatch = useDispatch();
+    it('dispatches actions.problem.updateAnswer if problemType is SINGLESELECT', () => {
+      module.removeAnswer({
+        answers,
+        answer,
+        problemType,
+        dispatch,
+      })();
+      expect(dispatch).toHaveBeenCalledWith(actions.problem.updateAnswer({
+        id: 'A',
+        title: 'atitle',
+        correct: false,
+      }));
+    });
+    it('dispatches actions.problem.deleteAnswer', () => {
+      module.removeAnswer({
+        answers,
+        answer,
+        problemType,
+        dispatch,
+      })();
       expect(dispatch).toHaveBeenCalledWith(actions.problem.deleteAnswer({
         id: answer.id,
         correct: answer.correct,

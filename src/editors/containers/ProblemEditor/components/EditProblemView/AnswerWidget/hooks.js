@@ -9,7 +9,25 @@ export const state = StrictDict({
   isFeedbackVisible: (val) => useState(val),
 });
 
-export const removeAnswer = ({ answer, dispatch }) => () => {
+export const removeAnswer = ({
+  answers,
+  answer,
+  problemType,
+  dispatch,
+}) => () => {
+  const richTextProblems = [ProblemTypeKeys.SINGLESELECT, ProblemTypeKeys.MULTISELECT];
+
+  if (richTextProblems.includes(problemType)) {
+    const currentAnswerTitles = fetchEditorContent({ format: 'text' }).answers;
+    answers.forEach(ans => {
+      dispatch(actions.problem.updateAnswer({
+        ...ans,
+        title: currentAnswerTitles?.[ans.id] || ans.title,
+        correct: ans.correct,
+      }));
+    });
+  }
+
   dispatch(actions.problem.deleteAnswer({ id: answer.id, correct: answer.correct }));
 };
 

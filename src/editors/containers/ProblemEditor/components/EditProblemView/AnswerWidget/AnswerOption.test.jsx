@@ -7,6 +7,7 @@ import { AnswerOption, mapStateToProps } from './AnswerOption';
 jest.mock('../../../../../data/redux', () => ({
   selectors: {
     problem: {
+      answers: jest.fn(state => ({ answers: state })),
       problemType: jest.fn(state => ({ problemType: state })),
     },
   },
@@ -63,6 +64,11 @@ describe('AnswerOption', () => {
 
   describe('mapStateToProps', () => {
     const testState = { A: 'pple', B: 'anana', C: 'ucumber' };
+    test('answers from problem.answers', () => {
+      expect(
+        mapStateToProps(testState).answers,
+      ).toEqual(selectors.problem.answers(testState));
+    });
     test('problemType from problem.problemType', () => {
       expect(
         mapStateToProps(testState).problemType,
