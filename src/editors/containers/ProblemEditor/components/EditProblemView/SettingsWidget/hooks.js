@@ -3,7 +3,12 @@ import { useState, useEffect } from 'react';
 import _ from 'lodash-es';
 import * as module from './hooks';
 import messages from './messages';
-import { ProblemTypeKeys, ProblemTypes, RichTextProblems, ShowAnswerTypesKeys } from '../../../../../data/constants/problem';
+import {
+  ProblemTypeKeys,
+  ProblemTypes,
+  RichTextProblems,
+  ShowAnswerTypesKeys,
+} from '../../../../../data/constants/problem';
 import { fetchEditorContent } from '../hooks';
 
 export const state = {
@@ -234,7 +239,7 @@ export const typeRowHooks = ({
   typeKey,
   updateField,
   updateAnswer,
-}) => {  
+}) => {
   const clearPreviouslySelectedAnswers = () => {
     let currentAnswerTitles;
     if (RichTextProblems.includes(problemType)) {
