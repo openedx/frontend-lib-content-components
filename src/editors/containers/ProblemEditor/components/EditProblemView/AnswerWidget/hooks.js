@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { StrictDict } from '../../../../../utils';
 import * as module from './hooks';
 import { actions } from '../../../../../data/redux';
-import { ProblemTypeKeys } from '../../../../../data/constants/problem';
+import { ProblemTypeKeys, RichTextProblems } from '../../../../../data/constants/problem';
 import { fetchEditorContent } from '../hooks';
 
 export const state = StrictDict({
@@ -15,9 +15,7 @@ export const removeAnswer = ({
   problemType,
   dispatch,
 }) => () => {
-  const richTextProblems = [ProblemTypeKeys.SINGLESELECT, ProblemTypeKeys.MULTISELECT];
-
-  if (richTextProblems.includes(problemType)) {
+  if (RichTextProblems.includes(problemType)) {
     const currentAnswerTitles = fetchEditorContent({ format: 'text' }).answers;
     answers.forEach(ans => {
       dispatch(actions.problem.updateAnswer({
