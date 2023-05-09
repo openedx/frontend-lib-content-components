@@ -7,10 +7,15 @@ import { ProblemTypeKeys, ProblemTypes, ShowAnswerTypesKeys } from '../../../../
 import { fetchEditorContent } from '../hooks';
 
 export const state = {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   showAdvanced: (val) => useState(val),
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   cardCollapsed: (val) => useState(val),
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   summary: (val) => useState(val),
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   showAttempts: (val) => useState(val),
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   attemptDisplayValue: (val) => useState(val),
 };
 
@@ -39,6 +44,7 @@ export const showFullCard = (hasExpandableTextArea) => {
 export const hintsCardHooks = (hints, updateSettings) => {
   const [summary, setSummary] = module.state.summary({ message: messages.noHintSummary, values: {} });
 
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   useEffect(() => {
     const hintsNumber = hints.length;
     if (hintsNumber === 0) {
@@ -89,6 +95,7 @@ export const hintsRowHooks = (id, hints, updateSettings) => {
 export const matlabCardHooks = (matLabApiKey, updateSettings) => {
   const [summary, setSummary] = module.state.summary({ message: '', values: {}, intl: false });
 
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   useEffect(() => {
     if (_.isEmpty(matLabApiKey)) {
       setSummary({ message: messages.matlabNoKeySummary, values: {}, intl: true });

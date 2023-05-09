@@ -9,6 +9,7 @@ import * as module from './VideoEditorModal';
 
 export const hooks = {
   initialize: (dispatch) => {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
     React.useEffect(() => {
       dispatch(thunkActions.video.loadVideoData());
     }, []);

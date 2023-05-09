@@ -10,12 +10,19 @@ import {
 } from './utils';
 
 export const state = {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   highlighted: (val) => React.useState(val),
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   searchString: (val) => React.useState(val),
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   showSelectVideoError: (val) => React.useState(val),
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   showSizeError: (val) => React.useState(val),
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   sortBy: (val) => React.useState(val),
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   filertBy: (val) => React.useState(val),
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   hideSelectedVideos: (val) => React.useState(val),
 };
 
@@ -125,6 +132,7 @@ export const videoListProps = ({ searchSortProps, videos }) => {
 
 export const fileInputProps = () => {
   // TODO [Update video] Implement this
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const ref = React.useRef();
   const click = () => ref.current.click();
 
