@@ -16,7 +16,7 @@ export const removeAnswer = ({
   dispatch,
 }) => () => {
   if (RichTextProblems.includes(problemType)) {
-    const currentAnswerTitles = fetchEditorContent({ format: 'text' }).answers;
+    const currentAnswerTitles = fetchEditorContent({ format: '' }).answers;
     answers.forEach(ans => {
       dispatch(actions.problem.updateAnswer({
         ...ans,
