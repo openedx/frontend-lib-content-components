@@ -435,7 +435,6 @@ export class OLXParser {
    * The OLX saved to the class constuctor is parsed for demand hint tags with hint subtags. An empty array is returned
    * if there are no hints in the OLX. Otherwise the hint tag is parsed and appended to the hintsObject arrary. After
    * going through all the hints the hintsObject array is returned.
-   * is returned.
    * @return {array} array of hint objects
    */
   getHints() {
@@ -500,7 +499,7 @@ export class OLXParser {
   }
 
   /** getFeedback(xmlElement)
-   * parseQuestions takes xmlElement. The xmlElement is searched for the attribute correcthint.
+   * getFeedback takes xmlElement. The xmlElement is searched for the attribute correcthint.
    * An empty string is returned if the parameter is not present. Otherwise a string of the feedback
    * is returned.
    * @param {object} xmlElement - object of answer attributes
