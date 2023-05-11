@@ -1,10 +1,10 @@
-6. Feature-based Application Organization
+7. Feature-based Application Organization
 -----------------------------------------
 
 Status
 ------
 
-Proposed
+Accepted
 
 Context
 -------
