@@ -108,9 +108,11 @@ export class OLXParser {
   /** parseMultipleChoiceAnswers(problemType, widgetName, option)
    * parseMultipleChoiceAnswers takes a problemType, widgetName, and a valid option. The
    * olx for the given problem type and widget is parsed. Depending on the problem
-   * type, the tile for an answer will be parsed differently becuase of their tag structure.
-   * The parsing returns a data object with an array of answer objects. If the olx has grouped
-   * feedback, this will also be included in the data object.
+   * type, the title for an answer will be parsed differently because of single select and multiselect
+   * problems are rich text while dropdown answers are plain text. The rich text is parsed into an object
+   * and is converted back into a string before being added to the answer object. The parsing returns a
+   * data object with an array of answer objects. If the olx has grouped feedback, this will also be
+   * included in the data object.
    * @param {string} problemType - string of the olx problem type
    * @param {string} widgetName - string of the wrapping tag name (optioninput, choicegroup, checkboxgroup)
    * @param {string} option - string of the type of answers (choice or option)

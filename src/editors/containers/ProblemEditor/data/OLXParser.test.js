@@ -174,7 +174,7 @@ describe('OLXParser', () => {
         'choicegroup',
         'choice',
       );
-      it('should return an array of objects with length one', () => {
+      it('should return a default answer', () => {
         expect(answers).toEqual(multipleChoiceWithoutAnswers.data.answers);
         expect(answers).toHaveLength(1);
       });
