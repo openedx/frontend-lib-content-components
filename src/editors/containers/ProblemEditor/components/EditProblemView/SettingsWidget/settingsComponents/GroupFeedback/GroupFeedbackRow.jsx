@@ -1,12 +1,11 @@
 import React from 'react';
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 import {
-  ActionRow, Container, Form, Icon, IconButton, Row,
+  ActionRow, Form, Icon, IconButton, Row,
 } from '@edx/paragon';
 import { DeleteOutline } from '@edx/paragon/icons';
 import PropTypes from 'prop-types';
 import messages from '../../messages';
-import ExpandableTextArea from '../../../../../../../sharedComponents/ExpandableTextArea';
 
 export const GroupFeedbackRow = ({
   value,
@@ -14,27 +13,25 @@ export const GroupFeedbackRow = ({
   handleFeedbackChange,
   handleDelete,
   answers,
-  id,
   // injected
   intl,
 }) => (
 
   <div className="mb-4">
     <ActionRow className="mb-2">
-      <Container fluid className="p-0">
-        <ExpandableTextArea
-          value={value.feedback}
-          onChange={handleFeedbackChange}
-          id={`groupFeedback-${id}`}
-        />
-      </Container>
-      <IconButton
-        src={DeleteOutline}
-        iconAs={Icon}
-        alt={intl.formatMessage(messages.settingsDeleteIconAltText)}
-        onClick={handleDelete}
-        variant="primary"
+      <Form.Control
+        value={value.feedback}
+        onChange={handleFeedbackChange}
       />
+      <div className="d-flex flex-row flex-nowrap">
+        <IconButton
+          src={DeleteOutline}
+          iconAs={Icon}
+          alt={intl.formatMessage(messages.settingsDeleteIconAltText)}
+          onClick={handleDelete}
+          variant="primary"
+        />
+      </div>
     </ActionRow>
     <Form.CheckboxSet
       onChange={handleAnswersSelectedChange}
@@ -47,7 +44,10 @@ export const GroupFeedbackRow = ({
             value={letter.id}
             checked={value.answers.indexOf(letter.id)}
             isValid={value.answers.indexOf(letter.id) >= 0}
-          >{letter.id}
+          >
+            <div className="x-small">
+              {letter.id}
+            </div>
           </Form.Checkbox>
         ))}
       </Row>
@@ -72,7 +72,6 @@ GroupFeedbackRow.propTypes = {
     answers: PropTypes.arrayOf(PropTypes.string),
     feedback: PropTypes.string,
   }).isRequired,
-  id: PropTypes.string.isRequired,
   // injected
   intl: intlShape.isRequired,
 };

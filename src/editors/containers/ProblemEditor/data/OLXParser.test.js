@@ -17,6 +17,9 @@ import {
   styledQuestionOLX,
   shuffleProblemOLX,
   scriptProblemOlX,
+  labelDescriptionQuestionOLX,
+  htmlEntityTestOLX,
+  numberParseTestOLX,
 } from './mockData/olxTestData';
 import { ProblemTypeKeys } from '../../../data/constants/problem';
 
@@ -70,6 +73,18 @@ describe('Check OLXParser problem type', () => {
     const olxparser = new OLXParser(blankProblemOLX.rawOLX);
     const problemType = olxparser.getProblemType();
     expect(problemType).toBe(null);
+  });
+});
+
+describe('OLX Parser settings attributes on problem tags', () => {
+  test('OLX with attributes on the problem tags should error out', () => {
+    const olxparser = new OLXParser(labelDescriptionQuestionOLX.rawOLX);
+    try {
+      olxparser.getParsedOLXData();
+    } catch (e) {
+      expect(e).toBeInstanceOf(Error);
+      expect(e.message).toBe('Misc Attributes asscoiated with problem, opening in advanced editor');
+    }
   });
 });
 
@@ -198,6 +213,12 @@ describe('Check OLXParser for question parsing', () => {
     const question = olxparser.parseQuestions(problemType);
     expect(question).toBe(styledQuestionOLX.question);
   });
+  test('Test OLX content with labels and descriptions inside reponse tag should parse correctly, appending the label/description to the question', () => {
+    const olxparser = new OLXParser(labelDescriptionQuestionOLX.rawOLX);
+    const problemType = olxparser.getProblemType();
+    const question = olxparser.parseQuestions(problemType);
+    expect(question).toBe(labelDescriptionQuestionOLX.question);
+  });
 });
 
 describe('OLXParser for problem with solution tag', () => {
@@ -210,5 +231,19 @@ describe('OLXParser for problem with solution tag', () => {
       const expected = getCheckboxesOLXWithFeedbackAndHintsOLX().solutionExplanation;
       expect(explanation.replace(/\s/g, '')).toBe(expected.replace(/\s/g, ''));
     });
+  });
+});
+
+describe('Check OLXParser for proper encoding', () => {
+  it('should not encode html entities', () => {
+    const olxparser = new OLXParser(htmlEntityTestOLX.rawOLX);
+    const problemType = olxparser.getProblemType();
+    const question = olxparser.parseQuestions(problemType);
+    expect(question).toBe(htmlEntityTestOLX.question);
+  });
+  it('should not parse hex numbers and leading zeros', () => {
+    const olxparser = new OLXParser(numberParseTestOLX.rawOLX);
+    const answer = olxparser.parseMultipleChoiceAnswers('multiplechoiceresponse', 'choicegroup', 'choice');
+    expect(answer).toEqual(numberParseTestOLX.data);
   });
 });

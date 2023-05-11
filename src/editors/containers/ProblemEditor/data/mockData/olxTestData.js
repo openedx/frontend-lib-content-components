@@ -15,8 +15,8 @@ export const getCheckboxesOLXWithFeedbackAndHintsOLX = () => ({
         <choicehint selected="false"><p>You can specify optional feedback for selected answers, cleared answers, or both.</p></choicehint>
   </choice>
       <choice correct="true"><p>a correct answer</p></choice>
-      <compoundhint value="A B D"><p>You can specify optional feedback for a combination of answers which appears after the specified set of answers is submitted.</p></compoundhint>
-      <compoundhint value="A B C D"><p>You can specify optional feedback for one, several, or all answer combinations.</p></compoundhint>
+      <compoundhint value="A B D">You can specify optional feedback for a combination of answers which appears after the specified set of answers is submitted.</compoundhint>
+      <compoundhint value="A B C D">You can specify optional feedback for one, several, or all answer combinations.</compoundhint>
     </checkboxgroup>
     <solution>
         <div class="detailed-solution">
@@ -87,7 +87,7 @@ export const getCheckboxesOLXWithFeedbackAndHintsOLX = () => ({
           'B',
           'D',
         ],
-        feedback: '<p>You can specify optional feedback for a combination of answers which appears after the specified set of answers is submitted.</p>',
+        feedback: 'You can specify optional feedback for a combination of answers which appears after the specified set of answers is submitted.',
       },
       {
         id: 1,
@@ -97,7 +97,7 @@ export const getCheckboxesOLXWithFeedbackAndHintsOLX = () => ({
           'C',
           'D',
         ],
-        feedback: '<p>You can specify optional feedback for one, several, or all answer combinations.</p>',
+        feedback: 'You can specify optional feedback for one, several, or all answer combinations.',
       },
     ],
   },
@@ -118,8 +118,8 @@ export const getCheckboxesOLXWithFeedbackAndHintsOLX = () => ({
         <choicehint selected="false"><p>You can specify optional feedback for selected answers, cleared answers, or both.</p></choicehint>
       </choice>
       <choice correct="true"><p>a correct answer</p></choice>
-      <compoundhint value="A B D"><p>You can specify optional feedback for a combination of answers which appears after the specified set of answers is submitted.</p></compoundhint>
-      <compoundhint value="A B C D"><p>You can specify optional feedback for one, several, or all answer combinations.</p></compoundhint>
+      <compoundhint value="A B D">You can specify optional feedback for a combination of answers which appears after the specified set of answers is submitted.</compoundhint>
+      <compoundhint value="A B C D">You can specify optional feedback for one, several, or all answer combinations.</compoundhint>
     </checkboxgroup>
       <solution>
       <div class="detailed-solution">
@@ -384,6 +384,38 @@ export const numericInputWithFeedbackAndHintsOLX = {
 `,
 };
 
+export const numericInputWithAnswerRangeOLX = {
+  rawOLX: `<problem>
+<numericalresponse answer="[3/2,-1.3)">
+  <p>You can use this template as a guide to the simple editor markdown and OLX markup to use for numerical input with hints and feedback problems. Edit this component to replace this template with your own assessment.</p>
+<label>Add the question text, or prompt, here. This text is required.</label>
+<description>You can add an optional tip or note related to the prompt like this. </description>
+  <formulaequationinput/>\
+</numericalresponse>
+</problem>`,
+  data: {
+    answers: [
+      {
+        id: 'A',
+        title: '[32,-1.3)',
+        correct: true,
+        selectedFeedback: '<p>You can specify optional feedback like this, which appears after this answer is submitted.</p>',
+        isAnswerRange: true,
+      },
+    ],
+  },
+  question: '<p>You can use this template as a guide to the simple editor markdown and OLX markup to use for numerical input with hints and feedback problems. Edit this component to replace this template with your own assessment.</p><label>Add the question text, or prompt, here. This text is required.</label><em>You can add an optional tip or note related to the prompt like this.</em>',
+  buildOLX: `<problem>
+  <p>You can use this template as a guide to the simple editor markdown and OLX markup to use for numerical input with hints and feedback problems. Edit this component to replace this template with your own assessment.</p>
+  <label>Add the question text, or prompt, here. This text is required.</label>
+  <em>You can add an optional tip or note related to the prompt like this.</em>
+  <numericalresponse answer="(-1.3,3/2]">
+    <formulaequationinput></formulaequationinput>
+  </numericalresponse>
+</problem>
+`,
+};
+
 export const textInputWithFeedbackAndHintsOLX = {
   rawOLX: `<problem>
 <stringresponse answer="the correct answer" type="ci">
@@ -638,4 +670,115 @@ export const shuffleProblemOLX = {
     </choicegroup>
   </multiplechoiceresponse>
 </problem>`,
+};
+
+export const labelDescriptionQuestionOLX = {
+  rawOLX:
+`<problem display_name="Eggs b) - Choosing a System" markdown="null" max_attempts="3" weight="0.5">
+  <p style="text-align: center;"><img height="274" width="" src="/static/boiling_eggs_water_system.png" alt="boiling eggs: water system"/></p>
+  <multiplechoiceresponse>
+  <label>Taking the system as just the <b>water</b>, as indicated by the red dashed line, what would be the correct expression for the first law of thermodynamics applied to this system?</label>
+  <description>Watch out, boiling water is hot</description>
+  <choicegroup type="MultipleChoice">
+    <choice correct="true">( Delta E_text{water} = Q )</choice>
+    <choice correct="false">( Delta E_text{water} = - W )</choice>
+    <choice correct="false">( Delta E_text{water} = 0 )</choice>
+  </choicegroup>
+  </multiplechoiceresponse>
+  <solution>
+    <div class="detailed-solution">
+      <h2>Explanation</h2>
+    </div>
+  </solution>
+</problem>`,
+
+  question: '<p style="text-align: center;"><img height="274" width="" src="/static/boiling_eggs_water_system.png" alt="boiling eggs: water system"></img></p><label>Taking the system as just the<b>water</b>, as indicated by the red dashed line, what would be the correct expression for the first law of thermodynamics applied to this system?</label><em>Watch out, boiling water is hot</em>',
+};
+
+export const htmlEntityTestOLX = {
+  rawOLX:
+  `<problem>
+  <multiplechoiceresponse>
+  <p>What is the content of the register x2 after executing the following three lines of instructions?</p>
+  <p><span style="font-family: 'courier new', courier;"><strong>Address&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;assembly instructions <br />0x0&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;addi x1, x0, 1<br />0x4&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;slli x2, x1, 4<br />0x8&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;sub x1, x2, x1</strong></span></p>
+  <choicegroup type="MultipleChoice">
+      <choice correct="false">answerA</choice>
+      <choice correct="true">answerB</choice>
+    </choicegroup>
+  <solution>
+  <div class="detailed-solution">
+   <p>Explanation</p>
+    <p><span style="font-family: 'courier new', courier;"><strong>Address&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;assembly instructions&#160;&#160;&#160;&#160;comment<br />0x0&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;addi x1, x0, 1&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;x1 = 0x1<br />0x4&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;slli x2, x1, 4&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;x2 = x1 &lt;&lt; 4 = 0x10<br />0x8&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;sub x1, x2, x1&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;x1 = x2 - x1 = 0x10 - 0x01 = 0xf</strong></span></p>
+    </div>
+    </solution>
+  </multiplechoiceresponse>
+  </problem>`,
+  data: {
+    answers: [
+      {
+        id: 'A',
+        title: 'answerA',
+        correct: false,
+      },
+      {
+        id: 'B',
+        title: 'answerB',
+        correct: true,
+      },
+    ],
+  },
+  // eslint-disable-next-line
+  question: `<p>What is the content of the register x2 after executing the following three lines of instructions?</p><p><span style="font-family: 'courier new', courier;"><strong>Address&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;assembly instructions<br></br>0x0&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;addi x1, x0, 1<br></br>0x4&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;slli x2, x1, 4<br></br>0x8&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;sub x1, x2, x1</strong></span></p>`,
+  // eslint-disable-next-line
+  solutionExplanation: `<p><span style="font-family: 'courier new', courier;"><strong>Address&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;assembly instructions&#160;&#160;&#160;&#160;comment<br></br>0x0&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;addi x1, x0, 1&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;x1 = 0x1<br></br>0x4&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;slli x2, x1, 4&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;x2 = x1 &lt;&lt; 4 = 0x10<br></br>0x8&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;sub x1, x2, x1&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;x1 = x2 - x1 = 0x10 - 0x01 = 0xf</strong></span></p>`,
+};
+
+export const numberParseTestOLX = {
+  rawOLX: `<problem>
+  <multiplechoiceresponse>
+  <p>What is the content of the register x2 after executing the following three lines of instructions?</p>
+  <choicegroup type="MultipleChoice">
+      <choice correct="false"><span style="font-family: 'courier new', courier;"><strong>0x10</strong></span></choice>
+      <choice correct="true"><span style="font-family: 'courier new', courier;"><strong>0x0f</strong></span></choice>
+      <choice correct="false"><span style="font-family: 'courier new', courier;"><strong>0x07</strong></span></choice>
+      <choice correct="false"><span style="font-family: 'courier new', courier;"><strong>0009</strong></span></choice>
+    </choicegroup>
+  </multiplechoiceresponse>
+  </problem>`,
+  data: {
+    answers: [
+      {
+        id: 'A',
+        title: `<span style="font-family: 'courier new', courier;"><strong>0x10</strong></span>`, // eslint-disable-line
+        correct: false,
+      },
+      {
+        id: 'B',
+        title: `<span style="font-family: 'courier new', courier;"><strong>0x0f</strong></span>`, // eslint-disable-line
+        correct: true,
+      },
+      {
+        id: 'C',
+        title: `<span style="font-family: 'courier new', courier;"><strong>0x07</strong></span>`, // eslint-disable-line
+        correct: false,
+      },
+      {
+        id: 'D',
+        title: `<span style="font-family: 'courier new', courier;"><strong>0009</strong></span>`, // eslint-disable-line
+        correct: false,
+      },
+    ],
+  },
+  question: '<p>What is the content of the register x2 after executing the following three lines of instructions?</p>',
+  buildOLX: `<problem>
+  <multiplechoiceresponse>
+  <p>What is the content of the register x2 after executing the following three lines of instructions?</p>
+  <choicegroup>
+      <choice correct="false"><span style="font-family: &apos;courier new&apos;, courier;"><strong>0x10</strong></span></choice>
+      <choice correct="true"><span style="font-family: &apos;courier new&apos;, courier;"><strong>0x0f</strong></span></choice>
+      <choice correct="false"><span style="font-family: &apos;courier new&apos;, courier;"><strong>0x07</strong></span></choice>
+      <choice correct="false"><span style="font-family: &apos;courier new&apos;, courier;"><strong>0009</strong></span></choice>
+    </choicegroup>
+  </multiplechoiceresponse>
+  </problem>`,
 };

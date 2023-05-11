@@ -75,11 +75,9 @@ export const AnswerOption = ({
           onChange={setAnswerTitle}
           placeholder={intl.formatMessage(messages.answerRangeTextboxPlaceholder)}
         />
-        <hr className="d-block" />
         <div className="pgn__form-switch-helper-text">
           <FormattedMessage {...messages.answerRangeHelperText} />
         </div>
-
       </div>
 
     );
@@ -112,12 +110,10 @@ export const AnswerOption = ({
         </Collapsible.Body>
       </div>
       <div className="d-flex flex-row flex-nowrap">
-        <Collapsible.Trigger>
-          <IconButton
+        <Collapsible.Trigger aria-label="Toggle feedback" className="btn-icon btn-icon-primary btn-icon-md align-items-center">
+          <Icon
             src={FeedbackOutline}
-            iconAs={Icon}
             alt={intl.formatMessage(messages.feedbackToggleIconAltText)}
-            variant="primary"
           />
         </Collapsible.Trigger>
         <IconButton

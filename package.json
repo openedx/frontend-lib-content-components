@@ -36,10 +36,11 @@
   "devDependencies": {
     "@edx/frontend-build": "^11.0.2",
     "@edx/frontend-platform": "2.4.0",
-    "@edx/paragon": "^20.28.0",
+    "@edx/paragon": "^20.32.0",
     "@edx/reactifex": "^2.1.1",
     "@testing-library/dom": "^8.13.0",
-    "@testing-library/react": "^12.1.1",
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^12.1.5",
     "@testing-library/user-event": "^13.5.0",
     "codecov": "3.8.3",
     "enzyme": "3.11.0",
@@ -59,6 +60,7 @@
   "dependencies": {
     "@codemirror/lang-html": "^6.0.0",
     "@codemirror/lang-xml": "^6.0.0",
+    "@codemirror/lint": "^6.2.1",
     "@codemirror/state": "^6.0.0",
     "@codemirror/view": "^6.0.0",
     "@reduxjs/toolkit": "^1.8.1",
@@ -68,6 +70,9 @@
     "codemirror": "^6.0.0",
     "fast-xml-parser": "^4.0.10",
     "lodash-es": "^4.17.21",
+    "moment": "^2.29.4",
+    "moment-shortformat": "^2.1.0",
+    "react-dropzone": "^14.2.3",
     "react-redux": "^7.2.8",
     "react-responsive": "8.2.0",
     "react-transition-group": "4.4.2",
@@ -79,7 +84,8 @@
     "reselect": "^4.1.5",
     "tinymce": "^5.10.4",
     "video-react": "^0.15.0",
-    "video.js": "^7.18.1"
+    "video.js": "^7.18.1",
+    "xmlchecker": "^0.1.0"
   },
   "peerDependencies": {
     "@edx/frontend-platform": ">1.15.0",

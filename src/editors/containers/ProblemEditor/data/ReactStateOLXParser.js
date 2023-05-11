@@ -8,10 +8,18 @@ class ReactStateOLXParser {
     const parserOptions = {
       ignoreAttributes: false,
       alwaysCreateTextNode: true,
+      numberParseOptions: {
+        leadingZeros: false,
+        hex: false,
+      },
     };
     const questionParserOptions = {
       ignoreAttributes: false,
       alwaysCreateTextNode: true,
+      numberParseOptions: {
+        leadingZeros: false,
+        hex: false,
+      },
       preserveOrder: true,
     };
     const questionBuilderOptions = {
@@ -19,6 +27,10 @@ class ReactStateOLXParser {
       attributeNamePrefix: '@_',
       suppressBooleanAttributes: false,
       format: true,
+      numberParseOptions: {
+        leadingZeros: false,
+        hex: false,
+      },
       preserveOrder: true,
     };
     const builderOptions = {
@@ -26,6 +38,10 @@ class ReactStateOLXParser {
       attributeNamePrefix: '@_',
       suppressBooleanAttributes: false,
       format: true,
+      numberParseOptions: {
+        leadingZeros: false,
+        hex: false,
+      },
     };
     this.questionParser = new XMLParser(questionParserOptions);
     this.parser = new XMLParser(parserOptions);
@@ -38,6 +54,9 @@ class ReactStateOLXParser {
   addHints() {
     const hintsArray = [];
     const { hints } = this.editorObject;
+    if (hints.length < 1) {
+      return {};
+    }
     hints.forEach(hint => {
       if (hint.length > 0) {
         const parsedHint = this.parser.parse(hint);
@@ -157,12 +176,9 @@ class ReactStateOLXParser {
   addGroupFeedbackList() {
     const compoundhint = [];
     const { groupFeedbackList } = this.problemState;
-    const { groupFeedback } = this.editorObject;
     groupFeedbackList.forEach((element) => {
-      const feedbackString = groupFeedback?.[element.id];
-      const parsedFeedback = this.parser.parse(feedbackString);
       compoundhint.push({
-        ...parsedFeedback,
+        '#text': element.feedback,
         '@_value': element.answers.join(' '),
       });
     });
@@ -172,6 +188,22 @@ class ReactStateOLXParser {
   addQuestion() {
     const { question } = this.editorObject;
     const questionObject = this.questionParser.parse(question);
+    /* Removes block tags like <p> or <h1> that surround the <label> format.
+      Block tags are required by tinyMCE but have adverse effect on css in studio.
+      */
+    questionObject.forEach((tag, ind) => {
+      const tagName = Object.keys(tag)[0];
+      let label = null;
+      tag[tagName].forEach(subTag => {
+        const subTagName = Object.keys(subTag)[0];
+        if (subTagName === 'label') {
+          label = subTag;
+        }
+      });
+      if (label) {
+        questionObject[ind] = label;
+      }
+    });
     return questionObject;
   }
 
@@ -315,6 +347,44 @@ class ReactStateOLXParser {
     answers.forEach((answer) => {
       const correcthint = this.getAnswerHints(selectedFeedback?.[answer.id]);
       if (this.hasAttributeWithValue(answer, 'title')) {
+        let { title } = answer;
+        if (title.startsWith('(') || title.startsWith('[')) {
+          const parsedRange = title.split(',');
+          const [rawLowerBound, rawUpperBound] = parsedRange;
+          let lowerBoundInt;
+          let lowerBoundFraction;
+          let upperBoundInt;
+          let upperBoundFraction;
+          if (rawLowerBound.includes('/')) {
+            lowerBoundFraction = rawLowerBound.replace(/[^0-9-/]/gm, '');
+            const [numerator, denominator] = lowerBoundFraction.split('/');
+            const lowerBoundFloat = Number(numerator) / Number(denominator);
+            lowerBoundInt = lowerBoundFloat;
+          } else {
+            // these regex replaces remove everything that is not a decimal or positive/negative numer
+            lowerBoundInt = Number(rawLowerBound.replace(/[^0-9-.]/gm, ''));
+          }
+          if (rawUpperBound.includes('/')) {
+            upperBoundFraction = rawUpperBound.replace(/[^0-9-/]/gm, '');
+            const [numerator, denominator] = upperBoundFraction.split('/');
+            const upperBoundFloat = Number(numerator) / Number(denominator);
+            upperBoundInt = upperBoundFloat;
+          } else {
+            // these regex replaces remove everything that is not a decimal or positive/negative numer
+            upperBoundInt = Number(rawUpperBound.replace(/[^0-9-.]/gm, ''));
+          }
+          if (lowerBoundInt > upperBoundInt) {
+            const lowerBoundChar = rawUpperBound[rawUpperBound.length - 1] === ']' ? '[' : '(';
+            const upperBoundChar = rawLowerBound[0] === '[' ? ']' : ')';
+            if (lowerBoundFraction) {
+              lowerBoundInt = lowerBoundFraction;
+            }
+            if (upperBoundFraction) {
+              upperBoundInt = upperBoundFraction;
+            }
+            title = `${lowerBoundChar}${upperBoundInt},${lowerBoundInt}${upperBoundChar}`;
+          }
+        }
         if (answer.correct && !firstCorrectAnswerParsed) {
           firstCorrectAnswerParsed = true;
           let responseParam = {};
@@ -327,13 +397,13 @@ class ReactStateOLXParser {
             };
           }
           answerObject = {
-            '@_answer': answer.title,
+            '@_answer': title,
             ...responseParam,
             ...correcthint,
           };
         } else if (answer.correct && firstCorrectAnswerParsed) {
           additionalAnswers.push({
-            '@_answer': answer.title,
+            '@_answer': title,
             ...correcthint,
           });
         }
