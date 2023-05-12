@@ -1,55 +1,69 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import {
   Scrollable, SelectableBox, Spinner,
 } from '@edx/paragon';
 
-import { FormattedMessage, injectIntl, intlShape } from '@edx/frontend-platform/i18n';
-
-import { selectors } from '../../../data/redux';
-import { RequestKeys } from '../../../data/constants/requests';
+import {
+  FormattedMessage,
+  injectIntl,
+  intlShape,
+} from '@edx/frontend-platform/i18n';
 
 import messages from './messages';
 import GalleryCard from './GalleryCard';
 
 export const Gallery = ({
+  show,
   galleryIsEmpty,
   searchIsEmpty,
   displayList,
   highlighted,
   onHighlightChange,
+  emptyGalleryLabel,
+  showIdsOnCards,
+  height,
+  isLoaded,
   // injected
   intl,
-  // redux
-  isLoaded,
 }) => {
+  if (!show) {
+    return null;
+  }
   if (!isLoaded) {
     return (
-      <Spinner
-        animation="border"
-        className="mie-3"
-        screenReaderText={intl.formatMessage(messages.loading)}
-      />
+      <div style={{
+        position: 'absolute',
+        left: '50%',
+        top: '50%',
+        transform: 'translate(-50%, -50%)',
+      }}
+      >
+        <Spinner
+          animation="border"
+          className="mie-3"
+          screenReaderText={intl.formatMessage(messages.loading)}
+        />
+      </div>
     );
   }
   if (galleryIsEmpty) {
     return (
-      <div className="gallery p-4 bg-gray-100" style={{ height: '375px' }}>
-        <FormattedMessage {...messages.emptyGalleryLabel} />
+      <div className="gallery p-4 bg-gray-100" style={{ height, margin: '0 -1.5rem' }}>
+        <FormattedMessage {...emptyGalleryLabel} />
       </div>
     );
   }
   if (searchIsEmpty) {
     return (
-      <div className="gallery p-4 bg-gray-100" style={{ height: '375px' }}>
+      <div className="gallery p-4 bg-gray-100" style={{ height, margin: '0 -1.5rem' }}>
         <FormattedMessage {...messages.emptySearchLabel} />
       </div>
     );
   }
   return (
-    <Scrollable className="gallery bg-gray-100" style={{ height: '375px' }}>
+    <Scrollable className="gallery bg-gray-100" style={{ height, margin: '0 -1.5rem' }}>
       <div className="p-4">
         <SelectableBox.Set
           columns={1}
@@ -58,7 +72,7 @@ export const Gallery = ({
           type="radio"
           value={highlighted}
         >
-          {displayList.map(img => <GalleryCard key={img.id} img={img} />)}
+          { displayList.map(asset => <GalleryCard key={asset.id} asset={asset} showId={showIdsOnCards} />) }
         </SelectableBox.Set>
       </div>
     </Scrollable>
@@ -67,24 +81,23 @@ export const Gallery = ({
 
 Gallery.defaultProps = {
   highlighted: '',
+  showIdsOnCards: false,
+  height: '375px',
+  show: true,
 };
 Gallery.propTypes = {
+  show: PropTypes.bool,
+  isLoaded: PropTypes.bool.isRequired,
   galleryIsEmpty: PropTypes.bool.isRequired,
   searchIsEmpty: PropTypes.bool.isRequired,
   displayList: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   highlighted: PropTypes.string,
   onHighlightChange: PropTypes.func.isRequired,
+  emptyGalleryLabel: PropTypes.shape({}).isRequired,
+  showIdsOnCards: PropTypes.bool,
+  height: PropTypes.string,
   // injected
   intl: intlShape.isRequired,
-  // redux
-  isLoaded: PropTypes.bool.isRequired,
 };
 
-const requestKey = RequestKeys.fetchAssets;
-export const mapStateToProps = (state) => ({
-  isLoaded: selectors.requests.isFinished(state, { requestKey }),
-});
-
-export const mapDispatchToProps = {};
-
-export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(Gallery));
+export default injectIntl(Gallery);

@@ -18,6 +18,9 @@ export const apiMethods = {
   fetchAssets: ({ learningContextId, studioEndpointUrl }) => get(
     urls.courseAssets({ studioEndpointUrl, learningContextId }),
   ),
+  fetchVideos: ({ studioEndpointUrl, learningContextId }) => get(
+    urls.courseVideos({ studioEndpointUrl, learningContextId }),
+  ),
   fetchCourseDetails: ({ studioEndpointUrl, learningContextId }) => get(
     urls.courseDetailsUrl({ studioEndpointUrl, learningContextId }),
   ),
@@ -163,7 +166,7 @@ export const apiMethods = {
         metadata: {
           display_name: title,
           download_video: content.allowVideoDownloads,
-          public_access: content.allowVideoSharing,
+          public_access: content.allowVideoSharing.value,
           edx_video_id: edxVideoId,
           html5_sources: html5Sources,
           youtube_id_1_0: youtubeId,
@@ -204,6 +207,14 @@ export const apiMethods = {
     learningContextId,
   }) => get(
     urls.videoFeatures({ studioEndpointUrl, learningContextId }),
+  ),
+  uploadVideo: ({
+    data,
+    studioEndpointUrl,
+    learningContextId,
+  }) => post(
+    urls.courseVideos({ studioEndpointUrl, learningContextId }),
+    data,
   ),
 };
 
@@ -277,7 +288,7 @@ export const processLicense = (licenseType, licenseDetails) => {
 
 export const checkMockApi = (key) => {
   if (process.env.REACT_APP_DEVGALLERY) {
-    return mockApi[key];
+    return mockApi[key] ? mockApi[key] : mockApi.emptyMock;
   }
   return module.apiMethods[key];
 };

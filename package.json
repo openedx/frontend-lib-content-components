@@ -32,16 +32,20 @@
   "bugs": {
     "url": "https://github.com/edx/frontend-lib-content-components/issues"
   },
+  "browserslist": [
+    "extends @edx/browserslist-config"
+  ],
   "homepage": "https://github.com/edx/frontend-lib-content-components#readme",
   "devDependencies": {
+    "@edx/browserslist-config": "^1.1.1",
     "@edx/frontend-build": "12.8.6",
     "@edx/frontend-platform": "^4.1.0",
-    "@edx/paragon": "^20.28.0",
+    "@edx/paragon": "^20.32.0",
     "@edx/reactifex": "^2.1.1",
     "@testing-library/dom": "^8.13.0",
-    "@testing-library/react": "^12.1.1",
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^12.1.5",
     "@testing-library/user-event": "^13.5.0",
-    "codecov": "3.8.3",
     "enzyme": "3.11.0",
     "enzyme-adapter-react-16": "1.15.6",
     "enzyme-to-json": "^3.6.2",
@@ -70,6 +74,9 @@
     "codemirror": "^6.0.0",
     "fast-xml-parser": "^4.0.10",
     "lodash-es": "^4.17.21",
+    "moment": "^2.29.4",
+    "moment-shortformat": "^2.1.0",
+    "react-dropzone": "^14.2.3",
     "react-redux": "^7.2.8",
     "react-responsive": "8.2.0",
     "react-transition-group": "4.4.2",

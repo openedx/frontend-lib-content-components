@@ -1,7 +1,7 @@
 import { StrictDict } from '../../../utils';
 
 import { RequestKeys } from '../../constants/requests';
-// eslint-disable-next-line import/no-cycle
+/* eslint-disable import/no-cycle */
 import { actions, selectors } from '..';
 import api, { loadImages } from '../../services/cms/api';
 
@@ -133,6 +133,18 @@ export const fetchAssets = ({ ...rest }) => (dispatch, getState) => {
         learningContextId: selectors.app.learningContextId(getState()),
       })
       .then((response) => loadImages(response.data.assets)),
+    ...rest,
+  }));
+};
+
+export const fetchVideos = ({ ...rest }) => (dispatch, getState) => {
+  dispatch(module.networkRequest({
+    requestKey: RequestKeys.fetchVideos,
+    promise: api
+      .fetchVideos({
+        studioEndpointUrl: selectors.app.studioEndpointUrl(getState()),
+        learningContextId: selectors.app.learningContextId(getState()),
+      }),
     ...rest,
   }));
 };
@@ -284,12 +296,25 @@ export const fetchVideoFeatures = ({ ...rest }) => (dispatch, getState) => {
   }));
 };
 
+export const uploadVideo = ({ data, ...rest }) => (dispatch, getState) => {
+  dispatch(module.networkRequest({
+    requestKey: RequestKeys.uploadVideo,
+    promise: api.uploadVideo({
+      data,
+      studioEndpointUrl: selectors.app.studioEndpointUrl(getState()),
+      learningContextId: selectors.app.learningContextId(getState()),
+    }),
+    ...rest,
+  }));
+};
+
 export default StrictDict({
   fetchBlock,
   fetchStudioView,
   fetchUnit,
   saveBlock,
   fetchAssets,
+  fetchVideos,
   uploadAsset,
   allowThumbnailUpload,
   uploadThumbnail,
@@ -302,4 +327,5 @@ export default StrictDict({
   importTranscript,
   fetchAdvancedSettings,
   fetchVideoFeatures,
+  uploadVideo,
 });
