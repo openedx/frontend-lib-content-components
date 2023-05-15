@@ -25,6 +25,11 @@ export const removeAnswer = ({
           currentAnswerTitles?.[ans.id] || '',
         ];
       }
+      dispatch(actions.problem.updateAnswer({
+        ...ans,
+        title: currentAnswerTitles?.[ans.id] || ans.title,
+        correct: ans.correct,
+      }));
     });
     const editorObject = { hints: [] };
     const EditorsArray = window.tinymce.editors;
@@ -85,7 +90,7 @@ export const useFeedback = (answer) => {
     // Show feedback fields if feedback is present
     const isVisible = !!answer.selectedFeedback || !!answer.unselectedFeedback;
     setIsFeedbackVisible(isVisible);
-  }, []);
+  }, [answer]);
 
   const toggleFeedback = (open) => {
     // Do not allow to hide if feedback is added
