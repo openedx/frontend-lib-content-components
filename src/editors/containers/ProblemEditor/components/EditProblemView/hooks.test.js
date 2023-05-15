@@ -258,7 +258,7 @@ describe('EditProblemView hooks parseState', () => {
       expect(openSaveWarningModal).toHaveBeenCalled();
       expect(expected).toEqual(true);
     });
-    it('returns false for setting discrepancies', () => {
+    it('returns false when there are no setting discrepancies', () => {
       jest.mock('../../data/ReactStateSettingsParser', () => (
         jest.fn().mockImplementationOnce(() => ({
           getSettings: () => mockGetSettings,
