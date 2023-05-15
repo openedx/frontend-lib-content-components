@@ -33,9 +33,7 @@ const messages = defineMessages({
   },
   olxSettingDiscrepancyBodyExplanation: {
     id: 'authoring.problemEditor.editProblemView.saveWarningModal.olxSettingDiscrepancy.body.explanation',
-    defaultMessage: `A discrepancy was found between the settings defined in the <problem> tag
-      and the settings selected in the sidebar. The settings defined in the <problem> tag will be saved
-      and corresponding values in the sidebar will be discarded.`,
+    defaultMessage: 'A discrepancy was found between the settings defined in the <problem> tag and the settings selected in the sidebar. The settings defined in the <problem> tag will be saved and corresponding values in the sidebar will be discarded.',
     description: 'Explanation in body of mismatched settings modal',
   },
 });
