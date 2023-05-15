@@ -16,13 +16,30 @@ export const removeAnswer = ({
   dispatch,
 }) => () => {
   if (RichTextProblems.includes(problemType)) {
+    let newAnswers = [];
     const currentAnswerTitles = fetchEditorContent({ format: '' }).answers;
     answers.forEach(ans => {
-      dispatch(actions.problem.updateAnswer({
-        ...ans,
-        title: currentAnswerTitles?.[ans.id] || ans.title,
-        correct: ans.correct,
-      }));
+      if (ans !== answer) {
+        newAnswers = [
+          ...newAnswers,
+          currentAnswerTitles?.[ans.id] || '',
+        ];
+      }
+    });
+    const editorObject = { hints: [] };
+    const EditorsArray = window.tinymce.editors;
+    let iter = 0;
+    Object.entries(EditorsArray).forEach(([id, editor]) => {
+      if (Number.isNaN(parseInt(id))) {
+        if (id.startsWith('answer')) {
+          const { editorAnswers } = editorObject;
+          const answerId = id.substring(id.indexOf('-') + 1);
+          if (iter < newAnswers.length) {
+            editorObject.editorAnswers = { ...editorAnswers, [answerId]: editor.setContent(newAnswers[iter]) };
+            iter++;
+          }
+        }
+      }
     });
   }
 

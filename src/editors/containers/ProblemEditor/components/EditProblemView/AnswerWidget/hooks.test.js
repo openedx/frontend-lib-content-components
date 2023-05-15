@@ -51,19 +51,6 @@ describe('Answer Options Hooks', () => {
     const answer = { id: 'A', correct: false };
     const problemType = 'multiplechoiceresponse';
     const dispatch = useDispatch();
-    it('dispatches actions.problem.updateAnswer if problemType is SINGLESELECT', () => {
-      module.removeAnswer({
-        answers,
-        answer,
-        problemType,
-        dispatch,
-      })();
-      expect(dispatch).toHaveBeenCalledWith(actions.problem.updateAnswer({
-        id: 'A',
-        title: 'atitle',
-        correct: false,
-      }));
-    });
     it('dispatches actions.problem.deleteAnswer', () => {
       module.removeAnswer({
         answers,
