@@ -90,7 +90,7 @@ export const checkForNoAnswers = ({ openSaveWarningModal, problem }) => {
     return false;
   };
 
-  const hasNoCorrectAnswer = () => {
+  const hasCorrectAnswer = () => {
     let correctAnswer;
     answers.forEach(answer => {
       if (answer.correct) {
@@ -110,7 +110,7 @@ export const checkForNoAnswers = ({ openSaveWarningModal, problem }) => {
     openSaveWarningModal();
     return true;
   }
-  if (!hasNoCorrectAnswer()) {
+  if (!hasCorrectAnswer()) {
     openSaveWarningModal();
     return true;
   }

@@ -160,14 +160,14 @@ describe('EditProblemView hooks parseState', () => {
   });
   describe('checkNoAnswers', () => {
     const openSaveWarningModal = jest.fn();
-    describe('hasNoTitle', () => {
+    describe('hasTitle', () => {
       const problem = {
         problemType: ProblemTypeKeys.NUMERIC,
       };
       beforeEach(() => {
         jest.clearAllMocks();
       });
-      it('returns true for numerical problem with empty title', () => {
+      it('should call openSaveWarningModal for numerical problem with empty title', () => {
         const expected = hooks.checkForNoAnswers({
           openSaveWarningModal,
           problem: {
@@ -190,14 +190,14 @@ describe('EditProblemView hooks parseState', () => {
         expect(expected).toEqual(false);
       });
     });
-    describe('hasNoCorrectAnswer', () => {
+    describe('hasCorrectAnswer', () => {
       const problem = {
         problemType: ProblemTypeKeys.SINGLESELECT,
       };
       beforeEach(() => {
         jest.clearAllMocks();
       });
-      it('returns true for single select problem with empty title', () => {
+      it('should call openSaveWarningModal for single select problem with empty title', () => {
         window.tinymce.editors = { 'answer-A': { getContent: () => '' }, 'answer-B': { getContent: () => 'sOmevALUe' } };
         const expected = hooks.checkForNoAnswers({
           openSaveWarningModal,
