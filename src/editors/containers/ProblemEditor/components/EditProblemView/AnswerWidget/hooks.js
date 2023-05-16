@@ -4,6 +4,7 @@ import * as module from './hooks';
 import { actions } from '../../../../../data/redux';
 import { ProblemTypeKeys, RichTextProblems } from '../../../../../data/constants/problem';
 import { fetchEditorContent } from '../hooks';
+import { indexToLetterMap } from '../../../data/OLXParser';
 
 export const state = StrictDict({
   isFeedbackVisible: (val) => useState(val),
@@ -31,20 +32,11 @@ export const removeAnswer = ({
         correct: ans.correct,
       }));
     });
-    const editorObject = { hints: [] };
     const EditorsArray = window.tinymce.editors;
-    let iter = 0;
-    Object.entries(EditorsArray).forEach(([id, editor]) => {
-      if (Number.isNaN(parseInt(id))) {
-        if (id.startsWith('answer')) {
-          const { editorAnswers } = editorObject;
-          const answerId = id.substring(id.indexOf('-') + 1);
-          if (iter < newAnswers.length) {
-            editorObject.editorAnswers = { ...editorAnswers, [answerId]: editor.setContent(newAnswers[iter]) };
-            iter++;
-          }
-        }
-      }
+    newAnswers.forEach((value, index) => {
+      const newId = indexToLetterMap[index];
+      const editor = EditorsArray[`answer-${newId}`];
+      editor.setContent(value);
     });
   }
 

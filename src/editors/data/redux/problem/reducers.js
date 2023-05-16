@@ -114,9 +114,19 @@ const problem = createSlice({
         }
         return { ...answer, id: newId };
       });
+      const groupFeedbackList = state.groupFeedbackList.map(feedback => {
+        const newAnswers = feedback.answers.filter(obj => obj !== id).map(letter => {
+          if (letter.charCodeAt(0) > id.charCodeAt(0)) {
+            return String.fromCharCode(letter.charCodeAt(0) - 1);
+          }
+          return letter;
+        });
+        return { ...feedback, answers: newAnswers };
+      });
       return {
         ...state,
         correctAnswerCount,
+        groupFeedbackList,
         answers,
       };
     },

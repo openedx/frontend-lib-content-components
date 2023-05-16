@@ -48,9 +48,25 @@ describe('Answer Options Hooks', () => {
       { id: 'B', title: 'btitle', correct: false },
       { id: 'C', title: 'ctitle', correct: false },
     ];
-    const answer = { id: 'A', correct: false };
+    const answer = answers[0];
     const problemType = 'multiplechoiceresponse';
     const dispatch = useDispatch();
+    const getContent = () => '<p></p>';
+    const setContent = jest.fn();
+    window.tinymce.editors = {
+      'answer-A': { getContent, setContent },
+      'answer-B': { getContent, setContent },
+      'answer-C': { getContent, setContent },
+    };
+    it('calls setContent if problemType is a RichTextProblem', () => {
+      module.removeAnswer({
+        answers,
+        answer,
+        problemType,
+        dispatch,
+      })();
+      expect(setContent).toHaveBeenCalledTimes(answers.length - 1);
+    });
     it('dispatches actions.problem.deleteAnswer', () => {
       module.removeAnswer({
         answers,
