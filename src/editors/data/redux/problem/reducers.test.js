@@ -177,11 +177,53 @@ describe('problem reducer', () => {
         )).toEqual({
           ...testingState,
           correctAnswerCount: 1,
-          answers: [
-            {
+          answers: [{
+            id: 'A',
+            correct: true,
+          }],
+        });
+      });
+      it('sets groupFeedbackList by removing the checked list of ', () => {
+        const answer = { id: 'A', correct: false };
+        expect(reducer(
+          {
+            ...testingState,
+            correctAnswerCount: 1,
+            answers: [{
               id: 'A',
+              correct: false,
+            },
+            {
+              id: 'B',
               correct: true,
+            },
+            {
+              id: 'C',
+              correct: false,
             }],
+            groupFeedbackList: [{
+              id: 0,
+              answers: ['A', 'C'],
+              feedback: 'fake feedback',
+            }],
+          },
+          actions.deleteAnswer(answer),
+        )).toEqual({
+          ...testingState,
+          correctAnswerCount: 1,
+          answers: [{
+            id: 'A',
+            correct: true,
+          },
+          {
+            id: 'B',
+            correct: false,
+          }],
+          groupFeedbackList: [{
+            id: 0,
+            answers: ['B'],
+            feedback: 'fake feedback',
+          }],
         });
       });
       it('if you delete an answer range, it will be replaced with a blank answer', () => {
