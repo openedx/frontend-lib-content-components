@@ -2,45 +2,22 @@ import { useState, useEffect } from 'react';
 import { StrictDict } from '../../../../../utils';
 import * as module from './hooks';
 import { actions } from '../../../../../data/redux';
-import { ProblemTypeKeys, RichTextProblems } from '../../../../../data/constants/problem';
+import { ProblemTypeKeys } from '../../../../../data/constants/problem';
 import { fetchEditorContent } from '../hooks';
-import { indexToLetterMap } from '../../../data/OLXParser';
 
 export const state = StrictDict({
   isFeedbackVisible: (val) => useState(val),
 });
 
 export const removeAnswer = ({
-  answers,
   answer,
-  problemType,
   dispatch,
 }) => () => {
-  if (RichTextProblems.includes(problemType)) {
-    let newAnswers = [];
-    const currentAnswerTitles = fetchEditorContent({ format: '' }).answers;
-    answers.forEach(ans => {
-      if (ans !== answer) {
-        newAnswers = [
-          ...newAnswers,
-          currentAnswerTitles?.[ans.id] || '',
-        ];
-      }
-      dispatch(actions.problem.updateAnswer({
-        ...ans,
-        title: currentAnswerTitles?.[ans.id] || ans.title,
-        correct: ans.correct,
-      }));
-    });
-    const EditorsArray = window.tinymce.editors;
-    newAnswers.forEach((value, index) => {
-      const newId = indexToLetterMap[index];
-      const editor = EditorsArray[`answer-${newId}`];
-      editor.setContent(value);
-    });
-  }
-
-  dispatch(actions.problem.deleteAnswer({ id: answer.id, correct: answer.correct }));
+  dispatch(actions.problem.deleteAnswer({
+    id: answer.id,
+    correct: answer.correct,
+    editorState: fetchEditorContent({ format: '' }),
+  }));
 };
 
 export const setAnswer = ({ answer, hasSingleAnswer, dispatch }) => (payload) => {

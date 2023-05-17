@@ -24,16 +24,10 @@ export const AnswerOption = ({
   // injected
   intl,
   // redux
-  answers,
   problemType,
 }) => {
   const dispatch = useDispatch();
-  const removeAnswer = hooks.removeAnswer({
-    answers,
-    answer,
-    problemType,
-    dispatch,
-  });
+  const removeAnswer = hooks.removeAnswer({ answer, dispatch });
   const setAnswer = hooks.setAnswer({ answer, hasSingleAnswer, dispatch });
   const setAnswerTitle = hooks.setAnswerTitle({
     answer,
@@ -140,18 +134,10 @@ AnswerOption.propTypes = {
   // injected
   intl: intlShape.isRequired,
   // redux
-  answers: PropTypes.arrayOf(PropTypes.shape({
-    correct: PropTypes.bool,
-    id: PropTypes.string,
-    selectedFeedback: PropTypes.string,
-    title: PropTypes.string,
-    unselectedFeedback: PropTypes.string,
-  })).isRequired,
   problemType: PropTypes.string.isRequired,
 };
 
 export const mapStateToProps = (state) => ({
-  answers: selectors.problem.answers(state),
   problemType: selectors.problem.problemType(state),
 });
 
