@@ -228,9 +228,20 @@ export const typeRowHooks = ({
     answers.forEach(answer => {
       const title = currentAnswerTitles?.[answer.id] || answer.title;
       if (answer.correct) {
-        updateAnswer({ ...answer, title, selectedFeedback, unselectedFeedback, correct: false });
+        updateAnswer({
+          ...answer,
+          title,
+          selectedFeedback,
+          unselectedFeedback,
+          correct: false,
+        });
       } else {
-        updateAnswer({ ...answer, selectedFeedback, unselectedFeedback, title });
+        updateAnswer({
+          ...answer,
+          selectedFeedback,
+          unselectedFeedback,
+          title,
+        });
       }
     });
   };
@@ -243,7 +254,13 @@ export const typeRowHooks = ({
     }
     answers.forEach(answer => {
       const title = currentAnswerTitles ? currentAnswerTitles[answer.id] : answer.title;
-      updateAnswer({ ...answer, title, selectedFeedback, unselectedFeedback, correct: true });
+      updateAnswer({
+        ...answer,
+        title,
+        selectedFeedback,
+        unselectedFeedback,
+        correct: true,
+      });
     });
   };
 
@@ -251,7 +268,12 @@ export const typeRowHooks = ({
     const { selectedFeedback, unselectedFeedback, ...editorContent } = fetchEditorContent({ format: 'text' });
     const currentAnswerTitles = editorContent.answers;
     answers.forEach(answer => {
-      updateAnswer({ ...answer, selectedFeedback, unselectedFeedback, title: currentAnswerTitles[answer.id] });
+      updateAnswer({
+        ...answer,
+        selectedFeedback,
+        unselectedFeedback,
+        title: currentAnswerTitles[answer.id],
+      });
     });
   };
 
