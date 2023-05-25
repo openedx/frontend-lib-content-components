@@ -101,8 +101,8 @@ export class OLXParser {
       preserveOrder: true,
       processEntities: false,
     };
-    // There are two versions of the parsed XLM because the question requires the order of the
-    // parsed data to be preserved. However, all the other widgets need the data grouped by
+    // There are two versions of the parsed XLM because the fields using tinymce require the order
+    // of the parsed data to be preserved. However, all the other widgets need the data grouped by
     // the wrapping tag.
     const richTextParser = new XMLParser(richTextOptions);
     const parser = new XMLParser(parserOptions);
@@ -119,48 +119,44 @@ export class OLXParser {
 
   /** getPreservedAnswersAndFeedback(problemType, widgetName, option)
    * getPreservedAnswersAndFeedback takes a problemType, widgetName, and a valid option. The
-   * olx for the given problem type and widget is parsed. Depending on the
+   * olx for the given problem type and widget is parsed. Do to the structure of xml that is
+   * parsed with the prsereved attribute, the function has to loop through arrays of objects.
+   * The  first for-loop checks for feedback tags and answer choices and appended to the
+   * preservedAnswers. The nested for loop checks for feedback and answer values inside the
+   * option (answer) tags.
    * @param {string} problemType - string of the olx problem type
    * @param {string} widgetName - string of the wrapping tag name
    *                              (optioninput, choicegroup, checkboxgroup, addition_answer)
-   * @param {string} option - string of the type of answers (choice, option)
+   * @param {string} option - string of the type of answers (choice, option, correcthint, stringequalhint)
    * @return {array} array containing answer objects and possibly an array of grouped feedback
    */
   getPreservedAnswersAndFeedback(problemType, widgetName, option) {
-    console.log('calling preserved');
-    const preservedProblem = this.richTextProblem;
-    const isChoiceProblem = problemType !== ProblemTypeKeys.NUMERIC ? problemType !== ProblemTypeKeys.TEXTINPUT : false;
+    const [problemBody] = this.richTextProblem.filter(section => Object.keys(section).includes(problemType));
+    const isChoiceProblem = !([ProblemTypeKeys.NUMERIC, ProblemTypeKeys.TEXTINPUT].includes(problemType));
     const preservedAnswers = [];
-    let correctFeedbackTag = option;
-    let incorrectFeedbackTag;
+    let correctAnswerFeedbackTag = option;
+    let incorrectAnswerFeedbackTag;
     if (problemType === ProblemTypeKeys.TEXTINPUT) {
-      [correctFeedbackTag, incorrectFeedbackTag] = option;
+      [correctAnswerFeedbackTag, incorrectAnswerFeedbackTag] = option;
     }
-    preservedProblem.forEach(wrapperTag => {
-      const wrapperTagKeys = Object.keys(wrapperTag);
-      if (wrapperTagKeys.includes(problemType)) {
-        const problemTag = wrapperTag[problemType];
-        problemTag.forEach(obj => {
-          const objKeys = Object.keys(obj);
-          if (!isChoiceProblem && objKeys.includes(correctFeedbackTag)) {
-            preservedAnswers.unshift(obj[correctFeedbackTag]);
-          }
-          if (problemType === ProblemTypeKeys.TEXTINPUT && objKeys.includes(incorrectFeedbackTag)) {
-            preservedAnswers.push(obj);
-          }
-          if (objKeys.includes(widgetName)) {
-            const currentAnswerArr = obj[widgetName];
-            currentAnswerArr.forEach(tag => {
-              if (Object.keys(tag).includes(correctFeedbackTag)) {
-                // add check for empty
-                preservedAnswers.push(tag[correctFeedbackTag]);
-              }
-            });
+    const problemBodyArr = problemBody[problemType];
+    problemBodyArr.forEach(subtag => {
+      const tagNames = Object.keys(subtag);
+      if (!isChoiceProblem && tagNames.includes(correctAnswerFeedbackTag)) {
+        preservedAnswers.unshift(subtag[correctAnswerFeedbackTag]);
+      }
+      if (problemType === ProblemTypeKeys.TEXTINPUT && tagNames.includes(incorrectAnswerFeedbackTag)) {
+        preservedAnswers.push(subtag);
+      }
+      if (tagNames.includes(widgetName)) {
+        const currentAnswerArr = subtag[widgetName];
+        currentAnswerArr.forEach(answer => {
+          if (Object.keys(answer).includes(correctAnswerFeedbackTag)) {
+            preservedAnswers.push(answer[correctAnswerFeedbackTag]);
           }
         });
       }
     });
-    console.log(preservedAnswers);
     return preservedAnswers;
   }
 
@@ -525,8 +521,8 @@ export class OLXParser {
    */
   getSolutionExplanation(problemType) {
     if (!_.has(this.problem, `${problemType}.solution`) && !_.has(this.problem, 'solution')) { return null; }
-    const problemBody = this.richTextProblem.filter(section => Object.keys(section).includes(problemType));
-    let { solution } = problemBody[0][problemType].pop();
+    const [problemBody] = this.richTextProblem.filter(section => Object.keys(section).includes(problemType));
+    let { solution } = problemBody[problemType].pop();
     const { div } = solution[0];
     if (solution.length === 1 && div) {
       div.forEach((block) => {
