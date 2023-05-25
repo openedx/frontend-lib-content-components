@@ -101,8 +101,45 @@ export class OLXParser {
     this.parsedQuestionOLX = questionParser.parse(olxString);
     if (_.has(this.parsedOLX, 'problem')) {
       this.problem = this.parsedOLX.problem;
-      this.questionData = this.parsedQuestionOLX[0].problem;
+      this.questionData = this.richTextOlx[0].problem;
+      this.richTextProblem = this.richTextOlx[0].problem;
     }
+  }
+
+  getPreservedAnswersAndFeedback(problemType, widgetName, option) {
+    const preservedProblem = this.richTextProblem;
+    const isChoiceProblem = problemType !== ProblemTypeKeys.NUMERIC ? problemType !== ProblemTypeKeys.TEXTINPUT : false;
+    const preservedAnswers = [];
+    let correctFeedbackTag = option;
+    let incorrectFeedbackTag;
+    if (problemType === ProblemTypeKeys.TEXTINPUT) {
+      [correctFeedbackTag, incorrectFeedbackTag] = option;
+    }
+    preservedProblem.forEach(wrapperTag => {
+      const wrapperTagKeys = Object.keys(wrapperTag);
+      if (wrapperTagKeys.includes(problemType)) {
+        const problemTag = wrapperTag[problemType];
+        problemTag.forEach(obj => {
+          const objKeys = Object.keys(obj);
+          if (!isChoiceProblem && objKeys.includes(correctFeedbackTag)) {
+            preservedAnswers.unshift(obj[correctFeedbackTag]);
+          }
+          if (problemType === ProblemTypeKeys.TEXTINPUT && objKeys.includes(incorrectFeedbackTag)) {
+            preservedAnswers.push(obj);
+          }
+          if (objKeys.includes(widgetName)) {
+            const currentAnswerArr = obj[widgetName];
+            currentAnswerArr.forEach(tag => {
+              if (Object.keys(tag).includes(correctFeedbackTag)) {
+                // add check for empty
+                preservedAnswers.push(tag[correctFeedbackTag]);
+              }
+            });
+          }
+        });
+      }
+    });
+    return preservedAnswers;
   }
 
   /** parseMultipleChoiceAnswers(problemType, widgetName, option)
@@ -191,27 +228,19 @@ export class OLXParser {
   getAnswerFeedback(choice, hintKey) {
     let feedback = {};
     let feedbackKeys = 'selectedFeedback';
-    if (_.has(choice, hintKey)) {
-      const answerFeedback = choice[hintKey];
-      if (_.isArray(answerFeedback)) {
-        answerFeedback.forEach((element) => {
-          if (_.has(element, '@_selected')) {
-            feedbackKeys = eval(element['@_selected'].toLowerCase()) ? 'selectedFeedback' : 'unselectedFeedback';
-          }
-          feedback = {
-            ...feedback,
-            [feedbackKeys]: this.builder.build(element),
-          };
-        });
-      } else {
-        if (_.has(answerFeedback, '@_selected')) {
-          feedbackKeys = eval(answerFeedback['@_selected'].toLowerCase()) ? 'selectedFeedback' : 'unselectedFeedback';
+    if (_.isEmpty(preservedFeedback)) { return feedback; }
+
+    preservedFeedback.forEach((feedbackArr) => {
+      if (_.has(feedbackArr, hintKey)) {
+        if (_.has(feedbackArr, ':@') && _.has(feedbackArr[':@'], '@_selected')) {
+          const isSelectedFeedback = feedbackArr[':@']['@_selected'] === 'true';
+          feedbackKeys = isSelectedFeedback ? 'selectedFeedback' : 'unselectedFeedback';
         }
         feedback = {
           [feedbackKeys]: this.builder.build(answerFeedback),
         };
       }
-    }
+    });
     return feedback;
   }
 
@@ -261,19 +290,22 @@ export class OLXParser {
     let answerFeedback = '';
     let additionalStringAttributes = {};
     let data = {};
-    const feedback = this.getFeedback(stringresponse);
+    const firstFeedback = this.getFeedback(firstCorrectFeedback);
     answers.push({
       id: indexToLetterMap[answers.length],
       title: stringresponse['@_answer'],
       correct: true,
-      selectedFeedback: feedback,
+      selectedFeedback: firstFeedback,
     });
+
+    const additionalAnswerFeedback = preservedFeedback.filter(feedback => _.isArray(feedback));
+    const stringEqualHintFeedback = preservedFeedback.filter(feedback => !_.isArray(feedback));
 
     // Parsing additional_answer for string response.
     const additionalAnswer = _.get(stringresponse, 'additional_answer', []);
     if (_.isArray(additionalAnswer)) {
-      additionalAnswer.forEach((newAnswer) => {
-        answerFeedback = this.getFeedback(newAnswer);
+      additionalAnswer.forEach((newAnswer, indx) => {
+        answerFeedback = this.getFeedback(additionalAnswerFeedback[indx]);
         answers.push({
           id: indexToLetterMap[answers.length],
           title: newAnswer['@_answer'],
@@ -282,7 +314,7 @@ export class OLXParser {
         });
       });
     } else {
-      answerFeedback = this.getFeedback(additionalAnswer);
+      answerFeedback = this.getFeedback(additionalAnswerFeedback[0]);
       answers.push({
         id: indexToLetterMap[answers.length],
         title: additionalAnswer['@_answer'],
@@ -294,9 +326,9 @@ export class OLXParser {
     // Parsing stringequalhint for string response.
     const stringEqualHint = _.get(stringresponse, 'stringequalhint', []);
     if (_.isArray(stringEqualHint)) {
-      stringEqualHint.forEach((newAnswer) => {
-        const parsedFeedback = stripNonTextTags({ input: newAnswer, tag: '@_answer' });
-        answerFeedback = this.builder.build(parsedFeedback);
+      stringEqualHint.forEach((newAnswer, indx) => {
+        // const parsedFeedback = stripNonTextTags({ input: newAnswer, tag: '@_answer' });
+        answerFeedback = this.richTextBuilder.build(stringEqualHintFeedback[indx].stringequalhint);
         answers.push({
           id: indexToLetterMap[answers.length],
           title: newAnswer['@_answer'],
@@ -305,8 +337,7 @@ export class OLXParser {
         });
       });
     } else {
-      const parsedFeedback = stripNonTextTags({ input: stringEqualHint, tag: '@_answer' });
-      answerFeedback = this.builder.build(parsedFeedback);
+      answerFeedback = this.richTextBuilder.build(stringEqualHintFeedback[0].stringequalhint);
       answers.push({
         id: indexToLetterMap[answers.length],
         title: stringEqualHint['@_answer'],
@@ -442,22 +473,20 @@ export class OLXParser {
   getHints() {
     const hintsObject = [];
     if (_.has(this.problem, 'demandhint.hint')) {
-      const hint = _.get(this.problem, 'demandhint.hint');
-      if (_.isArray(hint)) {
-        hint.forEach(element => {
-          const hintValue = this.builder.build(element);
-          hintsObject.push({
-            id: hintsObject.length,
-            value: hintValue,
+      const preservedProblem = this.richTextProblem;
+      preservedProblem.forEach(obj => {
+        const objKeys = Object.keys(obj);
+        if (objKeys.includes('demandhint')) {
+          const currentDemandHint = obj.demandhint;
+          currentDemandHint.forEach(hint => {
+            const hintValue = this.richTextBuilder.build(hint.hint);
+            hintsObject.push({
+              id: hintsObject.length,
+              value: hintValue,
+            });
           });
-        });
-      } else {
-        const hintValue = this.builder.build(hint);
-        hintsObject.push({
-          id: hintsObject.length,
-          value: hintValue,
-        });
-      }
+        }
+      });
     }
     return hintsObject;
   }
@@ -472,31 +501,22 @@ export class OLXParser {
    */
   getSolutionExplanation(problemType) {
     if (!_.has(this.problem, `${problemType}.solution`) && !_.has(this.problem, 'solution')) { return null; }
-    let solution = _.get(this.problem, `${problemType}.solution`, null) || _.get(this.problem, 'solution', null);
-    const wrapper = Object.keys(solution)[0];
-    if (Object.keys(solution).length === 1 && wrapper === 'div') {
-      const parsedSolution = {};
-      Object.entries(solution.div).forEach(([key, value]) => {
-        if (key.indexOf('@_' === -1)) {
-          // The redundant "explanation" title should be removed.
-          // If the key is a paragraph or h2, and the text of either the first or only item is "Explanation."
-          if (
-            (key === 'p' || key === 'h2')
-            && (_.get(value, '#text', null) === 'Explanation'
-            || (_.isArray(value) && _.get(value[0], '#text', null) === 'Explanation'))
-          ) {
-            if (_.isArray(value)) {
-              value.shift();
-              parsedSolution[key] = value;
-            }
-          } else {
-            parsedSolution[key] = value;
-          }
+
+    let { solution } = this.richTextProblem[0][problemType].pop();
+    const { div } = solution[0];
+    if (solution.length === 1 && div) {
+      div.forEach((block) => {
+        const [key] = Object.keys(block);
+        const [value] = block[key];
+        if ((key === 'p' || key === 'h2')
+          && (_.get(value, '#text', null) === 'Explanation')
+        ) {
+          div.shift();
         }
       });
-      solution = parsedSolution;
+      solution = div;
     }
-    const solutionString = this.builder.build(solution);
+    const solutionString = this.richTextBuilder.build(solution);
     return solutionString;
   }
 
@@ -508,9 +528,8 @@ export class OLXParser {
    * @return {string} string of feedback
    */
   getFeedback(xmlElement) {
-    if (!_.has(xmlElement, 'correcthint')) { return ''; }
-    const feedback = _.get(xmlElement, 'correcthint');
-    const feedbackString = this.builder.build(feedback);
+    if (_.isEmpty(xmlElement)) { return ''; }
+    const feedbackString = this.richTextBuilder.build(xmlElement);
     return feedbackString;
   }
 
