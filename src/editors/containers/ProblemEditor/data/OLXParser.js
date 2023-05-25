@@ -127,6 +127,7 @@ export class OLXParser {
    * @return {array} array containing answer objects and possibly an array of grouped feedback
    */
   getPreservedAnswersAndFeedback(problemType, widgetName, option) {
+    console.log('calling preserved');
     const preservedProblem = this.richTextProblem;
     const isChoiceProblem = problemType !== ProblemTypeKeys.NUMERIC ? problemType !== ProblemTypeKeys.TEXTINPUT : false;
     const preservedAnswers = [];
@@ -159,6 +160,7 @@ export class OLXParser {
         });
       }
     });
+    console.log(preservedAnswers);
     return preservedAnswers;
   }
 
@@ -523,8 +525,8 @@ export class OLXParser {
    */
   getSolutionExplanation(problemType) {
     if (!_.has(this.problem, `${problemType}.solution`) && !_.has(this.problem, 'solution')) { return null; }
-
-    let { solution } = this.richTextProblem[0][problemType].pop();
+    const problemBody = this.richTextProblem.filter(section => Object.keys(section).includes(problemType));
+    let { solution } = problemBody[0][problemType].pop();
     const { div } = solution[0];
     if (solution.length === 1 && div) {
       div.forEach((block) => {

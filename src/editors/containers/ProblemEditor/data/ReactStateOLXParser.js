@@ -25,18 +25,8 @@ class ReactStateOLXParser {
       },
       preserveOrder: true,
     };
-    const builderOptions = {
-      ignoreAttributes: false,
-      attributeNamePrefix: '@_',
-      suppressBooleanAttributes: false,
-      format: true,
-      numberParseOptions: {
-        leadingZeros: false,
-        hex: false,
-      },
-    };
+
     this.richTextParser = new XMLParser(richTextParserOptions);
-    this.builder = new XMLBuilder(builderOptions);
     this.richTextBuilder = new XMLBuilder(richTextBuilderOptions);
     this.editorObject = problemState.editorObject;
     this.problemState = problemState.problem;
