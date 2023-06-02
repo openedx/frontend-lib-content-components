@@ -169,12 +169,12 @@ export const multipleChoiceSingleAnswer = {
     <p>You can use this template as a guide to the simple editor markdown and OLX markup to use for checkboxes with hints and feedback problems. Edit this component to replace this template with your own assessment.</p>
     <label>Add the question text, or prompt, here. This text is required.</label>
     <description>You can add an optional tip or note related to the prompt like this.</description>
-    <checkboxgroup>
+    <choicegroup>
       <choice correct="true"><p>a correct answer</p><div><img src="#" />image with <strong>caption</strong>.</div>
         <choicehint selected="true"><p>You can specify optional feedback that appears after the learner selects and submits this answer.</p></choicehint>
         <choicehint selected="false"><p>You can specify optional feedback that appears after the learner clears and submits this answer.</p></choicehint>
       </choice>
-    </checkboxgroup>
+    </choicegroup>
     <solution>
       <div class="detailed-solution">
           <p>Explanation</p>
@@ -199,7 +199,7 @@ export const multipleChoiceSingleAnswer = {
     answers: [
       {
         id: 'A',
-        title: '<p>a correct answer</p>',
+        title: '<p>a correct answer</p><div><img src="#"></img>image with<strong>caption</strong>.</div>',
         correct: true,
         selectedFeedback: '<p>You can specify optional feedback that appears after the learner selects and submits this answer.</p>',
         unselectedFeedback: '<p>You can specify optional feedback that appears after the learner clears and submits this answer.</p>',

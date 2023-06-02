@@ -181,14 +181,14 @@ describe('OLXParser', () => {
         expect(answers).toHaveLength(1);
       });
     });
-    describe('given a problem with one answers', () => {
+    describe('given a problem with one answer', () => {
       const { answers } = multipleChoiceSingleAnswerOlxParser.parseMultipleChoiceAnswers(
         'multiplechoiceresponse',
         'choicegroup',
         'choice',
       );
       it('should return a single answer', () => {
-        expect(answers).toEqual(multipleChoiceWithoutAnswers.data.answers);
+        expect(answers).toEqual(multipleChoiceSingleAnswer.data.answers);
         expect(answers).toHaveLength(1);
       });
     });
