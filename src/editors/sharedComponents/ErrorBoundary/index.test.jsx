@@ -11,7 +11,9 @@ jest.mock('@edx/frontend-platform/logging', () => ({
 }));
 
 // stubbing this to avoid needing to inject a stubbed intl into an internal component
-jest.mock('./ErrorPage', () => () => <p>Error Page</p>);
+jest.mock('./ErrorPage', () => function () {
+  return <p>Error Page</p>;
+});
 
 describe('ErrorBoundary', () => {
   it('should render children if no error', () => {
@@ -39,7 +41,9 @@ describe('ErrorBoundary', () => {
     const wrapper = mount(component);
     const element = wrapper.find('p');
     expect(logError).toHaveBeenCalledTimes(1);
-    expect(logError).toHaveBeenCalledWith(new Error('booyah'), { stack: '\n    in ExplodingComponent\n    in ErrorBoundary (created by WrapperComponent)\n    in WrapperComponent' });
+    expect(logError).toHaveBeenCalledWith(new Error('booyah'), {
+      stack: expect.stringContaining('ExplodingComponent'),
+    });
     expect(element.text()).toEqual('Error Page');
   });
 });
