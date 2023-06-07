@@ -25,12 +25,13 @@ import ExplanationWidget from './ExplanationWidget';
 import { saveBlock } from '../../../../hooks';
 
 export const EditProblemView = ({
+  returnUrl,
   // redux
   problemType,
   problemState,
   assets,
   lmsEndpointUrl,
-  returnUrl,
+  reduxReturnUrl,
   analytics,
   // injected
   intl,
@@ -50,6 +51,7 @@ export const EditProblemView = ({
         assets,
         lmsEndpointUrl,
       })}
+      returnUrl={returnUrl}
     >
       <AlertModal
         title={isAdvancedProblemType ? (
@@ -71,7 +73,7 @@ export const EditProblemView = ({
                   assets,
                   lmsEndpointUrl,
                 })(),
-                destination: returnUrl,
+                destination: reduxReturnUrl,
                 dispatch,
                 analytics,
               })}
@@ -117,16 +119,18 @@ export const EditProblemView = ({
 EditProblemView.defaultProps = {
   assets: null,
   lmsEndpointUrl: null,
+  returnUrl: null,
 };
 
 EditProblemView.propTypes = {
   problemType: PropTypes.string.isRequired,
+  returnUrl: PropTypes.string,
   // eslint-disable-next-line
   problemState: PropTypes.any.isRequired,
   assets: PropTypes.shape({}),
   analytics: PropTypes.shape({}).isRequired,
   lmsEndpointUrl: PropTypes.string,
-  returnUrl: PropTypes.string.isRequired,
+  reduxReturnUrl: PropTypes.string.isRequired,
   // injected
   intl: intlShape.isRequired,
 };
@@ -135,7 +139,7 @@ export const mapStateToProps = (state) => ({
   assets: selectors.app.assets(state),
   analytics: selectors.app.analytics(state),
   lmsEndpointUrl: selectors.app.lmsEndpointUrl(state),
-  returnUrl: selectors.app.returnUrl(state),
+  reduxReturnUrl: selectors.app.returnUrl(state),
   problemType: selectors.problem.problemType(state),
   problemState: selectors.problem.completeState(state),
 });

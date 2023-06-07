@@ -20,6 +20,7 @@ import { prepareEditorRef } from '../../sharedComponents/TinyMceWidget/hooks';
 
 export const TextEditor = ({
   onClose,
+  returnUrl,
   // redux
   isRaw,
   blockValue,
@@ -60,6 +61,7 @@ export const TextEditor = ({
     <EditorContainer
       getContent={hooks.getContent({ editorRef, isRaw, assets })}
       onClose={onClose}
+      returnUrl={returnUrl}
     >
       <div className="editor-body h-75 overflow-auto">
         <Toast show={blockFailed} onClose={hooks.nullMethod}>
@@ -85,9 +87,11 @@ TextEditor.defaultProps = {
   isRaw: null,
   assetsFinished: null,
   assets: null,
+  returnUrl: null,
 };
 TextEditor.propTypes = {
   onClose: PropTypes.func.isRequired,
+  returnUrl: PropTypes.string,
   // redux
   blockValue: PropTypes.shape({
     data: PropTypes.shape({ data: PropTypes.string }),

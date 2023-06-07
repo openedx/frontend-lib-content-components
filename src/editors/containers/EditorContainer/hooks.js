@@ -19,8 +19,16 @@ export const state = StrictDict({
   isCancelConfirmModalOpen: (val) => useState(val),
 });
 
-export const handleSaveClicked = ({ dispatch, getContent, validateEntry }) => {
-  const destination = useSelector(selectors.app.returnUrl);
+export const handleSaveClicked = ({
+  dispatch,
+  getContent,
+  validateEntry,
+  returnUrl,
+}) => {
+  let destination = useSelector(selectors.app.returnUrl);
+  if (returnUrl) {
+    destination = returnUrl;
+  }
   const analytics = useSelector(selectors.app.analytics);
 
   return () => saveBlock({
@@ -41,12 +49,17 @@ export const cancelConfirmModalToggle = () => {
   };
 };
 
-export const handleCancel = ({ onClose }) => {
+export const handleCancel = ({ onClose, returnUrl }) => {
   if (onClose) {
     return onClose;
   }
+  let destination = useSelector(selectors.app.returnUrl);
+  console.log(returnUrl);
+  if (returnUrl) {
+    destination = returnUrl;
+  }
   return navigateCallback({
-    destination: useSelector(selectors.app.returnUrl),
+    destination,
     analyticsEvent: analyticsEvt.editorCancelClick,
     analytics: useSelector(selectors.app.analytics),
   });
