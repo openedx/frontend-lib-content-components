@@ -17,7 +17,7 @@ import messages from './messages';
 
 export const VideoEditor = ({
   onClose,
-  returnUrl,
+  returnFunction,
   // injected
   intl,
   // redux
@@ -32,7 +32,7 @@ export const VideoEditor = ({
       <EditorContainer
         getContent={fetchVideoContent()}
         onClose={onClose}
-        returnUrl={returnUrl}
+        returnFunction={returnFunction}
         validateEntry={validateEntry}
       >
         {studioViewFinished ? (
@@ -61,11 +61,11 @@ export const VideoEditor = ({
 
 VideoEditor.defaultProps = {
   onClose: null,
-  returnUrl: null,
+  returnFunction: null,
 };
 VideoEditor.propTypes = {
   onClose: PropTypes.func,
-  returnUrl: PropTypes.string,
+  returnFunction: PropTypes.func,
   // injected
   intl: intlShape.isRequired,
   // redux

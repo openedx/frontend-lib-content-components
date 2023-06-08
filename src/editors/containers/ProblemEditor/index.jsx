@@ -11,7 +11,7 @@ import messages from './messages';
 
 export const ProblemEditor = ({
   onClose,
-  returnUrl,
+  returnFunction,
   // Redux
   problemType,
   blockFinished,
@@ -51,16 +51,16 @@ export const ProblemEditor = ({
   if (problemType === null) {
     return (<SelectTypeModal {...{ onClose }} />);
   }
-  return (<EditProblemView {...{ onClose, returnUrl }} />);
+  return (<EditProblemView {...{ onClose, returnFunction }} />);
 };
 
 ProblemEditor.defaultProps = {
   assetsFinished: null,
-  returnUrl: null,
+  returnFunction: null,
 };
 ProblemEditor.propTypes = {
   onClose: PropTypes.func.isRequired,
-  returnUrl: PropTypes.string,
+  returnFunction: PropTypes.func,
   // redux
   assetsFinished: PropTypes.bool,
   advancedSettingsFinished: PropTypes.bool.isRequired,

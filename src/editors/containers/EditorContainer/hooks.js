@@ -23,12 +23,9 @@ export const handleSaveClicked = ({
   dispatch,
   getContent,
   validateEntry,
-  returnUrl,
+  returnFunction,
 }) => {
-  let destination = useSelector(selectors.app.returnUrl);
-  if (returnUrl) {
-    destination = returnUrl;
-  }
+  const destination = useSelector(selectors.app.returnUrl);
   const analytics = useSelector(selectors.app.analytics);
 
   return () => saveBlock({
@@ -36,6 +33,7 @@ export const handleSaveClicked = ({
     content: getContent({ dispatch }),
     destination,
     dispatch,
+    returnFunction,
     validateEntry,
   });
 };
@@ -49,17 +47,13 @@ export const cancelConfirmModalToggle = () => {
   };
 };
 
-export const handleCancel = ({ onClose, returnUrl }) => {
+export const handleCancel = ({ onClose, returnFunction }) => {
   if (onClose) {
     return onClose;
   }
-  let destination = useSelector(selectors.app.returnUrl);
-  console.log(returnUrl);
-  if (returnUrl) {
-    destination = returnUrl;
-  }
   return navigateCallback({
-    destination,
+    returnFunction,
+    destination: useSelector(selectors.app.returnUrl),
     analyticsEvent: analyticsEvt.editorCancelClick,
     analytics: useSelector(selectors.app.analytics),
   });

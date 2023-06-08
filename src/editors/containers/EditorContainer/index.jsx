@@ -19,14 +19,14 @@ export const EditorContainer = ({
   getContent,
   onClose,
   validateEntry,
-  returnUrl,
+  returnFunction,
   // injected
   intl,
 }) => {
   const dispatch = useDispatch();
   const isInitialized = hooks.isInitialized();
   const { isCancelConfirmOpen, openCancelConfirmModal, closeCancelConfirmModal } = hooks.cancelConfirmModalToggle();
-  const handleCancel = hooks.handleCancel({ onClose, returnUrl });
+  const handleCancel = hooks.handleCancel({ onClose, returnFunction });
   return (
     <div
       className="position-relative zindex-0"
@@ -70,7 +70,7 @@ export const EditorContainer = ({
           dispatch,
           getContent,
           validateEntry,
-          returnUrl,
+          returnFunction,
         })}
         saveFailed={hooks.saveFailed()}
       />
@@ -79,14 +79,14 @@ export const EditorContainer = ({
 };
 EditorContainer.defaultProps = {
   onClose: null,
-  returnUrl: null,
+  returnFunction: null,
   validateEntry: null,
 };
 EditorContainer.propTypes = {
   children: PropTypes.node.isRequired,
   getContent: PropTypes.func.isRequired,
   onClose: PropTypes.func,
-  returnUrl: PropTypes.string,
+  returnFunction: PropTypes.func,
   validateEntry: PropTypes.func,
   // injected
   intl: intlShape.isRequired,
