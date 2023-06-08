@@ -109,7 +109,7 @@ describe('hooks', () => {
       const returnedOutput = output();
       expect(returnFunction).toHaveBeenCalled();
       expect(returnedOutput).toEqual(undefined);
-    })
+    });
   });
 
   describe('nullMethod', () => {
