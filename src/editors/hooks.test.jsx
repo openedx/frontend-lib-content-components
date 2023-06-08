@@ -74,6 +74,7 @@ describe('hooks', () => {
     let output;
     const SAVED_ENV = process.env;
     const destination = 'hOmE';
+    const returnFunction = jest.fn();
     beforeEach(() => {
       jest.resetModules();
       process.env = { ...SAVED_ENV };
@@ -100,6 +101,15 @@ describe('hooks', () => {
       output();
       expect(spy).toHaveBeenCalledWith(destination);
     });
+    it('should call returnFunction and return null', () => {
+      output = hooks.navigateCallback({
+        destination,
+        returnFunction,
+      });
+      const returnedOutput = output();
+      expect(returnFunction).toHaveBeenCalled();
+      expect(returnedOutput).toEqual(undefined);
+    })
   });
 
   describe('nullMethod', () => {
