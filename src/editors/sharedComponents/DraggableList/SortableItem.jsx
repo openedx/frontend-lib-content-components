@@ -32,6 +32,7 @@ const SortableItem = ({
     <Row
       ref={setNodeRef}
       style={style}
+      className="mx-0"
     >
       {children}
       <IconButtonWithTooltip
