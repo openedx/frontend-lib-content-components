@@ -4,7 +4,7 @@ import { intlShape, injectIntl } from '@edx/frontend-platform/i18n';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { Icon, IconButtonWithTooltip, Row } from '@edx/paragon';
-import { DragIndicator } from '@edx/paragon/icons' 
+import { DragIndicator } from '@edx/paragon/icons';
 import messages from './messages';
 
 const SortableItem = ({
@@ -12,7 +12,7 @@ const SortableItem = ({
   componentStyle,
   children,
   // injected
-  intl
+  intl,
 }) => {
   const {
     attributes,
@@ -35,8 +35,8 @@ const SortableItem = ({
     >
       {children}
       <IconButtonWithTooltip
-        key='drag-to-reorder-icon'
-        tooltipPlacement='top'
+        key="drag-to-reorder-icon"
+        tooltipPlacement="top"
         tooltipContent={intl.formatMessage(messages.tooltipContent)}
         src={DragIndicator}
         iconAs={Icon}
@@ -48,7 +48,9 @@ const SortableItem = ({
     </Row>
   );
 };
-
+SortableItem.defaultProps = {
+  componentStyle: null,
+};
 SortableItem.propTypes = {
   id: PropTypes.string.isRequired,
   children: PropTypes.node.isRequired,
