@@ -63,17 +63,7 @@ export const stripNonTextTags = ({ input, tag }) => {
 export class OLXParser {
   constructor(olxString) {
     this.problem = {};
-    this.questionData = {};
-    const questionOptions = {
-      ignoreAttributes: false,
-      alwaysCreateTextNode: true,
-      numberParseOptions: {
-        leadingZeros: false,
-        hex: false,
-      },
-      preserveOrder: true,
-      processEntities: false,
-    };
+    this.problemArray = [];
     const parserOptions = {
       ignoreAttributes: false,
       alwaysCreateTextNode: true,
@@ -82,6 +72,18 @@ export class OLXParser {
         hex: false,
       },
       processEntities: false,
+      trimValues: false,
+    };
+    const orderMattersOptions = {
+      ignoreAttributes: false,
+      alwaysCreateTextNode: true,
+      numberParseOptions: {
+        leadingZeros: false,
+        hex: false,
+      },
+      preserveOrder: true,
+      processEntities: false,
+      trimValues: false,
     };
     const builderOptions = {
       ignoreAttributes: false,
@@ -94,14 +96,14 @@ export class OLXParser {
     // There are two versions of the parsed XLM because the question requires the order of the
     // parsed data to be preserved. However, all the other widgets need the data grouped by
     // the wrapping tag.
-    const questionParser = new XMLParser(questionOptions);
     const parser = new XMLParser(parserOptions);
+    const orderedParser = new XMLParser(orderMattersOptions);
     this.builder = new XMLBuilder(builderOptions);
     this.parsedOLX = parser.parse(olxString);
-    this.parsedQuestionOLX = questionParser.parse(olxString);
+    this.orderedOLX = orderedParser.parse(olxString);
     if (_.has(this.parsedOLX, 'problem')) {
       this.problem = this.parsedOLX.problem;
-      this.questionData = this.parsedQuestionOLX[0].problem;
+      this.problemArray = this.orderedOLX[0].problem;
     }
   }
 
@@ -354,7 +356,7 @@ export class OLXParser {
       processEntities: false,
     };
     const builder = new XMLBuilder(options);
-    const problemArray = _.get(this.questionData[0], problemType) || this.questionData;
+    const problemArray = _.get(this.problemArray[0], problemType) || this.problemArray;
 
     const questionArray = [];
     problemArray.forEach(tag => {
@@ -404,32 +406,40 @@ export class OLXParser {
   }
 
   getSolutionExplanation(problemType) {
-    if (!_.has(this.problem, `${problemType}.solution`) && !_.has(this.problem, 'solution')) { return null; }
-    let solution = _.get(this.problem, `${problemType}.solution`, null) || _.get(this.problem, 'solution', null);
-    const wrapper = Object.keys(solution)[0];
-    if (Object.keys(solution).length === 1 && wrapper === 'div') {
-      const parsedSolution = {};
-      Object.entries(solution.div).forEach(([key, value]) => {
-        if (key.indexOf('@_' === -1)) {
-          // The redundant "explanation" title should be removed.
-          // If the key is a paragraph or h2, and the text of either the first or only item is "Explanation."
-          if (
-            (key === 'p' || key === 'h2')
-            && (_.get(value, '#text', null) === 'Explanation'
-            || (_.isArray(value) && _.get(value[0], '#text', null) === 'Explanation'))
-          ) {
-            if (_.isArray(value)) {
-              value.shift();
-              parsedSolution[key] = value;
-            }
-          } else {
-            parsedSolution[key] = value;
+    const options = {
+      ignoreAttributes: false,
+      numberParseOptions: {
+        leadingZeros: false,
+        hex: false,
+      },
+      preserveOrder: true,
+      processEntities: false,
+    };
+    const builder = new XMLBuilder(options);
+    const problemArray = _.get(this.problemArray[0], problemType) || this.problemArray;
+
+    const solutionArray = [];
+    problemArray.forEach(tag => {
+      const tagName = Object.keys(tag)[0];
+      if (responseKeys.includes(tagName)) {
+        tag[tagName].forEach(problemSubTag => {
+          const problemSubTagName = Object.keys(problemSubTag)[0];
+          if (problemSubTagName === 'solution') {
+            problemSubTag[problemSubTagName].forEach(solutionSubTag => {
+              const solutionSubTagName = Object.keys(solutionSubTag)[0];
+              if (solutionSubTagName === 'div' || solutionSubTagName === 'p') {
+                solutionSubTag[solutionSubTagName].forEach(tag => {
+                  if (_.get(Object.values(tag)[0][0], '#text', null) !== 'Explanation') {
+                    solutionArray.push(tag);
+                  }
+                });
+              }
+            });
           }
-        }
-      });
-      solution = parsedSolution;
-    }
-    const solutionString = this.builder.build(solution);
+        });
+      }
+    });
+    const solutionString = builder.build(solutionArray);
     return solutionString;
   }
 

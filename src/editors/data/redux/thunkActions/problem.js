@@ -43,7 +43,7 @@ export const getDataFromOlx = ({ rawOLX, rawSettings }) => {
   if (!_.isEmpty(rawOLX) && !_.isEmpty(data)) {
     return { ...data, rawOLX, settings: parsedSettings };
   }
-  return {};
+  return { settings: {} };
 };
 
 export const loadProblem = ({ rawOLX, rawSettings, defaultSettings }) => (dispatch) => {
