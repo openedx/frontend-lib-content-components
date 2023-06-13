@@ -93,6 +93,15 @@ export class OLXParser {
       },
       processEntities: false,
     };
+    this.rebuilderOptions = {
+      ignoreAttributes: false,
+      numberParseOptions: {
+        leadingZeros: false,
+        hex: false,
+      },
+      preserveOrder: true,
+      processEntities: false,
+    };
     // There are two versions of the parsed XLM because the question requires the order of the
     // parsed data to be preserved. However, all the other widgets need the data grouped by
     // the wrapping tag.
@@ -345,21 +354,11 @@ export class OLXParser {
     return { answers };
   }
 
-  parseQuestions(problemType) {
-    const options = {
-      ignoreAttributes: false,
-      numberParseOptions: {
-        leadingZeros: false,
-        hex: false,
-      },
-      preserveOrder: true,
-      processEntities: false,
-    };
-    const builder = new XMLBuilder(options);
-    const problemArray = _.get(this.problemArray[0], problemType) || this.problemArray;
+  parseQuestions() {
+    const builder = new XMLBuilder(this.rebuilderOptions);
 
     const questionArray = [];
-    problemArray.forEach(tag => {
+    this.problemArray.forEach(tag => {
       const tagName = Object.keys(tag)[0];
       if (!nonQuestionKeys.includes(tagName)) {
         if (tagName === 'script') {
@@ -368,12 +367,12 @@ export class OLXParser {
         questionArray.push(tag);
       } else if (responseKeys.includes(tagName)) {
         /* <label> and <description> tags often are both valid olx as siblings or children of response type tags.
-         They, however, do belong in the question, so we append them to the question.
+          They, however, do belong in the question, so we append them to the question.
         */
-        tag[tagName].forEach(subTag => {
-          const subTagName = Object.keys(subTag)[0];
-          if (subTagName === 'label' || subTagName === 'description') {
-            questionArray.push(subTag);
+        tag[tagName].forEach(problemSubTag => {
+          const problemSubTagName = Object.keys(problemSubTag)[0];
+          if (problemSubTagName === 'label' || problemSubTagName === 'description' || problemSubTagName === 'p') {
+            questionArray.push(problemSubTag);
           }
         });
       }
@@ -406,31 +405,21 @@ export class OLXParser {
   }
 
   getSolutionExplanation(problemType) {
-    const options = {
-      ignoreAttributes: false,
-      numberParseOptions: {
-        leadingZeros: false,
-        hex: false,
-      },
-      preserveOrder: true,
-      processEntities: false,
-    };
-    const builder = new XMLBuilder(options);
-    const problemArray = _.get(this.problemArray[0], problemType) || this.problemArray;
+    const builder = new XMLBuilder(this.rebuilderOptions);
 
     const solutionArray = [];
-    problemArray.forEach(tag => {
+    this.problemArray.forEach(tag => {
       const tagName = Object.keys(tag)[0];
-      if (responseKeys.includes(tagName)) {
+      if (tagName === problemType) {
         tag[tagName].forEach(problemSubTag => {
           const problemSubTagName = Object.keys(problemSubTag)[0];
           if (problemSubTagName === 'solution') {
             problemSubTag[problemSubTagName].forEach(solutionSubTag => {
               const solutionSubTagName = Object.keys(solutionSubTag)[0];
               if (solutionSubTagName === 'div' || solutionSubTagName === 'p') {
-                solutionSubTag[solutionSubTagName].forEach(tag => {
-                  if (_.get(Object.values(tag)[0][0], '#text', null) !== 'Explanation') {
-                    solutionArray.push(tag);
+                solutionSubTag[solutionSubTagName].forEach(textSubTag => {
+                  if (_.get(Object.values(textSubTag)[0][0], '#text', null) !== 'Explanation') {
+                    solutionArray.push(textSubTag);
                   }
                 });
               }
@@ -439,6 +428,7 @@ export class OLXParser {
         });
       }
     });
+
     const solutionString = builder.build(solutionArray);
     return solutionString;
   }

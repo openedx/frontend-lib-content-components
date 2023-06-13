@@ -20,6 +20,7 @@ import {
   labelDescriptionQuestionOLX,
   htmlEntityTestOLX,
   numberParseTestOLX,
+  orderedSolutionTest,
 } from './mockData/olxTestData';
 import { ProblemTypeKeys } from '../../../data/constants/problem';
 
@@ -245,5 +246,11 @@ describe('Check OLXParser for proper encoding', () => {
     const olxparser = new OLXParser(numberParseTestOLX.rawOLX);
     const answer = olxparser.parseMultipleChoiceAnswers('multiplechoiceresponse', 'choicegroup', 'choice');
     expect(answer).toEqual(numberParseTestOLX.data);
+  });
+  it('should parse solutionExplanation with proper order', () => {
+    const olxparser = new OLXParser(orderedSolutionTest.rawOLX);
+    const problemType = olxparser.getProblemType();
+    const explanation = olxparser.getSolutionExplanation(problemType);
+    expect(explanation).toBe(orderedSolutionTest.solutionExplanation);
   });
 });
