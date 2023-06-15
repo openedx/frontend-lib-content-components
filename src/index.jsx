@@ -11,6 +11,6 @@ export {
   VideoSelectorPage,
   DraggableList,
   SortableItem,
-  ErrorAlert
+  ErrorAlert,
 };
 export default Placeholder;
