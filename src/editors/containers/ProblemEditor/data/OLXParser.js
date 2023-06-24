@@ -28,19 +28,6 @@ export const nonQuestionKeys = [
   'textline',
 ];
 
-export const richTextFormats = [
-  'h1',
-  'h2',
-  'h3',
-  'h4',
-  'h5',
-  'h6',
-  'div',
-  'p',
-  'pre',
-  'table',
-];
-
 export const responseKeys = [
   'multiplechoiceresponse',
   'numericalresponse',
