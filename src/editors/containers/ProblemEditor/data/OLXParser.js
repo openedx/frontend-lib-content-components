@@ -38,6 +38,7 @@ export const richTextFormats = [
   'div',
   'p',
   'pre',
+  'table',
 ];
 
 export const responseKeys = [
@@ -480,12 +481,13 @@ export class OLXParser {
         }
         questionArray.push(tag);
       } else if (responseKeys.includes(tagName)) {
-        /* <label> and <description> tags often are both valid olx as siblings or children of response type tags.
-         They, however, do belong in the question, so we append them to the question.
-        */
+        /* Tags that are not used for other parts of the question such as <solution> or <choicegroup>
+         should be included in the question. These include but are not limited to tags like <label>,
+         <description> and <table> as they often are both valid olx as siblings or children of response
+         type tags. */
         tag[tagName].forEach(subTag => {
           const subTagName = Object.keys(subTag)[0];
-          if (subTagName === 'label' || subTagName === 'description' || richTextFormats.includes(subTagName)) {
+          if (!nonQuestionKeys.includes(subTagName)) {
             questionArray.push(subTag);
           }
         });
@@ -540,11 +542,15 @@ export class OLXParser {
     const solutionArray = [];
     if (divBody && divBody.div) {
       divBody.div.forEach(tag => {
-        solutionArray.push(tag);
+        if (_.get(Object.values(tag)[0][0], '#text', null) !== 'Explanation') {
+          solutionArray.push(tag);
+        }
       });
     } else {
       solutionBody.solution.forEach(tag => {
-        solutionArray.push(tag);
+        if (_.get(Object.values(tag)[0][0], '#text', null) !== 'Explanation') {
+          solutionArray.push(tag);
+        }
       });
     }
     const solutionString = this.richTextBuilder.build(solutionArray);
