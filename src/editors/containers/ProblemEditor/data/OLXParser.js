@@ -540,9 +540,11 @@ export class OLXParser {
     const solutionArray = [];
     if (divBody && divBody.div) {
       divBody.div.forEach(tag => {
-        if (_.get(Object.values(tag)[0][0], '#text', null) !== 'Explanation') {
-          solutionArray.push(tag);
-        }
+        solutionArray.push(tag);
+      });
+    } else {
+      solutionBody.solution.forEach(tag => {
+        solutionArray.push(tag);
       });
     }
     const solutionString = this.richTextBuilder.build(solutionArray);
