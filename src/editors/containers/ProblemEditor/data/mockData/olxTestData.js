@@ -771,7 +771,7 @@ export const labelDescriptionQuestionOLX = {
 </problem>`,
 
   question: `<p style="text-align: center;"><img height="274" width="" src="/static/boiling_eggs_water_system.png" alt="boiling eggs: water system"></img></p>
-
+  
   <label>Taking the system as just the <b>water</b>, as indicated by the red dashed line, what would be the correct expression for the first law of thermodynamics applied to this system?</label>
   <em>Watch out, boiling water is hot</em>`,
 };
