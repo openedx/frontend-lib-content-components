@@ -885,3 +885,208 @@ export const solutionExplanationTest = {
   solutionExplanation: `\n            
             This loop will iterate <code class="lang-matlab">99</code> times, but the length of <code class="lang-matlab">q</code> will not be <code class="lang-matlab">99</code> due to indexing with the value <code class="lang-matlab">2*i -1</code>. On the last iteration, <code class="lang-matlab">i = 99</code>, so <code class="lang-matlab">2*i - 1 = 2*78 - 1 = 197</code>. This will be the last position filled in <code class="lang-matlab">q</code>, so the answer is <code class="lang-matlab">197</code>.\n          `,
 };
+
+export const solutionExplanationWithoutDivTest = {
+  rawOLX: `<problem display_name="For loop" markdown="null" max_attempts="3" showanswer="answered" weight="0.0">
+      <multiplechoiceresponse>
+        <p>Considering a list z=[8,12,2,9,7] and the following for loop:</p>
+        <b>
+          <p>for i in z: </p>
+          <p>     y=i+1 </p>
+          <p>     print(y)</p>
+        </b>
+        <label>What would be the result of running this code?</label>
+        <description>Select the correct answer </description>
+        <choicegroup type="MultipleChoice">
+          <choice correct="false">8 </choice>
+          <choice correct="false">[9,13,3,10,8] </choice>
+          <choice correct="true">9<br>
+          13</br>
+        3
+          <br>10</br>
+      8 </choice>
+        </choicegroup>
+        <solution>
+          <p/>
+          <img src="https://courses.edx.org/asset-v1:MITx+CTL.SC0x+1T2023+type@asset+block@Screenshot_2022-12-19_205625.png"/>
+          <p>How would you adjust your code to get the other results? We encourage you to try different for loops and share them in the discussion forum.</p>
+        </solution>
+      </multiplechoiceresponse>
+    </problem>`,
+  solutionExplanation: `
+          <p></p>
+          <img src="https://courses.edx.org/asset-v1:MITx+CTL.SC0x+1T2023+type@asset+block@Screenshot_2022-12-19_205625.png"></img>
+          <p>How would you adjust your code to get the other results? We encourage you to try different for loops and share them in the discussion forum.</p>
+        `,
+};
+
+export const tablesInRichTextTest = {
+  rawOLX: `<problem>
+    <choiceresponse>
+      <p>
+        The table shows the number of protein-coding genes, chromosomes, and bases in a range of eukaryotic species.
+      </p>
+      <table class="chart" summary="A list of eukaryotic organisms and their genome contents." label="Four columns. The first column lists the species, the second column lists the number of protein-coding genes, the third column lists the number of chromosomes, and the fourth column lists the genome size in bases." width="100%">
+        <caption>Eukaryotic Genomes Comparison</caption>
+        <tbody>
+          <tr>
+            <th scope="col" style="text-align: center; border: 1px solid black;">
+              <b>Species</b>
+            </th>
+            <th scope="col" style="text-align: center; border: 1px solid black;">
+              <b>Protein-coding genes</b>
+            </th>
+            <th scope="col" style="text-align: center; border: 1px solid black;">
+              <b>Chromosomes</b>
+            </th>
+            <th scope="col" style="text-align: center; border: 1px solid black;">
+              <b>Bases</b>
+            </th>
+          </tr>
+          <tr>
+            <td style="text-align: center; border: 1px solid black;">Yeast (<i>S. cerevisiae</i>)</td>
+            <td style="text-align: center; border: 1px solid black;">~5,800</td>
+            <td style="text-align: center; border: 1px solid black;">16</td>
+            <td style="text-align: center; border: 1px solid black;">~12 Mb</td>
+          </tr>
+          <tr>
+            <td style="text-align: center; border: 1px solid black;">Arabidopsis (<i>A. thaliana</i>)</td>
+            <td style="text-align: center; border: 1px solid black;">~27,000</td>
+            <td style="text-align: center; border: 1px solid black;">5</td>
+            <td style="text-align: center; border: 1px solid black;">~115 Mb</td>
+          </tr>
+          <tr>
+            <td style="text-align: center; border: 1px solid black;">Rice (<i>O. sativa</i>)</td>
+            <td style="text-align: center; border: 1px solid black;">~41,000</td>
+            <td style="text-align: center; border: 1px solid black;">12</td>
+            <td style="text-align: center; border: 1px solid black;">~390 Mb</td>
+          </tr>
+          <tr>
+            <td style="text-align: center; border: 1px solid black;">Worm (<i>C. elegans</i>)</td>
+            <td style="text-align: center; border: 1px solid black;">~19,000</td>
+            <td style="text-align: center; border: 1px solid black;">6</td>
+            <td style="text-align: center; border: 1px solid black;">~100 Mb</td>
+          </tr>
+          <tr>
+            <td style="text-align: center; border: 1px solid black;">Fly (<i>D. melanogaster</i>)</td>
+            <td style="text-align: center; border: 1px solid black;">~14,000</td>
+            <td style="text-align: center; border: 1px solid black;">4</td>
+            <td style="text-align: center; border: 1px solid black;">~165 Mb</td>
+          </tr>
+          <tr>
+            <td style="text-align: center; border: 1px solid black;">Mouse (<i>M. musculus</i>)</td>
+            <td style="text-align: center; border: 1px solid black;">~23,000</td>
+            <td style="text-align: center; border: 1px solid black;">20</td>
+            <td style="text-align: center; border: 1px solid black;">~3 Gb</td>
+          </tr>
+          <tr>
+            <td style="text-align: center; border: 1px solid black;">Human (<i>H. sapiens</i>)</td>
+            <td style="text-align: center; border: 1px solid black;">~21,000</td>
+            <td style="text-align: center; border: 1px solid black;">23</td>
+            <td style="text-align: center; border: 1px solid black;">~3 Gb</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>
+        In which of the following observations does the C-value paradox apply? Select all that apply.
+      </p>
+      <checkboxgroup>
+        <choice correct="false">
+          <div>
+            Rice has a larger genome and more genes than <i>Arabidopsis</i>.
+          </div>
+        </choice>
+        <choice correct="true">
+          <div>
+            Humans have a larger genome but fewer genes than <i>Arabidopsis</i>.
+          </div>
+        </choice>
+        <choice correct="true">
+          <div>
+            Worms have a smaller genome but more genes than flies.
+          </div>
+        </choice>
+      </checkboxgroup>
+      <solution>
+        <div class="detailed-solution">
+          <p>
+            Explanation
+          </p>
+          <p>
+            Explanation
+          </p>
+          <p dir="ltr" id="docs-internal-guid-8b7482ab-7fff-27bd-79c5-a433e43a95ea">
+            The C-value paradox states that there is no relation between size of genome and number of genes. In the comparison between rice and <i>Arabidopsis</i>, the size of the rice genome is both larger and contains a greater number of genes than <i>Arabidopsis</i>, so the C-value paradox does not apply here. In the remaining options, the larger genomes have fewer genes.
+          </p>
+        </div>
+      </solution>
+    </choiceresponse>
+  </problem>`,
+  question: `<p>
+        The table shows the number of protein-coding genes, chromosomes, and bases in a range of eukaryotic species.
+      </p>
+      <table class="chart" summary="A list of eukaryotic organisms and their genome contents." label="Four columns. The first column lists the species, the second column lists the number of protein-coding genes, the third column lists the number of chromosomes, and the fourth column lists the genome size in bases." width="100%">
+        <caption>Eukaryotic Genomes Comparison</caption>
+        <tbody>
+          <tr>
+            <th scope="col" style="text-align: center; border: 1px solid black;">
+              <b>Species</b>
+            </th>
+            <th scope="col" style="text-align: center; border: 1px solid black;">
+              <b>Protein-coding genes</b>
+            </th>
+            <th scope="col" style="text-align: center; border: 1px solid black;">
+              <b>Chromosomes</b>
+            </th>
+            <th scope="col" style="text-align: center; border: 1px solid black;">
+              <b>Bases</b>
+            </th>
+          </tr>
+          <tr>
+            <td style="text-align: center; border: 1px solid black;">Yeast (<i>S. cerevisiae</i>)</td>
+            <td style="text-align: center; border: 1px solid black;">~5,800</td>
+            <td style="text-align: center; border: 1px solid black;">16</td>
+            <td style="text-align: center; border: 1px solid black;">~12 Mb</td>
+          </tr>
+          <tr>
+            <td style="text-align: center; border: 1px solid black;">Arabidopsis (<i>A. thaliana</i>)</td>
+            <td style="text-align: center; border: 1px solid black;">~27,000</td>
+            <td style="text-align: center; border: 1px solid black;">5</td>
+            <td style="text-align: center; border: 1px solid black;">~115 Mb</td>
+          </tr>
+          <tr>
+            <td style="text-align: center; border: 1px solid black;">Rice (<i>O. sativa</i>)</td>
+            <td style="text-align: center; border: 1px solid black;">~41,000</td>
+            <td style="text-align: center; border: 1px solid black;">12</td>
+            <td style="text-align: center; border: 1px solid black;">~390 Mb</td>
+          </tr>
+          <tr>
+            <td style="text-align: center; border: 1px solid black;">Worm (<i>C. elegans</i>)</td>
+            <td style="text-align: center; border: 1px solid black;">~19,000</td>
+            <td style="text-align: center; border: 1px solid black;">6</td>
+            <td style="text-align: center; border: 1px solid black;">~100 Mb</td>
+          </tr>
+          <tr>
+            <td style="text-align: center; border: 1px solid black;">Fly (<i>D. melanogaster</i>)</td>
+            <td style="text-align: center; border: 1px solid black;">~14,000</td>
+            <td style="text-align: center; border: 1px solid black;">4</td>
+            <td style="text-align: center; border: 1px solid black;">~165 Mb</td>
+          </tr>
+          <tr>
+            <td style="text-align: center; border: 1px solid black;">Mouse (<i>M. musculus</i>)</td>
+            <td style="text-align: center; border: 1px solid black;">~23,000</td>
+            <td style="text-align: center; border: 1px solid black;">20</td>
+            <td style="text-align: center; border: 1px solid black;">~3 Gb</td>
+          </tr>
+          <tr>
+            <td style="text-align: center; border: 1px solid black;">Human (<i>H. sapiens</i>)</td>
+            <td style="text-align: center; border: 1px solid black;">~21,000</td>
+            <td style="text-align: center; border: 1px solid black;">23</td>
+            <td style="text-align: center; border: 1px solid black;">~3 Gb</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>
+        In which of the following observations does the C-value paradox apply? Select all that apply.
+      </p>`,
+};
