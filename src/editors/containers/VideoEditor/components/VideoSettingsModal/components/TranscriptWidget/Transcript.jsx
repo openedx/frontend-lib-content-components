@@ -40,11 +40,13 @@ export const hooks = {
 export const Transcript = ({
   index,
   language,
+  transcriptUrl,
   // redux
   deleteTranscript,
 }) => {
   const { inDeleteConfirmation, launchDeleteConfirmation, cancelDelete } = module.hooks.setUpDeleteConfirmation();
   return (
+    // eslint-disable-next-line react/jsx-no-useless-fragment
     <>
       {inDeleteConfirmation
         ? (
@@ -90,6 +92,7 @@ export const Transcript = ({
               <TranscriptActionMenu
                 index={index}
                 language={language}
+                transcriptUrl={transcriptUrl}
                 launchDeleteConfirmation={launchDeleteConfirmation}
               />
             )}
@@ -99,9 +102,14 @@ export const Transcript = ({
   );
 };
 
+Transcript.defaultProps = {
+  transcriptUrl: undefined,
+};
+
 Transcript.propTypes = {
   index: PropTypes.number.isRequired,
   language: PropTypes.string.isRequired,
+  transcriptUrl: PropTypes.string,
   deleteTranscript: PropTypes.func.isRequired,
 };
 

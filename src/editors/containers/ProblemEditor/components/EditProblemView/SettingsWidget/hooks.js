@@ -3,7 +3,12 @@ import { useState, useEffect } from 'react';
 import _ from 'lodash-es';
 import * as module from './hooks';
 import messages from './messages';
-import { ProblemTypeKeys, ProblemTypes, ShowAnswerTypesKeys } from '../../../../../data/constants/problem';
+import {
+  ProblemTypeKeys,
+  ProblemTypes,
+  RichTextProblems,
+  ShowAnswerTypesKeys,
+} from '../../../../../data/constants/problem';
 import { fetchEditorContent } from '../hooks';
 
 export const state = {
@@ -83,27 +88,6 @@ export const hintsRowHooks = (id, hints, updateSettings) => {
   return {
     handleChange,
     handleDelete,
-  };
-};
-
-export const matlabCardHooks = (matLabApiKey, updateSettings) => {
-  const [summary, setSummary] = module.state.summary({ message: '', values: {}, intl: false });
-
-  useEffect(() => {
-    if (_.isEmpty(matLabApiKey)) {
-      setSummary({ message: messages.matlabNoKeySummary, values: {}, intl: true });
-    } else {
-      setSummary({ message: matLabApiKey, values: {}, intl: false });
-    }
-  }, [matLabApiKey]);
-
-  const handleChange = (event) => {
-    updateSettings({ matLabApiKey: event.target.value });
-  };
-
-  return {
-    summary,
-    handleChange,
   };
 };
 
@@ -235,45 +219,68 @@ export const typeRowHooks = ({
   updateField,
   updateAnswer,
 }) => {
-  const richTextProblems = [ProblemTypeKeys.SINGLESELECT, ProblemTypeKeys.MULTISELECT];
-
   const clearPreviouslySelectedAnswers = () => {
     let currentAnswerTitles;
-    if (richTextProblems.includes(problemType)) {
-      currentAnswerTitles = fetchEditorContent({ format: 'text' }).answers;
+    const { selectedFeedback, unselectedFeedback, ...editorContent } = fetchEditorContent({ format: 'text' });
+    if (RichTextProblems.includes(problemType)) {
+      currentAnswerTitles = editorContent.answers;
     }
     answers.forEach(answer => {
       const title = currentAnswerTitles?.[answer.id] || answer.title;
       if (answer.correct) {
-        updateAnswer({ ...answer, title, correct: false });
+        updateAnswer({
+          ...answer,
+          title,
+          selectedFeedback,
+          unselectedFeedback,
+          correct: false,
+        });
       } else {
-        updateAnswer({ ...answer, title });
+        updateAnswer({
+          ...answer,
+          selectedFeedback,
+          unselectedFeedback,
+          title,
+        });
       }
     });
   };
 
   const updateAnswersToCorrect = () => {
     let currentAnswerTitles;
-    if (richTextProblems.includes(problemType)) {
-      currentAnswerTitles = fetchEditorContent({ format: 'text' }).answers;
+    const { selectedFeedback, unselectedFeedback, ...editorContent } = fetchEditorContent({ format: 'text' });
+    if (RichTextProblems.includes(problemType)) {
+      currentAnswerTitles = editorContent.answers;
     }
     answers.forEach(answer => {
       const title = currentAnswerTitles ? currentAnswerTitles[answer.id] : answer.title;
-      updateAnswer({ ...answer, title, correct: true });
+      updateAnswer({
+        ...answer,
+        title,
+        selectedFeedback,
+        unselectedFeedback,
+        correct: true,
+      });
     });
   };
 
   const convertToPlainText = () => {
-    const currentAnswerTitles = fetchEditorContent({ format: 'text' }).answers;
+    const { selectedFeedback, unselectedFeedback, ...editorContent } = fetchEditorContent({ format: 'text' });
+    const currentAnswerTitles = editorContent.answers;
     answers.forEach(answer => {
-      updateAnswer({ ...answer, title: currentAnswerTitles[answer.id] });
+      updateAnswer({
+        ...answer,
+        selectedFeedback,
+        unselectedFeedback,
+        title: currentAnswerTitles[answer.id],
+      });
     });
   };
 
   const onClick = () => {
     // Numeric, text, and dropdowns cannot render HTML as answer values, so if switching from a single select
     // or multi-select problem the rich text needs to covert to plain text
-    if (typeKey === ProblemTypeKeys.TEXTINPUT && richTextProblems.includes(problemType)) {
+    if (typeKey === ProblemTypeKeys.TEXTINPUT && RichTextProblems.includes(problemType)) {
       convertToPlainText();
     }
     // Dropdown problems can only have one correct answer. When there is more than one correct answer
@@ -281,7 +288,7 @@ export const typeRowHooks = ({
     if (typeKey === ProblemTypeKeys.DROPDOWN) {
       if (correctAnswerCount > 1) {
         clearPreviouslySelectedAnswers();
-      } else if (richTextProblems.includes(problemType)) {
+      } else if (RichTextProblems.includes(problemType)) {
         convertToPlainText();
       }
     }

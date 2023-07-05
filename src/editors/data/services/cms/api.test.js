@@ -1,3 +1,4 @@
+/* eslint-disable no-import-assign */
 import * as utils from '../../../utils';
 import * as api from './api';
 import * as mockApi from './mockApi';
@@ -26,8 +27,7 @@ jest.mock('./urls', () => ({
   courseAdvanceSettings: jest.fn().mockName('urls.courseAdvanceSettings'),
   replaceTranscript: jest.fn().mockName('urls.replaceTranscript'),
   videoFeatures: jest.fn().mockName('urls.videoFeatures'),
-  courseVideos: jest.fn().mockName('urls.courseVideos'),
-  videoUpload: jest.fn()
+  courseVideos: jest.fn()
     .mockName('urls.courseVideos')
     .mockImplementation(
       ({ studioEndpointUrl, learningContextId }) => `${studioEndpointUrl}/some_video_upload_url/${learningContextId}`,
@@ -575,7 +575,7 @@ describe('cms api', () => {
   });
   describe('fetchVideoFeatures', () => {
     it('should call get with url.videoFeatures', () => {
-      const args = { studioEndpointUrl, learningContextId };
+      const args = { studioEndpointUrl };
       apiMethods.fetchVideoFeatures({ ...args });
       expect(get).toHaveBeenCalledWith(urls.videoFeatures({ ...args }));
     });

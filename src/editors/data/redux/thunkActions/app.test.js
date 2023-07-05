@@ -1,3 +1,4 @@
+/* eslint-disable no-import-assign */
 import { actions } from '..';
 import { camelizeKeys } from '../../../utils';
 import * as thunkActions from './app';
@@ -138,7 +139,7 @@ describe('app thunkActions', () => {
     let calls;
     beforeEach(() => {
       returnToUnit = jest.fn();
-      thunkActions.saveBlock({ content: testValue, returnToUnit })(dispatch);
+      thunkActions.saveBlock(testValue, returnToUnit)(dispatch);
       calls = dispatch.mock.calls;
     });
     it('dispatches actions.app.setBlockContent with content, before dispatching saveBlock', () => {
