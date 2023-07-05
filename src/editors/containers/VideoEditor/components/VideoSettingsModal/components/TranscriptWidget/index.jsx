@@ -79,6 +79,7 @@ export const hooks = {
 export const TranscriptWidget = ({
   // redux
   transcripts,
+  selectedVideoTranscriptUrls,
   allowTranscriptDownloads,
   showTranscriptByDefault,
   allowTranscriptImport,
@@ -118,6 +119,7 @@ export const TranscriptWidget = ({
             {transcripts.map((language, index) => (
               <Transcript
                 language={language}
+                transcriptUrl={selectedVideoTranscriptUrls[language]}
                 index={index}
               />
             ))}
@@ -179,10 +181,12 @@ export const TranscriptWidget = ({
 };
 
 TranscriptWidget.defaultProps = {
+  selectedVideoTranscriptUrls: {},
 };
 TranscriptWidget.propTypes = {
   // redux
   transcripts: PropTypes.arrayOf(PropTypes.string).isRequired,
+  selectedVideoTranscriptUrls: PropTypes.shape(),
   allowTranscriptDownloads: PropTypes.bool.isRequired,
   showTranscriptByDefault: PropTypes.bool.isRequired,
   allowTranscriptImport: PropTypes.bool.isRequired,
@@ -193,6 +197,7 @@ TranscriptWidget.propTypes = {
 };
 export const mapStateToProps = (state) => ({
   transcripts: selectors.video.transcripts(state),
+  selectedVideoTranscriptUrls: selectors.video.selectedVideoTranscriptUrls(state),
   allowTranscriptDownloads: selectors.video.allowTranscriptDownloads(state),
   showTranscriptByDefault: selectors.video.showTranscriptByDefault(state),
   allowTranscriptImport: selectors.video.allowTranscriptImport(state),

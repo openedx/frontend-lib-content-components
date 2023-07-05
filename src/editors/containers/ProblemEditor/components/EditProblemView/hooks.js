@@ -8,15 +8,15 @@ import { ProblemTypeKeys } from '../../../../data/constants/problem';
 
 export const state = StrictDict({
   // eslint-disable-next-line react-hooks/rules-of-hooks
-  isNoAnswerModalOpen: (val) => useState(val),
+  isSaveWarningModalOpen: (val) => useState(val),
 });
 
-export const noAnswerModalToggle = () => {
-  const [isNoAnswerModalOpen, setIsOpen] = state.isNoAnswerModalOpen(false);
+export const saveWarningModalToggle = () => {
+  const [isSaveWarningModalOpen, setIsOpen] = state.isSaveWarningModalOpen(false);
   return {
-    isNoAnswerModalOpen,
-    openNoAnswerModal: () => setIsOpen(true),
-    closeNoAnswerModal: () => setIsOpen(false),
+    isSaveWarningModalOpen,
+    openSaveWarningModal: () => setIsOpen(true),
+    closeSaveWarningModal: () => setIsOpen(false),
   };
 };
 
@@ -33,17 +33,17 @@ export const fetchEditorContent = ({ format }) => {
         const { selectedFeedback, unselectedFeedback, groupFeedback } = editorObject;
         const feedbackId = id.substring(id.indexOf('-') + 1);
         if (id.startsWith('selected')) {
-          editorObject.selectedFeedback = { ...selectedFeedback, [feedbackId]: editor.getContent({ format }) };
+          editorObject.selectedFeedback = { ...selectedFeedback, [feedbackId]: editor.getContent() };
         }
         if (id.startsWith('unselected')) {
-          editorObject.unselectedFeedback = { ...unselectedFeedback, [feedbackId]: editor.getContent({ format }) };
+          editorObject.unselectedFeedback = { ...unselectedFeedback, [feedbackId]: editor.getContent() };
         }
         if (id.startsWith('group')) {
-          editorObject.groupFeedback = { ...groupFeedback, [feedbackId]: editor.getContent({ format }) };
+          editorObject.groupFeedback = { ...groupFeedback, [feedbackId]: editor.getContent() };
         }
       } else if (id.startsWith('hint')) {
         const { hints } = editorObject;
-        hints.push(editor.getContent({ format }));
+        hints.push(editor.getContent());
       } else {
         editorObject[id] = editor.getContent();
       }
@@ -59,18 +59,18 @@ export const parseState = ({
   assets,
   lmsEndpointUrl,
 }) => () => {
-  const editorObject = fetchEditorContent({ format: '' });
-  const reactSettingsParser = new ReactStateSettingsParser(problem);
-  const reactOLXParser = new ReactStateOLXParser({ problem, editorObject });
-  const reactBuiltOlx = setAssetToStaticUrl({ editorValue: reactOLXParser.buildOLX(), assets, lmsEndpointUrl });
   const rawOLX = ref?.current?.state.doc.toString();
+  const editorObject = fetchEditorContent({ format: '' });
+  const reactOLXParser = new ReactStateOLXParser({ problem, editorObject });
+  const reactSettingsParser = new ReactStateSettingsParser({ problem, rawOLX });
+  const reactBuiltOlx = setAssetToStaticUrl({ editorValue: reactOLXParser.buildOLX(), assets, lmsEndpointUrl });
   return {
-    settings: reactSettingsParser.getSettings(),
+    settings: isAdvanced ? reactSettingsParser.parseRawOlxSettings() : reactSettingsParser.getSettings(),
     olx: isAdvanced ? rawOLX : reactBuiltOlx,
   };
 };
 
-export const checkForNoAnswers = ({ openNoAnswerModal, problem }) => {
+export const checkForNoAnswers = ({ openSaveWarningModal, problem }) => {
   const simpleTextAreaProblems = [ProblemTypeKeys.DROPDOWN, ProblemTypeKeys.NUMERIC, ProblemTypeKeys.TEXTINPUT];
   const editorObject = fetchEditorContent({ format: '' });
   const { problemType } = problem;
@@ -91,7 +91,7 @@ export const checkForNoAnswers = ({ openNoAnswerModal, problem }) => {
     return false;
   };
 
-  const hasNoCorrectAnswer = () => {
+  const hasCorrectAnswer = () => {
     let correctAnswer;
     answers.forEach(answer => {
       if (answer.correct) {
@@ -108,11 +108,31 @@ export const checkForNoAnswers = ({ openNoAnswerModal, problem }) => {
   };
 
   if (problemType === ProblemTypeKeys.NUMERIC && !hasTitle()) {
-    openNoAnswerModal();
+    openSaveWarningModal();
     return true;
   }
-  if (!hasNoCorrectAnswer()) {
-    openNoAnswerModal();
+  if (!hasCorrectAnswer()) {
+    openSaveWarningModal();
+    return true;
+  }
+  return false;
+};
+
+export const checkForSettingDiscrepancy = ({ problem, ref, openSaveWarningModal }) => {
+  const rawOLX = ref?.current?.state.doc.toString();
+  const reactSettingsParser = new ReactStateSettingsParser({ problem, rawOLX });
+  const problemSettings = reactSettingsParser.getSettings();
+  const rawOlxSettings = reactSettingsParser.parseRawOlxSettings();
+  let isMismatched = false;
+  // console.log(rawOlxSettings);
+  Object.entries(rawOlxSettings).forEach(([key, value]) => {
+    if (value !== problemSettings[key]) {
+      isMismatched = true;
+    }
+  });
+
+  if (isMismatched) {
+    openSaveWarningModal();
     return true;
   }
   return false;
@@ -120,7 +140,7 @@ export const checkForNoAnswers = ({ openNoAnswerModal, problem }) => {
 
 export const getContent = ({
   problemState,
-  openNoAnswerModal,
+  openSaveWarningModal,
   isAdvancedProblemType,
   editorRef,
   assets,
@@ -129,9 +149,14 @@ export const getContent = ({
   const problem = problemState;
   const hasNoAnswers = isAdvancedProblemType ? false : checkForNoAnswers({
     problem,
-    openNoAnswerModal,
+    openSaveWarningModal,
   });
-  if (!hasNoAnswers) {
+  const hasMismatchedSettings = isAdvancedProblemType ? checkForSettingDiscrepancy({
+    ref: editorRef,
+    problem,
+    openSaveWarningModal,
+  }) : false;
+  if (!hasNoAnswers && !hasMismatchedSettings) {
     const data = parseState({
       isAdvanced: isAdvancedProblemType,
       ref: editorRef,

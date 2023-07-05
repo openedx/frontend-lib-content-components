@@ -16,7 +16,9 @@ export const returnUrl = ({ studioEndpointUrl, unitUrl, learningContextId }) => 
 };
 
 export const block = ({ studioEndpointUrl, blockId }) => (
-  `${studioEndpointUrl}/xblock/${blockId}`
+  blockId.includes('block-v1')
+    ? `${studioEndpointUrl}/xblock/${blockId}`
+    : `${studioEndpointUrl}/api/xblock/v2/xblocks/${blockId}`
 );
 
 export const blockAncestor = ({ studioEndpointUrl, blockId }) => (
@@ -43,6 +45,10 @@ export const downloadVideoTranscriptURL = ({ studioEndpointUrl, blockId, languag
   `${videoTranscripts({ studioEndpointUrl, blockId })}?language_code=${language}`
 );
 
+export const mediaTranscriptURL = ({ studioEndpointUrl, transcriptUrl }) => (
+  `${studioEndpointUrl}${transcriptUrl}`
+);
+
 export const downloadVideoHandoutUrl = ({ studioEndpointUrl, handout }) => (
   `${studioEndpointUrl}${handout}`
 );
@@ -63,8 +69,8 @@ export const courseAdvanceSettings = ({ studioEndpointUrl, learningContextId }) 
   `${studioEndpointUrl}/api/contentstore/v0/advanced_settings/${learningContextId}`
 );
 
-export const videoFeatures = ({ studioEndpointUrl, learningContextId }) => (
-  `${studioEndpointUrl}/video_features/${learningContextId}`
+export const videoFeatures = ({ studioEndpointUrl }) => (
+  `${studioEndpointUrl}/video_features/`
 );
 
 export const courseVideos = ({ studioEndpointUrl, learningContextId }) => (

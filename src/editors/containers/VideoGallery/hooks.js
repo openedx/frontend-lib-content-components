@@ -1,6 +1,10 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import * as module from './hooks';
 import messages from './messages';
+import * as appHooks from '../../hooks';
+import { selectors } from '../../data/redux';
+import analyticsEvt from '../../data/constants/analyticsEvt';
 import {
   filterKeys,
   filterMessages,
@@ -8,6 +12,11 @@ import {
   sortMessages,
   sortFunctions,
 } from './utils';
+
+export const {
+  navigateCallback,
+  navigateTo,
+} = appHooks;
 
 export const state = {
   // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -44,7 +53,7 @@ export const searchAndSortProps = () => {
     onFilterClick: (key) => () => setFilterBy(key),
     filterKeys,
     filterMessages,
-    showSwitch: true,
+    showSwitch: false,
     hideSelectedVideos,
     switchMessage: messages.hideSelectedCourseVideosSwitchLabel,
     onSwitchClick: () => setHideSelectedVideos(!hideSelectedVideos),
@@ -98,6 +107,10 @@ export const videoListProps = ({ searchSortProps, videos }) => {
     setShowSizeError,
   ] = module.state.showSizeError(false);
   const filteredList = module.filterList({ ...searchSortProps, videos });
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const learningContextId = useSelector(selectors.app.learningContextId);
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const blockId = useSelector(selectors.app.blockId);
   return {
     galleryError: {
       show: showSelectVideoError,
@@ -123,25 +136,41 @@ export const videoListProps = ({ searchSortProps, videos }) => {
       height: '100%',
     },
     selectBtnProps: {
-      onclick: () => {
-        // TODO Update this when implementing the selection feature
+      onClick: () => {
+        if (highlighted) {
+          navigateTo(`/course/${learningContextId}/editor/video/${blockId}?selectedVideoId=${highlighted}`);
+        } else {
+          setShowSelectVideoError(true);
+        }
       },
     },
   };
 };
 
 export const fileInputProps = () => {
-  // TODO [Update video] Implement this
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  const ref = React.useRef();
-  const click = () => ref.current.click();
-
+  const click = module.handleVideoUpload();
   return {
     click,
-    addFile: () => {},
-    ref,
   };
 };
+
+export const handleVideoUpload = () => {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const learningContextId = useSelector(selectors.app.learningContextId);
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const blockId = useSelector(selectors.app.blockId);
+  return () => navigateTo(`/course/${learningContextId}/editor/video_upload/${blockId}`);
+};
+
+export const handleCancel = () => (
+  navigateCallback({
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    destination: useSelector(selectors.app.returnUrl),
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    analytics: useSelector(selectors.app.analytics),
+    analyticsEvent: analyticsEvt.videoGalleryCancelClick,
+  })
+);
 
 export const buildVideos = ({ rawVideos }) => {
   let videos = [];
@@ -199,4 +228,6 @@ export const videoProps = ({ videos }) => {
 export default {
   videoProps,
   buildVideos,
+  handleCancel,
+  handleVideoUpload,
 };

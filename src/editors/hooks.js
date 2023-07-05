@@ -18,12 +18,17 @@ export const navigateTo = (destination) => {
 };
 
 export const navigateCallback = ({
+  returnFunction,
   destination,
   analyticsEvent,
   analytics,
-}) => () => {
+}) => (response) => {
   if (process.env.NODE_ENV !== 'development' && analyticsEvent && analytics) {
     sendTrackEvent(analyticsEvent, analytics);
+  }
+  if (returnFunction) {
+    returnFunction()(response);
+    return;
   }
   module.navigateTo(destination);
 };
@@ -35,6 +40,7 @@ export const saveBlock = ({
   content,
   destination,
   dispatch,
+  returnFunction,
   validateEntry,
 }) => {
   if (!content) {
@@ -49,14 +55,15 @@ export const saveBlock = ({
     attemptSave = true;
   }
   if (attemptSave) {
-    dispatch(thunkActions.app.saveBlock({
-      returnToUnit: module.navigateCallback({
+    dispatch(thunkActions.app.saveBlock(
+      content,
+      module.navigateCallback({
         destination,
         analyticsEvent: analyticsEvt.editorSaveClick,
         analytics,
+        returnFunction,
       }),
-      content,
-    }));
+    ));
   }
 };
 

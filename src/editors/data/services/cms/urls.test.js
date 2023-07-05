@@ -14,13 +14,15 @@ import {
   checkTranscriptsForImport,
   replaceTranscript,
   courseAdvanceSettings,
+  mediaTranscriptURL,
   videoFeatures,
   courseVideos,
 } from './urls';
 
 describe('cms url methods', () => {
   const studioEndpointUrl = 'urLgoeStOstudiO';
-  const blockId = 'blOckIDTeST123';
+  const blockId = 'block-v1-blOckIDTeST123';
+  const v2BlockId = 'blOckIDTeST123';
   const learningContextId = 'lEarnIngCOntextId123';
   const courseId = 'course-v1:courseId123';
   const libraryV1Id = 'library-v1:libaryId123';
@@ -61,9 +63,13 @@ describe('cms url methods', () => {
     });
   });
   describe('block', () => {
-    it('returns url with studioEndpointUrl and blockId', () => {
+    it('returns v1 url with studioEndpointUrl and blockId', () => {
       expect(block({ studioEndpointUrl, blockId }))
         .toEqual(`${studioEndpointUrl}/xblock/${blockId}`);
+    });
+    it('returns v2 url with studioEndpointUrl and v2BlockId', () => {
+      expect(block({ studioEndpointUrl, blockId: v2BlockId }))
+        .toEqual(`${studioEndpointUrl}/api/xblock/v2/xblocks/${v2BlockId}`);
     });
   });
   describe('blockAncestor', () => {
@@ -135,14 +141,21 @@ describe('cms url methods', () => {
   });
   describe('videoFeatures', () => {
     it('returns url with studioEndpointUrl and learningContextId', () => {
-      expect(videoFeatures({ studioEndpointUrl, learningContextId }))
-        .toEqual(`${studioEndpointUrl}/video_features/${learningContextId}`);
+      expect(videoFeatures({ studioEndpointUrl }))
+        .toEqual(`${studioEndpointUrl}/video_features/`);
     });
   });
   describe('courseVideos', () => {
     it('returns url with studioEndpointUrl and learningContextId', () => {
       expect(courseVideos({ studioEndpointUrl, learningContextId }))
         .toEqual(`${studioEndpointUrl}/videos/${learningContextId}`);
+    });
+  });
+  describe('mediaTranscriptURL', () => {
+    it('returns url with studioEndpointUrl', () => {
+      const transcriptUrl = 'this-is-a-transcript';
+      expect(mediaTranscriptURL({ studioEndpointUrl, transcriptUrl }))
+        .toEqual(`${studioEndpointUrl}${transcriptUrl}`);
     });
   });
 });

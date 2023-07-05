@@ -36,7 +36,7 @@ export const fetchBlockById = ({ blockId, studioEndpointUrl }) => {
   } else if (blockId === 'problem-block-id') {
     data = {
       data: `<problem>
-        </problem>`,
+    </problem>`,
       display_name: 'Dropdown',
       metadata: {
         markdown: `You can use this template as a guide to the simple editor markdown and OLX markup to use for dropdown problems. Edit this component to replace this template with your own assessment.
@@ -47,7 +47,6 @@ export const fetchBlockById = ({ blockId, studioEndpointUrl }) => {
         an incorrect answer
         ]]`,
         attempts_before_showanswer_button: 7,
-        matlab_api_key: 'sample_matlab_api_key',
         max_attempts: 5,
         show_reset_button: true,
         showanswer: 'after_attempts',
@@ -139,7 +138,7 @@ export const fetchAdvanceSettings = ({ studioEndpointUrl, learningContextId }) =
   data: { allow_unsupported_xblocks: { value: true } },
 });
 // eslint-disable-next-line
-export const fetchVideoFeatures = ({ studioEndpointUrl, learningContextId }) => mockPromise({
+export const fetchVideoFeatures = ({ studioEndpointUrl }) => mockPromise({
   data: {
     allowThumbnailUpload: true,
     videoSharingEnabledForCourse: true,
@@ -271,7 +270,6 @@ export const fetchStudioView = ({ blockId, studioEndpointUrl }) => {
         an incorrect answer
         ]]`,
         attempts_before_showanswer_button: 7,
-        matlab_api_key: 'numerical_input_matlab_api_key',
         max_attempts: 5,
         rerandomize: 'per_student',
         show_reset_button: true,
