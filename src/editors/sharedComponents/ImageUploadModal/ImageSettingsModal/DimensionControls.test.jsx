@@ -73,16 +73,20 @@ describe('DimensionControls', () => {
       paragon.Form.Label = jest.fn().mockImplementation(({ children }) => (
         <div>{children}</div>
       ));
+      // eslint-disable-next-line no-import-assign
       paragon.Icon = jest.fn().mockImplementation(({ children }) => (
         <div>{children}</div>
       ));
+      // eslint-disable-next-line no-import-assign
       paragon.IconButton = jest.fn().mockImplementation(({ children }) => (
         <div>{children}</div>
       ));
       paragon.Form.Control = jest.fn().mockImplementation(({ value, onChange, onBlur }) => (
         <input className="formControl" onChange={onChange} onBlur={onBlur} value={value} />
       ));
+      // eslint-disable-next-line no-import-assign
       icons.Locked = jest.fn().mockImplementation(() => {});
+      // eslint-disable-next-line no-import-assign
       icons.Unlocked = jest.fn().mockImplementation(() => {});
     });
     afterEach(() => {
