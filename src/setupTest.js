@@ -60,76 +60,76 @@ jest.mock('@edx/frontend-platform/i18n', () => {
   };
 });
 
-// jest.mock('@edx/paragon', () => jest.requireActual('testUtils').mockNestedComponents({
-//   Alert: {
-//     Heading: 'Alert.Heading',
-//   },
-//   ActionRow: {
-//     Spacer: 'ActionRow.Spacer',
-//   },
-//   Button: 'Button',
-//   ButtonGroup: 'ButtonGroup',
-//   Collapsible: {
-//     Advanced: 'Advanced',
-//     Body: 'Body',
-//     Trigger: 'Trigger',
-//     Visible: 'Visible',
-//   },
-//   Card: {
-//     Header: 'Card.Header',
-//     Section: 'Card.Section',
-//     Footer: 'Card.Footer',
-//     Body: 'Card.Body',
-//   },
-//   Col: 'Col',
-//   Container: 'Container',
-//   Dropdown: {
-//     Item: 'Dropdown.Item',
-//     Menu: 'Dropdown.Menu',
-//     Toggle: 'Dropdown.Toggle',
-//   },
-//   ErrorContext: {
-//     Provider: 'ErrorContext.Provider',
-//   },
-//   Hyperlink: 'Hyperlink',
-//   Icon: 'Icon',
-//   IconButton: 'IconButton',
-//   IconButtonWithTooltip: 'IconButtonWithTooltip',
-//   Image: 'Image',
-//   MailtoLink: 'MailtoLink',
-//   ModalDialog: {
-//     Footer: 'ModalDialog.Footer',
-//     Header: 'ModalDialog.Header',
-//     Title: 'ModalDialog.Title',
-//     Body: 'ModalDialog.Body',
-//     CloseButton: 'ModalDialog.CloseButton',
-//   },
-//   Form: {
-//     Checkbox: 'Form.Checkbox',
-//     Control: {
-//       Feedback: 'Form.Control.Feedback',
-//     },
-//     Group: 'Form.Group',
-//     Label: 'Form.Label',
-//     Text: 'Form.Text',
-//     Row: 'Form.Row',
-//     Radio: 'Radio',
-//     RadioSet: 'RadioSet',
-//   },
-//   OverlayTrigger: 'OverlayTrigger',
-//   Tooltip: 'Tooltip',
-//   FullscreenModal: 'FullscreenModal',
-//   Row: 'Row',
-//   Scrollable: 'Scrollable',
-//   SelectableBox: {
-//     Set: 'SelectableBox.Set',
-//   },
+jest.mock('@edx/paragon', () => jest.requireActual('testUtils').mockNestedComponents({
+  Alert: {
+    Heading: 'Alert.Heading',
+  },
+  ActionRow: {
+    Spacer: 'ActionRow.Spacer',
+  },
+  Button: 'Button',
+  ButtonGroup: 'ButtonGroup',
+  Collapsible: {
+    Advanced: 'Advanced',
+    Body: 'Body',
+    Trigger: 'Trigger',
+    Visible: 'Visible',
+  },
+  Card: {
+    Header: 'Card.Header',
+    Section: 'Card.Section',
+    Footer: 'Card.Footer',
+    Body: 'Card.Body',
+  },
+  Col: 'Col',
+  Container: 'Container',
+  Dropdown: {
+    Item: 'Dropdown.Item',
+    Menu: 'Dropdown.Menu',
+    Toggle: 'Dropdown.Toggle',
+  },
+  ErrorContext: {
+    Provider: 'ErrorContext.Provider',
+  },
+  Hyperlink: 'Hyperlink',
+  Icon: 'Icon',
+  IconButton: 'IconButton',
+  IconButtonWithTooltip: 'IconButtonWithTooltip',
+  Image: 'Image',
+  MailtoLink: 'MailtoLink',
+  ModalDialog: {
+    Footer: 'ModalDialog.Footer',
+    Header: 'ModalDialog.Header',
+    Title: 'ModalDialog.Title',
+    Body: 'ModalDialog.Body',
+    CloseButton: 'ModalDialog.CloseButton',
+  },
+  Form: {
+    Checkbox: 'Form.Checkbox',
+    Control: {
+      Feedback: 'Form.Control.Feedback',
+    },
+    Group: 'Form.Group',
+    Label: 'Form.Label',
+    Text: 'Form.Text',
+    Row: 'Form.Row',
+    Radio: 'Radio',
+    RadioSet: 'RadioSet',
+  },
+  OverlayTrigger: 'OverlayTrigger',
+  Tooltip: 'Tooltip',
+  FullscreenModal: 'FullscreenModal',
+  Row: 'Row',
+  Scrollable: 'Scrollable',
+  SelectableBox: {
+    Set: 'SelectableBox.Set',
+  },
 
-//   Spinner: 'Spinner',
-//   Stack: 'Stack',
-//   Toast: 'Toast',
-//   Truncate: 'Truncate',
-// }));
+  Spinner: 'Spinner',
+  Stack: 'Stack',
+  Toast: 'Toast',
+  Truncate: 'Truncate',
+}));
 
 jest.mock('@edx/paragon/icons', () => ({
   Close: jest.fn().mockName('icons.Close'),

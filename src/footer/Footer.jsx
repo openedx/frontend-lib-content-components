@@ -38,11 +38,8 @@ const Footer = ({
           iconAfter={isOpen ? ExpandLess : ExpandMore}
           size="sm"
         >
-          {isOpen ? (
-            <FormattedMessage {...messages.closeHelpButtonLabel} />
-          ) : (
-            <FormattedMessage {...messages.openHelpButtonLabel} />
-          )}
+          {isOpen ? intl.formatMessage(messages.closeHelpButtonLabel)
+            : intl.formatMessage(messages.openHelpButtonLabel)}
         </Button>
         <div className="col border-top ml-2" />
       </div>
@@ -113,7 +110,7 @@ const Footer = ({
           Translators: 'edX' and 'Open edX' are trademarks of 'edX Inc.'. Please do not translate
             any of these trademarks and company names.
         */}
-        edX and Open edX, and the edX and Open edX logos are registered trademarks of<Hyperlink destination="https://www.edx.org">edX Inc</Hyperlink>.
+        edX and Open edX, and the edX and Open edX logos are registered trademarks of <Hyperlink className="ml-1" destination="https://www.edx.org">edX Inc</Hyperlink>.
         {/* need to add link to edx.org */}
         <ActionRow.Spacer />
         <Hyperlink destination="https://open.edx.org" className="float-right">

@@ -29,6 +29,8 @@ const renderComponent = (
   );
 };
 
+jest.unmock('@edx/paragon');
+
 describe('Footer', () => {
   describe('help section default view', () => {
     it('help button should read Looking for help with Studio?', () => {
