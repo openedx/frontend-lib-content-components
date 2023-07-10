@@ -18,8 +18,9 @@ export const imgProps = ({
   lmsEndpointUrl,
   editorType,
 }) => {
-  let url = selection.externalUrl;
-  if (url.startsWith(lmsEndpointUrl) && editorType !== 'expandable') {
+  console.log('selection: ', selection);
+  let url = selection?.externalUrl;
+  if (url?.startsWith(lmsEndpointUrl) && editorType !== 'expandable') {
     const sourceEndIndex = lmsEndpointUrl.length;
     url = url.substring(sourceEndIndex);
   }
@@ -88,7 +89,8 @@ export const hooks = {
 
     close();
   },
-  onClose: ({ clearSelection, close }) => () => {
+  onClose: ({ editorRef, clearSelection, close }) => () => {
+    console.log('editorRef: ', editorRef);
     clearSelection();
     close();
   },
@@ -125,12 +127,12 @@ export const ImageUploadModal = ({
   editorType,
   lmsEndpointUrl,
 }) => {
-  if (selection) {
+  if (selection && selection.externalUrl) {
     return (
       <ImageSettingsModal
         {...{
           isOpen,
-          close: module.hooks.onClose({ clearSelection, close }),
+          close: module.hooks.onClose({ editorRef, clearSelection, close }),
           selection,
           images,
           saveToEditor: module.hooks.createSaveCallback({

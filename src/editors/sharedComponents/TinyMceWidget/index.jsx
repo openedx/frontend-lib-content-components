@@ -44,6 +44,7 @@ export const TinyMceWidget = ({
   const { imagesRef } = hooks.useImages({ assets, editorContentHtml });
 
   const imageSelection = hooks.selectedImage(null);
+  console.log('imageSelection: ', imageSelection);
 
   return (
     <>
