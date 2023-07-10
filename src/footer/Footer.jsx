@@ -45,7 +45,7 @@ const Footer = ({
       </div>
       <TransitionReplace>
         {isOpen ? (
-          <ActionRow className="py-4" data-testid="helpButtonRow">
+          <ActionRow key="help-link-button-row" className="py-4" data-testid="helpButtonRow">
             <ActionRow.Spacer />
             <Button as="a" href="https://docs.edx.org/" size="sm">
               <FormattedMessage {...messages.edxDocumentationButtonLabel} />
