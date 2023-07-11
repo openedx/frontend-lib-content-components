@@ -50,9 +50,25 @@ const Footer = ({
             <Button as="a" href="https://docs.edx.org/" size="sm">
               <FormattedMessage {...messages.edxDocumentationButtonLabel} />
             </Button>
-            <Button as="a" href="https://openedx.org/" size="sm">
-              Open edX Portal
-            </Button>
+            {platformName === 'edX' ? (
+              <Button
+                as="a"
+                href="https://partner.edx.org/"
+                size="sm"
+                data-testid="edXPortalButton"
+              >
+                <FormattedMessage {...messages.parnterPortalButtonLabel} />
+              </Button>
+            ) : (
+              <Button
+                as="a"
+                href="https://open.edx.org/"
+                size="sm"
+                data-testid="openEdXPortalButton"
+              >
+                <FormattedMessage {...messages.openEdxPortalButtonLabel} />
+              </Button>
+            )}
             <Button
               as="a"
               href="https://www.edx.org/course/edx101-overview-of-creating-an-edx-course#.VO4eaLPF-n1"
@@ -110,8 +126,8 @@ const Footer = ({
           Translators: 'edX' and 'Open edX' are trademarks of 'edX Inc.'. Please do not translate
             any of these trademarks and company names.
         */}
-        edX and Open edX, and the edX and Open edX logos are registered trademarks of <Hyperlink className="ml-1" destination="https://www.edx.org">edX Inc</Hyperlink>.
-        {/* need to add link to edx.org */}
+        <FormattedMessage {...messages.trademarkMessage} />
+        <Hyperlink className="ml-1" destination="https://www.edx.org">edX Inc</Hyperlink>.
         <ActionRow.Spacer />
         <Hyperlink destination="https://open.edx.org" className="float-right">
           <Image

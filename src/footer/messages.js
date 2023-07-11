@@ -13,13 +13,18 @@ const messages = defineMessages({
   },
   edxDocumentationButtonLabel: {
     id: 'authoring.footer.help.edxDocumentation.button.label',
-    defaultMessage: 'edX Documentation',
+    defaultMessage: 'edX documentation',
     description: 'Label for button that links to the edX documentation site',
   },
+  parnterPortalButtonLabel: {
+    id: 'authoring.footer.help.parnterPortal.button.label',
+    defaultMessage: 'edX partner portal',
+    description: 'Label for button that links to the edX partner portal',
+  },
   openEdxPortalButtonLabel: {
-    id: 'authoring.footer.help.edxDocumentation.button.label',
-    defaultMessage: 'edX Documentation',
-    description: 'Label for button that links to the edX documentation site',
+    id: 'authoring.footer.help.openEdxPortal.button.label',
+    defaultMessage: 'Open edX portal',
+    description: 'Label for button that links to the Open edX portal',
   },
   edx101ButtonLabel: {
     id: 'authoring.footer.help.edx101.button.label',
@@ -50,6 +55,11 @@ const messages = defineMessages({
     id: 'authoring.footer.accessibilityRequest.link.label',
     defaultMessage: 'Accessibility Accomodation Request',
     description: 'Label for button that links to the accessibility accomodation requests page',
+  },
+  trademarkMessage: {
+    id: 'authoring.footer.trademark.message',
+    defaultMessage: 'edX and Open edX, and the edX and Open edX logos are registered trademarks of',
+    description: 'Message about the use of logos and names edX and Open edX',
   },
 });
 

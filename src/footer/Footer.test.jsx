@@ -11,6 +11,7 @@ const renderComponent = (
   privacyPolicyUrl,
   supportEmail,
   showAccessibilityPage,
+  platformName,
 ) => {
   render(
     <IntlProvider locale="en">
@@ -19,7 +20,7 @@ const renderComponent = (
         termsOfServiceUrl={termsOfServiceUrl}
         privacyPolicyUrl={privacyPolicyUrl}
         supportEmail={supportEmail}
-        platformName="Test Platform"
+        platformName={platformName || 'Test Platform'}
         lmsBaseUrl="#"
         studioBaseUrl="#"
         showAccessibilityPage={showAccessibilityPage || false}
@@ -57,14 +58,30 @@ describe('Footer', () => {
       fireEvent.click(helpToggleButton);
       expect(screen.getByTestId('helpButtonRow')).toBeVisible();
     });
-    it('should not show contect us button', () => {
+    describe('portal button', () => {
+      it('should equal edX partner portal and edX equals platform name', () => {
+        renderComponent(null, null, null, false, 'edX');
+        const helpToggleButton = screen.getByText(messages.openHelpButtonLabel.defaultMessage);
+        fireEvent.click(helpToggleButton);
+        expect(screen.getByTestId('edXPortalButton')).toBeVisible();
+        expect(screen.queryByTestId('openEdXPortalButton')).toBeNull();
+      });
+      it('should equal Open edX portal and edX does not equal platform name', () => {
+        renderComponent();
+        const helpToggleButton = screen.getByText(messages.openHelpButtonLabel.defaultMessage);
+        fireEvent.click(helpToggleButton);
+        expect(screen.queryByTestId('edXPortalButton')).toBeNull();
+        expect(screen.getByTestId('openEdXPortalButton')).toBeVisible();
+      });
+    });
+    it('should not show contact us button', () => {
       renderComponent();
       const helpToggleButton = screen.getByText(messages.openHelpButtonLabel.defaultMessage);
       fireEvent.click(helpToggleButton);
       expect(screen.queryByTestId('contactUsButton')).toBeNull();
     });
-    it('should not show contect us button', () => {
-      renderComponent(null, null, 'support@email.com', false);
+    it('should show contact us button', () => {
+      renderComponent(null, null, 'support@email.com', false, null);
       const helpToggleButton = screen.getByText(messages.openHelpButtonLabel.defaultMessage);
       fireEvent.click(helpToggleButton);
       expect(screen.getByTestId('contactUsButton')).toBeVisible();
@@ -79,21 +96,21 @@ describe('Footer', () => {
       expect(screen.queryByTestId('accessibilityRequest')).toBeNull();
     });
     it('should show terms of service link', () => {
-      renderComponent('termsofserviceurl', null, null, false);
+      renderComponent('termsofserviceurl', null, null, false, null);
       expect(screen.getByText('LMS')).toBeVisible();
       expect(screen.queryByTestId('termsOfService')).toBeVisible();
       expect(screen.queryByTestId('privacyPolicy')).toBeNull();
       expect(screen.queryByTestId('accessibilityRequest')).toBeNull();
     });
     it('should show privacy policy link', () => {
-      renderComponent(null, 'privacypolicyurl', null, false);
+      renderComponent(null, 'privacypolicyurl', null, false, null);
       expect(screen.getByText('LMS')).toBeVisible();
       expect(screen.queryByTestId('termsOfService')).toBeNull();
       expect(screen.queryByTestId('privacyPolicy')).toBeVisible();
       expect(screen.queryByTestId('accessibilityRequest')).toBeNull();
     });
     it('should show accessibilty request link', () => {
-      renderComponent(null, null, null, true);
+      renderComponent(null, null, null, true, null);
       expect(screen.getByText('LMS')).toBeVisible();
       expect(screen.queryByTestId('termsOfService')).toBeNull();
       expect(screen.queryByTestId('privacyPolicy')).toBeNull();
