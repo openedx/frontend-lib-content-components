@@ -228,8 +228,8 @@ describe('ImageSettingsModal hooks', () => {
   describe('altTextHooks', () => {
     const value = 'myVAL';
     const isDecorative = true;
-    const showAltTextDismissibleError = 'dismiSSiBLE';
-    const showAltTextSubmissionError = 'subMISsion';
+    const showAltTextDismissibleError = true;
+    const showAltTextSubmissionError = true;
     beforeEach(() => {
       state.mock();
       hook = hooks.altTextHooks();

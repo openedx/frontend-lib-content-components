@@ -155,6 +155,9 @@ describe('ImageUploadModal', () => {
         selection: { some: 'images', externalUrl: 'sOmEuRl.cOm' },
         setSelection: jest.fn().mockName('props.setSelection'),
         lmsEndpointUrl: 'sOmE',
+        images: {
+          current: [mockImage],
+        },
       };
       module.hooks = {
         createSaveCallback: jest.fn().mockName('hooks.createSaveCallback'),
