@@ -146,6 +146,7 @@ export const dimensionLockHooks = () => {
 export const dimensionHooks = (altTextHook) => {
   const [dimensions, setDimensions] = module.state.dimensions(null);
   const [local, setLocal] = module.state.local(null);
+
   const setAll = ({ height, width, altText }) => {
     if (altText === '' || altText) {
       if (altText === '') {
@@ -156,6 +157,25 @@ export const dimensionHooks = (altTextHook) => {
     setDimensions({ height, width });
     setLocal({ height, width });
   };
+
+  const setHeight = (height) => {
+    if (height.match(/[0-9]+[%]{1}/)) {
+      const heightPercent = height.match(/[0-9]+[%]{1}/)[0];
+      setLocal({ ...local, height: heightPercent });
+    } else if (height.match(/[0-9]/)) {
+      setLocal({ ...local, height: parseInt(height, 10) });
+    }
+  };
+
+  const setWidth = (width) => {
+    if (width.match(/[0-9]+[%]{1}/)) {
+      const widthPercent = width.match(/[0-9]+[%]{1}/)[0];
+      setLocal({ ...local, width: widthPercent });
+    } else if (width.match(/[0-9]/)) {
+      setLocal({ ...local, width: parseInt(width, 10) });
+    }
+  };
+
   const {
     initializeLock,
     isLocked,
@@ -168,28 +188,14 @@ export const dimensionHooks = (altTextHook) => {
     onImgLoad: (selection) => ({ target: img }) => {
       const imageDims = { height: img.naturalHeight, width: img.naturalWidth };
       setAll(selection.height ? selection : imageDims);
-      initializeLock(imageDims);
+      initializeLock(selection.height ? selection : imageDims);
     },
     isLocked,
     lock,
     unlock,
     value: local,
-    setHeight: (height) => {
-      if (height.match(/[0-9]+[%]{1}/)) {
-        const heightPercent = height.match(/[0-9]+[%]{1}/)[0];
-        setLocal({ ...local, height: heightPercent });
-      } else if (height.match(/[0-9]/)) {
-        setLocal({ ...local, height: parseInt(height, 10) });
-      }
-    },
-    setWidth: (width) => {
-      if (width.match(/[0-9]+[%]{1}/)) {
-        const widthPercent = width.match(/[0-9]+[%]{1}/)[0];
-        setLocal({ ...local, width: widthPercent });
-      } else if (width.match(/[0-9]/)) {
-        setLocal({ ...local, width: parseInt(width, 10) });
-      }
-    },
+    setHeight,
+    setWidth,
     updateDimensions: () => setAll(module.getValidDimensions({
       dimensions,
       local,
