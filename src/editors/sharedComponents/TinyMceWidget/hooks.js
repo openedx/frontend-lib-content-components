@@ -337,18 +337,36 @@ export const getImageFromHtmlString = (htmlString, imageSrc) => {
   return Array.from(images).find((img) => matchImageStringsByIdentifiers(img.src || '', imageSrc));
 };
 
+export const detectImageMatchingError = ({ matchingImages, tinyMceHTML }) => {
+  if (!matchingImages.length) { return true; }
+  if (matchingImages.length > 1) { return true; }
+
+  if (!matchImageStringsByIdentifiers(matchingImages[0].id, tinyMceHTML.src)) { return true; }
+  if (!matchingImages[0].width || !matchingImages[0].height) { return true; }
+  if (matchingImages[0].width !== tinyMceHTML.width) { return true; }
+  if (matchingImages[0].height !== tinyMceHTML.height) { return true; }
+
+  return false;
+};
+
 export const openModalWithSelectedImage = ({
   editor, images, setImage, openImgModal,
 }) => () => {
   const tinyMceHTML = editor.selection.getNode();
+  const { src: mceSrc } = tinyMceHTML;
 
-  const selectedImage = images.current.find(image => matchImageStringsByIdentifiers(image.id, tinyMceHTML.src));
+  const matchingImages = images.current.filter(image => matchImageStringsByIdentifiers(image.id, mceSrc));
+
+  const imageMatchingErrorDetected = detectImageMatchingError({ tinyMceHTML, matchingImages });
+
+  const width = imageMatchingErrorDetected ? null : matchingImages[0]?.width;
+  const height = imageMatchingErrorDetected ? null : matchingImages[0]?.height;
 
   setImage({
     externalUrl: tinyMceHTML.src,
     altText: tinyMceHTML.alt,
-    width: selectedImage?.width,
-    height: selectedImage?.height,
+    width,
+    height,
   });
 
   openImgModal();

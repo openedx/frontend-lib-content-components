@@ -186,7 +186,9 @@ export const dimensionHooks = (altTextHook) => {
 
   return {
     onImgLoad: (selection) => ({ target: img }) => {
+      console.log('onImgLoad');
       const imageDims = { height: img.naturalHeight, width: img.naturalWidth };
+      console.log('selection', selection);
       setAll(selection.height ? selection : imageDims);
       initializeLock(selection.height ? selection : imageDims);
     },
