@@ -152,7 +152,7 @@ describe('ImageUploadModal', () => {
         isOpen: false,
         close: jest.fn().mockName('props.close'),
         clearSelection: jest.fn().mockName('props.clearSelection'),
-        selection: { some: 'images' },
+        selection: { some: 'images', externalUrl: 'sOmEuRl.cOm' },
         setSelection: jest.fn().mockName('props.setSelection'),
         lmsEndpointUrl: 'sOmE',
       };
@@ -166,6 +166,9 @@ describe('ImageUploadModal', () => {
     });
     test('snapshot: with selection content (ImageSettingsUpload)', () => {
       expect(shallow(<ImageUploadModal {...props} />)).toMatchSnapshot();
+    });
+    test('snapshot: selection has no externalUrl (Select Image Modal)', () => {
+      expect(shallow(<ImageUploadModal {...props} selection={null} />)).toMatchSnapshot();
     });
     test('snapshot: no selection (Select Image Modal)', () => {
       expect(shallow(<ImageUploadModal {...props} selection={null} />)).toMatchSnapshot();

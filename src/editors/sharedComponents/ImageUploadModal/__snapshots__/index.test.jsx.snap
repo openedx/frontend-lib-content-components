@@ -9,12 +9,22 @@ exports[`ImageUploadModal component snapshot: no selection (Select Image Modal) 
 />
 `;
 
+exports[`ImageUploadModal component snapshot: selection has no externalUrl (Select Image Modal) 1`] = `
+<SelectImageModal
+  clearSelection={[MockFunction props.clearSelection]}
+  close={[MockFunction props.close]}
+  isOpen={false}
+  setSelection={[MockFunction props.setSelection]}
+/>
+`;
+
 exports[`ImageUploadModal component snapshot: with selection content (ImageSettingsUpload) 1`] = `
 <ImageSettingsModal
   isOpen={false}
   returnToSelection={[MockFunction props.clearSelection]}
   selection={
     Object {
+      "externalUrl": "sOmEuRl.cOm",
       "some": "images",
     }
   }
