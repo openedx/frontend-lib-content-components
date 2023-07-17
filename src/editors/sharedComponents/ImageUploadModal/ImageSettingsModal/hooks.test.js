@@ -41,7 +41,6 @@ describe('state values', () => {
   test('provides isLocked state value', () => testStateMethod(state.keys.isLocked));
   test('provides local state value', () => testStateMethod(state.keys.local));
   test('provides lockAspectRatio state value', () => testStateMethod(state.keys.lockAspectRatio));
-  test('provides lockInitialized state value', () => testStateMethod(state.keys.lockInitialized));
 });
 
 describe('ImageSettingsModal hooks', () => {

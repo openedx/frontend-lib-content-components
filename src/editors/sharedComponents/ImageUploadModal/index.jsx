@@ -18,7 +18,6 @@ export const imgProps = ({
   lmsEndpointUrl,
   editorType,
 }) => {
-  console.log('selection: ', selection);
   let url = selection?.externalUrl;
   if (url?.startsWith(lmsEndpointUrl) && editorType !== 'expandable') {
     const sourceEndIndex = lmsEndpointUrl.length;
@@ -89,8 +88,7 @@ export const hooks = {
 
     close();
   },
-  onClose: ({ editorRef, clearSelection, close }) => () => {
-    console.log('editorRef: ', editorRef);
+  onClose: ({ clearSelection, close }) => () => {
     clearSelection();
     close();
   },
