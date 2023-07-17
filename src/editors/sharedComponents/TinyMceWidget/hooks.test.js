@@ -81,6 +81,34 @@ describe('TinyMceEditor hooks', () => {
     beforeEach(() => { state.mock(); });
     afterEach(() => { state.restore(); });
 
+    describe('detectImageMatchingError', () => {
+      it('should detect an error if the matchingImages array is empty', () => {
+        const matchingImages = [];
+        const tinyMceHTML = mockNode;
+        expect(module.detectImageMatchingError({ matchingImages, tinyMceHTML })).toBe(true);
+      });
+      it('should detect an error if the matchingImages array has more than one element', () => {
+        const matchingImages = [mockImage, mockImage];
+        const tinyMceHTML = mockNode;
+        expect(module.detectImageMatchingError({ matchingImages, tinyMceHTML })).toBe(true);
+      });
+      it('should detect an error if the image id does not match the tinyMceHTML src', () => {
+        const matchingImages = [{ ...mockImage, id: 'some-other-id' }];
+        const tinyMceHTML = mockNode;
+        expect(module.detectImageMatchingError({ matchingImages, tinyMceHTML })).toBe(true);
+      });
+      it('should detect an error if the image id matches the tinyMceHTML src, but width and height do not match', () => {
+        const matchingImages = [{ ...mockImage, width: 100, height: 100 }];
+        const tinyMceHTML = mockNode;
+        expect(module.detectImageMatchingError({ matchingImages, tinyMceHTML })).toBe(true);
+      });
+      it('should not detect any errors if id matches src, and width and height match', () => {
+        const matchingImages = [{ ...mockImage, width: mockNode.width, height: mockNode.height }];
+        const tinyMceHTML = mockNode;
+        expect(module.detectImageMatchingError({ matchingImages, tinyMceHTML })).toBe(false);
+      });
+    });
+
     describe('setupCustomBehavior', () => {
       test('It calls addButton and addToggleButton in the editor, but openModal is not called', () => {
         const addButton = jest.fn();
