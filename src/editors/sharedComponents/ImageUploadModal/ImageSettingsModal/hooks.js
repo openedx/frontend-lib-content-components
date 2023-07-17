@@ -5,15 +5,22 @@ import * as module from './hooks';
 
 // Simple wrappers for useState to allow easy mocking for tests.
 export const state = {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   altText: (val) => React.useState(val),
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   dimensions: (val) => React.useState(val),
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   showAltTextDismissibleError: (val) => React.useState(val),
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   showAltTextSubmissionError: (val) => React.useState(val),
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   isDecorative: (val) => React.useState(val),
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   isLocked: (val) => React.useState(val),
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   local: (val) => React.useState(val),
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   lockAspectRatio: (val) => React.useState(val),
-  lockInitialized: (val) => React.useState(val),
 };
 
 export const dimKeys = StrictDict({
@@ -186,9 +193,7 @@ export const dimensionHooks = (altTextHook) => {
 
   return {
     onImgLoad: (selection) => ({ target: img }) => {
-      console.log('onImgLoad');
       const imageDims = { height: img.naturalHeight, width: img.naturalWidth };
-      console.log('selection', selection);
       setAll(selection.height ? selection : imageDims);
       initializeLock(selection.height ? selection : imageDims);
     },
