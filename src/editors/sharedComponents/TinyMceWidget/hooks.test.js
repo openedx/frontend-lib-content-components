@@ -29,9 +29,10 @@ const mockNode = {
   height: editorImageHeight,
 };
 
-const mockEditorWithSelection = { selection: { getNode: () => mockNode } };
 const initialContentHeight = 150;
 const initialContentWidth = 100;
+const mockNodeWithInitialContentDimensions = { ...mockNode, width: initialContentWidth, height: initialContentHeight };
+const mockEditorWithSelection = { selection: { getNode: () => mockNode } };
 
 const mockImage = {
   displayName: 'DALL·E 2023-03-10.png',
@@ -376,12 +377,17 @@ describe('TinyMceEditor hooks', () => {
     describe('openModalWithSelectedImage', () => {
       const setImage = jest.fn();
       const openImgModal = jest.fn();
-      const editor = mockEditorWithSelection;
+      let editor;
 
       beforeEach(() => {
+        editor = { selection: { getNode: () => mockNodeWithInitialContentDimensions } };
         module.openModalWithSelectedImage({
           editor, images: mockImagesRef, openImgModal, setImage,
         })();
+      });
+
+      afterEach(() => {
+        jest.clearAllMocks();
       });
 
       test('updates React state for selected image to be value stored in editor, adding dimensions from images ref', () => {
@@ -392,8 +398,31 @@ describe('TinyMceEditor hooks', () => {
           height: mockImage.height,
         });
       });
+
       test('opens image setting modal', () => {
         expect(openImgModal).toHaveBeenCalled();
+      });
+
+      describe('when images cannot be successfully matched', () => {
+        beforeEach(() => {
+          editor = { selection: { getNode: () => mockNode } };
+          module.openModalWithSelectedImage({
+            editor, images: mockImagesRef, openImgModal, setImage,
+          })();
+        });
+
+        afterEach(() => {
+          jest.clearAllMocks();
+        });
+
+        test('updates React state for selected image to be value stored in editor, setting dimensions to null', () => {
+          expect(setImage).toHaveBeenCalledWith({
+            externalUrl: mockNode.src,
+            altText: mockNode.alt,
+            width: null,
+            height: null,
+          });
+        });
       });
     });
 
