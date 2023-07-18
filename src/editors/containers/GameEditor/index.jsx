@@ -1,3 +1,6 @@
+/* eslint-disable */
+// TODO remove the lint disabler above when TODO's are filled in
+
 import React from 'react';
 import { connect } from 'react-redux';
 import EditorContainer from '../EditorContainer';
@@ -13,7 +16,7 @@ export const GamesEditor = ({
   );
 };
 
-export const mapStateToProps = (state) => ({
+export const mapStateToProps = () => ({
   // TODO fill with redux state here if needed
 });
 
