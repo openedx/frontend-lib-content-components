@@ -31,6 +31,9 @@ const DraggableList = ({
 
   const handleDragEnd = (event) => {
     const { active, over } = event;
+    console.log('active: ', active);
+    console.log('over: ', over);
+    console.log(itemList);
     if (active.id !== over.id) {
       let updatedArray;
       setState(() => {
@@ -39,9 +42,13 @@ const DraggableList = ({
         const oldIndex = itemList.indexOf(activeElement);
         const newIndex = itemList.indexOf(overElement);
         updatedArray = arrayMove(itemList, oldIndex, newIndex);
+        console.log(updatedArray);
+        console.log('old: ', oldIndex);
+        console.log('new: ', newIndex);
         return updatedArray;
       });
-      updateOrder()(updatedArray);
+      updateOrder(updatedArray);
+      // updateOrder changed from origin
     }
   };
 

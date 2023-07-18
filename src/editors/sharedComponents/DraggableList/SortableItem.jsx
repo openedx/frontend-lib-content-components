@@ -10,6 +10,7 @@ import messages from './messages';
 const SortableItem = ({
   id,
   componentStyle,
+  buttonClassName,
   children,
   // injected
   intl,
@@ -36,6 +37,7 @@ const SortableItem = ({
     >
       {children}
       <IconButtonWithTooltip
+        className={buttonClassName}
         key="drag-to-reorder-icon"
         tooltipPlacement="top"
         tooltipContent={intl.formatMessage(messages.tooltipContent)}
