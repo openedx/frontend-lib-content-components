@@ -1,4 +1,3 @@
-import _ from 'lodash-es';
 import { createSlice } from '@reduxjs/toolkit';
 import { StrictDict } from '../../../utils';
 
