@@ -7,6 +7,7 @@ const mockPromise = (returnValue) => new Promise(resolve => resolve(returnValue)
 // eslint-disable-next-line
 export const fetchBlockById = ({ blockId, studioEndpointUrl }) => {
   let data = {};
+  console.log('test', blockId)
   if (blockId === 'html-block-id') {
     data = {
       data: `<problem>
