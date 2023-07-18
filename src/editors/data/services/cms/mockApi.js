@@ -7,6 +7,7 @@ const mockPromise = (returnValue) => new Promise(resolve => resolve(returnValue)
 // eslint-disable-next-line
 export const fetchBlockById = ({ blockId, studioEndpointUrl }) => {
   let data = {};
+  console.log('test', blockId)
   if (blockId === 'html-block-id') {
     data = {
       data: `<problem>
@@ -53,6 +54,11 @@ export const fetchBlockById = ({ blockId, studioEndpointUrl }) => {
         submission_wait_seconds: 15,
         weight: 29,
       },
+    };
+  } else if (blockId === 'game-block-id') {
+    data = {
+      display_name: 'Game Block',
+      // TODO: insert mock data from backend here
     };
   }
   return mockPromise({ data: { ...data } });
