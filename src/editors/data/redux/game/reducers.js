@@ -4,6 +4,7 @@ import { StrictDict } from '../../../utils';
 const initialState = {
   settings: {},
   // TODO fill in with mock state
+  exampleValue: 'this is an example value from the redux state',
 };
 
 // eslint-disable-next-line no-unused-vars
