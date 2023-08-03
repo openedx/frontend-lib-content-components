@@ -66,6 +66,7 @@ describe('TinyMceWidget', () => {
     studioEndpointUrl: 'sOmEoThERvaLue.cOm',
     disabled: false,
     id: 'sOMeiD',
+    updateContent: () => ({}),
   };
   describe('snapshots', () => {
     imgModalToggle.mockReturnValue({
