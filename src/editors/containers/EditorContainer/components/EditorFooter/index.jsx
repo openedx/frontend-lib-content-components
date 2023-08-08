@@ -46,6 +46,16 @@ export const EditorFooter = ({
           </Hyperlink>
           )
         }
+          {
+        // TODO: Try to find a less repetitive way to display the feedback link for different block types
+        // TODO: Get a proper feedback link for games block
+        blockType === blockTypes.game
+          && (
+          <Hyperlink destination="https://www.google.com" target="_blank">
+            Share Feedback
+          </Hyperlink>
+          )
+        }
           <ActionRow.Spacer />
           <Button
             aria-label={intl.formatMessage(messages.cancelButtonAriaLabel)}
