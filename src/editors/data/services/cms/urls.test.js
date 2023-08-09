@@ -24,7 +24,7 @@ describe('cms url methods', () => {
   const blockId = 'block-v1-blOckIDTeST123';
   const v2BlockId = 'blOckIDTeST123';
   const learningContextId = 'lEarnIngCOntextId123';
-  const libraryLeearningContextId = 'library-v1:libaryId123';
+  const libraryLearningContextId = 'library-v1:libaryId123';
   const courseId = 'course-v1:courseId123';
   const libraryV1Id = 'lib-block-v1:libaryId123';
   const libraryV2Id = 'lib:libaryId123';
@@ -44,7 +44,7 @@ describe('cms url methods', () => {
       },
     };
     it('returns the library page when given the v1 library', () => {
-      expect(returnUrl({ studioEndpointUrl, unitUrl, learningContextId: libraryLeearningContextId }))
+      expect(returnUrl({ studioEndpointUrl, unitUrl, learningContextId: libraryLearningContextId }))
         .toEqual(`${studioEndpointUrl}/library/${libraryLeearningContextId}`);
     });
     it('throws error when given the v2 library', () => {
