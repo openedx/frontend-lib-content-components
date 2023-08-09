@@ -45,7 +45,7 @@ describe('cms url methods', () => {
     };
     it('returns the library page when given the v1 library', () => {
       expect(returnUrl({ studioEndpointUrl, unitUrl, learningContextId: libraryLearningContextId }))
-        .toEqual(`${studioEndpointUrl}/library/${libraryLeearningContextId}`);
+        .toEqual(`${studioEndpointUrl}/library/${libraryLearningContextId}`);
     });
     it('throws error when given the v2 library', () => {
       expect(() => { returnUrl({ studioEndpointUrl, unitUrl, learningContextId: libraryV2Id }); })
