@@ -197,7 +197,6 @@
 }
 
 .sidebar-type, .sidebar-shuffle, .sidebar-timer {
-    padding: 24px;
     gap: 16px;
 
     border-radius: 4px;
@@ -219,11 +218,11 @@
 }
 
 .toggle-button {
-    width: 115px;
+    width: 50%;
 }
 
 .type-button {
-    width: 230px;
+    width: 100%;
     justify-content: space-between;
     padding-left: 0;
     padding-right: 0;
@@ -249,4 +248,17 @@
 .preview-term, .preview-definition {
     padding-left: 8px;
     padding-right: 8px;
+    position: absolute;
+}
+
+.preview-term {
+    left: 0;
+}
+
+.preview-definition {
+    left: 50%;
+}
+
+.preview-block {
+    bottom: 35%;
 }

@@ -53,11 +53,13 @@ const SortableItem = ({
 };
 SortableItem.defaultProps = {
   componentStyle: null,
+  buttonClassName: null,
 };
 SortableItem.propTypes = {
   id: PropTypes.string.isRequired,
   children: PropTypes.node.isRequired,
   componentStyle: PropTypes.shape({}),
+  buttonClassName: PropTypes.string,
   // injected
   intl: intlShape.isRequired,
 };

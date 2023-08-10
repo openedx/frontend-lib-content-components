@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { StrictDict } from '../../../utils';
-import { state } from '../../../sharedComponents/TinyMceWidget/hooks';
 
 const initialState = {
   settings: {
@@ -8,12 +7,14 @@ const initialState = {
     timer: true,
   },
 
-  type: 'flashcards', // type must be a lowercase string indicating the type of game ('flashcards' or 'matching' for now)
+  // type must be a lowercase string indicating the type of game ('flashcards' or 'matching' for now)
+  type: 'flashcards',
 
   list: [{
     term_image: '', definition_image: '', term: '', definition: '', id: 1, editorOpen: true,
   }],
-  listCounter: 1, // a counter to keep track of the total number of items that have been added to the list. This is used to obtain a unique (but unambiguous) id for the DraggableList to work
+  // a counter to keep track of the total number of items that have been added to the list
+  listCounter: 1,
 };
 
 // eslint-disable-next-line no-unused-vars
@@ -72,10 +73,10 @@ const game = createSlice({
       };
     },
     updateTermImage: (state, { payload }) => {
-      const { index, term_image } = payload;
+      const { index, termImage } = payload;
       const newCard = { ...state.list[index] };
 
-      newCard.term_image = term_image;
+      newCard.term_image = termImage;
 
       const newList = [...state.list];
       newList[index] = newCard;
@@ -85,10 +86,10 @@ const game = createSlice({
       };
     },
     updateDefinitionImage: (state, { payload }) => {
-      const { index, definition_image } = payload;
+      const { index, definitionImage } = payload;
       const newCard = { ...state.list[index] };
 
-      newCard.definition_image = definition_image;
+      newCard.definition_image = definitionImage;
 
       const newList = [...state.list];
       newList[index] = newCard;
@@ -102,10 +103,7 @@ const game = createSlice({
       const { index, isOpen } = payload;
       const newCard = { ...state.list[index] };
 
-      if (isOpen)
-        newCard.editorOpen = true;
-      else
-        newCard.editorOpen = false;
+      newCard.editorOpen = isOpen;
 
       const newList = [...state.list];
       newList[index] = newCard;
@@ -115,13 +113,10 @@ const game = createSlice({
       };
     },
 
-    setList: (state, { payload }) => {
-      console.log(payload);
-      return {
-        ...state,
-        list: payload,
-      };
-    },
+    setList: (state, { payload }) => ({
+      ...state,
+      list: payload,
+    }),
     addCard: (state) => {
       const newListCounter = state.listCounter + 1;
       return {
@@ -139,9 +134,9 @@ const game = createSlice({
       };
     },
     removeCard: (state, { payload }) => {
-      const { id } = payload;
+      const { index } = payload;
       const newList = [...state.list];
-      newList.splice(id, 1);
+      newList.splice(index, 1);
       return {
         ...state,
         list: newList,
