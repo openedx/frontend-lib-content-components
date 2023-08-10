@@ -2,9 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { injectIntl, FormattedMessage, intlShape } from '@edx/frontend-platform/i18n';
-import { selectors, actions } from '../../../../../data/redux';
-import { messages } from './messages';
-import './index.scss';
+import { selectors } from '../../../../../data/redux';
+import messages from './messages';
 
 import TinyMceWidget from '../../../../../sharedComponents/TinyMceWidget';
 import { prepareEditorRef } from '../../../../../sharedComponents/TinyMceWidget/hooks';
@@ -18,7 +17,7 @@ export const QuestionWidget = ({
   const { editorRef, refReady, setEditorRef } = prepareEditorRef();
   if (!refReady) { return null; }
   return (
-    <div className="question-widget">
+    <div className="tinyMceWidget">
       <div className="h4 mb-3">
         <FormattedMessage {...messages.questionWidgetTitle} />
       </div>
@@ -26,7 +25,7 @@ export const QuestionWidget = ({
         id="question"
         editorType="question"
         editorRef={editorRef}
-        textValue={question}
+        editorContentHtml={question}
         setEditorRef={setEditorRef}
         minHeight={150}
         placeholder={intl.formatMessage(messages.placeholder)}
@@ -45,8 +44,4 @@ export const mapStateToProps = (state) => ({
   question: selectors.problem.question(state),
 });
 
-export const mapDispatchToProps = {
-  updateQuestion: actions.problem.updateQuestion,
-};
-
-export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(QuestionWidget));
+export default injectIntl(connect(mapStateToProps)(QuestionWidget));

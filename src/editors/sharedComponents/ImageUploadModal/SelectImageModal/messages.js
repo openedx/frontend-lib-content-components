@@ -1,4 +1,7 @@
-export const messages = {
+import { defineMessages } from '@edx/frontend-platform/i18n';
+
+const messages = defineMessages({
+
   nextButtonLabel: {
     id: 'authoring.texteditor.selectimagemodal.next.label',
     defaultMessage: 'Next',
@@ -13,11 +16,6 @@ export const messages = {
     id: 'authoring.texteditor.selectimagemodal.title.label',
     defaultMessage: 'Add an image',
     description: 'Title for the select image modal',
-  },
-  searchPlaceholder: {
-    id: 'authoring.texteditor.selectimagemodal.search.placeholder',
-    defaultMessage: 'Search',
-    description: 'Placeholder text for search bar',
   },
 
   // Sort Dropdown
@@ -43,26 +41,11 @@ export const messages = {
   },
 
   // Gallery
-  addedDate: {
-    id: 'authoring.texteditor.selectimagemodal.addedDate.label',
-    defaultMessage: 'Added {date} at {time}',
-    description: 'File date-added string',
-  },
-  loading: {
-    id: 'authoring.texteditor.selectimagemodal.spinner.readertext',
-    defaultMessage: 'loading...',
-    description: 'Gallery loading spinner screen-reader text',
-  },
   emptyGalleryLabel: {
     id: 'authoring.texteditor.selectimagemodal.emptyGalleryLabel',
     defaultMessage:
       'No images found in your gallery. Please upload an image using the button below.',
     description: 'Label for when image gallery is empty.',
-  },
-  emptySearchLabel: {
-    id: 'authoring.texteditor.selectimagemodal.emptySearchLabel',
-    defaultMessage: 'No search results.',
-    description: 'Label for when search returns nothing.',
   },
 
   // Errors
@@ -89,6 +72,6 @@ export const messages = {
     description:
       'Message presented to user when clicking Next without selecting an image',
   },
-};
+});
 
 export default messages;

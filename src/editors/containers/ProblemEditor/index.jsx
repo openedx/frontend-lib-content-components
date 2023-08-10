@@ -11,6 +11,7 @@ import messages from './messages';
 
 export const ProblemEditor = ({
   onClose,
+  returnFunction,
   // Redux
   problemType,
   blockFinished,
@@ -19,6 +20,7 @@ export const ProblemEditor = ({
   blockValue,
   initializeProblemEditor,
   assetsFinished,
+  advancedSettingsFinished,
 }) => {
   React.useEffect(() => {
     if (blockFinished && studioViewFinished && assetsFinished && !blockFailed) {
@@ -26,7 +28,7 @@ export const ProblemEditor = ({
     }
   }, [blockFinished, studioViewFinished, assetsFinished, blockFailed]);
 
-  if (!blockFinished || !studioViewFinished || !assetsFinished) {
+  if (!blockFinished || !studioViewFinished || !assetsFinished || !advancedSettingsFinished) {
     return (
       <div className="text-center p-6">
         <Spinner
@@ -47,24 +49,27 @@ export const ProblemEditor = ({
   }
 
   if (problemType === null) {
-    return (<SelectTypeModal onClose={onClose} />);
+    return (<SelectTypeModal {...{ onClose }} />);
   }
-  return (<EditProblemView onClose={onClose} />);
+  return (<EditProblemView {...{ onClose, returnFunction }} />);
 };
 
 ProblemEditor.defaultProps = {
   assetsFinished: null,
+  returnFunction: null,
 };
 ProblemEditor.propTypes = {
   onClose: PropTypes.func.isRequired,
+  returnFunction: PropTypes.func,
   // redux
   assetsFinished: PropTypes.bool,
+  advancedSettingsFinished: PropTypes.bool.isRequired,
   blockFinished: PropTypes.bool.isRequired,
   blockFailed: PropTypes.bool.isRequired,
   studioViewFinished: PropTypes.bool.isRequired,
   problemType: PropTypes.string.isRequired,
   initializeProblemEditor: PropTypes.func.isRequired,
-  blockValue: PropTypes.objectOf(PropTypes.object).isRequired,
+  blockValue: PropTypes.objectOf(PropTypes.shape({})).isRequired,
 };
 
 export const mapStateToProps = (state) => ({
@@ -74,6 +79,7 @@ export const mapStateToProps = (state) => ({
   problemType: selectors.problem.problemType(state),
   blockValue: selectors.app.blockValue(state),
   assetsFinished: selectors.requests.isFinished(state, { requestKey: RequestKeys.fetchAssets }),
+  advancedSettingsFinished: selectors.requests.isFinished(state, { requestKey: RequestKeys.fetchAdvancedSettings }),
 });
 
 export const mapDispatchToProps = {

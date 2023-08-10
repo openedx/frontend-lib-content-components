@@ -3,13 +3,25 @@ import { useState, useEffect } from 'react';
 import _ from 'lodash-es';
 import * as module from './hooks';
 import messages from './messages';
-import { ProblemTypeKeys, ProblemTypes, ShowAnswerTypesKeys } from '../../../../../data/constants/problem';
+import {
+  ProblemTypeKeys,
+  ProblemTypes,
+  RichTextProblems,
+  ShowAnswerTypesKeys,
+} from '../../../../../data/constants/problem';
+import { fetchEditorContent } from '../hooks';
 
 export const state = {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   showAdvanced: (val) => useState(val),
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   cardCollapsed: (val) => useState(val),
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   summary: (val) => useState(val),
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   showAttempts: (val) => useState(val),
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  attemptDisplayValue: (val) => useState(val),
 };
 
 export const showAdvancedSettingsCards = () => {
@@ -20,17 +32,24 @@ export const showAdvancedSettingsCards = () => {
   };
 };
 
-export const showFullCard = () => {
-  const [isCardCollapsibleOpen, setIsCardCollapsibleOpen] = module.state.cardCollapsed(false);
+export const showFullCard = (hasExpandableTextArea) => {
+  const [isCardCollapsibleOpen, setIsCardCollapsibleOpen] = module.state.cardCollapsed(hasExpandableTextArea);
   return {
     isCardCollapsibleOpen,
-    toggleCardCollapse: () => setIsCardCollapsibleOpen(!isCardCollapsibleOpen),
+    toggleCardCollapse: () => {
+      if (hasExpandableTextArea) {
+        setIsCardCollapsibleOpen(true);
+      } else {
+        setIsCardCollapsibleOpen(!isCardCollapsibleOpen);
+      }
+    },
   };
 };
 
 export const hintsCardHooks = (hints, updateSettings) => {
   const [summary, setSummary] = module.state.summary({ message: messages.noHintSummary, values: {} });
 
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   useEffect(() => {
     const hintsNumber = hints.length;
     if (hintsNumber === 0) {
@@ -57,8 +76,7 @@ export const hintsCardHooks = (hints, updateSettings) => {
 };
 
 export const hintsRowHooks = (id, hints, updateSettings) => {
-  const handleChange = (event) => {
-    const { value } = event.target;
+  const handleChange = (value) => {
     const modifiedHints = hints.map(hint => {
       if (hint.id === id) {
         return { ...hint, value };
@@ -73,39 +91,9 @@ export const hintsRowHooks = (id, hints, updateSettings) => {
     updateSettings({ hints: modifiedHints });
   };
 
-  const handleEmptyHint = (event) => {
-    const { value } = event.target;
-    if (value === '') {
-      const modifiedHints = hints.filter((hint) => (hint.id !== id));
-      updateSettings({ hints: modifiedHints });
-    }
-  };
-
   return {
     handleChange,
     handleDelete,
-    handleEmptyHint,
-  };
-};
-
-export const matlabCardHooks = (matLabApiKey, updateSettings) => {
-  const [summary, setSummary] = module.state.summary({ message: '', values: {}, intl: false });
-
-  useEffect(() => {
-    if (_.isEmpty(matLabApiKey)) {
-      setSummary({ message: messages.matlabNoKeySummary, values: {}, intl: true });
-    } else {
-      setSummary({ message: matLabApiKey, values: {}, intl: false });
-    }
-  }, [matLabApiKey]);
-
-  const handleChange = (event) => {
-    updateSettings({ matLabApiKey: event.target.value });
-  };
-
-  return {
-    summary,
-    handleChange,
   };
 };
 
@@ -120,17 +108,50 @@ export const resetCardHooks = (updateSettings) => {
   };
 };
 
-export const scoringCardHooks = (scoring, updateSettings) => {
+export const scoringCardHooks = (scoring, updateSettings, defaultValue) => {
+  const loadedAttemptsNumber = scoring.attempts.number === defaultValue ? `${scoring.attempts.number} (Default)` : scoring.attempts.number;
+  const [attemptDisplayValue, setAttemptDisplayValue] = module.state.attemptDisplayValue(loadedAttemptsNumber);
+  const handleUnlimitedChange = (event) => {
+    const isUnlimited = event.target.checked;
+    if (isUnlimited) {
+      setAttemptDisplayValue('');
+      updateSettings({ scoring: { ...scoring, attempts: { number: '', unlimited: true } } });
+    } else {
+      setAttemptDisplayValue(`${defaultValue} (Default)`);
+      updateSettings({ scoring: { ...scoring, attempts: { number: defaultValue, unlimited: false } } });
+    }
+  };
   const handleMaxAttemptChange = (event) => {
     let unlimitedAttempts = false;
     let attemptNumber = parseInt(event.target.value);
+    const { value } = event.target;
     if (_.isNaN(attemptNumber)) {
-      attemptNumber = '';
-      unlimitedAttempts = true;
-    } else if (attemptNumber < 0) {
+      if (value === '') {
+        attemptNumber = defaultValue;
+        setAttemptDisplayValue(`${defaultValue} (Default)`);
+      } else {
+        attemptNumber = '';
+        unlimitedAttempts = true;
+      }
+    } else if (attemptNumber <= 0) {
       attemptNumber = 0;
+    } else if (attemptNumber === defaultValue) {
+      const attemptNumberStr = value.replace(' (Default)');
+      attemptNumber = parseInt(attemptNumberStr);
     }
     updateSettings({ scoring: { ...scoring, attempts: { number: attemptNumber, unlimited: unlimitedAttempts } } });
+  };
+
+  const handleOnChange = (event) => {
+    let newMaxAttempt = parseInt(event.target.value);
+    if (newMaxAttempt === defaultValue) {
+      newMaxAttempt = `${defaultValue} (Default)`;
+    } else if (_.isNaN(newMaxAttempt)) {
+      newMaxAttempt = '';
+    } else if (newMaxAttempt < 0) {
+      newMaxAttempt = 0;
+    }
+    setAttemptDisplayValue(newMaxAttempt);
   };
 
   const handleWeightChange = (event) => {
@@ -142,7 +163,10 @@ export const scoringCardHooks = (scoring, updateSettings) => {
   };
 
   return {
+    attemptDisplayValue,
+    handleUnlimitedChange,
     handleMaxAttemptChange,
+    handleOnChange,
     handleWeightChange,
   };
 };
@@ -174,14 +198,9 @@ export const useAnswerSettings = (showAnswer, updateSettings) => {
     updateSettings({ showAnswer: { ...showAnswer, afterAttempts: attempts } });
   };
 
-  const handleExplanationChange = (event) => {
-    updateSettings({ solutionExplanation: event.target.value });
-  };
-
   return {
     handleShowAnswerChange,
     handleAttemptsChange,
-    handleExplanationChange,
     showAttempts,
   };
 };
@@ -207,23 +226,76 @@ export const typeRowHooks = ({
   updateAnswer,
 }) => {
   const clearPreviouslySelectedAnswers = () => {
+    let currentAnswerTitles;
+    const { selectedFeedback, unselectedFeedback, ...editorContent } = fetchEditorContent({ format: 'text' });
+    if (RichTextProblems.includes(problemType)) {
+      currentAnswerTitles = editorContent.answers;
+    }
     answers.forEach(answer => {
+      const title = currentAnswerTitles?.[answer.id] || answer.title;
       if (answer.correct) {
-        updateAnswer({ ...answer, correct: false });
+        updateAnswer({
+          ...answer,
+          title,
+          selectedFeedback,
+          unselectedFeedback,
+          correct: false,
+        });
+      } else {
+        updateAnswer({
+          ...answer,
+          selectedFeedback,
+          unselectedFeedback,
+          title,
+        });
       }
     });
   };
+
   const updateAnswersToCorrect = () => {
+    let currentAnswerTitles;
+    const { selectedFeedback, unselectedFeedback, ...editorContent } = fetchEditorContent({ format: 'text' });
+    if (RichTextProblems.includes(problemType)) {
+      currentAnswerTitles = editorContent.answers;
+    }
     answers.forEach(answer => {
-      updateAnswer({ ...answer, correct: true });
+      const title = currentAnswerTitles ? currentAnswerTitles[answer.id] : answer.title;
+      updateAnswer({
+        ...answer,
+        title,
+        selectedFeedback,
+        unselectedFeedback,
+        correct: true,
+      });
     });
   };
+
+  const convertToPlainText = () => {
+    const { selectedFeedback, unselectedFeedback, ...editorContent } = fetchEditorContent({ format: 'text' });
+    const currentAnswerTitles = editorContent.answers;
+    answers.forEach(answer => {
+      updateAnswer({
+        ...answer,
+        selectedFeedback,
+        unselectedFeedback,
+        title: currentAnswerTitles[answer.id],
+      });
+    });
+  };
+
   const onClick = () => {
+    // Numeric, text, and dropdowns cannot render HTML as answer values, so if switching from a single select
+    // or multi-select problem the rich text needs to covert to plain text
+    if (typeKey === ProblemTypeKeys.TEXTINPUT && RichTextProblems.includes(problemType)) {
+      convertToPlainText();
+    }
     // Dropdown problems can only have one correct answer. When there is more than one correct answer
     // from a previous problem type, the correct attribute for selected answers need to be set to false.
     if (typeKey === ProblemTypeKeys.DROPDOWN) {
       if (correctAnswerCount > 1) {
         clearPreviouslySelectedAnswers();
+      } else if (RichTextProblems.includes(problemType)) {
+        convertToPlainText();
       }
     }
     // Numeric input problems can only have correct answers. Switch all answers to correct when switching
@@ -231,6 +303,7 @@ export const typeRowHooks = ({
     if (typeKey === ProblemTypeKeys.NUMERIC) {
       updateAnswersToCorrect();
     }
+
     if (blockTitle === ProblemTypes[problemType].title) {
       setBlockTitle(ProblemTypes[typeKey].title);
     }

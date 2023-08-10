@@ -1,6 +1,7 @@
 import { StrictDict } from '../../../utils';
 
 import { RequestKeys } from '../../constants/requests';
+/* eslint-disable import/no-cycle */
 import { actions, selectors } from '..';
 import api, { loadImages } from '../../services/cms/api';
 
@@ -136,6 +137,18 @@ export const fetchAssets = ({ ...rest }) => (dispatch, getState) => {
   }));
 };
 
+export const fetchVideos = ({ ...rest }) => (dispatch, getState) => {
+  dispatch(module.networkRequest({
+    requestKey: RequestKeys.fetchVideos,
+    promise: api
+      .fetchVideos({
+        studioEndpointUrl: selectors.app.studioEndpointUrl(getState()),
+        learningContextId: selectors.app.learningContextId(getState()),
+      }),
+    ...rest,
+  }));
+};
+
 export const allowThumbnailUpload = ({ ...rest }) => (dispatch, getState) => {
   dispatch(module.networkRequest({
     requestKey: RequestKeys.allowThumbnailUpload,
@@ -261,10 +274,10 @@ export const fetchCourseDetails = ({ ...rest }) => (dispatch, getState) => {
   }));
 };
 
-export const fetchAdvanceSettings = ({ ...rest }) => (dispatch, getState) => {
+export const fetchAdvancedSettings = ({ ...rest }) => (dispatch, getState) => {
   dispatch(module.networkRequest({
-    requestKey: RequestKeys.fetchAdvanceSettings,
-    promise: api.fetchAdvanceSettings({
+    requestKey: RequestKeys.fetchAdvancedSettings,
+    promise: api.fetchAdvancedSettings({
       studioEndpointUrl: selectors.app.studioEndpointUrl(getState()),
       learningContextId: selectors.app.learningContextId(getState()),
     }),
@@ -276,6 +289,17 @@ export const fetchVideoFeatures = ({ ...rest }) => (dispatch, getState) => {
   dispatch(module.networkRequest({
     requestKey: RequestKeys.fetchVideoFeatures,
     promise: api.fetchVideoFeatures({
+      studioEndpointUrl: selectors.app.studioEndpointUrl(getState()),
+    }),
+    ...rest,
+  }));
+};
+
+export const uploadVideo = ({ data, ...rest }) => (dispatch, getState) => {
+  dispatch(module.networkRequest({
+    requestKey: RequestKeys.uploadVideo,
+    promise: api.uploadVideo({
+      data,
       studioEndpointUrl: selectors.app.studioEndpointUrl(getState()),
       learningContextId: selectors.app.learningContextId(getState()),
     }),
@@ -289,6 +313,7 @@ export default StrictDict({
   fetchUnit,
   saveBlock,
   fetchAssets,
+  fetchVideos,
   uploadAsset,
   allowThumbnailUpload,
   uploadThumbnail,
@@ -299,6 +324,7 @@ export default StrictDict({
   getTranscriptFile,
   checkTranscriptsForImport,
   importTranscript,
-  fetchAdvanceSettings,
+  fetchAdvancedSettings,
   fetchVideoFeatures,
+  uploadVideo,
 });

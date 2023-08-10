@@ -3,33 +3,8 @@
 exports[`ShowAnswerCard snapshot snapshot: show answer setting card 1`] = `
 <SettingsOption
   className=""
-  extraSections={
-    Array [
-      Object {
-        "children": <React.Fragment>
-          <div
-            className="pb-3"
-          >
-            <span>
-              <FormattedMessage
-                defaultMessage="Provide an explanation for the correct answer."
-                description="Solution Explanation text"
-                id="authoring.problemeditor.settings.showAnswer.explanation.text"
-              />
-            </span>
-          </div>
-          <Form.Group
-            className="pb-0"
-          >
-            <Form.Control
-              floatingLabel="Explanation"
-              value=""
-            />
-          </Form.Group>
-        </React.Fragment>,
-      },
-    ]
-  }
+  extraSections={Array []}
+  hasExpandableTextArea={false}
   summary="After Some Number of Attempts"
   title="Show answer"
 >
@@ -48,7 +23,7 @@ exports[`ShowAnswerCard snapshot snapshot: show answer setting card 1`] = `
     className="pb-4"
   >
     <Hyperlink
-      destination="SoMEeNDpOinT/settings/advanced/sOMEcouRseId"
+      destination="SoMEeNDpOinT/settings/advanced/sOMEcouRseId#showanswer"
       target="_blank"
     >
       <FormattedMessage
@@ -94,7 +69,7 @@ exports[`ShowAnswerCard snapshot snapshot: show answer setting card 1`] = `
         key="finished"
         value="finished"
       >
-        Finished
+        Finished (Default)
       </option>
       <option
         key="correct_or_past_due"

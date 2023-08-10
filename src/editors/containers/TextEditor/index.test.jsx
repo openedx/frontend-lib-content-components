@@ -42,6 +42,8 @@ jest.mock('react', () => {
 });
 
 jest.mock('../../data/redux', () => ({
+  __esModule: true,
+  default: jest.fn(),
   actions: {
     app: {
       initializeEditor: jest.fn().mockName('actions.app.initializeEditor'),
@@ -59,6 +61,11 @@ jest.mock('../../data/redux', () => ({
     requests: {
       isFailed: jest.fn((state, params) => ({ isFailed: { state, params } })),
       isFinished: jest.fn((state, params) => ({ isFailed: { state, params } })),
+    },
+  },
+  thunkActions: {
+    video: {
+      importTranscript: jest.fn(),
     },
   },
 }));

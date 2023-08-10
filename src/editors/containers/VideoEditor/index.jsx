@@ -13,10 +13,11 @@ import { RequestKeys } from '../../data/constants/requests';
 import EditorContainer from '../EditorContainer';
 import VideoEditorModal from './components/VideoEditorModal';
 import { ErrorContext, errorsHook, fetchVideoContent } from './hooks';
-import { messages } from './messages';
+import messages from './messages';
 
 export const VideoEditor = ({
   onClose,
+  returnFunction,
   // injected
   intl,
   // redux
@@ -31,6 +32,7 @@ export const VideoEditor = ({
       <EditorContainer
         getContent={fetchVideoContent()}
         onClose={onClose}
+        returnFunction={returnFunction}
         validateEntry={validateEntry}
       >
         {studioViewFinished ? (
@@ -38,11 +40,19 @@ export const VideoEditor = ({
             <VideoEditorModal />
           </div>
         ) : (
-          <Spinner
-            animation="border"
-            className="m-3"
-            screenreadertext={intl.formatMessage(messages.spinnerScreenReaderText)}
-          />
+          <div style={{
+            position: 'absolute',
+            left: '50%',
+            top: '50%',
+            transform: 'translate(-50%, -50%)',
+          }}
+          >
+            <Spinner
+              animation="border"
+              className="m-3"
+              screenreadertext={intl.formatMessage(messages.spinnerScreenReaderText)}
+            />
+          </div>
         )}
       </EditorContainer>
     </ErrorContext.Provider>
@@ -51,9 +61,11 @@ export const VideoEditor = ({
 
 VideoEditor.defaultProps = {
   onClose: null,
+  returnFunction: null,
 };
 VideoEditor.propTypes = {
   onClose: PropTypes.func,
+  returnFunction: PropTypes.func,
   // injected
   intl: intlShape.isRequired,
   // redux

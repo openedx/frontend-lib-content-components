@@ -1,4 +1,7 @@
-export const messages = {
+import { defineMessages } from '@edx/frontend-platform/i18n';
+
+const messages = defineMessages({
+
   expandAltText: {
     id: 'authoring.videoeditor.expand',
     defaultMessage: 'Expand',
@@ -57,6 +60,26 @@ export const messages = {
     defaultMessage: 'Total: {total}',
     description: 'Text describing a video with custom start time and custom stop time, or just a custom stop time',
   },
-};
+  custom: {
+    id: 'authoring.videoeditor.duration.custom',
+    defaultMessage: 'Custom: {total}',
+    description: 'Text describing a video with custom start time and custom stop time, or just a custom stop time for a collapsed widget',
+  },
+  noTranscriptsAdded: {
+    id: 'authoring.videoeditor.transcripts.empty',
+    defaultMessage: 'No transcripts added',
+    description: 'Message shown when the user has not selected any transcripts for the video.',
+  },
+  videoTypeYoutube: {
+    id: 'authoring.videoeditor.videotype.youtube',
+    defaultMessage: 'YouTube video',
+    description: 'Shown on the preview card if the video is from youtube.com.',
+  },
+  videoTypeOther: {
+    id: 'authoring.videoeditor.videotype.other',
+    defaultMessage: 'Other video',
+    description: 'Shown on the preview card if the video source could not be identified.',
+  },
+});
 
 export default messages;

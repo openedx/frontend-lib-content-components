@@ -16,6 +16,7 @@ const initialState = {
   studioEndpointUrl: null,
   lmsEndpointUrl: null,
   assets: {},
+  videos: {},
   courseDetails: {},
 };
 
@@ -31,6 +32,7 @@ const app = createSlice({
       blockId: payload.blockId,
       learningContextId: payload.learningContextId,
       blockType: payload.blockType,
+      blockValue: null,
     }),
     setUnitUrl: (state, { payload }) => ({ ...state, unitUrl: payload }),
     setBlockValue: (state, { payload }) => ({
@@ -45,6 +47,7 @@ const app = createSlice({
     setSaveResponse: (state, { payload }) => ({ ...state, saveResponse: payload }),
     initializeEditor: (state) => ({ ...state, editorInitialized: true }),
     setAssets: (state, { payload }) => ({ ...state, assets: payload }),
+    setVideos: (state, { payload }) => ({ ...state, videos: payload }),
     setCourseDetails: (state, { payload }) => ({ ...state, courseDetails: payload }),
   },
 });

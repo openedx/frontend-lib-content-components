@@ -1,9 +1,10 @@
 import { useEffect } from 'react';
 import { MockUseState } from '../../../../../../testUtils';
 import messages from './messages';
-
+import { keyStore } from '../../../../../utils';
 import * as hooks from './hooks';
 import { ProblemTypeKeys, ProblemTypes } from '../../../../../data/constants/problem';
+import * as editHooks from '../hooks';
 
 jest.mock('react', () => {
   const updateState = jest.fn();
@@ -13,6 +14,10 @@ jest.mock('react', () => {
     useState: jest.fn(val => ([{ state: val }, (newVal) => updateState({ val, newVal })])),
   };
 });
+
+jest.mock('@edx/frontend-platform/i18n', () => ({
+  defineMessages: m => m,
+}));
 
 jest.mock('../../../../../data/redux', () => ({
   actions: {
@@ -25,6 +30,7 @@ jest.mock('../../../../../data/redux', () => ({
 }));
 
 const state = new MockUseState(hooks);
+const moduleKeys = keyStore(editHooks);
 
 describe('Problem settings hooks', () => {
   let output;
@@ -57,6 +63,11 @@ describe('Problem settings hooks', () => {
       expect(output.isCardCollapsibleOpen).toBeFalsy();
     });
     test('test toggleCardCollapse to true', () => {
+      output.toggleCardCollapse();
+      expect(state.setState[state.keys.cardCollapsed]).toHaveBeenCalledWith(true);
+    });
+    test('test toggleCardCollapse to true', () => {
+      output = hooks.showFullCard(true);
       output.toggleCardCollapse();
       expect(state.setState[state.keys.cardCollapsed]).toHaveBeenCalledWith(true);
     });
@@ -105,45 +116,12 @@ describe('Problem settings hooks', () => {
       output = hooks.hintsRowHooks(2, hints, updateSettings);
     });
     test('test handleChange', () => {
-      output.handleChange({ target: { value } });
+      output.handleChange(value);
       expect(updateSettings).toHaveBeenCalledWith({ hints: [hint1, modifiedHint] });
     });
     test('test handleDelete', () => {
       output.handleDelete();
       expect(updateSettings).toHaveBeenCalledWith({ hints: [hint1] });
-    });
-    test('test handleEmptyHint', () => {
-      output.handleEmptyHint({ target: { value: '' } });
-      expect(updateSettings).toHaveBeenCalledWith({ hints: [hint1] });
-    });
-  });
-
-  describe('Matlab card hooks', () => {
-    test('test useEffect triggers set summary', () => {
-      const apiKey = 'matlab_api_key';
-      hooks.matlabCardHooks(apiKey, updateSettings);
-      expect(state.setState[state.keys.summary]).not.toHaveBeenCalled();
-      const [cb, prereqs] = useEffect.mock.calls[0];
-      expect(prereqs).toStrictEqual([apiKey]);
-      cb();
-      expect(state.setState[state.keys.summary])
-        .toHaveBeenCalledWith({ message: apiKey, values: {}, intl: false });
-    });
-    test('test useEffect triggers set summary no key', () => {
-      hooks.matlabCardHooks('', updateSettings);
-      expect(state.setState[state.keys.summary]).not.toHaveBeenCalled();
-      const [cb, prereqs] = useEffect.mock.calls[0];
-      expect(prereqs).toStrictEqual(['']);
-      cb();
-      expect(state.setState[state.keys.summary])
-        .toHaveBeenCalledWith({ message: messages.matlabNoKeySummary, values: {}, intl: true });
-    });
-    test('test handleChange', () => {
-      const apiKey = 'matlab_api_key';
-      const value = 'new_matlab_api_key';
-      output = hooks.matlabCardHooks(apiKey, updateSettings);
-      output.handleChange({ target: { value } });
-      expect(updateSettings).toHaveBeenCalledWith({ matLabApiKey: value });
     });
   });
 
@@ -169,8 +147,21 @@ describe('Problem settings hooks', () => {
         number: 5,
       },
     };
+    const defaultValue = 1;
     beforeEach(() => {
-      output = hooks.scoringCardHooks(scoring, updateSettings);
+      output = hooks.scoringCardHooks(scoring, updateSettings, defaultValue);
+    });
+    test('test handleUnlimitedChange sets attempts.unlimited to true when checked', () => {
+      output.handleUnlimitedChange({ target: { checked: true } });
+      expect(state.setState[state.keys.attemptDisplayValue]).toHaveBeenCalledWith('');
+      expect(updateSettings)
+        .toHaveBeenCalledWith({ scoring: { ...scoring, attempts: { number: '', unlimited: true } } });
+    });
+    test('test handleUnlimitedChange sets attempts.unlimited to false when unchecked', () => {
+      output.handleUnlimitedChange({ target: { checked: false } });
+      expect(state.setState[state.keys.attemptDisplayValue]).toHaveBeenCalledWith(`${defaultValue} (Default)`);
+      expect(updateSettings)
+        .toHaveBeenCalledWith({ scoring: { ...scoring, attempts: { number: defaultValue, unlimited: false } } });
     });
     test('test handleMaxAttemptChange', () => {
       const value = 6;
@@ -190,11 +181,11 @@ describe('Problem settings hooks', () => {
       expect(updateSettings)
         .toHaveBeenCalledWith({ scoring: { ...scoring, attempts: { number: '', unlimited: true } } });
     });
-    test('test handleMaxAttemptChange set attempts to empty string', () => {
-      const value = '';
+    test('test handleMaxAttemptChange set attempts to default value', () => {
+      const value = '1 (Default)';
       output.handleMaxAttemptChange({ target: { value } });
       expect(updateSettings)
-        .toHaveBeenCalledWith({ scoring: { ...scoring, attempts: { number: '', unlimited: true } } });
+        .toHaveBeenCalledWith({ scoring: { ...scoring, attempts: { number: 1, unlimited: false } } });
     });
     test('test handleMaxAttemptChange set attempts to non-numeric value', () => {
       const value = 'abc';
@@ -202,11 +193,48 @@ describe('Problem settings hooks', () => {
       expect(updateSettings)
         .toHaveBeenCalledWith({ scoring: { ...scoring, attempts: { number: '', unlimited: true } } });
     });
+    test('test handleMaxAttemptChange set attempts to empty value', () => {
+      const value = '';
+      output.handleMaxAttemptChange({ target: { value } });
+      expect(state.setState[state.keys.attemptDisplayValue]).toHaveBeenCalledWith(`${defaultValue} (Default)`);
+      expect(updateSettings)
+        .toHaveBeenCalledWith({ scoring: { ...scoring, attempts: { number: 1, unlimited: false } } });
+    });
     test('test handleMaxAttemptChange set attempts to negative value', () => {
       const value = -1;
       output.handleMaxAttemptChange({ target: { value } });
       expect(updateSettings)
         .toHaveBeenCalledWith({ scoring: { ...scoring, attempts: { number: 0, unlimited: false } } });
+    });
+    test('test handleOnChange', () => {
+      const value = 6;
+      output.handleOnChange({ target: { value } });
+      expect(state.setState[state.keys.attemptDisplayValue]).toHaveBeenCalledWith(value);
+    });
+    test('test handleOnChange set attempts to zero', () => {
+      const value = 0;
+      output.handleOnChange({ target: { value } });
+      expect(state.setState[state.keys.attemptDisplayValue]).toHaveBeenCalledWith(value);
+    });
+    test('test handleOnChange set attempts to default value from empty string', () => {
+      const value = '';
+      output.handleOnChange({ target: { value } });
+      expect(state.setState[state.keys.attemptDisplayValue]).toHaveBeenCalledWith('');
+    });
+    test('test handleOnChange set attempts to default value', () => {
+      const value = 1;
+      output.handleOnChange({ target: { value } });
+      expect(state.setState[state.keys.attemptDisplayValue]).toHaveBeenCalledWith('1 (Default)');
+    });
+    test('test handleOnChange set attempts to non-numeric value', () => {
+      const value = '';
+      output.handleOnChange({ target: { value } });
+      expect(state.setState[state.keys.attemptDisplayValue]).toHaveBeenCalledWith(value);
+    });
+    test('test handleOnChange set attempts to negative value', () => {
+      const value = -1;
+      output.handleOnChange({ target: { value } });
+      expect(state.setState[state.keys.attemptDisplayValue]).toHaveBeenCalledWith(0);
     });
     test('test handleWeightChange', () => {
       const value = 2;
@@ -233,11 +261,6 @@ describe('Problem settings hooks', () => {
       output.handleAttemptsChange({ target: { value } });
       expect(updateSettings).toHaveBeenCalledWith({ showAnswer: { ...showAnswer, afterAttempts: parseInt(value) } });
     });
-    test('handleExplanationChange should update settings', () => {
-      const value = 'explanation';
-      output.handleExplanationChange({ target: { value } });
-      expect(updateSettings).toHaveBeenCalledWith({ solutionExplanation: value });
-    });
   });
 
   describe('Timer card hooks', () => {
@@ -259,21 +282,49 @@ describe('Problem settings hooks', () => {
       updateAnswer: jest.fn(),
       correctAnswerCount: 2,
       answers: [
-        { correct: true, id: 'a' },
-        { correct: true, id: 'b' },
-        { correct: false, id: 'c' },
+        { correct: true, id: 'a', title: '<p>testA</p>' },
+        { correct: true, id: 'b', title: '<p>testB</p>' },
+        { correct: false, id: 'c', title: '<p>testC</p>' },
       ],
     };
+    const fetchEditorContent = () => ({
+      answers: {
+        a: 'testA',
+        b: 'testB',
+        c: 'testC',
+      },
+    });
     beforeEach(() => {
       jest.clearAllMocks();
+      jest.spyOn(editHooks, moduleKeys.fetchEditorContent)
+        .mockImplementationOnce(fetchEditorContent);
     });
     test('test onClick Multi-select to Dropdown', () => {
       output = hooks.typeRowHooks(typeRowProps);
       output.onClick();
       expect(typeRowProps.setBlockTitle).toHaveBeenCalledWith(ProblemTypes[ProblemTypeKeys.DROPDOWN].title);
-      expect(typeRowProps.updateAnswer).toHaveBeenNthCalledWith(1, { ...typeRowProps.answers[0], correct: false });
-      expect(typeRowProps.updateAnswer).toHaveBeenNthCalledWith(2, { ...typeRowProps.answers[1], correct: false });
-      expect(typeRowProps.updateAnswer).not.toHaveBeenNthCalledWith(3, { ...typeRowProps.answers[2], correct: false });
+      expect(typeRowProps.updateAnswer).toHaveBeenNthCalledWith(1, { ...typeRowProps.answers[0], correct: false, title: 'testA' });
+      expect(typeRowProps.updateAnswer).toHaveBeenNthCalledWith(2, { ...typeRowProps.answers[1], correct: false, title: 'testB' });
+      expect(typeRowProps.updateAnswer).toHaveBeenNthCalledWith(3, { ...typeRowProps.answers[2], correct: false, title: 'testC' });
+      expect(typeRowProps.updateField).toHaveBeenCalledWith({ problemType: ProblemTypeKeys.DROPDOWN });
+    });
+
+    test('test onClick Multi-select to Dropdown with one correct answer', () => {
+      const oneAnswerTypeRowProps = {
+        ...typeRowProps,
+        correctAnswerCount: 1,
+        answers: [
+          { correct: true, id: 'a', title: '<p>testA</p>' },
+          { correct: false, id: 'b', title: '<p>testB</p>' },
+          { correct: false, id: 'c', title: '<p>testC</p>' },
+        ],
+      };
+      output = hooks.typeRowHooks(oneAnswerTypeRowProps);
+      output.onClick();
+      expect(typeRowProps.setBlockTitle).toHaveBeenCalledWith(ProblemTypes[ProblemTypeKeys.DROPDOWN].title);
+      expect(typeRowProps.updateAnswer).toHaveBeenNthCalledWith(1, { ...oneAnswerTypeRowProps.answers[0], title: 'testA' });
+      expect(typeRowProps.updateAnswer).toHaveBeenNthCalledWith(2, { ...oneAnswerTypeRowProps.answers[1], title: 'testB' });
+      expect(typeRowProps.updateAnswer).toHaveBeenNthCalledWith(3, { ...oneAnswerTypeRowProps.answers[2], title: 'testC' });
       expect(typeRowProps.updateField).toHaveBeenCalledWith({ problemType: ProblemTypeKeys.DROPDOWN });
     });
     test('test onClick Multi-select to Numeric', () => {
@@ -283,10 +334,23 @@ describe('Problem settings hooks', () => {
       });
       output.onClick();
       expect(typeRowProps.setBlockTitle).toHaveBeenCalledWith(ProblemTypes[ProblemTypeKeys.NUMERIC].title);
-      expect(typeRowProps.updateAnswer).toHaveBeenNthCalledWith(1, { ...typeRowProps.answers[0], correct: true });
-      expect(typeRowProps.updateAnswer).toHaveBeenNthCalledWith(2, { ...typeRowProps.answers[1], correct: true });
-      expect(typeRowProps.updateAnswer).toHaveBeenNthCalledWith(3, { ...typeRowProps.answers[2], correct: true });
+      expect(typeRowProps.updateAnswer).toHaveBeenNthCalledWith(1, { ...typeRowProps.answers[0], correct: true, title: 'testA' });
+      expect(typeRowProps.updateAnswer).toHaveBeenNthCalledWith(2, { ...typeRowProps.answers[1], correct: true, title: 'testB' });
+      expect(typeRowProps.updateAnswer).toHaveBeenNthCalledWith(3, { ...typeRowProps.answers[2], correct: true, title: 'testC' });
       expect(typeRowProps.updateField).toHaveBeenCalledWith({ problemType: ProblemTypeKeys.NUMERIC });
+    });
+
+    test('test onClick Multi-select to Text Input', () => {
+      output = hooks.typeRowHooks({
+        ...typeRowProps,
+        typeKey: ProblemTypeKeys.TEXTINPUT,
+      });
+      output.onClick();
+      expect(typeRowProps.setBlockTitle).toHaveBeenCalledWith(ProblemTypes[ProblemTypeKeys.TEXTINPUT].title);
+      expect(typeRowProps.updateAnswer).toHaveBeenNthCalledWith(1, { ...typeRowProps.answers[0], title: 'testA' });
+      expect(typeRowProps.updateAnswer).toHaveBeenNthCalledWith(2, { ...typeRowProps.answers[1], title: 'testB' });
+      expect(typeRowProps.updateAnswer).toHaveBeenNthCalledWith(3, { ...typeRowProps.answers[2], title: 'testC' });
+      expect(typeRowProps.updateField).toHaveBeenCalledWith({ problemType: ProblemTypeKeys.TEXTINPUT });
     });
   });
   test('test confirmSwitchToAdvancedEditor hook', () => {

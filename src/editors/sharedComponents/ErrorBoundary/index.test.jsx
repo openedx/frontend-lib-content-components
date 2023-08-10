@@ -10,6 +10,11 @@ jest.mock('@edx/frontend-platform/logging', () => ({
   logError: jest.fn(),
 }));
 
+// stubbing this to avoid needing to inject a stubbed intl into an internal component
+jest.mock('./ErrorPage', () => function mockErrorPage() {
+  return <p>Error Page</p>;
+});
+
 describe('ErrorBoundary', () => {
   it('should render children if no error', () => {
     const component = (
@@ -18,8 +23,9 @@ describe('ErrorBoundary', () => {
       </ErrorBoundary>
     );
     const wrapper = mount(component);
-
     const element = wrapper.find('div');
+
+    expect(logError).toHaveBeenCalledTimes(0);
     expect(element.text()).toEqual('Yay');
   });
 
@@ -32,8 +38,15 @@ describe('ErrorBoundary', () => {
         <ExplodingComponent />
       </ErrorBoundary>
     );
-    mount(component);
+    const wrapper = mount(component);
+    const element = wrapper.find('p');
     expect(logError).toHaveBeenCalledTimes(1);
-    expect(logError).toHaveBeenCalledWith(new Error('booyah'), { stack: '\n    in ExplodingComponent\n    in ErrorBoundary (created by WrapperComponent)\n    in WrapperComponent' });
+    expect(logError).toHaveBeenCalledWith(
+      new Error('booyah'),
+      expect.objectContaining({
+        stack: expect.stringContaining('ExplodingComponent'),
+      }),
+    );
+    expect(element.text()).toEqual('Error Page');
   });
 });

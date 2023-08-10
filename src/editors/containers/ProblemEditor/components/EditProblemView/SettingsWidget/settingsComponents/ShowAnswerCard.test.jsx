@@ -16,6 +16,9 @@ jest.mock('../../../../../../data/redux', () => ({
       learningContextId: jest.fn(state => ({ learningContextId: state })),
     },
   },
+  thunkActions: {
+    video: jest.fn(),
+  },
 }));
 
 describe('ShowAnswerCard', () => {
@@ -27,6 +30,7 @@ describe('ShowAnswerCard', () => {
   };
   const props = {
     showAnswer,
+    defaultValue: 'finished',
     // injected
     intl: { formatMessage },
     // redux

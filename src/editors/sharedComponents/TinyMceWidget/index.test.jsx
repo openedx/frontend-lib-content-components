@@ -6,6 +6,8 @@ import ImageUploadModal from '../ImageUploadModal';
 import { imgModalToggle, sourceCodeModalToggle } from './hooks';
 import { TinyMceWidget, mapStateToProps } from '.';
 
+const staticUrl = '/assets/sOmEaSsET';
+
 // Per https://github.com/tinymce/tinymce-react/issues/91 React unit testing in JSDOM is not supported by tinymce.
 // Consequently, mock the Editor out.
 jest.mock('@tinymce/tinymce-react', () => {
@@ -21,6 +23,8 @@ jest.mock('../ImageUploadModal', () => 'ImageUploadModal');
 jest.mock('../SourceCodeModal', () => 'SourceCodeModal');
 
 jest.mock('../../data/redux', () => ({
+  __esModule: true,
+  default: jest.fn(),
   selectors: {
     app: {
       lmsEndpointUrl: jest.fn(state => ({ lmsEndpointUrl: state })),
@@ -48,7 +52,8 @@ jest.mock('./hooks', () => ({
     setSelection: jest.fn().mockName('hooks.selectedImage.setSelection'),
     clearSelection: jest.fn().mockName('hooks.selectedImage.clearSelection'),
   })),
-  filterAssets: jest.fn(() => [{ staTICUrl: '/assets/sOmEaSsET' }]),
+  filterAssets: jest.fn(() => [{ staTICUrl: staticUrl }]),
+  useImages: jest.fn(() => ({ imagesRef: { current: [{ externalUrl: staticUrl }] } })),
 }));
 
 describe('TinyMceWidget', () => {
@@ -56,11 +61,12 @@ describe('TinyMceWidget', () => {
     editorType: 'text',
     editorRef: { current: { value: 'something' } },
     isLibrary: false,
-    assets: { sOmEaSsET: { staTICUrl: '/assets/sOmEaSsET' } },
+    assets: { sOmEaSsET: { staTICUrl: staticUrl } },
     lmsEndpointUrl: 'sOmEvaLue.cOm',
     studioEndpointUrl: 'sOmEoThERvaLue.cOm',
     disabled: false,
     id: 'sOMeiD',
+    updateContent: () => ({}),
   };
   describe('snapshots', () => {
     imgModalToggle.mockReturnValue({

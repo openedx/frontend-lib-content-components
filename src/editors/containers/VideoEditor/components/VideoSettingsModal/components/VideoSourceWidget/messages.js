@@ -1,4 +1,7 @@
-export const messages = {
+import { defineMessages } from '@edx/frontend-platform/i18n';
+
+const messages = defineMessages({
+
   titleLabel: {
     id: 'authoring.videoeditor.videoSource.title.label',
     defaultMessage: 'Video source',
@@ -24,6 +27,11 @@ export const messages = {
     defaultMessage: `The URL for your video. This can be a YouTube URL, or a link
     to an .mp4, .ogg, or .webm video file hosted elsewhere on the internet.`,
     description: 'Feedback for video URL field',
+  },
+  videoIdChangeAlert: {
+    id: 'authoring.videoeditor.videoIdChangeAlert.message',
+    defaultMessage: 'The Video ID field has changed, please check the Video URL and fallback URL values and update them if necessary.',
+    description: 'Body message for the alert that appears when the video id has been changed.',
   },
   fallbackVideoTitle: {
     id: 'authoring.videoeditor.videoSource.fallbackVideo.title',
@@ -78,6 +86,6 @@ export const messages = {
     defaultMessage: 'Add a video URL',
     description: 'Label for add a video URL button',
   },
-};
+});
 
 export default messages;

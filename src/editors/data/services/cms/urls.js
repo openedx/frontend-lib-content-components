@@ -3,28 +3,43 @@ export const libraryV1 = ({ studioEndpointUrl, learningContextId }) => (
 );
 
 export const unit = ({ studioEndpointUrl, unitUrl }) => (
-  `${studioEndpointUrl}/container/${unitUrl.data.ancestors[0].id}`
+  `${studioEndpointUrl}/container/${unitUrl.data.ancestors[0]?.id}`
 );
 
 export const returnUrl = ({ studioEndpointUrl, unitUrl, learningContextId }) => {
-  if (learningContextId && learningContextId.includes('library-v1')) {
+  if (learningContextId && learningContextId.startsWith('library-v1')) {
     // when the learning context is a v1 library, return to the library page
     return libraryV1({ studioEndpointUrl, learningContextId });
   }
+  if (learningContextId && learningContextId.startsWith('lib')) {
+    // when it's a v2 library, there will be no return url (instead a closed popup)
+    throw new Error('Return url not available (or needed) for V2 libraries');
+  }
   // when the learning context is a course, return to the unit page
-  return unitUrl ? unit({ studioEndpointUrl, unitUrl }) : '';
+  if (unitUrl) {
+    return unit({ studioEndpointUrl, unitUrl });
+  }
+  return '';
 };
 
 export const block = ({ studioEndpointUrl, blockId }) => (
-  `${studioEndpointUrl}/xblock/${blockId}`
+  blockId.includes('block-v1')
+    ? `${studioEndpointUrl}/xblock/${blockId}`
+    : `${studioEndpointUrl}/api/xblock/v2/xblocks/${blockId}/fields/`
 );
 
-export const blockAncestor = ({ studioEndpointUrl, blockId }) => (
-  `${block({ studioEndpointUrl, blockId })}?fields=ancestorInfo`
-);
+export const blockAncestor = ({ studioEndpointUrl, blockId }) => {
+  if (blockId.includes('block-v1')) {
+    return `${block({ studioEndpointUrl, blockId })}?fields=ancestorInfo`;
+  }
+  // this url only need to get info to build the return url, which isn't used by V2 blocks
+  throw new Error('Block ancestor not available (and not needed) for V2 blocks');
+};
 
 export const blockStudioView = ({ studioEndpointUrl, blockId }) => (
-  `${block({ studioEndpointUrl, blockId })}/studio_view`
+  blockId.includes('block-v1')
+    ? `${block({ studioEndpointUrl, blockId })}/studio_view`
+    : `${studioEndpointUrl}/api/xblock/v2/xblocks/${blockId}/view/studio_view/`
 );
 
 export const courseAssets = ({ studioEndpointUrl, learningContextId }) => (
@@ -41,6 +56,10 @@ export const videoTranscripts = ({ studioEndpointUrl, blockId }) => (
 
 export const downloadVideoTranscriptURL = ({ studioEndpointUrl, blockId, language }) => (
   `${videoTranscripts({ studioEndpointUrl, blockId })}?language_code=${language}`
+);
+
+export const mediaTranscriptURL = ({ studioEndpointUrl, transcriptUrl }) => (
+  `${studioEndpointUrl}${transcriptUrl}`
 );
 
 export const downloadVideoHandoutUrl = ({ studioEndpointUrl, handout }) => (
@@ -63,6 +82,10 @@ export const courseAdvanceSettings = ({ studioEndpointUrl, learningContextId }) 
   `${studioEndpointUrl}/api/contentstore/v0/advanced_settings/${learningContextId}`
 );
 
-export const videoFeatures = ({ studioEndpointUrl, learningContextId }) => (
-  `${studioEndpointUrl}/video_features/${learningContextId}`
+export const videoFeatures = ({ studioEndpointUrl }) => (
+  `${studioEndpointUrl}/video_features/`
+);
+
+export const courseVideos = ({ studioEndpointUrl, learningContextId }) => (
+  `${studioEndpointUrl}/videos/${learningContextId}`
 );

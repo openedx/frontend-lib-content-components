@@ -10,12 +10,21 @@ exports[`BaseModal ImageUploadModal template component snapshot 1`] = `
   size="lg"
   variant="default"
 >
-  <ModalDialog.Header>
+  <ModalDialog.Header
+    style={
+      Object {
+        "boxShadow": "2px 2px 5px rgba(0, 0, 0, 0.3)",
+        "zIndex": 1,
+      }
+    }
+  >
     <ModalDialog.Title>
       props.title node
     </ModalDialog.Title>
   </ModalDialog.Header>
-  <ModalDialog.Body>
+  <ModalDialog.Body
+    style={null}
+  >
     props.children node
   </ModalDialog.Body>
   <ModalDialog.Footer>

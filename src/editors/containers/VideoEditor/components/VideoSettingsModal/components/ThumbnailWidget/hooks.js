@@ -5,6 +5,7 @@ import * as constants from './constants';
 import * as module from './hooks';
 
 export const state = {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   showSizeError: (args) => React.useState(args),
 };
 
@@ -85,7 +86,9 @@ export const checkValidSize = ({ file, onSizeFail }) => {
 };
 
 export const fileInput = ({ setThumbnailSrc, imgRef, fileSizeError }) => {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const dispatch = useDispatch();
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const ref = React.useRef();
   const click = () => ref.current.click();
   const addFile = (e) => {
@@ -105,9 +108,11 @@ export const fileInput = ({ setThumbnailSrc, imgRef, fileSizeError }) => {
             const [resampledUrl, resampledFile] = module.resampleImage({ image, filename: file.name });
             setThumbnailSrc(resampledUrl);
             dispatch(thunkActions.video.uploadThumbnail({ thumbnail: resampledFile }));
+            dispatch(actions.video.updateField({ thumbnail: resampledUrl }));
             return;
           }
           dispatch(thunkActions.video.uploadThumbnail({ thumbnail: file }));
+          dispatch(actions.video.updateField({ thumbnail: reader.result }));
         };
       };
       dispatch(actions.video.updateField({ thumbnail: ' ' }));

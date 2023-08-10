@@ -17,7 +17,9 @@ export const TitleHeader = ({
   intl,
 }) => {
   if (!isInitialized) { return intl.formatMessage(messages.loading); }
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const dispatch = useDispatch();
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const title = useSelector(selectors.app.displayTitle);
 
   const {
@@ -46,7 +48,7 @@ export const TitleHeader = ({
     );
   }
   return (
-    <div className="d-flex flex-row align-items-center">
+    <div className="d-flex flex-row align-items-center mt-1">
       <Truncate>
         {title}
       </Truncate>

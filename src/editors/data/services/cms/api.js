@@ -18,10 +18,13 @@ export const apiMethods = {
   fetchAssets: ({ learningContextId, studioEndpointUrl }) => get(
     urls.courseAssets({ studioEndpointUrl, learningContextId }),
   ),
+  fetchVideos: ({ studioEndpointUrl, learningContextId }) => get(
+    urls.courseVideos({ studioEndpointUrl, learningContextId }),
+  ),
   fetchCourseDetails: ({ studioEndpointUrl, learningContextId }) => get(
     urls.courseDetailsUrl({ studioEndpointUrl, learningContextId }),
   ),
-  fetchAdvanceSettings: ({ studioEndpointUrl, learningContextId }) => get(
+  fetchAdvancedSettings: ({ studioEndpointUrl, learningContextId }) => get(
     urls.courseAdvanceSettings({ studioEndpointUrl, learningContextId }),
   ),
   uploadAsset: ({
@@ -137,11 +140,10 @@ export const apiMethods = {
         metadata: { display_name: title },
       };
     } else if (blockType === 'problem') {
-      // console.log(type);
       response = {
         data: content.olx,
         category: blockType,
-        couseKey: learningContextId,
+        courseKey: learningContextId,
         has_changes: true,
         id: blockId,
         metadata: { display_name: title, ...content.settings },
@@ -164,7 +166,7 @@ export const apiMethods = {
         metadata: {
           display_name: title,
           download_video: content.allowVideoDownloads,
-          public_access: content.allowVideoSharing,
+          public_access: content.allowVideoSharing.value,
           edx_video_id: edxVideoId,
           html5_sources: html5Sources,
           youtube_id_1_0: youtubeId,
@@ -202,9 +204,16 @@ export const apiMethods = {
   ),
   fetchVideoFeatures: ({
     studioEndpointUrl,
-    learningContextId,
   }) => get(
-    urls.videoFeatures({ studioEndpointUrl, learningContextId }),
+    urls.videoFeatures({ studioEndpointUrl }),
+  ),
+  uploadVideo: ({
+    data,
+    studioEndpointUrl,
+    learningContextId,
+  }) => post(
+    urls.courseVideos({ studioEndpointUrl, learningContextId }),
+    data,
   ),
 };
 
@@ -246,7 +255,7 @@ export const processVideoIds = ({
 };
 
 export const isEdxVideo = (src) => {
-  const uuid4Regex = new RegExp(/^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$/);
+  const uuid4Regex = /^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$/;
   if (src && src.match(uuid4Regex)) {
     return true;
   }
@@ -254,7 +263,7 @@ export const isEdxVideo = (src) => {
 };
 
 export const parseYoutubeId = (src) => {
-  const youtubeRegex = new RegExp(/^((?:https?:)?\/\/)?((?:www|m)\.)?((?:youtube\.com|youtu.be))(\/(?:[\w-]+\?v=|embed\/|v\/)?)([\w-]+)(\S+)?$/);
+  const youtubeRegex = /^((?:https?:)?\/\/)?((?:www|m)\.)?((?:youtube\.com|youtu.be))(\/(?:[\w-]+\?v=|embed\/|v\/)?)([\w-]+)(\S+)?$/;
   if (!src.match(youtubeRegex)) {
     return null;
   }
@@ -278,7 +287,7 @@ export const processLicense = (licenseType, licenseDetails) => {
 
 export const checkMockApi = (key) => {
   if (process.env.REACT_APP_DEVGALLERY) {
-    return mockApi[key];
+    return mockApi[key] ? mockApi[key] : mockApi.emptyMock;
   }
   return module.apiMethods[key];
 };

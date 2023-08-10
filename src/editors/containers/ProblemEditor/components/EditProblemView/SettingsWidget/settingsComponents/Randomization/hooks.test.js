@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { MockUseState } from '../../../../../../../../testUtils';
-import messages from './messages';
 import * as hooks from './hooks';
+import { RandomizationTypes, RandomizationTypesKeys } from '../../../../../../../data/constants/problem';
 
 jest.mock('react', () => {
   const updateState = jest.fn();
@@ -11,6 +11,10 @@ jest.mock('react', () => {
     useState: jest.fn(val => ([{ state: val }, (newVal) => updateState({ val, newVal })])),
   };
 });
+
+jest.mock('@edx/frontend-platform/i18n', () => ({
+  defineMessages: m => m,
+}));
 
 const state = new MockUseState(hooks);
 
@@ -32,7 +36,7 @@ describe('Problem settings hooks', () => {
       output = hooks.useRandomizationSettingStatus({ randomization, updateSettings });
     });
     test('test default state is false', () => {
-      expect(output.summary).toEqual({ message: messages.noRandomizationSummary, values: {} });
+      expect(output.summary).toEqual({ message: RandomizationTypes[RandomizationTypesKeys.NEVER], values: {} });
     });
     test('test showAdvancedCards sets state to true', () => {
       const mockEvent = { target: { value: 'sOmE_otheR_ValUe' } };

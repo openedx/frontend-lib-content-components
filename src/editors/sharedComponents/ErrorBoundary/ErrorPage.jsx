@@ -1,62 +1,89 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import {
   Button, Container, Row, Col,
 } from '@edx/paragon';
 
-import { FormattedMessage } from '@edx/frontend-platform/i18n';
+import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
+import messages from './messages';
+import { navigateTo } from '../../hooks';
+import { selectors } from '../../data/redux';
 
 /**
  * An error page that displays a generic message for unexpected errors.  Also contains a "Try
  * Again" button to refresh the page.
- *
- * @memberof module:React
- * @extends {Component}
  */
-class ErrorPage extends Component {
-  /* istanbul ignore next */
-  reload() {
-    global.location.reload();
-  }
+export const ErrorPage = ({
+  message,
+  studioEndpointUrl,
+  learningContextId,
+  // redux
+  unitData,
+  // injected
+  intl,
+}) => {
+  const outlineType = learningContextId?.startsWith('library-v1') ? 'library' : 'course';
+  const outlineUrl = `${studioEndpointUrl}/${outlineType}/${learningContextId}`;
+  const unitUrl = unitData?.data ? `${studioEndpointUrl}/container/${unitData?.data.ancestors[0].id}` : null;
 
-  render() {
-    const { message } = this.props;
-    return (
-      <Container fluid className="py-5 justify-content-center align-items-start text-center">
-        <Row>
-          <Col>
-            <p className="text-muted">
-              <FormattedMessage
-                id="unexpected.error.message.text"
-                defaultMessage="An unexpected error occurred. Please click the button below to refresh the page."
-                description="error message when an unexpected error occurs"
-              />
-            </p>
-            {message && (
-              <div role="alert" className="my-4">
-                <p>{message}</p>
-              </div>
-            )}
-            <Button onClick={this.reload}>
-              <FormattedMessage
-                id="unexpected.error.button.text"
-                defaultMessage="Try again"
-                description="text for button that tries to reload the app by refreshing the page"
-              />
+  return (
+    <Container fluid className="py-5 justify-content-center align-items-start text-center">
+      <Row>
+        <Col>
+          <p className="text-muted">
+            {intl.formatMessage(messages.unexpectedError)}
+          </p>
+          {message && (
+            <div role="alert" className="my-4">
+              <p>{message}</p>
+            </div>
+          )}
+          <Row className="justify-content-center">
+            {learningContextId && (unitUrl && outlineType !== 'library' ? (
+              <Button className="mr-2" variant="outline-primary" onClick={() => navigateTo(unitUrl)}>
+                {intl.formatMessage(messages.returnToUnitPageLabel)}
+              </Button>
+            ) : (
+              <Button className="mr-2" variant="outline-primary" onClick={() => navigateTo(outlineUrl)}>
+                {intl.formatMessage(messages.returnToOutlineLabel, { outlineType })}
+              </Button>
+            ))}
+            <Button className="ml-2" onClick={() => global.location.reload()}>
+              {intl.formatMessage(messages.unexpectedErrorButtonLabel)}
             </Button>
-          </Col>
-        </Row>
-      </Container>
-    );
-  }
-}
+          </Row>
+        </Col>
+      </Row>
+    </Container>
+  );
+};
 
 ErrorPage.propTypes = {
   message: PropTypes.string,
+  learningContextId: PropTypes.string.isRequired,
+  studioEndpointUrl: PropTypes.string.isRequired,
+  // redux
+  unitData: PropTypes.shape({
+    data: PropTypes.shape({
+      ancestors: PropTypes.arrayOf(
+        PropTypes.shape({
+          id: PropTypes.string,
+        }),
+      ),
+    }),
+  }),
+  // injected
+  intl: intlShape.isRequired,
 };
 
 ErrorPage.defaultProps = {
   message: null,
+  unitData: null,
 };
 
-export default ErrorPage;
+export const mapStateToProps = (state) => ({
+  unitData: selectors.app.unitUrl(state),
+});
+
+export default injectIntl(connect(mapStateToProps)(ErrorPage));

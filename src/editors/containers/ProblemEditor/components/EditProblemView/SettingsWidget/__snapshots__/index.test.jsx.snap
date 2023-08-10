@@ -14,7 +14,9 @@ exports[`SettingsWidget snapshot snapshot: renders Settings widget for Advanced 
   <div
     className="my-3"
   >
-    <ScoringCard />
+    <ScoringCard
+      defaultValue={2}
+    />
   </div>
   <div
     className="mt-3"
@@ -53,7 +55,9 @@ exports[`SettingsWidget snapshot snapshot: renders Settings widget for Advanced 
       <div
         className="my-3"
       >
-        <ShowAnswerCard />
+        <ShowAnswerCard
+          defaultValue="finished"
+        />
       </div>
       <div
         className="my-3"
@@ -64,11 +68,6 @@ exports[`SettingsWidget snapshot snapshot: renders Settings widget for Advanced 
         className="my-3"
       >
         <TimerCard />
-      </div>
-      <div
-        className="my-3"
-      >
-        <MatlabCard />
       </div>
       <div
         className="my-3"
@@ -96,7 +95,9 @@ exports[`SettingsWidget snapshot snapshot: renders Settings widget page 1`] = `
   <div
     className="my-3"
   >
-    <ScoringCard />
+    <ScoringCard
+      defaultValue={2}
+    />
   </div>
   <div
     className="mt-3"
@@ -135,7 +136,9 @@ exports[`SettingsWidget snapshot snapshot: renders Settings widget page 1`] = `
       <div
         className="my-3"
       >
-        <ShowAnswerCard />
+        <ShowAnswerCard
+          defaultValue="finished"
+        />
       </div>
       <div
         className="my-3"
@@ -146,11 +149,6 @@ exports[`SettingsWidget snapshot snapshot: renders Settings widget page 1`] = `
         className="my-3"
       >
         <TimerCard />
-      </div>
-      <div
-        className="my-3"
-      >
-        <MatlabCard />
       </div>
       <div
         className="my-3"
@@ -178,7 +176,9 @@ exports[`SettingsWidget snapshot snapshot: renders Settings widget page advanced
   <div
     className="my-3"
   >
-    <ScoringCard />
+    <ScoringCard
+      defaultValue={2}
+    />
   </div>
   <div
     className="mt-3"
@@ -217,7 +217,9 @@ exports[`SettingsWidget snapshot snapshot: renders Settings widget page advanced
       <div
         className="my-3"
       >
-        <ShowAnswerCard />
+        <ShowAnswerCard
+          defaultValue="finished"
+        />
       </div>
       <div
         className="my-3"
@@ -228,11 +230,6 @@ exports[`SettingsWidget snapshot snapshot: renders Settings widget page advanced
         className="my-3"
       >
         <TimerCard />
-      </div>
-      <div
-        className="my-3"
-      >
-        <MatlabCard />
       </div>
       <div
         className="my-3"

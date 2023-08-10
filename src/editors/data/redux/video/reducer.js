@@ -10,10 +10,16 @@ const initialState = {
     '',
   ],
   allowVideoDownloads: false,
-  allowVideoSharing: false,
+  allowVideoSharing: {
+    level: 'block',
+    value: false,
+  },
+  videoSharingEnabledForAll: false,
   videoSharingEnabledForCourse: false,
+  videoSharingLearnMoreLink: '',
   thumbnail: null,
   transcripts: [],
+  selectedVideoTranscriptUrls: {},
   allowTranscriptDownloads: false,
   duration: {
     startTime: '00:00:00',

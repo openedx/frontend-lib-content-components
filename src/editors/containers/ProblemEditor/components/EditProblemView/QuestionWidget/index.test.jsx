@@ -2,10 +2,12 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import { formatMessage } from '../../../../../../testUtils';
-import { actions, selectors } from '../../../../../data/redux';
-import { QuestionWidget, mapStateToProps, mapDispatchToProps } from '.';
+import { selectors } from '../../../../../data/redux';
+import { QuestionWidget, mapStateToProps } from '.';
 
 jest.mock('../../../../../data/redux', () => ({
+  __esModule: true,
+  default: jest.fn(),
   actions: {
     problem: {
       updateQuestion: jest.fn().mockName('actions.problem.updateQuestion'),
@@ -19,6 +21,11 @@ jest.mock('../../../../../data/redux', () => ({
     },
     problem: {
       question: jest.fn(state => ({ question: state })),
+    },
+  },
+  thunkActions: {
+    video: {
+      importTranscript: jest.fn(),
     },
   },
 }));
@@ -47,11 +54,6 @@ describe('QuestionWidget', () => {
     const testState = { A: 'pple', B: 'anana', C: 'ucumber' };
     test('question from problem.question', () => {
       expect(mapStateToProps(testState).question).toEqual(selectors.problem.question(testState));
-    });
-  });
-  describe('mapDispatchToProps', () => {
-    test('updateField from actions.problem.updateQuestion', () => {
-      expect(mapDispatchToProps.updateQuestion).toEqual(actions.problem.updateQuestion);
     });
   });
 });

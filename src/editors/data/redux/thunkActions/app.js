@@ -1,4 +1,5 @@
 import { StrictDict, camelizeKeys } from '../../../utils';
+/* eslint-disable import/no-cycle */
 import { actions } from '..';
 import * as requests from './requests';
 import * as module from './app';
@@ -31,6 +32,12 @@ export const fetchAssets = () => (dispatch) => {
   }));
 };
 
+export const fetchVideos = () => (dispatch) => {
+  dispatch(requests.fetchVideos({
+    onSuccess: (response) => dispatch(actions.app.setVideos(response.data.videos)),
+  }));
+};
+
 export const fetchCourseDetails = () => (dispatch) => {
   dispatch(requests.fetchCourseDetails({
     onSuccess: (response) => dispatch(actions.app.setCourseDetails(response)),
@@ -50,19 +57,20 @@ export const initialize = (data) => (dispatch) => {
   dispatch(module.fetchUnit());
   dispatch(module.fetchStudioView());
   dispatch(module.fetchAssets());
+  dispatch(module.fetchVideos());
   dispatch(module.fetchCourseDetails());
 };
 
 /**
  * @param {func} onSuccess
  */
-export const saveBlock = ({ content, returnToUnit }) => (dispatch) => {
+export const saveBlock = (content, returnToUnit) => (dispatch) => {
   dispatch(actions.app.setBlockContent(content));
   dispatch(requests.saveBlock({
     content,
     onSuccess: (response) => {
       dispatch(actions.app.setSaveResponse(response));
-      returnToUnit();
+      returnToUnit(response.data);
     },
   }));
 };
@@ -72,11 +80,6 @@ export const uploadImage = ({ file, setSelection }) => (dispatch) => {
     asset: file,
     onSuccess: (response) => setSelection(camelizeKeys(response.data.asset)),
   }));
-};
-
-export const fetchVideos = ({ onSuccess }) => (dispatch) => {
-  dispatch(requests.fetchAssets({ onSuccess }));
-  // onSuccess(mockData.mockVideoData);
 };
 
 export default StrictDict({

@@ -7,6 +7,7 @@ import { actions, thunkActions } from './data/redux';
 import * as module from './hooks';
 import { RequestKeys } from './data/constants/requests';
 
+// eslint-disable-next-line react-hooks/rules-of-hooks
 export const initializeApp = ({ dispatch, data }) => useEffect(
   () => dispatch(thunkActions.app.initialize(data)),
   [data],
@@ -17,12 +18,17 @@ export const navigateTo = (destination) => {
 };
 
 export const navigateCallback = ({
+  returnFunction,
   destination,
   analyticsEvent,
   analytics,
-}) => () => {
+}) => (response) => {
   if (process.env.NODE_ENV !== 'development' && analyticsEvent && analytics) {
     sendTrackEvent(analyticsEvent, analytics);
+  }
+  if (returnFunction) {
+    returnFunction()(response);
+    return;
   }
   module.navigateTo(destination);
 };
@@ -34,8 +40,12 @@ export const saveBlock = ({
   content,
   destination,
   dispatch,
+  returnFunction,
   validateEntry,
 }) => {
+  if (!content) {
+    return;
+  }
   let attemptSave = false;
   if (validateEntry) {
     if (validateEntry()) {
@@ -45,14 +55,15 @@ export const saveBlock = ({
     attemptSave = true;
   }
   if (attemptSave) {
-    dispatch(thunkActions.app.saveBlock({
-      returnToUnit: module.navigateCallback({
+    dispatch(thunkActions.app.saveBlock(
+      content,
+      module.navigateCallback({
         destination,
         analyticsEvent: analyticsEvt.editorSaveClick,
         analytics,
+        returnFunction,
       }),
-      content,
-    }));
+    ));
   }
 };
 
