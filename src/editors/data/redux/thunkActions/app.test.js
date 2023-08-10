@@ -24,7 +24,7 @@ const testValue = {
   data: {
     assets: 'test VALUE',
     videos: 'vIDeO vALUe',
-  }
+  },
 };
 
 describe('app thunkActions', () => {
