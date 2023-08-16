@@ -47,7 +47,7 @@ describe('FormGroup', () => {
     const newProps = {
       ...defaultProps,
       errorMessage: 'error message',
-    }
+    };
     renderComponent(newProps);
     expect(screen.getByText(defaultProps.floatingLabel)).toBeVisible();
     expect(screen.getByText(newProps.errorMessage)).toBeVisible();
