@@ -9,7 +9,6 @@ import { Add, ExpandLess, ExpandMore } from '@edx/paragon/icons';
 import PropTypes from 'prop-types';
 // eslint-disable-next-line import/no-unresolved
 import onClickOutside from 'react-onclickoutside';
-import { injectIntl } from '@edx/frontend-platform/i18n';
 import FormGroup from './FormGroup';
 
 class TypeaheadDropdown extends React.Component {
@@ -155,6 +154,7 @@ class TypeaheadDropdown extends React.Component {
     return (
       <IconButton
         className="expand-more"
+        data-testid="expand-more-button"
         src={ExpandMore}
         iconAs={Icon}
         size="sm"
@@ -169,6 +169,7 @@ class TypeaheadDropdown extends React.Component {
     return (
       <IconButton
         className="expand-less"
+        data-testid="expand-less-button"
         src={ExpandLess}
         iconAs={Icon}
         size="sm"
@@ -185,7 +186,13 @@ class TypeaheadDropdown extends React.Component {
         <div className="muted">{this.props.noOptionsMessage}</div>
         <ActionRow.Spacer />
         {this.props.allowNewOption && (
-          <Button iconBefore={Add} onClick={this.props.addNewOption}>{this.props.newOptionButtonLabel}</Button>
+          <Button
+            data-testid="add-option-button"
+            iconBefore={Add}
+            onClick={this.props.addNewOption}
+          >
+            {this.props.newOptionButtonLabel}
+          </Button>
         )}
       </ActionRow>
     );
@@ -210,8 +217,9 @@ class TypeaheadDropdown extends React.Component {
           isFocused={this.state.isFocused}
         >
           <div
+            data-testid="dropdown-container"
             className="dropdown-container mt-2 rounded bg-light-100 box-shadow-centered-1 mr-2"
-            style={{ 'max-height': '300px', 'overflow-y': 'scroll' }}
+            style={{ maxHeight: '300px', overflowY: 'scroll' }}
           >
             { this.state.dropDownItems.length > 0 ? this.state.dropDownItems : dropDownEmptyList }
           </div>
@@ -257,4 +265,4 @@ TypeaheadDropdown.propTypes = {
   addNewOption: PropTypes.func,
 };
 
-export default injectIntl(onClickOutside(TypeaheadDropdown));
+export default onClickOutside(TypeaheadDropdown);

@@ -1,7 +1,7 @@
 import React from 'react';
-
-import { Form } from '@edx/paragon';
 import PropTypes from 'prop-types';
+import _ from 'lodash-es';
+import { Form } from '@edx/paragon';
 
 const FormGroup = (props) => {
   const handleFocus = (e) => {
@@ -15,7 +15,6 @@ const FormGroup = (props) => {
       if (props.handleBlur) { props.handleBlur(e); }
     }
   };
-
   return (
     <Form.Group
       isInvalid={!!props.errorMessage}
@@ -23,6 +22,7 @@ const FormGroup = (props) => {
       className={props.className}
     >
       <Form.Control
+        data-testid="formControl"
         aria-invalid={props.errorMessage}
         autoComplete={props.autoComplete ? 'on' : 'off'}
         onChange={props.handleChange}
@@ -35,14 +35,19 @@ const FormGroup = (props) => {
 
       {props.children}
 
-      {props.helpText && !props.errorMessage && (
+      {props.helpText && _.isEmpty(props.errorMessage) && (
         <Form.Control.Feedback type="default" key="help-text">
           {props.helpText}
         </Form.Control.Feedback>
       )}
 
-      {props.errorMessage && (
-        <Form.Control.Feedback type="invalid" key="error" feedback-for={props.name}>
+      {!_.isEmpty(props.errorMessage) && (
+        <Form.Control.Feedback
+          type="invalid"
+          key="error"
+          feedback-for={props.name}
+          data-testid="errorMessage"
+        >
           {props.errorMessage}
         </Form.Control.Feedback>
       )}
