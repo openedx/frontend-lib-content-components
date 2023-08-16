@@ -3,6 +3,7 @@ import {
   render,
   screen,
 } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom/extend-expect';
 import FormGroup from './FormGroup';
 
@@ -71,5 +72,12 @@ describe('FormGroup', () => {
     const formInput = screen.getByTestId('formControl');
     fireEvent.click(formInput);
     expect(mockHandleClick).toHaveBeenCalled();
+  });
+  it('handles element change', () => {
+    renderComponent(defaultProps);
+    const formInput = screen.getByTestId('formControl');
+    fireEvent.focus(formInput);
+    userEvent.type(formInput, 'opt1');
+    expect(mockHandleChange).toHaveBeenCalled();
   });
 });
