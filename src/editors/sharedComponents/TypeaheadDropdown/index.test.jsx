@@ -7,7 +7,7 @@ import {
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom/extend-expect';
-import TypeaheadDroopdown from '.';
+import TypeaheadDropdown from '.';
 
 jest.unmock('@edx/paragon');
 
@@ -25,9 +25,7 @@ const defaultProps = {
   readOnly: false,
   noOptionsMessage: 'No options',
 };
-const renderComponent = (props) => {
-  render(<TypeaheadDroopdown {...props} />);
-};
+const renderComponent = (props) => render(<TypeaheadDropdown {...props} />);
 
 describe('common/OrganizationDropdown.jsx', () => {
   it('renders component without error', () => {
@@ -93,20 +91,17 @@ describe('common/OrganizationDropdown.jsx', () => {
     expect(within(screen.getByTestId('dropdown-container'))
       .queryAllByRole('button').length).toEqual(1);
   });
-  // it('closes options list on click outside', async () => {
-  //   const newProps = { ...defaultProps, options: ['opt1', 'opt2'] };
-  //   renderComponent(newProps);
-  //   const formInput = screen.getByTestId('formControl');
-  //   fireEvent.click(formInput);
-  //   expect(within(screen.getByTestId('dropdown-container'))
-  //     .queryAllByRole('button').length).toEqual(2);
-  //   await act(async () => {
-  //     fireEvent.focusOut(formInput);
-  //     fireEvent.click(document.body);
-  //   });
-  //   expect(within(screen.getByTestId('dropdown-container'))
-  //     .queryAllByRole('button').length).toEqual(0);
-  // });
+  it('closes options list on click outside', async () => {
+    const newProps = { ...defaultProps, options: ['opt1', 'opt2'] };
+    renderComponent(newProps);
+    const formInput = screen.getByTestId('formControl');
+    fireEvent.click(formInput);
+    expect(within(screen.getByTestId('dropdown-container'))
+      .queryAllByRole('button').length).toEqual(2);
+    userEvent.click(document.body);
+    expect(within(screen.getByTestId('dropdown-container'))
+      .queryAllByRole('button').length).toEqual(0);
+  });
   describe('empty options list', () => {
     it('shows empty options list depends on field value', () => {
       const newProps = { ...defaultProps, options: ['opt1', 'opt2'] };
