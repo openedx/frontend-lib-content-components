@@ -7,12 +7,13 @@ import '@testing-library/jest-dom/extend-expect';
 import FormGroup from './FormGroup';
 
 jest.unmock('@edx/paragon');
+jest.unmock('@edx/paragon/icons');
 
 const mockHandleChange = jest.fn();
 const mockHandleFocus = jest.fn();
 const mockHandleClick = jest.fn();
 const mockHandleBlur = jest.fn();
-const props = {
+const defaultProps = {
   as: 'input',
   errorMessage: '',
   borderClass: '',
@@ -33,41 +34,40 @@ const props = {
   value: '',
 };
 
-const renderComponent = (errorMessage) => {
-  props.errorMessage = errorMessage;
-  render(<FormGroup {...props} />);
-};
+const renderComponent = (props) => render(<FormGroup {...props} />);
 
 describe('FormGroup', () => {
   it('renders component without error', () => {
-    renderComponent();
-    expect(screen.getByText(props.floatingLabel)).toBeVisible();
-    expect(screen.getByText(props.helpText)).toBeVisible();
+    renderComponent(defaultProps);
+    expect(screen.getByText(defaultProps.floatingLabel)).toBeVisible();
+    expect(screen.getByText(defaultProps.helpText)).toBeVisible();
     expect(screen.queryByTestId('errorMessage')).toBeNull();
   });
-  // fit('renders component with error', () => {
-  //   renderComponent('error message');
-  //   expect(screen.getByText(props.floatingLabel)).toBeVisible();
-  //   expect(screen.queryByText(props.helpText)).toBeNull();
-  //   expect(screen.getByTestId('errorMessage')).toBeVisible();
-  // });
+  it('renders component with error', () => {
+    const newProps = {
+      ...defaultProps,
+      errorMessage: 'error message',
+    }
+    renderComponent(newProps);
+    expect(screen.getByText(defaultProps.floatingLabel)).toBeVisible();
+    expect(screen.getByText(newProps.errorMessage)).toBeVisible();
+    expect(screen.queryByText(defaultProps.helpText)).toBeNull();
+  });
   it('handles element focus', async () => {
-    renderComponent();
+    renderComponent(defaultProps);
     const formInput = screen.getByTestId('formControl');
     fireEvent.focus(formInput);
     expect(mockHandleFocus).toHaveBeenCalled();
   });
-
   it('handles element blur', () => {
-    renderComponent();
+    renderComponent(defaultProps);
     const formInput = screen.getByTestId('formControl');
     fireEvent.focus(formInput);
     fireEvent.focusOut(formInput);
     expect(mockHandleBlur).toHaveBeenCalled();
   });
-
   it('handles element click', () => {
-    renderComponent();
+    renderComponent(defaultProps);
     const formInput = screen.getByTestId('formControl');
     fireEvent.click(formInput);
     expect(mockHandleClick).toHaveBeenCalled();

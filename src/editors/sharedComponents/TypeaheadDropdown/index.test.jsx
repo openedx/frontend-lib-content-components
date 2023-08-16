@@ -10,6 +10,7 @@ import '@testing-library/jest-dom/extend-expect';
 import TypeaheadDropdown from '.';
 
 jest.unmock('@edx/paragon');
+jest.unmock('@edx/paragon/icons');
 
 const defaultProps = {
   as: 'input',
