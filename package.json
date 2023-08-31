@@ -56,7 +56,7 @@
     "prop-types": "15.7.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-router-dom": "6.14.2",
+    "react-router-dom": "6.15.0",
     "react-test-renderer": "^17.0.2",
     "redux-saga": "1.1.3",
     "webpack-cli": "4.10.0"
@@ -95,7 +95,7 @@
     "xmlchecker": "^0.1.0"
   },
   "peerDependencies": {
-    "@edx/frontend-platform": "^5.0.0",
+    "@edx/frontend-platform": "^4.0.0 || ^5.0.0",
     "@edx/paragon": "^20.27.0",
     "prop-types": "^15.5.10",
     "react": "^16.14.0 || ^17.0.0",
