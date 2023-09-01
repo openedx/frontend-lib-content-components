@@ -19,7 +19,7 @@ exports[`QuestionWidget render snapshot: renders correct default 1`] = `
     id="question"
     minHeight={150}
     placeholder="Enter your question"
-    setEditorRef={[MockFunction prepareEditorRef.setEditorRef]}
+    setEditorRef={[MockFunction useEditorRef.setEditorRef]}
   />
 </div>
 `;

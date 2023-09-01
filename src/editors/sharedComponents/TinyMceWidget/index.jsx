@@ -67,7 +67,7 @@ export const TinyMceWidget = ({
   const imagesRef = useRef([]);
 
   useEffect(() => {
-    module.addImagesAndDimensionsToRef({ imagesRef, assets, editorContentHtml });
+    hooks.addImagesAndDimensionsToRef({ imagesRef, assets, editorContentHtml });
   }, []);
 
   return (

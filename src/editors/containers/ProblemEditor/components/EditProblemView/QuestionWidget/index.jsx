@@ -6,7 +6,7 @@ import { selectors } from '../../../../../data/redux';
 import messages from './messages';
 
 import TinyMceWidget from '../../../../../sharedComponents/TinyMceWidget';
-import { prepareEditorRef } from '../../../../../sharedComponents/TinyMceWidget/hooks';
+import useEditorRef from '../../../../../../hooks/useEditorRef';
 
 export const QuestionWidget = ({
   // redux
@@ -14,7 +14,7 @@ export const QuestionWidget = ({
   // injected
   intl,
 }) => {
-  const { editorRef, refReady, setEditorRef } = prepareEditorRef();
+  const { editorRef, refReady, setEditorRef } = useEditorRef();
   if (!refReady) { return null; }
   return (
     <div className="tinyMceWidget">

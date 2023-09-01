@@ -28,7 +28,7 @@ exports[`SolutionWidget render snapshot: renders correct default 1`] = `
     id="solution"
     minHeight={150}
     placeholder="Enter your explanation"
-    setEditorRef={[MockFunction prepareEditorRef.setEditorRef]}
+    setEditorRef={[MockFunction useEditorRef.setEditorRef]}
   />
 </div>
 `;

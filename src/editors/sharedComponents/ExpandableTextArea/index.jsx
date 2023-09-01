@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import TinyMceWidget from '../TinyMceWidget';
-import { prepareEditorRef } from '../TinyMceWidget/hooks';
+import useEditorRef from '../../../hooks/useEditorRef';
 import './index.scss';
 
 export const ExpandableTextArea = ({
@@ -11,7 +11,7 @@ export const ExpandableTextArea = ({
   errorMessage,
   ...props
 }) => {
-  const { editorRef, setEditorRef } = prepareEditorRef();
+  const { editorRef, setEditorRef } = useEditorRef();
 
   return (
     <>

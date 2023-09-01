@@ -6,7 +6,7 @@ import DraggableList, { SortableItem } from './editors/sharedComponents/Draggabl
 import ErrorAlert from './editors/sharedComponents/ErrorAlerts/ErrorAlert';
 import Footer from './footer';
 import { TinyMceWidget } from './editors/sharedComponents/TinyMceWidget';
-import { prepareEditorRef } from './editors/sharedComponents/TinyMceWidget/hooks';
+import prepareEditorRef from './hooks/useEditorRef';
 import TypeaheadDropdown from './editors/sharedComponents/TypeaheadDropdown';
 
 export {

@@ -48,7 +48,7 @@ exports[`TextEditor snapshots block failed to load, Toast is shown 1`] = `
       height="100%"
       initializeEditor={[MockFunction args.intializeEditor]}
       minHeight={500}
-      setEditorRef={[MockFunction hooks.prepareEditorRef.setEditorRef]}
+      setEditorRef={[MockFunction hooks.useEditorRef.setEditorRef]}
     />
   </div>
 </EditorContainer>
@@ -206,7 +206,7 @@ exports[`TextEditor snapshots renders as expected with default behavior 1`] = `
       height="100%"
       initializeEditor={[MockFunction args.intializeEditor]}
       minHeight={500}
-      setEditorRef={[MockFunction hooks.prepareEditorRef.setEditorRef]}
+      setEditorRef={[MockFunction hooks.useEditorRef.setEditorRef]}
     />
   </div>
 </EditorContainer>

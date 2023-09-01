@@ -21,9 +21,9 @@ jest.mock('../../../../../data/redux', () => ({
 }));
 
 jest.mock('../../../../../sharedComponents/TinyMceWidget/hooks', () => ({
-  prepareEditorRef: jest.fn(() => ({
+  useEditorRef: jest.fn(() => ({
     refReady: true,
-    setEditorRef: jest.fn().mockName('prepareEditorRef.setEditorRef'),
+    setEditorRef: jest.fn().mockName('useEditorRef.setEditorRef'),
   })),
 }));
 

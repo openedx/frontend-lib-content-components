@@ -25,10 +25,10 @@ jest.mock('./hooks', () => ({
 }));
 
 jest.mock('../../sharedComponents/TinyMceWidget/hooks', () => ({
-  prepareEditorRef: jest.fn(() => ({
+  useEditorRef: jest.fn(() => ({
     editorRef: { current: { value: 'something' } },
     refReady: true,
-    setEditorRef: jest.fn().mockName('hooks.prepareEditorRef.setEditorRef'),
+    setEditorRef: jest.fn().mockName('hooks.useEditorRef.setEditorRef'),
   })),
 }));
 
