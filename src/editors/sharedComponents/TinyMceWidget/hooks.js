@@ -1,14 +1,8 @@
 import {
   useState,
-  useRef,
-  useEffect,
 } from 'react';
 
 import { StrictDict } from '../../utils';
-
-import {
-  addImagesAndDimensionsToRef,
-} from './logic';
 
 export const state = StrictDict({
   // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -20,16 +14,6 @@ export const state = StrictDict({
   // eslint-disable-next-line react-hooks/rules-of-hooks
   refReady: (val) => useState(val),
 });
-
-export const useImagesEffect = ({ assets, editorContentHtml }) => {
-  const imagesRef = useRef([]);
-
-  useEffect(() => {
-    addImagesAndDimensionsToRef({ imagesRef, assets, editorContentHtml });
-  }, []);
-
-  return { imagesRef };
-};
 
 export const useImgModalToggle = () => {
   const [isImgOpen, setIsOpen] = state.isImageModalOpen(false);

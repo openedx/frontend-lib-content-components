@@ -1,5 +1,5 @@
 import * as appHooks from '../../hooks';
-import { setAssetToStaticUrl } from '../../sharedComponents/TinyMceWidget/logic';
+import setAssetToStaticUrl from '../../utils/setAssetToStaticUrl';
 
 export const { nullMethod, navigateCallback, navigateTo } = appHooks;
 
