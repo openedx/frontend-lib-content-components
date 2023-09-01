@@ -25,7 +25,13 @@ import store from '../../data/store';
 import { selectors } from '../../data/redux';
 import ImageUploadModal from '../ImageUploadModal';
 import SourceCodeModal from '../SourceCodeModal';
-import * as hooks from './hooks';
+import {
+  useImgModalToggle,
+  useSourceCodeModalToggle,
+  useSelectedImage,
+} from './hooks';
+
+import { addImagesAndDimensionsToRef, editorConfig } from './logic';
 
 const editorConfigDefaultProps = {
   setEditorRef: undefined,
@@ -59,15 +65,15 @@ export const TinyMceWidget = ({
   lmsEndpointUrl,
   studioEndpointUrl,
   onChange,
-  ...editorConfig
+  ...editorConfigProps
 }) => {
-  const { isImgOpen, openImgModal, closeImgModal } = hooks.useImgModalToggle();
-  const { isSourceCodeOpen, openSourceCodeModal, closeSourceCodeModal } = hooks.useSourceCodeModalToggle(editorRef);
-  const imageSelectionState = hooks.useSelectedImage(null);
+  const { isImgOpen, openImgModal, closeImgModal } = useImgModalToggle();
+  const { isSourceCodeOpen, openSourceCodeModal, closeSourceCodeModal } = useSourceCodeModalToggle(editorRef);
+  const imageSelectionState = useSelectedImage(null);
   const imagesRef = useRef([]);
 
   useEffect(() => {
-    hooks.addImagesAndDimensionsToRef({ imagesRef, assets, editorContentHtml });
+    addImagesAndDimensionsToRef({ imagesRef, assets, editorContentHtml });
   }, []);
 
   return (
@@ -95,7 +101,7 @@ export const TinyMceWidget = ({
         disabled={disabled}
         onEditorChange={onChange}
         {
-          ...hooks.editorConfig({
+          ...editorConfig({
             openImgModal,
             openSourceCodeModal,
             editorType,
@@ -106,7 +112,7 @@ export const TinyMceWidget = ({
             images: imagesRef,
             editorContentHtml,
             ...imageSelectionState,
-            ...editorConfig,
+            ...editorConfigProps,
           })
         }
       />

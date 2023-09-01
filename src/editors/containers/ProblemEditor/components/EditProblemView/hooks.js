@@ -3,7 +3,7 @@ import 'tinymce';
 import { StrictDict } from '../../../../utils';
 import ReactStateSettingsParser from '../../data/ReactStateSettingsParser';
 import ReactStateOLXParser from '../../data/ReactStateOLXParser';
-import { setAssetToStaticUrl } from '../../../../sharedComponents/TinyMceWidget/hooks';
+import { setAssetToStaticUrl } from '../../../../sharedComponents/TinyMceWidget/logic';
 import { ProblemTypeKeys } from '../../../../data/constants/problem';
 
 export const state = StrictDict({

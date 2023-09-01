@@ -6,7 +6,7 @@ import tinyMCEKeys from '../../data/constants/tinyMCE';
 import ImageSettingsModal from './ImageSettingsModal';
 import SelectImageModal from './SelectImageModal';
 import * as module from '.';
-import { updateImageDimensions } from '../TinyMceWidget/hooks';
+import { updateImageDimensions } from '../TinyMceWidget/logic';
 
 export const propsString = (props) => (
   Object.keys(props).map((key) => `${key}="${props[key]}"`).join(' ')
