@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Provider, connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Editor } from '@tinymce/tinymce-react';
@@ -61,11 +61,14 @@ export const TinyMceWidget = ({
   onChange,
   ...editorConfig
 }) => {
-  const { isImgOpen, openImgModal, closeImgModal } = hooks.imgModalToggle();
-  const { isSourceCodeOpen, openSourceCodeModal, closeSourceCodeModal } = hooks.sourceCodeModalToggle(editorRef);
-  const { imagesRef } = hooks.useImages({ assets, editorContentHtml });
+  const { isImgOpen, openImgModal, closeImgModal } = hooks.useImgModalToggle();
+  const { isSourceCodeOpen, openSourceCodeModal, closeSourceCodeModal } = hooks.useSourceCodeModalToggle(editorRef);
+  const imageSelectionState = hooks.useSelectedImage(null);
+  const imagesRef = useRef([]);
 
-  const imageSelection = hooks.selectedImage(null);
+  useEffect(() => {
+    module.addImagesAndDimensionsToRef({ imagesRef, assets, editorContentHtml });
+  }, []);
 
   return (
     <Provider store={store}>
@@ -77,7 +80,7 @@ export const TinyMceWidget = ({
           images={imagesRef}
           editorType={editorType}
           lmsEndpointUrl={lmsEndpointUrl}
-          {...imageSelection}
+          {...imageSelectionState}
         />
       )}
       {editorType === 'text' ? (
@@ -102,7 +105,7 @@ export const TinyMceWidget = ({
             studioEndpointUrl,
             images: imagesRef,
             editorContentHtml,
-            ...imageSelection,
+            ...imageSelectionState,
             ...editorConfig,
           })
         }

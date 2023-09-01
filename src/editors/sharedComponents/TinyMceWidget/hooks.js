@@ -30,7 +30,7 @@ export const addImagesAndDimensionsToRef = ({ imagesRef, assets, editorContentHt
   imagesRef.current = imagesWithDimensions;
 };
 
-export const useImages = ({ assets, editorContentHtml }) => {
+export const useImagesEffect = ({ assets, editorContentHtml }) => {
   const imagesRef = useRef([]);
 
   useEffect(() => {
@@ -293,7 +293,7 @@ export const prepareEditorRef = () => {
   return { editorRef, refReady, setEditorRef };
 };
 
-export const imgModalToggle = () => {
+export const useImgModalToggle = () => {
   const [isImgOpen, setIsOpen] = module.state.isImageModalOpen(false);
   return {
     isImgOpen,
@@ -302,7 +302,7 @@ export const imgModalToggle = () => {
   };
 };
 
-export const sourceCodeModalToggle = (editorRef) => {
+export const useSourceCodeModalToggle = (editorRef) => {
   const [isSourceCodeOpen, setIsOpen] = module.state.isSourceCodeModalOpen(false);
   return {
     isSourceCodeOpen,
@@ -436,8 +436,9 @@ export const fetchImageUrls = (images) => {
   return imageUrls;
 };
 
-export const selectedImage = (val) => {
+export const useSelectedImage = (val) => {
   const [selection, setSelection] = module.state.imageSelection(val);
+
   return {
     clearSelection: () => setSelection(null),
     selection,
