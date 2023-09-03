@@ -2,21 +2,8 @@ import {
   useState,
 } from 'react';
 
-import { StrictDict } from '../../utils';
-
-export const state = StrictDict({
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  isImageModalOpen: (val) => useState(val),
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  isSourceCodeModalOpen: (val) => useState(val),
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  imageSelection: (val) => useState(val),
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  refReady: (val) => useState(val),
-});
-
 export const useImgModalToggle = () => {
-  const [isImgOpen, setIsOpen] = state.isImageModalOpen(false);
+  const [isImgOpen, setIsOpen] = useState(false);
   return {
     isImgOpen,
     openImgModal: () => setIsOpen(true),
@@ -25,7 +12,7 @@ export const useImgModalToggle = () => {
 };
 
 export const useSourceCodeModalToggle = (editorRef) => {
-  const [isSourceCodeOpen, setIsOpen] = state.isSourceCodeModalOpen(false);
+  const [isSourceCodeOpen, setIsOpen] = useState(false);
   return {
     isSourceCodeOpen,
     openSourceCodeModal: () => setIsOpen(true),
@@ -37,7 +24,7 @@ export const useSourceCodeModalToggle = (editorRef) => {
 };
 
 export const useSelectedImage = (val) => {
-  const [selection, setSelection] = state.imageSelection(val);
+  const [selection, setSelection] = useState(val);
 
   return {
     clearSelection: () => setSelection(null),
