@@ -38,9 +38,9 @@
   "homepage": "https://github.com/edx/frontend-lib-content-components#readme",
   "devDependencies": {
     "@edx/browserslist-config": "^1.1.1",
-    "@edx/frontend-build": "12.8.27",
-    "@edx/frontend-platform": "4.2.0",
-    "@edx/paragon": "^20.45.0",
+    "@edx/frontend-build": "github:openedx/frontend-build#ags/2321",
+    "@edx/frontend-platform": "github:openedx/frontend-platform#ags/inject-theme-css",
+    "@edx/paragon": "21.0.0-alpha.41",
     "@edx/reactifex": "^2.1.1",
     "@testing-library/dom": "^8.13.0",
     "@testing-library/jest-dom": "^5.16.5",

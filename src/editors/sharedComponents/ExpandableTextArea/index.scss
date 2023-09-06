@@ -1,7 +1,7 @@
 .expandable-mce {
 
   .error {
-    outline: 2px solid #CA3A2F;
+    outline: 2px solid var(--pgn-color-danger-300);
   }
   .mce-content-body {
     padding: 10px;
@@ -12,14 +12,14 @@
       margin: 16px 40px;
     }
   }
-  
+
   *[contentEditable=false] {
-    outline: 1px solid #D7D3D1;
+    outline: 1px solid var(--pgn-color-light-700);
   }
   *[contentEditable=true] {
-    outline: 1px solid #707070;
+    outline: 1px solid var(--pgn-color-gray-500);
     &:focus, &:active {
-      outline: 2px solid #000;
+      outline: 2px solid var(--pgn-color-black);
     }
   }
 }

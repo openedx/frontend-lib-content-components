@@ -1,5 +1,5 @@
 .dropzone-middle {
-  border: 2px dashed #ccc;
+  border: 2px dashed var(--pgn-color-gray-200);
 
   &.active {
     border: 2px solid #262626; /* change color when active */
@@ -28,7 +28,7 @@
   transform: translateX(-50%);
 
   input::placeholder {
-    color: #454545;
+    color: var(--pgn-color-gray-700);
     // color: #5E35B1;
     font-family: 'Inter';
     font-weight: 500;
@@ -37,12 +37,17 @@
 
   button {
     border: none !important;
-    background-color: #FFFFFF;
+    background-color: var(--pgn-color-white);
   }
 
   .prompt-button {
     background: rgba(239, 234, 247, 0.70);
   }
+}
+
+.error-message {
+  color: var(--pgn-color-danger-500);
+  margin-top: 20rem;
 }
 
 .close-button-container {

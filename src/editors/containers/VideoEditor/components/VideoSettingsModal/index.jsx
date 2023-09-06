@@ -15,7 +15,6 @@ import ThumbnailWidget from './components/ThumbnailWidget';
 import TranscriptWidget from './components/TranscriptWidget';
 import VideoSourceWidget from './components/VideoSourceWidget';
 import VideoPreviewWidget from './components/VideoPreviewWidget';
-import './index.scss';
 import SocialShareWidget from './components/SocialShareWidget';
 import messages from '../../messages';
 
