@@ -45,7 +45,7 @@ class TypeaheadDropdown extends React.Component {
       options = options.filter((option) => (option.toLowerCase().includes(strToFind.toLowerCase())));
     }
 
-    return options.map((opt) => {
+    return options.sort().map((opt) => {
       let value = opt;
       if (value.length > 30) {
         value = value.substring(0, 30).concat('...');
@@ -220,6 +220,7 @@ class TypeaheadDropdown extends React.Component {
             data-testid="dropdown-container"
             className="dropdown-container mt-2 rounded bg-light-100 box-shadow-centered-1 mr-2"
             style={{ maxHeight: '300px', overflowY: 'scroll' }}
+            role="listbox"
           >
             { this.state.dropDownItems.length > 0 ? this.state.dropDownItems : dropDownEmptyList }
           </div>
