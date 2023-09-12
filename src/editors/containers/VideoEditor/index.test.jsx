@@ -47,6 +47,11 @@ describe('VideoEditor', () => {
         mapStateToProps(testState).studioViewFinished,
       ).toEqual(selectors.requests.isFinished(testState, { requestKey: RequestKeys.fetchStudioView }));
     });
+    test('isLibrary from app.isLibrary', () => {
+      expect(
+        mapStateToProps(testState).isLibrary,
+      ).toEqual(selectors.app.isLibrary(testState));
+    });
   });
   describe('mapDispatchToProps', () => {
     test('is empty', () => {
