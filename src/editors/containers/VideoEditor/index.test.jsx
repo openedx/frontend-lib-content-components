@@ -25,7 +25,7 @@ jest.mock('../../data/redux', () => ({
     },
     app: {
       isLibrary: jest.fn(state => ({ isLibrary: state })),
-    }
+    },
   },
 }));
 
