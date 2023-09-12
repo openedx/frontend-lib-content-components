@@ -220,7 +220,6 @@ class TypeaheadDropdown extends React.Component {
             data-testid="dropdown-container"
             className="dropdown-container mt-2 rounded bg-light-100 box-shadow-centered-1 mr-2"
             style={{ maxHeight: '300px', overflowY: 'scroll' }}
-            role="listbox"
           >
             { this.state.dropDownItems.length > 0 ? this.state.dropDownItems : dropDownEmptyList }
           </div>
