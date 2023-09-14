@@ -273,7 +273,7 @@ describe('video thunkActions', () => {
           studioEndpointUrl: 'soMEeNDPoiNT',
           blockValue: { data: { metadata: {} } },
           courseDetails: { data: { license: null } },
-          studioView: { data: { html: 'sOMeHTml' } },
+          studioView: { data: { content: 'sOMeHTml' } },
           videos: testVideosState,
         },
       }));
