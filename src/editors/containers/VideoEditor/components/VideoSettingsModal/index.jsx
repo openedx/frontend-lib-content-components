@@ -42,7 +42,9 @@ export const VideoSettingsModal = ({
     <ErrorSummary />
     <VideoPreviewWidget />
     <VideoSourceWidget />
-    <SocialShareWidget />
+    {!isLibrary && (
+      <SocialShareWidget />
+    )}
     <ThumbnailWidget />
     <TranscriptWidget />
     <DurationWidget />
