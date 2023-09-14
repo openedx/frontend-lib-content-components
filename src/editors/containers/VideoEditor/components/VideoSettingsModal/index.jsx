@@ -4,6 +4,7 @@ import { Button, Icon } from '@edx/paragon';
 import { ArrowBackIos } from '@edx/paragon/icons';
 import {
   FormattedMessage,
+  injectIntl,
 } from '@edx/frontend-platform/i18n';
 
 // import VideoPreview from './components/VideoPreview';
@@ -58,4 +59,4 @@ VideoSettingsModal.propTypes = {
   isLibrary: PropTypes.func.isRequired,
 };
 
-export default VideoSettingsModal;
+export default injectIntl(VideoSettingsModal);
