@@ -31,6 +31,8 @@ const pluginConfig = ({ isLibrary, placeholder, editorType }) => {
         image,
         imageTools,
         quickToolbar,
+        plugins.preview,
+        plugins.embediframe
       ].join(' '),
       menubar: false,
       toolbar: toolbar ? mapToolbars([
@@ -53,6 +55,7 @@ const pluginConfig = ({ isLibrary, placeholder, editorType }) => {
         [imageUploadButton, buttons.link, buttons.unlink, buttons.blockQuote, buttons.codeBlock],
         [buttons.table, buttons.emoticons, buttons.charmap, buttons.hr],
         [buttons.removeFormat, codeButton],
+        [buttons.codeRow , buttons.preview, buttons.embediframe]
       ]) : false,
       imageToolbar: mapToolbars([
         // [buttons.rotate.left, buttons.rotate.right],

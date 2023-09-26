@@ -20,6 +20,8 @@ import 'tinymce/plugins/autoresize';
 import 'tinymce/plugins/image';
 import 'tinymce/plugins/imagetools';
 import 'tinymce/plugins/quickbars';
+import 'tinymce/plugins/preview';
+import './embedIframePlugin';
 
 import store from '../../data/store';
 import { selectors } from '../../data/redux';
