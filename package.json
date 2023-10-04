@@ -13,7 +13,8 @@
     "snapshot": "fedx-scripts jest --updateSnapshot",
     "start": "fedx-scripts webpack-dev-server --progress",
     "test": "fedx-scripts jest --coverage",
-    "addXblock": "node addXblock"
+    "addXblock": "node addXblock",
+    "prepare": "npm run build"
   },
   "files": [
     "/dist"
