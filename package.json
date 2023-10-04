@@ -39,8 +39,7 @@
   "devDependencies": {
     "@edx/browserslist-config": "^1.1.1",
     "@edx/frontend-build": "12.8.27",
-    "@edx/frontend-platform": "5.5.1",
-    "@edx/paragon": "^21.3.1",
+    "@edx/frontend-platform": "5.4.0",
     "@edx/reactifex": "^2.1.1",
     "@testing-library/dom": "^8.13.0",
     "@testing-library/jest-dom": "^5.16.5",
@@ -71,6 +70,7 @@
     "@dnd-kit/sortable": "^7.0.2",
     "@dnd-kit/utilities": "^3.2.1",
     "@edx/browserslist-config": "^1.1.1",
+    "@edx/paragon": "^21.3.1",
     "@reduxjs/toolkit": "^1.8.1",
     "@tinymce/tinymce-react": "^3.14.0",
     "babel-polyfill": "6.26.0",
@@ -97,7 +97,6 @@
   },
   "peerDependencies": {
     "@edx/frontend-platform": "^4.0.0 || ^5.0.0",
-    "@edx/paragon": "^21.3.1",
     "prop-types": "^15.5.10",
     "react": "^16.14.0 || ^17.0.0",
     "react-dom": "^16.14.0 || ^17.0.0"
