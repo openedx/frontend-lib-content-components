@@ -11,6 +11,7 @@ import {
 } from '@edx/frontend-platform/i18n';
 
 import messages from './messages';
+import './index.scss';
 import MultiSelectFilterDropdown from './MultiSelectFilterDropdown';
 import { sortKeys, sortMessages } from '../../containers/VideoGallery/utils';
 
@@ -54,9 +55,13 @@ export const SearchSort = ({
       </Form.Group>
 
       { !showSwitch && <ActionRow.Spacer /> }
-      <SelectMenu variant="link">
+      <SelectMenu variant="link" className="search-sort-menu">
         {Object.keys(sortKeys).map(key => (
           <MenuItem key={key} onClick={onSortClick(key)} defaultSelected={key === sortBy}>
+            <span className="search-sort-menu-by">
+              <FormattedMessage {...messages.sortBy} />
+              &nbsp;
+            </span>
             <FormattedMessage {...sortMessages[key]} />
           </MenuItem>
         ))}

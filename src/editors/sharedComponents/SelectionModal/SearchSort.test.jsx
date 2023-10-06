@@ -6,8 +6,9 @@ import {
 } from '@testing-library/react';
 import { IntlProvider } from '@edx/frontend-platform/i18n';
 
-import { sortKeys, sortMessages } from '../ImageUploadModal/SelectImageModal/utils';
-import { filterMessages } from '../../containers/VideoGallery/utils';
+import {
+  filterMessages, sortKeys, sortMessages,
+} from '../../containers/VideoGallery/utils';
 import { SearchSort } from './SearchSort';
 import messages from './messages';
 
@@ -48,23 +49,23 @@ describe('SearchSort component', () => {
     const { getByRole } = getComponent();
     await act(() => {
       fireEvent.click(screen.getByRole('button', {
-        name: /by date added \(oldest\)/i,
+        name: /By oldest/i,
       }));
     });
     Object.values(sortMessages)
       .forEach(({ defaultMessage }) => {
-        expect(getByRole('link', { name: defaultMessage }))
+        expect(getByRole('link', { name: `By ${defaultMessage}` }))
           .toBeInTheDocument();
       });
   });
   test('adds a sort option for each sortKey', async () => {
     const { getByRole } = getComponent();
     await act(() => {
-      fireEvent.click(screen.getByRole('button', { name: /by date added \(oldest\)/i }));
+      fireEvent.click(screen.getByRole('button', { name: /oldest/i }));
     });
     Object.values(sortMessages)
       .forEach(({ defaultMessage }) => {
-        expect(getByRole('link', { name: defaultMessage }))
+        expect(getByRole('link', { name: `By ${defaultMessage}` }))
           .toBeInTheDocument();
       });
   });
