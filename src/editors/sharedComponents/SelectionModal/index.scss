@@ -1,0 +1,9 @@
+.selection-modal .pgn__vstack > .alert {
+    margin-bottom: 0;
+    margin-top: 1.5rem;
+}
+
+/* Set top padding to 0 when there is an alert above. */
+.selection-modal .pgn__vstack > .alert + .gallery > .pgn__scrollable-body-content > .p-4 {
+    padding-top: 0 !important;
+}

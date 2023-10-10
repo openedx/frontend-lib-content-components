@@ -6,6 +6,7 @@ exports[`EditorContainer component render snapshot: initialized. enable save and
 >
   <BaseModal
     bodyStyle={null}
+    className=""
     close={[MockFunction closeCancelConfirmModal]}
     confirmAction={
       <Button
@@ -82,6 +83,7 @@ exports[`EditorContainer component render snapshot: not initialized. disable sav
 >
   <BaseModal
     bodyStyle={null}
+    className=""
     close={[MockFunction closeCancelConfirmModal]}
     confirmAction={
       <Button

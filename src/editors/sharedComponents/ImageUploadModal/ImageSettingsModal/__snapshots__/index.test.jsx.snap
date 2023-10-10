@@ -3,6 +3,7 @@
 exports[`ImageSettingsModal render snapshot 1`] = `
 <BaseModal
   bodyStyle={null}
+  className=""
   close={[MockFunction props.close]}
   confirmAction={
     <Button

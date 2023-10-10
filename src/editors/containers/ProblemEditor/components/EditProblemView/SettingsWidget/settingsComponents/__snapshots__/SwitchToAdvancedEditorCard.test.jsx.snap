@@ -6,6 +6,7 @@ exports[`SwitchToAdvancedEditorCard snapshot snapshot: SwitchToAdvancedEditorCar
 >
   <BaseModal
     bodyStyle={null}
+    className=""
     close={[Function]}
     confirmAction={
       <Button

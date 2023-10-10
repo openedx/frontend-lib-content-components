@@ -3,6 +3,7 @@
 exports[`SourceCodeModal renders as expected with default behavior 1`] = `
 <BaseModal
   bodyStyle={null}
+  className=""
   close={[MockFunction]}
   confirmAction={
     <Button

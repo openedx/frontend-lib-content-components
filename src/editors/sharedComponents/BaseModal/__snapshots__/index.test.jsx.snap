@@ -2,6 +2,7 @@
 
 exports[`BaseModal ImageUploadModal template component snapshot 1`] = `
 <ModalDialog
+  className=""
   hasCloseButton={true}
   isFullscreenOnMobile={true}
   isFullscreenScroll={true}
