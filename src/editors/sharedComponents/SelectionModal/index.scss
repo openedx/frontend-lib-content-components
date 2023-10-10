@@ -7,3 +7,9 @@
 .selection-modal .pgn__vstack > .alert + .gallery > .pgn__scrollable-body-content > .p-4 {
     padding-top: 0 !important;
 }
+
+.selection-modal .pgn__vstack > .alert > .alert-icon {
+    /* Vertical margin equal to the vertical padding of the "Dismiss" button. */
+    margin-bottom: 0.4375rem;
+    margin-top: 0.4375rem;
+}
