@@ -105,7 +105,12 @@ export const SelectionModal = ({
       >
         <FormattedMessage {...galleryError.message} />
       </ErrorAlert>
-      <Stack gap={2}>
+
+      {/*
+        If the modal dialog content is zero height, it shows a bottom shadow
+        as if there was content to scroll to, so make the min-height 1px.
+      */}
+      <Stack gap={2} style={{ minHeight: '1px' }}>
         {showGallery && <Gallery {...galleryPropsValues} />}
         <FileInput fileInput={fileInput} acceptedFiles={Object.values(acceptedFiles).join()} />
       </Stack>
