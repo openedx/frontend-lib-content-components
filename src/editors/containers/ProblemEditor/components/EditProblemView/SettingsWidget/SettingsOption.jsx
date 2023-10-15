@@ -18,7 +18,7 @@ export const SettingsOption = ({
 
   return (
     <Card className={`${className} settingsOption border border-light-700 shadow-none`}>
-      <Card.Section className="settingsCardTitleSection" key={`settingsOption-${title}-header`}>
+      <Card.Section className="settingsCardTitleSection w-100" key={`settingsOption-${title}-header`}>
         <Collapsible.Advanced
           open={isCardCollapsibleOpen}
           onToggle={toggleCardCollapse}
