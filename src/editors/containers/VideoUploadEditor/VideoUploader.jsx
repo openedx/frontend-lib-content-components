@@ -17,17 +17,20 @@ const URLUploader = () => {
   const intl = useIntl();
   return (
     <div className="d-flex flex-column">
-      <div style={{ backgroundColor: '#F2F0EF' }} className="justify-content-center align-self-center rounded-circle p-5">
-        <Icon src={FileUpload} className="text-muted" size="lg" />
+      <div className="justify-content-center align-self-center rounded-circle bg-light-300 p-2.5">
+        <Icon src={FileUpload} className="text-muted" style={{ height: '2rem', width: '2rem' }} />
       </div>
-      <div className="d-flex align-self-center justify-content-center flex-wrap flex-column pt-5">
-        <span className="small">{intl.formatMessage(messages.dropVideoFileHere)}</span>
-        <span className="align-self-center" style={{ fontSize: '0.8rem' }}>{intl.formatMessage(messages.info)}</span>
+      <div className="d-flex align-self-center justify-content-center flex-wrap flex-column pt-3">
+        <span>{intl.formatMessage(messages.dropVideoFileHere)}</span>
+        <span className="x-small align-self-center pt-2">{intl.formatMessage(messages.info)}</span>
       </div>
-      <div className="x-small align-self-center justify-content-center mx-2 text-dark font-weight-normal">OR</div>
-      <div className="zindex-9 video-id-prompt p-4">
-        <InputGroup className="video-upload-input-group">
+      <div className="small align-self-center justify-content-center mx-2 text-dark font-weight-normal pt-3">
+        OR
+      </div>
+      <div className="zindex-9 video-id-prompt py-3">
+        <InputGroup>
           <FormControl
+            className="m-0"
             placeholder={intl.formatMessage(messages.pasteURL)}
             aria-label={intl.formatMessage(messages.pasteURL)}
             aria-describedby="basic-addon2"
@@ -35,21 +38,20 @@ const URLUploader = () => {
             onClick={(event) => { event.stopPropagation(); }}
             onChange={(event) => { setTextInputValue(event.target.value); }}
           />
-          <div className="light-300 justify-content-center align-self-center bg-light rounded-circle p-0 x-small url-submit-button">
-            <IconButton
-              className="text-muted"
-              alt={intl.formatMessage(messages.submitButtonAltText)}
-              src={ArrowForward}
-              iconAs={Icon}
-              size="inline"
-              onClick={(event) => {
-                event.stopPropagation();
-                if (textInputValue.trim() !== '') {
-                  onURLUpload(textInputValue);
-                }
-              }}
-            />
-          </div>
+          <IconButton
+            className="position-absolute align-self-center text-muted bg-transparent shadow-none"
+            style={{ marginLeft: '20.25rem' }}
+            alt={intl.formatMessage(messages.submitButtonAltText)}
+            src={ArrowForward}
+            iconAs={Icon}
+            size="inline"
+            onClick={(event) => {
+              event.stopPropagation();
+              if (textInputValue.trim() !== '') {
+                onURLUpload(textInputValue);
+              }
+            }}
+          />
         </InputGroup>
       </div>
     </div>
