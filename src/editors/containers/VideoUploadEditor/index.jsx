@@ -1,16 +1,11 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { useIntl } from '@edx/frontend-platform/i18n';
 import { Spinner } from '@edx/paragon';
 import './index.scss';
 import messages from './messages';
 import { VideoUploader } from './VideoUploader';
 
-export const VideoUploadEditor = (
-  {
-    onClose,
-  },
-) => {
+export const VideoUploadEditor = () => {
   const [loading, setLoading] = React.useState(false);
   const intl = useIntl();
 
@@ -18,7 +13,7 @@ export const VideoUploadEditor = (
     <div>
       {(!loading) ? (
         <div className="d-flex marked-area flex-column p-3">
-          <VideoUploader setLoading={setLoading} onClose={onClose} />
+          <VideoUploader setLoading={setLoading} />
         </div>
       ) : (
         <div className="text-center p-6">
@@ -31,10 +26,6 @@ export const VideoUploadEditor = (
       )}
     </div>
   );
-};
-
-VideoUploadEditor.propTypes = {
-  onClose: PropTypes.func.isRequired,
 };
 
 export default VideoUploadEditor;

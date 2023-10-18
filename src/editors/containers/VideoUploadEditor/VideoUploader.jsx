@@ -8,7 +8,6 @@ import { ArrowForward, FileUpload, Close } from '@edx/paragon/icons';
 import { useDispatch } from 'react-redux';
 import { thunkActions } from '../../data/redux';
 import * as hooks from './hooks';
-import * as editorHooks from '../EditorContainer/hooks';
 import messages from './messages';
 
 const URLUploader = () => {
@@ -58,10 +57,10 @@ const URLUploader = () => {
   );
 };
 
-export const VideoUploader = ({ setLoading, onClose }) => {
+export const VideoUploader = ({ setLoading }) => {
   const dispatch = useDispatch();
   const intl = useIntl();
-  const handleCancel = editorHooks.handleCancel({ onClose });
+  const goBack = hooks.useHistoryGoBack();
 
   const handleProcessUpload = ({ fileData }) => {
     dispatch(thunkActions.video.uploadVideo({
@@ -79,7 +78,7 @@ export const VideoUploader = ({ setLoading, onClose }) => {
           alt={intl.formatMessage(messages.closeButtonAltText)}
           src={Close}
           iconAs={Icon}
-          onClick={handleCancel}
+          onClick={goBack}
         />
       </div>
       <Dropzone
@@ -93,7 +92,6 @@ export const VideoUploader = ({ setLoading, onClose }) => {
 
 VideoUploader.propTypes = {
   setLoading: PropTypes.func.isRequired,
-  onClose: PropTypes.func.isRequired,
 };
 
 export default VideoUploader;
