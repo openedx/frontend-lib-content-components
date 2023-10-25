@@ -7,6 +7,7 @@ import * as requests from './requests';
 import * as video from './video';
 import * as problem from './problem';
 import * as game from './game';
+import * as library from '../../containers/LibraryContentEditor/data';
 
 /* eslint-disable import/no-cycle */
 export { default as thunkActions } from './thunkActions';
@@ -17,6 +18,7 @@ const modules = {
   video,
   problem,
   game,
+  library,
 };
 
 const moduleProps = (propName) => Object.keys(modules).reduce(

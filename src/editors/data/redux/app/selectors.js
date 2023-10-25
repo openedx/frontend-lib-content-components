@@ -52,7 +52,7 @@ export const displayTitle = createSelector(
     if (blockType === null) {
       return null;
     }
-    if (blockTitle !== null) {
+    if (blockTitle) {
       return blockTitle;
     }
     return (blockType === blockTypes.html)
