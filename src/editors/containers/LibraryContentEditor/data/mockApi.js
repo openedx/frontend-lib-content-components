@@ -55,7 +55,15 @@ export const fetchContentStore = ({ studioEndpointUrl }) => {
         "org": "new",
         "number": "CPSPRqwer",
         "can_edit": true
-      }
+      },
+      {
+        "display_name": "Really Big Library",
+        "library_key": "library-v1:new+CPSPR+big",
+        "url": "/library/library-v1:new+CPSPR+big",
+        "org": "new",
+        "number": "CPSPR+big",
+        "can_edit": true
+      },
     ],
     "libraries_enabled": true,
     "library_authoring_mfe_url": "//localhost:3001/course/course-v1:edX+P315+2T2023",
@@ -75,34 +83,221 @@ export const fetchContentStore = ({ studioEndpointUrl }) => {
 };
 
 export const fetchLibraryContent = ({ studioEndpointUrl, libraryId }) => {
-  return {
-    "count": 3,
-    "next": null,
-    "previous": null,
-    "results": [
-      {
-        "id": "lb:edx:test202:html:3eb918b1-6ebd-4172-b1e7-bd7c4eaa51ab",
-        "def_key": "bundle-olx:539d7fcc-615c-4b6e-8b57-34cffc82bbd0:studio_draft:html:html/3eb918b1-6ebd-4172-b1e7-bd7c4eaa51ab/definition.xml",
-        "block_type": "html",
-        "display_name": "Text",
-        "has_unpublished_changes": true
-      },
-      {
-        "id": "lb:edx:test202:html:b7c18081-0bec-4de0-8d16-8b255924722e",
-        "def_key": "bundle-olx:539d7fcc-615c-4b6e-8b57-34cffc82bbd0:studio_draft:html:html/b7c18081-0bec-4de0-8d16-8b255924722e/definition.xml",
-        "block_type": "html",
-        "display_name": "Lorem texts",
-        "has_unpublished_changes": false
-      },
-      {
-        "id": "lb:edx:test202:problem:86e480e4-e31c-492f-822e-1a8b2501cfde",
-        "def_key": "bundle-olx:539d7fcc-615c-4b6e-8b57-34cffc82bbd0:studio_draft:problem:problem/86e480e4-e31c-492f-822e-1a8b2501cfde/definition.xml",
-        "block_type": "problem",
-        "display_name": "Blank Problem",
-        "has_unpublished_changes": true
-      }
-    ]
-  };
+  if (libraryId === 'library-v1:new+CPSPR') {
+    return {
+      "count": 1,
+      "next": null,
+      "previous": null,
+      "results": [
+        {
+          "id": "lb:edx:test202:html:3eb918b1-6ebd-4172-b1e7-bd7c4eaa51ab",
+          "def_key": "bundle-olx:539d7fcc-615c-4b6e-8b57-34cffc82bbd0:studio_draft:html:html/3eb918b1-6ebd-4172-b1e7-bd7c4eaa51ab/definition.xml",
+          "block_type": "html",
+          "display_name": "Text",
+          "has_unpublished_changes": true
+        },
+      ],
+    };
+  } else if (libraryId === 'library-v1:new+CPSPRsadf') {
+    return {
+      "count": 3,
+      "next": null,
+      "previous": null,
+      "results": [
+        {
+          "id": "lb:edx:test202:html:3eb918b1-6ebd-4172-b1e7-bd7c4eaa51ab",
+          "def_key": "bundle-olx:539d7fcc-615c-4b6e-8b57-34cffc82bbd0:studio_draft:html:html/3eb918b1-6ebd-4172-b1e7-bd7c4eaa51ab/definition.xml",
+          "block_type": "html",
+          "display_name": "Text",
+          "has_unpublished_changes": true
+        },
+        {
+          "id": "lb:edx:test202:html:b7c18081-0bec-4de0-8d16-8b255924722e",
+          "def_key": "bundle-olx:539d7fcc-615c-4b6e-8b57-34cffc82bbd0:studio_draft:html:html/b7c18081-0bec-4de0-8d16-8b255924722e/definition.xml",
+          "block_type": "html",
+          "display_name": "Lorem texts",
+          "has_unpublished_changes": false
+        },
+      ],
+    };
+  } else if (libraryId === 'library-v1:new+CPSPRqwer') {
+    return {
+      "count": 3,
+      "next": null,
+      "previous": null,
+      "results": [
+        {
+          "id": "lb:edx:test202:html:3eb918b1-6ebd-4172-b1e7-bd7c4eaa51ab",
+          "def_key": "bundle-olx:539d7fcc-615c-4b6e-8b57-34cffc82bbd0:studio_draft:html:html/3eb918b1-6ebd-4172-b1e7-bd7c4eaa51ab/definition.xml",
+          "block_type": "html",
+          "display_name": "Text",
+          "has_unpublished_changes": true
+        },
+        {
+          "id": "lb:edx:test202:html:b7c18081-0bec-4de0-8d16-8b255924722e",
+          "def_key": "bundle-olx:539d7fcc-615c-4b6e-8b57-34cffc82bbd0:studio_draft:html:html/b7c18081-0bec-4de0-8d16-8b255924722e/definition.xml",
+          "block_type": "html",
+          "display_name": "Lorem texts",
+          "has_unpublished_changes": false
+        },
+        {
+          "id": "lb:edx:test202:problem:86e480e4-e31c-492f-822e-1a8b2501cfde",
+          "def_key": "bundle-olx:539d7fcc-615c-4b6e-8b57-34cffc82bbd0:studio_draft:problem:problem/86e480e4-e31c-492f-822e-1a8b2501cfde/definition.xml",
+          "block_type": "problem",
+          "display_name": "Blank Problem",
+          "has_unpublished_changes": true
+        },
+      ],
+    };
+  } else if (libraryId === 'library-v1:new+CPSPR+big') {
+    return {
+      "count": 20,
+      "next": null,
+      "previous": null,
+      "results": [
+        {
+          "id": "lb:edx:test202:html:3eb918b1-6ebd-4172-b1e7-bd7c4eaa51ab",
+          "def_key": "bundle-olx:539d7fcc-615c-4b6e-8b57-34cffc82bbd0:studio_draft:html:html/3eb918b1-6ebd-4172-b1e7-bd7c4eaa51ab/definition.xml",
+          "block_type": "html",
+          "display_name": "a",
+          "has_unpublished_changes": true
+        },
+        {
+          "id": "lb:edx:test202:html:b7c18081-0bec-4de0-8d16-8b255924722e",
+          "def_key": "bundle-olx:539d7fcc-615c-4b6e-8b57-34cffc82bbd0:studio_draft:html:html/b7c18081-0bec-4de0-8d16-8b255924722e/definition.xml",
+          "block_type": "html",
+          "display_name": "b",
+          "has_unpublished_changes": false
+        },
+        {
+          "id": "lb:edx:test202:problem:86e480e4-e31c-492f-822e-1a8b2501cfde",
+          "def_key": "bundle-olx:539d7fcc-615c-4b6e-8b57-34cffc82bbd0:studio_draft:problem:problem/86e480e4-e31c-492f-822e-1a8b2501cfde/definition.xml",
+          "block_type": "problem",
+          "display_name": "c",
+          "has_unpublished_changes": true
+        },
+        {
+          "id": "lb:edx:test202:html:3eb918b1-6ebd-4172-b1e7-bd7c4eaa51ab",
+          "def_key": "bundle-olx:539d7fcc-615c-4b6e-8b57-34cffc82bbd0:studio_draft:html:html/3eb918b1-6ebd-4172-b1e7-bd7c4eaa51ab/definition.xml",
+          "block_type": "html",
+          "display_name": "d",
+          "has_unpublished_changes": true
+        },
+        {
+          "id": "lb:edx:test202:html:b7c18081-0bec-4de0-8d16-8b255924722e",
+          "def_key": "bundle-olx:539d7fcc-615c-4b6e-8b57-34cffc82bbd0:studio_draft:html:html/b7c18081-0bec-4de0-8d16-8b255924722e/definition.xml",
+          "block_type": "html",
+          "display_name": "e",
+          "has_unpublished_changes": false
+        },
+        {
+          "id": "lb:edx:test202:problem:86e480e4-e31c-492f-822e-1a8b2501cfde",
+          "def_key": "bundle-olx:539d7fcc-615c-4b6e-8b57-34cffc82bbd0:studio_draft:problem:problem/86e480e4-e31c-492f-822e-1a8b2501cfde/definition.xml",
+          "block_type": "problem",
+          "display_name": "f",
+          "has_unpublished_changes": true
+        },
+        {
+          "id": "lb:edx:test202:html:3eb918b1-6ebd-4172-b1e7-bd7c4eaa51ab",
+          "def_key": "bundle-olx:539d7fcc-615c-4b6e-8b57-34cffc82bbd0:studio_draft:html:html/3eb918b1-6ebd-4172-b1e7-bd7c4eaa51ab/definition.xml",
+          "block_type": "html",
+          "display_name": "g",
+          "has_unpublished_changes": true
+        },
+        {
+          "id": "lb:edx:test202:html:b7c18081-0bec-4de0-8d16-8b255924722e",
+          "def_key": "bundle-olx:539d7fcc-615c-4b6e-8b57-34cffc82bbd0:studio_draft:html:html/b7c18081-0bec-4de0-8d16-8b255924722e/definition.xml",
+          "block_type": "html",
+          "display_name": "h",
+          "has_unpublished_changes": false
+        },
+        {
+          "id": "lb:edx:test202:problem:86e480e4-e31c-492f-822e-1a8b2501cfde",
+          "def_key": "bundle-olx:539d7fcc-615c-4b6e-8b57-34cffc82bbd0:studio_draft:problem:problem/86e480e4-e31c-492f-822e-1a8b2501cfde/definition.xml",
+          "block_type": "problem",
+          "display_name": "i",
+          "has_unpublished_changes": true
+        },
+        {
+          "id": "lb:edx:test202:html:3eb918b1-6ebd-4172-b1e7-bd7c4eaa51ab",
+          "def_key": "bundle-olx:539d7fcc-615c-4b6e-8b57-34cffc82bbd0:studio_draft:html:html/3eb918b1-6ebd-4172-b1e7-bd7c4eaa51ab/definition.xml",
+          "block_type": "html",
+          "display_name": "j",
+          "has_unpublished_changes": true
+        },
+        {
+          "id": "lb:edx:test202:html:b7c18081-0bec-4de0-8d16-8b255924722e",
+          "def_key": "bundle-olx:539d7fcc-615c-4b6e-8b57-34cffc82bbd0:studio_draft:html:html/b7c18081-0bec-4de0-8d16-8b255924722e/definition.xml",
+          "block_type": "html",
+          "display_name": "k",
+          "has_unpublished_changes": false
+        },
+        {
+          "id": "lb:edx:test202:problem:86e480e4-e31c-492f-822e-1a8b2501cfde",
+          "def_key": "bundle-olx:539d7fcc-615c-4b6e-8b57-34cffc82bbd0:studio_draft:problem:problem/86e480e4-e31c-492f-822e-1a8b2501cfde/definition.xml",
+          "block_type": "problem",
+          "display_name": "l",
+          "has_unpublished_changes": true
+        },
+        {
+          "id": "lb:edx:test202:html:3eb918b1-6ebd-4172-b1e7-bd7c4eaa51ab",
+          "def_key": "bundle-olx:539d7fcc-615c-4b6e-8b57-34cffc82bbd0:studio_draft:html:html/3eb918b1-6ebd-4172-b1e7-bd7c4eaa51ab/definition.xml",
+          "block_type": "html",
+          "display_name": "m",
+          "has_unpublished_changes": true
+        },
+        {
+          "id": "lb:edx:test202:html:b7c18081-0bec-4de0-8d16-8b255924722e",
+          "def_key": "bundle-olx:539d7fcc-615c-4b6e-8b57-34cffc82bbd0:studio_draft:html:html/b7c18081-0bec-4de0-8d16-8b255924722e/definition.xml",
+          "block_type": "html",
+          "display_name": "n",
+          "has_unpublished_changes": false
+        },
+        {
+          "id": "lb:edx:test202:problem:86e480e4-e31c-492f-822e-1a8b2501cfde",
+          "def_key": "bundle-olx:539d7fcc-615c-4b6e-8b57-34cffc82bbd0:studio_draft:problem:problem/86e480e4-e31c-492f-822e-1a8b2501cfde/definition.xml",
+          "block_type": "problem",
+          "display_name": "o",
+          "has_unpublished_changes": true
+        },
+        {
+          "id": "lb:edx:test202:html:3eb918b1-6ebd-4172-b1e7-bd7c4eaa51ab",
+          "def_key": "bundle-olx:539d7fcc-615c-4b6e-8b57-34cffc82bbd0:studio_draft:html:html/3eb918b1-6ebd-4172-b1e7-bd7c4eaa51ab/definition.xml",
+          "block_type": "html",
+          "display_name": "p",
+          "has_unpublished_changes": true
+        },
+        {
+          "id": "lb:edx:test202:html:b7c18081-0bec-4de0-8d16-8b255924722e",
+          "def_key": "bundle-olx:539d7fcc-615c-4b6e-8b57-34cffc82bbd0:studio_draft:html:html/b7c18081-0bec-4de0-8d16-8b255924722e/definition.xml",
+          "block_type": "html",
+          "display_name": "q",
+          "has_unpublished_changes": false
+        },
+        {
+          "id": "lb:edx:test202:problem:86e480e4-e31c-492f-822e-1a8b2501cfde",
+          "def_key": "bundle-olx:539d7fcc-615c-4b6e-8b57-34cffc82bbd0:studio_draft:problem:problem/86e480e4-e31c-492f-822e-1a8b2501cfde/definition.xml",
+          "block_type": "problem",
+          "display_name": "r",
+          "has_unpublished_changes": true
+        },
+        {
+          "id": "lb:edx:test202:html:3eb918b1-6ebd-4172-b1e7-bd7c4eaa51ab",
+          "def_key": "bundle-olx:539d7fcc-615c-4b6e-8b57-34cffc82bbd0:studio_draft:html:html/3eb918b1-6ebd-4172-b1e7-bd7c4eaa51ab/definition.xml",
+          "block_type": "html",
+          "display_name": "s",
+          "has_unpublished_changes": true
+        },
+        {
+          "id": "lb:edx:test202:html:b7c18081-0bec-4de0-8d16-8b255924722e",
+          "def_key": "bundle-olx:539d7fcc-615c-4b6e-8b57-34cffc82bbd0:studio_draft:html:html/b7c18081-0bec-4de0-8d16-8b255924722e/definition.xml",
+          "block_type": "html",
+          "display_name": "t",
+          "has_unpublished_changes": false
+        },
+      ],
+    };
+  }
 };
 
 export const emptyMock = () => mockPromise({});

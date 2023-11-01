@@ -1,23 +1,28 @@
 import React, { useEffect } from 'react';
+import { modes } from './constants';
 import api from './data/api';
 import * as urls from './data/urls';
 
 export const useLibraryHook = ({
+  blockFailed,
+  blockFinished,
   blockValue,
   initialize,
   studioEndpointUrl,
 }) => {
   useEffect(() => {
-    const contentStore = api.fetchContentStore({ studioEndpointUrl });
-    initialize({
-      libraries: contentStore.libraries,
-      selectedLibrary: 0,
-      selectionMode: 'mode',
-      selectionSettings: {
-        showReset: blockValue?.data?.metadata?.allow_resetting_children,
-        count: 1,
-      },
-    });
+    if (blockFinished && !blockFailed) {
+      const contentStore = api.fetchContentStore({ studioEndpointUrl });
+      initialize({
+        libraries: contentStore.libraries,
+        selectedLibrary: 0,
+        selectionMode: modes.random.value,
+        selectionSettings: {
+          showReset: blockValue?.data?.metadata?.allow_resetting_children,
+          count: 1,
+        },
+      });
+    }
   }, []);
 
   return {
@@ -30,17 +35,20 @@ export const useLibraryHook = ({
 export const useBlocksHook = ({
   blocksInSelectedLibrary,
   loadBlocksInLibrary,
-  selectedLibrary,
+  onSelectCandidates,
+  selectedLibraryId,
   studioEndpointUrl,
 }) => {
   useEffect(() => {
-    if (selectedLibrary !== null) {
-      const libraryContent = api.fetchLibraryContent({ studioEndpointUrl, selectedLibrary });
+    if (selectedLibraryId !== null) {
+      const libraryContent = api.fetchLibraryContent({ studioEndpointUrl, libraryId: selectedLibraryId });
       loadBlocksInLibrary({
         blocks: libraryContent.results,
       });
+    } else {
+      // TODO set candidate to empty list []
     }
-  }, [selectedLibrary]);
+  }, [selectedLibraryId]);
 
   const blockTypeDisplay = (type) => {
     if (type === 'html') return 'Text';
@@ -51,11 +59,23 @@ export const useBlocksHook = ({
 
   return ({
     blockLinks: blocksInSelectedLibrary.map(block => (
-      urls.blockContent({ studioEndpointUrl, blockId: block.url })
+      urls.blockContent({
+        studioEndpointUrl,
+        blockId: block.id,
+      })
     )),
     blocksTableData: blocksInSelectedLibrary.map(block => ({
       display_name: block.display_name,
       block_type: blockTypeDisplay(block.block_type),
     })),
+    selectCandidates: ({ selected }) => {
+      let candidates = []
+      for (const [key, value] of Object.entries(selected)) {
+        if (value) {
+          candidates.push([ blocksInSelectedLibrary[key].block_type, blocksInSelectedLibrary[key].id ]);
+        }
+      }
+      onSelectCandidates({ candidates });
+    },
   });
 };

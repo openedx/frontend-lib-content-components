@@ -20,7 +20,6 @@ export const thumbEditor = ({
   blockFailed,
   blockFinished,
   initialize,
-  lmsEndpointUrl,
   studioEndpointUrl,
   // inject
   intl,
@@ -28,6 +27,8 @@ export const thumbEditor = ({
   const {
     getContent,
   } = useLibraryHook({
+    blockFailed,
+    blockFinished,
     blockValue,
     initialize,
     studioEndpointUrl,
@@ -75,7 +76,6 @@ export const thumbEditor = ({
 
 thumbEditor.defaultProps = {
   blockValue: null,
-  lmsEndpointUrl: null,
 };
 
 thumbEditor.propTypes = {
@@ -84,7 +84,6 @@ thumbEditor.propTypes = {
   blockValue: PropTypes.shape({
     data: PropTypes.shape({ data: PropTypes.string }),
   }),
-  lmsEndpointUrl: PropTypes.string,
   blockFailed: PropTypes.bool.isRequired,
   blockFinished: PropTypes.bool.isRequired,
   initializeEditor: PropTypes.func.isRequired,
@@ -94,7 +93,6 @@ thumbEditor.propTypes = {
 
 export const mapStateToProps = (state) => ({
   blockValue: selectors.app.blockValue(state),
-  lmsEndpointUrl: selectors.app.lmsEndpointUrl(state),
   blockFailed: selectors.requests.isFailed(state, { requestKey: RequestKeys.fetchBlock }),
   blockFinished: selectors.requests.isFinished(state, { requestKey: RequestKeys.fetchBlock }),
   studioEndpointUrl: selectors.app.studioEndpointUrl(state),

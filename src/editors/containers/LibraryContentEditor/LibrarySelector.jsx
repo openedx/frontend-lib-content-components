@@ -18,7 +18,7 @@ export const LibrarySelector = ({
   };
 
   return (
-    <div className='mb-5'>
+    <div className='mb-3'>
       {libraries
       ? (
         <Dropdown className='w-100'>

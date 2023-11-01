@@ -5,13 +5,13 @@ import { StrictDict } from '../../../utils';
 const initialState = {
   libraries: [],
   selectedLibrary: null,
-  selectionMode: modes.all,
+  selectionMode: modes.random.value,  // 'random' or 'selected'
   selectionSettings: {
     count: false,
     showReset: false,
-    //max count?
   },
   blocksInSelectedLibrary: [],
+  candidateBlocks: [],          // tuples of (block_type, block_id)
 };
 
 const library = createSlice({
@@ -50,6 +50,10 @@ const library = createSlice({
     loadBlocksInLibrary: (state, { payload }) => ({
       ...state,
       blocksInSelectedLibrary: payload.blocks,
+    }),
+    onSelectCandidates: (state, { payload }) => ({
+      ...state,
+      candidateBlocks: payload.candidates,
     }),
   },
 });
