@@ -92,7 +92,7 @@ export const SettingsWidget = ({
         <Collapsible.Advanced open={!isAdvancedCardsVisible}>
           <Collapsible.Body className="collapsible-body small">
             <Button
-              className="my-3 px-0 text-info-500"
+              className="my-3 px-0"
               variant="link"
               size="inline"
               onClick={showAdvancedCards}
