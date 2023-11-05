@@ -71,17 +71,15 @@ export const DurationWidget = ({
           </Form.Control.Feedback>
         </Form.Group>
       </Form.Row>
-      {Boolean(duration) && (
-        <div className="mt-4 mx-2 text-right">
-          <span className="p-2 total-label rounded">
-            {getTotalLabel({
-              durationString: duration,
-              subtitle: false,
-              intl,
-            })}
-          </span>
-        </div>
-      )}
+      <div className="mt-4 mx-2 text-right">
+        <span className="p-2 total-label rounded">
+          {getTotalLabel({
+            durationString: duration,
+            subtitle: false,
+            intl,
+          })}
+        </span>
+      </div>
     </CollapsibleFormWidget>
   );
 };
