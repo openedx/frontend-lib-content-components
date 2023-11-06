@@ -1,21 +1,33 @@
 import React from 'react';
-import { connect, useSelector } from 'react-redux';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-
-import { Dropdown, DropdownButton } from '@edx/paragon';
+import { Dropdown } from '@edx/paragon';
 import { FormattedMessage, injectIntl, intlShape } from '@edx/frontend-platform/i18n';
+
+import messages from './messages';
 import { actions, selectors } from './data';
+import { useLibrarySelectorHook } from './hooks';
 
 export const LibrarySelector = ({
+  studioEndpointUrl,
   // redux
   libraries,
+  loadLibrary,
   selectedLibrary,
   onSelectLibrary,
+  settings,
+  unloadLibrary,
 }) => {
-  const title = () => {
-    if (selectedLibrary === null) return 'Select a library';
-    return libraries[selectedLibrary]?.display_name;
-  };
+  const {
+    title,
+  } = useLibrarySelectorHook({
+    libraries,
+    loadLibrary,
+    selectedLibrary,
+    settings,
+    studioEndpointUrl,
+    unloadLibrary,
+  });
 
   return (
     <div className='mb-3'>
@@ -25,14 +37,14 @@ export const LibrarySelector = ({
           <Dropdown.Toggle
             className='w-100'
             id='library-selector'
-            title={title()}
+            title={title}
             variant='outline-primary'
           >
-            {title()}
+            {title}
           </Dropdown.Toggle>
           <Dropdown.Menu>
             <Dropdown.Item onClick={() => onSelectLibrary({ selectedLibrary: null })}>
-              Select a library
+              <FormattedMessage {...messages.librarySelectorDropdownDefault} />
             </Dropdown.Item>
             {libraries.map((library, index) => (
               <Dropdown.Item onClick={() => onSelectLibrary({ selectedLibrary: index })}>
@@ -43,7 +55,9 @@ export const LibrarySelector = ({
         </Dropdown>
       )
       : (
-        <span>There is no library!</span>
+        <span>
+          <FormattedMessage {...messages.noLibraryMessage} />
+        </span>
       )}
     </div>
   );
@@ -52,10 +66,13 @@ export const LibrarySelector = ({
 export const mapStateToProps = (state) => ({
   libraries: selectors.libraries(state),
   selectedLibrary: selectors.selectedLibrary(state),
+  settings: selectors.settings(state),
 });
 
 export const mapDispatchToProps = {
+  loadLibrary: actions.loadLibrary,
   onSelectLibrary: actions.onSelectLibrary,
+  unloadLibrary: actions.unloadLibrary,
 };
 
 export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(LibrarySelector));

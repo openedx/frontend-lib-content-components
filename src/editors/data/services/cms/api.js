@@ -192,8 +192,16 @@ export const apiMethods = {
         highlights_enabled_for_messaging: false,
         highlights_preview_only: true,
         id: blockId, //"block-v1:edx+123+test+type@library_content+block@880758e62c2542d5b45c944360dfa799"
-        // TODO candidates?
-        metadata: {},
+        metadata: {
+          allow_resetting_children: content.showReset,
+          candidates: content.candidates,
+          capa_type: 'any',
+          count: content.count,
+          //manual
+          //shuffle
+          source_library_id: content.libraryId,
+          source_library_version: content.libraryVersion,
+        },
       };
     } else {
       throw new TypeError(`No Block in V2 Editors named /"${blockType}/", Cannot Save Content.`);

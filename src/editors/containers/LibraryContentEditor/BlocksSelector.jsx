@@ -9,29 +9,38 @@ import { useBlocksHook } from './hooks';
 import { modes } from './constants';
 
 export const BlocksSelector = ({
+  candidates,
+  mode,
   studioEndpointUrl,
-
   // redux
   blocksInSelectedLibrary,
-  libraries,
-  loadBlocksInLibrary,
-  onSelectCandidates,
-  selectedLibrary,
-  selectionMode,
+  onCandidatesChange,
+  selectedLibraryId,
 }) => {
+  if (selectedLibraryId === null) return <></>;
+
   const {
     blockLinks,
     blocksTableData,
-    selectCandidates,
+    tempCandidates,
+    setTempCandidates,
+    isSelectable,
   } = useBlocksHook({
     blocksInSelectedLibrary,
-    loadBlocksInLibrary,
-    onSelectCandidates,
-    selectedLibraryId: (selectedLibrary !== null) ? libraries[selectedLibrary].library_key : null,
+    candidates,
+    mode,
+    onCandidatesChange,
+    // settings,
+    selectedLibraryId,
     studioEndpointUrl,
   });
 
-  if (selectedLibrary === null || !blocksInSelectedLibrary) return <></>;
+  const selectColumn = {
+    id: 'selection',
+    Header: DataTable.ControlledSelectHeader,
+    Cell: DataTable.ControlledSelect,
+    disableSortBy: true,
+  };
 
   const ViewAction = ({ row }) => (
     <Button
@@ -49,20 +58,94 @@ export const BlocksSelector = ({
   return (
     <div className='mb-5 pt-3 border-top'>
       {
-        selectionMode === modes.selected.value
-        ? <label><FormattedMessage {...messages.tableInstructionLabel} /></label>
-        : null
+        mode === modes.selected.value
+        // isSelectable
+        ? (
+          <>
+            <label><FormattedMessage {...messages.tableInstructionLabel} /></label>
+            <DataTable
+              // showFiltersInSidebar
+              // isFilterable
+              isPaginated
+              isSelectable
+              // manualSelectColumn={selectColumn}
+              // SelectionStatusComponent={DataTable.ControlledSelectionStatus}
+              isSortable
+              itemCount={blocksTableData.length}
+              data={blocksTableData}
+              initialState={{ selectedRowIds: tempCandidates }}
+              columns={[
+                {
+                  Header: 'Name',
+                  accessor: 'display_name',
+                },
+                {
+                  Header: 'Block Type',
+                  accessor: 'block_type',
+                },
+              ]}
+              additionalColumns={[
+                {
+                  id: 'action',
+                  Header: 'View',
+                  Cell: ({ row }) => ViewAction({ row }),
+                }
+              ]}
+              onSelectedRowsChanged={selected => setTempCandidates(selected)}
+            >
+              <DataTable.TableControlBar />
+              <DataTable.Table />
+              <DataTable.EmptyTable content="No blocks found." />
+              <DataTable.TableFooter />
+            </DataTable>
+          </>
+        )
+        : (
+          <DataTable
+            // showFiltersInSidebar
+            // isFilterable
+            isPaginated
+            isSortable
+            itemCount={blocksTableData.length}
+            data={blocksTableData}
+            initialState={{ selectedRowIds: tempCandidates }}
+            columns={[
+              {
+                Header: 'Name',
+                accessor: 'display_name',
+              },
+              {
+                Header: 'Block Type',
+                accessor: 'block_type',
+              },
+            ]}
+            additionalColumns={[
+              {
+                id: 'action',
+                Header: 'View',
+                Cell: ({ row }) => ViewAction({ row }),
+              }
+            ]}
+            onSelectedRowsChanged={selected => setTempCandidates(selected)}
+          >
+            <DataTable.TableControlBar />
+            <DataTable.Table />
+            <DataTable.EmptyTable content="No blocks found." />
+            <DataTable.TableFooter />
+          </DataTable>
+        )
       }
-      <DataTable
+      {/* <DataTable
         // showFiltersInSidebar
         // isFilterable
         isPaginated
-        isSelectable
-        // isSelectable={selectionMode === modes.selected.value}
+        // isSelectable
+        isSelectable={isSelectable}
+        // isSelectable={mode === modes.selected.value}
         isSortable
-        // defaultColumnValues={{ Filter: TextFilter }}
         itemCount={blocksTableData.length}
         data={blocksTableData}
+        initialState={{ selectedRowIds: tempCandidates }}
         columns={[
           {
             Header: 'Name',
@@ -80,14 +163,13 @@ export const BlocksSelector = ({
             Cell: ({ row }) => ViewAction({ row }),
           }
         ]}
-        onSelectedRowsChanged={(selected) => selectCandidates({ selected })}
-        // maxSelectedRows={2}
-        // onMaxSelectedRows={() => console.log('hey3 this is the last row allowed')}
+        onSelectedRowsChanged={selected => setTempCandidates(selected)}
       >
         <DataTable.TableControlBar />
         <DataTable.Table />
         <DataTable.EmptyTable content="No blocks found." />
-      </DataTable>
+        <DataTable.TableFooter />
+      </DataTable> */}
     </div>
   );
 };
@@ -95,13 +177,11 @@ export const BlocksSelector = ({
 export const mapStateToProps = (state) => ({
   blocksInSelectedLibrary: selectors.blocksInSelectedLibrary(state),
   libraries: selectors.libraries(state),
-  selectedLibrary: selectors.selectedLibrary(state),
-  selectionMode: selectors.selectionMode(state),
-})
+  selectedLibraryId: selectors.selectedLibraryId(state),
+});
 
 export const mapDispatchToProps = {
-  loadBlocksInLibrary: actions.loadBlocksInLibrary,
-  onSelectCandidates: actions.onSelectCandidates,
+  onCandidatesChange: actions.onCandidatesChange,
 };
 
 export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(BlocksSelector));

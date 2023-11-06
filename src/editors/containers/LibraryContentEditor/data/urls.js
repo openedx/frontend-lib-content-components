@@ -2,6 +2,10 @@ export const contentStore = ({ studioEndpointUrl }) => (
   `${studioEndpointUrl}/api/libraries/v1/home/`
 );
 
+export const libraryProperty = ({ studioEndpointUrl, libraryId }) => (
+  `${studioEndpointUrl}/api/libraries/v2/${libraryId}/`
+);
+
 export const libraryContent = ({ studioEndpointUrl, libraryId }) => (
   `${studioEndpointUrl}/api/libraries/v2/${libraryId}/blocks/`
 );

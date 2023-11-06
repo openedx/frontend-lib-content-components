@@ -64,7 +64,7 @@ export const EditorContainer = ({
           />
         </div>
       </ModalDialog.Header>
-      <ModalDialog.Body className="pb-6">
+      <ModalDialog.Body className="pb-6 min-vh-100">
         {isInitialized && children}
       </ModalDialog.Body>
       <EditorFooter

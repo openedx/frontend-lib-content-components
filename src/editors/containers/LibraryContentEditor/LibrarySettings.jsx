@@ -1,21 +1,20 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { FormattedMessage, injectIntl, intlShape } from '@edx/frontend-platform/i18n';
-import { Button, Form } from '@edx/paragon';
+import { Form } from '@edx/paragon';
 
 import messages from './messages';
 import { modes } from './constants';
 import { actions, selectors } from './data';
-import { thunkActions } from '../../data/redux';
 
 export const LibrarySettings = ({
   // redux
-  onCountSettingsChange,
-  onSelectionModeChange,
-  onShowResetSettingsChange,
+  onCountChange,
+  onModeChange,
+  onShowResetChange,
   selectedLibrary,
-  selectionMode,
-  selectionSettings,
+  selectedLibraryId,
+  settings,
 }) => {
   if (selectedLibrary === null) return <></>;
 
@@ -23,8 +22,11 @@ export const LibrarySettings = ({
     <div className='col'>
       <div className='row mb-2 p-3 border-top'>
         <Form.RadioSet
-          onChange={e => onSelectionModeChange({ selectionMode: e.target.value })}
-          value={selectionMode}
+          onChange={e => onModeChange({
+            libraryId: selectedLibraryId,
+            mode: e.target.value,
+          })}
+          value={settings[selectedLibraryId]?.mode}
         >
           <Form.Radio value={modes.random.value}>
             <FormattedMessage {...modes.random.description} />
@@ -34,26 +36,17 @@ export const LibrarySettings = ({
           </Form.Radio>
 
         </Form.RadioSet>
-        {/* <Form.Switch
-          helperText={
-            <span><FormattedMessage {...modes[selectionMode].description} /></span>
-          }
-          onChange={(e) => onSelectionModeChange({
-            selectionMode: (e.target.checked ? modes.selected.value : modes.random.value)
-          })}
-        >
-          <FormattedMessage {...modes[selectionMode].title} />
-        </Form.Switch> */}
       </div>
       {
-        selectionMode === modes.random.value
+        settings[selectedLibraryId]?.mode === modes.random.value
         ? <div className='row mb-2 pb-3'>
             <Form.Control
               className='col col-2'
-              onChange= {(e) => onCountSettingsChange({
+              onChange= {(e) => onCountChange({
+                libraryId: selectedLibraryId,
                 count: e.target.value,
               })}
-              value={selectionSettings.count}
+              value={settings[selectedLibraryId]?.count}
               type="number"
             />
             <label className='col pt-2'>
@@ -66,8 +59,9 @@ export const LibrarySettings = ({
       <div className='row mb-2 p-3 border-top'>
         <div className='col p-0'>
           <Form.Switch
-            checked={selectionSettings.showReset}
-            onChange={(e) => onShowResetSettingsChange({
+            checked={settings[selectedLibraryId]?.showReset}
+            onChange={(e) => onShowResetChange({
+              libraryId: selectedLibraryId,
               showReset: e.target.checked,
             })}
           >
@@ -84,14 +78,14 @@ export const LibrarySettings = ({
 
 export const mapStateToProps = (state) => ({
   selectedLibrary: selectors.selectedLibrary(state),
-  selectionMode: selectors.selectionMode(state),
-  selectionSettings: selectors.selectionSettings(state),
+  selectedLibraryId: selectors.selectedLibraryId(state),
+  settings: selectors.settings(state),
 })
 
 export const mapDispatchToProps = {
-  onCountSettingsChange: actions.onCountSettingsChange,
-  onSelectionModeChange: actions.onSelectionModeChange,
-  onShowResetSettingsChange: actions.onShowResetSettingsChange,
+  onCountChange: actions.onCountChange,
+  onModeChange: actions.onModeChange,
+  onShowResetChange: actions.onShowResetChange,
 };
 
 export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(LibrarySettings));

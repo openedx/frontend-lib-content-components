@@ -6,6 +6,11 @@ const messages = defineMessages({
     defaultMessage: 'Enter the number of components to display to each student. Set it to -1 to display all components.',
     description: 'label for number of blocks to show',
   },
+  librarySelectorDropdownDefault: {
+    id: 'authoring.library_content.library.selector.dropdown.default',
+    defaultMessage: 'Select a library',
+    description: 'dropdown selection when no library is selected'
+  },
   modeRandom: {
     id: 'authoring.library_content.mode.random',
     defaultMessage: 'Random Blocks',
@@ -26,6 +31,11 @@ const messages = defineMessages({
     defaultMessage: 'Show the selected blocks of the library to all users.',
     description: 'description of mode for selecting content from a library to put in a course',
   },
+  noLibraryMessage: {
+    id: 'authoring.library_content.no.library.message',
+    defaultMessage: 'There are no libraries!',
+    description: 'message to show when user has no libraries to select',
+  },
   resetButton: {
     id: 'authoring.library_content.reset.button',
     defaultMessage: 'Show Reset Button',
@@ -35,6 +45,11 @@ const messages = defineMessages({
     id: 'authoring.library_content.reset.button.description',
     defaultMessage: "Determines whether a 'Reset Problems' button is shown, so users may reset their answers and reshuffle selected items.",
     description: 'description of button for allowing users to reset answers and reshuffle selected items',
+  },
+  spinnerScreenReader: {
+    id: 'authoring.library_content.spinner.screen.reader',
+    defaultMessage: 'Loading Spinner',
+    description: 'screen reader text for loading spinner',
   },
   tableInstructionLabel: {
     id: 'authoring.library_content.table.instruction.label',

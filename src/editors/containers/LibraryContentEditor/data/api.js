@@ -1,18 +1,20 @@
 import { get, post, deleteObject } from '../../../data/services/cms/utils';
-// import * as urls from '../../../data/services/cms/urls';
 import * as urls from './urls';
 import * as module from './api';
 import * as mockApi from './mockApi';
 
 export const apiMethods = {
-  // fetchLibraries: ({}) => get(
-  //   urls
-  // ),
   fetchContentStore: ({ studioEndpointUrl }) => get(
     urls.contentStore({ studioEndpointUrl }),
   ),
+  fetchLibraryProperty: ({ studioEndpointUrl, libraryId }) => get(
+    urls.libraryProperty({ studioEndpointUrl, libraryId }),
+  ),
   fetchLibraryContent: ({ studioEndpointUrl, libraryId }) => get(
     urls.libraryContent({ studioEndpointUrl, libraryId }),
+  ),
+  fetchBlockContent: ({ studioEndpointUrl, blockId }) => get(
+    urls.blockContent({ studioEndpointUrl, blockId }),
   ),
 };
 

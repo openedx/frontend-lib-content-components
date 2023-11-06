@@ -3,15 +3,37 @@ import { modes } from '../constants';
 import { StrictDict } from '../../../utils';
 
 const initialState = {
+  // libraries: [],
+  // selectedLibrary: null,        // not the id, rather, the key of libraries array
+  // selectedLibraryVersion: null,
+  // selectionMode: modes.random.value,  // 'random' or 'selected'
+  // blocksInSelectedLibrary: [],
+  // selectionSettings: {
+  //   count: 1,
+  //   showReset: false,
+  // },
+  // candidates: {
+  //   // [libraryId]: [ [block_type], [block_id] ]
+  // },
+
+
   libraries: [],
   selectedLibrary: null,
-  selectionMode: modes.random.value,  // 'random' or 'selected'
-  selectionSettings: {
-    count: false,
-    showReset: false,
+  selectedLibraryId: null,
+  selectedLibraryVersion: null,
+  settings: {
+    // [libraryId]: { initialSettings },
+    // This reducer structure allows selected settings 
+    // to persist when user switches between libraries.
   },
   blocksInSelectedLibrary: [],
-  candidateBlocks: [],          // tuples of (block_type, block_id)
+};
+
+const initialSettings = {
+  mode: modes.random.value,
+  count: -1,
+  showReset: false,
+  candidates: {},
 };
 
 const library = createSlice({
@@ -22,38 +44,73 @@ const library = createSlice({
       ...state,
       libraries: payload.libraries,
       selectedLibrary: payload.selectedLibrary,
-      selectionMode: payload.selectionMode,
-      selectionSettings: payload.selectionSettings,
+      selectedLibraryId: payload.selectedLibraryId,
+      selectedLibraryVersion: payload.selectedLibraryVersion,
+      settings: {
+        ...state.settings,
+        [payload.selectedLibraryId]: payload.settings,
+      },
+      blocksInSelectedLibrary: payload.blocksInSelectedLibrary,
+    }),
+    loadLibrary: (state, { payload }) => ({
+      ...state,
+      selectedLibraryId: payload.id,
+      selectedLibraryVersion: payload.version,
+      settings: {
+        ...state.settings,
+        [payload.id]: payload.settings,
+      },
+      blocksInSelectedLibrary: payload.blocks,
+    }),
+    unloadLibrary: (state) => ({
+      ...state,
+      selectedLibraryId: null,
+      selectedLibraryVersion: null,
+      blocksInSelectedLibrary: [],
     }),
     onSelectLibrary: (state, { payload }) => ({
       ...state,
       selectedLibrary: payload.selectedLibrary,
     }),
-    onSelectionModeChange: (state, { payload }) => ({
+    onModeChange: (state, { payload }) => ({
       ...state,
-      selectionMode: payload.selectionMode,
-    }),
-    onShowResetSettingsChange: (state, { payload }) => ({
-      ...state,
-      selectionSettings: {
-        ...state.selectionSettings,
-        showReset: payload.showReset,
+      settings: {
+        ...state.settings,
+        [payload.libraryId]: {
+          ...state.settings[payload.libraryId],
+          mode: payload.mode,
+        },
       },
     }),
-    onCountSettingsChange: (state, { payload }) => ({
+    onCountChange: (state, { payload }) => ({
       ...state,
-      selectionSettings: {
-        ...state.selectionSettings,
-        count: payload.count,
+      settings: {
+        ...state.settings,
+        [payload.libraryId]: {
+          ...state.settings[payload.libraryId],
+          count: payload.count,
+        },
       },
     }),
-    loadBlocksInLibrary: (state, { payload }) => ({
+    onShowResetChange: (state, { payload }) => ({
       ...state,
-      blocksInSelectedLibrary: payload.blocks,
+      settings: {
+        ...state.settings,
+        [payload.libraryId]: {
+          ...state.settings[payload.libraryId],
+          showReset: payload.showReset,
+        },
+      },
     }),
-    onSelectCandidates: (state, { payload }) => ({
+    onCandidatesChange: (state, { payload }) => ({
       ...state,
-      candidateBlocks: payload.candidates,
+      settings: {
+        ...state.settings,
+        [payload.libraryId]: {
+          ...state.settings[payload.libraryId],
+          candidates: payload.candidates,
+        },
+      },
     }),
   },
 });

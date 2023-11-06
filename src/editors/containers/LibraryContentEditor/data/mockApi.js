@@ -1,3 +1,5 @@
+const mockPromise = (returnValue) => new Promise(resolve => resolve(returnValue));
+
 export const fetchContentStore = ({ studioEndpointUrl }) => {
   return {
     "allow_course_reruns": true,
