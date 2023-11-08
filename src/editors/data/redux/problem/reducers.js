@@ -2,7 +2,7 @@ import _ from 'lodash-es';
 import { createSlice } from '@reduxjs/toolkit';
 import { indexToLetterMap } from '../../../containers/ProblemEditor/data/OLXParser';
 import { StrictDict } from '../../../utils';
-import { ProblemTypeKeys, RichTextProblems } from '../../constants/problem';
+import { GradingMethodKeys, ProblemTypeKeys, RichTextProblems } from '../../constants/problem';
 import { ToleranceTypes } from '../../../containers/ProblemEditor/components/EditProblemView/SettingsWidget/settingsComponents/Tolerance/constants';
 
 const nextAlphaId = (lastId) => String.fromCharCode(lastId.charCodeAt(0) + 1);
@@ -24,6 +24,7 @@ const initialState = {
         unlimited: false,
         number: null,
       },
+      gradingMethod: GradingMethodKeys.LAST_SCORE,
     },
     hints: [],
     timeBetween: 0,

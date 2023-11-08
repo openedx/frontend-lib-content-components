@@ -3,11 +3,13 @@ import _ from 'lodash-es';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage, injectIntl, intlShape } from '@edx/frontend-platform/i18n';
+import { getConfig } from '@edx/frontend-platform';
 import { Form, Hyperlink } from '@openedx/paragon';
 import { selectors } from '../../../../../../data/redux';
 import SettingsOption from '../SettingsOption';
 import messages from '../messages';
 import { scoringCardHooks } from '../hooks';
+import { GradingMethod, GradingMethodKeys } from '../../../../../../data/constants/problem';
 
 export const ScoringCard = ({
   scoring,
@@ -20,32 +22,73 @@ export const ScoringCard = ({
   learningContextId,
   isLibrary,
 }) => {
+  const isGradingMethodEnabled = getConfig().ENABLE_GRADING_METHOD_IN_PROBLEMS;
   const {
     handleUnlimitedChange,
     handleMaxAttemptChange,
     handleWeightChange,
+    handleGradingMethodChange,
     handleOnChange,
     attemptDisplayValue,
   } = scoringCardHooks(scoring, updateSettings, defaultValue);
 
-  const getScoringSummary = (weight, attempts, unlimited) => {
+  const getScoringSummary = (weight, attempts, unlimited, gradingMethod) => {
     let summary = intl.formatMessage(messages.weightSummary, { weight });
     summary += ` ${String.fromCharCode(183)} `;
     summary += unlimited
       ? intl.formatMessage(messages.unlimitedAttemptsSummary)
       : intl.formatMessage(messages.attemptsSummary, { attempts: attempts || defaultValue });
+    if (isGradingMethodEnabled) {
+      summary += ` ${String.fromCharCode(183)} `;
+      summary += intl.formatMessage(messages.gradingMethodSummary, {
+        gradingMethod: intl.formatMessage(GradingMethod[gradingMethod]),
+      });
+    }
     return summary;
   };
 
   return (
     <SettingsOption
       title={intl.formatMessage(messages.scoringSettingsTitle)}
-      summary={getScoringSummary(scoring.weight, scoring.attempts.number, scoring.attempts.unlimited)}
+      summary={
+        getScoringSummary(
+          scoring.weight,
+          scoring.attempts.number,
+          scoring.attempts.unlimited,
+          scoring.gradingMethod,
+        )
+      }
       className="scoringCard"
     >
       <div className="mb-4">
-        <FormattedMessage {...messages.scoringSettingsLabel} />
+        {isGradingMethodEnabled && <FormattedMessage {...messages.scoringSettingsLabelWithGradingMethod} />}
+        {!isGradingMethodEnabled && <FormattedMessage {...messages.scoringSettingsLabel} />}
       </div>
+      {isGradingMethodEnabled && (
+      <Form.Group>
+        <Form.Control
+          as="select"
+          value={scoring.gradingMethod}
+          onChange={handleGradingMethodChange}
+          floatingLabel={intl.formatMessage(messages.scoringGradingMethodInputLabel)}
+        >
+          {Object.values(GradingMethodKeys).map((gradingMethod) => {
+            const optionDisplayName = GradingMethod[gradingMethod];
+            return (
+              <option
+                key={gradingMethod}
+                value={gradingMethod}
+              >
+                {intl.formatMessage(optionDisplayName)}
+              </option>
+            );
+          })}
+        </Form.Control>
+        <Form.Control.Feedback>
+          <FormattedMessage {...messages.gradingMethodHint} />
+        </Form.Control.Feedback>
+      </Form.Group>
+      )}
       <Form.Group>
         <Form.Control
           type="number"

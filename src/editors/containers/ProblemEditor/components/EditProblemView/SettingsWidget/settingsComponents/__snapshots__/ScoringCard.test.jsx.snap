@@ -5,18 +5,58 @@ exports[`ScoringCard snapshot snapshot: scoring setting card 1`] = `
   className="scoringCard"
   extraSections={Array []}
   hasExpandableTextArea={false}
-  summary="{weight, plural, =0 {Ungraded} other {# points}} · {attempts, plural, =1 {# attempt} other {# attempts}}"
+  summary="{weight, plural, =0 {Ungraded} other {# points}} · {attempts, plural, =1 {# attempt} other {# attempts}} · Last Score"
   title="Scoring"
 >
   <div
     className="mb-4"
   >
     <FormattedMessage
-      defaultMessage="Specify point weight and the number of answer attempts"
-      description="Descriptive text for scoring settings"
-      id="authoring.problemeditor.settings.scoring.label"
+      defaultMessage="Specify grading method, point weight and the number of answer attempts"
+      description="Descriptive text for scoring settings when grading method is enabled"
+      id="authoring.problemeditor.settings.scoring.label.withGradingMethod"
     />
   </div>
+  <Form.Group>
+    <Form.Control
+      as="select"
+      floatingLabel="Grading Method"
+      onChange={[MockFunction scoringCardHooks.handleGradingMethodChange]}
+      value="last_score"
+    >
+      <option
+        key="last_score"
+        value="last_score"
+      >
+        Last Score
+      </option>
+      <option
+        key="highest_score"
+        value="highest_score"
+      >
+        Highest Score
+      </option>
+      <option
+        key="average_score"
+        value="average_score"
+      >
+        Average Score
+      </option>
+      <option
+        key="first_score"
+        value="first_score"
+      >
+        First Score
+      </option>
+    </Form.Control>
+    <Form.Control.Feedback>
+      <FormattedMessage
+        defaultMessage="Define the grading method for this problem. By default, it is the score of the last submission made by the student."
+        description="Summary text for scoring grading method"
+        id="authoring.problemeditor.settings.scoring.grading.method.hint"
+      />
+    </Form.Control.Feedback>
+  </Form.Group>
   <Form.Group>
     <Form.Control
       floatingLabel="Points"
@@ -80,18 +120,58 @@ exports[`ScoringCard snapshot snapshot: scoring setting card max attempts 1`] = 
   className="scoringCard"
   extraSections={Array []}
   hasExpandableTextArea={false}
-  summary="{weight, plural, =0 {Ungraded} other {# points}} · Unlimited attempts"
+  summary="{weight, plural, =0 {Ungraded} other {# points}} · Unlimited attempts · Last Score"
   title="Scoring"
 >
   <div
     className="mb-4"
   >
     <FormattedMessage
-      defaultMessage="Specify point weight and the number of answer attempts"
-      description="Descriptive text for scoring settings"
-      id="authoring.problemeditor.settings.scoring.label"
+      defaultMessage="Specify grading method, point weight and the number of answer attempts"
+      description="Descriptive text for scoring settings when grading method is enabled"
+      id="authoring.problemeditor.settings.scoring.label.withGradingMethod"
     />
   </div>
+  <Form.Group>
+    <Form.Control
+      as="select"
+      floatingLabel="Grading Method"
+      onChange={[MockFunction scoringCardHooks.handleGradingMethodChange]}
+      value="last_score"
+    >
+      <option
+        key="last_score"
+        value="last_score"
+      >
+        Last Score
+      </option>
+      <option
+        key="highest_score"
+        value="highest_score"
+      >
+        Highest Score
+      </option>
+      <option
+        key="average_score"
+        value="average_score"
+      >
+        Average Score
+      </option>
+      <option
+        key="first_score"
+        value="first_score"
+      >
+        First Score
+      </option>
+    </Form.Control>
+    <Form.Control.Feedback>
+      <FormattedMessage
+        defaultMessage="Define the grading method for this problem. By default, it is the score of the last submission made by the student."
+        description="Summary text for scoring grading method"
+        id="authoring.problemeditor.settings.scoring.grading.method.hint"
+      />
+    </Form.Control.Feedback>
+  </Form.Group>
   <Form.Group>
     <Form.Control
       floatingLabel="Points"
@@ -155,18 +235,58 @@ exports[`ScoringCard snapshot snapshot: scoring setting card zero zero weight 1`
   className="scoringCard"
   extraSections={Array []}
   hasExpandableTextArea={false}
-  summary="{weight, plural, =0 {Ungraded} other {# points}} · {attempts, plural, =1 {# attempt} other {# attempts}}"
+  summary="{weight, plural, =0 {Ungraded} other {# points}} · {attempts, plural, =1 {# attempt} other {# attempts}} · Last Score"
   title="Scoring"
 >
   <div
     className="mb-4"
   >
     <FormattedMessage
-      defaultMessage="Specify point weight and the number of answer attempts"
-      description="Descriptive text for scoring settings"
-      id="authoring.problemeditor.settings.scoring.label"
+      defaultMessage="Specify grading method, point weight and the number of answer attempts"
+      description="Descriptive text for scoring settings when grading method is enabled"
+      id="authoring.problemeditor.settings.scoring.label.withGradingMethod"
     />
   </div>
+  <Form.Group>
+    <Form.Control
+      as="select"
+      floatingLabel="Grading Method"
+      onChange={[MockFunction scoringCardHooks.handleGradingMethodChange]}
+      value="last_score"
+    >
+      <option
+        key="last_score"
+        value="last_score"
+      >
+        Last Score
+      </option>
+      <option
+        key="highest_score"
+        value="highest_score"
+      >
+        Highest Score
+      </option>
+      <option
+        key="average_score"
+        value="average_score"
+      >
+        Average Score
+      </option>
+      <option
+        key="first_score"
+        value="first_score"
+      >
+        First Score
+      </option>
+    </Form.Control>
+    <Form.Control.Feedback>
+      <FormattedMessage
+        defaultMessage="Define the grading method for this problem. By default, it is the score of the last submission made by the student."
+        description="Summary text for scoring grading method"
+        id="authoring.problemeditor.settings.scoring.grading.method.hint"
+      />
+    </Form.Control.Feedback>
+  </Form.Group>
   <Form.Group>
     <Form.Control
       floatingLabel="Points"
