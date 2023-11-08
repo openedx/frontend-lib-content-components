@@ -3,26 +3,17 @@ import { modes } from '../constants';
 import { StrictDict } from '../../../utils';
 
 const initialState = {
-  // libraries: [],
-  // selectedLibrary: null,        // not the id, rather, the key of libraries array
-  // selectedLibraryVersion: null,
-  // selectionMode: modes.random.value,  // 'random' or 'selected'
-  // blocksInSelectedLibrary: [],
-  // selectionSettings: {
-  //   count: 1,
-  //   showReset: false,
-  // },
-  // candidates: {
-  //   // [libraryId]: [ [block_type], [block_id] ]
-  // },
-
-
   libraries: [],
   selectedLibrary: null,
   selectedLibraryId: null,
   selectedLibraryVersion: null,
   settings: {
-    // [libraryId]: { initialSettings },
+    // [libraryId]: { 
+    //   mode: modes.random.value,
+    //   count: -1,
+    //   showReset: false,
+    //   candidates: {},
+    // },
     // This reducer structure allows selected settings 
     // to persist when user switches between libraries.
   },

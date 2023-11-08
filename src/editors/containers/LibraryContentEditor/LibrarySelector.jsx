@@ -63,6 +63,23 @@ export const LibrarySelector = ({
   );
 };
 
+LibrarySelector.defaultProps = {
+  libraries: [],
+  selectedLibrary: 0,
+  settings: {},
+};
+
+LibrarySelector.propTypes = {
+  studioEndpointUrl: PropTypes.string.isRequired,
+  // redux
+  libraries: PropTypes.shape([]),
+  loadLibrary: PropTypes.func.isRequired,
+  selectedLibrary: PropTypes.number,
+  onSelectLibrary: PropTypes.func.isRequired,
+  settings: PropTypes.shape({}),
+  unloadLibrary: PropTypes.func.isRequired,
+};
+
 export const mapStateToProps = (state) => ({
   libraries: selectors.libraries(state),
   selectedLibrary: selectors.selectedLibrary(state),

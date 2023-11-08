@@ -7,7 +7,7 @@ export const useLibraryHook = ({
   blockFinished,
   blockValue,
   initialize,
-  librarySettings,
+  libraryPayload,
   studioEndpointUrl,
 }) => {
   useEffect(() => {
@@ -52,7 +52,7 @@ export const useLibraryHook = ({
   }, []);
 
   return {
-    getContent: () => librarySettings,
+    getContent: () => libraryPayload,
   };
 };
 
@@ -110,7 +110,6 @@ export const useBlocksHook = ({
 }) => {
   const [ tempLibraryId, setTempLibraryId ] = useState(null);
   const [ tempCandidates, setTempCandidates ] = useState({});
-  const [ isSelectable, setIsSelectable ] = useState(false);
   
   useEffect(() => {
     if (!!tempLibraryId) {
@@ -123,6 +122,15 @@ export const useBlocksHook = ({
     setTempCandidates(candidates);
   }, [selectedLibraryId]);
 
+  useEffect(() => {
+    if (mode === modes.random.value) {
+      onCandidatesChange({
+        libraryId: tempLibraryId,
+        candidates: tempCandidates,
+      });
+    }
+  }, [mode]);
+
   const blockTypeDisplay = (type) => {
     if (type === 'html') return 'Text';
     if (type === 'video') return 'Video';
@@ -133,7 +141,6 @@ export const useBlocksHook = ({
   return ({
     tempCandidates,
     setTempCandidates,
-    isSelectable,
     blockLinks: blocksInSelectedLibrary.map(block => (
       api.fetchBlockContent({ studioEndpointUrl, blockId: block.id })
     )),

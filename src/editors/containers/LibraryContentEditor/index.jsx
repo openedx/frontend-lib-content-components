@@ -13,14 +13,14 @@ import LibrarySelector from './LibrarySelector';
 import LibrarySettings from './LibrarySettings';
 import BlocksSelector from './BlocksSelector';
 
-export const thumbEditor = ({
+export const LibraryContentEditor = ({
   onClose,
   // redux app layer
   blockValue,
   blockFailed,
   blockFinished,
   initialize,
-  librarySettings,
+  libraryPayload,
   selectedLibraryId,
   settings,
   studioEndpointUrl,
@@ -34,7 +34,7 @@ export const thumbEditor = ({
     blockFinished,
     blockValue,
     initialize,
-    librarySettings,
+    libraryPayload,
     studioEndpointUrl,
   });
 
@@ -81,11 +81,14 @@ export const thumbEditor = ({
   );
 };
 
-thumbEditor.defaultProps = {
+LibraryContentEditor.defaultProps = {
   blockValue: null,
+  libraryPayload: {},
+  selectedLibraryId: null,
+  settings: {},
 };
 
-thumbEditor.propTypes = {
+LibraryContentEditor.propTypes = {
   onClose: PropTypes.func.isRequired,
   // redux
   blockValue: PropTypes.shape({
@@ -93,7 +96,12 @@ thumbEditor.propTypes = {
   }),
   blockFailed: PropTypes.bool.isRequired,
   blockFinished: PropTypes.bool.isRequired,
+  initialize: PropTypes.func.isRequired,
   initializeEditor: PropTypes.func.isRequired,
+  libraryPayload: PropTypes.shape({}),
+  selectedLibraryId: PropTypes.string,
+  settings: PropTypes.shape({}),
+  studioEndpointUrl: PropTypes.string.isRequired,
   // inject
   intl: intlShape.isRequired,
 };
@@ -102,7 +110,7 @@ export const mapStateToProps = (state) => ({
   blockValue: selectors.app.blockValue(state),
   blockFailed: selectors.requests.isFailed(state, { requestKey: RequestKeys.fetchBlock }),
   blockFinished: selectors.requests.isFinished(state, { requestKey: RequestKeys.fetchBlock }),
-  librarySettings: selectors.library.librarySettings(state),
+  libraryPayload: selectors.library.libraryPayload(state),
   selectedLibraryId: selectors.library.selectedLibraryId(state),
   settings: selectors.library.settings(state),
   studioEndpointUrl: selectors.app.studioEndpointUrl(state),
@@ -112,4 +120,4 @@ export const mapDispatchToProps = {
   initialize: actions.library.initialize,
 };
 
-export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(thumbEditor));
+export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(LibraryContentEditor));

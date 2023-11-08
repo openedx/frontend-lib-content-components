@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { FormattedMessage, injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 import { Button, DataTable, Form } from '@edx/paragon';
 
@@ -24,23 +25,16 @@ export const BlocksSelector = ({
     blocksTableData,
     tempCandidates,
     setTempCandidates,
-    isSelectable,
   } = useBlocksHook({
     blocksInSelectedLibrary,
     candidates,
     mode,
     onCandidatesChange,
-    // settings,
     selectedLibraryId,
     studioEndpointUrl,
   });
 
-  const selectColumn = {
-    id: 'selection',
-    Header: DataTable.ControlledSelectHeader,
-    Cell: DataTable.ControlledSelect,
-    disableSortBy: true,
-  };
+  if (mode !== modes.selected.value) return <></>;
 
   const ViewAction = ({ row }) => (
     <Button
@@ -57,91 +51,12 @@ export const BlocksSelector = ({
 
   return (
     <div className='mb-5 pt-3 border-top'>
-      {
-        mode === modes.selected.value
-        // isSelectable
-        ? (
-          <>
-            <label><FormattedMessage {...messages.tableInstructionLabel} /></label>
-            <DataTable
-              // showFiltersInSidebar
-              // isFilterable
-              isPaginated
-              isSelectable
-              // manualSelectColumn={selectColumn}
-              // SelectionStatusComponent={DataTable.ControlledSelectionStatus}
-              isSortable
-              itemCount={blocksTableData.length}
-              data={blocksTableData}
-              initialState={{ selectedRowIds: tempCandidates }}
-              columns={[
-                {
-                  Header: 'Name',
-                  accessor: 'display_name',
-                },
-                {
-                  Header: 'Block Type',
-                  accessor: 'block_type',
-                },
-              ]}
-              additionalColumns={[
-                {
-                  id: 'action',
-                  Header: 'View',
-                  Cell: ({ row }) => ViewAction({ row }),
-                }
-              ]}
-              onSelectedRowsChanged={selected => setTempCandidates(selected)}
-            >
-              <DataTable.TableControlBar />
-              <DataTable.Table />
-              <DataTable.EmptyTable content="No blocks found." />
-              <DataTable.TableFooter />
-            </DataTable>
-          </>
-        )
-        : (
-          <DataTable
-            // showFiltersInSidebar
-            // isFilterable
-            isPaginated
-            isSortable
-            itemCount={blocksTableData.length}
-            data={blocksTableData}
-            initialState={{ selectedRowIds: tempCandidates }}
-            columns={[
-              {
-                Header: 'Name',
-                accessor: 'display_name',
-              },
-              {
-                Header: 'Block Type',
-                accessor: 'block_type',
-              },
-            ]}
-            additionalColumns={[
-              {
-                id: 'action',
-                Header: 'View',
-                Cell: ({ row }) => ViewAction({ row }),
-              }
-            ]}
-            onSelectedRowsChanged={selected => setTempCandidates(selected)}
-          >
-            <DataTable.TableControlBar />
-            <DataTable.Table />
-            <DataTable.EmptyTable content="No blocks found." />
-            <DataTable.TableFooter />
-          </DataTable>
-        )
-      }
-      {/* <DataTable
-        // showFiltersInSidebar
-        // isFilterable
+      <label>
+        <FormattedMessage {...messages.tableInstructionLabel} />
+      </label>
+      <DataTable
         isPaginated
-        // isSelectable
-        isSelectable={isSelectable}
-        // isSelectable={mode === modes.selected.value}
+        isSelectable
         isSortable
         itemCount={blocksTableData.length}
         data={blocksTableData}
@@ -169,9 +84,25 @@ export const BlocksSelector = ({
         <DataTable.Table />
         <DataTable.EmptyTable content="No blocks found." />
         <DataTable.TableFooter />
-      </DataTable> */}
+      </DataTable>
     </div>
   );
+};
+
+BlocksSelector.defaultProps = {
+  blocksInSelectedLibrary: [],
+  candidates: {},
+  selectedLibraryId: null,
+};
+
+BlocksSelector.propTypes = {
+  candidates: PropTypes.objectOf(PropTypes.shape({})),
+  mode: PropTypes.string.isRequired,
+  studioEndpointUrl: PropTypes.string.isRequired,
+  // redux
+  blocksInSelectedLibrary: PropTypes.arrayOf(PropTypes.shape({})),
+  onCandidatesChange: PropTypes.func.isRequired,
+  selectedLibraryId: PropTypes.string,
 };
 
 export const mapStateToProps = (state) => ({

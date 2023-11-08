@@ -14,7 +14,7 @@ export const simpleSelectors = {
   blocksInSelectedLibrary: mkSimpleSelector(library => library.blocksInSelectedLibrary),
 };
 
-export const librarySettings = createSelector(
+export const libraryPayload = createSelector(
   [
     module.simpleSelectors.selectedLibraryId,
     module.simpleSelectors.selectedLibraryVersion,
@@ -51,5 +51,5 @@ export const librarySettings = createSelector(
 
 export default {
   ...simpleSelectors,
-  librarySettings,
+  libraryPayload,
 };
