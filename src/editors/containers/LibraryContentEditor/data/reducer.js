@@ -8,13 +8,13 @@ const initialState = {
   selectedLibraryId: null,
   selectedLibraryVersion: null,
   settings: {
-    // [libraryId]: { 
+    // [libraryId]: {
     //   mode: modes.random.value,
     //   count: -1,
     //   showReset: false,
     //   candidates: {},
     // },
-    // This reducer structure allows selected settings 
+    // This reducer structure allows selected settings
     // to persist when user switches between libraries.
   },
   blocksInSelectedLibrary: [],
