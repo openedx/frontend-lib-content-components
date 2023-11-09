@@ -15,6 +15,7 @@ import BlocksSelector from './BlocksSelector';
 
 export const LibraryContentEditor = ({
   onClose,
+  returnFunction,
   // redux app layer
   blockValue,
   blockFailed,
@@ -68,8 +69,7 @@ export const LibraryContentEditor = ({
     <EditorContainer
       getContent={getContent}
       onClose={onClose}
-      returnFunction
-      validateEntry
+      returnFunction={returnFunction}
     >
       <div className="library-content-editor h-100">
         {!blockFinished

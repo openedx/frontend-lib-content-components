@@ -92,12 +92,13 @@ export const BlocksSelector = ({
 BlocksSelector.defaultProps = {
   blocksInSelectedLibrary: [],
   candidates: {},
+  mode: '',
   selectedLibraryId: null,
 };
 
 BlocksSelector.propTypes = {
   candidates: PropTypes.objectOf(PropTypes.shape({})),
-  mode: PropTypes.string.isRequired,
+  mode: PropTypes.string,
   studioEndpointUrl: PropTypes.string.isRequired,
   // redux
   blocksInSelectedLibrary: PropTypes.arrayOf(PropTypes.shape({})),
