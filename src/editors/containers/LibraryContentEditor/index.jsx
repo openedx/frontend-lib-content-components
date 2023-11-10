@@ -28,6 +28,7 @@ export const LibraryContentEditor = ({
   // inject
   intl,
 }) => {
+  console.log("WE GOT THIS FAR");
   const {
     getContent,
   } = useLibraryHook({
@@ -38,32 +39,30 @@ export const LibraryContentEditor = ({
     libraryPayload,
     studioEndpointUrl,
   });
+  console.log("WE GOT THIS Hook FAR");
 
-  const loading = () => {
-    return (
-      <div className="text-center p-6">
-        <Spinner
-          animation="border"
-          className="m-3"
-          screenreadertext={intl.formatMessage(messages.spinnerScreenReader)}
-        />
-      </div>
-    );
-  };
+  const loading = () => (
+    <div className="text-center p-6">
+      <Spinner
+        data-testid="librarycontenteditor-loadingspinner"
+        animation="border"
+        className="m-3"
+        screenreadertext={intl.formatMessage(messages.spinnerScreenReader)}
+      />
+    </div>
+  );
 
-  const loaded = () => {
-    return (
-      <div>
-        <LibrarySelector studioEndpointUrl={studioEndpointUrl} />
-        <LibrarySettings />
-        <BlocksSelector
-          candidates={settings[selectedLibraryId]?.candidates}
-          mode={settings[selectedLibraryId]?.mode}
-          studioEndpointUrl={studioEndpointUrl}
-        />
-      </div>
-    );
-  };
+  const loaded = () => (
+    <div>
+      <LibrarySelector studioEndpointUrl={studioEndpointUrl} />
+      <LibrarySettings />
+      <BlocksSelector
+        candidates={settings[selectedLibraryId]?.candidates}
+        mode={settings[selectedLibraryId]?.mode}
+        studioEndpointUrl={studioEndpointUrl}
+      />
+    </div>
+  );
 
   return (
     <EditorContainer
@@ -74,8 +73,7 @@ export const LibraryContentEditor = ({
       <div className="library-content-editor h-100">
         {!blockFinished
           ? loading()
-          : loaded()
-        }
+          : loaded()}
       </div>
     </EditorContainer>
   );

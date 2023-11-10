@@ -1,10 +1,7 @@
 import React from 'react';
-import { render, fireEvent, prettyDOM } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 import { IntlProvider } from '@edx/frontend-platform/i18n';
 import { LibrarySelector } from './LibrarySelector';
-
-jest.unmock('@edx/paragon');
-jest.unmock('@edx/paragon/icons');
 
 jest.mock('./data/api', () => ({
     fetchLibraryContent: jest.fn().mockReturnValue({
