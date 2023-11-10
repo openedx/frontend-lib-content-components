@@ -16,7 +16,6 @@ jest.mock('./hooks', () => ({
       // Mocked blocksTableData
       { id: 1, display_name: 'Block 1', block_type: 'Type A' },
       { id: 2, display_name: 'Block 2', block_type: 'Type B' },
-      // Add more mocked table data as needed
     ],
     tempCandidates: [],
     setTempCandidates: jest.fn(),
@@ -33,11 +32,10 @@ function renderComponent(props) {
 
 const mockProps = {
   candidates: {
-    // mock candidates object here
   },
   mode: 'selected',
   studioEndpointUrl: 'https://example.com',
-  blocksInSelectedLibrary: [{ /* mock data for blocksInSelectedLibrary */ }],
+  blocksInSelectedLibrary: [{}],
   onCandidatesChange: jest.fn(),
   selectedLibraryId: 'exampleLibraryId',
 };

@@ -1,0 +1,81 @@
+import React from 'react';
+import { render, screen, fireEvent, prettyDOM } from '@testing-library/react';
+import { IntlProvider } from '@edx/frontend-platform/i18n';
+import { LibrarySettings } from './LibrarySettings';
+
+jest.unmock('@edx/paragon');
+jest.unmock('@edx/paragon/icons');
+
+
+jest.mock('@edx/frontend-platform/i18n', () => ({
+    ...jest.requireActual('@edx/frontend-platform/i18n'),
+    FormattedMessage: (content) =>(<p>{content.defaultMessage}</p>)
+  }));
+
+jest.mock('./data/api', () => ({
+    fetchLibraryContent: jest.fn().mockReturnValue({
+        blocks: 'SoMe BLOcKs',
+    }),
+    fetchLibraryProperty: jest.fn().mockReturnValue({
+        version: 'lIkE a VeRsiOn',
+    }),
+}));
+
+function renderComponent(props) {
+  return render(
+    <IntlProvider locale="en">
+      <LibrarySettings {...props} />
+    </IntlProvider>,
+  );
+}
+
+describe('LibrarySettings Component', () => {
+    const props = {
+        onCountChange: jest.fn(),
+        onModeChange: jest.fn(),
+        onShowResetChange: jest.fn(),
+        selectedLibrary: 'sOme vAluE',
+        selectedLibraryId: 0,
+        settings: { 0: { mode: 'random', count: 5, showReset: true } },
+    }
+
+    // For some reason, queyselector stops working outside the first test, so these are all in one test.
+    it('renders with selected library and editing form calls handlers', ()=>{
+        const {container, getByRole} = renderComponent(props);
+
+        // Settings values are expected by props.
+        expect(container.querySelector('#form-field1').getAttribute('value')).toBe('random');
+        expect(container.querySelector('#form-field1').getAttribute('checked')).toBe('');
+
+        expect(container.querySelector('#form-field2').getAttribute('value')).toBe('selected');
+        expect(container.querySelector('#form-field2').getAttribute('checked')).toBe(null);
+
+        expect(container.querySelectorAll('input')[2].getAttribute('value')).toBe('5');
+        expect(container.querySelector('#form-field3').getAttribute('checked')).toBe('');
+
+
+        //Count calls handler with correct input
+        const newCount = "345"
+        fireEvent.change(container.querySelectorAll('input')[2], {target: {value: newCount}})
+        expect(props.onCountChange).toHaveBeenCalledWith({
+            libraryId: props.selectedLibraryId,
+            count: newCount
+        });
+
+        // ShowReset calls hadnler with correct input
+        fireEvent.click(getByRole("switch"))
+
+        expect(props.onShowResetChange).toHaveBeenCalledWith({
+            libraryId: props.selectedLibraryId,
+            showReset: false,
+        });
+
+        // Mode Calls handler with correct input
+        const newMode = 'selected'
+        fireEvent.click(container.querySelector('#form-field2'))
+        expect(props.onModeChange).toHaveBeenCalledWith({
+            libraryId: props.selectedLibraryId,
+            mode: newMode
+        });
+    });
+});
