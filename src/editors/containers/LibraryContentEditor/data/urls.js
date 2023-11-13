@@ -1,5 +1,5 @@
 export const contentStore = ({ studioEndpointUrl }) => (
-  `${studioEndpointUrl}/api/libraries/v1/home/`
+  `${studioEndpointUrl}/api/contentstore/v1/home/`
 );
 
 export const libraryProperty = ({ studioEndpointUrl, libraryId }) => (

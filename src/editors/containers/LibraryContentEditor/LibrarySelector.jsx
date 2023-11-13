@@ -72,11 +72,11 @@ LibrarySelector.defaultProps = {
 LibrarySelector.propTypes = {
   studioEndpointUrl: PropTypes.string.isRequired,
   // redux
-  libraries: PropTypes.shape([]),
+  libraries: PropTypes.array,
   loadLibrary: PropTypes.func.isRequired,
   selectedLibrary: PropTypes.number,
   onSelectLibrary: PropTypes.func.isRequired,
-  settings: PropTypes.shape({}),
+  settings: PropTypes.object,
   unloadLibrary: PropTypes.func.isRequired,
 };
 

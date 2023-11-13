@@ -31,15 +31,18 @@ export const LibraryContentEditor = ({
   console.log("WE GOT THIS FAR");
   const {
     getContent,
+    useInitialize,
   } = useLibraryHook({
-    blockFailed,
-    blockFinished,
     blockValue,
     initialize,
     libraryPayload,
     studioEndpointUrl,
   });
   console.log("WE GOT THIS Hook FAR");
+
+  if (blockFinished && !blockFailed) {
+    useInitialize();
+  }
 
   const loading = () => (
     <div className="text-center p-6">
@@ -84,6 +87,7 @@ LibraryContentEditor.defaultProps = {
   libraryPayload: {},
   selectedLibraryId: null,
   settings: {},
+  studioEndpointUrl: '',
 };
 
 LibraryContentEditor.propTypes = {
@@ -95,11 +99,10 @@ LibraryContentEditor.propTypes = {
   blockFailed: PropTypes.bool.isRequired,
   blockFinished: PropTypes.bool.isRequired,
   initialize: PropTypes.func.isRequired,
-  initializeEditor: PropTypes.func.isRequired,
   libraryPayload: PropTypes.shape({}),
   selectedLibraryId: PropTypes.string,
   settings: PropTypes.shape({}),
-  studioEndpointUrl: PropTypes.string.isRequired,
+  studioEndpointUrl: PropTypes.string,
   // inject
   intl: intlShape.isRequired,
 };

@@ -3,55 +3,52 @@ import { modes } from './constants';
 import api from './data/api';
 
 export const useLibraryHook = ({
-  blockFailed,
-  blockFinished,
   blockValue,
   initialize,
   libraryPayload,
   studioEndpointUrl,
 }) => {
-  useEffect(() => {
-    if (blockFinished && !blockFailed) {
-      const libraries = api.fetchContentStore({ studioEndpointUrl }).libraries;
-      const metadata = blockValue?.data?.metadata;
-      const selectedLibraryId = metadata?.source_library_id;
-      let selectedLibrary = null;
-      let selectedLibraryVersion = null;
-      let blocksInSelectedLibrary = [];
-      let settings = {};
-      if (!!selectedLibraryId) {
-        selectedLibrary = libraries.findIndex(library => {
-          library.library_key === selectedLibraryId
-        });
-        selectedLibraryVersion = api.fetchLibraryProperty({
-          studioEndpointUrl,
-          libraryId: selectedLibraryId,
-        }).version;
-        settings = {
-          [selectedLibrary]: {
-            mode: metadata?.mode,
-            count: metadata?.count,
-            showReset: metadata?.allow_resetting_children,
-            candidates: metadata?.candidates,
-          },
-        };
-        blocksInSelectedLibrary = api.fetchLibraryContent({
-          studioEndpointUrl,
-          libraryId: selectedLibraryId,
-        })?.results;
-      }
-      initialize({
-        libraries,
-        selectedLibrary,
-        selectedLibraryId: selectedLibraryId ? selectedLibraryId : null,
-        selectedLibraryVersion,
-        settings,
-        blocksInSelectedLibrary: blocksInSelectedLibrary ? blocksInSelectedLibrary : [],
+  const useInitialize = () => useEffect(() => {
+    const libraries = api.fetchContentStore({ studioEndpointUrl }).libraries;
+    const metadata = blockValue?.data?.metadata;
+    const selectedLibraryId = metadata?.source_library_id;
+    let selectedLibrary = null;
+    let selectedLibraryVersion = null;
+    let blocksInSelectedLibrary = [];
+    let settings = {};
+    if (!!selectedLibraryId) {
+      selectedLibrary = libraries.findIndex(library => {
+        library.library_key === selectedLibraryId
       });
+      selectedLibraryVersion = api.fetchLibraryProperty({
+        studioEndpointUrl,
+        libraryId: selectedLibraryId,
+      }).version;
+      settings = {
+        [selectedLibrary]: {
+          mode: metadata?.mode,
+          count: metadata?.count,
+          showReset: metadata?.allow_resetting_children,
+          candidates: metadata?.candidates,
+        },
+      };
+      blocksInSelectedLibrary = api.fetchLibraryContent({
+        studioEndpointUrl,
+        libraryId: selectedLibraryId,
+      })?.results;
     }
+    initialize({
+      libraries,
+      selectedLibrary,
+      selectedLibraryId: selectedLibraryId ? selectedLibraryId : null,
+      selectedLibraryVersion,
+      settings,
+      blocksInSelectedLibrary: blocksInSelectedLibrary ? blocksInSelectedLibrary : [],
+    });
   }, []);
 
   return {
+    useInitialize,
     getContent: () => libraryPayload,
   };
 };
