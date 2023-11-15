@@ -39,8 +39,6 @@ describe('LibrarySelector',()=>{
         studioEndpointUrl: 'eXaMplE.com',
         libraries: mocklibraries,
         loadLibrary: jest.fn(),
-        selectedLibrary: 0,
-        onSelectLibrary: jest.fn(),
         settings: {
             [mocklibraries[0].library_key]: {
                 value: 'SoMethIng'
@@ -68,35 +66,7 @@ describe('LibrarySelector',()=>{
         const {container, queryByTestId} = renderComponent({
             ...props,
             libraries: null,
-            selectedLibrary: null,
         });
         expect(queryByTestId('dropdown')).toBeFalsy();
     });
-
-    it('sets the default option to be selected if selectedLibrary is null.',()=>{
-        const {container, queryByTestId, queryByText} = renderComponent({
-            ...props,
-            selectedLibrary: null,
-        });
-        expect(queryByTestId('dropdown')).toBeTruthy();
-        expect(queryByText('Select a library')).toBeTruthy();
-    });
-    it('Clicking The default option calls onSelectLibrary with value null and calls unloadlibrary',()=>{
-        const {container, queryByTestId, queryByText} = renderComponent({
-            ...props,
-        });
-        fireEvent.click(container.querySelector("#library-selector"));
-        fireEvent.click(queryByText('FormattedMessage'));
-        expect(props.onSelectLibrary).toHaveBeenCalledWith({selectedLibrary: null});
-        expect(props.unloadLibrary).toHaveBeenCalled();
-    });
-    it('Clicking any other option in dropdown calls onSelectLibrary with value equal to its index  and calls loadlibrary',()=>{
-        const {container, queryByTestId, queryByText} = renderComponent({
-            ...props,
-        });
-        fireEvent.click(container.querySelector("#library-selector"));
-        fireEvent.click(queryByText(mocklibraries[1].display_name));
-        expect(props.onSelectLibrary).toHaveBeenCalledWith({selectedLibrary: 1});
-        expect(props.loadLibrary).toHaveBeenCalled();
-    });
-})
+});

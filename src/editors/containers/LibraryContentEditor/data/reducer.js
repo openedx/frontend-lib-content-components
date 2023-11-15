@@ -4,7 +4,6 @@ import { StrictDict } from '../../../utils';
 
 const initialState = {
   libraries: [],
-  selectedLibrary: null,
   selectedLibraryId: null,
   selectedLibraryVersion: null,
   settings: {
@@ -31,18 +30,46 @@ const library = createSlice({
   name: 'library',
   initialState,
   reducers: {
-    initialize: (state, { payload }) => ({
+    // initialize: (state, { payload }) => ({
+    //   ...state,
+    //   libraries: payload.libraries,
+    //   selectedLibraryId: payload.selectedLibraryId,
+    //   selectedLibraryVersion: payload.selectedLibraryVersion,
+    //   settings: {
+    //     ...state.settings,
+    //     [payload.selectedLibraryId]: payload.settings,
+    //   },
+    //   blocksInSelectedLibrary: payload.blocksInSelectedLibrary,
+    // }),
+    initializeFromBlockValue: (state, { payload }) => ({
+      ...state,
+      selectedLibraryId: payload.selectedLibraryId,
+      settings: payload.settings,
+    }),
+    loadLibraryList: (state, { payload }) => ({
       ...state,
       libraries: payload.libraries,
-      selectedLibrary: payload.selectedLibrary,
+    }),
+    setLibraryId: (state, { payload }) => ({
+      ...state,
       selectedLibraryId: payload.selectedLibraryId,
-      selectedLibraryVersion: payload.selectedLibraryVersion,
+    }),
+    setLibraryVersion: (state, { payload }) => ({
+      ...state,
+      selectedLibraryVersion: payload.version,
+    }),
+    setLibraryBlocks: (state, { payload }) => ({
+      ...state,
+      blocksInSelectedLibrary: payload.blocks,
+    }),
+    setLibrarySettings: (state, { payload }) => ({
+      ...state,
       settings: {
         ...state.settings,
-        [payload.selectedLibraryId]: payload.settings,
+        [payload.id]: payload.settings,
       },
-      blocksInSelectedLibrary: payload.blocksInSelectedLibrary,
     }),
+
     loadLibrary: (state, { payload }) => ({
       ...state,
       selectedLibraryId: payload.id,
@@ -58,10 +85,6 @@ const library = createSlice({
       selectedLibraryId: null,
       selectedLibraryVersion: null,
       blocksInSelectedLibrary: [],
-    }),
-    onSelectLibrary: (state, { payload }) => ({
-      ...state,
-      selectedLibrary: payload.selectedLibrary,
     }),
     onModeChange: (state, { payload }) => ({
       ...state,

@@ -34,7 +34,6 @@ describe('LibrarySettings Component', () => {
         onCountChange: jest.fn(),
         onModeChange: jest.fn(),
         onShowResetChange: jest.fn(),
-        selectedLibrary: 'sOme vAluE',
         selectedLibraryId: 0,
         settings: { 0: { mode: 'random', count: 5, showReset: true } },
     }

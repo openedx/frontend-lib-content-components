@@ -20,7 +20,6 @@ export const LibraryContentEditor = ({
   blockValue,
   blockFailed,
   blockFinished,
-  initialize,
   libraryPayload,
   selectedLibraryId,
   settings,
@@ -30,18 +29,15 @@ export const LibraryContentEditor = ({
 }) => {
   console.log("WE GOT THIS FAR");
   const {
+    initializeEditor,
     getContent,
-    useInitialize,
   } = useLibraryHook({
-    blockValue,
-    initialize,
     libraryPayload,
-    studioEndpointUrl,
   });
   console.log("WE GOT THIS Hook FAR");
 
   if (blockFinished && !blockFailed) {
-    useInitialize();
+    initializeEditor(blockValue);
   }
 
   const loading = () => (
@@ -98,7 +94,6 @@ LibraryContentEditor.propTypes = {
   }),
   blockFailed: PropTypes.bool.isRequired,
   blockFinished: PropTypes.bool.isRequired,
-  initialize: PropTypes.func.isRequired,
   libraryPayload: PropTypes.shape({}),
   selectedLibraryId: PropTypes.string,
   settings: PropTypes.shape({}),

@@ -25,7 +25,6 @@ describe('Library Selectors', () => {
     describe('simple selectors link their values from app store', () => {
       [
         simpleKeys.libraries,
-        simpleKeys.selectedLibrary,
         simpleKeys.selectedLibraryId,
         simpleKeys.selectedLibraryVersion,
         simpleKeys.settings,

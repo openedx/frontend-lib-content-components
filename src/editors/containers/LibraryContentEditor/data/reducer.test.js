@@ -17,7 +17,6 @@ describe('app reducer', () => {
       const libId = 'anOther lIb Id';
       const data = {
         libraries: 'soMe LibS',
-        selectedLibrary: 'a lIb id',
         selectedLibraryId: libId,
         selectedLibraryVersion: 'a lib veRsioN (oFteN an Int)',
         settings: {
@@ -65,13 +64,6 @@ describe('app reducer', () => {
           selectedLibraryId: null,
           selectedLibraryVersion: null,
           blocksInSelectedLibrary: [],
-        });
-      });
-      it(' onSelectLibrary sets the selected library from data.selectedLibrary', () => {
-        const selectedlib = { selectedLibrary: 'sOmE LiB' };
-        expect(reducer(testingState, actions.onSelectLibrary(selectedlib))).toEqual({
-          ...testingState,
-          selectedLibrary: selectedlib.selectedLibrary,
         });
       });
     });

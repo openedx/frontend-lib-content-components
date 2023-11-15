@@ -12,11 +12,10 @@ export const LibrarySettings = ({
   onCountChange,
   onModeChange,
   onShowResetChange,
-  selectedLibrary,
   selectedLibraryId,
   settings,
 }) => {
-  if (selectedLibrary === null) return <></>;
+  if (selectedLibraryId === null) return <></>;
 
   return (
     <div className='col'>
@@ -77,7 +76,6 @@ export const LibrarySettings = ({
 };
 
 export const mapStateToProps = (state) => ({
-  selectedLibrary: selectors.selectedLibrary(state),
   selectedLibraryId: selectors.selectedLibraryId(state),
   settings: selectors.settings(state),
 })

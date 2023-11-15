@@ -13,21 +13,29 @@ export const LibrarySelector = ({
   // redux
   libraries,
   loadLibrary,
-  selectedLibrary,
-  onSelectLibrary,
+  selectedLibraryId,
   settings,
   unloadLibrary,
 }) => {
   const {
+    initializeLibrary,
+    onSelectedLibraryChange,
+    setSelectedLibrary,
     title,
   } = useLibrarySelectorHook({
     libraries,
     loadLibrary,
-    selectedLibrary,
+    selectedLibraryId,
     settings,
     studioEndpointUrl,
     unloadLibrary,
   });
+
+  if (!!selectedLibraryId) {
+    initializeLibrary(selectedLibraryId);
+  }
+
+  onSelectedLibraryChange(selectedLibraryId);
 
   return (
     <div className='mb-3'>
@@ -43,11 +51,11 @@ export const LibrarySelector = ({
             {title}
           </Dropdown.Toggle>
           <Dropdown.Menu>
-            <Dropdown.Item onClick={() => onSelectLibrary({ selectedLibrary: null })}>
+            <Dropdown.Item onClick={() => setSelectedLibrary(null)}>
               <FormattedMessage {...messages.librarySelectorDropdownDefault} />
             </Dropdown.Item>
             {libraries.map((library, index) => (
-              <Dropdown.Item onClick={() => onSelectLibrary({ selectedLibrary: index })}>
+              <Dropdown.Item onClick={() => setSelectedLibrary(index)}>
                 {library.display_name}
               </Dropdown.Item>
             ))}
@@ -65,7 +73,6 @@ export const LibrarySelector = ({
 
 LibrarySelector.defaultProps = {
   libraries: [],
-  selectedLibrary: 0,
   settings: {},
 };
 
@@ -74,21 +81,18 @@ LibrarySelector.propTypes = {
   // redux
   libraries: PropTypes.array,
   loadLibrary: PropTypes.func.isRequired,
-  selectedLibrary: PropTypes.number,
-  onSelectLibrary: PropTypes.func.isRequired,
   settings: PropTypes.object,
   unloadLibrary: PropTypes.func.isRequired,
 };
 
 export const mapStateToProps = (state) => ({
   libraries: selectors.libraries(state),
-  selectedLibrary: selectors.selectedLibrary(state),
+  selectedLibraryId: selectors.selectedLibraryId(state),
   settings: selectors.settings(state),
 });
 
 export const mapDispatchToProps = {
   loadLibrary: actions.loadLibrary,
-  onSelectLibrary: actions.onSelectLibrary,
   unloadLibrary: actions.unloadLibrary,
 };
 
