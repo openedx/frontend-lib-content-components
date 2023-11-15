@@ -53,7 +53,7 @@ export const LibraryContentEditor = ({
 
   const loaded = () => (
     <div>
-      <LibrarySelector studioEndpointUrl={studioEndpointUrl} />
+      <LibrarySelector />
       <LibrarySettings />
       <BlocksSelector
         candidates={settings[selectedLibraryId]?.candidates}

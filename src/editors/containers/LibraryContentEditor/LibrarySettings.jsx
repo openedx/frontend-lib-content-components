@@ -25,7 +25,7 @@ export const LibrarySettings = ({
             libraryId: selectedLibraryId,
             mode: e.target.value,
           })}
-          value={settings[selectedLibraryId]?.mode}
+          value={settings[selectedLibraryId]?.mode ?? 0}
         >
           <Form.Radio value={modes.random.value}>
             <FormattedMessage {...modes.random.description} />
@@ -45,7 +45,7 @@ export const LibrarySettings = ({
                 libraryId: selectedLibraryId,
                 count: e.target.value,
               })}
-              value={settings[selectedLibraryId]?.count}
+              value={settings[selectedLibraryId]?.count ?? -1}
               type="number"
             />
             <label className='col pt-2'>
@@ -58,7 +58,7 @@ export const LibrarySettings = ({
       <div className='row mb-2 p-3 border-top'>
         <div className='col p-0'>
           <Form.Switch
-            checked={settings[selectedLibraryId]?.showReset}
+            checked={settings[selectedLibraryId]?.showReset ?? false}
             onChange={(e) => onShowResetChange({
               libraryId: selectedLibraryId,
               showReset: e.target.checked,

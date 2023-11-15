@@ -9,32 +9,23 @@ import { actions, selectors } from './data';
 import { useLibrarySelectorHook } from './hooks';
 
 export const LibrarySelector = ({
-  studioEndpointUrl,
   // redux
   libraries,
-  loadLibrary,
   selectedLibraryId,
   settings,
-  unloadLibrary,
 }) => {
   const {
     initializeLibrary,
     onSelectedLibraryChange,
+    selectionName,
     setSelectedLibrary,
-    title,
   } = useLibrarySelectorHook({
     libraries,
-    loadLibrary,
     selectedLibraryId,
     settings,
-    studioEndpointUrl,
-    unloadLibrary,
   });
 
-  if (!!selectedLibraryId) {
-    initializeLibrary(selectedLibraryId);
-  }
-
+  initializeLibrary(selectedLibraryId);
   onSelectedLibraryChange(selectedLibraryId);
 
   return (
@@ -45,17 +36,16 @@ export const LibrarySelector = ({
           <Dropdown.Toggle
             className='w-100'
             id='library-selector'
-            title={title}
             variant='outline-primary'
           >
-            {title}
+            {selectionName}
           </Dropdown.Toggle>
           <Dropdown.Menu>
-            <Dropdown.Item onClick={() => setSelectedLibrary(null)}>
+            <Dropdown.Item key={-1} onClick={() => setSelectedLibrary(null)}>
               <FormattedMessage {...messages.librarySelectorDropdownDefault} />
             </Dropdown.Item>
             {libraries.map((library, index) => (
-              <Dropdown.Item onClick={() => setSelectedLibrary(index)}>
+              <Dropdown.Item key={index} onClick={() => setSelectedLibrary(index)}>
                 {library.display_name}
               </Dropdown.Item>
             ))}
@@ -77,12 +67,9 @@ LibrarySelector.defaultProps = {
 };
 
 LibrarySelector.propTypes = {
-  studioEndpointUrl: PropTypes.string.isRequired,
   // redux
   libraries: PropTypes.array,
-  loadLibrary: PropTypes.func.isRequired,
   settings: PropTypes.object,
-  unloadLibrary: PropTypes.func.isRequired,
 };
 
 export const mapStateToProps = (state) => ({
@@ -91,10 +78,7 @@ export const mapStateToProps = (state) => ({
   settings: selectors.settings(state),
 });
 
-export const mapDispatchToProps = {
-  loadLibrary: actions.loadLibrary,
-  unloadLibrary: actions.unloadLibrary,
-};
+export const mapDispatchToProps = { };
 
 export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(LibrarySelector));
 
