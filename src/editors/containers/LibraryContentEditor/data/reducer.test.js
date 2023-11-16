@@ -46,18 +46,6 @@ describe('app reducer', () => {
         blocks: ['b1', 'b2'],
         other: 'data',
       };
-      it('LoadLibrary sets selected library, which has a version, id, blocks, and settings.', () => {
-        expect(reducer(testingState, actions.loadLibrary(testLib))).toEqual({
-          ...testingState,
-          selectedLibraryId: testLib.id,
-          selectedLibraryVersion: testLib.version,
-          settings: {
-            ...testingState.settings,
-            [testLib.id]: testLib.settings,
-          },
-          blocksInSelectedLibrary: testLib.blocks,
-        });
-      });
       it('unloadLibrary sets library version, id, and blocks to null/[]', () => {
         expect(reducer(testingState, actions.unloadLibrary())).toEqual({
           ...testingState,

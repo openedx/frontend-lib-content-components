@@ -21,11 +21,12 @@ export const LibrarySettings = ({
     <div className='col'>
       <div className='row mb-2 p-3 border-top'>
         <Form.RadioSet
+          name='mode'
           onChange={e => onModeChange({
             libraryId: selectedLibraryId,
             mode: e.target.value,
           })}
-          value={settings[selectedLibraryId]?.mode ?? 0}
+          value={settings[selectedLibraryId]?.mode ?? modes.random.value}
         >
           <Form.Radio value={modes.random.value}>
             <FormattedMessage {...modes.random.description} />
@@ -46,7 +47,7 @@ export const LibrarySettings = ({
                 count: e.target.value,
               })}
               value={settings[selectedLibraryId]?.count ?? -1}
-              type="number"
+              type='number'
             />
             <label className='col pt-2'>
               <FormattedMessage {...messages.countLabel} />
@@ -66,7 +67,7 @@ export const LibrarySettings = ({
           >
             <FormattedMessage {...messages.resetButton} />
           </Form.Switch>
-          <div className="x-small mt-2">
+          <div className='x-small mt-2'>
             <FormattedMessage {...messages.resetButtonDescription} />
           </div>
         </div>

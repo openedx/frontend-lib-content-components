@@ -12,7 +12,6 @@ import { modes } from './constants';
 export const BlocksSelector = ({
   candidates,
   mode,
-  studioEndpointUrl,
   // redux
   blocksInSelectedLibrary,
   onCandidatesChange,
@@ -31,7 +30,6 @@ export const BlocksSelector = ({
     mode,
     onCandidatesChange,
     selectedLibraryId,
-    studioEndpointUrl,
   });
 
   if (mode !== modes.selected.value) return <></>;
@@ -99,7 +97,6 @@ BlocksSelector.defaultProps = {
 BlocksSelector.propTypes = {
   candidates: PropTypes.objectOf(PropTypes.shape({})),
   mode: PropTypes.string,
-  studioEndpointUrl: PropTypes.string.isRequired,
   // redux
   blocksInSelectedLibrary: PropTypes.arrayOf(PropTypes.shape({})),
   onCandidatesChange: PropTypes.func.isRequired,

@@ -7,14 +7,9 @@ const initialState = {
   selectedLibraryId: null,
   selectedLibraryVersion: null,
   settings: {
-    // [libraryId]: {
-    //   mode: modes.random.value,
-    //   count: -1,
-    //   showReset: false,
-    //   candidates: {},
-    // },
-    // This reducer structure allows selected settings
-    // to persist when user switches between libraries.
+    // [libraryId]: initialSettings,
+    //  This reducer structure allows selected settings
+    //  to persist when user switches between libraries.
   },
   blocksInSelectedLibrary: [],
 };
@@ -30,17 +25,6 @@ const library = createSlice({
   name: 'library',
   initialState,
   reducers: {
-    // initialize: (state, { payload }) => ({
-    //   ...state,
-    //   libraries: payload.libraries,
-    //   selectedLibraryId: payload.selectedLibraryId,
-    //   selectedLibraryVersion: payload.selectedLibraryVersion,
-    //   settings: {
-    //     ...state.settings,
-    //     [payload.selectedLibraryId]: payload.settings,
-    //   },
-    //   blocksInSelectedLibrary: payload.blocksInSelectedLibrary,
-    // }),
     initializeFromBlockValue: (state, { payload }) => ({
       ...state,
       selectedLibraryId: payload.selectedLibraryId,
@@ -62,23 +46,12 @@ const library = createSlice({
       ...state,
       blocksInSelectedLibrary: payload.blocks,
     }),
-    setLibrarySettings: (state, { payload }) => ({
+    initializeSettings: (state, { payload }) => ({
       ...state,
       settings: {
         ...state.settings,
-        [payload.id]: payload.settings,
+        [payload.selectedLibraryId]: initialSettings,
       },
-    }),
-
-    loadLibrary: (state, { payload }) => ({
-      ...state,
-      selectedLibraryId: payload.id,
-      selectedLibraryVersion: payload.version,
-      settings: {
-        ...state.settings,
-        [payload.id]: payload.settings,
-      },
-      blocksInSelectedLibrary: payload.blocks,
     }),
     unloadLibrary: (state) => ({
       ...state,

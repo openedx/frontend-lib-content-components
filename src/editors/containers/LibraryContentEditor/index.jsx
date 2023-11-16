@@ -6,7 +6,7 @@ import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 
 import messages from './messages';
 import { useLibraryHook } from './hooks';
-import { actions, selectors } from '../../data/redux';
+import { selectors } from '../../data/redux';
 import { RequestKeys } from '../../data/constants/requests';
 import EditorContainer from '../EditorContainer';
 import LibrarySelector from './LibrarySelector';
@@ -17,28 +17,23 @@ export const LibraryContentEditor = ({
   onClose,
   returnFunction,
   // redux app layer
-  blockValue,
   blockFailed,
   blockFinished,
+  blockValue,
   libraryPayload,
   selectedLibraryId,
   settings,
-  studioEndpointUrl,
   // inject
   intl,
 }) => {
-  console.log("WE GOT THIS FAR");
   const {
-    initializeEditor,
     getContent,
   } = useLibraryHook({
+    blockFailed,
+    blockFinished,
+    blockValue,
     libraryPayload,
   });
-  console.log("WE GOT THIS Hook FAR");
-
-  if (blockFinished && !blockFailed) {
-    initializeEditor(blockValue);
-  }
 
   const loading = () => (
     <div className="text-center p-6">
@@ -58,7 +53,6 @@ export const LibraryContentEditor = ({
       <BlocksSelector
         candidates={settings[selectedLibraryId]?.candidates}
         mode={settings[selectedLibraryId]?.mode}
-        studioEndpointUrl={studioEndpointUrl}
       />
     </div>
   );
@@ -112,8 +106,6 @@ export const mapStateToProps = (state) => ({
   studioEndpointUrl: selectors.app.studioEndpointUrl(state),
 });
 
-export const mapDispatchToProps = {
-  initialize: actions.library.initialize,
-};
+export const mapDispatchToProps = {};
 
 export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(LibraryContentEditor));

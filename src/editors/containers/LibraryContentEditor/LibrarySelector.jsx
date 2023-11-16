@@ -5,7 +5,7 @@ import { Dropdown } from '@edx/paragon';
 import { FormattedMessage, injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 
 import messages from './messages';
-import { actions, selectors } from './data';
+import { selectors } from './data';
 import { useLibrarySelectorHook } from './hooks';
 
 export const LibrarySelector = ({
@@ -15,8 +15,6 @@ export const LibrarySelector = ({
   settings,
 }) => {
   const {
-    initializeLibrary,
-    onSelectedLibraryChange,
     selectionName,
     setSelectedLibrary,
   } = useLibrarySelectorHook({
@@ -24,9 +22,6 @@ export const LibrarySelector = ({
     selectedLibraryId,
     settings,
   });
-
-  initializeLibrary(selectedLibraryId);
-  onSelectedLibraryChange(selectedLibraryId);
 
   return (
     <div className='mb-3'>
@@ -78,7 +73,7 @@ export const mapStateToProps = (state) => ({
   settings: selectors.settings(state),
 });
 
-export const mapDispatchToProps = { };
+export const mapDispatchToProps = {};
 
 export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(LibrarySelector));
 

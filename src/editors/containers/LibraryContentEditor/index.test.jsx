@@ -53,7 +53,6 @@ describe('LibraryContentEditor',()=>{
         blockValue: 'SoMe VaLue',
         blockFailed: false,
         blockFinished: true,
-        initialize: jest.fn(),
         libraryPayload: true,
         studioEndpointUrl: 'A UrL',
         selectedLibraryId: mockLibId,

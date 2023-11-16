@@ -32,4 +32,5 @@ export const RequestKeys = StrictDict({
   fetchContentStore: 'fetchContentStore',
   fetchLibraryProperty: 'fetchLibraryProperty',
   fetchLibraryContent: 'fetchLibraryContent',
+  fetchBlockContent: 'fetchBlockContent',
 });

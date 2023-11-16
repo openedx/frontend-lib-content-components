@@ -38,7 +38,6 @@ describe('LibrarySelector',()=>{
     const props = {
         studioEndpointUrl: 'eXaMplE.com',
         libraries: mocklibraries,
-        loadLibrary: jest.fn(),
         settings: {
             [mocklibraries[0].library_key]: {
                 value: 'SoMethIng'
