@@ -1,11 +1,14 @@
-import { get, post, deleteObject } from '../../../data/services/cms/utils';
+import { get } from '../../../data/services/cms/utils';
 import * as urls from './urls';
 import * as module from './api';
 import * as mockApi from './mockApi';
 
 export const apiMethods = {
-  fetchContentStore: ({ studioEndpointUrl }) => get(
-    urls.contentStore({ studioEndpointUrl }),
+  fetchV1Libraries: ({ studioEndpointUrl }) => get(
+    urls.v1Libraries({ studioEndpointUrl }),
+  ),
+  fetchV2Libraries: ({ studioEndpointUrl }) => get(
+    urls.v2Libraries({ studioEndpointUrl }),
   ),
   fetchLibraryProperty: ({ studioEndpointUrl, libraryId }) => get(
     urls.libraryProperty({ studioEndpointUrl, libraryId }),

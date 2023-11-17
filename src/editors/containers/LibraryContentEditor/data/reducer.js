@@ -28,6 +28,7 @@ const library = createSlice({
     initializeFromBlockValue: (state, { payload }) => ({
       ...state,
       selectedLibraryId: payload.selectedLibraryId,
+      selectedLibraryVersion: payload.version,
       settings: payload.settings,
     }),
     loadLibraryList: (state, { payload }) => ({

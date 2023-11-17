@@ -185,14 +185,17 @@ export const apiMethods = {
         category: blockType,
         courseKey: learningContextId,
         display_name: title, //"course-v1:edx+123+test"
+        data: null,
         id: blockId, //"block-v1:edx+123+test+type@library_content+block@880758e62c2542d5b45c944360dfa799"
         metadata: {
+          manual: content.manual,
+          shuffle: content.shuffle,
           allow_resetting_children: content.showReset,
           candidates: content.candidates,
           capa_type: 'any',
-          count: content.count,
+          max_count: content.count,
           source_library_id: content.libraryId,
-          source_library_version: content.libraryVersion,
+          source_library_version: content.libraryVersion.toString(),
         },
       };
     } else {

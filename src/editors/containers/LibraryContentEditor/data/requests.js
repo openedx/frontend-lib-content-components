@@ -7,15 +7,15 @@ import { actions, selectors } from '../../../data/redux';
 import api from './api';
 
 /**
- * Tracked fetchContentStore api method.
- * Tracked to the `fetchContentStore` request key.
+ * Tracked fetchV2Libraries api method.
+ * Tracked to the `fetchV2Libraries` request key.
  * @param {[func]} onSuccess - onSuccess method ((response) => { ... })
  * @param {[func]} onFailure - onFailure method ((error) => { ... })
  */
-export const fetchContentStore = ({ ...rest }) => (dispatch, getState) => {
+export const fetchV2Libraries = ({ ...rest }) => (dispatch, getState) => {
   dispatch(networkRequest({
-    requestKey: RequestKeys.fetchContentStore,
-    promise: api.fetchContentStore({
+    requestKey: RequestKeys.fetchV2Libraries,
+    promise: api.fetchV2Libraries({
       studioEndpointUrl: selectors.app.studioEndpointUrl(getState()),
     }),
     ...rest,
@@ -47,8 +47,8 @@ export const fetchLibraryProperty = ({ libraryId, ...rest }) => (dispatch, getSt
  */
  export const fetchLibraryContent = ({ libraryId, ...rest }) => (dispatch, getState) => {
   dispatch(networkRequest({
-    requestKey: RequestKeys.fetchLibraryProperty,
-    promise: api.fetchLibraryProperty({
+    requestKey: RequestKeys.fetchLibraryContent,
+    promise: api.fetchLibraryContent({
       studioEndpointUrl: selectors.app.studioEndpointUrl(getState()),
       libraryId,
     }),
@@ -74,7 +74,7 @@ export const fetchLibraryProperty = ({ libraryId, ...rest }) => (dispatch, getSt
 };
 
 export default StrictDict({
-  fetchContentStore,
+  fetchV2Libraries,
   fetchLibraryProperty,
   fetchLibraryContent,
   fetchBlockContent,

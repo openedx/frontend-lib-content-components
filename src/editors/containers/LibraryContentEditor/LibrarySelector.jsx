@@ -16,7 +16,7 @@ export const LibrarySelector = ({
 }) => {
   const {
     selectionName,
-    setSelectedLibrary,
+    setSelectedLibraryIndex,
   } = useLibrarySelectorHook({
     libraries,
     selectedLibraryId,
@@ -36,12 +36,12 @@ export const LibrarySelector = ({
             {selectionName}
           </Dropdown.Toggle>
           <Dropdown.Menu>
-            <Dropdown.Item key={-1} onClick={() => setSelectedLibrary(null)}>
+            <Dropdown.Item key={-1} onClick={() => setSelectedLibraryIndex(null)}>
               <FormattedMessage {...messages.librarySelectorDropdownDefault} />
             </Dropdown.Item>
             {libraries.map((library, index) => (
-              <Dropdown.Item key={index} onClick={() => setSelectedLibrary(index)}>
-                {library.display_name}
+              <Dropdown.Item key={index} onClick={() => setSelectedLibraryIndex(index)}>
+                {library.title}
               </Dropdown.Item>
             ))}
           </Dropdown.Menu>

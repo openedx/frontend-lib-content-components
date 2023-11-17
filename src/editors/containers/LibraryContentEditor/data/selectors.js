@@ -1,4 +1,5 @@
 import { createSelector } from 'reselect';
+import { modes } from '../constants';
 import * as module from './selectors';
 
 export const libraryState = (state) => state.library;
@@ -26,21 +27,30 @@ export const libraryPayload = createSelector(
     settings,
     blocksInSelectedLibrary,
   ) => {
-    let count = 0;
+    let manual = false;
+    let shuffle = true;
+    let count = null;
     let showReset = false;
     let candidates = [];
     if (selectedLibraryId && settings[selectedLibraryId]) {
-      count = settings[selectedLibraryId].count;
+      if (settings[selectedLibraryId].mode === modes.selected.value) {
+        manual = true;
+        shuffle = false;
+      }
+      count = settings[selectedLibraryId].count.toString();
       showReset = settings[selectedLibraryId].showReset;
-      for (const [key, value] of Object.entries(settings[selectedLibraryId].candidates)) {
-        if (value) {
-          candidates.push([ blocksInSelectedLibrary[key]?.block_type, blocksInSelectedLibrary[key]?.id ]);
+      for (const [key, selected] of Object.entries(settings[selectedLibraryId].candidates)) {
+        if (selected) {
+          // candidates.push([ blocksInSelectedLibrary[key]?.block_type, blocksInSelectedLibrary[key]?.id ]);
+          candidates.push(blocksInSelectedLibrary[key]?.id);
         }
       }
     }
     return {
       libraryId: selectedLibraryId,
       libraryVersion: selectedLibraryVersion,
+      manual,
+      shuffle,
       count,
       showReset,
       candidates,

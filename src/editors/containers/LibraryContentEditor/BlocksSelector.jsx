@@ -8,6 +8,7 @@ import messages from './messages';
 import { actions, selectors } from './data';
 import { useBlocksHook } from './hooks';
 import { modes } from './constants';
+import { getCandidates } from './utils';
 
 export const BlocksSelector = ({
   candidates,
@@ -20,32 +21,31 @@ export const BlocksSelector = ({
   if (selectedLibraryId === null) return <></>;
 
   const {
-    blockLinks,
+    blockUrls,
     blocksTableData,
-    tempCandidates,
-    setTempCandidates,
+    selectedRows,
+    setSelectedRows,
   } = useBlocksHook({
     blocksInSelectedLibrary,
     candidates,
     mode,
-    onCandidatesChange,
     selectedLibraryId,
   });
 
   if (mode !== modes.selected.value) return <></>;
 
-  const ViewAction = ({ row }) => (
-    <Button
-      className='p-0'
-      onClick={() => {
-        window.open(blockLinks[row.id])
-      }}
-      size='sm'
-      variant='link'
-    >
-      <FormattedMessage {...messages.tableViewButton} />
-    </Button>
-  );
+  // const ViewAction = ({ row }) => (
+  //   <Button
+  //     className='p-0'
+  //     onClick={() => {
+  //       window.open(blockLinks[row.id], '_blank')
+  //     }}
+  //     size='sm'
+  //     variant='link'
+  //   >
+  //     <FormattedMessage {...messages.tableViewButton} />
+  //   </Button>
+  // );
 
   return (
     <div className='mb-5 pt-3 border-top'>
@@ -58,7 +58,7 @@ export const BlocksSelector = ({
         isSortable
         itemCount={blocksTableData.length}
         data={blocksTableData}
-        initialState={{ selectedRowIds: tempCandidates }}
+        initialState={{ selectedRowIds: selectedRows }}
         columns={[
           {
             Header: 'Name',
@@ -69,14 +69,23 @@ export const BlocksSelector = ({
             accessor: 'block_type',
           },
         ]}
-        additionalColumns={[
-          {
-            id: 'action',
-            Header: 'View',
-            Cell: ({ row }) => ViewAction({ row }),
-          }
-        ]}
-        onSelectedRowsChanged={selected => setTempCandidates(selected)}
+        // additionalColumns={[
+        //   {
+        //     id: 'action',
+        //     Header: 'View',
+        //     Cell: ({ row }) => ViewAction({ row }),
+        //   }
+        // ]}
+        onSelectedRowsChanged={selected => setSelectedRows(selected)}
+        // onSelectedRowsChanged={selectedRows => 
+        //   onCandidatesChange({
+        //     libraryId: selectedLibraryId,
+        //     candidates: getCandidates({
+        //       blocks: blocksInSelectedLibrary,
+        //       rows: selectedRows,
+        //     }),
+        //   })
+        // }
       >
         <DataTable.TableControlBar />
         <DataTable.Table />
@@ -89,13 +98,13 @@ export const BlocksSelector = ({
 
 BlocksSelector.defaultProps = {
   blocksInSelectedLibrary: [],
-  candidates: {},
+  candidates: [],
   mode: '',
   selectedLibraryId: null,
 };
 
 BlocksSelector.propTypes = {
-  candidates: PropTypes.objectOf(PropTypes.shape({})),
+  candidates: PropTypes.arrayOf(PropTypes.string),
   mode: PropTypes.string,
   // redux
   blocksInSelectedLibrary: PropTypes.arrayOf(PropTypes.shape({})),
@@ -105,7 +114,6 @@ BlocksSelector.propTypes = {
 
 export const mapStateToProps = (state) => ({
   blocksInSelectedLibrary: selectors.blocksInSelectedLibrary(state),
-  libraries: selectors.libraries(state),
   selectedLibraryId: selectors.selectedLibraryId(state),
 });
 

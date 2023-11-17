@@ -1,6 +1,6 @@
 const mockPromise = (returnValue) => new Promise(resolve => resolve(returnValue));
 
-export const fetchContentStore = ({ studioEndpointUrl }) => {
+export const fetchV1Libraries = ({ studioEndpointUrl }) => {
   return {
     "allow_course_reruns": true,
     "allow_to_create_new_org": true,
@@ -82,6 +82,47 @@ export const fetchContentStore = ({ studioEndpointUrl }) => {
     "platform_name": "Your Platform Name Here",
     "user_is_active": true,
   };
+};
+
+export const fetchV2Libraries = ({ studioEndpointUrl }) => {
+  return [
+    {
+      id: "lib:DeveloperInc:lib1",
+      type: "complex",
+      org: "DeveloperInc",
+      slug: "lib1",
+      bundle_uuid: "d0465545-96d2-4fe4-b503-0ed5e3b41517",
+      title: "myfirstlib",
+      description: "myfirstlib",
+      num_blocks: null,
+      version: 0,
+      last_published: null,
+      allow_lti: false,
+      allow_public_learning: false,
+      allow_public_read: false,
+      has_unpublished_changes: null,
+      has_unpublished_deletes: null,
+      license: "",
+    },
+    {
+      id: "lib:DeveloperInc:lib2",
+      type: "complex",
+      org: "DeveloperInc",
+      slug: "lib2",
+      bundle_uuid: "d0465545-96d2-4fe4-b503-0ed5e3b41518",
+      title: "mysecondlib",
+      description: "mysecondlib",
+      num_blocks: null,
+      version: 0,
+      last_published: null,
+      allow_lti: false,
+      allow_public_learning: false,
+      allow_public_read: false,
+      has_unpublished_changes: null,
+      has_unpublished_deletes: null,
+      license: "",
+    },
+  ];
 };
 
 export const fetchLibraryProperty = ({ studioEndpointUrl, libraryId }) => {

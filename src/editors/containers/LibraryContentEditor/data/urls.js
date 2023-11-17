@@ -1,5 +1,9 @@
-export const contentStore = ({ studioEndpointUrl }) => (
+export const v1Libraries = ({ studioEndpointUrl }) => (
   `${studioEndpointUrl}/api/contentstore/v1/home`
+);
+
+export const v2Libraries = ({ studioEndpointUrl }) => (
+  `${studioEndpointUrl}/api/libraries/v2/`
 );
 
 export const libraryProperty = ({ studioEndpointUrl, libraryId }) => (
