@@ -14,6 +14,38 @@ export const simpleSelectors = {
   blocksInSelectedLibrary: mkSimpleSelector(library => library.blocksInSelectedLibrary),
 };
 
+export const candidates = createSelector(
+  [
+    module.simpleSelectors.selectedLibraryId,
+    module.simpleSelectors.settings,
+  ],
+  (
+    selectedLibraryId,
+    settings,
+  ) => {
+    if (!!selectedLibraryId) {
+      return settings[selectedLibraryId]?.candidates ?? [];
+    }
+    return [];
+  },
+);
+
+export const mode = createSelector(
+  [
+    module.simpleSelectors.selectedLibraryId,
+    module.simpleSelectors.settings,
+  ],
+  (
+    selectedLibraryId,
+    settings,
+  ) => {
+    if (!!selectedLibraryId) {
+      return settings[selectedLibraryId]?.mode ?? modes.random.value;
+    }
+    return modes.random.value;
+  },
+);
+
 export const libraryPayload = createSelector(
   [
     module.simpleSelectors.selectedLibraryId,
@@ -60,5 +92,7 @@ export const libraryPayload = createSelector(
 
 export default {
   ...simpleSelectors,
+  candidates,
+  mode,
   libraryPayload,
 };

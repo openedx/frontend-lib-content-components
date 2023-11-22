@@ -51,8 +51,8 @@ export const LibraryContentEditor = ({
       <LibrarySelector />
       <LibrarySettings />
       <BlocksSelector
-        candidates={settings[selectedLibraryId]?.candidates}
-        mode={settings[selectedLibraryId]?.mode}
+        // candidates={settings[selectedLibraryId]?.candidates}
+        // mode={settings[selectedLibraryId]?.mode}
       />
     </div>
   );

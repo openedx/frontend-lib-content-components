@@ -30,7 +30,7 @@ export const getSelectedRows = ({
   candidates,
 }) => {
   let selectedRows = {};
-  if (candidates.length > 0) {
+  if (candidates && candidates.length > 0) {
     let candidatesMapping = {};
     candidates.forEach(candidate => {
       candidatesMapping[candidate] = true;

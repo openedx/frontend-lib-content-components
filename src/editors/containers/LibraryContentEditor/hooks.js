@@ -117,13 +117,13 @@ export const useLibrarySelectorHook = ({
 
 export const useBlocksHook = ({
   blocksInSelectedLibrary,
-  candidates,
+  // candidates,
   mode,
   selectedLibraryId,
 }) => {
   const dispatch = useDispatch();
-  const [ prevLibraryId, setPrevLibraryId ] = useState(null);
-  const [ selectedRows, setSelectedRows ] = useState({});
+  // const [ prevLibraryId, setPrevLibraryId ] = useState(null);
+  // const [ selectedRows, setSelectedRows ] = useState({});
 
   useEffect(() => {
     if (!!selectedLibraryId) {
@@ -142,49 +142,54 @@ export const useBlocksHook = ({
         },
       }));
     }
-  }, [selectedLibraryId]);
-  
-  useEffect(() => {
-    console.log('testcandidates', candidates)
-    if (!!prevLibraryId) {
-      dispatch(actions.library.onCandidatesChange({
-        libraryId: prevLibraryId,
-        candidates: getCandidates({
-          blocks: blocksInSelectedLibrary,
-          rows: selectedRows,
-        }),
-      }));
-      // onCandidatesChange({
-      //   libraryId: tempLibraryId,
-      //   candidates: tempCandidates,
-      // });
-    }
-    setPrevLibraryId(selectedLibraryId);
-    setSelectedRows(
-      getSelectedRows({
-        blocks: blocksInSelectedLibrary,
-        candidates,
-      })
-    );
-    // setTempLibraryId(selectedLibraryId);
-    // setTempCandidates(candidates);
+    // setSelectedRows(candidates)
   }, [selectedLibraryId]);
 
-  useEffect(() => {
-    if (mode === modes.random.value) {
-      // onCandidatesChange({
-      //   libraryId: tempLibraryId,
-      //   candidates: tempCandidates,
-      // });
-      dispatch(actions.library.onCandidatesChange({
-        libraryId: selectedLibraryId,
-        candidates: getCandidates({
-          blocks: blocksInSelectedLibrary,
-          rows: selectedRows,
-        }),
-      }));
-    }
-  }, [mode]);
+  // useEffect(() => {
+
+  // }, [selectedRows]);
+  
+  // useEffect(() => {
+  //   console.log('testcandidates', candidates)
+  //   if (!!prevLibraryId) {
+  //     dispatch(actions.library.onCandidatesChange({
+  //       libraryId: prevLibraryId,
+  //       candidates: getCandidates({
+  //         blocks: blocksInSelectedLibrary,
+  //         rows: selectedRows,
+  //       }),
+  //     }));
+  //     // onCandidatesChange({
+  //     //   libraryId: tempLibraryId,
+  //     //   candidates: tempCandidates,
+  //     // });
+  //   }
+  //   setPrevLibraryId(selectedLibraryId);
+  //   setSelectedRows(
+  //     getSelectedRows({
+  //       blocks: blocksInSelectedLibrary,
+  //       candidates,
+  //     })
+  //   );
+  //   // setTempLibraryId(selectedLibraryId);
+  //   // setTempCandidates(candidates);
+  // }, [selectedLibraryId]);
+
+  // useEffect(() => {
+  //   if (mode === modes.random.value) {
+  //     // onCandidatesChange({
+  //     //   libraryId: tempLibraryId,
+  //     //   candidates: tempCandidates,
+  //     // });
+  //     dispatch(actions.library.onCandidatesChange({
+  //       libraryId: selectedLibraryId,
+  //       candidates: getCandidates({
+  //         blocks: blocksInSelectedLibrary,
+  //         rows: selectedRows,
+  //       }),
+  //     }));
+  //   }
+  // }, [mode]);
 
   const blockTypeDisplay = (type) => {
     if (type === 'html') return 'Text';
@@ -194,8 +199,8 @@ export const useBlocksHook = ({
   };
 
   return ({
-    selectedRows,
-    setSelectedRows,
+    // selectedRows,
+    // setSelectedRows,
     blockUrls: blocksInSelectedLibrary.map(block => (
       urls.blockContent({ blockId: block.id })
     )),

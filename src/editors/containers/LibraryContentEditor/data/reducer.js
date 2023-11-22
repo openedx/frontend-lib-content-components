@@ -18,7 +18,7 @@ const initialSettings = {
   mode: modes.random.value,
   count: -1,
   showReset: false,
-  candidates: {},
+  candidates: [],
 };
 
 const library = createSlice({

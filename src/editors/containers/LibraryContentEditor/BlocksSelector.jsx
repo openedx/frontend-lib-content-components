@@ -1,38 +1,115 @@
-import React from 'react';
+import React, { useMemo, useCallback } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { FormattedMessage, injectIntl, intlShape } from '@edx/frontend-platform/i18n';
-import { Button, DataTable, Form } from '@edx/paragon';
+import { Button, CheckboxControl, DataTable, DataTableContext, Form } from '@edx/paragon';
 
 import messages from './messages';
 import { actions, selectors } from './data';
 import { useBlocksHook } from './hooks';
 import { modes } from './constants';
-import { getCandidates } from './utils';
+import { getCandidates, getSelectedRows } from './utils';
+
+export const RowCheckbox = ({ row }) => {
+  // const { id } = row;
+  const {
+    indeterminate,
+    checked,
+    ...toggleRowSelectedProps
+  } = row.getToggleRowSelectedProps();
+
+
+  // console.log('testcheckbox', selectedRows, toggleRowSelectedProps)
+
+  return (
+    <div className='text-center'>
+      <CheckboxControl
+        {...toggleRowSelectedProps}
+        title="Toggle row selected"
+        // checked={selectedRows[id]}
+        // checked={true}
+        checked={checked}
+        isIndeterminate={false}
+        // data-testid={SELECT_ONE_TEST_ID}
+      />
+    </div>
+  );
+};
 
 export const BlocksSelector = ({
-  candidates,
+  // candidates,
   mode,
   // redux
   blocksInSelectedLibrary,
+  // candidates,
   onCandidatesChange,
   selectedLibraryId,
 }) => {
-  if (selectedLibraryId === null) return <></>;
+  console.log('testrerender', mode,
+  // redux
+  blocksInSelectedLibrary,
+  // candidates,
+  onCandidatesChange,
+  selectedLibraryId,)
 
   const {
     blockUrls,
     blocksTableData,
-    selectedRows,
-    setSelectedRows,
+    // selectedRows,
+    // setSelectedRows,
   } = useBlocksHook({
     blocksInSelectedLibrary,
-    candidates,
+    // candidates,
     mode,
     selectedLibraryId,
   });
 
-  if (mode !== modes.selected.value) return <></>;
+  // const selectedRows = getSelectedRows(candidates)
+
+  const columns = [
+    {
+      Header: 'Name',
+      accessor: 'display_name',
+    },
+    {
+      Header: 'Block Type',
+      accessor: 'block_type',
+    },
+  ];
+
+  const selectColumn = {
+    id: 'selection',
+    Header: () => null,
+    Cell: RowCheckbox,
+    // Cell: (props) => <RowCheckbox {...props} 
+    // // selectedRows={selectedRows} 
+    // />,
+    disableSortBy: true,
+  };
+
+  const onSelectedRowsChanged = 
+  useCallback(
+    (selected) => {
+      console.log('testonselectedrowchanged', selectedLibraryId, selected, blocksInSelectedLibrary)
+
+      // const selectedCandidates = getCandidates({
+      //   blocks: blocksInSelectedLibrary,
+      //   rows: selected,
+      // })
+      // console.log('testselectedcandidates', selectedCandidates)
+
+
+      onCandidatesChange({
+        libraryId: selectedLibraryId,
+        candidates: getCandidates({
+          blocks: blocksInSelectedLibrary,
+          rows: selected,
+        }),
+      })
+    },
+    [blocksInSelectedLibrary]
+  //   [onCandidatesChange],
+  );
 
   // const ViewAction = ({ row }) => (
   //   <Button
@@ -47,18 +124,47 @@ export const BlocksSelector = ({
   //   </Button>
   // );
 
+  if (selectedLibraryId === null || mode !== modes.selected.value) return <></>;
+
   return (
     <div className='mb-5 pt-3 border-top'>
       <label>
         <FormattedMessage {...messages.tableInstructionLabel} />
       </label>
       <DataTable
-        isPaginated
+        key={selectedLibraryId}
+        columns={columns}
+        data={blocksTableData}
+        itemCount={blocksTableData.length}
         isSelectable
+        isPaginated
+        isSortable
+        // initialState={{ selectedRowIds: getSelectedRows({
+        //   blocks: blocksInSelectedLibrary,
+        //   candidates,
+        // }) }}
+        manualSelectColumn={selectColumn}
+        // onSelectedRowsChanged={props => console.log('testselected', props)}
+        onSelectedRowsChanged={onSelectedRowsChanged}
+        // onSelectedRowsChanged={selected => setSelectedRows(selected)}
+        // onSelectedRowsChanged={selectedRows => 
+        //   onCandidatesChange({
+        //     libraryId: selectedLibraryId,
+        //     candidates: getCandidates({
+        //       blocks: blocksInSelectedLibrary,
+        //       rows: selectedRows,
+        //     }),
+        //   })
+        // }
+      >
+      {/* <DataTable
+        isSelectable
+        isPaginated
         isSortable
         itemCount={blocksTableData.length}
         data={blocksTableData}
-        initialState={{ selectedRowIds: selectedRows }}
+        // initialState={{ selectedRowIds: selectedRows }}
+        initialState={{ selectedRowIds: {0: true}}}
         columns={[
           {
             Header: 'Name',
@@ -76,7 +182,7 @@ export const BlocksSelector = ({
         //     Cell: ({ row }) => ViewAction({ row }),
         //   }
         // ]}
-        onSelectedRowsChanged={selected => setSelectedRows(selected)}
+        // onSelectedRowsChanged={selected => setSelectedRows(selected)}
         // onSelectedRowsChanged={selectedRows => 
         //   onCandidatesChange({
         //     libraryId: selectedLibraryId,
@@ -86,7 +192,7 @@ export const BlocksSelector = ({
         //     }),
         //   })
         // }
-      >
+      > */}
         <DataTable.TableControlBar />
         <DataTable.Table />
         <DataTable.EmptyTable content="No blocks found." />
@@ -114,6 +220,8 @@ BlocksSelector.propTypes = {
 
 export const mapStateToProps = (state) => ({
   blocksInSelectedLibrary: selectors.blocksInSelectedLibrary(state),
+  // candidates: selectors.candidates(state),
+  mode: selectors.mode(state),
   selectedLibraryId: selectors.selectedLibraryId(state),
 });
 
