@@ -11,7 +11,9 @@
 }
 
 .settingsWidget {
-    margin-top: 40px;
+    @media (min-width: 768px) {
+        margin-top: 40px;
+    }
     .pgn__form-text {
         font-size: small;
     }

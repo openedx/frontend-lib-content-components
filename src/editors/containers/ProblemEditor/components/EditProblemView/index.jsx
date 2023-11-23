@@ -97,19 +97,19 @@ export const EditProblemView = ({
           </>
         )}
       </AlertModal>
-      <div className="editProblemView d-flex flex-row flex-nowrap justify-content-end">
+      <div className="editProblemView d-flex flex-row flex-wrap justify-content-end">
         {isAdvancedProblemType ? (
           <Container fluid className="advancedEditorTopMargin p-0">
             <RawEditor editorRef={editorRef} lang="xml" content={problemState.rawOLX} />
           </Container>
         ) : (
-          <span className="flex-grow-1 mb-5">
+          <span className="editProblemView-mainColumn flex-grow-1 mb-3 mb-md-5">
             <QuestionWidget />
             <ExplanationWidget />
             <AnswerWidget problemType={problemType} />
           </span>
         )}
-        <span className="editProblemView-settingsColumn">
+        <span className="editProblemView-settingsColumn mb-3">
           <SettingsWidget problemType={problemType} />
         </span>
       </div>

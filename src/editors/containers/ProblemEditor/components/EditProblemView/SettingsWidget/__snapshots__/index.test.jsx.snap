@@ -2,7 +2,7 @@
 
 exports[`SettingsWidget snapshot snapshot: renders Settings widget for Advanced Problem with correct widgets 1`] = `
 <div
-  className="settingsWidget ml-4"
+  className="settingsWidget ml-md-4"
 >
   <div
     className="mb-3"
@@ -83,7 +83,7 @@ exports[`SettingsWidget snapshot snapshot: renders Settings widget for Advanced 
 
 exports[`SettingsWidget snapshot snapshot: renders Settings widget page 1`] = `
 <div
-  className="settingsWidget ml-4"
+  className="settingsWidget ml-md-4"
 >
   <div
     className="mb-3"
@@ -164,7 +164,7 @@ exports[`SettingsWidget snapshot snapshot: renders Settings widget page 1`] = `
 
 exports[`SettingsWidget snapshot snapshot: renders Settings widget page advanced settings visible 1`] = `
 <div
-  className="settingsWidget ml-4"
+  className="settingsWidget ml-md-4"
 >
   <div
     className="mb-3"

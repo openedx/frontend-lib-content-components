@@ -38,6 +38,7 @@ exports[`AdvanceTypeSelect snapshots snapshots: renders as expected with default
         className="border-primary-100 border-bottom m-0 py-3 w-100"
       >
         <Radio
+          controlClassName="flex-shrink-0"
           id="blankadvanced"
           value="blankadvanced"
         >
@@ -49,6 +50,7 @@ exports[`AdvanceTypeSelect snapshots snapshots: renders as expected with default
         className="border-primary-100 border-bottom m-0 py-3 w-100"
       >
         <Radio
+          controlClassName="flex-shrink-0"
           id="circuitschematic"
           value="circuitschematic"
         >
@@ -93,6 +95,7 @@ exports[`AdvanceTypeSelect snapshots snapshots: renders as expected with default
         className="border-primary-100 border-bottom m-0 py-3 w-100"
       >
         <Radio
+          controlClassName="flex-shrink-0"
           id="jsinputresponse"
           value="jsinputresponse"
         >
@@ -104,6 +107,7 @@ exports[`AdvanceTypeSelect snapshots snapshots: renders as expected with default
         className="border-primary-100 border-bottom m-0 py-3 w-100"
       >
         <Radio
+          controlClassName="flex-shrink-0"
           id="customgrader"
           value="customgrader"
         >
@@ -148,6 +152,7 @@ exports[`AdvanceTypeSelect snapshots snapshots: renders as expected with default
         className="border-primary-100 border-bottom m-0 py-3 w-100"
       >
         <Radio
+          controlClassName="flex-shrink-0"
           id="imageresponse"
           value="imageresponse"
         >
@@ -192,6 +197,7 @@ exports[`AdvanceTypeSelect snapshots snapshots: renders as expected with default
         className="border-primary-100 border-bottom m-0 py-3 w-100"
       >
         <Radio
+          controlClassName="flex-shrink-0"
           id="formularesponse"
           value="formularesponse"
         >
@@ -203,6 +209,7 @@ exports[`AdvanceTypeSelect snapshots snapshots: renders as expected with default
         className="border-primary-100 border-bottom m-0 py-3 w-100"
       >
         <Radio
+          controlClassName="flex-shrink-0"
           id="problemwithhint"
           value="problemwithhint"
         >
@@ -296,6 +303,7 @@ exports[`AdvanceTypeSelect snapshots snapshots: renders as expected with problem
         className="border-primary-100 border-bottom m-0 py-3 w-100"
       >
         <Radio
+          controlClassName="flex-shrink-0"
           id="blankadvanced"
           value="blankadvanced"
         >
@@ -307,6 +315,7 @@ exports[`AdvanceTypeSelect snapshots snapshots: renders as expected with problem
         className="border-primary-100 border-bottom m-0 py-3 w-100"
       >
         <Radio
+          controlClassName="flex-shrink-0"
           id="circuitschematic"
           value="circuitschematic"
         >
@@ -351,6 +360,7 @@ exports[`AdvanceTypeSelect snapshots snapshots: renders as expected with problem
         className="border-primary-100 border-bottom m-0 py-3 w-100"
       >
         <Radio
+          controlClassName="flex-shrink-0"
           id="jsinputresponse"
           value="jsinputresponse"
         >
@@ -362,6 +372,7 @@ exports[`AdvanceTypeSelect snapshots snapshots: renders as expected with problem
         className="border-primary-100 border-bottom m-0 py-3 w-100"
       >
         <Radio
+          controlClassName="flex-shrink-0"
           id="customgrader"
           value="customgrader"
         >
@@ -406,6 +417,7 @@ exports[`AdvanceTypeSelect snapshots snapshots: renders as expected with problem
         className="border-primary-100 border-bottom m-0 py-3 w-100"
       >
         <Radio
+          controlClassName="flex-shrink-0"
           id="imageresponse"
           value="imageresponse"
         >
@@ -450,6 +462,7 @@ exports[`AdvanceTypeSelect snapshots snapshots: renders as expected with problem
         className="border-primary-100 border-bottom m-0 py-3 w-100"
       >
         <Radio
+          controlClassName="flex-shrink-0"
           id="formularesponse"
           value="formularesponse"
         >
@@ -461,6 +474,7 @@ exports[`AdvanceTypeSelect snapshots snapshots: renders as expected with problem
         className="border-primary-100 border-bottom m-0 py-3 w-100"
       >
         <Radio
+          controlClassName="flex-shrink-0"
           id="problemwithhint"
           value="problemwithhint"
         >
@@ -554,6 +568,7 @@ exports[`AdvanceTypeSelect snapshots snapshots: renders as expected with problem
         className="border-primary-100 border-bottom m-0 py-3 w-100"
       >
         <Radio
+          controlClassName="flex-shrink-0"
           id="blankadvanced"
           value="blankadvanced"
         >
@@ -565,6 +580,7 @@ exports[`AdvanceTypeSelect snapshots snapshots: renders as expected with problem
         className="border-primary-100 border-bottom m-0 py-3 w-100"
       >
         <Radio
+          controlClassName="flex-shrink-0"
           id="circuitschematic"
           value="circuitschematic"
         >
@@ -609,6 +625,7 @@ exports[`AdvanceTypeSelect snapshots snapshots: renders as expected with problem
         className="border-primary-100 border-bottom m-0 py-3 w-100"
       >
         <Radio
+          controlClassName="flex-shrink-0"
           id="jsinputresponse"
           value="jsinputresponse"
         >
@@ -620,6 +637,7 @@ exports[`AdvanceTypeSelect snapshots snapshots: renders as expected with problem
         className="border-primary-100 border-bottom m-0 py-3 w-100"
       >
         <Radio
+          controlClassName="flex-shrink-0"
           id="customgrader"
           value="customgrader"
         >
@@ -664,6 +682,7 @@ exports[`AdvanceTypeSelect snapshots snapshots: renders as expected with problem
         className="border-primary-100 border-bottom m-0 py-3 w-100"
       >
         <Radio
+          controlClassName="flex-shrink-0"
           id="imageresponse"
           value="imageresponse"
         >
@@ -708,6 +727,7 @@ exports[`AdvanceTypeSelect snapshots snapshots: renders as expected with problem
         className="border-primary-100 border-bottom m-0 py-3 w-100"
       >
         <Radio
+          controlClassName="flex-shrink-0"
           id="formularesponse"
           value="formularesponse"
         >
@@ -719,6 +739,7 @@ exports[`AdvanceTypeSelect snapshots snapshots: renders as expected with problem
         className="border-primary-100 border-bottom m-0 py-3 w-100"
       >
         <Radio
+          controlClassName="flex-shrink-0"
           id="problemwithhint"
           value="problemwithhint"
         >
@@ -812,6 +833,7 @@ exports[`AdvanceTypeSelect snapshots snapshots: renders as expected with problem
         className="border-primary-100 border-bottom m-0 py-3 w-100"
       >
         <Radio
+          controlClassName="flex-shrink-0"
           id="blankadvanced"
           value="blankadvanced"
         >
@@ -823,6 +845,7 @@ exports[`AdvanceTypeSelect snapshots snapshots: renders as expected with problem
         className="border-primary-100 border-bottom m-0 py-3 w-100"
       >
         <Radio
+          controlClassName="flex-shrink-0"
           id="circuitschematic"
           value="circuitschematic"
         >
@@ -867,6 +890,7 @@ exports[`AdvanceTypeSelect snapshots snapshots: renders as expected with problem
         className="border-primary-100 border-bottom m-0 py-3 w-100"
       >
         <Radio
+          controlClassName="flex-shrink-0"
           id="jsinputresponse"
           value="jsinputresponse"
         >
@@ -878,6 +902,7 @@ exports[`AdvanceTypeSelect snapshots snapshots: renders as expected with problem
         className="border-primary-100 border-bottom m-0 py-3 w-100"
       >
         <Radio
+          controlClassName="flex-shrink-0"
           id="customgrader"
           value="customgrader"
         >
@@ -922,6 +947,7 @@ exports[`AdvanceTypeSelect snapshots snapshots: renders as expected with problem
         className="border-primary-100 border-bottom m-0 py-3 w-100"
       >
         <Radio
+          controlClassName="flex-shrink-0"
           id="imageresponse"
           value="imageresponse"
         >
@@ -966,6 +992,7 @@ exports[`AdvanceTypeSelect snapshots snapshots: renders as expected with problem
         className="border-primary-100 border-bottom m-0 py-3 w-100"
       >
         <Radio
+          controlClassName="flex-shrink-0"
           id="formularesponse"
           value="formularesponse"
         >
@@ -977,6 +1004,7 @@ exports[`AdvanceTypeSelect snapshots snapshots: renders as expected with problem
         className="border-primary-100 border-bottom m-0 py-3 w-100"
       >
         <Radio
+          controlClassName="flex-shrink-0"
           id="problemwithhint"
           value="problemwithhint"
         >
@@ -1070,6 +1098,7 @@ exports[`AdvanceTypeSelect snapshots snapshots: renders as expected with problem
         className="border-primary-100 border-bottom m-0 py-3 w-100"
       >
         <Radio
+          controlClassName="flex-shrink-0"
           id="blankadvanced"
           value="blankadvanced"
         >
@@ -1081,6 +1110,7 @@ exports[`AdvanceTypeSelect snapshots snapshots: renders as expected with problem
         className="border-primary-100 border-bottom m-0 py-3 w-100"
       >
         <Radio
+          controlClassName="flex-shrink-0"
           id="circuitschematic"
           value="circuitschematic"
         >
@@ -1125,6 +1155,7 @@ exports[`AdvanceTypeSelect snapshots snapshots: renders as expected with problem
         className="border-primary-100 border-bottom m-0 py-3 w-100"
       >
         <Radio
+          controlClassName="flex-shrink-0"
           id="jsinputresponse"
           value="jsinputresponse"
         >
@@ -1136,6 +1167,7 @@ exports[`AdvanceTypeSelect snapshots snapshots: renders as expected with problem
         className="border-primary-100 border-bottom m-0 py-3 w-100"
       >
         <Radio
+          controlClassName="flex-shrink-0"
           id="customgrader"
           value="customgrader"
         >
@@ -1180,6 +1212,7 @@ exports[`AdvanceTypeSelect snapshots snapshots: renders as expected with problem
         className="border-primary-100 border-bottom m-0 py-3 w-100"
       >
         <Radio
+          controlClassName="flex-shrink-0"
           id="imageresponse"
           value="imageresponse"
         >
@@ -1224,6 +1257,7 @@ exports[`AdvanceTypeSelect snapshots snapshots: renders as expected with problem
         className="border-primary-100 border-bottom m-0 py-3 w-100"
       >
         <Radio
+          controlClassName="flex-shrink-0"
           id="formularesponse"
           value="formularesponse"
         >
@@ -1235,6 +1269,7 @@ exports[`AdvanceTypeSelect snapshots snapshots: renders as expected with problem
         className="border-primary-100 border-bottom m-0 py-3 w-100"
       >
         <Radio
+          controlClassName="flex-shrink-0"
           id="problemwithhint"
           value="problemwithhint"
         >
@@ -1328,6 +1363,7 @@ exports[`AdvanceTypeSelect snapshots snapshots: renders as expected with problem
         className="border-primary-100 border-bottom m-0 py-3 w-100"
       >
         <Radio
+          controlClassName="flex-shrink-0"
           id="blankadvanced"
           value="blankadvanced"
         >
@@ -1339,6 +1375,7 @@ exports[`AdvanceTypeSelect snapshots snapshots: renders as expected with problem
         className="border-primary-100 border-bottom m-0 py-3 w-100"
       >
         <Radio
+          controlClassName="flex-shrink-0"
           id="circuitschematic"
           value="circuitschematic"
         >
@@ -1383,6 +1420,7 @@ exports[`AdvanceTypeSelect snapshots snapshots: renders as expected with problem
         className="border-primary-100 border-bottom m-0 py-3 w-100"
       >
         <Radio
+          controlClassName="flex-shrink-0"
           id="jsinputresponse"
           value="jsinputresponse"
         >
@@ -1394,6 +1432,7 @@ exports[`AdvanceTypeSelect snapshots snapshots: renders as expected with problem
         className="border-primary-100 border-bottom m-0 py-3 w-100"
       >
         <Radio
+          controlClassName="flex-shrink-0"
           id="customgrader"
           value="customgrader"
         >
@@ -1438,6 +1477,7 @@ exports[`AdvanceTypeSelect snapshots snapshots: renders as expected with problem
         className="border-primary-100 border-bottom m-0 py-3 w-100"
       >
         <Radio
+          controlClassName="flex-shrink-0"
           id="imageresponse"
           value="imageresponse"
         >
@@ -1482,6 +1522,7 @@ exports[`AdvanceTypeSelect snapshots snapshots: renders as expected with problem
         className="border-primary-100 border-bottom m-0 py-3 w-100"
       >
         <Radio
+          controlClassName="flex-shrink-0"
           id="formularesponse"
           value="formularesponse"
         >
@@ -1493,6 +1534,7 @@ exports[`AdvanceTypeSelect snapshots snapshots: renders as expected with problem
         className="border-primary-100 border-bottom m-0 py-3 w-100"
       >
         <Radio
+          controlClassName="flex-shrink-0"
           id="problemwithhint"
           value="problemwithhint"
         >
@@ -1586,6 +1628,7 @@ exports[`AdvanceTypeSelect snapshots snapshots: renders as expected with problem
         className="border-primary-100 border-bottom m-0 py-3 w-100"
       >
         <Radio
+          controlClassName="flex-shrink-0"
           id="blankadvanced"
           value="blankadvanced"
         >
@@ -1597,6 +1640,7 @@ exports[`AdvanceTypeSelect snapshots snapshots: renders as expected with problem
         className="border-primary-100 border-bottom m-0 py-3 w-100"
       >
         <Radio
+          controlClassName="flex-shrink-0"
           id="circuitschematic"
           value="circuitschematic"
         >
@@ -1641,6 +1685,7 @@ exports[`AdvanceTypeSelect snapshots snapshots: renders as expected with problem
         className="border-primary-100 border-bottom m-0 py-3 w-100"
       >
         <Radio
+          controlClassName="flex-shrink-0"
           id="jsinputresponse"
           value="jsinputresponse"
         >
@@ -1652,6 +1697,7 @@ exports[`AdvanceTypeSelect snapshots snapshots: renders as expected with problem
         className="border-primary-100 border-bottom m-0 py-3 w-100"
       >
         <Radio
+          controlClassName="flex-shrink-0"
           id="customgrader"
           value="customgrader"
         >
@@ -1696,6 +1742,7 @@ exports[`AdvanceTypeSelect snapshots snapshots: renders as expected with problem
         className="border-primary-100 border-bottom m-0 py-3 w-100"
       >
         <Radio
+          controlClassName="flex-shrink-0"
           id="imageresponse"
           value="imageresponse"
         >
@@ -1740,6 +1787,7 @@ exports[`AdvanceTypeSelect snapshots snapshots: renders as expected with problem
         className="border-primary-100 border-bottom m-0 py-3 w-100"
       >
         <Radio
+          controlClassName="flex-shrink-0"
           id="formularesponse"
           value="formularesponse"
         >
@@ -1751,6 +1799,7 @@ exports[`AdvanceTypeSelect snapshots snapshots: renders as expected with problem
         className="border-primary-100 border-bottom m-0 py-3 w-100"
       >
         <Radio
+          controlClassName="flex-shrink-0"
           id="problemwithhint"
           value="problemwithhint"
         >
@@ -1844,6 +1893,7 @@ exports[`AdvanceTypeSelect snapshots snapshots: renders as expected with problem
         className="border-primary-100 border-bottom m-0 py-3 w-100"
       >
         <Radio
+          controlClassName="flex-shrink-0"
           id="blankadvanced"
           value="blankadvanced"
         >
@@ -1855,6 +1905,7 @@ exports[`AdvanceTypeSelect snapshots snapshots: renders as expected with problem
         className="border-primary-100 border-bottom m-0 py-3 w-100"
       >
         <Radio
+          controlClassName="flex-shrink-0"
           id="circuitschematic"
           value="circuitschematic"
         >
@@ -1899,6 +1950,7 @@ exports[`AdvanceTypeSelect snapshots snapshots: renders as expected with problem
         className="border-primary-100 border-bottom m-0 py-3 w-100"
       >
         <Radio
+          controlClassName="flex-shrink-0"
           id="jsinputresponse"
           value="jsinputresponse"
         >
@@ -1910,6 +1962,7 @@ exports[`AdvanceTypeSelect snapshots snapshots: renders as expected with problem
         className="border-primary-100 border-bottom m-0 py-3 w-100"
       >
         <Radio
+          controlClassName="flex-shrink-0"
           id="customgrader"
           value="customgrader"
         >
@@ -1954,6 +2007,7 @@ exports[`AdvanceTypeSelect snapshots snapshots: renders as expected with problem
         className="border-primary-100 border-bottom m-0 py-3 w-100"
       >
         <Radio
+          controlClassName="flex-shrink-0"
           id="imageresponse"
           value="imageresponse"
         >
@@ -1998,6 +2052,7 @@ exports[`AdvanceTypeSelect snapshots snapshots: renders as expected with problem
         className="border-primary-100 border-bottom m-0 py-3 w-100"
       >
         <Radio
+          controlClassName="flex-shrink-0"
           id="formularesponse"
           value="formularesponse"
         >
@@ -2009,6 +2064,7 @@ exports[`AdvanceTypeSelect snapshots snapshots: renders as expected with problem
         className="border-primary-100 border-bottom m-0 py-3 w-100"
       >
         <Radio
+          controlClassName="flex-shrink-0"
           id="problemwithhint"
           value="problemwithhint"
         >

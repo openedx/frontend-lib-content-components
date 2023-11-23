@@ -42,7 +42,7 @@ exports[`EditorProblemView component renders raw editor 1`] = `
     />
   </Component>
   <div
-    className="editProblemView d-flex flex-row flex-nowrap justify-content-end"
+    className="editProblemView d-flex flex-row flex-wrap justify-content-end"
   >
     <Container
       className="advancedEditorTopMargin p-0"
@@ -59,7 +59,7 @@ exports[`EditorProblemView component renders raw editor 1`] = `
       />
     </Container>
     <span
-      className="editProblemView-settingsColumn"
+      className="editProblemView-settingsColumn mb-3"
     >
       <injectIntl(ShimmedIntlComponent)
         problemType="advanced"
@@ -118,10 +118,10 @@ exports[`EditorProblemView component renders simple view 1`] = `
     </div>
   </Component>
   <div
-    className="editProblemView d-flex flex-row flex-nowrap justify-content-end"
+    className="editProblemView d-flex flex-row flex-wrap justify-content-end"
   >
     <span
-      className="flex-grow-1 mb-5"
+      className="editProblemView-mainColumn flex-grow-1 mb-3 mb-md-5"
     >
       <injectIntl(ShimmedIntlComponent) />
       <injectIntl(ShimmedIntlComponent) />
@@ -130,7 +130,7 @@ exports[`EditorProblemView component renders simple view 1`] = `
       />
     </span>
     <span
-      className="editProblemView-settingsColumn"
+      className="editProblemView-settingsColumn mb-3"
     >
       <injectIntl(ShimmedIntlComponent)
         problemType="multiplechoiceresponse"
