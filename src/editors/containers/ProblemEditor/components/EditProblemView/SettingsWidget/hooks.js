@@ -160,7 +160,7 @@ export const scoringCardHooks = (scoring, updateSettings, defaultValue) => {
 
   const handleWeightChange = (event) => {
     let weight = parseFloat(event.target.value);
-    if (_.isNaN(weight)) {
+    if (_.isNaN(weight) || weight < 0) {
       weight = 0;
     }
     updateSettings({ scoring: { ...scoring, weight } });
@@ -196,7 +196,7 @@ export const useAnswerSettings = (showAnswer, updateSettings) => {
 
   const handleAttemptsChange = (event) => {
     let attempts = parseInt(event.target.value);
-    if (_.isNaN(attempts)) {
+    if (_.isNaN(attempts) || attempts < 0) {
       attempts = 0;
     }
     updateSettings({ showAnswer: { ...showAnswer, afterAttempts: attempts } });
@@ -212,7 +212,7 @@ export const useAnswerSettings = (showAnswer, updateSettings) => {
 export const timerCardHooks = (updateSettings) => ({
   handleChange: (event) => {
     let time = parseInt(event.target.value);
-    if (_.isNaN(time)) {
+    if (_.isNaN(time) || time < 0) {
       time = 0;
     }
     updateSettings({ timeBetween: time });
