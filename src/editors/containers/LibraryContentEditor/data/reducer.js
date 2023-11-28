@@ -33,7 +33,10 @@ const library = createSlice({
     }),
     loadLibraryList: (state, { payload }) => ({
       ...state,
-      libraries: payload.libraries,
+      libraries: {
+        ...state.libraries,
+        ...payload.libraries,
+      },
     }),
     setLibraryId: (state, { payload }) => ({
       ...state,
@@ -60,7 +63,7 @@ const library = createSlice({
       selectedLibraryVersion: null,
       blocksInSelectedLibrary: [],
     }),
-    onModeChange: (state, { payload }) => ({
+    setModeForLibrary: (state, { payload }) => ({
       ...state,
       settings: {
         ...state.settings,
@@ -70,7 +73,7 @@ const library = createSlice({
         },
       },
     }),
-    onCountChange: (state, { payload }) => ({
+    setCountForLibrary: (state, { payload }) => ({
       ...state,
       settings: {
         ...state.settings,
@@ -80,7 +83,7 @@ const library = createSlice({
         },
       },
     }),
-    onShowResetChange: (state, { payload }) => ({
+    setShowResetForLibrary: (state, { payload }) => ({
       ...state,
       settings: {
         ...state.settings,
@@ -90,7 +93,7 @@ const library = createSlice({
         },
       },
     }),
-    onCandidatesChange: (state, { payload }) => ({
+    setCandidatesForLibrary: (state, { payload }) => ({
       ...state,
       settings: {
         ...state.settings,

@@ -37,20 +37,14 @@ export const RowCheckbox = ({ row }) => {
 };
 
 export const BlocksSelector = ({
+  initialRows,
   // candidates,
   mode,
   // redux
   blocksInSelectedLibrary,
-  // candidates,
-  onCandidatesChange,
+  setCandidatesForLibrary,
   selectedLibraryId,
 }) => {
-  console.log('testrerender', mode,
-  // redux
-  blocksInSelectedLibrary,
-  // candidates,
-  onCandidatesChange,
-  selectedLibraryId,)
 
   const {
     blockUrls,
@@ -63,6 +57,12 @@ export const BlocksSelector = ({
     mode,
     selectedLibraryId,
   });
+
+  // const initialRows = useMemo(() => {
+  //   getSelectedRows({
+  //   blocks: blocksInSelectedLibrary,
+  //   candidates,
+  // })}, [blocksInSelectedLibrary]);
 
   // const selectedRows = getSelectedRows(candidates)
 
@@ -90,7 +90,10 @@ export const BlocksSelector = ({
   const onSelectedRowsChanged = 
   useCallback(
     (selected) => {
-      console.log('testonselectedrowchanged', selectedLibraryId, selected, blocksInSelectedLibrary)
+      console.log('testonselectedrowchanged', selected, getCandidates({
+        blocks: blocksInSelectedLibrary,
+        rows: selected,
+      }))
 
       // const selectedCandidates = getCandidates({
       //   blocks: blocksInSelectedLibrary,
@@ -98,17 +101,26 @@ export const BlocksSelector = ({
       // })
       // console.log('testselectedcandidates', selectedCandidates)
 
-
-      onCandidatesChange({
-        libraryId: selectedLibraryId,
-        candidates: getCandidates({
-          blocks: blocksInSelectedLibrary,
-          rows: selected,
-        }),
-      })
+      // let run = false
+      // Object.values(selected).forEach(val => {
+      //   if (val) { run = true }
+      // })
+      // if (Object.keys(selected).length === 0) { run = false }
+      
+      // if (run) {
+      //   console.log('testonselectedrowchanged has run!', selected)
+        setCandidatesForLibrary({
+          libraryId: selectedLibraryId,
+          candidates: getCandidates({
+            blocks: blocksInSelectedLibrary,
+            rows: selected,
+          }),
+        })
+      // }
+      
     },
     [blocksInSelectedLibrary]
-  //   [onCandidatesChange],
+  //   [setCandidatesForLibrary],
   );
 
   // const ViewAction = ({ row }) => (
@@ -139,6 +151,8 @@ export const BlocksSelector = ({
         isSelectable
         isPaginated
         isSortable
+        // initialState={{ selectedRowIds: {}}}
+        initialState={{ selectedRowIds: initialRows }}
         // initialState={{ selectedRowIds: getSelectedRows({
         //   blocks: blocksInSelectedLibrary,
         //   candidates,
@@ -148,7 +162,7 @@ export const BlocksSelector = ({
         onSelectedRowsChanged={onSelectedRowsChanged}
         // onSelectedRowsChanged={selected => setSelectedRows(selected)}
         // onSelectedRowsChanged={selectedRows => 
-        //   onCandidatesChange({
+        //   setCandidatesForLibrary({
         //     libraryId: selectedLibraryId,
         //     candidates: getCandidates({
         //       blocks: blocksInSelectedLibrary,
@@ -184,7 +198,7 @@ export const BlocksSelector = ({
         // ]}
         // onSelectedRowsChanged={selected => setSelectedRows(selected)}
         // onSelectedRowsChanged={selectedRows => 
-        //   onCandidatesChange({
+        //   setCandidatesForLibrary({
         //     libraryId: selectedLibraryId,
         //     candidates: getCandidates({
         //       blocks: blocksInSelectedLibrary,
@@ -214,7 +228,7 @@ BlocksSelector.propTypes = {
   mode: PropTypes.string,
   // redux
   blocksInSelectedLibrary: PropTypes.arrayOf(PropTypes.shape({})),
-  onCandidatesChange: PropTypes.func.isRequired,
+  setCandidatesForLibrary: PropTypes.func.isRequired,
   selectedLibraryId: PropTypes.string,
 };
 
@@ -226,7 +240,7 @@ export const mapStateToProps = (state) => ({
 });
 
 export const mapDispatchToProps = {
-  onCandidatesChange: actions.onCandidatesChange,
+  setCandidatesForLibrary: actions.setCandidatesForLibrary,
 };
 
 export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(BlocksSelector));

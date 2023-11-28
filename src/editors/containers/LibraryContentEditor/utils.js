@@ -1,6 +1,17 @@
 import { modes } from "./constants";
 
 /**
+ * checks if library id is v1
+ * @param {[string]} libraryId - target library id
+ * @returns {[boolean]} true if library id is v1
+ */
+export const isV1Library = ({
+  libraryId,
+}) => {
+  return true
+};
+
+/**
  * gets the index of a library id
  * @param {[array]} libraries - list of all libraries
  * @param {[string]} libraryId - target library id
@@ -30,13 +41,13 @@ export const getSelectedRows = ({
   candidates,
 }) => {
   let selectedRows = {};
+  let candidatesMapping = {};
   if (candidates && candidates.length > 0) {
-    let candidatesMapping = {};
     candidates.forEach(candidate => {
       candidatesMapping[candidate] = true;
     });
     blocks.forEach((block, index) => {
-      selectedRows[index] = !!candidatesMapping[block];
+      selectedRows[index] = !!candidatesMapping[block.id];
     });
   }
   return selectedRows;

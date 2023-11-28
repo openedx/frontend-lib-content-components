@@ -77,10 +77,10 @@ describe('app reducer', () => {
         });
       });
       [
-        ['onModeChange', 'mode'],
-        ['onCountChange', 'count'],
-        ['onShowResetChange', 'showReset'],
-        ['onCandidatesChange', 'candidates'],
+        ['setModeForLibrary', 'mode'],
+        ['setCountForLibrary', 'count'],
+        ['setShowResetForLibrary', 'showReset'],
+        ['setCandidatesForLibrary', 'candidates'],
       ].map(args => setterTest(...args));
     });
   });

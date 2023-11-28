@@ -14,6 +14,7 @@ export const LibrarySelector = ({
   selectedLibraryId,
   settings,
 }) => {
+  console.log('testlibraryselector', libraries)
   const {
     selectionName,
     setSelectedLibraryIndex,

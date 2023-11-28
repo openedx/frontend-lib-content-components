@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Spinner } from '@edx/paragon';
@@ -8,6 +8,8 @@ import messages from './messages';
 import { useLibraryHook } from './hooks';
 import { selectors } from '../../data/redux';
 import { RequestKeys } from '../../data/constants/requests';
+import { getCandidates, getSelectedRows } from './utils';
+
 import EditorContainer from '../EditorContainer';
 import LibrarySelector from './LibrarySelector';
 import LibrarySettings from './LibrarySettings';
@@ -20,9 +22,9 @@ export const LibraryContentEditor = ({
   blockFailed,
   blockFinished,
   blockValue,
+  blocksInSelectedLibrary,
+  candidates,
   libraryPayload,
-  selectedLibraryId,
-  settings,
   // inject
   intl,
 }) => {
@@ -46,11 +48,17 @@ export const LibraryContentEditor = ({
     </div>
   );
 
+  const initialRows = useMemo(() => getSelectedRows({
+    blocks: blocksInSelectedLibrary,
+    candidates,
+  }), [blocksInSelectedLibrary]);
+
   const loaded = () => (
     <div>
       <LibrarySelector />
       <LibrarySettings />
       <BlocksSelector
+        initialRows={initialRows}
         // candidates={settings[selectedLibraryId]?.candidates}
         // mode={settings[selectedLibraryId]?.mode}
       />
@@ -76,7 +84,6 @@ LibraryContentEditor.defaultProps = {
   blockValue: null,
   libraryPayload: {},
   selectedLibraryId: null,
-  settings: {},
   studioEndpointUrl: '',
 };
 
@@ -90,7 +97,6 @@ LibraryContentEditor.propTypes = {
   blockFinished: PropTypes.bool.isRequired,
   libraryPayload: PropTypes.shape({}),
   selectedLibraryId: PropTypes.string,
-  settings: PropTypes.shape({}),
   studioEndpointUrl: PropTypes.string,
   // inject
   intl: intlShape.isRequired,
@@ -100,9 +106,9 @@ export const mapStateToProps = (state) => ({
   blockValue: selectors.app.blockValue(state),
   blockFailed: selectors.requests.isFailed(state, { requestKey: RequestKeys.fetchBlock }),
   blockFinished: selectors.requests.isFinished(state, { requestKey: RequestKeys.fetchBlock }),
+  blocksInSelectedLibrary: selectors.library.blocksInSelectedLibrary(state),
+  candidates: selectors.library.candidates(state),
   libraryPayload: selectors.library.libraryPayload(state),
-  selectedLibraryId: selectors.library.selectedLibraryId(state),
-  settings: selectors.library.settings(state),
   studioEndpointUrl: selectors.app.studioEndpointUrl(state),
 });
 

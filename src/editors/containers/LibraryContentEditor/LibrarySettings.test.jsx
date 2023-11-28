@@ -31,9 +31,9 @@ function renderComponent(props) {
 
 describe('LibrarySettings Component', () => {
     const props = {
-        onCountChange: jest.fn(),
-        onModeChange: jest.fn(),
-        onShowResetChange: jest.fn(),
+        setCountForLibrary: jest.fn(),
+        setModeForLibrary: jest.fn(),
+        setShowResetForLibrary: jest.fn(),
         selectedLibraryId: 0,
         settings: { 0: { mode: 'random', count: 5, showReset: true } },
     }
@@ -56,7 +56,7 @@ describe('LibrarySettings Component', () => {
         //Count calls handler with correct input
         const newCount = "345"
         fireEvent.change(container.querySelectorAll('input')[2], {target: {value: newCount}})
-        expect(props.onCountChange).toHaveBeenCalledWith({
+        expect(props.setCountForLibrary).toHaveBeenCalledWith({
             libraryId: props.selectedLibraryId,
             count: newCount
         });
@@ -64,7 +64,7 @@ describe('LibrarySettings Component', () => {
         // ShowReset calls hadnler with correct input
         fireEvent.click(getByRole("switch"))
 
-        expect(props.onShowResetChange).toHaveBeenCalledWith({
+        expect(props.setShowResetForLibrary).toHaveBeenCalledWith({
             libraryId: props.selectedLibraryId,
             showReset: false,
         });
@@ -72,7 +72,7 @@ describe('LibrarySettings Component', () => {
         // Mode Calls handler with correct input
         const newMode = 'selected'
         fireEvent.click(container.querySelector('#form-field2'))
-        expect(props.onModeChange).toHaveBeenCalledWith({
+        expect(props.setModeForLibrary).toHaveBeenCalledWith({
             libraryId: props.selectedLibraryId,
             mode: newMode
         });

@@ -19,9 +19,9 @@ export const useLibraryHook = ({
   useEffect(() => {
     if (blockFinished && !blockFailed) {
 
-    // TODO fetch v1 as well and put them in a list together
     dispatch(requests.fetchV2Libraries({
       onSuccess: (response) => {
+        console.log('testv2', response)
         dispatch(actions.library.loadLibraryList({
           libraries: response?.data,  //v2 libraries
           // libraries: response?.data?.libraries,  // this is for v1
@@ -34,6 +34,21 @@ export const useLibraryHook = ({
         }));
       },
     }));
+
+    // dispatch(requests.fetchV1Libraries({
+    //   onSuccess: (response) => {
+    //     console.log('testv1', response)
+    //     dispatch(actions.library.loadLibraryList({
+    //       libraries: response?.data?.libraries,  // this is for v1
+    //     }));
+    //   },
+    //   onFailure: (error) => {
+    //     dispatch(actions.requests.failRequest({
+    //       requestKey: RequestKeys.fetchV1Libraries,
+    //       error,
+    //     }));
+    //   },
+    // }));
   }
   }, [blockFinished, blockFailed]);
 
@@ -152,14 +167,14 @@ export const useBlocksHook = ({
   // useEffect(() => {
   //   console.log('testcandidates', candidates)
   //   if (!!prevLibraryId) {
-  //     dispatch(actions.library.onCandidatesChange({
+  //     dispatch(actions.library.setCandidatesForLibrary({
   //       libraryId: prevLibraryId,
   //       candidates: getCandidates({
   //         blocks: blocksInSelectedLibrary,
   //         rows: selectedRows,
   //       }),
   //     }));
-  //     // onCandidatesChange({
+  //     // setCandidatesForLibrary({
   //     //   libraryId: tempLibraryId,
   //     //   candidates: tempCandidates,
   //     // });
@@ -177,11 +192,11 @@ export const useBlocksHook = ({
 
   // useEffect(() => {
   //   if (mode === modes.random.value) {
-  //     // onCandidatesChange({
+  //     // setCandidatesForLibrary({
   //     //   libraryId: tempLibraryId,
   //     //   candidates: tempCandidates,
   //     // });
-  //     dispatch(actions.library.onCandidatesChange({
+  //     dispatch(actions.library.setCandidatesForLibrary({
   //       libraryId: selectedLibraryId,
   //       candidates: getCandidates({
   //         blocks: blocksInSelectedLibrary,

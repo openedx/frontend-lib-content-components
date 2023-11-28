@@ -36,7 +36,7 @@ const mockProps = {
   mode: 'selected',
   studioEndpointUrl: 'https://example.com',
   blocksInSelectedLibrary: [{}],
-  onCandidatesChange: jest.fn(),
+  setCandidatesForLibrary: jest.fn(),
   selectedLibraryId: 'exampleLibraryId',
 };
 
@@ -62,7 +62,7 @@ describe('BlocksSelector', () => {
     const { container } = renderComponent({ ...mockProps, mode: 'soMeThingElse' });
     expect(container.firstChild).toBeFalsy();
   });
-  it('renders rows and triggers onCandidatesChange when a row is selected', () => {
+  it('renders rows and triggers setCandidatesForLibrary when a row is selected', () => {
     const { getAllByTestId } = renderComponent(mockProps);
     const rowcheckboxes = getAllByTestId('datatable-select-column-checkbox-cell');
     expect(rowcheckboxes.length).toBe(2);

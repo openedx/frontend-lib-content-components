@@ -9,9 +9,9 @@ import { actions, selectors } from './data';
 
 export const LibrarySettings = ({
   // redux
-  onCountChange,
-  onModeChange,
-  onShowResetChange,
+  setCountForLibrary,
+  setModeForLibrary,
+  setShowResetForLibrary,
   selectedLibraryId,
   settings,
 }) => {
@@ -22,7 +22,7 @@ export const LibrarySettings = ({
       <div className='row mb-2 p-3 border-top'>
         <Form.RadioSet
           name='mode'
-          onChange={e => onModeChange({
+          onChange={e => setModeForLibrary({
             libraryId: selectedLibraryId,
             mode: e.target.value,
           })}
@@ -42,7 +42,7 @@ export const LibrarySettings = ({
         ? <div className='row mb-2 pb-3'>
             <Form.Control
               className='col col-2'
-              onChange= {(e) => onCountChange({
+              onChange= {(e) => setCountForLibrary({
                 libraryId: selectedLibraryId,
                 count: e.target.value,
               })}
@@ -60,7 +60,7 @@ export const LibrarySettings = ({
         <div className='col p-0'>
           <Form.Switch
             checked={settings[selectedLibraryId]?.showReset ?? false}
-            onChange={(e) => onShowResetChange({
+            onChange={(e) => setShowResetForLibrary({
               libraryId: selectedLibraryId,
               showReset: e.target.checked,
             })}
@@ -82,9 +82,9 @@ export const mapStateToProps = (state) => ({
 })
 
 export const mapDispatchToProps = {
-  onCountChange: actions.onCountChange,
-  onModeChange: actions.onModeChange,
-  onShowResetChange: actions.onShowResetChange,
+  setCountForLibrary: actions.setCountForLibrary,
+  setModeForLibrary: actions.setModeForLibrary,
+  setShowResetForLibrary: actions.setShowResetForLibrary,
 };
 
 export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(LibrarySettings));

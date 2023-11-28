@@ -7,6 +7,22 @@ import { actions, selectors } from '../../../data/redux';
 import api from './api';
 
 /**
+ * Tracked fetchV1Libraries api method.
+ * Tracked to the `fetchV1Libraries` request key.
+ * @param {[func]} onSuccess - onSuccess method ((response) => { ... })
+ * @param {[func]} onFailure - onFailure method ((error) => { ... })
+ */
+export const fetchV1Libraries = ({ ...rest }) => (dispatch, getState) => {
+  dispatch(networkRequest({
+    requestKey: RequestKeys.fetchV1Libraries,
+    promise: api.fetchV1Libraries({
+      studioEndpointUrl: selectors.app.studioEndpointUrl(getState()),
+    }),
+    ...rest,
+  }));
+};
+
+/**
  * Tracked fetchV2Libraries api method.
  * Tracked to the `fetchV2Libraries` request key.
  * @param {[func]} onSuccess - onSuccess method ((response) => { ... })
