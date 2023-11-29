@@ -57,11 +57,7 @@ export const LibraryContentEditor = ({
     <div>
       <LibrarySelector />
       <LibrarySettings />
-      <BlocksSelector
-        initialRows={initialRows}
-        // candidates={settings[selectedLibraryId]?.candidates}
-        // mode={settings[selectedLibraryId]?.mode}
-      />
+      <BlocksSelector initialRows={initialRows} />
     </div>
   );
 

@@ -33,10 +33,10 @@ const library = createSlice({
     }),
     loadLibraryList: (state, { payload }) => ({
       ...state,
-      libraries: {
+      libraries: [
         ...state.libraries,
         ...payload.libraries,
-      },
+      ],
     }),
     setLibraryId: (state, { payload }) => ({
       ...state,

@@ -6,7 +6,7 @@ import { actions } from '../../data/redux';
 import * as urls from './data/urls';
 import * as requests from './data/requests';
 import { RequestKeys } from '../../data/constants/requests';
-import { getLibraryIndex, getCandidates, getSelectedRows } from './utils';
+import { getLibraryIndex, getCandidates, getSelectedRows, isV1Library, getLibraryName } from './utils';
 
 export const useLibraryHook = ({
   blockFailed,
@@ -16,42 +16,39 @@ export const useLibraryHook = ({
 }) => {
   const dispatch = useDispatch();
   
+  // fetch libraries when block finishes loading
   useEffect(() => {
     if (blockFinished && !blockFailed) {
-
-    dispatch(requests.fetchV2Libraries({
-      onSuccess: (response) => {
-        console.log('testv2', response)
-        dispatch(actions.library.loadLibraryList({
-          libraries: response?.data,  //v2 libraries
-          // libraries: response?.data?.libraries,  // this is for v1
-        }));
-      },
-      onFailure: (error) => {
-        dispatch(actions.requests.failRequest({
-          requestKey: RequestKeys.fetchV2Libraries,
-          error,
-        }));
-      },
-    }));
-
-    // dispatch(requests.fetchV1Libraries({
-    //   onSuccess: (response) => {
-    //     console.log('testv1', response)
-    //     dispatch(actions.library.loadLibraryList({
-    //       libraries: response?.data?.libraries,  // this is for v1
-    //     }));
-    //   },
-    //   onFailure: (error) => {
-    //     dispatch(actions.requests.failRequest({
-    //       requestKey: RequestKeys.fetchV1Libraries,
-    //       error,
-    //     }));
-    //   },
-    // }));
-  }
+      dispatch(requests.fetchV2Libraries({
+        onSuccess: (response) => {
+          dispatch(actions.library.loadLibraryList({
+            libraries: response?.data,
+          }));
+        },
+        onFailure: (error) => {
+          dispatch(actions.requests.failRequest({
+            requestKey: RequestKeys.fetchV2Libraries,
+            error,
+          }));
+        },
+      }));
+      dispatch(requests.fetchV1Libraries({
+        onSuccess: (response) => {
+          dispatch(actions.library.loadLibraryList({
+            libraries: response?.data?.libraries,
+          }));
+        },
+        onFailure: (error) => {
+          dispatch(actions.requests.failRequest({
+            requestKey: RequestKeys.fetchV1Libraries,
+            error,
+          }));
+        },
+      }));
+    }
   }, [blockFinished, blockFailed]);
 
+  // load previously saved library info into state
   useEffect(() => {
     const metadata = blockValue?.data?.metadata;
     const selectedLibraryId = metadata?.source_library_id ?? null;
@@ -89,29 +86,29 @@ export const useLibrarySelectorHook = ({
     })
   );
 
-  // needed to fetch v1 library version
-  // useEffect(() => {
-  //   if (!!selectedLibraryId) {
-  //     dispatch(requests.fetchLibraryProperty({
-  //       libraryId: selectedLibraryId,
-  //       onSuccess: (response) => {
-  //         dispatch(actions.library.setLibraryVersion({
-  //           version: response?.data?.version,
-  //         }));
-  //       },
-  //       onFailure: (error) => {
-  //         dispatch(actions.requests.failRequest({
-  //           requestKey: RequestKeys.fetchLibraryProperty,
-  //           error,
-  //         }));
-  //       },
-  //     }));
-  //   }
-  // }, [selectedLibraryId]);
+  // fetch v1 library version
+  useEffect(() => {
+    if (!!selectedLibraryId && isV1Library(selectedLibraryId)) {
+      dispatch(requests.fetchLibraryProperty({
+        libraryId: selectedLibraryId,
+        onSuccess: (response) => {
+          dispatch(actions.library.setLibraryVersion({
+            version: response?.data?.version,
+          }));
+        },
+        onFailure: (error) => {
+          dispatch(actions.requests.failRequest({
+            requestKey: RequestKeys.fetchLibraryProperty,
+            error,
+          }));
+        },
+      }));
+    }
+  }, [selectedLibraryId]);
 
   useEffect(() => {
     if (selectedLibraryIndex !== null) {
-      const selectedLibraryId = libraries[selectedLibraryIndex].id;
+      const selectedLibraryId = libraries[selectedLibraryIndex].id || libraries[selectedLibraryIndex].library_key;
       dispatch(actions.library.setLibraryId({ selectedLibraryId }));
       dispatch(actions.library.setLibraryVersion({ version: libraries[selectedLibraryIndex].version }))
       if (!settings[selectedLibraryId]) {
@@ -123,23 +120,20 @@ export const useLibrarySelectorHook = ({
   }, [selectedLibraryIndex]);
 
   return {
+    selectionName: getLibraryName(libraries[selectedLibraryIndex])
+      ? getLibraryName(libraries[selectedLibraryIndex])
+      : 'Select a library',
     setSelectedLibraryIndex,
-    selectionName: (selectedLibraryIndex === null)
-      ? 'Select a library'
-      : libraries[selectedLibraryIndex]?.title,
   };
 };
 
 export const useBlocksHook = ({
   blocksInSelectedLibrary,
-  // candidates,
-  mode,
   selectedLibraryId,
 }) => {
   const dispatch = useDispatch();
-  // const [ prevLibraryId, setPrevLibraryId ] = useState(null);
-  // const [ selectedRows, setSelectedRows ] = useState({});
 
+  // fetch v2 library content
   useEffect(() => {
     if (!!selectedLibraryId) {
       dispatch(requests.fetchLibraryContent({
@@ -157,54 +151,7 @@ export const useBlocksHook = ({
         },
       }));
     }
-    // setSelectedRows(candidates)
   }, [selectedLibraryId]);
-
-  // useEffect(() => {
-
-  // }, [selectedRows]);
-  
-  // useEffect(() => {
-  //   console.log('testcandidates', candidates)
-  //   if (!!prevLibraryId) {
-  //     dispatch(actions.library.setCandidatesForLibrary({
-  //       libraryId: prevLibraryId,
-  //       candidates: getCandidates({
-  //         blocks: blocksInSelectedLibrary,
-  //         rows: selectedRows,
-  //       }),
-  //     }));
-  //     // setCandidatesForLibrary({
-  //     //   libraryId: tempLibraryId,
-  //     //   candidates: tempCandidates,
-  //     // });
-  //   }
-  //   setPrevLibraryId(selectedLibraryId);
-  //   setSelectedRows(
-  //     getSelectedRows({
-  //       blocks: blocksInSelectedLibrary,
-  //       candidates,
-  //     })
-  //   );
-  //   // setTempLibraryId(selectedLibraryId);
-  //   // setTempCandidates(candidates);
-  // }, [selectedLibraryId]);
-
-  // useEffect(() => {
-  //   if (mode === modes.random.value) {
-  //     // setCandidatesForLibrary({
-  //     //   libraryId: tempLibraryId,
-  //     //   candidates: tempCandidates,
-  //     // });
-  //     dispatch(actions.library.setCandidatesForLibrary({
-  //       libraryId: selectedLibraryId,
-  //       candidates: getCandidates({
-  //         blocks: blocksInSelectedLibrary,
-  //         rows: selectedRows,
-  //       }),
-  //     }));
-  //   }
-  // }, [mode]);
 
   const blockTypeDisplay = (type) => {
     if (type === 'html') return 'Text';
@@ -214,8 +161,6 @@ export const useBlocksHook = ({
   };
 
   return ({
-    // selectedRows,
-    // setSelectedRows,
     blockUrls: blocksInSelectedLibrary.map(block => (
       urls.blockContent({ blockId: block.id })
     )),

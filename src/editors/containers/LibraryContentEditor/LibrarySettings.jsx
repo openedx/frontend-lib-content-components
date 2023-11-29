@@ -6,6 +6,7 @@ import { Form } from '@edx/paragon';
 import messages from './messages';
 import { modes } from './constants';
 import { actions, selectors } from './data';
+import { isV1Library } from './utils';
 
 export const LibrarySettings = ({
   // redux
@@ -19,26 +20,32 @@ export const LibrarySettings = ({
 
   return (
     <div className='col'>
-      <div className='row mb-2 p-3 border-top'>
-        <Form.RadioSet
-          name='mode'
-          onChange={e => setModeForLibrary({
-            libraryId: selectedLibraryId,
-            mode: e.target.value,
-          })}
-          value={settings[selectedLibraryId]?.mode ?? modes.random.value}
-        >
-          <Form.Radio value={modes.random.value}>
-            <FormattedMessage {...modes.random.description} />
-          </Form.Radio>
-          <Form.Radio value={modes.selected.value}>
-            <FormattedMessage {...modes.selected.description} />
-          </Form.Radio>
-
-        </Form.RadioSet>
-      </div>
       {
-        settings[selectedLibraryId]?.mode === modes.random.value
+        !isV1Library(selectedLibraryId)
+        ? <div className='row mb-2 p-3 border-top'>
+            <Form.RadioSet
+              name='mode'
+              onChange={e => setModeForLibrary({
+                libraryId: selectedLibraryId,
+                mode: e.target.value,
+              })}
+              value={settings[selectedLibraryId]?.mode ?? modes.random.value}
+            >
+              <Form.Radio value={modes.random.value}>
+                <FormattedMessage {...modes.random.description} />
+              </Form.Radio>
+              <Form.Radio value={modes.selected.value}>
+                <FormattedMessage {...modes.selected.description} />
+              </Form.Radio>
+
+            </Form.RadioSet>
+          </div>
+        : <div className='row mb-2 p-3 border-top'>
+            <FormattedMessage {...messages.isV1LibraryDescription} />
+          </div>
+      }
+      {
+        (settings[selectedLibraryId]?.mode === modes.random.value) && !isV1Library(selectedLibraryId)
         ? <div className='row mb-2 pb-3'>
             <Form.Control
               className='col col-2'
@@ -55,7 +62,6 @@ export const LibrarySettings = ({
           </div>
         : null
       }
-      
       <div className='row mb-2 p-3 border-top'>
         <div className='col p-0'>
           <Form.Switch

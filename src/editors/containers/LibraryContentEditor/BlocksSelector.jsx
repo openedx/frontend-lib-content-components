@@ -11,26 +11,19 @@ import { modes } from './constants';
 import { getCandidates, getSelectedRows } from './utils';
 
 export const RowCheckbox = ({ row }) => {
-  // const { id } = row;
   const {
     indeterminate,
     checked,
     ...toggleRowSelectedProps
   } = row.getToggleRowSelectedProps();
 
-
-  // console.log('testcheckbox', selectedRows, toggleRowSelectedProps)
-
   return (
     <div className='text-center'>
       <CheckboxControl
         {...toggleRowSelectedProps}
         title="Toggle row selected"
-        // checked={selectedRows[id]}
-        // checked={true}
         checked={checked}
         isIndeterminate={false}
-        // data-testid={SELECT_ONE_TEST_ID}
       />
     </div>
   );
@@ -38,7 +31,6 @@ export const RowCheckbox = ({ row }) => {
 
 export const BlocksSelector = ({
   initialRows,
-  // candidates,
   mode,
   // redux
   blocksInSelectedLibrary,
@@ -49,22 +41,10 @@ export const BlocksSelector = ({
   const {
     blockUrls,
     blocksTableData,
-    // selectedRows,
-    // setSelectedRows,
   } = useBlocksHook({
     blocksInSelectedLibrary,
-    // candidates,
-    mode,
     selectedLibraryId,
   });
-
-  // const initialRows = useMemo(() => {
-  //   getSelectedRows({
-  //   blocks: blocksInSelectedLibrary,
-  //   candidates,
-  // })}, [blocksInSelectedLibrary]);
-
-  // const selectedRows = getSelectedRows(candidates)
 
   const columns = [
     {
@@ -81,46 +61,20 @@ export const BlocksSelector = ({
     id: 'selection',
     Header: () => null,
     Cell: RowCheckbox,
-    // Cell: (props) => <RowCheckbox {...props} 
-    // // selectedRows={selectedRows} 
-    // />,
     disableSortBy: true,
   };
 
-  const onSelectedRowsChanged = 
-  useCallback(
+  const onSelectedRowsChanged = useCallback(
     (selected) => {
-      console.log('testonselectedrowchanged', selected, getCandidates({
-        blocks: blocksInSelectedLibrary,
-        rows: selected,
-      }))
-
-      // const selectedCandidates = getCandidates({
-      //   blocks: blocksInSelectedLibrary,
-      //   rows: selected,
-      // })
-      // console.log('testselectedcandidates', selectedCandidates)
-
-      // let run = false
-      // Object.values(selected).forEach(val => {
-      //   if (val) { run = true }
-      // })
-      // if (Object.keys(selected).length === 0) { run = false }
-      
-      // if (run) {
-      //   console.log('testonselectedrowchanged has run!', selected)
-        setCandidatesForLibrary({
-          libraryId: selectedLibraryId,
-          candidates: getCandidates({
-            blocks: blocksInSelectedLibrary,
-            rows: selected,
-          }),
-        })
-      // }
-      
+      setCandidatesForLibrary({
+        libraryId: selectedLibraryId,
+        candidates: getCandidates({
+          blocks: blocksInSelectedLibrary,
+          rows: selected,
+        }),
+      })
     },
     [blocksInSelectedLibrary]
-  //   [setCandidatesForLibrary],
   );
 
   // const ViewAction = ({ row }) => (
@@ -151,62 +105,10 @@ export const BlocksSelector = ({
         isSelectable
         isPaginated
         isSortable
-        // initialState={{ selectedRowIds: {}}}
         initialState={{ selectedRowIds: initialRows }}
-        // initialState={{ selectedRowIds: getSelectedRows({
-        //   blocks: blocksInSelectedLibrary,
-        //   candidates,
-        // }) }}
         manualSelectColumn={selectColumn}
-        // onSelectedRowsChanged={props => console.log('testselected', props)}
         onSelectedRowsChanged={onSelectedRowsChanged}
-        // onSelectedRowsChanged={selected => setSelectedRows(selected)}
-        // onSelectedRowsChanged={selectedRows => 
-        //   setCandidatesForLibrary({
-        //     libraryId: selectedLibraryId,
-        //     candidates: getCandidates({
-        //       blocks: blocksInSelectedLibrary,
-        //       rows: selectedRows,
-        //     }),
-        //   })
-        // }
       >
-      {/* <DataTable
-        isSelectable
-        isPaginated
-        isSortable
-        itemCount={blocksTableData.length}
-        data={blocksTableData}
-        // initialState={{ selectedRowIds: selectedRows }}
-        initialState={{ selectedRowIds: {0: true}}}
-        columns={[
-          {
-            Header: 'Name',
-            accessor: 'display_name',
-          },
-          {
-            Header: 'Block Type',
-            accessor: 'block_type',
-          },
-        ]}
-        // additionalColumns={[
-        //   {
-        //     id: 'action',
-        //     Header: 'View',
-        //     Cell: ({ row }) => ViewAction({ row }),
-        //   }
-        // ]}
-        // onSelectedRowsChanged={selected => setSelectedRows(selected)}
-        // onSelectedRowsChanged={selectedRows => 
-        //   setCandidatesForLibrary({
-        //     libraryId: selectedLibraryId,
-        //     candidates: getCandidates({
-        //       blocks: blocksInSelectedLibrary,
-        //       rows: selectedRows,
-        //     }),
-        //   })
-        // }
-      > */}
         <DataTable.TableControlBar />
         <DataTable.Table />
         <DataTable.EmptyTable content="No blocks found." />
@@ -218,13 +120,13 @@ export const BlocksSelector = ({
 
 BlocksSelector.defaultProps = {
   blocksInSelectedLibrary: [],
-  candidates: [],
+  initialRows: {},
   mode: '',
   selectedLibraryId: null,
 };
 
 BlocksSelector.propTypes = {
-  candidates: PropTypes.arrayOf(PropTypes.string),
+  initialRows: PropTypes.shape({}),
   mode: PropTypes.string,
   // redux
   blocksInSelectedLibrary: PropTypes.arrayOf(PropTypes.shape({})),
@@ -234,7 +136,6 @@ BlocksSelector.propTypes = {
 
 export const mapStateToProps = (state) => ({
   blocksInSelectedLibrary: selectors.blocksInSelectedLibrary(state),
-  // candidates: selectors.candidates(state),
   mode: selectors.mode(state),
   selectedLibraryId: selectors.selectedLibraryId(state),
 });

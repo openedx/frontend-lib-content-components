@@ -61,6 +61,11 @@ const messages = defineMessages({
     defaultMessage: 'View',
     description: 'button on block selection table for viewing block in a separate browser tab',
   },
+  isV1LibraryDescription: {
+    id: 'authoring.library_content.isV1Library.description',
+    defaultMessage: 'The selected library is an older version and some block selection options are not available.',
+    description: 'message explaining that option selection is not available in the case of a v1 library',
+  },
 });
 
 export default messages;

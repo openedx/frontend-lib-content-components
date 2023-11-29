@@ -1,14 +1,36 @@
 import { modes } from "./constants";
 
 /**
- * checks if library id is v1
+ * checks if library id is v1. defaults to false
  * @param {[string]} libraryId - target library id
  * @returns {[boolean]} true if library id is v1
  */
-export const isV1Library = ({
-  libraryId,
-}) => {
-  return true
+export const isV1Library = (libraryId) => {
+  if (!libraryId || (typeof libraryId !== 'string')) {
+    return false;
+  }
+  if (libraryId.split(':')[0] === 'library-v1') {
+    return true;
+  }
+  return false;
+};
+
+/**
+ * gets the name of a library whether it is v1 or v2
+ * @param {[object]} library - library
+ * @returns {[string]} library name. returns an empty string if nothing is found
+ */
+export const getLibraryName = (library) => {
+  if (!library) {
+    return '';
+  }
+  if (library.title) {
+    return library.title;
+  }
+  if (library.display_name) {
+    return library.display_name;
+  }
+  return '';
 };
 
 /**
@@ -21,7 +43,12 @@ export const getLibraryIndex = ({
   libraries,
   libraryId,
 }) => {
-  const index = libraries.findIndex(library => library.id === libraryId);
+  const index = libraries.findIndex(library => {
+    if (isV1Library(libraryId)) {
+      return library.library_key === libraryId;
+    }
+    return library.id === libraryId;
+  });
   if (index >= 0) {
     return index;
   } else {

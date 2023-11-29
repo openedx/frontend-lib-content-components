@@ -7,6 +7,7 @@ import { FormattedMessage, injectIntl, intlShape } from '@edx/frontend-platform/
 import messages from './messages';
 import { selectors } from './data';
 import { useLibrarySelectorHook } from './hooks';
+import { getLibraryName } from './utils';
 
 export const LibrarySelector = ({
   // redux
@@ -14,7 +15,6 @@ export const LibrarySelector = ({
   selectedLibraryId,
   settings,
 }) => {
-  console.log('testlibraryselector', libraries)
   const {
     selectionName,
     setSelectedLibraryIndex,
@@ -42,7 +42,7 @@ export const LibrarySelector = ({
             </Dropdown.Item>
             {libraries.map((library, index) => (
               <Dropdown.Item key={index} onClick={() => setSelectedLibraryIndex(index)}>
-                {library.title}
+                {getLibraryName(library)}
               </Dropdown.Item>
             ))}
           </Dropdown.Menu>
