@@ -64,15 +64,13 @@ export const BlocksSelector = ({
   };
 
   const onSelectedRowsChanged = useCallback(
-    (selected) => {
-      setCandidatesForLibrary({
-        libraryId: selectedLibraryId,
-        candidates: getCandidates({
-          blocks: blocksInSelectedLibrary,
-          rows: selected,
-        }),
-      })
-    },
+    (selected) => setCandidatesForLibrary({
+      libraryId: selectedLibraryId,
+      candidates: getCandidates({
+        blocks: blocksInSelectedLibrary,
+        rows: selected,
+      }),
+    }),
     [blocksInSelectedLibrary]
   );
 

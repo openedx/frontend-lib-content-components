@@ -71,12 +71,7 @@ export const libraryPayload = createSelector(
       }
       count = settings[selectedLibraryId].count.toString();
       showReset = settings[selectedLibraryId].showReset;
-      for (const [key, selected] of Object.entries(settings[selectedLibraryId].candidates)) {
-        if (selected) {
-          // candidates.push([ blocksInSelectedLibrary[key]?.block_type, blocksInSelectedLibrary[key]?.id ]);
-          candidates.push(blocksInSelectedLibrary[key]?.id);
-        }
-      }
+      candidates = settings[selectedLibraryId].candidates;
     }
     return {
       libraryId: selectedLibraryId,

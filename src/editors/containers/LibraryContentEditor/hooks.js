@@ -48,7 +48,6 @@ export const useLibraryHook = ({
 
   // load previously saved library info into state
   useEffect(() => {
-    console.log('test', blockValue)
     const metadata = blockValue?.data?.metadata;
     const selectedLibraryId = metadata?.source_library_id ?? null;
     let version = '';
