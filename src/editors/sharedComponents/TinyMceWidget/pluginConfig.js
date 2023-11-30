@@ -31,7 +31,7 @@ const pluginConfig = ({ isLibrary, placeholder, editorType }) => {
         image,
         imageTools,
         quickToolbar,
-        plugins.embediframe
+        plugins.embediframe,
       ].join(' '),
       menubar: false,
       toolbar: toolbar ? mapToolbars([
