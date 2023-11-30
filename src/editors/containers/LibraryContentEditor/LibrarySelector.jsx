@@ -50,10 +50,16 @@ export const LibrarySelector = ({
           <Dropdown.Item key={-1} onClick={() => onLibrarySelect(null)}>
             <FormattedMessage {...messages.librarySelectorDropdownDefault} />
           </Dropdown.Item>
-          {Object.entries(libraries).map(([id, library], index) => (
-            <Dropdown.Item key={index} onClick={() => onLibrarySelect(id)}>
-              {getLibraryName(library)}
-            </Dropdown.Item>
+          {Object.entries(libraries)
+            .sort((a, b) => {
+              const aName = a[1].title || a[1].display_name;
+              const bName = b[1].title || b[1].display_name;
+              return aName < bName ? -1 : 1;
+            })
+            .map(([id, library], index) => (
+              <Dropdown.Item key={index} onClick={() => onLibrarySelect(id)}>
+                {getLibraryName(library)}
+              </Dropdown.Item>
           ))}
         </Dropdown.Menu>
       </Dropdown>
