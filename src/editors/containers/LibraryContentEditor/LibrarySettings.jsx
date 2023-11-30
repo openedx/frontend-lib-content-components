@@ -16,7 +16,9 @@ export const LibrarySettings = ({
   selectedLibraryId,
   settings,
 }) => {
-  if (selectedLibraryId === null) return <></>;
+  if (selectedLibraryId === null) {
+    return <></>;
+  }
 
   return (
     <div className='col'>

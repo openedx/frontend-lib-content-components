@@ -3,7 +3,7 @@ import { modes } from '../constants';
 import { StrictDict } from '../../../utils';
 
 const initialState = {
-  libraries: [],
+  libraries: {},
   selectedLibraryId: null,
   selectedLibraryVersion: null,
   settings: {
@@ -31,12 +31,12 @@ const library = createSlice({
       selectedLibraryVersion: payload.version,
       settings: payload.settings,
     }),
-    loadLibraryList: (state, { payload }) => ({
+    loadLibraries: (state, { payload }) => ({
       ...state,
-      libraries: [
+      libraries: {
         ...state.libraries,
         ...payload.libraries,
-      ],
+      },
     }),
     setLibraryId: (state, { payload }) => ({
       ...state,

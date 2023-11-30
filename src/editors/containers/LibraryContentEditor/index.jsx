@@ -8,7 +8,7 @@ import messages from './messages';
 import { useLibraryHook } from './hooks';
 import { selectors } from '../../data/redux';
 import { RequestKeys } from '../../data/constants/requests';
-import { getCandidates, getSelectedRows } from './utils';
+import { getSelectedRows } from './utils';
 
 import EditorContainer from '../EditorContainer';
 import LibrarySelector from './LibrarySelector';

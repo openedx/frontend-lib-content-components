@@ -14,58 +14,66 @@ export const LibrarySelector = ({
   libraries,
   selectedLibraryId,
   settings,
+  // injected
+  intl,
 }) => {
   const {
-    selectionName,
-    setSelectedLibraryIndex,
+    onLibrarySelect,
   } = useLibrarySelectorHook({
     libraries,
-    selectedLibraryId,
     settings,
   });
 
-  return (
-    <div className='mb-3'>
-      {libraries
-      ? (
-        <Dropdown className='w-100'>
-          <Dropdown.Toggle
-            className='w-100'
-            id='library-selector'
-            variant='outline-primary'
-          >
-            {selectionName}
-          </Dropdown.Toggle>
-          <Dropdown.Menu>
-            <Dropdown.Item key={-1} onClick={() => setSelectedLibraryIndex(null)}>
-              <FormattedMessage {...messages.librarySelectorDropdownDefault} />
-            </Dropdown.Item>
-            {libraries.map((library, index) => (
-              <Dropdown.Item key={index} onClick={() => setSelectedLibraryIndex(index)}>
-                {getLibraryName(library)}
-              </Dropdown.Item>
-            ))}
-          </Dropdown.Menu>
-        </Dropdown>
-      )
-      : (
+  if (Object.keys(libraries).length === 0) {
+    return (
+      <div className='mb-3'>
         <span>
           <FormattedMessage {...messages.noLibraryMessage} />
         </span>
-      )}
+      </div>
+    );
+  }
+
+  return (
+    <div className='mb-3'>
+      <Dropdown className='w-100'>
+        <Dropdown.Toggle
+          className='w-100'
+          id='library-selector'
+          variant='outline-primary'
+        >
+          {selectedLibraryId 
+            ? getLibraryName(libraries[selectedLibraryId])
+            : intl.formatMessage(messages.librarySelectorDropdownDefault)}
+        </Dropdown.Toggle>
+        <Dropdown.Menu>
+          <Dropdown.Item key={-1} onClick={() => onLibrarySelect(null)}>
+            <FormattedMessage {...messages.librarySelectorDropdownDefault} />
+          </Dropdown.Item>
+          {Object.entries(libraries).map(([id, library], index) => (
+            <Dropdown.Item key={index} onClick={() => onLibrarySelect(id)}>
+              {getLibraryName(library)}
+            </Dropdown.Item>
+          ))}
+        </Dropdown.Menu>
+      </Dropdown>
     </div>
   );
 };
 
 LibrarySelector.defaultProps = {
   libraries: [],
+  selectedLibraryId: null,
   settings: {},
 };
 
 LibrarySelector.propTypes = {
   // redux
   libraries: PropTypes.array,
+  selectedLibraryId: PropTypes.string,
   settings: PropTypes.object,
+  // injected
+  intl: intlShape.isRequired,
 };
 
 export const mapStateToProps = (state) => ({

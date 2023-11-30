@@ -24,36 +24,7 @@ export const getLibraryName = (library) => {
   if (!library) {
     return '';
   }
-  if (library.title) {
-    return library.title;
-  }
-  if (library.display_name) {
-    return library.display_name;
-  }
-  return '';
-};
-
-/**
- * gets the index of a library id
- * @param {[array]} libraries - list of all libraries
- * @param {[string]} libraryId - target library id
- * @returns {[number]} index of the library id or null if it can't be found
- */
-export const getLibraryIndex = ({
-  libraries,
-  libraryId,
-}) => {
-  const index = libraries.findIndex(library => {
-    if (isV1Library(libraryId)) {
-      return library.library_key === libraryId;
-    }
-    return library.id === libraryId;
-  });
-  if (index >= 0) {
-    return index;
-  } else {
-    return null;
-  }
+  return library.title || library.display_name || '';
 };
 
 /**

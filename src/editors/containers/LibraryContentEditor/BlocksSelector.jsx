@@ -1,14 +1,14 @@
-import React, { useMemo, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { FormattedMessage, injectIntl, intlShape } from '@edx/frontend-platform/i18n';
-import { Button, CheckboxControl, DataTable, DataTableContext, Form } from '@edx/paragon';
+import { CheckboxControl, DataTable } from '@edx/paragon';
 
 import messages from './messages';
 import { actions, selectors } from './data';
 import { useBlocksHook } from './hooks';
 import { modes } from './constants';
-import { getCandidates, getSelectedRows } from './utils';
+import { getCandidates } from './utils';
 
 export const RowCheckbox = ({ row }) => {
   const {
@@ -39,7 +39,6 @@ export const BlocksSelector = ({
 }) => {
 
   const {
-    blockUrls,
     blocksTableData,
   } = useBlocksHook({
     blocksInSelectedLibrary,
@@ -77,20 +76,9 @@ export const BlocksSelector = ({
     [blocksInSelectedLibrary]
   );
 
-  // const ViewAction = ({ row }) => (
-  //   <Button
-  //     className='p-0'
-  //     onClick={() => {
-  //       window.open(blockLinks[row.id], '_blank')
-  //     }}
-  //     size='sm'
-  //     variant='link'
-  //   >
-  //     <FormattedMessage {...messages.tableViewButton} />
-  //   </Button>
-  // );
-
-  if (selectedLibraryId === null || mode !== modes.selected.value) return <></>;
+  if (selectedLibraryId === null || mode !== modes.selected.value) {
+    return <></>;
+  }
 
   return (
     <div className='mb-5 pt-3 border-top'>

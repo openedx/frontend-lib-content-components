@@ -3,7 +3,7 @@ import { RequestKeys } from '../../../data/constants/requests';
 import { networkRequest } from '../../../data/redux/thunkActions/requests';
 
 /* eslint-disable import/no-cycle */
-import { actions, selectors } from '../../../data/redux';
+import { selectors } from '../../../data/redux';
 import api from './api';
 
 /**

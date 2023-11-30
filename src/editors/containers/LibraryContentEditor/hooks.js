@@ -1,12 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { modes } from './constants';
 import { actions } from '../../data/redux';
-import * as urls from './data/urls';
 import * as requests from './data/requests';
 import { RequestKeys } from '../../data/constants/requests';
-import { getLibraryIndex, getCandidates, getSelectedRows, isV1Library, getLibraryName } from './utils';
 
 export const useLibraryHook = ({
   blockFailed,
@@ -21,9 +19,9 @@ export const useLibraryHook = ({
     if (blockFinished && !blockFailed) {
       dispatch(requests.fetchV2Libraries({
         onSuccess: (response) => {
-          dispatch(actions.library.loadLibraryList({
-            libraries: response?.data,
-          }));
+          let libraries = {};
+          response?.data.map(library => libraries[library.id] = library);
+          dispatch(actions.library.loadLibraries({ libraries }));
         },
         onFailure: (error) => {
           dispatch(actions.requests.failRequest({
@@ -34,9 +32,9 @@ export const useLibraryHook = ({
       }));
       dispatch(requests.fetchV1Libraries({
         onSuccess: (response) => {
-          dispatch(actions.library.loadLibraryList({
-            libraries: response?.data?.libraries,
-          }));
+          let libraries = {};
+          response?.data?.libraries.map(library => libraries[library.library_key] = library);
+          dispatch(actions.library.loadLibraries({ libraries }));
         },
         onFailure: (error) => {
           dispatch(actions.requests.failRequest({
@@ -50,6 +48,7 @@ export const useLibraryHook = ({
 
   // load previously saved library info into state
   useEffect(() => {
+    console.log('test', blockValue)
     const metadata = blockValue?.data?.metadata;
     const selectedLibraryId = metadata?.source_library_id ?? null;
     let version = '';
@@ -75,55 +74,22 @@ export const useLibraryHook = ({
 
 export const useLibrarySelectorHook = ({
   libraries,
-  selectedLibraryId,
   settings,
 }) => {
   const dispatch = useDispatch();
-  const [ selectedLibraryIndex, setSelectedLibraryIndex ] = useState(
-    getLibraryIndex({
-      libraries,
-      libraryId: selectedLibraryId,
-    })
-  );
-
-  // fetch v1 library version
-  useEffect(() => {
-    if (!!selectedLibraryId && isV1Library(selectedLibraryId)) {
-      dispatch(requests.fetchLibraryProperty({
-        libraryId: selectedLibraryId,
-        onSuccess: (response) => {
-          dispatch(actions.library.setLibraryVersion({
-            version: response?.data?.version,
-          }));
-        },
-        onFailure: (error) => {
-          dispatch(actions.requests.failRequest({
-            requestKey: RequestKeys.fetchLibraryProperty,
-            error,
-          }));
-        },
-      }));
-    }
-  }, [selectedLibraryId]);
-
-  useEffect(() => {
-    if (selectedLibraryIndex !== null) {
-      const selectedLibraryId = libraries[selectedLibraryIndex].id || libraries[selectedLibraryIndex].library_key;
-      dispatch(actions.library.setLibraryId({ selectedLibraryId }));
-      dispatch(actions.library.setLibraryVersion({ version: libraries[selectedLibraryIndex].version }))
-      if (!settings[selectedLibraryId]) {
-        dispatch(actions.library.initializeSettings({ selectedLibraryId }));
-      }
-    } else {
-      dispatch(actions.library.unloadLibrary());
-    }
-  }, [selectedLibraryIndex]);
 
   return {
-    selectionName: getLibraryName(libraries[selectedLibraryIndex])
-      ? getLibraryName(libraries[selectedLibraryIndex])
-      : 'Select a library',
-    setSelectedLibraryIndex,
+    onLibrarySelect: (id) => {
+      if (id === null) {
+        dispatch(actions.library.unloadLibrary());
+      } else {
+        dispatch(actions.library.setLibraryId({ selectedLibraryId: id }));
+        dispatch(actions.library.setLibraryVersion({ version: libraries[id]?.version }))
+        if (!settings[id]) {
+          dispatch(actions.library.initializeSettings({ selectedLibraryId: id }));
+        }
+      }
+    },
   };
 };
 
@@ -160,13 +126,10 @@ export const useBlocksHook = ({
     return 'Other';
   };
 
-  return ({
-    blockUrls: blocksInSelectedLibrary.map(block => (
-      urls.blockContent({ blockId: block.id })
-    )),
+  return {
     blocksTableData: blocksInSelectedLibrary.map(block => ({
       display_name: block.display_name,
       block_type: blockTypeDisplay(block.block_type),
     })),
-  });
+  };
 };
