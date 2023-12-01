@@ -1,3 +1,4 @@
+/* eslint-disable */
 const mockPromise = (returnValue) => new Promise(resolve => resolve(returnValue));
 
 export const fetchV1Libraries = ({ studioEndpointUrl }) => {
@@ -125,7 +126,7 @@ export const fetchV2Libraries = ({ studioEndpointUrl }) => {
   ];
 };
 
-export const fetchLibraryProperty = ({ studioEndpointUrl, libraryId }) => {
+export const fetchlibraryMetadata = ({ studioEndpointUrl, libraryId }) => {
   return {
     id: "lib:edx:test202",
     type: "complex",

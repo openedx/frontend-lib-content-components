@@ -1,4 +1,4 @@
-import messages from "./messages"
+import messages from './messages';
 
 export const modes = {
   random: {
@@ -12,3 +12,5 @@ export const modes = {
     value: 'selected',
   },
 };
+
+export default modes;

@@ -13,14 +13,16 @@ export const useLibraryHook = ({
   blockValue,
 }) => {
   const dispatch = useDispatch();
-  
+
   // fetch libraries when block finishes loading
   useEffect(() => {
     if (blockFinished && !blockFailed) {
       dispatch(requests.fetchV2Libraries({
         onSuccess: (response) => {
-          let libraries = {};
-          response?.data.map(library => libraries[library.id] = library);
+          const libraries = {};
+          response?.data.forEach(library => {
+            libraries[library.id] = library;
+          });
           dispatch(actions.library.loadLibraries({ libraries }));
         },
         onFailure: (error) => {
@@ -32,8 +34,10 @@ export const useLibraryHook = ({
       }));
       dispatch(requests.fetchV1Libraries({
         onSuccess: (response) => {
-          let libraries = {};
-          response?.data?.libraries.map(library => libraries[library.library_key] = library);
+          const libraries = {};
+          response?.data?.libraries.forEach(library => {
+            libraries[library.library_key] = library;
+          });
           dispatch(actions.library.loadLibraries({ libraries }));
         },
         onFailure: (error) => {
@@ -52,7 +56,7 @@ export const useLibraryHook = ({
     const selectedLibraryId = metadata?.source_library_id ?? null;
     let version = '';
     let settings = {};
-    if (!!selectedLibraryId) {
+    if (selectedLibraryId) {
       version = metadata?.source_library_version;
       settings = {
         [selectedLibraryId]: {
@@ -83,7 +87,7 @@ export const useLibrarySelectorHook = ({
         dispatch(actions.library.unloadLibrary());
       } else {
         dispatch(actions.library.setLibraryId({ selectedLibraryId: id }));
-        dispatch(actions.library.setLibraryVersion({ version: libraries[id]?.version }))
+        dispatch(actions.library.setLibraryVersion({ version: libraries[id]?.version }));
         if (!settings[id]) {
           dispatch(actions.library.initializeSettings({ selectedLibraryId: id }));
         }
@@ -100,7 +104,7 @@ export const useBlocksHook = ({
 
   // fetch v2 library content
   useEffect(() => {
-    if (!!selectedLibraryId) {
+    if (selectedLibraryId) {
       dispatch(requests.fetchLibraryContent({
         libraryId: selectedLibraryId,
         onSuccess: (response) => {
@@ -110,7 +114,7 @@ export const useBlocksHook = ({
         },
         onFailure: (error) => {
           dispatch(actions.requests.failRequest({
-            requestKey: RequestKeys.fetchLibraryProperty,
+            requestKey: RequestKeys.fetchlibraryMetadata,
             error,
           }));
         },
@@ -119,9 +123,9 @@ export const useBlocksHook = ({
   }, [selectedLibraryId]);
 
   const blockTypeDisplay = (type) => {
-    if (type === 'html') return 'Text';
-    if (type === 'video') return 'Video';
-    if (type === 'problem') return 'Problem';
+    if (type === 'html') { return 'Text'; }
+    if (type === 'video') { return 'Video'; }
+    if (type === 'problem') { return 'Problem'; }
     return 'Other';
   };
 

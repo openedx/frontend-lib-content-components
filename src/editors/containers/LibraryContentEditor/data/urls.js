@@ -6,7 +6,7 @@ export const v2Libraries = ({ studioEndpointUrl }) => (
   `${studioEndpointUrl}/api/libraries/v2/`
 );
 
-export const libraryProperty = ({ studioEndpointUrl, libraryId }) => (
+export const libraryMetadata = ({ studioEndpointUrl, libraryId }) => (
   `${studioEndpointUrl}/api/libraries/v2/${libraryId}/`
 );
 

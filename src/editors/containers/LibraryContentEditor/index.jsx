@@ -78,22 +78,23 @@ export const LibraryContentEditor = ({
 
 LibraryContentEditor.defaultProps = {
   blockValue: null,
+  blocksInSelectedLibrary: {},
+  candidates: [],
   libraryPayload: {},
-  selectedLibraryId: null,
-  studioEndpointUrl: '',
 };
 
 LibraryContentEditor.propTypes = {
   onClose: PropTypes.func.isRequired,
+  returnFunction: PropTypes.func.isRequired,
   // redux
   blockValue: PropTypes.shape({
     data: PropTypes.shape({ data: PropTypes.string }),
   }),
   blockFailed: PropTypes.bool.isRequired,
   blockFinished: PropTypes.bool.isRequired,
+  blocksInSelectedLibrary: PropTypes.shape({}),
+  candidates: PropTypes.shape([]),
   libraryPayload: PropTypes.shape({}),
-  selectedLibraryId: PropTypes.string,
-  studioEndpointUrl: PropTypes.string,
   // inject
   intl: intlShape.isRequired,
 };

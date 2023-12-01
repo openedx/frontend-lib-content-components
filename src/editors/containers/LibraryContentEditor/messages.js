@@ -9,7 +9,7 @@ const messages = defineMessages({
   librarySelectorDropdownDefault: {
     id: 'authoring.library_content.library.selector.dropdown.default',
     defaultMessage: 'Select a library',
-    description: 'dropdown selection when no library is selected'
+    description: 'dropdown selection when no library is selected',
   },
   modeRandom: {
     id: 'authoring.library_content.mode.random',

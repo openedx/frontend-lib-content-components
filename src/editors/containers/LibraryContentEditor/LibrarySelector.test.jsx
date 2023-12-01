@@ -7,7 +7,7 @@ jest.mock('./data/api', () => ({
     fetchLibraryContent: jest.fn().mockReturnValue({
         blocks: 'SoMe BLOcKs',
     }),
-    fetchLibraryProperty: jest.fn().mockReturnValue({
+    fetchlibraryMetadata: jest.fn().mockReturnValue({
         version: 'lIkE a VeRsiOn',
     }),
   }));

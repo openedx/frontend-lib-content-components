@@ -39,15 +39,15 @@ export const fetchV2Libraries = ({ ...rest }) => (dispatch, getState) => {
 };
 
 /**
- * Tracked fetchLibraryProperty api method.
- * Tracked to the `fetchLibraryProperty` request key.
+ * Tracked fetchlibraryMetadata api method.
+ * Tracked to the `fetchlibraryMetadata` request key.
  * @param {[func]} onSuccess - onSuccess method ((response) => { ... })
  * @param {[func]} onFailure - onFailure method ((error) => { ... })
  */
-export const fetchLibraryProperty = ({ libraryId, ...rest }) => (dispatch, getState) => {
+export const fetchlibraryMetadata = ({ libraryId, ...rest }) => (dispatch, getState) => {
   dispatch(networkRequest({
-    requestKey: RequestKeys.fetchLibraryProperty,
-    promise: api.fetchLibraryProperty({
+    requestKey: RequestKeys.fetchlibraryMetadata,
+    promise: api.fetchlibraryMetadata({
       studioEndpointUrl: selectors.app.studioEndpointUrl(getState()),
       libraryId,
     }),
@@ -61,7 +61,7 @@ export const fetchLibraryProperty = ({ libraryId, ...rest }) => (dispatch, getSt
  * @param {[func]} onSuccess - onSuccess method ((response) => { ... })
  * @param {[func]} onFailure - onFailure method ((error) => { ... })
  */
- export const fetchLibraryContent = ({ libraryId, ...rest }) => (dispatch, getState) => {
+export const fetchLibraryContent = ({ libraryId, ...rest }) => (dispatch, getState) => {
   dispatch(networkRequest({
     requestKey: RequestKeys.fetchLibraryContent,
     promise: api.fetchLibraryContent({
@@ -78,7 +78,7 @@ export const fetchLibraryProperty = ({ libraryId, ...rest }) => (dispatch, getSt
  * @param {[func]} onSuccess - onSuccess method ((response) => { ... })
  * @param {[func]} onFailure - onFailure method ((error) => { ... })
  */
- export const fetchBlockContent = ({ blockId, ...rest }) => (dispatch, getState) => {
+export const fetchBlockContent = ({ blockId, ...rest }) => (dispatch, getState) => {
   dispatch(networkRequest({
     requestKey: RequestKeys.fetchBlockContent,
     promise: api.fetchBlockContent({
@@ -91,7 +91,7 @@ export const fetchLibraryProperty = ({ libraryId, ...rest }) => (dispatch, getSt
 
 export default StrictDict({
   fetchV2Libraries,
-  fetchLibraryProperty,
+  fetchlibraryMetadata,
   fetchLibraryContent,
   fetchBlockContent,
 });

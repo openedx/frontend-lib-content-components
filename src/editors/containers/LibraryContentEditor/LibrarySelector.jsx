@@ -26,7 +26,7 @@ export const LibrarySelector = ({
 
   if (Object.keys(libraries).length === 0) {
     return (
-      <div className='mb-3'>
+      <div className="mb-3">
         <span>
           <FormattedMessage {...messages.noLibraryMessage} />
         </span>
@@ -35,14 +35,14 @@ export const LibrarySelector = ({
   }
 
   return (
-    <div className='mb-3'>
-      <Dropdown className='w-100'>
+    <div className="mb-3">
+      <Dropdown className="w-100">
         <Dropdown.Toggle
-          className='w-100'
-          id='library-selector'
-          variant='outline-primary'
+          className="w-100"
+          id="library-selector"
+          variant="outline-primary"
         >
-          {selectedLibraryId 
+          {selectedLibraryId
             ? getLibraryName(libraries[selectedLibraryId])
             : intl.formatMessage(messages.librarySelectorDropdownDefault)}
         </Dropdown.Toggle>
@@ -50,17 +50,19 @@ export const LibrarySelector = ({
           <Dropdown.Item key={-1} onClick={() => onLibrarySelect(null)}>
             <FormattedMessage {...messages.librarySelectorDropdownDefault} />
           </Dropdown.Item>
-          {Object.entries(libraries)
-            .sort((a, b) => {
-              const aName = a[1].title || a[1].display_name;
-              const bName = b[1].title || b[1].display_name;
-              return aName < bName ? -1 : 1;
-            })
-            .map(([id, library], index) => (
-              <Dropdown.Item key={index} onClick={() => onLibrarySelect(id)}>
-                {getLibraryName(library)}
-              </Dropdown.Item>
-          ))}
+          {
+            Object.entries(libraries)
+              .sort((a, b) => {
+                const aName = a[1].title || a[1].display_name;
+                const bName = b[1].title || b[1].display_name;
+                return aName < bName ? -1 : 1;
+              })
+              .map(([id, library]) => (
+                <Dropdown.Item key={id} onClick={() => onLibrarySelect(id)}>
+                  {getLibraryName(library)}
+                </Dropdown.Item>
+              ))
+          }
         </Dropdown.Menu>
       </Dropdown>
     </div>
@@ -75,9 +77,9 @@ LibrarySelector.defaultProps = {
 
 LibrarySelector.propTypes = {
   // redux
-  libraries: PropTypes.array,
+  libraries: PropTypes.shape([]),
   selectedLibraryId: PropTypes.string,
-  settings: PropTypes.object,
+  settings: PropTypes.shape({}),
   // injected
   intl: intlShape.isRequired,
 };
@@ -91,5 +93,3 @@ export const mapStateToProps = (state) => ({
 export const mapDispatchToProps = {};
 
 export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(LibrarySelector));
-
-

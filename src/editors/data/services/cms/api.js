@@ -180,20 +180,20 @@ export const apiMethods = {
           license: module.processLicense(content.licenseType, content.licenseDetails),
         },
       };
-    } else if (blockType ==='library_content') {
+    } else if (blockType === 'library_content') {
       response = {
         category: blockType,
         courseKey: learningContextId,
-        display_name: title, //"course-v1:edx+123+test"
         data: null,
-        id: blockId, //"block-v1:edx+123+test+type@library_content+block@880758e62c2542d5b45c944360dfa799"
+        id: blockId,
         metadata: {
-          manual: content.manual,
-          shuffle: content.shuffle,
           allow_resetting_children: content.showReset,
           candidates: content.candidates,
           capa_type: 'any',
+          display_name: title,
+          manual: content.manual,
           max_count: content.count,
+          shuffle: content.shuffle,
           source_library_id: content.libraryId,
           source_library_version: content.libraryVersion.toString(),
         },

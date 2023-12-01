@@ -1,8 +1,8 @@
 import React, { useCallback } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { FormattedMessage, injectIntl, intlShape } from '@edx/frontend-platform/i18n';
-import { CheckboxControl, DataTable } from '@edx/paragon';
+import { FormattedMessage, injectIntl } from '@edx/frontend-platform/i18n';
+import { CheckboxControl, DataTable, Form } from '@edx/paragon';
 
 import messages from './messages';
 import { actions, selectors } from './data';
@@ -18,7 +18,7 @@ export const RowCheckbox = ({ row }) => {
   } = row.getToggleRowSelectedProps();
 
   return (
-    <div className='text-center'>
+    <div className="text-center">
       <CheckboxControl
         {...toggleRowSelectedProps}
         title="Toggle row selected"
@@ -37,7 +37,6 @@ export const BlocksSelector = ({
   setCandidatesForLibrary,
   selectedLibraryId,
 }) => {
-
   const {
     blocksTableData,
   } = useBlocksHook({
@@ -71,18 +70,18 @@ export const BlocksSelector = ({
         rows: selected,
       }),
     }),
-    [blocksInSelectedLibrary]
+    [blocksInSelectedLibrary],
   );
 
   if (selectedLibraryId === null || mode !== modes.selected.value) {
-    return <></>;
+    return null;
   }
 
   return (
-    <div className='mb-5 pt-3 border-top'>
-      <label>
+    <div className="mb-5 pt-3 border-top">
+      <Form.Label>
         <FormattedMessage {...messages.tableInstructionLabel} />
-      </label>
+      </Form.Label>
       <DataTable
         key={selectedLibraryId}
         columns={columns}
@@ -102,6 +101,16 @@ export const BlocksSelector = ({
       </DataTable>
     </div>
   );
+};
+
+RowCheckbox.defaultProps = {
+  row: {},
+};
+
+RowCheckbox.propTypes = {
+  row: PropTypes.shape({
+    getToggleRowSelectedProps: PropTypes.func.isRequired,
+  }),
 };
 
 BlocksSelector.defaultProps = {

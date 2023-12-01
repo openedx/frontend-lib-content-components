@@ -1,5 +1,3 @@
-import { modes } from "./constants";
-
 /**
  * checks if library id is v1. defaults to false
  * @param {[string]} libraryId - target library id
@@ -32,20 +30,22 @@ export const getLibraryName = (library) => {
  * @param {[array]} blocks - list of all blocks in library
  * @param {[array]} candidates - list of candidates
  * @returns {[object]} true/false mapping that shows whether a row is selected
- *    ie. first row is selected here { {0: true}, {1: false} }
+ *    ie. first row is selected here { {0: true} }
  */
 export const getSelectedRows = ({
   blocks,
   candidates,
 }) => {
-  let selectedRows = {};
-  let candidatesMapping = {};
+  const selectedRows = {};
+  const candidatesMapping = {};
   if (candidates && candidates.length > 0) {
     candidates.forEach(candidate => {
       candidatesMapping[candidate] = true;
     });
     blocks.forEach((block, index) => {
-      selectedRows[index] = !!candidatesMapping[block.id];
+      if (candidatesMapping[block.id]) {
+        selectedRows[index] = true;
+      }
     });
   }
   return selectedRows;
@@ -61,7 +61,7 @@ export const getCandidates = ({
   blocks,
   rows,
 }) => {
-  let candidates = [];
+  const candidates = [];
   if (Object.keys(rows).length > 0) {
     blocks.forEach((block, index) => {
       if (rows[index]) {

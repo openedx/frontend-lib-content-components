@@ -290,15 +290,15 @@ export const fetchStudioView = ({ blockId, studioEndpointUrl }) => {
       display_name: 'library title',
       has_children: false,
       highlights: [],
-      highlights_doc_url: "",
+      highlights_doc_url: '',
       highlights_enabled: false,
       highlights_enabled_for_messaging: false,
       highlights_preview_only: true,
       metadata: {
         allow_resetting_children: false,
-        capa_type: "any",
-        source_library_id: "library-v1:BradenX+LIB100",
-        source_library_version: "6537dc2ab6ab347e6266e780"
+        capa_type: 'any',
+        source_library_id: 'library-v1:BradenX+LIB100',
+        source_library_version: '6537dc2ab6ab347e6266e780',
       },
     };
   }

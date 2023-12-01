@@ -3,7 +3,7 @@ import VideoEditor from './containers/VideoEditor';
 import ProblemEditor from './containers/ProblemEditor';
 import VideoUploadEditor from './containers/VideoUploadEditor';
 import GameEditor from './containers/GameEditor';
-import LibraryContentEditor from './containers/LibraryContentEditor'
+import LibraryContentEditor from './containers/LibraryContentEditor';
 
 // ADDED_EDITOR_IMPORTS GO HERE
 

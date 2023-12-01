@@ -23,7 +23,7 @@ export const candidates = createSelector(
     selectedLibraryId,
     settings,
   ) => {
-    if (!!selectedLibraryId) {
+    if (selectedLibraryId) {
       return settings[selectedLibraryId]?.candidates ?? [];
     }
     return [];
@@ -39,7 +39,7 @@ export const mode = createSelector(
     selectedLibraryId,
     settings,
   ) => {
-    if (!!selectedLibraryId) {
+    if (selectedLibraryId) {
       return settings[selectedLibraryId]?.mode ?? modes.random.value;
     }
     return modes.random.value;
@@ -57,13 +57,12 @@ export const libraryPayload = createSelector(
     selectedLibraryId,
     selectedLibraryVersion,
     settings,
-    blocksInSelectedLibrary,
   ) => {
     let manual = false;
     let shuffle = true;
     let count = null;
     let showReset = false;
-    let candidates = [];
+    let candidateList = [];
     if (selectedLibraryId && settings[selectedLibraryId]) {
       if (settings[selectedLibraryId].mode === modes.selected.value) {
         manual = true;
@@ -71,7 +70,7 @@ export const libraryPayload = createSelector(
       }
       count = settings[selectedLibraryId].count.toString();
       showReset = settings[selectedLibraryId].showReset;
-      candidates = settings[selectedLibraryId].candidates;
+      candidateList = settings[selectedLibraryId].candidates;
     }
     return {
       libraryId: selectedLibraryId,
@@ -80,7 +79,7 @@ export const libraryPayload = createSelector(
       shuffle,
       count,
       showReset,
-      candidates,
+      candidates: candidateList,
     };
   },
 );
