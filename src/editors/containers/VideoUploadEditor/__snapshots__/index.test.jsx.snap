@@ -110,7 +110,7 @@ Object {
                     class="input-group"
                   >
                     <div
-                      class="pgn__form-control-decorator-group m-0"
+                      class="pgn__form-control-decorator-group has-appended-node has-trailing-element m-0"
                     >
                       <input
                         aria-describedby="basic-addon2"
@@ -119,37 +119,40 @@ Object {
                         placeholder="Paste your video ID or URL"
                         value=""
                       />
-                    </div>
-                    <button
-                      aria-label="Submit"
-                      class="btn-icon btn-icon-primary btn-icon-inline position-absolute align-self-center text-muted bg-transparent shadow-none"
-                      style="margin-left: 20.25rem;"
-                      type="button"
-                    >
-                      <span
-                        class="btn-icon__icon-container"
+                      <div
+                        class="pgn__form-control-decorator pgn__form-control-decorator-trailing"
                       >
-                        <span
-                          class="pgn__icon btn-icon__icon"
+                        <button
+                          aria-label="Submit"
+                          class="btn-icon btn-icon-primary btn-icon-inline url-submit-button"
+                          type="button"
                         >
-                          <svg
-                            aria-hidden="true"
-                            fill="none"
-                            focusable="false"
-                            height="24"
-                            role="img"
-                            viewBox="0 0 24 24"
-                            width="24"
-                            xmlns="http://www.w3.org/2000/svg"
+                          <span
+                            class="btn-icon__icon-container"
                           >
-                            <path
-                              d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8-8-8Z"
-                              fill="currentColor"
-                            />
-                          </svg>
-                        </span>
-                      </span>
-                    </button>
+                            <span
+                              class="pgn__icon btn-icon__icon"
+                            >
+                              <svg
+                                aria-hidden="true"
+                                fill="none"
+                                focusable="false"
+                                height="24"
+                                role="img"
+                                viewBox="0 0 24 24"
+                                width="24"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8-8-8Z"
+                                  fill="currentColor"
+                                />
+                              </svg>
+                            </span>
+                          </span>
+                        </button>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -266,7 +269,7 @@ Object {
                   class="input-group"
                 >
                   <div
-                    class="pgn__form-control-decorator-group m-0"
+                    class="pgn__form-control-decorator-group has-appended-node has-trailing-element m-0"
                   >
                     <input
                       aria-describedby="basic-addon2"
@@ -275,37 +278,40 @@ Object {
                       placeholder="Paste your video ID or URL"
                       value=""
                     />
-                  </div>
-                  <button
-                    aria-label="Submit"
-                    class="btn-icon btn-icon-primary btn-icon-inline position-absolute align-self-center text-muted bg-transparent shadow-none"
-                    style="margin-left: 20.25rem;"
-                    type="button"
-                  >
-                    <span
-                      class="btn-icon__icon-container"
+                    <div
+                      class="pgn__form-control-decorator pgn__form-control-decorator-trailing"
                     >
-                      <span
-                        class="pgn__icon btn-icon__icon"
+                      <button
+                        aria-label="Submit"
+                        class="btn-icon btn-icon-primary btn-icon-inline url-submit-button"
+                        type="button"
                       >
-                        <svg
-                          aria-hidden="true"
-                          fill="none"
-                          focusable="false"
-                          height="24"
-                          role="img"
-                          viewBox="0 0 24 24"
-                          width="24"
-                          xmlns="http://www.w3.org/2000/svg"
+                        <span
+                          class="btn-icon__icon-container"
                         >
-                          <path
-                            d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8-8-8Z"
-                            fill="currentColor"
-                          />
-                        </svg>
-                      </span>
-                    </span>
-                  </button>
+                          <span
+                            class="pgn__icon btn-icon__icon"
+                          >
+                            <svg
+                              aria-hidden="true"
+                              fill="none"
+                              focusable="false"
+                              height="24"
+                              role="img"
+                              viewBox="0 0 24 24"
+                              width="24"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8-8-8Z"
+                                fill="currentColor"
+                              />
+                            </svg>
+                          </span>
+                        </span>
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

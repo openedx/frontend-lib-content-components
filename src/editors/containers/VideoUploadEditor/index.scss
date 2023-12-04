@@ -1,3 +1,5 @@
+@import "@edx/paragon/scss/core/core";
+
 .dropzone-middle {
   border: 2px dashed #ccc;
 
@@ -23,6 +25,14 @@
   button {
     border: none !important;
     background-color: #FFFFFF;
+  }
+
+  .btn-icon.url-submit-button {
+    &, &:active, &:hover {
+      background-color: transparent !important;
+      border: none !important;
+      color: $gray-500 !important;
+    }
   }
 
   .prompt-button {

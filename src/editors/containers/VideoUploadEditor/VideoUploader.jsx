@@ -36,20 +36,21 @@ const URLUploader = () => {
             borderless
             onClick={(event) => { event.stopPropagation(); }}
             onChange={(event) => { setTextInputValue(event.target.value); }}
-          />
-          <IconButton
-            className="position-absolute align-self-center text-muted bg-transparent shadow-none"
-            style={{ marginLeft: '20.25rem' }}
-            alt={intl.formatMessage(messages.submitButtonAltText)}
-            src={ArrowForward}
-            iconAs={Icon}
-            size="inline"
-            onClick={(event) => {
-              event.stopPropagation();
-              if (textInputValue.trim() !== '') {
-                onURLUpload(textInputValue);
-              }
-            }}
+            trailingElement={(
+              <IconButton
+                className="url-submit-button"
+                alt={intl.formatMessage(messages.submitButtonAltText)}
+                src={ArrowForward}
+                iconAs={Icon}
+                size="inline"
+                onClick={(event) => {
+                  event.stopPropagation();
+                  if (textInputValue.trim() !== '') {
+                    onURLUpload(textInputValue);
+                  }
+                }}
+              />
+            )}
           />
         </InputGroup>
       </div>
