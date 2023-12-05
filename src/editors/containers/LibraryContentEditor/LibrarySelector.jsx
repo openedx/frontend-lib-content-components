@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Dropdown } from '@edx/paragon';
-import { FormattedMessage, injectIntl, intlShape } from '@edx/frontend-platform/i18n';
+import { FormattedMessage, useIntl } from '@edx/frontend-platform/i18n';
 
 import messages from './messages';
 import { selectors } from './data';
@@ -14,9 +14,8 @@ export const LibrarySelector = ({
   libraries,
   selectedLibraryId,
   settings,
-  // injected
-  intl,
 }) => {
+  const intl = useIntl();
   const {
     onLibrarySelect,
   } = useLibrarySelectorHook({
@@ -24,7 +23,7 @@ export const LibrarySelector = ({
     settings,
   });
 
-  if (Object.keys(libraries).length === 0) {
+  if (libraries.length === 0) {
     return (
       <div className="mb-3">
         <span>
@@ -80,8 +79,6 @@ LibrarySelector.propTypes = {
   libraries: PropTypes.shape([]),
   selectedLibraryId: PropTypes.string,
   settings: PropTypes.shape({}),
-  // injected
-  intl: intlShape.isRequired,
 };
 
 export const mapStateToProps = (state) => ({
@@ -92,4 +89,4 @@ export const mapStateToProps = (state) => ({
 
 export const mapDispatchToProps = {};
 
-export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(LibrarySelector));
+export default connect(mapStateToProps, mapDispatchToProps)(LibrarySelector);

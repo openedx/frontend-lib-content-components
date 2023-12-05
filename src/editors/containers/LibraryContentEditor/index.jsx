@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Spinner } from '@edx/paragon';
-import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
+import { useIntl } from '@edx/frontend-platform/i18n';
 
 import messages from './messages';
 import { useLibraryHook } from './hooks';
@@ -25,9 +25,8 @@ export const LibraryContentEditor = ({
   blocksInSelectedLibrary,
   candidates,
   libraryPayload,
-  // inject
-  intl,
 }) => {
+  const intl = useIntl();
   const {
     getContent,
   } = useLibraryHook({
@@ -95,8 +94,6 @@ LibraryContentEditor.propTypes = {
   blocksInSelectedLibrary: PropTypes.shape({}),
   candidates: PropTypes.shape([]),
   libraryPayload: PropTypes.shape({}),
-  // inject
-  intl: intlShape.isRequired,
 };
 
 export const mapStateToProps = (state) => ({
@@ -111,4 +108,4 @@ export const mapStateToProps = (state) => ({
 
 export const mapDispatchToProps = {};
 
-export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(LibraryContentEditor));
+export default connect(mapStateToProps, mapDispatchToProps)(LibraryContentEditor);

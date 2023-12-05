@@ -1,5 +1,6 @@
 import * as selectors from './selectors';
 import { keyStore } from '../../../utils';
+import modes from '../constants';
 
 jest.mock('reselect', () => ({
   createSelector: jest.fn((preSelectors, cb) => ({ preSelectors, cb })),
@@ -54,9 +55,10 @@ describe('Library Selectors', () => {
         selectedLibraryVersion: 'a lIb VERsion',
         settings: {
           [selectedLibraryId]: {
-            count: 123456,
-            showReset: 'sHOw ReseT',
             candidates: [blockId1, blockId2],
+            count: 123456,
+            mode: modes.selected.value,
+            showReset: 'sHOw ReseT',
           },
         },
         blocksInSelectedLibrary: {
@@ -80,6 +82,8 @@ describe('Library Selectors', () => {
       ).toEqual({
         libraryId: selectedLibraryId,
         libraryVersion: testData.selectedLibraryVersion,
+        manual,
+        shuffle,
         count: testData.settings[selectedLibraryId].count,
         showReset: testData.settings[selectedLibraryId].showReset,
         candidates: [[blockType1, blockId1], [blockType2, blockId2]],
