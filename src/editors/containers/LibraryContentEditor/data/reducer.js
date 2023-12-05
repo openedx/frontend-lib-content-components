@@ -38,6 +38,12 @@ const library = createSlice({
         ...payload.libraries,
       },
     }),
+    unloadLibrary: (state) => ({
+      ...state,
+      selectedLibraryId: null,
+      selectedLibraryVersion: null,
+      blocksInSelectedLibrary: [],
+    }),
     setLibraryId: (state, { payload }) => ({
       ...state,
       selectedLibraryId: payload.selectedLibraryId,
@@ -56,12 +62,6 @@ const library = createSlice({
         ...state.settings,
         [payload.selectedLibraryId]: initialSettings,
       },
-    }),
-    unloadLibrary: (state) => ({
-      ...state,
-      selectedLibraryId: null,
-      selectedLibraryVersion: null,
-      blocksInSelectedLibrary: [],
     }),
     setModeForLibrary: (state, { payload }) => ({
       ...state,
@@ -113,5 +113,6 @@ const { reducer } = library;
 export {
   actions,
   initialState,
+  initialSettings,
   reducer,
 };

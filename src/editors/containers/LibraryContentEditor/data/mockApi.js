@@ -126,7 +126,7 @@ export const fetchV2Libraries = ({ studioEndpointUrl }) => {
   ];
 };
 
-export const fetchlibraryMetadata = ({ studioEndpointUrl, libraryId }) => {
+export const fetchV2LibraryMetadata = ({ studioEndpointUrl, libraryId }) => {
   return {
     id: "lib:edx:test202",
     type: "complex",
@@ -147,7 +147,7 @@ export const fetchlibraryMetadata = ({ studioEndpointUrl, libraryId }) => {
   };
 };
 
-export const fetchLibraryContent = ({ studioEndpointUrl, libraryId }) => {
+export const fetchV2LibraryContent = ({ studioEndpointUrl, libraryId }) => {
   if (libraryId === 'library-v1:new+CPSPR') {
     return {
       "count": 1,

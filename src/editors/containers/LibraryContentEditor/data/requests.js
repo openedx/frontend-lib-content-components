@@ -39,15 +39,15 @@ export const fetchV2Libraries = ({ ...rest }) => (dispatch, getState) => {
 };
 
 /**
- * Tracked fetchlibraryMetadata api method.
- * Tracked to the `fetchlibraryMetadata` request key.
+ * Tracked fetchV2LibraryMetadata api method.
+ * Tracked to the `fetchV2LibraryMetadata` request key.
  * @param {[func]} onSuccess - onSuccess method ((response) => { ... })
  * @param {[func]} onFailure - onFailure method ((error) => { ... })
  */
-export const fetchlibraryMetadata = ({ libraryId, ...rest }) => (dispatch, getState) => {
+export const fetchV2LibraryMetadata = ({ libraryId, ...rest }) => (dispatch, getState) => {
   dispatch(networkRequest({
-    requestKey: RequestKeys.fetchlibraryMetadata,
-    promise: api.fetchlibraryMetadata({
+    requestKey: RequestKeys.fetchV2LibraryMetadata,
+    promise: api.fetchV2LibraryMetadata({
       studioEndpointUrl: selectors.app.studioEndpointUrl(getState()),
       libraryId,
     }),
@@ -56,15 +56,15 @@ export const fetchlibraryMetadata = ({ libraryId, ...rest }) => (dispatch, getSt
 };
 
 /**
- * Tracked fetchLibraryContent api method.
- * Tracked to the `fetchLibraryContent` request key.
+ * Tracked fetchV2LibraryContent api method.
+ * Tracked to the `fetchV2LibraryContent` request key.
  * @param {[func]} onSuccess - onSuccess method ((response) => { ... })
  * @param {[func]} onFailure - onFailure method ((error) => { ... })
  */
-export const fetchLibraryContent = ({ libraryId, ...rest }) => (dispatch, getState) => {
+export const fetchV2LibraryContent = ({ libraryId, ...rest }) => (dispatch, getState) => {
   dispatch(networkRequest({
-    requestKey: RequestKeys.fetchLibraryContent,
-    promise: api.fetchLibraryContent({
+    requestKey: RequestKeys.fetchV2LibraryContent,
+    promise: api.fetchV2LibraryContent({
       studioEndpointUrl: selectors.app.studioEndpointUrl(getState()),
       libraryId,
     }),
@@ -91,7 +91,7 @@ export const fetchBlockContent = ({ blockId, ...rest }) => (dispatch, getState) 
 
 export default StrictDict({
   fetchV2Libraries,
-  fetchlibraryMetadata,
-  fetchLibraryContent,
+  fetchV2LibraryMetadata,
+  fetchV2LibraryContent,
   fetchBlockContent,
 });

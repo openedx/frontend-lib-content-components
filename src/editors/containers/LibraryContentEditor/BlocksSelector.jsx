@@ -10,6 +10,9 @@ import { useBlocksHook } from './hooks';
 import { modes } from './constants';
 import { getCandidates } from './utils';
 
+export const SELECT_ONE_TEST_ID = 'selectOne';
+export const SELECT_ALL_TEST_ID = 'selectAll';
+
 export const RowCheckbox = ({ row }) => {
   const {
     indeterminate,
@@ -24,6 +27,7 @@ export const RowCheckbox = ({ row }) => {
         title="Toggle row selected"
         checked={checked}
         isIndeterminate={false}
+        data-testid={SELECT_ONE_TEST_ID}
       />
     </div>
   );

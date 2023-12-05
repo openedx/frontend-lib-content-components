@@ -6,11 +6,11 @@ export const v2Libraries = ({ studioEndpointUrl }) => (
   `${studioEndpointUrl}/api/libraries/v2/`
 );
 
-export const libraryMetadata = ({ studioEndpointUrl, libraryId }) => (
+export const v2LibraryMetadata = ({ studioEndpointUrl, libraryId }) => (
   `${studioEndpointUrl}/api/libraries/v2/${libraryId}/`
 );
 
-export const libraryContent = ({ studioEndpointUrl, libraryId }) => (
+export const v2LibraryContent = ({ studioEndpointUrl, libraryId }) => (
   `${studioEndpointUrl}/api/libraries/v2/${libraryId}/blocks/`
 );
 

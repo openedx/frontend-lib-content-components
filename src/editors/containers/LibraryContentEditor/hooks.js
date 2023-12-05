@@ -105,7 +105,7 @@ export const useBlocksHook = ({
   // fetch v2 library content
   useEffect(() => {
     if (selectedLibraryId) {
-      dispatch(requests.fetchLibraryContent({
+      dispatch(requests.fetchV2LibraryContent({
         libraryId: selectedLibraryId,
         onSuccess: (response) => {
           dispatch(actions.library.setLibraryBlocks({
@@ -114,7 +114,7 @@ export const useBlocksHook = ({
         },
         onFailure: (error) => {
           dispatch(actions.requests.failRequest({
-            requestKey: RequestKeys.fetchlibraryMetadata,
+            requestKey: RequestKeys.fetchV2LibraryContent,
             error,
           }));
         },
