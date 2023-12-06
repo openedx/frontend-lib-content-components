@@ -10,10 +10,6 @@ jest.mock('./hooks', () => ({
   initializeApp: jest.fn(),
 }));
 
-jest.mock('./containers/TextEditor', () => 'TextEditor');
-jest.mock('./containers/VideoEditor', () => 'VideoEditor');
-jest.mock('./containers/ProblemEditor', () => 'ProblemEditor');
-
 const initData = {
   blockId: 'block-v1:edX+DemoX+Demo_Course+type@html+block@030e35c4756a4ddc8d40b95fbbfff4d4',
   blockType: blockTypes.html,
@@ -39,7 +35,7 @@ describe('Editor', () => {
     });
     test.each(Object.values(blockTypes))('renders %p editor when ref is ready', (blockType) => {
       el = shallow(<Editor {...props} blockType={blockType} />);
-      expect(el.children().children().at(0).is(supportedEditors[blockType])).toBe(true);
+      expect(el.children().children().at(0).name()).toBe(supportedEditors[blockType].displayName);
     });
   });
   describe('behavior', () => {

@@ -108,4 +108,7 @@ export const mapStateToProps = (state) => ({
 
 export const mapDispatchToProps = {};
 
-export default connect(mapStateToProps, mapDispatchToProps)(LibraryContentEditor);
+const LibraryContentEditorConnector = connect(mapStateToProps, mapDispatchToProps)(LibraryContentEditor);
+LibraryContentEditorConnector.displayName = 'LibraryContentEditorConnector';
+export default LibraryContentEditorConnector;
+// export default connect(mapStateToProps, mapDispatchToProps)(LibraryContentEditor);

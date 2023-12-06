@@ -53,7 +53,7 @@ exports[`EditorContainer component render snapshot: initialized. enable save and
     </div>
   </ModalDialog.Header>
   <ModalDialog.Body
-    className="pb-6"
+    className="pb-6 min-vh-100"
   >
     <h1>
       My test content
@@ -129,7 +129,7 @@ exports[`EditorContainer component render snapshot: not initialized. disable sav
     </div>
   </ModalDialog.Header>
   <ModalDialog.Body
-    className="pb-6"
+    className="pb-6 min-vh-100"
   />
   <injectIntl(ShimmedIntlComponent)
     disableSave={true}

@@ -27,7 +27,7 @@ exports[`Editor render snapshot: renders correct editor given blockType (html ->
     className="pgn__modal-fullscreen"
     role="dialog"
   >
-    <TextEditor
+    <injectIntl(ShimmedIntlComponent)
       onClose={[MockFunction props.onClose]}
       returnFunction={null}
     />
