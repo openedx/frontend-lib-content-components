@@ -47,7 +47,7 @@ describe('LibrarySelector', () => {
       },
     },
   };
-  
+
   it('Renders as expected with default props', () => {
     const { container, queryByText, queryByTestId } = renderComponent(props);
 

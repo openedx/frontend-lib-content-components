@@ -64,12 +64,13 @@ export const libraryPayload = createSelector(
     let showReset = false;
     let candidateList = [];
     if (selectedLibraryId && settings[selectedLibraryId]) {
-      count = settings[selectedLibraryId].count.toString() ?? '1';
+      count = settings[selectedLibraryId].count ?? 1;
       if (settings[selectedLibraryId].mode === modes.selected.value) {
         manual = true;
         shuffle = false;
         count = -1;
       }
+      count = count.toString();
       showReset = settings[selectedLibraryId].showReset;
       candidateList = settings[selectedLibraryId].candidates;
     }

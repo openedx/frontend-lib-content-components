@@ -35,6 +35,34 @@ describe('Library Selectors', () => {
   });
 
   describe('libraryPayload', () => {
+    const { cb } = selectors.libraryPayload;
+    const selectedLibraryId = 'a LiB iD';
+    const blockId1 = 'a bLOCk id';
+    const blockType1 = 'a BLOck Type';
+    const blockId2 = 'a blocK ID tOO';
+    const blockType2 = 'a Different BLOck Type';
+    const testData = {
+      selectedLibraryId,
+      selectedLibraryVersion: 'a lIb VERsion',
+      settings: {
+        [selectedLibraryId]: {
+          candidates: [[blockType1, blockId1], [blockType2, blockId2]],
+          count: 123456,
+          mode: modes.selected.value,
+          showReset: 'sHOw ReseT',
+        },
+      },
+      blocksInSelectedLibrary: {
+        0: {
+          block_type: blockType1,
+          id: blockId1,
+        },
+        1: {
+          block_type: blockType2,
+          id: blockId2,
+        },
+      },
+    };
     it('is memoized based on the below listed selectors', () => {
       expect(selectors.libraryPayload.preSelectors).toEqual([
         simpleSelectors.selectedLibraryId,
@@ -43,35 +71,7 @@ describe('Library Selectors', () => {
         simpleSelectors.blocksInSelectedLibrary,
       ]);
     });
-    it('returns the relevant settings values given the library', () => {
-      const { cb } = selectors.libraryPayload;
-      const selectedLibraryId = 'a LiB iD';
-      const blockId1 = 'a bLOCk id';
-      const blockType1 = 'a BLOck Type';
-      const blockId2 = 'a blocK ID tOO';
-      const blockType2 = 'a Different BLOck Type';
-      const testData = {
-        selectedLibraryId,
-        selectedLibraryVersion: 'a lIb VERsion',
-        settings: {
-          [selectedLibraryId]: {
-            candidates: [blockId1, blockId2],
-            count: 123456,
-            mode: modes.selected.value,
-            showReset: 'sHOw ReseT',
-          },
-        },
-        blocksInSelectedLibrary: {
-          0: {
-            block_type: blockType1,
-            id: blockId1,
-          },
-          1: {
-            block_type: blockType2,
-            id: blockId2,
-          },
-        },
-      };
+    it('returns the relevant settings values given the library for selected mode', () => {
       expect(
         cb(
           testData.selectedLibraryId,
@@ -82,9 +82,28 @@ describe('Library Selectors', () => {
       ).toEqual({
         libraryId: selectedLibraryId,
         libraryVersion: testData.selectedLibraryVersion,
-        manual,
-        shuffle,
-        count: testData.settings[selectedLibraryId].count,
+        manual: true,
+        shuffle: false,
+        count: '-1',
+        showReset: testData.settings[selectedLibraryId].showReset,
+        candidates: [[blockType1, blockId1], [blockType2, blockId2]],
+      });
+    });
+    it('returns the relevant settings values given the library for random mode', () => {
+      testData.settings[selectedLibraryId].mode = modes.random.value;
+      expect(
+        cb(
+          testData.selectedLibraryId,
+          testData.selectedLibraryVersion,
+          testData.settings,
+          testData.blocksInSelectedLibrary,
+        ),
+      ).toEqual({
+        libraryId: selectedLibraryId,
+        libraryVersion: testData.selectedLibraryVersion,
+        manual: false,
+        shuffle: true,
+        count: testData.settings[selectedLibraryId].count.toString(),
         showReset: testData.settings[selectedLibraryId].showReset,
         candidates: [[blockType1, blockId1], [blockType2, blockId2]],
       });

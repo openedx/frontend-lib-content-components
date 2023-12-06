@@ -29,31 +29,31 @@ describe('library api', () => {
   describe('apiMethods', () => {
     describe('v1Libraries', () => {
       it('should call get with urls.v1Libraries', () => {
-        apiMethods.v1Libraries({ studioEndpointUrl });
+        apiMethods.fetchV1Libraries({ studioEndpointUrl });
         expect(get).toHaveBeenCalledWith(urls.v1Libraries({ studioEndpointUrl }));
       });
     });
     describe('v2Libraries', () => {
       it('should call get with urls.v2Libraries', () => {
-        apiMethods.v2Libraries({ studioEndpointUrl });
+        apiMethods.fetchV2Libraries({ studioEndpointUrl });
         expect(get).toHaveBeenCalledWith(urls.v2Libraries({ studioEndpointUrl }));
       });
     });
     describe('v2LibraryMetadata', () => {
       it('should call get with urls.v2LibraryMetadata', () => {
-        apiMethods.toHaveBeenCalledWith({ studioEndpointUrl, libraryId });
+        apiMethods.fetchV2LibraryMetadata({ studioEndpointUrl, libraryId });
         expect(get).toHaveBeenCalledWith(urls.v2LibraryMetadata({ studioEndpointUrl, libraryId }));
       });
     });
     describe('v2LibraryContent', () => {
       it('should call get with urls.v2LibraryContent', () => {
-        apiMethods.toHaveBeenCalledWith({ studioEndpointUrl, libraryId });
+        apiMethods.fetchV2LibraryContent({ studioEndpointUrl, libraryId });
         expect(get).toHaveBeenCalledWith(urls.v2LibraryContent({ studioEndpointUrl, libraryId }));
       });
     });
     describe('blockContent', () => {
       it('should call get with urls.blockContent', () => {
-        apiMethods.toHaveBeenCalledWith({ studioEndpointUrl, blockId });
+        apiMethods.fetchBlockContent({ studioEndpointUrl, blockId });
         expect(get).toHaveBeenCalledWith(urls.blockContent({ studioEndpointUrl, blockId }));
       });
     });
@@ -70,7 +70,7 @@ describe('library api', () => {
     describe('if REACT_APP_DEVGALLERY is true', () => {
       it('should return the mockApi version of a call when it exists', () => {
         process.env.REACT_APP_DEVGALLERY = true;
-        expect(api.checkMockApi('fetchBlockById')).toEqual(mockApi.fetchBlockById);
+        expect(api.checkMockApi('fetchV1Libraries')).toEqual(mockApi.fetchV1Libraries);
       });
       it('should return an empty mock when the call does not exist', () => {
         process.env.REACT_APP_DEVGALLERY = true;
@@ -79,7 +79,7 @@ describe('library api', () => {
     });
     describe('if REACT_APP_DEVGALLERY is not true', () => {
       it('should return the appropriate call', () => {
-        expect(api.checkMockApi('fetchBlockById')).toEqual(apiMethods.fetchBlockById);
+        expect(api.checkMockApi('fetchV1Libraries')).toEqual(apiMethods.fetchV1Libraries);
       });
     });
   });

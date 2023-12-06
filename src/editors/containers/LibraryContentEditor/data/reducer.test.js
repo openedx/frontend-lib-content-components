@@ -23,7 +23,7 @@ describe('app reducer', () => {
       const data = {
         libraries: 'soMe LibS',
         selectedLibraryId: libId,
-        selectedLibraryVersion: 'a lib veRsioN (oFteN an Int)',
+        version: 'a lib veRsioN (oFteN an Int)',
         settings: {
           value: 'sOmE sETTings vAlue',
         },
@@ -34,36 +34,20 @@ describe('app reducer', () => {
         actions.initializeFromBlockValue({ ...data, other: 'field' }),
       )).toEqual({
         ...testingState,
-        ...data,
-        settings: {
-          [libId]: {
-            ...data.settings,
-          },
-        },
+        selectedLibraryId: data.selectedLibraryId,
+        selectedLibraryVersion: data.version,
+        settings: data.settings,
       });
     });
 
     describe('Manipulate Library Data', () => {
-      const testLib = {
-        libraries: {
-          libIdAlpha: { data: 'DaTA' },
-          libIdBeta: { data: 'dAtA' },
-        },
-        id: 'a lIb id',
-        version: 'a lib veRsioN (oFteN an Int)',
-        settings: {
-          value: testValue,
-        },
-        blocks: ['b1', 'b2'],
-        other: 'data',
-      };
       const testLibraryList = {
         lib1: { libValue: 'someVAL' },
         lib2: { property: 'sOmEproP' },
       };
       describe('loadLibraries adds to the list of libraries', () => {
-        expect(reducer(testLib, actions.loadLibrary({ libraries: testLibraryList }))).toEqual({
-          ...testLib,
+        expect(reducer(testingState, actions.loadLibraries({ libraries: testLibraryList }))).toEqual({
+          ...testingState,
           libraries: {
             ...testingState.libraries,
             ...testLibraryList,
@@ -71,26 +55,26 @@ describe('app reducer', () => {
         });
       });
       describe('setLibraryId sets the id', () => {
-        expect(reducer(testLib, actions.setLibraryId({ selectedLibraryId: testValue }))).toEqual({
-          ...testLib,
+        expect(reducer(testingState, actions.setLibraryId({ selectedLibraryId: testValue }))).toEqual({
+          ...testingState,
           selectedLibraryId: testValue,
         });
       });
       describe('setLibraryVersion sets the library version', () => {
-        expect(reducer(testLib, actions.setLibraryVersion({ version: testValue }))).toEqual({
-          ...testLib,
+        expect(reducer(testingState, actions.setLibraryVersion({ version: testValue }))).toEqual({
+          ...testingState,
           selectedLibraryVersion: testValue,
         });
       });
       describe('setLibraryBlocks sets the blocks for the library', () => {
-        expect(reducer(testLib, actions.setLibraryBlocks({ blocks: testValue }))).toEqual({
-          ...testLib,
+        expect(reducer(testingState, actions.setLibraryBlocks({ blocks: testValue }))).toEqual({
+          ...testingState,
           blocksInSelectedLibrary: testValue,
         });
       });
       describe('unloadLibrary sets library version, id, and blocks to null/[]', () => {
-        expect(reducer(testLib, actions.unloadLibrary())).toEqual({
-          ...testLib,
+        expect(reducer(testingState, actions.unloadLibrary())).toEqual({
+          ...testingState,
           selectedLibraryId: null,
           selectedLibraryVersion: null,
           blocksInSelectedLibrary: [],

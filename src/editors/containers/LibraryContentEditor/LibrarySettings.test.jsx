@@ -32,7 +32,7 @@ describe('LibrarySettings Component', () => {
     setModeForLibrary: jest.fn(),
     setShowResetForLibrary: jest.fn(),
     selectedLibraryId: '0',
-    settings: { '0': { mode: 'random', count: 5, showReset: true } },
+    settings: { 0: { mode: 'random', count: 5, showReset: true } },
   };
 
   // For some reason, queyselector stops working outside the first test, so these are all in one test.
