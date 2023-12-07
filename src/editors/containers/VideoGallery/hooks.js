@@ -7,7 +7,7 @@ import * as appHooks from '../../hooks';
 import { selectors } from '../../data/redux';
 import analyticsEvt from '../../data/constants/analyticsEvt';
 import {
-  filterKeys, sortFunctions, sortKeys, sortMessages,
+  filterKeys, filterMessages, sortFunctions, sortKeys, sortMessages,
 } from './utils';
 
 export const {
@@ -18,16 +18,8 @@ export const {
 export const useSearchAndSortProps = () => {
   const [searchString, setSearchString] = React.useState('');
   const [sortBy, setSortBy] = React.useState(sortKeys.dateNewest);
-  const [filterBy, setFilterBy] = React.useState([]);
+  const [filterBy, setFilterBy] = React.useState(filterKeys.anyStatus);
   const [hideSelectedVideos, setHideSelectedVideos] = React.useState(false);
-
-  const handleFilter = (key) => () => {
-    if (filterBy.includes(key)) {
-      setFilterBy(filterBy.filter(item => item !== key));
-    } else {
-      setFilterBy([...filterBy, key]);
-    }
-  };
 
   return {
     searchString,
@@ -38,7 +30,9 @@ export const useSearchAndSortProps = () => {
     sortKeys,
     sortMessages,
     filterBy,
-    onFilterClick: handleFilter,
+    onFilterClick: (key) => () => setFilterBy(key),
+    filterKeys,
+    filterMessages,
     showSwitch: false,
     hideSelectedVideos,
     switchMessage: messages.hideSelectedCourseVideosSwitchLabel,
@@ -54,15 +48,13 @@ export const filterListBySearch = ({
     .includes(searchString.toLowerCase()))
 );
 
-export const filterListByStatus = ({
-  statusFilter,
-  videoList,
-}) => {
-  if (statusFilter.length === 0) {
+export const filterListByStatus = ({ statusFilter, videoList }) => {
+  if (statusFilter === filterKeys.anyStatus) {
     return videoList;
   }
-  return videoList.filter(({ status }) => statusFilter.map(key => filterKeys[key])
-    .includes(status));
+  // TODO deal with translation mismatch because the video status is
+  // already translated in the backend
+  return videoList.filter(({ status }) => filterKeys[statusFilter] === status);
 };
 
 export const filterListByHideSelectedCourse = ({ videoList }) => (
@@ -145,10 +137,14 @@ export const useVideoListProps = ({
   };
 };
 
-export const useVideoUploadHandler = () => {
+export const useVideoUploadHandler = ({ replace }) => {
   const learningContextId = useSelector(selectors.app.learningContextId);
   const blockId = useSelector(selectors.app.blockId);
-  return () => navigateTo(`/course/${learningContextId}/editor/video_upload/${blockId}`);
+  const path = `/course/${learningContextId}/editor/video_upload/${blockId}`;
+  if (replace) {
+    return () => window.location.replace(path);
+  }
+  return () => navigateTo(path);
 };
 
 export const useCancelHandler = () => (
@@ -181,6 +177,7 @@ export const buildVideos = ({ rawVideos }) => {
 
 export const getstatusBadgeVariant = ({ status }) => {
   switch (status) {
+    // TODO deal with translation mismatch
     case filterKeys.failed:
       return 'danger';
     case filterKeys.uploading:
@@ -203,7 +200,7 @@ export const useVideoProps = ({ videos }) => {
     inputError,
     selectBtnProps,
   } = videoList;
-  const fileInput = { click: useVideoUploadHandler() };
+  const fileInput = { click: useVideoUploadHandler({ replace: false }) };
 
   return {
     galleryError,

@@ -25,21 +25,22 @@ export const isBlankProblem = ({ rawOLX }) => {
   return false;
 };
 
-export const getDataFromOlx = ({ rawOLX, rawSettings }) => {
+export const getDataFromOlx = ({ rawOLX, rawSettings, defaultSettings }) => {
   let olxParser;
   let parsedProblem;
   try {
     olxParser = new OLXParser(rawOLX);
     parsedProblem = olxParser.getParsedOLXData();
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error('The Problem Could Not Be Parsed from OLX. redirecting to Advanced editor.', error);
-    return { problemType: ProblemTypeKeys.ADVANCED, rawOLX, settings: parseSettings(rawSettings) };
+    return { problemType: ProblemTypeKeys.ADVANCED, rawOLX, settings: parseSettings(rawSettings, defaultSettings) };
   }
   if (parsedProblem?.problemType === ProblemTypeKeys.ADVANCED) {
-    return { problemType: ProblemTypeKeys.ADVANCED, rawOLX, settings: parseSettings(rawSettings) };
+    return { problemType: ProblemTypeKeys.ADVANCED, rawOLX, settings: parseSettings(rawSettings, defaultSettings) };
   }
   const { settings, ...data } = parsedProblem;
-  const parsedSettings = { ...settings, ...parseSettings(rawSettings) };
+  const parsedSettings = { ...settings, ...parseSettings(rawSettings, defaultSettings) };
   if (!_.isEmpty(rawOLX) && !_.isEmpty(data)) {
     return { ...data, rawOLX, settings: parsedSettings };
   }
@@ -50,12 +51,12 @@ export const loadProblem = ({ rawOLX, rawSettings, defaultSettings }) => (dispat
   if (isBlankProblem({ rawOLX })) {
     dispatch(actions.problem.setEnableTypeSelection(camelizeKeys(defaultSettings)));
   } else {
-    dispatch(actions.problem.load(getDataFromOlx({ rawOLX, rawSettings })));
+    dispatch(actions.problem.load(getDataFromOlx({ rawOLX, rawSettings, defaultSettings })));
   }
 };
 
 export const fetchAdvancedSettings = ({ rawOLX, rawSettings }) => (dispatch) => {
-  const advancedProblemSettingKeys = ['max_attempts', 'showanswer', 'show_reset_button'];
+  const advancedProblemSettingKeys = ['max_attempts', 'showanswer', 'show_reset_button', 'rerandomize'];
   dispatch(requests.fetchAdvancedSettings({
     onSuccess: (response) => {
       const defaultSettings = {};

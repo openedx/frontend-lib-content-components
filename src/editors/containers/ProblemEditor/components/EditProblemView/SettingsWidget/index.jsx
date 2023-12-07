@@ -113,12 +113,20 @@ export const SettingsWidget = ({
             />
           </div>
           <div className="my-3">
-            <ResetCard showResetButton={settings.showResetButton} updateSettings={updateSettings} />
+            <ResetCard
+              showResetButton={settings.showResetButton}
+              defaultValue={defaultSettings.showResetButton}
+              updateSettings={updateSettings}
+            />
           </div>
           {
             problemType === ProblemTypeKeys.ADVANCED && (
             <div className="my-3">
-              <Randomization randomization={settings.randomization} updateSettings={updateSettings} />
+              <Randomization
+                randomization={settings.randomization}
+                defaultValue={defaultSettings.rerandomize}
+                updateSettings={updateSettings}
+              />
             </div>
             )
           }
@@ -161,7 +169,8 @@ SettingsWidget.propTypes = {
   defaultSettings: PropTypes.shape({
     maxAttempts: PropTypes.number,
     showanswer: PropTypes.string,
-    showReseButton: PropTypes.bool,
+    showResetButton: PropTypes.bool,
+    rerandomize: PropTypes.string,
   }).isRequired,
   // eslint-disable-next-line
   settings: PropTypes.any.isRequired,
