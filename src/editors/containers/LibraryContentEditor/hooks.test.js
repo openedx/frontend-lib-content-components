@@ -61,14 +61,14 @@ describe('useLibraryHook', () => {
   describe('useEffect when block finishs loading', () => {
     const v2Libraries = [
       {
-        id: "v2libid",
-        title: "v2libtitle",
+        id: 'v2libid',
+        title: 'v2libtitle',
       },
     ];
     const v1Libraries = [
       {
-        display_name: "myv1library",
-        library_key: "v1id",
+        display_name: 'myv1library',
+        library_key: 'v1id',
       },
     ];
     it('should fetch v2 and v1 libraries when block finishes loading', () => {
@@ -93,7 +93,7 @@ describe('useLibraryHook', () => {
       expect(actions.library.loadLibraries).toHaveBeenCalledWith({
         libraries: {
           [v2Libraries[0].id]: v2Libraries[0],
-        }
+        },
       });
     });
     it('should call failRequest on failure response for fetchV2Libraries', () => {
@@ -122,7 +122,7 @@ describe('useLibraryHook', () => {
       expect(actions.library.loadLibraries).toHaveBeenCalledWith({
         libraries: {
           [v1Libraries[0].library_key]: v1Libraries[0],
-        }
+        },
       });
     });
     it('should call failRequest on failure response for fetchV1Libraries', () => {
@@ -270,12 +270,10 @@ describe('useBlocksHook', () => {
       blocksInSelectedLibrary,
       selectedLibraryId,
     }));
-    expect(result.current.blocksTableData).toEqual(
-      [
-        { display_name: 'textblock', block_type: 'Text' },
-        { display_name: 'vidblock', block_type: 'Video' },
-        { display_name: 'probblock', block_type: 'Problem' },
-      ]
-    );
+    expect(result.current.blocksTableData).toEqual([
+      { display_name: 'textblock', block_type: 'Text' },
+      { display_name: 'vidblock', block_type: 'Video' },
+      { display_name: 'probblock', block_type: 'Problem' },
+    ]);
   });
 });

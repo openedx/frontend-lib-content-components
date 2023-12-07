@@ -47,7 +47,7 @@ describe('utils', () => {
     it('should return the correct true/false row mapping', () => {
       expect(module.getSelectedRows({
         blocks,
-        candidates: [ [blocks[2].block_type, blocks[2].id] ],
+        candidates: [[blocks[2].block_type, blocks[2].id]],
       })).toEqual({
         2: true,
       });
@@ -73,14 +73,14 @@ describe('utils', () => {
         blocks,
         rows: { 0: true },
       })).toEqual([
-        [ blocks[0].block_type, blocks[0].id ],
+        [blocks[0].block_type, blocks[0].id],
       ]);
       expect(module.getCandidates({
         blocks,
         rows: { 1: true, 2: true },
       })).toEqual([
-        [ blocks[1].block_type, blocks[1].id ],
-        [ blocks[2].block_type, blocks[2].id ],
+        [blocks[1].block_type, blocks[1].id],
+        [blocks[2].block_type, blocks[2].id],
       ]);
     });
     it('should return an empty array for anything else', () => {
