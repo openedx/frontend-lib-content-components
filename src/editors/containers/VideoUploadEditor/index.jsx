@@ -30,9 +30,5 @@ export const VideoUploadEditor = () => {
   );
 };
 
-VideoUploadEditor.propTypes = {
-  onClose: PropTypes.func.isRequired,
-};
-
 VideoUploadEditor.displayName = 'VideoUploadEditor';
 export default VideoUploadEditor;
