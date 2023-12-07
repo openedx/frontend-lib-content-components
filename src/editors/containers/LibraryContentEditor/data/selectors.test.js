@@ -8,6 +8,33 @@ jest.mock('reselect', () => ({
 
 const testState = { some: 'arbitraryValue' };
 const testValue = 'my VALUE';
+const selectedLibraryId = 'a LiB iD';
+const blockId1 = 'a bLOCk id';
+const blockType1 = 'a BLOck Type';
+const blockId2 = 'a blocK ID tOO';
+const blockType2 = 'a Different BLOck Type';
+const testData = {
+  selectedLibraryId,
+  selectedLibraryVersion: 'a lIb VERsion',
+  settings: {
+    [selectedLibraryId]: {
+      candidates: [[blockType1, blockId1], [blockType2, blockId2]],
+      count: 123456,
+      mode: modes.selected.value,
+      showReset: 'sHOw ReseT',
+    },
+  },
+  blocksInSelectedLibrary: {
+    0: {
+      block_type: blockType1,
+      id: blockId1,
+    },
+    1: {
+      block_type: blockType2,
+      id: blockId2,
+    },
+  },
+};
 
 describe('Library Selectors', () => {
   const {
@@ -34,35 +61,50 @@ describe('Library Selectors', () => {
     });
   });
 
+  describe('candidates', () => {
+    const { cb } = selectors.candidates;
+    it('is memoized based on the below listed selectors', () => {
+      expect(selectors.candidates.preSelectors).toEqual([
+        simpleSelectors.selectedLibraryId,
+        simpleSelectors.settings,
+      ]);
+    });
+    it('returns the candidates list for the selected library', () => {
+      expect(
+        cb(
+          testData.selectedLibraryId,
+          testData.settings,
+        ),
+      ).toEqual(testData.settings[selectedLibraryId].candidates);
+    });
+    it('returns an empty array when there is no selected library', () => {
+      expect(cb(null, testData.settings)).toEqual([]);
+    });
+  });
+
+  describe('mode', () => {
+    const { cb } = selectors.mode;
+    it('is memoized based on the below listed selectors', () => {
+      expect(selectors.mode.preSelectors).toEqual([
+        simpleSelectors.selectedLibraryId,
+        simpleSelectors.settings,
+      ]);
+    });
+    it('returns the mode for the selected library', () => {
+      expect(
+        cb(
+          testData.selectedLibraryId,
+          testData.settings,
+        ),
+      ).toEqual(testData.settings[selectedLibraryId].mode);
+    });
+    it('returns random mode when there is no selected library', () => {
+      expect(cb(null, testData.settings)).toEqual(modes.random.value);
+    });
+  });
+
   describe('libraryPayload', () => {
     const { cb } = selectors.libraryPayload;
-    const selectedLibraryId = 'a LiB iD';
-    const blockId1 = 'a bLOCk id';
-    const blockType1 = 'a BLOck Type';
-    const blockId2 = 'a blocK ID tOO';
-    const blockType2 = 'a Different BLOck Type';
-    const testData = {
-      selectedLibraryId,
-      selectedLibraryVersion: 'a lIb VERsion',
-      settings: {
-        [selectedLibraryId]: {
-          candidates: [[blockType1, blockId1], [blockType2, blockId2]],
-          count: 123456,
-          mode: modes.selected.value,
-          showReset: 'sHOw ReseT',
-        },
-      },
-      blocksInSelectedLibrary: {
-        0: {
-          block_type: blockType1,
-          id: blockId1,
-        },
-        1: {
-          block_type: blockType2,
-          id: blockId2,
-        },
-      },
-    };
     it('is memoized based on the below listed selectors', () => {
       expect(selectors.libraryPayload.preSelectors).toEqual([
         simpleSelectors.selectedLibraryId,
