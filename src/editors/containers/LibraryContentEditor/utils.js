@@ -30,7 +30,7 @@ export const getLibraryName = (library) => {
  * @param {[array]} blocks - list of all blocks in library
  * @param {[array]} candidates - list of candidate tuples [ [block_type, block_id] ]
  * @returns {[object]} true/false mapping that shows whether a row is selected
- *    ie. first row is selected here { {0: true} }
+ *    ie. first row is selected here { 0: true }
  */
 export const getSelectedRows = ({
   blocks,
@@ -62,7 +62,7 @@ export const getCandidates = ({
   rows,
 }) => {
   const candidates = [];
-  if (Object.keys(rows).length > 0) {
+  if (rows && Object.keys(rows).length > 0) {
     blocks.forEach((block, index) => {
       if (rows[index]) {
         candidates.push([block.block_type, block.id]);

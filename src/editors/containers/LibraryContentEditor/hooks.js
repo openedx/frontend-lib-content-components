@@ -9,7 +9,6 @@ import { RequestKeys } from '../../data/constants/requests';
 export const useLibraryHook = ({
   blockFailed,
   blockFinished,
-  libraryPayload,
   blockValue,
 }) => {
   const dispatch = useDispatch();
@@ -50,7 +49,7 @@ export const useLibraryHook = ({
     }
   }, [blockFinished, blockFailed]);
 
-  // load previously saved library info into state
+  // load previously saved library into redux
   useEffect(() => {
     const metadata = blockValue?.data?.metadata;
     const selectedLibraryId = metadata?.source_library_id ?? null;
@@ -69,10 +68,6 @@ export const useLibraryHook = ({
     }
     dispatch(actions.library.initializeFromBlockValue({ selectedLibraryId, version, settings }));
   }, [blockValue]);
-
-  return {
-    getContent: () => libraryPayload,
-  };
 };
 
 export const useLibrarySelectorHook = ({

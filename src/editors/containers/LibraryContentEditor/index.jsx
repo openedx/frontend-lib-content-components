@@ -27,13 +27,10 @@ export const LibraryContentEditor = ({
   libraryPayload,
 }) => {
   const intl = useIntl();
-  const {
-    getContent,
-  } = useLibraryHook({
+  useLibraryHook({
     blockFailed,
     blockFinished,
     blockValue,
-    libraryPayload,
   });
 
   const loading = () => (
@@ -62,7 +59,7 @@ export const LibraryContentEditor = ({
 
   return (
     <EditorContainer
-      getContent={getContent}
+      getContent={() => libraryPayload}
       onClose={onClose}
       returnFunction={returnFunction}
     >
