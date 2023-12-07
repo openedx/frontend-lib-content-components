@@ -113,14 +113,18 @@ function tinyMCEEmbedIframePlugin(editor) {
             },
           } = defaultConfig;
 
-          generalTab.items = [
-            ...generalTab.items,
-            {
-              type: 'sizeinput',
-              name: 'size',
-              label: 'Dimensions',
-            },
-          ];
+          const hasSizeInput = generalTab.items.some((item) => item.name === 'size');
+
+          if (!hasSizeInput) {
+            generalTab.items = [
+              ...generalTab.items,
+              {
+                type: 'sizeinput',
+                name: 'size',
+                label: 'Dimensions',
+              },
+            ];
+          }
 
           defaultConfig.initialData = { sizeType };
           api.redial(defaultConfig);
@@ -166,6 +170,8 @@ function tinyMCEEmbedIframePlugin(editor) {
           if (!border) {
             iframeCode += 'frameborder="0"';
           }
+
+          iframeCode += '></iframe>';
 
           iframeCode = `<div class="tiny-pageembed" style="width: ${widthFormat}; height: ${heightFormat}">`
             + `${iframeCode}`

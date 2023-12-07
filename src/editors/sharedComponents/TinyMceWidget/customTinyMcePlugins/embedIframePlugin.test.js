@@ -39,7 +39,6 @@ describe('TinyMCE Embed IFrame Plugin', () => {
                 { text: 'Small embed', value: 'small' },
               ],
             },
-
             {
               type: 'sizeinput',
               name: 'size',
@@ -161,5 +160,249 @@ describe('TinyMCE Embed IFrame Plugin', () => {
         body: { type: 'tabpanel', tabs: [generalTab, advancedTab] },
       }),
     );
+  });
+  it('tests onChange function in plugin', () => {
+    tinyMCEEmbedIframePlugin(editorMock);
+    editorMock.ui.registry.addButton.mock.calls[0][1].onAction();
+
+    // Access the onChange function from the opened configuration
+    const onChangeFunction = editorMock.windowManager.open.mock.calls[0][0].onChange;
+
+    // Mock API and field for onChange
+    const apiMock = {
+      getData: jest.fn(() => ({ sizeType: 'big' })),
+      redial: jest.fn(),
+    };
+    const field = {
+      name: 'sizeType',
+    };
+
+    // Simulate calling the onChange function
+    onChangeFunction(apiMock, field);
+
+    expect(apiMock.getData).toHaveBeenCalled();
+    expect(apiMock.redial).toHaveBeenCalled();
+  });
+
+  it('modifies generalTab items when sizeType is not inline', () => {
+    tinyMCEEmbedIframePlugin(editorMock);
+    editorMock.ui.registry.addButton.mock.calls[0][1].onAction();
+
+    const onChangeFunction = editorMock.windowManager.open.mock.calls[0][0].onChange;
+
+    const apiMock = {
+      getData: jest.fn(() => ({ sizeType: 'big' })),
+      redial: jest.fn(),
+    };
+    const field = {
+      name: 'sizeType',
+    };
+
+    onChangeFunction(apiMock, field);
+
+    const [generalTab, advancedTab] = pluginConfig.body.tabs;
+    const generalTabExpected = generalTab.items.filter(
+      (item) => item.type !== 'sizeinput',
+    );
+
+    const expectedTabs = [
+      { title: generalTab.title, items: generalTabExpected, type: generalTab.type },
+      advancedTab,
+    ];
+
+    const expectedBody = {
+      type: pluginConfig.body.type,
+      tabs: expectedTabs,
+    };
+
+    expect(apiMock.redial).toHaveBeenCalledWith(expect.objectContaining({
+      body: expectedBody,
+    }));
+  });
+
+  it('adds sizeinput to generalTab items when sizeType is inline', () => {
+    tinyMCEEmbedIframePlugin(editorMock);
+    editorMock.ui.registry.addButton.mock.calls[0][1].onAction();
+
+    const onChangeFunction = editorMock.windowManager.open.mock.calls[0][0].onChange;
+
+    const apiMock = {
+      getData: jest.fn(() => ({ sizeType: 'inline' })),
+      redial: jest.fn(),
+    };
+    const field = {
+      name: 'sizeType',
+    };
+
+    onChangeFunction(apiMock, field);
+
+    const [generalTab, advancedTab] = pluginConfig.body.tabs;
+
+    expect(apiMock.redial).toHaveBeenCalledWith(
+      expect.objectContaining({
+        body: { type: 'tabpanel', tabs: [generalTab, advancedTab] },
+      }),
+    );
+  });
+
+  it('tests onSubmit function in plugin', () => {
+    const dataMock = {
+      source: 'https://www.example.com',
+      sizeType: 'big',
+    };
+    const apiMock = {
+      getData: jest.fn(() => dataMock),
+      close: jest.fn(),
+    };
+
+    tinyMCEEmbedIframePlugin(editorMock);
+    editorMock.ui.registry.addButton.mock.calls[0][1].onAction();
+
+    const onSubmitFunction = editorMock.windowManager.open.mock.calls[0][0].onSubmit;
+    onSubmitFunction(apiMock);
+
+    expect(apiMock.getData).toHaveBeenCalled();
+    expect(editorMock.insertContent).toHaveBeenCalled();
+    expect(apiMock.close).toHaveBeenCalled();
+  });
+
+  it('tests onSubmit function in plugin advanced properties', () => {
+    const dataMock = {
+      source: 'https://www.example.com',
+      sizeType: 'big',
+      name: 'iframeName',
+      title: 'iframeTitle',
+      longDescriptionURL: 'https://example.com/description',
+      border: true,
+      scrollbar: true,
+    };
+    const apiMock = {
+      getData: jest.fn(() => dataMock),
+      close: jest.fn(),
+    };
+
+    tinyMCEEmbedIframePlugin(editorMock);
+    editorMock.ui.registry.addButton.mock.calls[0][1].onAction();
+
+    const onSubmitFunction = editorMock.windowManager.open.mock.calls[0][0].onSubmit;
+    onSubmitFunction(apiMock);
+
+    expect(apiMock.getData).toHaveBeenCalled();
+
+    expect(editorMock.insertContent).toHaveBeenCalledWith(expect.stringContaining('width="800px"'));
+    expect(editorMock.insertContent).toHaveBeenCalledWith(expect.stringContaining('height="800px"'));
+    expect(editorMock.insertContent).toHaveBeenCalledWith(expect.stringContaining(`name="${dataMock.name}"`));
+    expect(editorMock.insertContent).toHaveBeenCalledWith(expect.stringContaining(`title="${dataMock.title}"`));
+    expect(editorMock.insertContent).toHaveBeenCalledWith(expect.stringContaining(`longdesc="${dataMock.longDescriptionURL}"`));
+    expect(editorMock.insertContent).toHaveBeenCalledWith(expect.stringContaining('scrolling="yes"'));
+
+    expect(apiMock.close).toHaveBeenCalled();
+  });
+
+  describe('tests onSubmit function in plugin sizeType', () => {
+    test('tests onSubmit function in plugin with sizeType big', () => {
+      const dataMock = {
+        source: 'https://www.example.com',
+        sizeType: 'big',
+      };
+
+      const apiMock = {
+        getData: jest.fn(() => dataMock),
+        close: jest.fn(),
+      };
+
+      tinyMCEEmbedIframePlugin(editorMock);
+      editorMock.ui.registry.addButton.mock.calls[0][1].onAction();
+
+      const onSubmitFunction = editorMock.windowManager.open.mock.calls[0][0].onSubmit;
+      onSubmitFunction(apiMock);
+
+      expect(apiMock.getData).toHaveBeenCalled();
+
+      expect(editorMock.insertContent).toHaveBeenCalledWith(expect.stringContaining('width="800px"'));
+      expect(editorMock.insertContent).toHaveBeenCalledWith(expect.stringContaining('height="800px"'));
+
+      expect(apiMock.close).toHaveBeenCalled();
+    });
+
+    test('tests onSubmit function in plugin with sizeType small', () => {
+      const dataMock = {
+        source: 'https://www.example.com',
+        sizeType: 'small',
+      };
+
+      const apiMock = {
+        getData: jest.fn(() => dataMock),
+        close: jest.fn(),
+      };
+
+      tinyMCEEmbedIframePlugin(editorMock);
+      editorMock.ui.registry.addButton.mock.calls[0][1].onAction();
+
+      const onSubmitFunction = editorMock.windowManager.open.mock.calls[0][0].onSubmit;
+      onSubmitFunction(apiMock);
+
+      expect(apiMock.getData).toHaveBeenCalled();
+
+      expect(editorMock.insertContent).toHaveBeenCalledWith(expect.stringContaining('width="100px"'));
+      expect(editorMock.insertContent).toHaveBeenCalledWith(expect.stringContaining('height="100px"'));
+      expect(apiMock.close).toHaveBeenCalled();
+    });
+
+    test('tests onSubmit function in plugin with custom sizeType', () => {
+      const dataMock = {
+        source: 'https://www.example.com',
+        sizeType: 'inline',
+        size: {
+          width: '500px',
+          height: '700px',
+        },
+      };
+
+      const apiMock = {
+        getData: jest.fn(() => dataMock),
+        close: jest.fn(),
+      };
+
+      tinyMCEEmbedIframePlugin(editorMock);
+      editorMock.ui.registry.addButton.mock.calls[0][1].onAction();
+
+      const onSubmitFunction = editorMock.windowManager.open.mock.calls[0][0].onSubmit;
+      onSubmitFunction(apiMock);
+
+      expect(apiMock.getData).toHaveBeenCalled();
+
+      expect(editorMock.insertContent).toHaveBeenCalledWith(expect.stringContaining('width="500px"'));
+      expect(editorMock.insertContent).toHaveBeenCalledWith(expect.stringContaining('height="700px"'));
+      expect(apiMock.close).toHaveBeenCalled();
+    });
+
+    test('tests onSubmit function in plugin with custom sizeType invalid values', () => {
+      const dataMock = {
+        source: 'https://www.example.com',
+        sizeType: 'inline',
+        size: {
+          width: 'test',
+          height: 'test',
+        },
+      };
+
+      const apiMock = {
+        getData: jest.fn(() => dataMock),
+        close: jest.fn(),
+      };
+
+      tinyMCEEmbedIframePlugin(editorMock);
+      editorMock.ui.registry.addButton.mock.calls[0][1].onAction();
+
+      const onSubmitFunction = editorMock.windowManager.open.mock.calls[0][0].onSubmit;
+      onSubmitFunction(apiMock);
+
+      expect(apiMock.getData).toHaveBeenCalled();
+
+      expect(editorMock.insertContent).toHaveBeenCalledWith(expect.stringContaining('width="300px"'));
+      expect(editorMock.insertContent).toHaveBeenCalledWith(expect.stringContaining('height="300px"'));
+      expect(apiMock.close).toHaveBeenCalled();
+    });
   });
 });
