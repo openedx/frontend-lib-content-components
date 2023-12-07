@@ -182,6 +182,40 @@ describe('cms api', () => {
         });
         jest.restoreAllMocks();
       });
+      test('return value for blockType: library_content', () => {
+        const content = {
+          showReset: 'goes to allow_resetting_children',
+          candidates: 'list of tuples',
+          manual: 'manuAL',
+          count: 'goes to max_count',
+          shuffle: 'shUFfle',
+          libraryId: 'goes to source_library_id',
+          libraryVersion: 1,
+        };
+        expect(apiMethods.normalizeContent({
+          blockId,
+          blockType: 'library_content',
+          content,
+          learningContextId,
+          title,
+        })).toEqual({
+          category: 'library_content',
+          courseKey: learningContextId,
+          data: null,
+          id: blockId,
+          metadata: {
+            allow_resetting_children: content.showReset,
+            candidates: content.candidates,
+            capa_type: 'any',
+            display_name: title,
+            manual: content.manual,
+            max_count: content.count,
+            shuffle: content.shuffle,
+            source_library_id: content.libraryId,
+            source_library_version: '1',
+          },
+        });
+      });
       test('throw error for invalid blockType', () => {
         expect(() => { apiMethods.normalizeContent({ blockType: 'somethingINVALID' }); })
           .toThrow(TypeError);
