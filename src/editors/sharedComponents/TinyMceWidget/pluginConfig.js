@@ -1,5 +1,5 @@
 import { StrictDict } from '../../utils';
-import { buttons, plugins } from '../../data/constants/tinyMCE';
+import { buttons, plugins } from './constants';
 
 const mapToolbars = toolbars => toolbars.map(toolbar => toolbar.join(' ')).join(' | ');
 
@@ -28,6 +28,8 @@ const pluginConfig = ({ isLibrary, placeholder, editorType }) => {
         plugins.charmap,
         codePlugin,
         plugins.autoresize,
+        plugins.powerpaste,
+        plugins.a11ychecker,
         image,
         imageTools,
         quickToolbar,
@@ -36,7 +38,7 @@ const pluginConfig = ({ isLibrary, placeholder, editorType }) => {
       toolbar: toolbar ? mapToolbars([
         [buttons.undo, buttons.redo],
         [buttons.formatSelect],
-        [labelButton],
+        [labelButton, buttons.a11ycheck],
         [buttons.bold, buttons.italic, buttons.underline, buttons.foreColor, buttons.backColor],
         [
           buttons.align.left,
@@ -96,6 +98,10 @@ const pluginConfig = ({ isLibrary, placeholder, editorType }) => {
         inline,
         block_formats: 'Header 1=h1;Header 2=h2;Header 3=h3;Header 4=h4;Header 5=h5;Header 6=h6;Div=div;Paragraph=p;Preformatted=pre',
         forced_root_block: defaultFormat,
+        powerpaste_allow_local_images: true,
+        powerpaste_word_import: 'prompt',
+        powerpaste_html_import: 'prompt',
+        powerpaste_googledoc_import: 'prompt',
       },
     })
   );

@@ -41,6 +41,7 @@ export const buttons = StrictDict({
   unlink: 'unlink',
   numlist: 'numlist',
   outdent: 'outdent',
+  a11ycheck: 'a11ycheck',
   redo: 'redo',
   removeFormat: 'removeformat',
   rotate: StrictDict({
@@ -54,6 +55,7 @@ export const buttons = StrictDict({
 });
 
 export const plugins = listKeyStore([
+  'a11ychecker',
   'link',
   'lists',
   'codesample',
@@ -65,6 +67,7 @@ export const plugins = listKeyStore([
   'autoresize',
   'image',
   'imagetools',
+  'powerpaste',
   'quickbars',
 ]);
 

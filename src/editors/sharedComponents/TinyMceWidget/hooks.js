@@ -4,11 +4,14 @@ import {
   useCallback,
   useEffect,
 } from 'react';
-import tinyMCEStyles from '../../data/constants/tinyMCEStyles';
+
+import tinyMCEStyles from './tinyMCEStyles';
 import { StrictDict } from '../../utils';
 import pluginConfig from './pluginConfig';
 import * as module from './hooks';
-import tinyMCE from '../../data/constants/tinyMCE';
+import tinyMCE from './constants';
+
+import { a11ycheckerCss } from 'frontend-components-tinymce-advanced-plugins'
 
 export const state = StrictDict({
   // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -250,7 +253,8 @@ export const editorConfig = ({
       ...config,
       skin: false,
       content_css: false,
-      content_style: tinyMCEStyles,
+      content_style: tinyMCEStyles + a11ycheckerCss,
+      // content_style: tinyMCEStyles,
       min_height: minHeight,
       contextmenu: 'link table',
       document_base_url: lmsEndpointUrl,

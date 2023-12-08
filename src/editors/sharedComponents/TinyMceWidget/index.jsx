@@ -21,6 +21,8 @@ import 'tinymce/plugins/image';
 import 'tinymce/plugins/imagetools';
 import 'tinymce/plugins/quickbars';
 
+// import 'frontend-components-tinymce-advanced-plugins';
+
 import store from '../../data/store';
 import { selectors } from '../../data/redux';
 import ImageUploadModal from '../ImageUploadModal';
@@ -31,7 +33,6 @@ const editorConfigDefaultProps = {
   setEditorRef: undefined,
   placeholder: undefined,
   initializeEditor: undefined,
-  setSelection: undefined,
   updateContent: undefined,
   content: undefined,
   minHeight: undefined,
@@ -41,7 +42,6 @@ const editorConfigPropTypes = {
   setEditorRef: PropTypes.func,
   placeholder: PropTypes.any,
   initializeEditor: PropTypes.func,
-  setSelection: PropTypes.func,
   updateContent: PropTypes.func,
   content: PropTypes.any,
   minHeight: PropTypes.any,

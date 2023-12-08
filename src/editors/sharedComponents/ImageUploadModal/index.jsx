@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { injectIntl } from '@edx/frontend-platform/i18n';
-import tinyMCEKeys from '../../data/constants/tinyMCE';
+import tinyMCEKeys from '../TinyMceWidget/constants';
 import ImageSettingsModal from './ImageSettingsModal';
 import SelectImageModal from './SelectImageModal';
 import * as module from '.';
