@@ -193,7 +193,8 @@ class ReactStateOLXParser {
 
   /** addQuestion()
    * The editorObject saved to the class constuctor is parsed for the attribute question. The question is parsed and
-   * checked for label tags. After the question is fully updated, the questionObject is returned.
+   * checked for label and em tags. After the question is fully updated, the questionObject is returned.
+   * TODO: this is very brittle and unreliable. Needs improvement.
    * @return {object} object representaion of question
    */
   addQuestion() {
@@ -202,20 +203,19 @@ class ReactStateOLXParser {
     /* Removes block tags like <p> or <h1> that surround the <label> format.
       Block tags are required by tinyMCE but have adverse effect on css in studio.
       */
-    questionObject.forEach((tag, ind) => {
-      const tagName = Object.keys(tag)[0];
-      let label = null;
-      tag[tagName].forEach(subTag => {
-        const subTagName = Object.keys(subTag)[0];
-        if (subTagName === 'label') {
-          label = subTag;
-        }
-      });
-      if (label) {
-        questionObject[ind] = label;
+    const resultQuestion = [];
+
+    questionObject.forEach((tag) => {
+      const subNodes = Object.values(tag)[0];
+      const containsLabel = subNodes.some(subNode => Object.keys(subNode)[0] === 'label');
+      if (!containsLabel) {
+        resultQuestion.push(tag);
+      } else {
+        resultQuestion.push(...subNodes);
       }
     });
-    return questionObject;
+
+    return resultQuestion;
   }
 
   /** buildMultiSelectProblem()

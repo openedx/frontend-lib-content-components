@@ -317,7 +317,7 @@ export const multipleChoiceWithFeedbackAndHintsOLX = {
 <choicegroup type="MultipleChoice">
     <choice correct="false"><p>an incorrect answer</p><choicehint><p>You can specify optional feedback like this, which appears after this answer is submitted.</p></choicehint></choice>
     <choice correct="true"><p>the correct answer</p></choice>
-    <choice correct="false"><p>an incorrect answer</p><choicehint><p>You can specify optional feedback for none, a subset, or all of the answers.</></choicehint></choice>
+    <choice correct="false"><p>an incorrect answer</p><choicehint><p>You can specify optional feedback for none, a subset, or all of the answers.</p></choicehint></choice>
   </choicegroup>
   <solution>
     <p>You can add a solution</p>
