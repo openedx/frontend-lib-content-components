@@ -212,7 +212,7 @@ describe('cms api', () => {
             max_count: content.count,
             shuffle: content.shuffle,
             source_library_id: content.libraryId,
-            source_library_version: '1',
+            source_library_version: 1,
           },
         });
       });

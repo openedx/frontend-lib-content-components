@@ -5,6 +5,7 @@ import { modes } from './constants';
 import { actions } from '../../data/redux';
 import * as requests from './data/requests';
 import { RequestKeys } from '../../data/constants/requests';
+import { isV1Library } from './utils';
 
 export const useLibraryHook = ({
   blockFailed,
@@ -99,7 +100,7 @@ export const useBlocksHook = ({
 
   // fetch v2 library content
   useEffect(() => {
-    if (selectedLibraryId) {
+    if (!isV1Library(selectedLibraryId)) {
       dispatch(requests.fetchV2LibraryContent({
         libraryId: selectedLibraryId,
         onSuccess: (response) => {

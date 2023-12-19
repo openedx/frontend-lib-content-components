@@ -39,12 +39,6 @@ describe('library api', () => {
         expect(get).toHaveBeenCalledWith(urls.v2Libraries({ studioEndpointUrl }));
       });
     });
-    describe('v2LibraryMetadata', () => {
-      it('should call get with urls.v2LibraryMetadata', () => {
-        apiMethods.fetchV2LibraryMetadata({ studioEndpointUrl, libraryId });
-        expect(get).toHaveBeenCalledWith(urls.v2LibraryMetadata({ studioEndpointUrl, libraryId }));
-      });
-    });
     describe('v2LibraryContent', () => {
       it('should call get with urls.v2LibraryContent', () => {
         apiMethods.fetchV2LibraryContent({ studioEndpointUrl, libraryId });

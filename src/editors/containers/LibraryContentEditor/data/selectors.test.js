@@ -126,7 +126,7 @@ describe('Library Selectors', () => {
         libraryVersion: testData.selectedLibraryVersion,
         manual: true,
         shuffle: false,
-        count: '-1',
+        count: -1,
         showReset: testData.settings[selectedLibraryId].showReset,
         candidates: [[blockType1, blockId1], [blockType2, blockId2]],
       });
@@ -145,7 +145,7 @@ describe('Library Selectors', () => {
         libraryVersion: testData.selectedLibraryVersion,
         manual: false,
         shuffle: true,
-        count: testData.settings[selectedLibraryId].count.toString(),
+        count: testData.settings[selectedLibraryId].count,
         showReset: testData.settings[selectedLibraryId].showReset,
         candidates: [[blockType1, blockId1], [blockType2, blockId2]],
       });
