@@ -10,9 +10,6 @@ export const apiMethods = {
   fetchV2Libraries: ({ studioEndpointUrl }) => get(
     urls.v2Libraries({ studioEndpointUrl }),
   ),
-  fetchV2LibraryMetadata: ({ studioEndpointUrl, libraryId }) => get(
-    urls.v2LibraryMetadata({ studioEndpointUrl, libraryId }),
-  ),
   fetchV2LibraryContent: ({ studioEndpointUrl, libraryId }) => get(
     urls.v2LibraryContent({ studioEndpointUrl, libraryId }),
   ),

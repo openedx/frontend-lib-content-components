@@ -10,9 +10,6 @@ jest.mock('./data/api', () => ({
   fetchV2LibraryContent: jest.fn().mockReturnValue({
     blocks: 'SoMe BLOcKs',
   }),
-  fetchV2LibraryMetadata: jest.fn().mockReturnValue({
-    version: 'lIkE a VeRsiOn',
-  }),
 }));
 
 function renderComponent(props) {

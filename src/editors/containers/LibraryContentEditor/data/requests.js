@@ -39,23 +39,6 @@ export const fetchV2Libraries = ({ ...rest }) => (dispatch, getState) => {
 };
 
 /**
- * Tracked fetchV2LibraryMetadata api method.
- * Tracked to the `fetchV2LibraryMetadata` request key.
- * @param {[func]} onSuccess - onSuccess method ((response) => { ... })
- * @param {[func]} onFailure - onFailure method ((error) => { ... })
- */
-export const fetchV2LibraryMetadata = ({ libraryId, ...rest }) => (dispatch, getState) => {
-  dispatch(networkRequest({
-    requestKey: RequestKeys.fetchV2LibraryMetadata,
-    promise: api.fetchV2LibraryMetadata({
-      studioEndpointUrl: selectors.app.studioEndpointUrl(getState()),
-      libraryId,
-    }),
-    ...rest,
-  }));
-};
-
-/**
  * Tracked fetchV2LibraryContent api method.
  * Tracked to the `fetchV2LibraryContent` request key.
  * @param {[func]} onSuccess - onSuccess method ((response) => { ... })
@@ -91,7 +74,6 @@ export const fetchBlockContent = ({ blockId, ...rest }) => (dispatch, getState) 
 
 export default StrictDict({
   fetchV2Libraries,
-  fetchV2LibraryMetadata,
   fetchV2LibraryContent,
   fetchBlockContent,
 });

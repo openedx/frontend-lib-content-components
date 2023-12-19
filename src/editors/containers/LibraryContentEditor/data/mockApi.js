@@ -126,27 +126,6 @@ export const fetchV2Libraries = ({ studioEndpointUrl }) => {
   ];
 };
 
-export const fetchV2LibraryMetadata = ({ studioEndpointUrl, libraryId }) => {
-  return {
-    id: "lib:edx:test202",
-    type: "complex",
-    org: "edx",
-    slug: "test202",
-    bundle_uuid: "539d7fcc-615c-4b6e-8b57-34cffc82bbd0",
-    title: "ray's lib",
-    description: "ray's lib",
-    num_blocks: 3,
-    version: 4,
-    last_published: "2023-09-22T15:34:01Z",
-    allow_lti: false,
-    allow_public_learning: false,
-    allow_public_read: false,
-    has_unpublished_changes: true,
-    has_unpublished_deletes: false,
-    license: ""
-  };
-};
-
 export const fetchV2LibraryContent = ({ studioEndpointUrl, libraryId }) => {
   if (libraryId === 'library-v1:new+CPSPR') {
     return {
