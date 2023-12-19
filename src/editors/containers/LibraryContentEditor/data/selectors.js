@@ -70,7 +70,6 @@ export const libraryPayload = createSelector(
         shuffle = false;
         count = -1;
       }
-      count = count;
       showReset = settings[selectedLibraryId].showReset;
       candidateList = settings[selectedLibraryId].candidates;
     }
