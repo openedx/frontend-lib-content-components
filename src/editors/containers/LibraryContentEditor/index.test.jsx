@@ -52,11 +52,17 @@ describe('LibraryContentEditor', () => {
     const { getByTestId } = renderComponent({ ...props, blockFinished: false });
     expect(getByTestId('librarycontenteditor-loadingspinner')).toBeTruthy();
   });
-  it('Renders as expected once loaded', () => {
+
+  it('Renders LibrarySettings, LibrarySelector and BlocksSelector when loaded', () => {
     const { queryByTestId, getByText } = renderComponent({ ...props });
     expect(queryByTestId('librarycontenteditor-loadingspinner')).toBeFalsy();
     expect(getByText('LibrarySettings')).toBeTruthy();
     expect(getByText('LibrarySelector')).toBeTruthy();
     expect(getByText('BlocksSelector')).toBeTruthy();
+  });
+
+  it('Renders a failed message when blockFailed', () => {
+    const { queryByTestId } = renderComponent({ ...props, blockFailed: true });
+    expect(queryByTestId('librarycontenteditor-blockfailedmessage')).toBeTruthy();
   });
 });

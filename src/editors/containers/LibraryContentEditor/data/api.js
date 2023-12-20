@@ -13,9 +13,6 @@ export const apiMethods = {
   fetchV2LibraryContent: ({ studioEndpointUrl, libraryId }) => get(
     urls.v2LibraryContent({ studioEndpointUrl, libraryId }),
   ),
-  fetchBlockContent: ({ studioEndpointUrl, blockId }) => get(
-    urls.blockContent({ studioEndpointUrl, blockId }),
-  ),
 };
 
 export const checkMockApi = (key) => {

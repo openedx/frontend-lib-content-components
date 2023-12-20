@@ -65,7 +65,7 @@ export const LibrarySettings = ({
   );
 
   return (
-    <div className="col">
+    <div className="col" data-testid="librarycontenteditor-librarysettings">
       { isV1Library(selectedLibraryId) ? v1LibrarySubsection() : null }
       { !isV1Library(selectedLibraryId) ? modeSubsection() : null }
       {

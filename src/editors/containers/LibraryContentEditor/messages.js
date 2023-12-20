@@ -1,6 +1,11 @@
 import { defineMessages } from '@edx/frontend-platform/i18n';
 
 const messages = defineMessages({
+  blockFailed: {
+    id: 'authoring.library_content.blockFailed',
+    defaultMessage: 'Library Content block failed to load',
+    description: 'Error message for library content block failing to load',
+  },
   countLabel: {
     id: 'authoring.library_content.count.label',
     defaultMessage: 'Enter the number of components to display to each student. Set it to -1 to display all components.',

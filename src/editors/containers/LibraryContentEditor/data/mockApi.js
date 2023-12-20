@@ -344,7 +344,4 @@ export const fetchV2LibraryContent = ({ studioEndpointUrl, libraryId }) => {
   }
 };
 
-export const fetchBlockContent = ({ blockId, studioEndpointUrl }) => {
-};
-
 export const emptyMock = () => mockPromise({});

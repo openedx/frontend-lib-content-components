@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Spinner } from '@edx/paragon';
-import { useIntl } from '@edx/frontend-platform/i18n';
+import { FormattedMessage, useIntl } from '@edx/frontend-platform/i18n';
 
 import messages from './messages';
 import { useLibraryHook } from './hooks';
@@ -33,6 +33,19 @@ export const LibraryContentEditor = ({
     blockValue,
   });
 
+  const initialRows = useMemo(() => getSelectedRows({
+    blocks: blocksInSelectedLibrary,
+    candidates,
+  }), [blocksInSelectedLibrary]);
+
+  if (blockFailed) {
+    return (
+      <div className="text-center p-6" data-testid="librarycontenteditor-blockfailedmessage">
+        <FormattedMessage {...messages.blockFailed} />
+      </div>
+    );
+  }
+
   const loading = () => (
     <div className="text-center p-6">
       <Spinner
@@ -43,11 +56,6 @@ export const LibraryContentEditor = ({
       />
     </div>
   );
-
-  const initialRows = useMemo(() => getSelectedRows({
-    blocks: blocksInSelectedLibrary,
-    candidates,
-  }), [blocksInSelectedLibrary]);
 
   const loaded = () => (
     <div>

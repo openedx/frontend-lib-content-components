@@ -9,7 +9,3 @@ export const v2Libraries = ({ studioEndpointUrl }) => (
 export const v2LibraryContent = ({ studioEndpointUrl, libraryId }) => (
   `${studioEndpointUrl}/api/libraries/v2/${libraryId}/blocks/`
 );
-
-export const blockContent = ({ studioEndpointUrl, blockId }) => (
-  `${studioEndpointUrl}/library/${blockId}/`
-);

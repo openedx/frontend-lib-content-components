@@ -20,7 +20,6 @@ const { apiMethods } = api;
 
 const studioEndpointUrl = 'hortus.coa';
 const libraryId = 'lb:DeveloperInc:test3:html:0aa6a843-fd86-4ecf-84cb-4640cf8bebdd';
-const blockId = 'block-v1-coursev1:2uX@4345432';
 
 describe('library api', () => {
   beforeEach(() => {
@@ -43,12 +42,6 @@ describe('library api', () => {
       it('should call get with urls.v2LibraryContent', () => {
         apiMethods.fetchV2LibraryContent({ studioEndpointUrl, libraryId });
         expect(get).toHaveBeenCalledWith(urls.v2LibraryContent({ studioEndpointUrl, libraryId }));
-      });
-    });
-    describe('blockContent', () => {
-      it('should call get with urls.blockContent', () => {
-        apiMethods.fetchBlockContent({ studioEndpointUrl, blockId });
-        expect(get).toHaveBeenCalledWith(urls.blockContent({ studioEndpointUrl, blockId }));
       });
     });
   });

@@ -60,6 +60,7 @@ describe('LibrarySelector', () => {
     expect(queryByText(mocklibraries[2].display_name)).toBeTruthy();
     expect(queryByText('FormattedMessage')).toBeTruthy();
   });
+
   it('Does not render dropdown when there are no libraries', () => {
     const { queryByTestId } = renderComponent({
       ...props,

@@ -67,4 +67,12 @@ describe('LibrarySettings Component', () => {
       mode: newMode,
     });
   });
+
+  it('Does not render when there are is no selected library', () => {
+    const { queryByTestId } = renderComponent({
+      ...props,
+      selectedLibraryId: null,
+    });
+    expect(queryByTestId('librarycontenteditor-librarysettings')).toBeFalsy();
+  });
 });

@@ -55,25 +55,8 @@ export const fetchV2LibraryContent = ({ libraryId, ...rest }) => (dispatch, getS
   }));
 };
 
-/**
- * Tracked fetchBlockContent api method.
- * Tracked to the `fetchBlockContent` request key.
- * @param {[func]} onSuccess - onSuccess method ((response) => { ... })
- * @param {[func]} onFailure - onFailure method ((error) => { ... })
- */
-export const fetchBlockContent = ({ blockId, ...rest }) => (dispatch, getState) => {
-  dispatch(networkRequest({
-    requestKey: RequestKeys.fetchBlockContent,
-    promise: api.fetchBlockContent({
-      studioEndpointUrl: selectors.app.studioEndpointUrl(getState()),
-      blockId,
-    }),
-    ...rest,
-  }));
-};
-
 export default StrictDict({
+  fetchV1Libraries,
   fetchV2Libraries,
   fetchV2LibraryContent,
-  fetchBlockContent,
 });

@@ -66,10 +66,12 @@ describe('BlocksSelector', () => {
     const { container } = renderComponent({ ...mockProps, selectedLibraryId: null });
     expect(container.firstChild).toBeFalsy();
   });
+
   it('renders when mode is selected', () => {
     const { queryByText } = renderComponent(mockProps);
     expect(queryByText('Name')).toBeTruthy();
   });
+
   it('does not render when mode is not selected', () => {
     const { container } = renderComponent({ ...mockProps, mode: 'soMeThingElse' });
     expect(container.firstChild).toBeFalsy();
@@ -80,12 +82,14 @@ describe('RowCheckbox', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
+
   it('renders a checkbox', () => {
     render(<RowCheckbox contextKey="emails" row={defaultRow} />);
     const checkbox = screen.getByTestId(SELECT_ONE_TEST_ID);
     expect(checkbox).toBeInTheDocument();
     expect(checkbox).toHaveProperty('checked', false);
   });
+
   it('renders a selected checkbox', () => {
     render(
       <RowCheckbox contextKey="emails" row={checkedRow} />,
@@ -94,6 +98,7 @@ describe('RowCheckbox', () => {
     expect(checkbox).toBeInTheDocument();
     expect(checkbox).toHaveProperty('checked', true);
   });
+
   it('deselects the row when selected checkbox is checked', () => {
     render(
       <RowCheckbox contextKey="emails" row={defaultRow} />,
