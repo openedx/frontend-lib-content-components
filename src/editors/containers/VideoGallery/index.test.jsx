@@ -80,7 +80,7 @@ describe('VideoGallery', () => {
     beforeAll(() => {
       oldLocation = window.location;
       delete window.location;
-      window.location = { assign: jest.fn() };
+      window.location = { replace: jest.fn() };
     });
     afterAll(() => {
       window.location = oldLocation;
@@ -118,23 +118,23 @@ describe('VideoGallery', () => {
       ));
     });
     it('navigates to video upload page when there are no videos', async () => {
-      expect(window.location.assign).not.toHaveBeenCalled();
+      expect(window.location.replace).not.toHaveBeenCalled();
       updateState({ videos: [] });
       await renderComponent();
-      expect(window.location.assign).toHaveBeenCalled();
+      expect(window.location.replace).toHaveBeenCalled();
     });
     it.each([
-      [/by date added \(newest\)/i, [2, 1, 3]],
-      [/by date added \(oldest\)/i, [3, 1, 2]],
-      [/by name \(ascending\)/i, [1, 2, 3]],
-      [/by name \(descending\)/i, [3, 2, 1]],
-      [/by duration \(longest\)/i, [3, 1, 2]],
-      [/by duration \(shortest\)/i, [2, 1, 3]],
+      [/newest/i, [2, 1, 3]],
+      [/oldest/i, [3, 1, 2]],
+      [/name A-Z/i, [1, 2, 3]],
+      [/name Z-A/i, [3, 2, 1]],
+      [/longest/i, [3, 1, 2]],
+      [/shortest/i, [2, 1, 3]],
     ])('videos can be sorted %s', async (sortBy, order) => {
       await renderComponent();
 
       fireEvent.click(screen.getByRole('button', {
-        name: /by date added \(newest\)/i,
+        name: /By newest/i,
       }));
       fireEvent.click(screen.getByRole('link', {
         name: sortBy,
@@ -163,13 +163,12 @@ describe('VideoGallery', () => {
         }],
       });
 
-      await act(async () => {
-        fireEvent.click(screen.getByRole('button', {
-          name: 'Video status',
-        }));
+      act(() => {
+        fireEvent.click(screen.getByTestId('dropdown-filter'));
       });
-      await act(async () => {
-        fireEvent.click(screen.getByRole('checkbox', {
+
+      act(() => {
+        fireEvent.click(screen.getByRole('button', {
           name: filterBy,
         }));
       });

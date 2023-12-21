@@ -6,7 +6,7 @@ exports[`Editor render presents error message if no relevant editor found and re
 >
   <div
     aria-label="fAkEBlock"
-    className="pgn__modal-fullscreen"
+    className="pgn__modal-fullscreen h-100"
     role="dialog"
   >
     <FormattedMessage
@@ -24,7 +24,7 @@ exports[`Editor render snapshot: renders correct editor given blockType (html ->
 >
   <div
     aria-label="html"
-    className="pgn__modal-fullscreen"
+    className="pgn__modal-fullscreen h-100"
     role="dialog"
   >
     <TextEditor

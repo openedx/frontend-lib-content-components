@@ -6,8 +6,9 @@ import {
 } from '@testing-library/react';
 import { IntlProvider } from '@edx/frontend-platform/i18n';
 
-import { sortKeys, sortMessages } from '../ImageUploadModal/SelectImageModal/utils';
-import { filterMessages } from '../../containers/VideoGallery/utils';
+import {
+  filterKeys, filterMessages, sortKeys, sortMessages,
+} from '../../containers/VideoGallery/utils';
 import { SearchSort } from './SearchSort';
 import messages from './messages';
 
@@ -32,7 +33,10 @@ describe('SearchSort component', () => {
       id: 'test.id',
       defaultMessage: 'test message',
     },
+    filterBy: filterKeys.anyStatus,
     onFilterClick: jest.fn(),
+    filterKeys,
+    filterMessages,
     showSwitch: true,
   };
 
@@ -48,37 +52,36 @@ describe('SearchSort component', () => {
     const { getByRole } = getComponent();
     await act(() => {
       fireEvent.click(screen.getByRole('button', {
-        name: /by date added \(oldest\)/i,
+        name: /By oldest/i,
       }));
     });
     Object.values(sortMessages)
       .forEach(({ defaultMessage }) => {
-        expect(getByRole('link', { name: defaultMessage }))
+        expect(getByRole('link', { name: `By ${defaultMessage}` }))
           .toBeInTheDocument();
       });
   });
   test('adds a sort option for each sortKey', async () => {
     const { getByRole } = getComponent();
     await act(() => {
-      fireEvent.click(screen.getByRole('button', { name: /by date added \(oldest\)/i }));
+      fireEvent.click(screen.getByRole('button', { name: /oldest/i }));
     });
     Object.values(sortMessages)
       .forEach(({ defaultMessage }) => {
-        expect(getByRole('link', { name: defaultMessage }))
+        expect(getByRole('link', { name: `By ${defaultMessage}` }))
           .toBeInTheDocument();
       });
   });
-  test('adds a filter option for each filterKet', async () => {
-    const { getByRole } = getComponent();
-    await act(() => {
-      fireEvent.click(screen.getByRole('button', { name: /video status/i }));
+  test('adds a filter option for each filter key', async () => {
+    const { getByTestId } = getComponent();
+    act(() => {
+      fireEvent.click(getByTestId('dropdown-filter'));
     });
+
     Object.keys(filterMessages)
       .forEach((key) => {
-        if (key !== 'title') {
-          expect(getByRole('checkbox', { name: filterMessages[key].defaultMessage }))
-            .toBeInTheDocument();
-        }
+        expect(getByTestId(`dropdown-filter-${key}`))
+          .toBeInTheDocument();
       });
   });
   test('searchbox should show clear message button when not empty', async () => {

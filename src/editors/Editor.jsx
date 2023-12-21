@@ -31,9 +31,11 @@ export const Editor = ({
 
   const EditorComponent = supportedEditors[blockType];
   return (
-    <div className="d-flex flex-column">
+    <div
+      className="d-flex flex-column"
+    >
       <div
-        className="pgn__modal-fullscreen"
+        className="pgn__modal-fullscreen h-100"
         role="dialog"
         aria-label={blockType}
       >

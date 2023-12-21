@@ -31,6 +31,8 @@ const pluginConfig = ({ isLibrary, placeholder, editorType }) => {
         image,
         imageTools,
         quickToolbar,
+        plugins.a11ychecker,
+        plugins.powerpaste,
         plugins.embediframe,
       ].join(' '),
       menubar: false,
@@ -53,9 +55,7 @@ const pluginConfig = ({ isLibrary, placeholder, editorType }) => {
         ],
         [imageUploadButton, buttons.link, buttons.unlink, buttons.blockQuote, buttons.codeBlock],
         [buttons.table, buttons.emoticons, buttons.charmap, buttons.hr],
-        [buttons.removeFormat, codeButton],
-        [buttons.a11ycheck],
-        [buttons.embediframe],
+        [buttons.removeFormat, codeButton, buttons.a11ycheck, buttons.embediframe],
       ]) : false,
       imageToolbar: mapToolbars([
         // [buttons.rotate.left, buttons.rotate.right],
@@ -72,7 +72,7 @@ const pluginConfig = ({ isLibrary, placeholder, editorType }) => {
           buttons.numlist,
         ],
         [imageUploadButton, buttons.blockQuote, buttons.codeBlock],
-        [buttons.table, buttons.emoticons, buttons.charmap, buttons.removeFormat],
+        [buttons.table, buttons.emoticons, buttons.charmap, buttons.removeFormat, buttons.a11ycheck],
       ]),
       quickbarsSelectionToolbar: toolbar ? false : mapToolbars([
         [buttons.undo, buttons.redo],
@@ -84,7 +84,7 @@ const pluginConfig = ({ isLibrary, placeholder, editorType }) => {
           buttons.numlist,
         ],
         [imageUploadButton, buttons.blockQuote, buttons.codeBlock],
-        [buttons.table, buttons.emoticons, buttons.charmap, buttons.removeFormat],
+        [buttons.table, buttons.emoticons, buttons.charmap, buttons.removeFormat, buttons.a11ycheck],
       ]),
       config: {
         branding: false,
@@ -99,6 +99,10 @@ const pluginConfig = ({ isLibrary, placeholder, editorType }) => {
         inline,
         block_formats: 'Header 1=h1;Header 2=h2;Header 3=h3;Header 4=h4;Header 5=h5;Header 6=h6;Div=div;Paragraph=p;Preformatted=pre',
         forced_root_block: defaultFormat,
+        powerpaste_allow_local_images: true,
+        powerpaste_word_import: 'prompt',
+        powerpaste_html_import: 'prompt',
+        powerpaste_googledoc_import: 'prompt',
       },
     })
   );
