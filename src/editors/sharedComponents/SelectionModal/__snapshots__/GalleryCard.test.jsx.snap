@@ -271,18 +271,17 @@ exports[`GalleryCard component snapshot with thumbnail fallback and load error 1
         }
       }
     >
-      <div
+      <Image
+        onError={[Function]}
+        src="props.img.externalUrl"
         style={
           Object {
+            "border": "none",
             "height": "100px",
             "width": "200px",
           }
         }
-      >
-        <span>
-          Image failed to load
-        </span>
-      </div>
+      />
     </div>
     <div
       className="card-text px-3 py-2"

@@ -102,20 +102,22 @@ exports[`EditorProblemView component renders simple view 1`] = `
     onClose={[Function]}
     title="No answer specified"
   >
-    <div>
-      <FormattedMessage
-        defaultMessage="Are you sure you want to exit the editor?"
-        description="Question in body of save warning modal"
-        id="authoring.problemEditor.editProblemView.saveWarningModal.body.question"
-      />
-    </div>
-    <div>
-      <FormattedMessage
-        defaultMessage="No correct answer has been specified."
-        description="Explanation in body of no answer modal"
-        id="authoring.problemEditor.editProblemView.saveWarningModal.noAnswer.body.explanation"
-      />
-    </div>
+    <Fragment>
+      <div>
+        <FormattedMessage
+          defaultMessage="Are you sure you want to exit the editor?"
+          description="Question in body of save warning modal"
+          id="authoring.problemEditor.editProblemView.saveWarningModal.body.question"
+        />
+      </div>
+      <div>
+        <FormattedMessage
+          defaultMessage="No correct answer has been specified."
+          description="Explanation in body of no answer modal"
+          id="authoring.problemEditor.editProblemView.saveWarningModal.noAnswer.body.explanation"
+        />
+      </div>
+    </Fragment>
   </Component>
   <div
     className="editProblemView d-flex flex-row flex-nowrap justify-content-end"

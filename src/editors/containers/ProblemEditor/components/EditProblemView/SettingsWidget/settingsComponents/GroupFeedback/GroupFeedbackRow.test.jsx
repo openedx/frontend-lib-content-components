@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow } from '@edx/react-unit-test-utils';
 import { formatMessage } from '../../../../../../../../testUtils';
 import { GroupFeedbackRow } from './GroupFeedbackRow';
 
@@ -15,7 +15,7 @@ describe('GroupFeedbackRow', () => {
 
   describe('snapshot', () => {
     test('snapshot: renders hints row', () => {
-      expect(shallow(<GroupFeedbackRow {...props} />)).toMatchSnapshot();
+      expect(shallow(<GroupFeedbackRow {...props} />).snapshot).toMatchSnapshot();
     });
   });
 });

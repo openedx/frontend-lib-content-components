@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow } from '@edx/react-unit-test-utils';
 
 import { formatMessage } from '../../../testUtils';
 import { selectors } from '../../data/redux';
@@ -38,10 +38,10 @@ describe('VideoEditor', () => {
   };
   describe('snapshots', () => {
     test('renders as expected with default behavior', () => {
-      expect(shallow(<VideoEditor {...props} />)).toMatchSnapshot();
+      expect(shallow(<VideoEditor {...props} />).snapshot).toMatchSnapshot();
     });
     test('renders as expected with default behavior', () => {
-      expect(shallow(<VideoEditor {...props} studioViewFinished />)).toMatchSnapshot();
+      expect(shallow(<VideoEditor {...props} studioViewFinished />).snapshot).toMatchSnapshot();
     });
   });
   describe('mapStateToProps', () => {
