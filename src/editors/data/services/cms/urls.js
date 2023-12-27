@@ -98,3 +98,7 @@ export const videoFeatures = ({ studioEndpointUrl }) => (
 export const courseVideos = ({ studioEndpointUrl, learningContextId }) => (
   `${studioEndpointUrl}/videos/${learningContextId}`
 );
+
+export const rephrase = ({studioEndpointUrl}) => (
+  `${studioEndpointUrl}/mxai/rephrase`
+)

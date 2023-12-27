@@ -215,6 +215,26 @@ export const apiMethods = {
     urls.courseVideos({ studioEndpointUrl, learningContextId }),
     data,
   ),
+  rephrase: ({
+    course_key,
+    content,
+    studioEndpointUrl,
+  }) => {
+    const data = new FormData();
+    data.append('course_key', course_key);
+    data.append('content', content);
+    return post(
+      urls.rephrase({ studioEndpointUrl }),
+      data,
+    ).then((res) => res.data)
+      .then((data) => {
+        tinymce.activeEditor.undoManager.add()
+        tinymce.activeEditor.selection.setContent(data);
+        tinymce.activeEditor.undoManager.add()
+        tinymce.activeEditor.selection.select(tinymce.activeEditor.selection.getNode());
+        return data;
+      })
+  }
 };
 
 export const loadImage = (imageData) => ({

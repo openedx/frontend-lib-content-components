@@ -1,5 +1,5 @@
 import React from 'react';
-import { Provider, connect } from 'react-redux';
+import { Provider, connect, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Editor } from '@tinymce/tinymce-react';
 
@@ -53,6 +53,8 @@ export const TinyMceWidget = ({
 
   const imageSelection = hooks.selectedImage(null);
 
+  const dispatch = useDispatch();
+
   return (
     <Provider store={store}>
       {isLibrary ? null : (
@@ -88,6 +90,7 @@ export const TinyMceWidget = ({
             studioEndpointUrl,
             images: imagesRef,
             editorContentHtml,
+            dispatch:dispatch,
             ...imageSelection,
             ...editorConfig,
           })
