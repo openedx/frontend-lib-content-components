@@ -12,6 +12,10 @@ const initialState = {
     //  to persist when user switches between libraries.
   },
   blocksInSelectedLibrary: [],
+
+  // The following two states are only loaded from a previously saved editor.
+  savedLibraryId: null,
+  savedChildren: [],
 };
 
 const initialSettings = {
@@ -27,7 +31,9 @@ const library = createSlice({
   reducers: {
     initializeFromBlockValue: (state, { payload }) => ({
       ...state,
-      selectedLibraryId: payload.selectedLibraryId,
+      savedChildren: payload.children,
+      savedLibraryId: payload.libraryId,
+      selectedLibraryId: payload.libraryId,
       selectedLibraryVersion: payload.version,
       settings: payload.settings,
     }),

@@ -53,13 +53,14 @@ export const useLibraryHook = ({
   // load previously saved library into redux
   useEffect(() => {
     const metadata = blockValue?.data?.metadata;
-    const selectedLibraryId = metadata?.source_library_id ?? null;
+    const libraryId = metadata?.source_library_id ?? null;
+    const children = blockValue?.data?.child_info?.children;
     let version = '';
     let settings = {};
-    if (selectedLibraryId) {
+    if (libraryId) {
       version = metadata?.source_library_version;
       settings = {
-        [selectedLibraryId]: {
+        [libraryId]: {
           mode: metadata?.manual ? modes.selected.value : modes.random.value,
           count: metadata?.max_count,
           showReset: metadata?.allow_resetting_children,
@@ -67,7 +68,9 @@ export const useLibraryHook = ({
         },
       };
     }
-    dispatch(actions.library.initializeFromBlockValue({ selectedLibraryId, version, settings }));
+    dispatch(actions.library.initializeFromBlockValue({
+      libraryId, version, settings, children,
+    }));
   }, [blockValue]);
 };
 
@@ -92,15 +95,27 @@ export const useLibrarySelectorHook = ({
   };
 };
 
-export const useBlocksHook = ({
+export const useBlocksSelectorHook = ({
   blocksInSelectedLibrary,
+  savedChildren,
+  savedLibraryId,
   selectedLibraryId,
 }) => {
   const dispatch = useDispatch();
 
   // fetch v2 library content
+  // If selected library is the same as the saved library,
+  //   use the children blocks of the library content block instead.
   useEffect(() => {
-    if (!isV1Library(selectedLibraryId)) {
+    if (selectedLibraryId === savedLibraryId) {
+      dispatch(actions.library.setLibraryBlocks({
+        blocks: savedChildren.map(block => ({
+          id: block.id,
+          display_name: block.display_name,
+          block_type: block.category,
+        })),
+      }));
+    } else if (!isV1Library(selectedLibraryId)) {
       dispatch(requests.fetchV2LibraryContent({
         libraryId: selectedLibraryId,
         onSuccess: (response) => {

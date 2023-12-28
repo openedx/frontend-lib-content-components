@@ -42,6 +42,9 @@ describe('useLibraryHook', () => {
   const version = 'verNum';
   const blockValue = {
     data: {
+      child_info: {
+        children: 'chIldInfo',
+      },
       metadata: {
         source_library_id: selectedLibraryId,
         source_library_version: version,
@@ -58,7 +61,7 @@ describe('useLibraryHook', () => {
     jest.clearAllMocks();
   });
 
-  describe('useEffect when block finishs loading', () => {
+  describe('useEffect when block finishes loading', () => {
     const v2Libraries = [
       {
         id: 'v2libid',
@@ -150,7 +153,7 @@ describe('useLibraryHook', () => {
         blockValue,
       }));
       expect(actions.library.initializeFromBlockValue).toHaveBeenCalledWith({
-        selectedLibraryId,
+        libraryId: selectedLibraryId,
         version,
         settings: {
           [selectedLibraryId]: {
@@ -160,6 +163,7 @@ describe('useLibraryHook', () => {
             candidates: blockValue.data.metadata.candidates,
           },
         },
+        children: blockValue.data.child_info.children,
       });
     });
   });
@@ -216,11 +220,16 @@ describe('useLibrarySelectorHook', () => {
   });
 });
 
-describe('useBlocksHook', () => {
+describe('useBlocksSelectorHook', () => {
   const blocksInSelectedLibrary = [
     { id: 'block1', display_name: 'textblock', block_type: 'html' },
     { id: 'block2', display_name: 'vidblock', block_type: 'video' },
     { id: 'block3', display_name: 'probblock', block_type: 'problem' },
+  ];
+  const savedChildren = [
+    { id: 'saved1', display_name: 'savedtext', category: 'html' },
+    { id: 'saved2', display_name: 'savedvid', category: 'video' },
+    { id: 'saved3', display_name: 'savedprob', category: 'problem' },
   ];
   const selectedLibraryId = 'libID';
 
@@ -231,15 +240,16 @@ describe('useBlocksHook', () => {
   describe('useEffect when selectedLibraryId changes', () => {
     it('should fetch v2 library content', () => {
       useDispatch.mockReturnValue(dispatch);
-      renderHook(() => module.useBlocksHook({
+      renderHook(() => module.useBlocksSelectorHook({
         blocksInSelectedLibrary,
         selectedLibraryId,
       }));
       expect(requests.fetchV2LibraryContent).toHaveBeenCalled();
     });
+
     it('should call loadLibraries on successful response for fetchV2Libraries', () => {
       useDispatch.mockReturnValue(dispatch);
-      renderHook(() => module.useBlocksHook({
+      renderHook(() => module.useBlocksSelectorHook({
         blocksInSelectedLibrary,
         selectedLibraryId,
       }));
@@ -249,9 +259,10 @@ describe('useBlocksHook', () => {
         blocks: 'someData',
       });
     });
+
     it('should call failRequest on failure response for fetchV2Libraries', () => {
       useDispatch.mockReturnValue(dispatch);
-      renderHook(() => module.useBlocksHook({
+      renderHook(() => module.useBlocksSelectorHook({
         blocksInSelectedLibrary,
         selectedLibraryId,
       }));
@@ -262,11 +273,28 @@ describe('useBlocksHook', () => {
         error,
       });
     });
+
+    it('should call loadLibraries with values from savedChildren when saved library id is the selected library id', () => {
+      useDispatch.mockReturnValue(dispatch);
+      renderHook(() => module.useBlocksSelectorHook({
+        blocksInSelectedLibrary,
+        selectedLibraryId,
+        savedLibraryId: selectedLibraryId,
+        savedChildren,
+      }));
+      expect(actions.library.setLibraryBlocks).toHaveBeenCalledWith({
+        blocks: [
+          { id: 'saved1', display_name: 'savedtext', block_type: 'html' },
+          { id: 'saved2', display_name: 'savedvid', block_type: 'video' },
+          { id: 'saved3', display_name: 'savedprob', block_type: 'problem' },
+        ],
+      });
+    });
   });
 
   describe('blocksTableData should return an array for passing into paragon DataTable component', () => {
     useDispatch.mockReturnValue(dispatch);
-    const { result } = renderHook(() => module.useBlocksHook({
+    const { result } = renderHook(() => module.useBlocksSelectorHook({
       blocksInSelectedLibrary,
       selectedLibraryId,
     }));

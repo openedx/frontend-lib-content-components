@@ -9,7 +9,7 @@ jest.unmock('@edx/paragon');
 jest.unmock('@edx/paragon/icons');
 
 jest.mock('./hooks', () => ({
-  useBlocksHook: jest.fn().mockReturnValue({
+  useBlocksSelectorHook: jest.fn().mockReturnValue({
     blocksTableData: [
       // Mocked blocksTableData
       { id: 1, display_name: 'Block 1', block_type: 'Type A' },

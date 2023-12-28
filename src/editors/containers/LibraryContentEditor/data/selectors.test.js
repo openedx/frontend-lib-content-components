@@ -14,6 +14,13 @@ const blockType1 = 'a BLOck Type';
 const blockId2 = 'a blocK ID tOO';
 const blockType2 = 'a Different BLOck Type';
 const testData = {
+  savedChildren: {
+    0: {
+      block_type: blockId1,
+      id: blockId1,
+    },
+  },
+  savedLibraryId: selectedLibraryId,
   selectedLibraryId,
   selectedLibraryVersion: 'a lIb VERsion',
   settings: {

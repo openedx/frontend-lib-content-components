@@ -8,6 +8,8 @@ const mkSimpleSelector = (cb) => createSelector([module.libraryState], cb);
 
 export const simpleSelectors = {
   libraries: mkSimpleSelector(library => library.libraries),
+  savedChildren: mkSimpleSelector(library => library.savedChildren),
+  savedLibraryId: mkSimpleSelector(library => library.savedLibraryId),
   selectedLibraryId: mkSimpleSelector(library => library.selectedLibraryId),
   selectedLibraryVersion: mkSimpleSelector(library => library.selectedLibraryVersion),
   settings: mkSimpleSelector(library => library.settings),

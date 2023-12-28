@@ -19,22 +19,24 @@ describe('app reducer', () => {
 
   describe('handling actions', () => {
     it('loads initial input fields into the store', () => {
-      const libId = 'anOther lIb Id';
       const data = {
         libraries: 'soMe LibS',
-        selectedLibraryId: libId,
+        libraryId: 'anOther lIb Id',
         version: 'a lib veRsioN (oFteN an Int)',
         settings: {
           value: 'sOmE sETTings vAlue',
         },
         blocksInSelectedLibrary: 'SoME bLocKs',
+        children: ['savEDchildrEN'],
       };
       expect(reducer(
         testingState,
         actions.initializeFromBlockValue({ ...data, other: 'field' }),
       )).toEqual({
         ...testingState,
-        selectedLibraryId: data.selectedLibraryId,
+        savedChildren: data.children,
+        savedLibraryId: data.libraryId,
+        selectedLibraryId: data.libraryId,
         selectedLibraryVersion: data.version,
         settings: data.settings,
       });

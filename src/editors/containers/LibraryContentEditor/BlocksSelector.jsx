@@ -6,7 +6,7 @@ import { CheckboxControl, DataTable, Form } from '@edx/paragon';
 
 import messages from './messages';
 import { actions, selectors } from './data';
-import { useBlocksHook } from './hooks';
+import { useBlocksSelectorHook } from './hooks';
 import { modes } from './constants';
 import { getCandidates } from './utils';
 
@@ -38,13 +38,17 @@ export const BlocksSelector = ({
   mode,
   // redux
   blocksInSelectedLibrary,
+  savedChildren,
+  savedLibraryId,
   setCandidatesForLibrary,
   selectedLibraryId,
 }) => {
   const {
     blocksTableData,
-  } = useBlocksHook({
+  } = useBlocksSelectorHook({
     blocksInSelectedLibrary,
+    savedChildren,
+    savedLibraryId,
     selectedLibraryId,
   });
 
@@ -121,6 +125,8 @@ BlocksSelector.defaultProps = {
   blocksInSelectedLibrary: [],
   initialRows: {},
   mode: '',
+  savedChildren: [],
+  savedLibraryId: null,
   selectedLibraryId: null,
 };
 
@@ -129,6 +135,8 @@ BlocksSelector.propTypes = {
   mode: PropTypes.string,
   // redux
   blocksInSelectedLibrary: PropTypes.arrayOf(PropTypes.shape({})),
+  savedChildren: PropTypes.arrayOf(PropTypes.shape({})),
+  savedLibraryId: PropTypes.string,
   setCandidatesForLibrary: PropTypes.func.isRequired,
   selectedLibraryId: PropTypes.string,
 };
@@ -136,6 +144,8 @@ BlocksSelector.propTypes = {
 export const mapStateToProps = (state) => ({
   blocksInSelectedLibrary: selectors.blocksInSelectedLibrary(state),
   mode: selectors.mode(state),
+  savedChildren: selectors.savedChildren(state),
+  savedLibraryId: selectors.savedLibraryId(state),
   selectedLibraryId: selectors.selectedLibraryId(state),
 });
 
