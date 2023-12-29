@@ -102,7 +102,6 @@ describe('VideoSourceWidget', () => {
       const { onBlur } = el
         // eslint-disable-next-line
         .children().at(1).children().at(0).children().at(2).props();
-      onBlur('onBlur event');
       expect(hook.updateVideoURL).toHaveBeenCalledWith('onBlur event', '');
     });
   });
