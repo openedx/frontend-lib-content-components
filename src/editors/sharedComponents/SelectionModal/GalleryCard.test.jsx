@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import { Image } from '@edx/paragon';
+import { Image } from '@openedx/paragon';
 import { GalleryCard } from './GalleryCard';
 
 describe('GalleryCard component', () => {

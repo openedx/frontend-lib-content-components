@@ -1,5 +1,6 @@
 const path = require('path');
-const { createConfig } = require('@edx/frontend-build');
+// eslint-disable-next-line import/no-extraneous-dependencies
+const { createConfig } = require('@openedx/frontend-build');
 
 module.exports = createConfig('webpack-dev', {
   entry: path.resolve(__dirname, 'src'),

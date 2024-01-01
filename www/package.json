@@ -12,10 +12,10 @@
   "dependencies": {
     "@edx/brand": "npm:@edx/brand-edx.org@^2.0.3",
     "@edx/browserslist-config": "1.0.0",
-    "@edx/frontend-build": "12.8.27",
+    "@openedx/frontend-build": "13.0.19",
     "@edx/frontend-lib-content-components": "file:..",
     "@edx/frontend-platform": "4.2.0",
-    "@edx/paragon": "^20.32.0",
+    "@openedx/paragon": "^21.11.3",
     "core-js": "^3.21.1",
     "dotenv": "^16.0.0",
     "prop-types": "^15.5.10",
