@@ -31,7 +31,6 @@ const library = createSlice({
   reducers: {
     initializeFromBlockValue: (state, { payload }) => ({
       ...state,
-      savedChildren: payload.children,
       savedLibraryId: payload.libraryId,
       selectedLibraryId: payload.libraryId,
       selectedLibraryVersion: payload.version,
@@ -49,6 +48,10 @@ const library = createSlice({
       selectedLibraryId: null,
       selectedLibraryVersion: null,
       blocksInSelectedLibrary: [],
+    }),
+    loadChildren: (state, { payload }) => ({
+      ...state,
+      savedChildren: payload.children,
     }),
     setLibraryId: (state, { payload }) => ({
       ...state,

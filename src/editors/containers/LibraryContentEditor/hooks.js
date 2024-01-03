@@ -14,7 +14,7 @@ export const useLibraryHook = ({
 }) => {
   const dispatch = useDispatch();
 
-  // fetch libraries when block finishes loading
+  // fetch libraries and child blocks when block finishes loading
   useEffect(() => {
     if (blockFinished && !blockFailed) {
       dispatch(requests.fetchV2Libraries({
@@ -47,6 +47,18 @@ export const useLibraryHook = ({
           }));
         },
       }));
+      dispatch(requests.fetchChildrenInfo({
+        onSuccess: (response) => {
+          const children = response?.data?.children;
+          dispatch(actions.library.loadChildren({ children }));
+        },
+        onFailure: (error) => {
+          dispatch(actions.requests.failRequest({
+            requestKey: RequestKeys.fetchChildrenInfo,
+            error,
+          }));
+        },
+      }));
     }
   }, [blockFinished, blockFailed]);
 
@@ -54,7 +66,6 @@ export const useLibraryHook = ({
   useEffect(() => {
     const metadata = blockValue?.data?.metadata;
     const libraryId = metadata?.source_library_id ?? null;
-    const children = blockValue?.data?.child_info?.children;
     let version = '';
     let settings = {};
     if (libraryId) {
@@ -69,7 +80,7 @@ export const useLibraryHook = ({
       };
     }
     dispatch(actions.library.initializeFromBlockValue({
-      libraryId, version, settings, children,
+      libraryId, version, settings,
     }));
   }, [blockValue]);
 };
@@ -131,7 +142,7 @@ export const useBlocksSelectorHook = ({
         },
       }));
     }
-  }, [selectedLibraryId]);
+  }, [selectedLibraryId, savedChildren]);
 
   const blockTypeDisplay = (type) => {
     if (type === 'html') { return 'Text'; }

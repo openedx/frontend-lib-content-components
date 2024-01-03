@@ -55,8 +55,26 @@ export const fetchV2LibraryContent = ({ libraryId, ...rest }) => (dispatch, getS
   }));
 };
 
+/**
+ * Tracked fetchChildrenInfo api method.
+ * Tracked to the `fetchChildrenInfo` request key.
+ * @param {[func]} onSuccess - onSuccess method ((response) => { ... })
+ * @param {[func]} onFailure - onFailure method ((error) => { ... })
+ */
+export const fetchChildrenInfo = ({ ...rest }) => (dispatch, getState) => {
+  dispatch(networkRequest({
+    requestKey: RequestKeys.fetchChildrenInfo,
+    promise: api.fetchChildrenInfo({
+      studioEndpointUrl: selectors.app.studioEndpointUrl(getState()),
+      blockId: selectors.app.blockId(getState()),
+    }),
+    ...rest,
+  }));
+};
+
 export default StrictDict({
   fetchV1Libraries,
   fetchV2Libraries,
   fetchV2LibraryContent,
+  fetchChildrenInfo,
 });
