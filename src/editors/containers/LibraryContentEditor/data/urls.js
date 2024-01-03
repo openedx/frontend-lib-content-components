@@ -1,4 +1,4 @@
-import { block } from "../../../data/services/cms/urls";
+import { block } from '../../../data/services/cms/urls';
 
 export const v1Libraries = ({ studioEndpointUrl }) => (
   `${studioEndpointUrl}/api/contentstore/v1/home/libraries`

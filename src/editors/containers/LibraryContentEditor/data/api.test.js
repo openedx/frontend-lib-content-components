@@ -7,9 +7,8 @@ import { get } from '../../../data/services/cms/utils';
 jest.mock('./urls', () => ({
   v1Libraries: jest.fn().mockName('urls.v1Libraries'),
   v2Libraries: jest.fn().mockName('urls.v2Libraries'),
-  v2LibraryMetadata: jest.fn().mockName('urls.v2LibraryMetadata'),
   v2LibraryContent: jest.fn().mockName('urls.v2LibraryContent'),
-  blockContent: jest.fn().mockName('urls.blockContent'),
+  blockChildren: jest.fn().mockName('urls.blockChildren'),
 }));
 
 jest.mock('../../../data/services/cms/utils', () => ({
@@ -20,6 +19,7 @@ const { apiMethods } = api;
 
 const studioEndpointUrl = 'hortus.coa';
 const libraryId = 'lb:DeveloperInc:test3:html:0aa6a843-fd86-4ecf-84cb-4640cf8bebdd';
+const blockId = 'block-v1-Id-Test';
 
 describe('library api', () => {
   beforeEach(() => {
@@ -42,6 +42,12 @@ describe('library api', () => {
       it('should call get with urls.v2LibraryContent', () => {
         apiMethods.fetchV2LibraryContent({ studioEndpointUrl, libraryId });
         expect(get).toHaveBeenCalledWith(urls.v2LibraryContent({ studioEndpointUrl, libraryId }));
+      });
+    });
+    describe('fetchChildrenInfo', () => {
+      it('should call get with urls.blockChildren', () => {
+        apiMethods.fetchChildrenInfo({ studioEndpointUrl, blockId });
+        expect(get).toHaveBeenCalledWith(urls.blockChildren({ studioEndpointUrl, blockId }));
       });
     });
   });

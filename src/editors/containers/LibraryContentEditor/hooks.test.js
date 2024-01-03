@@ -15,12 +15,14 @@ jest.mock('./data/requests', () => ({
   fetchV2Libraries: jest.fn(),
   fetchV1Libraries: jest.fn(),
   fetchV2LibraryContent: jest.fn(),
+  fetchChildrenInfo: jest.fn(),
 }));
 
 jest.mock('../../data/redux', () => ({
   actions: {
     library: {
       loadLibraries: jest.fn(),
+      loadChildren: jest.fn(),
       initializeFromBlockValue: jest.fn(),
       unloadLibrary: jest.fn(),
       setLibraryId: jest.fn(),
@@ -42,9 +44,6 @@ describe('useLibraryHook', () => {
   const version = 'verNum';
   const blockValue = {
     data: {
-      child_info: {
-        children: 'chIldInfo',
-      },
       metadata: {
         source_library_id: selectedLibraryId,
         source_library_version: version,
@@ -74,7 +73,7 @@ describe('useLibraryHook', () => {
         library_key: 'v1id',
       },
     ];
-    it('should fetch v2 and v1 libraries when block finishes loading', () => {
+    it('should fetch v2 libraries, v1 libraries and block children info when block finishes loading', () => {
       useDispatch.mockReturnValue(dispatch);
       renderHook(() => module.useLibraryHook({
         blockFailed: false,
@@ -83,6 +82,7 @@ describe('useLibraryHook', () => {
       }));
       expect(requests.fetchV2Libraries).toHaveBeenCalled();
       expect(requests.fetchV1Libraries).toHaveBeenCalled();
+      expect(requests.fetchChildrenInfo).toHaveBeenCalled();
     });
     it('should call loadLibraries on successful response for fetchV2Libraries', () => {
       useDispatch.mockReturnValue(dispatch);
@@ -142,6 +142,33 @@ describe('useLibraryHook', () => {
         error,
       });
     });
+    it('should call loadChildren on successful response for fetchChildrenInfo', () => {
+      useDispatch.mockReturnValue(dispatch);
+      renderHook(() => module.useLibraryHook({
+        blockFailed: false,
+        blockFinished: true,
+        blockValue,
+      }));
+      const onSuccessCallback = requests.fetchChildrenInfo.mock.calls[0][0].onSuccess;
+      onSuccessCallback({ data: { children: ['test-children-array'] } });
+      expect(actions.library.loadChildren).toHaveBeenCalledWith({
+        children: ['test-children-array'],
+      });
+    });
+    it('should call failRequest on failure response for fetchChildrenInfo', () => {
+      useDispatch.mockReturnValue(dispatch);
+      renderHook(() => module.useLibraryHook({
+        blockFailed: false,
+        blockFinished: true,
+        blockValue,
+      }));
+      const onFailureCallback = requests.fetchChildrenInfo.mock.calls[0][0].onFailure;
+      onFailureCallback(error);
+      expect(actions.requests.failRequest).toHaveBeenCalledWith({
+        requestKey: RequestKeys.fetchChildrenInfo,
+        error,
+      });
+    });
   });
 
   describe('useEffect when blockValue is loaded', () => {
@@ -163,7 +190,6 @@ describe('useLibraryHook', () => {
             candidates: blockValue.data.metadata.candidates,
           },
         },
-        children: blockValue.data.child_info.children,
       });
     });
   });

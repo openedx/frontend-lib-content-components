@@ -27,14 +27,12 @@ describe('app reducer', () => {
           value: 'sOmE sETTings vAlue',
         },
         blocksInSelectedLibrary: 'SoME bLocKs',
-        children: ['savEDchildrEN'],
       };
       expect(reducer(
         testingState,
         actions.initializeFromBlockValue({ ...data, other: 'field' }),
       )).toEqual({
         ...testingState,
-        savedChildren: data.children,
         savedLibraryId: data.libraryId,
         selectedLibraryId: data.libraryId,
         selectedLibraryVersion: data.version,
@@ -54,6 +52,13 @@ describe('app reducer', () => {
             ...testingState.libraries,
             ...testLibraryList,
           },
+        });
+      });
+      describe('loadChildren sets the savedChildren', () => {
+        const children = ['tEStChildRen'];
+        expect(reducer(testingState, actions.loadChildren({ children }))).toEqual({
+          ...testingState,
+          savedChildren: children,
         });
       });
       describe('setLibraryId sets the id', () => {
