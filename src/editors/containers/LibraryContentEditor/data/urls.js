@@ -8,6 +8,10 @@ export const v2Libraries = ({ studioEndpointUrl }) => (
   `${studioEndpointUrl}/api/libraries/v2/`
 );
 
+export const v1LibraryContent = ({ studioEndpointUrl, libraryId }) => (
+  `${studioEndpointUrl}/library/${libraryId}?format=json`
+);
+
 export const v2LibraryContent = ({ studioEndpointUrl, libraryId }) => (
   `${studioEndpointUrl}/api/libraries/v2/${libraryId}/blocks/`
 );

@@ -7,7 +7,6 @@ import { Form } from '@edx/paragon';
 import messages from './messages';
 import { modes } from './constants';
 import { actions, selectors } from './data';
-import { isV1Library } from './utils';
 
 export const LibrarySettings = ({
   // redux
@@ -20,12 +19,6 @@ export const LibrarySettings = ({
   if (selectedLibraryId === null) {
     return null;
   }
-
-  const v1LibrarySubsection = () => (
-    <div className="row mb-2 p-3 border-top">
-      <FormattedMessage {...messages.isV1LibraryDescription} />
-    </div>
-  );
 
   const modeSubsection = () => (
     <div className="row mb-2 p-3 border-top">
@@ -66,10 +59,9 @@ export const LibrarySettings = ({
 
   return (
     <div className="col" data-testid="librarycontenteditor-librarysettings">
-      { isV1Library(selectedLibraryId) ? v1LibrarySubsection() : null }
-      { !isV1Library(selectedLibraryId) ? modeSubsection() : null }
+      {modeSubsection()}
       {
-        (settings[selectedLibraryId]?.mode === modes.random.value) || isV1Library(selectedLibraryId)
+        (settings[selectedLibraryId]?.mode === modes.random.value)
           ? countSubsection()
           : null
       }

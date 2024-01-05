@@ -42,6 +42,7 @@ export const BlocksSelector = ({
   savedLibraryId,
   setCandidatesForLibrary,
   selectedLibraryId,
+  v1LibraryBlockIds,
 }) => {
   const {
     blocksTableData,
@@ -50,6 +51,7 @@ export const BlocksSelector = ({
     savedChildren,
     savedLibraryId,
     selectedLibraryId,
+    v1LibraryBlockIds,
   });
 
   const columns = [
@@ -128,6 +130,7 @@ BlocksSelector.defaultProps = {
   savedChildren: [],
   savedLibraryId: null,
   selectedLibraryId: null,
+  v1LibraryBlockIds: [],
 };
 
 BlocksSelector.propTypes = {
@@ -139,6 +142,7 @@ BlocksSelector.propTypes = {
   savedLibraryId: PropTypes.string,
   setCandidatesForLibrary: PropTypes.func.isRequired,
   selectedLibraryId: PropTypes.string,
+  v1LibraryBlockIds: PropTypes.arrayOf(PropTypes.shape({})),
 };
 
 export const mapStateToProps = (state) => ({
@@ -147,6 +151,7 @@ export const mapStateToProps = (state) => ({
   savedChildren: selectors.savedChildren(state),
   savedLibraryId: selectors.savedLibraryId(state),
   selectedLibraryId: selectors.selectedLibraryId(state),
+  v1LibraryBlockIds: selectors.v1LibraryBlockIds(state),
 });
 
 export const mapDispatchToProps = {

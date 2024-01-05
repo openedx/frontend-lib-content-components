@@ -2,6 +2,8 @@ import { createSelector } from 'reselect';
 import { modes } from '../constants';
 import * as module from './selectors';
 
+const USAGE_ID_REGEX = '[^:]+$';
+
 export const libraryState = (state) => state.library;
 
 const mkSimpleSelector = (cb) => createSelector([module.libraryState], cb);
@@ -14,6 +16,7 @@ export const simpleSelectors = {
   selectedLibraryVersion: mkSimpleSelector(library => library.selectedLibraryVersion),
   settings: mkSimpleSelector(library => library.settings),
   blocksInSelectedLibrary: mkSimpleSelector(library => library.blocksInSelectedLibrary),
+  v1LibraryBlockIds: mkSimpleSelector(library => library.v1LibraryBlockIds),
 };
 
 export const candidates = createSelector(
@@ -74,6 +77,10 @@ export const libraryPayload = createSelector(
       }
       showReset = settings[selectedLibraryId].showReset;
       candidateList = settings[selectedLibraryId].candidates;
+      candidateList = candidateList.map(candidate => {
+        const usageId = candidate[1].match(USAGE_ID_REGEX)[0];
+        return [candidate[0], usageId];
+      });
     }
     return {
       libraryId: selectedLibraryId,

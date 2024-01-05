@@ -26,7 +26,7 @@ describe('app reducer', () => {
         settings: {
           value: 'sOmE sETTings vAlue',
         },
-        blocksInSelectedLibrary: 'SoME bLocKs',
+        blocksInSelectedLibrary: ['SoME bLocKs'],
       };
       expect(reducer(
         testingState,
@@ -54,6 +54,21 @@ describe('app reducer', () => {
           },
         });
       });
+      describe('unloadLibrary sets library version, id, and blocks to null/[]', () => {
+        expect(reducer(testingState, actions.unloadLibrary())).toEqual({
+          ...testingState,
+          selectedLibraryId: null,
+          selectedLibraryVersion: null,
+          blocksInSelectedLibrary: [],
+        });
+      });
+      describe('loadV1LibraryBlockIds saves block ids to v1LibraryBlockIds', () => {
+        const blockIds = ['somv1id'];
+        expect(reducer(testingState, actions.loadV1LibraryBlockIds({ blockIds }))).toEqual({
+          ...testingState,
+          v1LibraryBlockIds: blockIds,
+        });
+      });
       describe('loadChildren sets the savedChildren', () => {
         const children = ['tEStChildRen'];
         expect(reducer(testingState, actions.loadChildren({ children }))).toEqual({
@@ -79,12 +94,14 @@ describe('app reducer', () => {
           blocksInSelectedLibrary: testValue,
         });
       });
-      describe('unloadLibrary sets library version, id, and blocks to null/[]', () => {
-        expect(reducer(testingState, actions.unloadLibrary())).toEqual({
+      describe('addLibraryBlock adds a block for the library', () => {
+        const block = 'newBlock';
+        expect(reducer(testingState, actions.addLibraryBlock({ block }))).toEqual({
           ...testingState,
-          selectedLibraryId: null,
-          selectedLibraryVersion: null,
-          blocksInSelectedLibrary: [],
+          blocksInSelectedLibrary: [
+            ...testingState.blocksInSelectedLibrary,
+            block,
+          ],
         });
       });
     });

@@ -7,6 +7,7 @@ import { get } from '../../../data/services/cms/utils';
 jest.mock('./urls', () => ({
   v1Libraries: jest.fn().mockName('urls.v1Libraries'),
   v2Libraries: jest.fn().mockName('urls.v2Libraries'),
+  v1LibraryContent: jest.fn().mockName('urls.v1LibraryContent'),
   v2LibraryContent: jest.fn().mockName('urls.v2LibraryContent'),
   blockChildren: jest.fn().mockName('urls.blockChildren'),
 }));
@@ -36,6 +37,12 @@ describe('library api', () => {
       it('should call get with urls.v2Libraries', () => {
         apiMethods.fetchV2Libraries({ studioEndpointUrl });
         expect(get).toHaveBeenCalledWith(urls.v2Libraries({ studioEndpointUrl }));
+      });
+    });
+    describe('v1LibraryContent', () => {
+      it('should call get with urls.v1LibraryContent', () => {
+        apiMethods.fetchV1LibraryContent({ studioEndpointUrl });
+        expect(get).toHaveBeenCalledWith(urls.v1LibraryContent({ studioEndpointUrl, libraryId }));
       });
     });
     describe('v2LibraryContent', () => {

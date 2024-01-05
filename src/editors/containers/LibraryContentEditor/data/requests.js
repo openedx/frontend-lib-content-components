@@ -5,6 +5,7 @@ import { networkRequest } from '../../../data/redux/thunkActions/requests';
 /* eslint-disable import/no-cycle */
 import { selectors } from '../../../data/redux';
 import api from './api';
+import apiMethods from '../../../data/services/cms/api';
 
 /**
  * Tracked fetchV1Libraries api method.
@@ -44,12 +45,46 @@ export const fetchV2Libraries = ({ ...rest }) => (dispatch, getState) => {
  * @param {[func]} onSuccess - onSuccess method ((response) => { ... })
  * @param {[func]} onFailure - onFailure method ((error) => { ... })
  */
+export const fetchV1LibraryContent = ({ libraryId, ...rest }) => (dispatch, getState) => {
+  dispatch(networkRequest({
+    requestKey: RequestKeys.fetchV1LibraryContent,
+    promise: api.fetchV1LibraryContent({
+      studioEndpointUrl: selectors.app.studioEndpointUrl(getState()),
+      libraryId,
+    }),
+    ...rest,
+  }));
+};
+
+/**
+ * Tracked fetchV2LibraryContent api method.
+ * Tracked to the `fetchV2LibraryContent` request key.
+ * @param {[func]} onSuccess - onSuccess method ((response) => { ... })
+ * @param {[func]} onFailure - onFailure method ((error) => { ... })
+ */
 export const fetchV2LibraryContent = ({ libraryId, ...rest }) => (dispatch, getState) => {
   dispatch(networkRequest({
     requestKey: RequestKeys.fetchV2LibraryContent,
     promise: api.fetchV2LibraryContent({
       studioEndpointUrl: selectors.app.studioEndpointUrl(getState()),
       libraryId,
+    }),
+    ...rest,
+  }));
+};
+
+/**
+ * Tracked fetchV1LibraryBlock api method.
+ * Tracked to the `fetchV1LibraryBlock` request key.
+ * @param {[func]} onSuccess - onSuccess method ((response) => { ... })
+ * @param {[func]} onFailure - onFailure method ((error) => { ... })
+ */
+export const fetchV1LibraryBlock = ({ blockId, ...rest }) => (dispatch, getState) => {
+  dispatch(networkRequest({
+    requestKey: RequestKeys.fetchV1LibraryBlock,
+    promise: apiMethods.fetchBlockById({
+      studioEndpointUrl: selectors.app.studioEndpointUrl(getState()),
+      blockId,
     }),
     ...rest,
   }));

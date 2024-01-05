@@ -9,10 +9,12 @@ jest.mock('reselect', () => ({
 const testState = { some: 'arbitraryValue' };
 const testValue = 'my VALUE';
 const selectedLibraryId = 'a LiB iD';
-const blockId1 = 'a bLOCk id';
+const blockId1 = 'a bLOCk id:1usageid';
 const blockType1 = 'a BLOck Type';
-const blockId2 = 'a blocK ID tOO';
+const blockUsageId1 = '1usageid';
+const blockId2 = 'a blocK ID tOO:2usageid';
 const blockType2 = 'a Different BLOck Type';
+const blockUsageId2 = '2usageid';
 const testData = {
   savedChildren: {
     0: {
@@ -135,7 +137,7 @@ describe('Library Selectors', () => {
         shuffle: false,
         count: -1,
         showReset: testData.settings[selectedLibraryId].showReset,
-        candidates: [[blockType1, blockId1], [blockType2, blockId2]],
+        candidates: [[blockType1, blockUsageId1], [blockType2, blockUsageId2]],
       });
     });
     it('returns the relevant settings values given the library for random mode', () => {
@@ -154,7 +156,7 @@ describe('Library Selectors', () => {
         shuffle: true,
         count: testData.settings[selectedLibraryId].count,
         showReset: testData.settings[selectedLibraryId].showReset,
-        candidates: [[blockType1, blockId1], [blockType2, blockId2]],
+        candidates: [[blockType1, blockUsageId1], [blockType2, blockUsageId2]],
       });
     });
   });

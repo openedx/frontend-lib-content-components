@@ -111,12 +111,17 @@ export const useBlocksSelectorHook = ({
   savedChildren,
   savedLibraryId,
   selectedLibraryId,
+  v1LibraryBlockIds,
 }) => {
   const dispatch = useDispatch();
 
-  // fetch v2 library content
+  // fetch library content
   // If selected library is the same as the saved library,
   //   use the children blocks of the library content block instead.
+  // Else if v1 library
+  //   fetch the block ids (block data in other useEffect)
+  // Else if v2 library
+  //   fetch the block ids along with block data
   useEffect(() => {
     if (selectedLibraryId === savedLibraryId) {
       dispatch(actions.library.setLibraryBlocks({
@@ -126,7 +131,23 @@ export const useBlocksSelectorHook = ({
           block_type: block.category,
         })),
       }));
-    } else if (!isV1Library(selectedLibraryId)) {
+    } else if (isV1Library(selectedLibraryId)) {
+      dispatch(requests.fetchV1LibraryContent({
+        libraryId: selectedLibraryId,
+        onSuccess: (response) => {
+          dispatch(actions.library.setLibraryBlocks({ blocks: [] }));
+          dispatch(actions.library.loadV1LibraryBlockIds({
+            blockIds: response?.data?.blocks,
+          }));
+        },
+        onFailure: (error) => {
+          dispatch(actions.requests.failRequest({
+            requestKey: RequestKeys.fetchV1LibraryContent,
+            error,
+          }));
+        },
+      }));
+    } else {
       dispatch(requests.fetchV2LibraryContent({
         libraryId: selectedLibraryId,
         onSuccess: (response) => {
@@ -143,6 +164,30 @@ export const useBlocksSelectorHook = ({
       }));
     }
   }, [selectedLibraryId, savedChildren]);
+
+  // fetch v1 library block data after block ids are fetched
+  useEffect(() => {
+    v1LibraryBlockIds.forEach(blockId => {
+      dispatch(requests.fetchV1LibraryBlock({
+        blockId,
+        onSuccess: (response) => {
+          dispatch(actions.library.addLibraryBlock({
+            block: {
+              id: blockId,
+              display_name: response.data?.display_name,
+              block_type: response.data?.category,
+            },
+          }));
+        },
+        onFailure: (error) => {
+          dispatch(actions.requests.failRequest({
+            requestKey: RequestKeys.fetchV1LibraryBlock,
+            error,
+          }));
+        },
+      }));
+    });
+  }, [v1LibraryBlockIds]);
 
   const blockTypeDisplay = (type) => {
     if (type === 'html') { return 'Text'; }

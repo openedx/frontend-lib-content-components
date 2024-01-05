@@ -12,6 +12,7 @@ const initialState = {
     //  to persist when user switches between libraries.
   },
   blocksInSelectedLibrary: [],
+  v1LibraryBlockIds: [],
 
   // The following two states are only loaded from a previously saved editor.
   savedLibraryId: null,
@@ -49,6 +50,10 @@ const library = createSlice({
       selectedLibraryVersion: null,
       blocksInSelectedLibrary: [],
     }),
+    loadV1LibraryBlockIds: (state, { payload }) => ({
+      ...state,
+      v1LibraryBlockIds: payload.blockIds,
+    }),
     loadChildren: (state, { payload }) => ({
       ...state,
       savedChildren: payload.children,
@@ -64,6 +69,13 @@ const library = createSlice({
     setLibraryBlocks: (state, { payload }) => ({
       ...state,
       blocksInSelectedLibrary: payload.blocks,
+    }),
+    addLibraryBlock: (state, { payload }) => ({
+      ...state,
+      blocksInSelectedLibrary: [
+        ...state.blocksInSelectedLibrary,
+        payload.block,
+      ],
     }),
     initializeSettings: (state, { payload }) => ({
       ...state,

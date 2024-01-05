@@ -31,7 +31,9 @@ export const RequestKeys = StrictDict({
   fetchVideoFeatures: 'fetchVideoFeatures',
   fetchV1Libraries: 'fetchV1Libraries',
   fetchV2Libraries: 'fetchV2Libraries',
+  fetchV1LibraryContent: 'fetchV1LibraryContent',
   fetchV2LibraryContent: 'fetchV2LibraryContent',
+  fetchV1LibraryBlock: 'fetchV1LibraryBlock',
   fetchChildrenInfo: 'fetchChildrenInfo',
   fetchBlockContent: 'fetchBlockContent',
 });
