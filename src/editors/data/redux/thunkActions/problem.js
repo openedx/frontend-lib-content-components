@@ -56,7 +56,7 @@ export const loadProblem = ({ rawOLX, rawSettings, defaultSettings }) => (dispat
 };
 
 export const fetchAdvancedSettings = ({ rawOLX, rawSettings }) => (dispatch) => {
-  const advancedProblemSettingKeys = ['max_attempts', 'showanswer', 'show_reset_button', 'rerandomize'];
+  const advancedProblemSettingKeys = ['max_attempts', 'showanswer', 'show_reset_button', 'rerandomize', 'advanced_modules'];
   dispatch(requests.fetchAdvancedSettings({
     onSuccess: (response) => {
       const defaultSettings = {};

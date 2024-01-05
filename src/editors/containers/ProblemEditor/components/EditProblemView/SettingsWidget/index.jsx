@@ -36,6 +36,8 @@ export const SettingsWidget = ({
   updateField,
   updateAnswer,
   defaultSettings,
+  asidesURL,
+  asidesEnabled,
 }) => {
   const { isAdvancedCardsVisible, showAdvancedCards } = showAdvancedSettingsCards();
 
@@ -88,6 +90,17 @@ export const SettingsWidget = ({
         <HintsCard problemType={problemType} hints={settings.hints} updateSettings={updateSettings} />
       </div>
       {feedbackCard()}
+      {asidesEnabled && (
+      <div>
+        <iframe
+          title="asides-iframe"
+          src={asidesURL}
+          allowFullScreen
+          frameBorder="0"
+          width={500}
+        />
+      </div>
+      )}
       <div>
         <Collapsible.Advanced open={!isAdvancedCardsVisible}>
           <Collapsible.Body className="collapsible-body small">
@@ -174,6 +187,8 @@ SettingsWidget.propTypes = {
   }).isRequired,
   // eslint-disable-next-line
   settings: PropTypes.any.isRequired,
+  asidesURL: PropTypes.string.isRequired,
+  asidesEnabled: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -183,6 +198,10 @@ const mapStateToProps = (state) => ({
   blockTitle: selectors.app.blockTitle(state),
   correctAnswerCount: selectors.problem.correctAnswerCount(state),
   defaultSettings: selectors.problem.defaultSettings(state),
+  asidesURL: `${selectors.app.studioEndpointUrl(state)
+  }/asides/${
+    selectors.app.blockId(state)}`,
+  asidesEnabled: selectors.problem.defaultSettings(state).advancedModules?.length > 0,
 });
 
 export const mapDispatchToProps = {
