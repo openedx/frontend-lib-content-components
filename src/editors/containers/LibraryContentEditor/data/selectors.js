@@ -1,8 +1,7 @@
 import { createSelector } from 'reselect';
 import { modes } from '../constants';
+import { getUsageKey } from '../utils';
 import * as module from './selectors';
-
-const USAGE_ID_REGEX = '[^:]+$';
 
 export const libraryState = (state) => state.library;
 
@@ -77,10 +76,7 @@ export const libraryPayload = createSelector(
       }
       showReset = settings[selectedLibraryId].showReset;
       candidateList = settings[selectedLibraryId].candidates;
-      candidateList = candidateList.map(candidate => {
-        const usageId = candidate[1].match(USAGE_ID_REGEX)[0];
-        return [candidate[0], usageId];
-      });
+      candidateList = candidateList.map(candidate => [candidate[0], getUsageKey(candidate[1])]);
     }
     return {
       libraryId: selectedLibraryId,

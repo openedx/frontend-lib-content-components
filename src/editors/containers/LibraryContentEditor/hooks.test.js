@@ -227,17 +227,31 @@ describe('useLibrarySelectorHook', () => {
       result.current.onLibrarySelect(null);
       expect(actions.library.unloadLibrary).toHaveBeenCalled();
     });
+
     it('should call setLibraryId and setLibraryVersion when a library is selected', () => {
       useDispatch.mockReturnValue(dispatch);
       const { result } = renderHook(() => module.useLibrarySelectorHook({
         libraries,
         settings,
       }));
-      result.current.onLibrarySelect('v2lib');
+      result.current.onLibrarySelect(selectedLibraryId);
       expect(actions.library.setLibraryId).toHaveBeenCalledWith({ selectedLibraryId });
       expect(actions.library.setLibraryVersion).toHaveBeenCalledWith({ version: 1 });
       expect(actions.library.initializeSettings).not.toHaveBeenCalled();
     });
+
+    it('should not call setLibraryVersion when a v1 library is selected', () => {
+      const v1LibId = 'library-v1:v1lib';
+      useDispatch.mockReturnValue(dispatch);
+      const { result } = renderHook(() => module.useLibrarySelectorHook({
+        libraries,
+        settings,
+      }));
+      result.current.onLibrarySelect(v1LibId);
+      expect(actions.library.setLibraryId).toHaveBeenCalledWith({ selectedLibraryId: v1LibId });
+      expect(actions.library.setLibraryVersion).not.toHaveBeenCalled();
+    });
+
     it('should call initializeSettings when there are no settings', () => {
       useDispatch.mockReturnValue(dispatch);
       const { result } = renderHook(() => module.useLibrarySelectorHook({
@@ -305,12 +319,20 @@ describe('useBlocksSelectorHook', () => {
         v1LibraryBlockIds,
       }));
       const onSuccessCallback = requests.fetchV1LibraryContent.mock.calls[0][0].onSuccess;
-      onSuccessCallback({ data: { blocks: 'someblockDta' } });
+      onSuccessCallback({
+        data: {
+          blocks: 'someblockDta',
+          version: 'VERv1',
+        },
+      });
       expect(actions.library.setLibraryBlocks).toHaveBeenCalledWith({
         blocks: [],
       });
       expect(actions.library.loadV1LibraryBlockIds).toHaveBeenCalledWith({
         blockIds: 'someblockDta',
+      });
+      expect(actions.library.setLibraryVersion).toHaveBeenCalledWith({
+        version: 'VERv1',
       });
     });
 

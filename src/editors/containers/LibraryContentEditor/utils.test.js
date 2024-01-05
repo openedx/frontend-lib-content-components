@@ -17,8 +17,21 @@ describe('utils', () => {
     it('should return true if the id is for a v1 library', () => {
       expect(module.isV1Library(v1Id)).toBe(true);
     });
+
     it('should return false if the id is not for a v1 library', () => {
       expect(module.isV1Library(v2Id)).toBe(false);
+    });
+  });
+
+  describe('isV1Block', () => {
+    const v1Id = 'block-v1:id';
+    const v2Id = 'block:org:id';
+    it('should return true if the id is for a v1 block', () => {
+      expect(module.isV1Block(v1Id)).toBe(true);
+    });
+
+    it('should return false if the id is not for a v1 block', () => {
+      expect(module.isV1Block(v2Id)).toBe(false);
     });
   });
 
@@ -35,9 +48,11 @@ describe('utils', () => {
     it('should return v1 library name for a v1 library', () => {
       expect(module.getLibraryName(v1Lib)).toEqual(v1Lib.display_name);
     });
+
     it('should return v2 library name for a v2 library', () => {
       expect(module.getLibraryName(v2Lib)).toEqual(v2Lib.title);
     });
+
     it('should return an empty string for anything else', () => {
       expect(module.getLibraryName({})).toEqual('');
     });
@@ -62,6 +77,7 @@ describe('utils', () => {
         1: true,
       });
     });
+
     it('should return an empty object for anything else', () => {
       expect(module.getSelectedRows({ blocks })).toEqual({});
     });
@@ -83,8 +99,21 @@ describe('utils', () => {
         [blocks[2].block_type, blocks[2].id],
       ]);
     });
+
     it('should return an empty array for anything else', () => {
       expect(module.getCandidates({ blocks })).toEqual([]);
+    });
+  });
+
+  describe('getUsageKey', () => {
+    const v1Id = 'block-v1:edX+DemoX+Demo_Course+type@library_content+block@bb417ac795444c9387a8e0cfb3e8f60e';
+    const v2Id = 'lb:edx:Lib1:html:2a077ebb9622416292dea797628f8cdf';
+    it('should return the usage key for a v1 block', () => {
+      expect(module.getUsageKey(v1Id)).toEqual('bb417ac795444c9387a8e0cfb3e8f60e');
+    });
+
+    it('should return the usage key for a v2 block', () => {
+      expect(module.getUsageKey(v2Id)).toEqual('2a077ebb9622416292dea797628f8cdf');
     });
   });
 });

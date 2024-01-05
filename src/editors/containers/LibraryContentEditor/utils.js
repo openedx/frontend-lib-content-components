@@ -14,6 +14,21 @@ export const isV1Library = (libraryId) => {
 };
 
 /**
+* checks if block id is v1. defaults to false
+* @param {[string]} blockId - target block id
+* @returns {[boolean]} true if block id is v1
+*/
+export const isV1Block = (blockId) => {
+  if (!blockId || (typeof blockId !== 'string')) {
+    return false;
+  }
+  if (blockId.split(':')[0] === 'block-v1') {
+    return true;
+  }
+  return false;
+};
+
+/**
  * gets the name of a library whether it is v1 or v2
  * @param {[object]} library - library
  * @returns {[string]} library name. returns an empty string if nothing is found
@@ -70,4 +85,24 @@ export const getCandidates = ({
     });
   }
   return candidates;
+};
+
+/**
+ * gets the usage key of a block id
+ * @param {[string]} blockId - block id
+ * @returns {[string]} usage key
+ */
+export const getUsageKey = (blockId) => {
+  if (!blockId) {
+    return '';
+  }
+  const V1_USAGE_ID_REGEX = /@([^@]+)$/;
+  const V2_USAGE_ID_REGEX = /:([^:]+)$/;
+  if (isV1Block(blockId)) {
+    const match = blockId.match(V1_USAGE_ID_REGEX);
+    return match ? match[1] : null;
+  } else {
+    const match = blockId.match(V2_USAGE_ID_REGEX);
+    return match ? match[1] : null;
+  }
 };

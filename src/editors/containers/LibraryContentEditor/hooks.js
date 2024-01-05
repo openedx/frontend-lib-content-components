@@ -97,7 +97,9 @@ export const useLibrarySelectorHook = ({
         dispatch(actions.library.unloadLibrary());
       } else {
         dispatch(actions.library.setLibraryId({ selectedLibraryId: id }));
-        dispatch(actions.library.setLibraryVersion({ version: libraries[id]?.version }));
+        if (!isV1Library(id)) {
+          dispatch(actions.library.setLibraryVersion({ version: libraries[id]?.version }));
+        }
         if (!settings[id]) {
           dispatch(actions.library.initializeSettings({ selectedLibraryId: id }));
         }
@@ -135,9 +137,14 @@ export const useBlocksSelectorHook = ({
       dispatch(requests.fetchV1LibraryContent({
         libraryId: selectedLibraryId,
         onSuccess: (response) => {
-          dispatch(actions.library.setLibraryBlocks({ blocks: [] }));
+          dispatch(actions.library.setLibraryBlocks({
+            blocks: [],
+          }));
           dispatch(actions.library.loadV1LibraryBlockIds({
-            blockIds: response?.data?.blocks,
+            blockIds: response.data?.blocks,
+          }));
+          dispatch(actions.library.setLibraryVersion({
+            version: response.data?.version,
           }));
         },
         onFailure: (error) => {
