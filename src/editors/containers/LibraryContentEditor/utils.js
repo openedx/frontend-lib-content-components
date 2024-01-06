@@ -101,8 +101,7 @@ export const getUsageKey = (blockId) => {
   if (isV1Block(blockId)) {
     const match = blockId.match(V1_USAGE_ID_REGEX);
     return match ? match[1] : null;
-  } else {
-    const match = blockId.match(V2_USAGE_ID_REGEX);
-    return match ? match[1] : null;
   }
+  const match = blockId.match(V2_USAGE_ID_REGEX);
+  return match ? match[1] : null;
 };
