@@ -12,6 +12,7 @@ export const simpleSelectors = {
   settings: mkSimpleSelector(problemData => problemData.settings),
   question: mkSimpleSelector(problemData => problemData.question),
   defaultSettings: mkSimpleSelector(problemData => problemData.defaultSettings),
+  hasAsides: mkSimpleSelector(problemData => problemData.hasAsides),
   completeState: mkSimpleSelector(problemData => problemData),
 };
 

@@ -201,7 +201,7 @@ const mapStateToProps = (state) => ({
   asidesURL: `${selectors.app.studioEndpointUrl(state)
   }/asides/${
     selectors.app.blockId(state)}`,
-  asidesEnabled: selectors.problem.defaultSettings(state).advancedModules?.length > 0,
+  asidesEnabled: selectors.problem.hasAsides(state),
 });
 
 export const mapDispatchToProps = {
