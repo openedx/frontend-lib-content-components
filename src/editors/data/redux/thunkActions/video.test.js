@@ -760,7 +760,7 @@ describe('uploadVideo', () => {
 
   it('should call fetch with correct arguments for each file', async () => {
     const mockResponseData = { success: true };
-    const mockFetchResponse = Promise.resolve({ data: mockResponseData });
+    const mockFetchResponse = Promise.resolve({ data: mockResponseData, ok: true });
     global.fetch = jest.fn().mockImplementation(() => mockFetchResponse);
     const response = {
       files: [
