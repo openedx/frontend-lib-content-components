@@ -779,7 +779,7 @@ describe('uploadVideo', () => {
     });
     supportedFiles.forEach((file, index) => {
       const fileDataTest = file.get('file');
-      expect(fetch.mock.calls[index][1].body.get('uploaded-file')).toBe(fileDataTest);
+      expect(fetch.mock.calls[index][1].body).toBe(fileDataTest);
     });
   });
 
