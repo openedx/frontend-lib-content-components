@@ -5,25 +5,22 @@ import { StrictDict } from '../../../utils';
 const initialState = {
   libraries: {},
   selectedLibraryId: null,
-  selectedLibraryVersion: null,
+  savedLibraryId: null,
   settings: {
-    // [libraryId]: initialSettings,
+    // [libraryId]: initialLibrarySettings,
     //  This reducer structure allows selected settings
     //  to persist when user switches between libraries.
   },
-  blocksInSelectedLibrary: [],
-  v1LibraryBlockIds: [],
-
-  // The following two states are only loaded from a previously saved editor.
-  savedLibraryId: null,
-  savedChildren: [],
 };
 
-const initialSettings = {
+const initialLibrarySettings = {
+  version: null,
   mode: modes.random.value,
   count: -1,
   showReset: false,
-  candidates: [],
+  blocks: [],               // [ { id: 'id', display_name: 'name', block_type: 'type' } ]
+  candidates: [],           // ['id1', 'id2']
+  v1BlockRequests: {},      // { [blockId]: 'RequestkeyState' }
 };
 
 const library = createSlice({
@@ -34,29 +31,21 @@ const library = createSlice({
       ...state,
       savedLibraryId: payload.libraryId,
       selectedLibraryId: payload.libraryId,
-      selectedLibraryVersion: payload.version,
       settings: payload.settings,
     }),
-    loadLibraries: (state, { payload }) => ({
+    addLibraries: (state, { payload }) => ({
       ...state,
       libraries: {
         ...state.libraries,
         ...payload.libraries,
       },
     }),
-    unloadLibrary: (state) => ({
+    initialLibrarySettings: (state, { payload }) => ({
       ...state,
-      selectedLibraryId: null,
-      selectedLibraryVersion: null,
-      blocksInSelectedLibrary: [],
-    }),
-    loadV1LibraryBlockIds: (state, { payload }) => ({
-      ...state,
-      v1LibraryBlockIds: payload.blockIds,
-    }),
-    loadChildren: (state, { payload }) => ({
-      ...state,
-      savedChildren: payload.children,
+      settings: {
+        ...state.settings,
+        [payload.selectedLibraryId]: initialLibrarySettings,
+      },
     }),
     setLibraryId: (state, { payload }) => ({
       ...state,
@@ -64,32 +53,20 @@ const library = createSlice({
     }),
     setLibraryVersion: (state, { payload }) => ({
       ...state,
-      selectedLibraryVersion: payload.version,
-    }),
-    setLibraryBlocks: (state, { payload }) => ({
-      ...state,
-      blocksInSelectedLibrary: payload.blocks,
-    }),
-    addLibraryBlock: (state, { payload }) => ({
-      ...state,
-      blocksInSelectedLibrary: [
-        ...state.blocksInSelectedLibrary,
-        payload.block,
-      ],
-    }),
-    initializeSettings: (state, { payload }) => ({
-      ...state,
       settings: {
         ...state.settings,
-        [payload.selectedLibraryId]: initialSettings,
+        [state.selectedLibraryId]: {
+          ...state.settings[state.selectedLibraryId],
+          version: payload.version,
+        },
       },
     }),
     setModeForLibrary: (state, { payload }) => ({
       ...state,
       settings: {
         ...state.settings,
-        [payload.libraryId]: {
-          ...state.settings[payload.libraryId],
+        [state.selectedLibraryId]: {
+          ...state.settings[state.selectedLibraryId],
           mode: payload.mode,
         },
       },
@@ -98,8 +75,8 @@ const library = createSlice({
       ...state,
       settings: {
         ...state.settings,
-        [payload.libraryId]: {
-          ...state.settings[payload.libraryId],
+        [state.selectedLibraryId]: {
+          ...state.settings[state.selectedLibraryId],
           count: payload.count,
         },
       },
@@ -108,9 +85,19 @@ const library = createSlice({
       ...state,
       settings: {
         ...state.settings,
-        [payload.libraryId]: {
-          ...state.settings[payload.libraryId],
+        [state.selectedLibraryId]: {
+          ...state.settings[state.selectedLibraryId],
           showReset: payload.showReset,
+        },
+      },
+    }),
+    setLibraryBlocks: (state, { payload }) => ({
+      ...state,
+      settings: {
+        ...state.settings,
+        [state.selectedLibraryId]: {
+          ...state.settings[state.selectedLibraryId],
+          blocks: payload.blocks,
         },
       },
     }),
@@ -118,9 +105,45 @@ const library = createSlice({
       ...state,
       settings: {
         ...state.settings,
-        [payload.libraryId]: {
-          ...state.settings[payload.libraryId],
+        [state.selectedLibraryId]: {
+          ...state.settings[state.selectedLibraryId],
           candidates: payload.candidates,
+        },
+      },
+    }),
+    setV1BlockRequests: (state, { payload }) => ({
+      ...state,
+      settings: {
+        ...state.settings,
+        [state.selectedLibraryId]: {
+          ...state.settings[state.selectedLibraryId],
+          v1BlockRequests: payload.v1BlockRequests,
+        },
+      },
+    }),
+    updateV1BlockRequestStatus: (state, { payload }) => ({
+      ...state,
+      settings: {
+        ...state.settings,
+        [state.selectedLibraryId]: {
+          ...state.settings[state.selectedLibraryId],
+          v1BlockRequests: {
+            ...state.settings[state.selectedLibraryId].v1BlockRequests,
+            [payload.blockId]: payload.status,
+          },
+        },
+      },
+    }),
+    addLibraryBlock: (state, { payload }) => ({
+      ...state,
+      settings: {
+        ...state.settings,
+        [state.selectedLibraryId]: {
+          ...state.settings[state.selectedLibraryId],
+          blocks: [
+            ...state.settings[state.selectedLibraryId].blocks,
+            payload.block,
+          ],
         },
       },
     }),
@@ -134,6 +157,6 @@ const { reducer } = library;
 export {
   actions,
   initialState,
-  initialSettings,
+  initialLibrarySettings,
   reducer,
 };

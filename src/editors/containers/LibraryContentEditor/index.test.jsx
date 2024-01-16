@@ -40,7 +40,6 @@ describe('LibraryContentEditor', () => {
     blockFailed: false,
     blockFinished: true,
     blockValue: 'SoMe VaLue',
-    blocksInSelectedLibrary: ['block1', 'block2', 'block3'],
     candidates: ['block3'],
     libraryPayload: { payload: 'pAYloAD' },
     intl: {

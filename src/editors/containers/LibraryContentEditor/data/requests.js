@@ -110,6 +110,8 @@ export const fetchChildrenInfo = ({ ...rest }) => (dispatch, getState) => {
 export default StrictDict({
   fetchV1Libraries,
   fetchV2Libraries,
+  fetchV1LibraryContent,
   fetchV2LibraryContent,
+  fetchV1LibraryBlock,
   fetchChildrenInfo,
 });

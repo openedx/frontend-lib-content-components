@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Spinner } from '@edx/paragon';
@@ -8,7 +8,6 @@ import messages from './messages';
 import { useLibraryHook } from './hooks';
 import { selectors } from '../../data/redux';
 import { RequestKeys } from '../../data/constants/requests';
-import { getSelectedRows } from './utils';
 
 import EditorContainer from '../EditorContainer';
 import LibrarySelector from './LibrarySelector';
@@ -22,8 +21,6 @@ export const LibraryContentEditor = ({
   blockFailed,
   blockFinished,
   blockValue,
-  blocksInSelectedLibrary,
-  candidates,
   libraryPayload,
 }) => {
   const intl = useIntl();
@@ -32,11 +29,6 @@ export const LibraryContentEditor = ({
     blockFinished,
     blockValue,
   });
-
-  const initialRows = useMemo(() => getSelectedRows({
-    blocks: blocksInSelectedLibrary,
-    candidates,
-  }), [blocksInSelectedLibrary]);
 
   if (blockFailed) {
     return (
@@ -61,7 +53,7 @@ export const LibraryContentEditor = ({
     <div>
       <LibrarySelector />
       <LibrarySettings />
-      <BlocksSelector initialRows={initialRows} />
+      <BlocksSelector />
     </div>
   );
 
@@ -82,8 +74,6 @@ export const LibraryContentEditor = ({
 
 LibraryContentEditor.defaultProps = {
   blockValue: null,
-  blocksInSelectedLibrary: {},
-  candidates: [],
   libraryPayload: {},
 };
 
@@ -96,8 +86,6 @@ LibraryContentEditor.propTypes = {
   }),
   blockFailed: PropTypes.bool.isRequired,
   blockFinished: PropTypes.bool.isRequired,
-  blocksInSelectedLibrary: PropTypes.shape({}),
-  candidates: PropTypes.shape([]),
   libraryPayload: PropTypes.shape({}),
 };
 
@@ -105,8 +93,6 @@ export const mapStateToProps = (state) => ({
   blockValue: selectors.app.blockValue(state),
   blockFailed: selectors.requests.isFailed(state, { requestKey: RequestKeys.fetchBlock }),
   blockFinished: selectors.requests.isFinished(state, { requestKey: RequestKeys.fetchBlock }),
-  blocksInSelectedLibrary: selectors.library.blocksInSelectedLibrary(state),
-  candidates: selectors.library.candidates(state),
   libraryPayload: selectors.library.libraryPayload(state),
   studioEndpointUrl: selectors.app.studioEndpointUrl(state),
 });

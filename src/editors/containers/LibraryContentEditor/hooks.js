@@ -1,11 +1,19 @@
-import { useEffect } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { modes } from './constants';
 import { actions } from '../../data/redux';
 import * as requests from './data/requests';
-import { RequestKeys } from '../../data/constants/requests';
-import { isV1Library } from './utils';
+import { RequestKeys, RequestStates } from '../../data/constants/requests';
+import { isV1Library, getCandidates, getSelectedRows } from './utils';
+
+//TODO this should be in message for i18n
+export const blockTypeDisplay = (type) => {
+  if (type === 'html') { return 'Text'; }
+  if (type === 'video') { return 'Video'; }
+  if (type === 'problem') { return 'Problem'; }
+  return 'Other';
+};
 
 export const useLibraryHook = ({
   blockFailed,
@@ -14,7 +22,27 @@ export const useLibraryHook = ({
 }) => {
   const dispatch = useDispatch();
 
-  // fetch libraries and child blocks when block finishes loading
+  // load previously saved block data from blockValue
+  useEffect(() => {
+    const metadata = blockValue?.data?.metadata;
+    const libraryId = metadata?.source_library_id ?? null;
+    let settings = {};
+    if (libraryId) {
+      settings = {
+        [libraryId]: {
+          version: metadata?.source_library_version,
+          mode: metadata?.manual ? modes.selected.value : modes.random.value,
+          count: metadata?.max_count,
+          showReset: metadata?.allow_resetting_children,
+          candidates: metadata?.candidates,
+          blocks: null,
+        },
+      };
+    }
+    dispatch(actions.library.initializeFromBlockValue({ libraryId, settings }));
+  }, [blockValue]);
+
+  // fetch libraries when block finishes loading
   useEffect(() => {
     if (blockFinished && !blockFailed) {
       dispatch(requests.fetchV2Libraries({
@@ -23,7 +51,7 @@ export const useLibraryHook = ({
           response?.data.forEach(library => {
             libraries[library.id] = library;
           });
-          dispatch(actions.library.loadLibraries({ libraries }));
+          dispatch(actions.library.addLibraries({ libraries }));
         },
         onFailure: (error) => {
           dispatch(actions.requests.failRequest({
@@ -38,7 +66,7 @@ export const useLibraryHook = ({
           response?.data?.libraries.forEach(library => {
             libraries[library.library_key] = library;
           });
-          dispatch(actions.library.loadLibraries({ libraries }));
+          dispatch(actions.library.addLibraries({ libraries }));
         },
         onFailure: (error) => {
           dispatch(actions.requests.failRequest({
@@ -47,61 +75,22 @@ export const useLibraryHook = ({
           }));
         },
       }));
-      dispatch(requests.fetchChildrenInfo({
-        onSuccess: (response) => {
-          const children = response?.data?.children;
-          dispatch(actions.library.loadChildren({ children }));
-        },
-        onFailure: (error) => {
-          dispatch(actions.requests.failRequest({
-            requestKey: RequestKeys.fetchChildrenInfo,
-            error,
-          }));
-        },
-      }));
     }
   }, [blockFinished, blockFailed]);
-
-  // load previously saved library into redux
-  useEffect(() => {
-    const metadata = blockValue?.data?.metadata;
-    const libraryId = metadata?.source_library_id ?? null;
-    let version = '';
-    let settings = {};
-    if (libraryId) {
-      version = metadata?.source_library_version;
-      settings = {
-        [libraryId]: {
-          mode: metadata?.manual ? modes.selected.value : modes.random.value,
-          count: metadata?.max_count,
-          showReset: metadata?.allow_resetting_children,
-          candidates: metadata?.candidates,
-        },
-      };
-    }
-    dispatch(actions.library.initializeFromBlockValue({
-      libraryId, version, settings,
-    }));
-  }, [blockValue]);
 };
 
 export const useLibrarySelectorHook = ({
-  libraries,
+  selectedLibraryId,
   settings,
 }) => {
   const dispatch = useDispatch();
 
   return {
     onLibrarySelect: (id) => {
-      if (id === null) {
-        dispatch(actions.library.unloadLibrary());
-      } else {
+      if (id !== selectedLibraryId) {
         dispatch(actions.library.setLibraryId({ selectedLibraryId: id }));
-        if (!isV1Library(id)) {
-          dispatch(actions.library.setLibraryVersion({ version: libraries[id]?.version }));
-        }
         if (!settings[id]) {
-          dispatch(actions.library.initializeSettings({ selectedLibraryId: id }));
+          dispatch(actions.library.initialLibrarySettings({ selectedLibraryId: id }));
         }
       }
     },
@@ -109,104 +98,163 @@ export const useLibrarySelectorHook = ({
 };
 
 export const useBlocksSelectorHook = ({
-  blocksInSelectedLibrary,
-  savedChildren,
+  blocks,
+  candidates,
+  libraries,
   savedLibraryId,
   selectedLibraryId,
-  v1LibraryBlockIds,
+  setCandidatesForLibrary,
+  v1BlockRequests,
 }) => {
   const dispatch = useDispatch();
 
-  // fetch library content
-  // If selected library is the same as the saved library,
-  //   use the children blocks of the library content block instead.
-  // Else if v1 library
-  //   fetch the block ids (block data in other useEffect)
-  // Else if v2 library
-  //   fetch the block ids along with block data
-  useEffect(() => {
-    if (selectedLibraryId === savedLibraryId) {
-      dispatch(actions.library.setLibraryBlocks({
-        blocks: savedChildren.map(block => ({
-          id: block.id,
-          display_name: block.display_name,
-          block_type: block.category,
-        })),
-      }));
-    } else if (isV1Library(selectedLibraryId)) {
-      dispatch(requests.fetchV1LibraryContent({
-        libraryId: selectedLibraryId,
-        onSuccess: (response) => {
-          dispatch(actions.library.setLibraryBlocks({
-            blocks: [],
-          }));
-          dispatch(actions.library.loadV1LibraryBlockIds({
-            blockIds: response.data?.blocks,
-          }));
-          dispatch(actions.library.setLibraryVersion({
-            version: response.data?.version,
-          }));
-        },
-        onFailure: (error) => {
-          dispatch(actions.requests.failRequest({
-            requestKey: RequestKeys.fetchV1LibraryContent,
-            error,
-          }));
-        },
-      }));
-    } else {
-      dispatch(requests.fetchV2LibraryContent({
-        libraryId: selectedLibraryId,
-        onSuccess: (response) => {
-          dispatch(actions.library.setLibraryBlocks({
-            blocks: response?.data,
-          }));
-        },
-        onFailure: (error) => {
-          dispatch(actions.requests.failRequest({
-            requestKey: RequestKeys.fetchV2LibraryContent,
-            error,
-          }));
-        },
-      }));
-    }
-  }, [selectedLibraryId, savedChildren]);
+  const [ tableDataLoaded, setTableDataLoaded ] = useState(false);
 
-  // fetch v1 library block data after block ids are fetched
+  // fetch library version and blocks
   useEffect(() => {
-    v1LibraryBlockIds.forEach(blockId => {
-      dispatch(requests.fetchV1LibraryBlock({
-        blockId,
-        onSuccess: (response) => {
-          dispatch(actions.library.addLibraryBlock({
-            block: {
-              id: blockId,
-              display_name: response.data?.display_name,
-              block_type: response.data?.category,
+    setTableDataLoaded(false);
+    if (!blocks || blocks.length === 0) {
+      if (selectedLibraryId === savedLibraryId) {
+        dispatch(requests.fetchChildrenInfo({
+          onSuccess: (response) => {
+            const children = response?.data?.children;
+            dispatch(actions.library.setLibraryBlocks({
+              blocks: children.map(block => ({
+                id: block.id,
+                display_name: block.display_name,
+                block_type: block.category,
+              })),
+            }));
+          },
+          onFailure: (error) => {
+            dispatch(actions.requests.failRequest({
+              requestKey: RequestKeys.fetchChildrenInfo,
+              error,
+            }));
+          },
+        }));
+      } else if (isV1Library(selectedLibraryId)) {
+        if (!v1BlockRequests || Object.keys(v1BlockRequests).length === 0) {
+          dispatch(requests.fetchV1LibraryContent({
+            libraryId: selectedLibraryId,
+            onSuccess: (response) => {
+              const v1Blocks = response.data?.blocks ?? [];
+              let v1BlockRequests = {};
+              v1Blocks.forEach(id => {
+                v1BlockRequests[id] = RequestStates.inactive;
+              });
+              dispatch(actions.library.setLibraryVersion({
+                version: response.data?.version,
+              }));
+              dispatch(actions.library.setV1BlockRequests({
+                v1BlockRequests,
+              }));
+            },
+            onFailure: (error) => {
+              dispatch(actions.requests.failRequest({
+                requestKey: RequestKeys.fetchV1LibraryContent,
+                error,
+              }));
             },
           }));
-        },
-        onFailure: (error) => {
-          dispatch(actions.requests.failRequest({
-            requestKey: RequestKeys.fetchV1LibraryBlock,
-            error,
-          }));
-        },
-      }));
-    });
-  }, [v1LibraryBlockIds]);
+        }
+      } else {
+        dispatch(actions.library.setLibraryVersion({
+          version: libraries[selectedLibraryId]?.version,
+        }));
+        dispatch(requests.fetchV2LibraryContent({
+          libraryId: selectedLibraryId,
+          onSuccess: (response) => {
+            dispatch(actions.library.setLibraryBlocks({
+              blocks: response?.data,
+            }));
+          },
+          onFailure: (error) => {
+            dispatch(actions.requests.failRequest({
+              requestKey: RequestKeys.fetchV2LibraryContent,
+              error,
+            }));
+          },
+        }));
+      }
+    }
+  }, [selectedLibraryId]);
 
-  const blockTypeDisplay = (type) => {
-    if (type === 'html') { return 'Text'; }
-    if (type === 'video') { return 'Video'; }
-    if (type === 'problem') { return 'Problem'; }
-    return 'Other';
-  };
+  // set up blocks for v1 library
+  useEffect(() => {
+    if (blocks.length < Object.keys(v1BlockRequests).length) {
+      if (isV1Library(selectedLibraryId)) {
+        for (const blockId in v1BlockRequests) {
+          const status = v1BlockRequests[blockId]
+          if (status === RequestStates.inactive) {
+            dispatch(actions.library.updateV1BlockRequestStatus({
+              blockId,
+              status: RequestStates.pending,
+            }));
+            dispatch(requests.fetchV1LibraryBlock({
+              blockId,
+              onSuccess: (response) => {
+                const v1Block = {
+                  id: blockId,
+                  display_name: response.data?.display_name ?? '',
+                  block_type: response.data?.category ?? '',
+                };
+                dispatch(actions.library.addLibraryBlock({ block: v1Block }));
+                dispatch(actions.library.updateV1BlockRequestStatus({
+                  blockId,
+                  status: RequestStates.completed,
+                }))
+              },
+              onFailure: (error) => {
+                dispatch(actions.library.updateV1BlockRequestStatus({
+                  blockId,
+                  status: RequestStates.failed,
+                }));
+              },
+            }));
+          }
+        }
+      }
+    }
+  }, [v1BlockRequests]);
+
+  // check if blocks for table is loaded
+  useEffect(() => {
+    let loaded = true;
+    for (const blockId in v1BlockRequests) {
+      const status = v1BlockRequests[blockId];
+      if ((status === RequestStates.inactive) || (status === RequestStates.pending)) {
+        loaded = false;
+      }
+    }
+    setTableDataLoaded(loaded);
+  }, [v1BlockRequests]);
 
   return {
-    blocksTableData: blocksInSelectedLibrary.map(block => ({
-      display_name: block.display_name,
-      block_type: blockTypeDisplay(block.block_type),
-    })),
+    tableDataLoaded,
+    data: useMemo(() => {
+      if (tableDataLoaded) {
+        return blocks;
+      }
+      return [];
+    }, [blocks, tableDataLoaded]),
+
+    initialRows: useMemo(() => {
+      if (tableDataLoaded) {
+        return getSelectedRows({ blocks, candidates });
+      }
+      return {};
+    }, [blocks, candidates, tableDataLoaded]),
+
+    onSelectedRowsChanged: useCallback((selected) => {
+      if (tableDataLoaded) {
+        setCandidatesForLibrary({
+          candidates: getCandidates({
+            blocks,
+            rows: selected,
+          }),
+        })
+      }
+    }, [blocks, tableDataLoaded]),
   };
 };

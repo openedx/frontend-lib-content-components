@@ -29,7 +29,6 @@ function renderComponent(props) {
 const mockProps = {
   initialRows: {},
   mode: 'selected',
-  blocksInSelectedLibrary: [{}],
   setCandidatesForLibrary: jest.fn(),
   selectedLibraryId: 'exampleLibraryId',
 };

@@ -9,14 +9,42 @@ const mkSimpleSelector = (cb) => createSelector([module.libraryState], cb);
 
 export const simpleSelectors = {
   libraries: mkSimpleSelector(library => library.libraries),
-  savedChildren: mkSimpleSelector(library => library.savedChildren),
   savedLibraryId: mkSimpleSelector(library => library.savedLibraryId),
   selectedLibraryId: mkSimpleSelector(library => library.selectedLibraryId),
-  selectedLibraryVersion: mkSimpleSelector(library => library.selectedLibraryVersion),
   settings: mkSimpleSelector(library => library.settings),
-  blocksInSelectedLibrary: mkSimpleSelector(library => library.blocksInSelectedLibrary),
-  v1LibraryBlockIds: mkSimpleSelector(library => library.v1LibraryBlockIds),
 };
+
+export const blocks = createSelector(
+  [
+    module.simpleSelectors.selectedLibraryId,
+    module.simpleSelectors.settings,
+  ],
+  (
+    selectedLibraryId,
+    settings,
+  ) => {
+    if (selectedLibraryId) {
+      return settings[selectedLibraryId]?.blocks ?? [];
+    }
+    return [];
+  },
+);
+
+export const v1BlockRequests = createSelector(
+  [
+    module.simpleSelectors.selectedLibraryId,
+    module.simpleSelectors.settings,
+  ],
+  (
+    selectedLibraryId,
+    settings,
+  ) => {
+    if (selectedLibraryId) {
+      return settings[selectedLibraryId]?.v1BlockRequests ?? {};
+    }
+    return [];
+  },
+);
 
 export const candidates = createSelector(
   [
@@ -53,20 +81,15 @@ export const mode = createSelector(
 export const libraryPayload = createSelector(
   [
     module.simpleSelectors.selectedLibraryId,
-    module.simpleSelectors.selectedLibraryVersion,
     module.simpleSelectors.settings,
-    module.simpleSelectors.blocksInSelectedLibrary,
   ],
   (
     selectedLibraryId,
-    selectedLibraryVersion,
     settings,
   ) => {
     let manual = false;
     let shuffle = true;
     let count = null;
-    let showReset = false;
-    let candidateList = [];
     if (selectedLibraryId && settings[selectedLibraryId]) {
       count = settings[selectedLibraryId].count ?? 1;
       if (settings[selectedLibraryId].mode === modes.selected.value) {
@@ -74,25 +97,24 @@ export const libraryPayload = createSelector(
         shuffle = false;
         count = -1;
       }
-      showReset = settings[selectedLibraryId].showReset;
-      candidateList = settings[selectedLibraryId].candidates;
-      candidateList = candidateList.map(candidate => [candidate[0], getUsageKey(candidate[1])]);
     }
     return {
       libraryId: selectedLibraryId,
-      libraryVersion: selectedLibraryVersion,
+      libraryVersion: settings[selectedLibraryId]?.version,
       manual,
       shuffle,
       count,
-      showReset,
-      candidates: candidateList,
+      showReset: settings[selectedLibraryId]?.showReset,
+      candidates: settings[selectedLibraryId]?.candidates || [],
     };
   },
 );
 
 export default {
   ...simpleSelectors,
+  blocks,
   candidates,
   mode,
   libraryPayload,
+  v1BlockRequests,
 };

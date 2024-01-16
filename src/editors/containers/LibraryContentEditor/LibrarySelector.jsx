@@ -19,7 +19,7 @@ export const LibrarySelector = ({
   const {
     onLibrarySelect,
   } = useLibrarySelectorHook({
-    libraries,
+    selectedLibraryId,
     settings,
   });
 

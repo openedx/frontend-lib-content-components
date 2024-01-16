@@ -16,15 +16,8 @@ const blockId2 = 'lb:a blocK ID:tOO:2usageid';
 const blockType2 = 'a Different BLOck Type';
 const blockUsageId2 = '2usageid';
 const testData = {
-  savedChildren: {
-    0: {
-      block_type: blockId1,
-      id: blockId1,
-    },
-  },
   savedLibraryId: selectedLibraryId,
   selectedLibraryId,
-  selectedLibraryVersion: 'a lIb VERsion',
   settings: {
     [selectedLibraryId]: {
       candidates: [[blockType1, blockId1], [blockType2, blockId2]],
@@ -63,7 +56,6 @@ describe('Library Selectors', () => {
       [
         simpleKeys.libraries,
         simpleKeys.selectedLibraryId,
-        simpleKeys.selectedLibraryVersion,
         simpleKeys.settings,
         simpleKeys.blocksInSelectedLibrary,
       ].map(testSimpleSelector);
@@ -117,7 +109,6 @@ describe('Library Selectors', () => {
     it('is memoized based on the below listed selectors', () => {
       expect(selectors.libraryPayload.preSelectors).toEqual([
         simpleSelectors.selectedLibraryId,
-        simpleSelectors.selectedLibraryVersion,
         simpleSelectors.settings,
         simpleSelectors.blocksInSelectedLibrary,
       ]);

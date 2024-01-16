@@ -25,7 +25,6 @@ export const LibrarySettings = ({
       <Form.RadioSet
         name="mode"
         onChange={e => setModeForLibrary({
-          libraryId: selectedLibraryId,
           mode: e.target.value,
         })}
         value={settings[selectedLibraryId]?.mode ?? modes.random.value}
@@ -45,7 +44,6 @@ export const LibrarySettings = ({
       <Form.Control
         className="col col-2"
         onChange={(e) => setCountForLibrary({
-          libraryId: selectedLibraryId,
           count: e.target.value,
         })}
         value={settings[selectedLibraryId]?.count ?? -1}
@@ -70,7 +68,6 @@ export const LibrarySettings = ({
           <Form.Switch
             checked={settings[selectedLibraryId]?.showReset ?? false}
             onChange={(e) => setShowResetForLibrary({
-              libraryId: selectedLibraryId,
               showReset: e.target.checked,
             })}
           >

@@ -43,7 +43,7 @@ export const getLibraryName = (library) => {
 /**
  * gets a mapping of selected rows given a list of candidates
  * @param {[array]} blocks - list of all blocks in library
- * @param {[array]} candidates - list of candidate tuples [ [block_type, block_id] ]
+ * @param {[array]} candidates - list of candidate block usage ids
  * @returns {[object]} true/false mapping that shows whether a row is selected
  *    ie. first row is selected here { 0: true }
  */
@@ -54,8 +54,8 @@ export const getSelectedRows = ({
   const selectedRows = {};
   const candidatesMapping = {};
   if (candidates && candidates.length > 0) {
-    candidates.forEach(candidateTuple => {
-      candidatesMapping[candidateTuple[1]] = true;
+    candidates.forEach(block => {
+      candidatesMapping[block] = true;
     });
     blocks.forEach((block, index) => {
       if (candidatesMapping[block.id]) {
@@ -70,7 +70,7 @@ export const getSelectedRows = ({
  * gets the index of a library id
  * @param {[array]} blocks - list of all blocks in library
  * @param {[object]} rows - true/false mapping that shows whether a row is selected
- * @returns {[array]} list of candidate tuples [ [block_type, block_id] ]
+ * @returns {[array]} list of block usage ids
  */
 export const getCandidates = ({
   blocks,
@@ -80,7 +80,7 @@ export const getCandidates = ({
   if (rows && Object.keys(rows).length > 0) {
     blocks.forEach((block, index) => {
       if (rows[index]) {
-        candidates.push([block.block_type, block.id]);
+        candidates.push(block.id);
       }
     });
   }
