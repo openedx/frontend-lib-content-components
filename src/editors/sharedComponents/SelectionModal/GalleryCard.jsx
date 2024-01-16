@@ -43,9 +43,9 @@ export const GalleryCard = ({
               onError={thumbnailFallback && (() => setThumbnailError(true))}
             />
           )}
-          { asset.status && asset.statusBadgeVariant && (
+          { asset.statusMessage && asset.statusBadgeVariant && (
             <Badge variant={asset.statusBadgeVariant} style={{ position: 'absolute', left: '6px', top: '6px' }}>
-              {asset.status}
+              <FormattedMessage {...asset.statusMessage} />
             </Badge>
           )}
           { asset.duration >= 0 && (
@@ -102,6 +102,7 @@ GalleryCard.propTypes = {
     url: PropTypes.string,
     duration: PropTypes.number,
     status: PropTypes.string,
+    statusMessage: PropTypes.objectOf(PropTypes.string),
     statusBadgeVariant: PropTypes.string,
     transcripts: PropTypes.arrayOf(PropTypes.string),
   }).isRequired,
