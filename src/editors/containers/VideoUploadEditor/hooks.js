@@ -7,7 +7,7 @@ export const {
   navigateTo,
 } = appHooks;
 
-export const postUploadRedirect = (storeState, uploadType) => {
+export const postUploadRedirect = (storeState, uploadType = 'selectedVideoUrl') => {
   const learningContextId = selectors.app.learningContextId(storeState);
   const blockId = selectors.app.blockId(storeState);
   return (videoUrl) => navigateTo(`/course/${learningContextId}/editor/video/${blockId}?${uploadType}=${videoUrl}`);
