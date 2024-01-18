@@ -8,8 +8,37 @@ import SearchBlocks from '.';
 Enzyme.configure({ adapter: new Adapter() });
 
 const mockBlocks = {
-  block1: { id: 'block1', path: 'Block 1', type: 'section' },
-  block2: { id: 'block2', path: 'Block 2', type: 'subsection' },
+  'block-key': {
+    id: 'block-key',
+    blockId: 'edx_block-1',
+    lmsWebUrl: 'http://localhost/weburl',
+    legacyWebUrl: 'http://localhost/legacy',
+    studentViewUrl: 'http://localhost/studentview',
+    type: 'sequential',
+    displayName: 'Any display name',
+    path: 'Any display name',
+    children: ['block-children-1', 'block-children-2'],
+  },
+  'block-children-1': {
+    id: 'block-children-1',
+    blockId: 'edx_block-1',
+    lmsWebUrl: 'http://localhost/weburl',
+    legacyWebUrl: 'http://localhost/legacy',
+    studentViewUrl: 'http://localhost/studentview',
+    type: 'sequential',
+    displayName: 'Block children 1',
+    path: 'Any display name / Block children 1',
+  },
+  'block-children-2': {
+    id: 'block-children-2',
+    blockId: 'edx_block-2',
+    lmsWebUrl: 'http://localhost/weburl',
+    legacyWebUrl: 'http://localhost/legacy',
+    studentViewUrl: 'http://localhost/studentview',
+    type: 'sequential',
+    displayName: 'Block children 2',
+    path: 'Any display name / Block children 2',
+  },
 };
 
 describe('SearchBlocks Component', () => {
@@ -27,5 +56,14 @@ describe('SearchBlocks Component', () => {
       </IntlProviderWrapper>,
     );
     expect(wrapper.exists()).toBeTruthy();
+  });
+
+  test('snapshot', () => {
+    const wrapper = shallow(
+      <IntlProviderWrapper>
+        <SearchBlocks blocks={mockBlocks} />
+      </IntlProviderWrapper>,
+    );
+    expect(wrapper).toMatchSnapshot();
   });
 });

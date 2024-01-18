@@ -1,0 +1,107 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BlocksList Component snapshot 1`] = `
+<IntlProvider
+  defaultFormats={Object {}}
+  defaultLocale="en"
+  fallbackOnEmptyString={true}
+  formats={Object {}}
+  locale="en"
+  messages={Object {}}
+  onError={[Function]}
+  onWarn={[Function]}
+  textComponent={Symbol(react.fragment)}
+>
+  <BlocksList
+    blocks={
+      Object {
+        "block-children-1": Object {
+          "blockId": "edx_block-1",
+          "displayName": "Block children 1",
+          "id": "block-children-1",
+          "legacyWebUrl": "http://localhost/legacy",
+          "lmsWebUrl": "http://localhost/weburl",
+          "studentViewUrl": "http://localhost/studentview",
+          "type": "sequential",
+        },
+        "block-children-2": Object {
+          "blockId": "edx_block-2",
+          "displayName": "Block children 2",
+          "id": "block-children-2",
+          "legacyWebUrl": "http://localhost/legacy",
+          "lmsWebUrl": "http://localhost/weburl",
+          "studentViewUrl": "http://localhost/studentview",
+          "type": "sequential",
+        },
+        "block-key": Object {
+          "blockId": "edx_block-1",
+          "children": Array [
+            "block-children-1",
+            "block-children-2",
+          ],
+          "displayName": "Any display name",
+          "id": "block-key",
+          "legacyWebUrl": "http://localhost/legacy",
+          "lmsWebUrl": "http://localhost/weburl",
+          "studentViewUrl": "http://localhost/studentview",
+          "type": "sequential",
+        },
+      }
+    }
+    onBlockSelected={[Function]}
+  />
+</IntlProvider>
+`;
+
+exports[`BlocksList Component snapshot with onBlockSelected 1`] = `
+<IntlProvider
+  defaultFormats={Object {}}
+  defaultLocale="en"
+  fallbackOnEmptyString={true}
+  formats={Object {}}
+  locale="en"
+  messages={Object {}}
+  onError={[Function]}
+  onWarn={[Function]}
+  textComponent={Symbol(react.fragment)}
+>
+  <BlocksList
+    blocks={
+      Object {
+        "block-children-1": Object {
+          "blockId": "edx_block-1",
+          "displayName": "Block children 1",
+          "id": "block-children-1",
+          "legacyWebUrl": "http://localhost/legacy",
+          "lmsWebUrl": "http://localhost/weburl",
+          "studentViewUrl": "http://localhost/studentview",
+          "type": "sequential",
+        },
+        "block-children-2": Object {
+          "blockId": "edx_block-2",
+          "displayName": "Block children 2",
+          "id": "block-children-2",
+          "legacyWebUrl": "http://localhost/legacy",
+          "lmsWebUrl": "http://localhost/weburl",
+          "studentViewUrl": "http://localhost/studentview",
+          "type": "sequential",
+        },
+        "block-key": Object {
+          "blockId": "edx_block-1",
+          "children": Array [
+            "block-children-1",
+            "block-children-2",
+          ],
+          "displayName": "Any display name",
+          "id": "block-key",
+          "legacyWebUrl": "http://localhost/legacy",
+          "lmsWebUrl": "http://localhost/weburl",
+          "studentViewUrl": "http://localhost/studentview",
+          "type": "sequential",
+        },
+      }
+    }
+    onBlockSelected={[Function]}
+  />
+</IntlProvider>
+`;

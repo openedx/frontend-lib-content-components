@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`InsertLinkModal snapshot 1`] = `
+<IntlProvider
+  defaultFormats={Object {}}
+  defaultLocale="en"
+  fallbackOnEmptyString={true}
+  formats={Object {}}
+  locale="en"
+  messages={Object {}}
+  onError={[Function]}
+  onWarn={[Function]}
+  textComponent={Symbol(react.fragment)}
+>
+  <InsertLinkModal
+    courseId="course123"
+    editorRef={
+      Object {
+        "current": Object {
+          "selection": Object {
+            "getContent": [MockFunction],
+            "setContent": [MockFunction],
+          },
+        },
+      }
+    }
+    isOpen={true}
+    onClose={[MockFunction]}
+  />
+</IntlProvider>
+`;

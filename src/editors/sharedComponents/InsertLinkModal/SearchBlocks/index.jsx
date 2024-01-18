@@ -8,7 +8,7 @@ import { filterBlocksByText } from '../utils';
 import messages from './messages';
 import './index.scss';
 
-const SearchBlocks = ({
+export const SearchBlocks = ({
   blocks,
   onSearchFilter,
   searchInputValue = '',
@@ -53,7 +53,7 @@ const SearchBlocks = ({
       />
 
       {searchField.trim() && (
-        <p className="h5 ml-1 text-gray-500">
+        <p className="h5 ml-1 text-gray-500" data-testid="filtered-block-text">
           {intl.formatMessage(messages.searchBlocksResultMessages, {
             searchField: `"${searchField}"`,
           })}

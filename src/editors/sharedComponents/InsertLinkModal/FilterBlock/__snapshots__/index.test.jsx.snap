@@ -1,0 +1,42 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FilterBlock Component snapshot 1`] = `
+<FilterBlock
+  block={
+    Object {
+      "blockId": "edx_block-1",
+      "children": Array [
+        "block-children-1",
+        "block-children-2",
+      ],
+      "displayName": "Any display name",
+      "id": "block-key",
+      "legacyWebUrl": "http://localhost/legacy",
+      "lmsWebUrl": "http://localhost/weburl",
+      "path": "Path / To / Block 1",
+      "studentViewUrl": "http://localhost/studentview",
+      "type": "sequential",
+    }
+  }
+  onBlockFilterClick={[MockFunction]}
+>
+  <Button
+    className="d-flex flex-column w-100 align-items-start p-3"
+    data-testid="filter-block-item"
+    key="filtered_block_block-key"
+    onClick={[Function]}
+    variant="tertiary"
+  >
+    <span
+      className="h5 text-left"
+    >
+      Path / To
+    </span>
+    <span
+      className="h3"
+    >
+      Block 1
+    </span>
+  </Button>
+</FilterBlock>
+`;

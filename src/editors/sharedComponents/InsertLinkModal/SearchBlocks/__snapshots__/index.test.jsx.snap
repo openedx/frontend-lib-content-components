@@ -1,0 +1,59 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SearchBlocks Component snapshot 1`] = `
+<IntlProvider
+  defaultFormats={Object {}}
+  defaultLocale="en"
+  fallbackOnEmptyString={true}
+  formats={Object {}}
+  locale="en"
+  messages={Object {}}
+  onError={[Function]}
+  onWarn={[Function]}
+  textComponent={Symbol(react.fragment)}
+>
+  <SearchBlocks
+    blocks={
+      Object {
+        "block-children-1": Object {
+          "blockId": "edx_block-1",
+          "displayName": "Block children 1",
+          "id": "block-children-1",
+          "legacyWebUrl": "http://localhost/legacy",
+          "lmsWebUrl": "http://localhost/weburl",
+          "path": "Any display name / Block children 1",
+          "studentViewUrl": "http://localhost/studentview",
+          "type": "sequential",
+        },
+        "block-children-2": Object {
+          "blockId": "edx_block-2",
+          "displayName": "Block children 2",
+          "id": "block-children-2",
+          "legacyWebUrl": "http://localhost/legacy",
+          "lmsWebUrl": "http://localhost/weburl",
+          "path": "Any display name / Block children 2",
+          "studentViewUrl": "http://localhost/studentview",
+          "type": "sequential",
+        },
+        "block-key": Object {
+          "blockId": "edx_block-1",
+          "children": Array [
+            "block-children-1",
+            "block-children-2",
+          ],
+          "displayName": "Any display name",
+          "id": "block-key",
+          "legacyWebUrl": "http://localhost/legacy",
+          "lmsWebUrl": "http://localhost/weburl",
+          "path": "Any display name",
+          "studentViewUrl": "http://localhost/studentview",
+          "type": "sequential",
+        },
+      }
+    }
+    onBlockSelected={[Function]}
+    onSearchFilter={[Function]}
+    searchInputValue=""
+  />
+</IntlProvider>
+`;
