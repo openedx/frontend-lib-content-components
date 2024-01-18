@@ -5,7 +5,7 @@ exports[`EditorProblemView component renders raw editor 1`] = `
   getContent={[Function]}
   returnFunction={null}
 >
-  <Component
+  <AlertModal
     footerNode={
       <ActionRow>
         <Button
@@ -40,7 +40,7 @@ exports[`EditorProblemView component renders raw editor 1`] = `
       description="Explanation in body of mismatched settings modal"
       id="authoring.problemEditor.editProblemView.saveWarningModal.olxSettingDiscrepancy.body.explanation"
     />
-  </Component>
+  </AlertModal>
   <div
     className="editProblemView d-flex flex-row flex-nowrap justify-content-end"
   >
@@ -74,7 +74,7 @@ exports[`EditorProblemView component renders simple view 1`] = `
   getContent={[Function]}
   returnFunction={null}
 >
-  <Component
+  <AlertModal
     footerNode={
       <ActionRow>
         <Button
@@ -118,7 +118,7 @@ exports[`EditorProblemView component renders simple view 1`] = `
         />
       </div>
     </Fragment>
-  </Component>
+  </AlertModal>
   <div
     className="editProblemView d-flex flex-row flex-nowrap justify-content-end"
   >

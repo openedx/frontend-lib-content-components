@@ -4,6 +4,13 @@ import { shallow } from '@edx/react-unit-test-utils';
 import { Image } from '@edx/paragon';
 import { GalleryCard } from './GalleryCard';
 
+jest.mock('@edx/paragon', () => ({
+  ...jest.requireActual('@edx/paragon'),
+  Badge: 'Badge',
+  SelectableBox: 'SelectableBox',
+  Image: 'Image',
+}));
+
 describe('GalleryCard component', () => {
   const asset = {
     externalUrl: 'props.img.externalUrl',

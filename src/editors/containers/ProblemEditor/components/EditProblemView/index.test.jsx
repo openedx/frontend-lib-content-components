@@ -6,6 +6,14 @@ import { ProblemTypeKeys } from '../../../../data/constants/problem';
 import RawEditor from '../../../../sharedComponents/RawEditor';
 import { formatMessage } from '../../../../../testUtils';
 
+jest.mock('@edx/paragon', () => ({
+  ...jest.requireActual('@edx/paragon'),
+  Container: 'Container',
+  Button: 'Button',
+  AlertModal: 'AlertModal',
+  ActionRow: 'ActionRow',
+}));
+
 describe('EditorProblemView component', () => {
   test('renders simple view', () => {
     const wrapper = shallow(<EditProblemView

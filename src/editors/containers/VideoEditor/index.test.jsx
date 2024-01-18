@@ -10,7 +10,9 @@ jest.mock('../EditorContainer', () => 'EditorContainer');
 jest.mock('./components/VideoEditorModal', () => 'VideoEditorModal');
 
 jest.mock('./hooks', () => ({
-  ErrorContext: jest.fn(),
+  ErrorContext: {
+    Provider: 'ErrorContext.Provider',
+  },
   errorsHook: jest.fn(() => ({
     error: 'hooks.errorsHook.error',
     validateEntry: jest.fn().mockName('validateEntry'),
@@ -27,6 +29,11 @@ jest.mock('../../data/redux', () => ({
       isLibrary: jest.fn(state => ({ isLibrary: state })),
     },
   },
+}));
+
+jest.mock('@edx/paragon', () => ({
+  ...jest.requireActual('@edx/paragon'),
+  Spinner: 'Spinner',
 }));
 
 describe('VideoEditor', () => {

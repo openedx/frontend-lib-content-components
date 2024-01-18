@@ -21,6 +21,18 @@ jest.mock('../../../../../../data/redux', () => ({
   },
 }));
 
+jest.mock('@edx/paragon', () => ({
+  ...jest.requireActual('@edx/paragon'),
+  CheckboxControl: 'CheckboxControl',
+  Stack: 'Stack',
+  Icon: 'Icon',
+  Form: {
+    Group: 'Form.Group',
+    Label: 'Form.Label',
+  },
+  ActionRow: { Spacer: 'ActionRow.Spacer' },
+}));
+
 describe('LicenseDetails', () => {
   const props = {
     license: null,

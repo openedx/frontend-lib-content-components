@@ -3,6 +3,23 @@ import { shallow } from '@edx/react-unit-test-utils';
 import { formatMessage } from '../../../../../../../../testUtils';
 import { GroupFeedbackRow } from './GroupFeedbackRow';
 
+jest.mock('@edx/paragon', () => ({
+  ...jest.requireActual('@edx/paragon'),
+  Row: 'Row',
+  IconButton: 'IconButton',
+  Icon: 'Icon',
+  Form: {
+    CheckboxSet: 'Form.CheckboxSet',
+    Checkbox: 'Form.CheckboxSet',
+    Control: 'Form.Control',
+  },
+  ActionRow: 'ActionRow',
+}));
+jest.mock('@edx/paragon/icons', () => ({
+  ...jest.requireActual('@edx/paragon/icons'),
+  DeleteOutline: 'DeleteOutline',
+}));
+
 describe('GroupFeedbackRow', () => {
   const props = {
     value: { answers: ['A', 'C'], feedback: 'sOmE FeEDBACK' },

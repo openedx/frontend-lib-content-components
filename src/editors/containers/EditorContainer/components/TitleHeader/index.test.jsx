@@ -9,6 +9,13 @@ import * as module from '.';
 jest.mock('./hooks', () => ({
   localTitleHooks: jest.fn(),
 }));
+jest.mock('@edx/paragon', () => ({
+  ...jest.requireActual('@edx/paragon'),
+  Truncate: ({ children }) => <div>{children}</div>, // eslint-disable-line react/prop-types
+  IconButton: 'IconButton',
+  Icon: 'Icon',
+}));
+jest.mock('./EditableHeader');
 
 describe('TitleHeader', () => {
   const props = {
@@ -44,7 +51,7 @@ describe('TitleHeader', () => {
     });
     test('initialized', () => {
       localTitleHooks.mockReturnValue(localTitleHooksProps);
-      expect(shallow(<module.TitleHeader {...props} isInitialized />).snapshot).toMatchSnapshot();
+      expect(shallow(<module.TitleHeader {...props} isInitialized />).shallowWrapper).toMatchSnapshot();
     });
     test('editing', () => {
       localTitleHooks.mockReturnValue({ ...localTitleHooksProps, isEditing: true });

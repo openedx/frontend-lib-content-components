@@ -56,6 +56,15 @@ jest.mock('./hooks', () => ({
   useImages: jest.fn(() => ({ imagesRef: { current: [{ externalUrl: staticUrl }] } })),
 }));
 
+jest.mock('react-redux', () => ({
+  Provider: 'Provider',
+  connect: (mapStateToProp, mapDispatchToProps) => (component) => ({
+    mapStateToProp,
+    mapDispatchToProps,
+    component,
+  }),
+}));
+
 describe('TinyMceWidget', () => {
   const props = {
     editorType: 'text',
