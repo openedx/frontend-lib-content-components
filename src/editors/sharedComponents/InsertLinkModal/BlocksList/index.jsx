@@ -15,7 +15,7 @@ import './index.scss';
 
 const BlocksList = ({ blocks, onBlockSelected }) => {
   const intl = useIntl();
-  const messagesTest = {
+  const messageBlockType = {
     [blockTypes.section]: intl.formatMessage(
       messages.blocksListSubsectionTitle,
     ),
@@ -92,7 +92,7 @@ const BlocksList = ({ blocks, onBlockSelected }) => {
           &nbsp;
           </Button>
 
-          <p className="col-11 text-center">{messagesTest[blockState.type]}</p>
+          <p className="col-11 text-center">{messageBlockType[blockState.type]}</p>
         </ActionRow>
       )}
       <div className="block-list-container">
@@ -127,10 +127,6 @@ const BlocksList = ({ blocks, onBlockSelected }) => {
   );
 };
 
-BlocksList.defaultProps = {
-  onBlockSelected: () => {},
-};
-
 const blockShape = PropTypes.shape({
   id: PropTypes.string.isRequired,
   blockId: PropTypes.string.isRequired,
@@ -144,7 +140,7 @@ const blockShape = PropTypes.shape({
 
 BlocksList.propTypes = {
   blocks: PropTypes.objectOf(blockShape).isRequired,
-  onBlockSelected: PropTypes.func,
+  onBlockSelected: PropTypes.func.isRequired,
 };
 
 export default BlocksList;

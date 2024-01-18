@@ -51,8 +51,8 @@ exports[`SearchBlocks Component snapshot 1`] = `
         },
       }
     }
-    onBlockSelected={[Function]}
-    onSearchFilter={[Function]}
+    onBlockSelected={[MockFunction]}
+    onSearchFilter={[MockFunction]}
     searchInputValue=""
   />
 </IntlProvider>

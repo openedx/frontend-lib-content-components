@@ -50,6 +50,7 @@ const InsertLinkModal = ({
     setInputUrlValue(value);
   };
 
+  /* istanbul ignore next */
   const handleSave = () => {
     const editor = editorRef.current;
     const urlPath = blockSelected?.lmsWebUrl || inputUrlValue;

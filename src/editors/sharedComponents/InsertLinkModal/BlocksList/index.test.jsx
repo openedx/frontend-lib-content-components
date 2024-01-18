@@ -14,7 +14,7 @@ const mockBlocks = {
     lmsWebUrl: 'http://localhost/weburl',
     legacyWebUrl: 'http://localhost/legacy',
     studentViewUrl: 'http://localhost/studentview',
-    type: 'sequential',
+    type: 'character',
     displayName: 'Any display name',
     children: ['block-children-1', 'block-children-2'],
   },
@@ -46,30 +46,17 @@ describe('BlocksList Component', () => {
     </IntlProvider>
   );
 
+  const wrapper = shallow(
+    <IntlProviderWrapper>
+      <BlocksList blocks={mockBlocks} onBlockSelected={() => {}} />
+    </IntlProviderWrapper>,
+  );
+
   test('renders without crashing', () => {
-    const wrapper = shallow(
-      <IntlProviderWrapper>
-        <BlocksList blocks={mockBlocks} onBlockSelected={() => {}} />
-      </IntlProviderWrapper>,
-    );
     expect(wrapper.exists()).toBeTruthy();
   });
 
   test('snapshot', () => {
-    const wrapper = shallow(
-      <IntlProviderWrapper>
-        <BlocksList blocks={mockBlocks} />
-      </IntlProviderWrapper>,
-    );
-    expect(wrapper).toMatchSnapshot();
-  });
-
-  test('snapshot with onBlockSelected', () => {
-    const wrapper = shallow(
-      <IntlProviderWrapper>
-        <BlocksList blocks={mockBlocks} onBlockSelected={() => {}} />
-      </IntlProviderWrapper>,
-    );
     expect(wrapper).toMatchSnapshot();
   });
 });

@@ -49,21 +49,24 @@ describe('SearchBlocks Component', () => {
     </IntlProvider>
   );
 
+  const onSearchFilterMock = jest.fn();
+  const onBlockSelectedMock = jest.fn();
+
+  const wrapper = shallow(
+    <IntlProviderWrapper>
+      <SearchBlocks
+        blocks={mockBlocks}
+        onSearchFilter={onSearchFilterMock}
+        onBlockSelected={onBlockSelectedMock}
+      />
+    </IntlProviderWrapper>,
+  );
+
   test('renders without crashing', () => {
-    const wrapper = shallow(
-      <IntlProviderWrapper>
-        <SearchBlocks blocks={mockBlocks} />
-      </IntlProviderWrapper>,
-    );
     expect(wrapper.exists()).toBeTruthy();
   });
 
   test('snapshot', () => {
-    const wrapper = shallow(
-      <IntlProviderWrapper>
-        <SearchBlocks blocks={mockBlocks} />
-      </IntlProviderWrapper>,
-    );
     expect(wrapper).toMatchSnapshot();
   });
 });
