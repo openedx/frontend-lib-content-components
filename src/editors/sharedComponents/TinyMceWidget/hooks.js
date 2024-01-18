@@ -20,6 +20,8 @@ export const state = StrictDict({
   imageSelection: (val) => useState(val),
   // eslint-disable-next-line react-hooks/rules-of-hooks
   refReady: (val) => useState(val),
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  isInsertLinkModalOpen: (val) => useState(val),
 });
 
 export const addImagesAndDimensionsToRef = ({ imagesRef, assets, editorContentHtml }) => {
@@ -131,6 +133,7 @@ export const setupCustomBehavior = ({
   updateContent,
   openImgModal,
   openSourceCodeModal,
+  openInsertLinkModal,
   editorType,
   imageUrls,
   images,
@@ -151,6 +154,14 @@ export const setupCustomBehavior = ({
       editor, images, setImage, openImgModal,
     }),
   });
+
+  // insert link button
+  editor.ui.registry.addButton(tinyMCE.buttons.insertLink, {
+    icon: 'link',
+    tooltip: 'Insert link',
+    onAction: openInsertLinkModal,
+  });
+
   // overriding the code plugin's icon with 'HTML' text
   editor.ui.registry.addButton(tinyMCE.buttons.code, {
     text: 'HTML',
@@ -225,6 +236,7 @@ export const editorConfig = ({
   initializeEditor,
   openImgModal,
   openSourceCodeModal,
+  openInsertLinkModal,
   setSelection,
   updateContent,
   content,
@@ -263,6 +275,7 @@ export const editorConfig = ({
         updateContent,
         openImgModal,
         openSourceCodeModal,
+        openInsertLinkModal,
         lmsEndpointUrl,
         setImage: setSelection,
         content,
@@ -300,6 +313,15 @@ export const imgModalToggle = () => {
     isImgOpen,
     openImgModal: () => setIsOpen(true),
     closeImgModal: () => setIsOpen(false),
+  };
+};
+
+export const insertLinkModalToggle = () => {
+  const [isInsertLinkOpen, setIsInsertLinkOpen] = module.state.isInsertLinkModalOpen(false);
+  return {
+    isInsertLinkOpen,
+    openInsertLinkModal: () => setIsInsertLinkOpen(true),
+    closeInsertLinkModal: () => setIsInsertLinkOpen(false),
   };
 };
 

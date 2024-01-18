@@ -8,6 +8,7 @@ const pluginConfig = ({ isLibrary, placeholder, editorType }) => {
   const imageTools = isLibrary ? '' : plugins.imagetools;
   const imageUploadButton = isLibrary ? '' : buttons.imageUploadButton;
   const editImageSettings = isLibrary ? '' : buttons.editImageSettings;
+  const insertLinkButton = isLibrary ? '' : buttons.insertLink;
   const codePlugin = editorType === 'text' ? plugins.code : '';
   const codeButton = editorType === 'text' ? buttons.code : '';
   const labelButton = editorType === 'question' ? buttons.customLabelButton : '';
@@ -19,7 +20,6 @@ const pluginConfig = ({ isLibrary, placeholder, editorType }) => {
   return (
     StrictDict({
       plugins: [
-        plugins.link,
         plugins.lists,
         plugins.codesample,
         plugins.emoticons,
@@ -52,9 +52,9 @@ const pluginConfig = ({ isLibrary, placeholder, editorType }) => {
           buttons.outdent,
           buttons.indent,
         ],
-        [imageUploadButton, buttons.link, buttons.unlink, buttons.blockQuote, buttons.codeBlock],
+        [imageUploadButton, buttons.blockQuote, buttons.codeBlock],
         [buttons.table, buttons.emoticons, buttons.charmap, buttons.hr],
-        [buttons.removeFormat, codeButton, buttons.a11ycheck],
+        [buttons.removeFormat, codeButton, buttons.a11ycheck, insertLinkButton],
       ]) : false,
       imageToolbar: mapToolbars([
         // [buttons.rotate.left, buttons.rotate.right],

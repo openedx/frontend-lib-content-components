@@ -12,6 +12,18 @@ exports[`TinyMceWidget snapshots ImageUploadModal is not rendered 1`] = `
     }
   }
 >
+  <InsertLinkModal
+    editorRef={
+      Object {
+        "current": Object {
+          "value": "something",
+        },
+      }
+    }
+    isOpen={true}
+    lmsEndpointUrl="sOmEvaLue.cOm"
+    onClose={[MockFunction closeModal]}
+  />
   <SourceCodeModal
     close={[MockFunction modal.closeModal]}
     editorRef={
@@ -48,6 +60,7 @@ exports[`TinyMceWidget snapshots ImageUploadModal is not rendered 1`] = `
         "lmsEndpointUrl": "sOmEvaLue.cOm",
         "minHeight": undefined,
         "openImgModal": [MockFunction modal.openModal],
+        "openInsertLinkModal": [MockFunction openModal],
         "openSourceCodeModal": [MockFunction modal.openModal],
         "placeholder": undefined,
         "selection": "hooks.selectedImage.selection",
@@ -100,6 +113,18 @@ exports[`TinyMceWidget snapshots SourcecodeModal is not rendered 1`] = `
     selection="hooks.selectedImage.selection"
     setSelection={[MockFunction hooks.selectedImage.setSelection]}
   />
+  <InsertLinkModal
+    editorRef={
+      Object {
+        "current": Object {
+          "value": "something",
+        },
+      }
+    }
+    isOpen={true}
+    lmsEndpointUrl="sOmEvaLue.cOm"
+    onClose={[MockFunction closeModal]}
+  />
   <Editor
     disabled={false}
     editorConfig={
@@ -125,6 +150,7 @@ exports[`TinyMceWidget snapshots SourcecodeModal is not rendered 1`] = `
         "lmsEndpointUrl": "sOmEvaLue.cOm",
         "minHeight": undefined,
         "openImgModal": [MockFunction modal.openModal],
+        "openInsertLinkModal": [MockFunction openModal],
         "openSourceCodeModal": [MockFunction modal.openModal],
         "placeholder": undefined,
         "selection": "hooks.selectedImage.selection",
@@ -177,6 +203,18 @@ exports[`TinyMceWidget snapshots renders as expected with default behavior 1`] =
     selection="hooks.selectedImage.selection"
     setSelection={[MockFunction hooks.selectedImage.setSelection]}
   />
+  <InsertLinkModal
+    editorRef={
+      Object {
+        "current": Object {
+          "value": "something",
+        },
+      }
+    }
+    isOpen={true}
+    lmsEndpointUrl="sOmEvaLue.cOm"
+    onClose={[MockFunction closeModal]}
+  />
   <SourceCodeModal
     close={[MockFunction modal.closeModal]}
     editorRef={
@@ -213,6 +251,7 @@ exports[`TinyMceWidget snapshots renders as expected with default behavior 1`] =
         "lmsEndpointUrl": "sOmEvaLue.cOm",
         "minHeight": undefined,
         "openImgModal": [MockFunction modal.openModal],
+        "openInsertLinkModal": [MockFunction openModal],
         "openSourceCodeModal": [MockFunction modal.openModal],
         "placeholder": undefined,
         "selection": "hooks.selectedImage.selection",

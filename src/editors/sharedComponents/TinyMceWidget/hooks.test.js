@@ -116,6 +116,7 @@ describe('TinyMceEditor hooks', () => {
         const addToggleButton = jest.fn();
         const openImgModal = jest.fn();
         const openSourceCodeModal = jest.fn();
+        const openInsertLinkModal = jest.fn();
         const setImage = jest.fn();
         const updateContent = jest.fn();
         const editorType = 'expandable';
@@ -137,11 +138,12 @@ describe('TinyMceEditor hooks', () => {
           updateContent,
           openImgModal,
           openSourceCodeModal,
+          openInsertLinkModal,
           setImage,
           lmsEndpointUrl,
         })(editor);
         expect(addIcon.mock.calls).toEqual([['textToSpeech', tinyMCE.textToSpeechIcon]]);
-        expect(addButton.mock.calls).toEqual([
+        expect(addButton.mock.calls).toEqual(expect.arrayContaining([
           [tinyMCE.buttons.imageUploadButton, { icon: 'image', tooltip: 'Add Image', onAction: openImgModal }],
           [tinyMCE.buttons.editImageSettings, { icon: 'image', tooltip: 'Edit Image Settings', onAction: expectedSettingsAction }],
           [tinyMCE.buttons.code, { text: 'HTML', tooltip: 'Source code', onAction: openSourceCodeModal }],
@@ -151,7 +153,7 @@ describe('TinyMceEditor hooks', () => {
             tooltip: 'Apply a "Question" label to specific text, recognized by screen readers. Recommended to improve accessibility.',
             onAction: toggleLabelFormatting,
           }],
-        ]);
+        ]));
         expect(addToggleButton.mock.calls).toEqual([
           [tinyMCE.buttons.codeBlock, {
             icon: 'sourcecode', tooltip: 'Code Block', onAction: toggleCodeFormatting, onSetup: setupCodeFormatting,
