@@ -24,10 +24,6 @@ const FilterBlock = ({ block, onBlockFilterClick }) => {
   );
 };
 
-FilterBlock.defaultProps = {
-  onBlockFilterClick: () => {},
-};
-
 const blockShape = PropTypes.shape({
   id: PropTypes.string.isRequired,
   blockId: PropTypes.string.isRequired,
@@ -41,7 +37,7 @@ const blockShape = PropTypes.shape({
 
 FilterBlock.propTypes = {
   block: PropTypes.objectOf(blockShape).isRequired,
-  onBlockFilterClick: PropTypes.func,
+  onBlockFilterClick: PropTypes.func.isRequired,
 };
 
 export default FilterBlock;

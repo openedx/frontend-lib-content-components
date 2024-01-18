@@ -29,13 +29,9 @@ const BlockLink = ({ path, onCloseLink }) => {
   );
 };
 
-BlockLink.defaultProps = {
-  onCloseLink: () => {},
-};
-
 BlockLink.propTypes = {
   path: PropTypes.string.isRequired,
-  onCloseLink: PropTypes.func,
+  onCloseLink: PropTypes.func.isRequired,
 };
 
 export default BlockLink;
