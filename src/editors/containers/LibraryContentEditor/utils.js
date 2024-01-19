@@ -60,6 +60,8 @@ export const getSelectedRows = ({
     blocks.forEach((block, index) => {
       if (candidatesMapping[block.id]) {
         selectedRows[index] = true;
+      } else {
+        selectedRows[index] = false;
       }
     });
   }

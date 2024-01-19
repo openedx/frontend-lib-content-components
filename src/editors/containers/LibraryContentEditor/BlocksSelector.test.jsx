@@ -10,11 +10,13 @@ jest.unmock('@edx/paragon/icons');
 
 jest.mock('./hooks', () => ({
   useBlocksSelectorHook: jest.fn().mockReturnValue({
-    blocksTableData: [
-      // Mocked blocksTableData
+    tableDataLoaded: true,
+    data: [
       { id: 1, display_name: 'Block 1', block_type: 'Type A' },
       { id: 2, display_name: 'Block 2', block_type: 'Type B' },
     ],
+    initialRows: {},
+    onSelectedRowsChanged: jest.fn(),
   }),
 }));
 

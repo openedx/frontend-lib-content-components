@@ -1,4 +1,9 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 import { useDispatch } from 'react-redux';
 
 import { modes } from './constants';
@@ -7,7 +12,6 @@ import * as requests from './data/requests';
 import { RequestKeys, RequestStates } from '../../data/constants/requests';
 import { isV1Library, getCandidates, getSelectedRows } from './utils';
 
-//TODO this should be in message for i18n
 export const blockTypeDisplay = (type) => {
   if (type === 'html') { return 'Text'; }
   if (type === 'video') { return 'Video'; }
@@ -35,7 +39,7 @@ export const useLibraryHook = ({
           count: metadata?.max_count,
           showReset: metadata?.allow_resetting_children,
           candidates: metadata?.candidates,
-          blocks: null,
+          blocks: [],
         },
       };
     }
@@ -103,12 +107,11 @@ export const useBlocksSelectorHook = ({
   libraries,
   savedLibraryId,
   selectedLibraryId,
-  setCandidatesForLibrary,
   v1BlockRequests,
 }) => {
   const dispatch = useDispatch();
 
-  const [ tableDataLoaded, setTableDataLoaded ] = useState(false);
+  const [tableDataLoaded, setTableDataLoaded] = useState(false);
 
   // fetch library version and blocks
   useEffect(() => {
@@ -139,15 +142,15 @@ export const useBlocksSelectorHook = ({
             libraryId: selectedLibraryId,
             onSuccess: (response) => {
               const v1Blocks = response.data?.blocks ?? [];
-              let v1BlockRequests = {};
+              const initialRequestStatus = {};
               v1Blocks.forEach(id => {
-                v1BlockRequests[id] = RequestStates.inactive;
+                initialRequestStatus[id] = RequestStates.inactive;
               });
               dispatch(actions.library.setLibraryVersion({
                 version: response.data?.version,
               }));
               dispatch(actions.library.setV1BlockRequests({
-                v1BlockRequests,
+                v1BlockRequests: initialRequestStatus,
               }));
             },
             onFailure: (error) => {
@@ -184,8 +187,8 @@ export const useBlocksSelectorHook = ({
   useEffect(() => {
     if (blocks.length < Object.keys(v1BlockRequests).length) {
       if (isV1Library(selectedLibraryId)) {
-        for (const blockId in v1BlockRequests) {
-          const status = v1BlockRequests[blockId]
+        Object.keys(v1BlockRequests).forEach(blockId => {
+          const status = v1BlockRequests[blockId];
           if (status === RequestStates.inactive) {
             dispatch(actions.library.updateV1BlockRequestStatus({
               blockId,
@@ -203,9 +206,9 @@ export const useBlocksSelectorHook = ({
                 dispatch(actions.library.updateV1BlockRequestStatus({
                   blockId,
                   status: RequestStates.completed,
-                }))
+                }));
               },
-              onFailure: (error) => {
+              onFailure: () => {
                 dispatch(actions.library.updateV1BlockRequestStatus({
                   blockId,
                   status: RequestStates.failed,
@@ -213,7 +216,7 @@ export const useBlocksSelectorHook = ({
               },
             }));
           }
-        }
+        });
       }
     }
   }, [v1BlockRequests]);
@@ -221,12 +224,12 @@ export const useBlocksSelectorHook = ({
   // check if blocks for table is loaded
   useEffect(() => {
     let loaded = true;
-    for (const blockId in v1BlockRequests) {
+    Object.keys(v1BlockRequests).forEach(blockId => {
       const status = v1BlockRequests[blockId];
       if ((status === RequestStates.inactive) || (status === RequestStates.pending)) {
         loaded = false;
       }
-    }
+    });
     setTableDataLoaded(loaded);
   }, [v1BlockRequests]);
 
@@ -234,7 +237,10 @@ export const useBlocksSelectorHook = ({
     tableDataLoaded,
     data: useMemo(() => {
       if (tableDataLoaded) {
-        return blocks;
+        return blocks.map(block => ({
+          display_name: block.display_name,
+          block_type: blockTypeDisplay(block.block_type),
+        }));
       }
       return [];
     }, [blocks, tableDataLoaded]),
@@ -248,12 +254,12 @@ export const useBlocksSelectorHook = ({
 
     onSelectedRowsChanged: useCallback((selected) => {
       if (tableDataLoaded) {
-        setCandidatesForLibrary({
+        dispatch(actions.library.setCandidatesForLibrary({
           candidates: getCandidates({
             blocks,
             rows: selected,
           }),
-        })
+        }));
       }
     }, [blocks, tableDataLoaded]),
   };

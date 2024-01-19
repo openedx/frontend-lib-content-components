@@ -5,7 +5,6 @@ import { FormattedMessage, injectIntl } from '@edx/frontend-platform/i18n';
 import { CheckboxControl, DataTable, Form } from '@edx/paragon';
 
 import { modes } from './constants';
-import { actions } from './data';
 import { selectors } from '../../data/redux';
 import { useBlocksSelectorHook } from './hooks';
 import messages from './messages';
@@ -39,7 +38,6 @@ export const BlocksSelector = ({
   candidates,
   libraries,
   savedLibraryId,
-  setCandidatesForLibrary,
   selectedLibraryId,
   v1BlockRequests,
 }) => {
@@ -54,7 +52,6 @@ export const BlocksSelector = ({
     libraries,
     savedLibraryId,
     selectedLibraryId,
-    setCandidatesForLibrary,
     v1BlockRequests,
   });
 
@@ -118,7 +115,10 @@ RowCheckbox.propTypes = {
 
 BlocksSelector.defaultProps = {
   blocks: [],
+  candidates: [],
+  libraries: [],
   mode: '',
+  savedLibraryId: null,
   selectedLibraryId: null,
   v1BlockRequests: [],
 };
@@ -126,8 +126,10 @@ BlocksSelector.defaultProps = {
 BlocksSelector.propTypes = {
   // redux
   blocks: PropTypes.arrayOf(PropTypes.shape({})),
+  candidates: PropTypes.shape([]),
+  libraries: PropTypes.shape([]),
   mode: PropTypes.string,
-  setCandidatesForLibrary: PropTypes.func.isRequired,
+  savedLibraryId: PropTypes.string,
   selectedLibraryId: PropTypes.string,
   v1BlockRequests: PropTypes.shape({}),
 };
@@ -142,8 +144,6 @@ export const mapStateToProps = (state) => ({
   v1BlockRequests: selectors.library.v1BlockRequests(state),
 });
 
-export const mapDispatchToProps = {
-  setCandidatesForLibrary: actions.setCandidatesForLibrary,
-};
+export const mapDispatchToProps = {};
 
 export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(BlocksSelector));

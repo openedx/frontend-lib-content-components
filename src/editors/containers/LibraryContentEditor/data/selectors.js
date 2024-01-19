@@ -1,6 +1,5 @@
 import { createSelector } from 'reselect';
 import { modes } from '../constants';
-import { getUsageKey } from '../utils';
 import * as module from './selectors';
 
 export const libraryState = (state) => state.library;
@@ -42,7 +41,7 @@ export const v1BlockRequests = createSelector(
     if (selectedLibraryId) {
       return settings[selectedLibraryId]?.v1BlockRequests ?? {};
     }
-    return [];
+    return {};
   },
 );
 

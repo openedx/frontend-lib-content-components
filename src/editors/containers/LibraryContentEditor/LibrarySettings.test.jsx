@@ -48,14 +48,12 @@ describe('LibrarySettings Component', () => {
     const newCount = '345';
     fireEvent.change(container.querySelectorAll('input')[2], { target: { value: newCount } });
     expect(props.setCountForLibrary).toHaveBeenCalledWith({
-      libraryId: props.selectedLibraryId,
       count: newCount,
     });
 
     // ShowReset calls hadnler with correct input
     fireEvent.click(getByRole('switch'));
     expect(props.setShowResetForLibrary).toHaveBeenCalledWith({
-      libraryId: props.selectedLibraryId,
       showReset: false,
     });
 
@@ -63,7 +61,6 @@ describe('LibrarySettings Component', () => {
     const newMode = 'selected';
     fireEvent.click(container.querySelector('#form-field2'));
     expect(props.setModeForLibrary).toHaveBeenCalledWith({
-      libraryId: props.selectedLibraryId,
       mode: newMode,
     });
   });

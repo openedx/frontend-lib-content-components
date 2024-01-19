@@ -62,19 +62,19 @@ describe('utils', () => {
     it('should return the correct true/false row mapping', () => {
       expect(module.getSelectedRows({
         blocks,
-        candidates: [[blocks[2].block_type, blocks[2].id]],
+        candidates: [blocks[2].id],
       })).toEqual({
+        0: false,
+        1: false,
         2: true,
       });
       expect(module.getSelectedRows({
         blocks,
-        candidates: [
-          [blocks[1].block_type, blocks[1].id],
-          [blocks[0].block_type, blocks[0].id],
-        ],
+        candidates: [blocks[1].id, blocks[0].id],
       })).toEqual({
         0: true,
         1: true,
+        2: false,
       });
     });
 
@@ -84,20 +84,15 @@ describe('utils', () => {
   });
 
   describe('getCandidates', () => {
-    it('should return an array of candidate tuples', () => {
+    it('should return an array of candidates', () => {
       expect(module.getCandidates({
         blocks,
         rows: { 0: true },
-      })).toEqual([
-        [blocks[0].block_type, blocks[0].id],
-      ]);
+      })).toEqual([blocks[0].id]);
       expect(module.getCandidates({
         blocks,
         rows: { 1: true, 2: true },
-      })).toEqual([
-        [blocks[1].block_type, blocks[1].id],
-        [blocks[2].block_type, blocks[2].id],
-      ]);
+      })).toEqual([blocks[1].id, blocks[2].id]);
     });
 
     it('should return an empty array for anything else', () => {

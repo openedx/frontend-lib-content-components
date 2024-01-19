@@ -18,9 +18,9 @@ const initialLibrarySettings = {
   mode: modes.random.value,
   count: -1,
   showReset: false,
-  blocks: [],               // [ { id: 'id', display_name: 'name', block_type: 'type' } ]
-  candidates: [],           // ['id1', 'id2']
-  v1BlockRequests: {},      // { [blockId]: 'RequestkeyState' }
+  blocks: [], // [ { id: 'id', display_name: 'name', block_type: 'type' } ]
+  candidates: [], // ['id1', 'id2']
+  v1BlockRequests: {}, // { [blockId]: 'RequestkeyState' }
 };
 
 const library = createSlice({
@@ -40,16 +40,16 @@ const library = createSlice({
         ...payload.libraries,
       },
     }),
+    setLibraryId: (state, { payload }) => ({
+      ...state,
+      selectedLibraryId: payload.selectedLibraryId,
+    }),
     initialLibrarySettings: (state, { payload }) => ({
       ...state,
       settings: {
         ...state.settings,
         [payload.selectedLibraryId]: initialLibrarySettings,
       },
-    }),
-    setLibraryId: (state, { payload }) => ({
-      ...state,
-      selectedLibraryId: payload.selectedLibraryId,
     }),
     setLibraryVersion: (state, { payload }) => ({
       ...state,
@@ -121,19 +121,6 @@ const library = createSlice({
         },
       },
     }),
-    updateV1BlockRequestStatus: (state, { payload }) => ({
-      ...state,
-      settings: {
-        ...state.settings,
-        [state.selectedLibraryId]: {
-          ...state.settings[state.selectedLibraryId],
-          v1BlockRequests: {
-            ...state.settings[state.selectedLibraryId].v1BlockRequests,
-            [payload.blockId]: payload.status,
-          },
-        },
-      },
-    }),
     addLibraryBlock: (state, { payload }) => ({
       ...state,
       settings: {
@@ -144,6 +131,19 @@ const library = createSlice({
             ...state.settings[state.selectedLibraryId].blocks,
             payload.block,
           ],
+        },
+      },
+    }),
+    updateV1BlockRequestStatus: (state, { payload }) => ({
+      ...state,
+      settings: {
+        ...state.settings,
+        [state.selectedLibraryId]: {
+          ...state.settings[state.selectedLibraryId],
+          v1BlockRequests: {
+            ...state.settings[state.selectedLibraryId].v1BlockRequests,
+            [payload.blockId]: payload.status,
+          },
         },
       },
     }),

@@ -7,6 +7,7 @@ import {
 
 const testingState = {
   ...initialState,
+  selectedLibraryId: 'libID',
   arbitraryField: 'arbitrary',
 };
 
@@ -43,6 +44,7 @@ describe('app reducer', () => {
         lib1: { libValue: 'someVAL' },
         lib2: { property: 'sOmEproP' },
       };
+
       describe('addLibraries adds to the list of libraries', () => {
         expect(reducer(testingState, actions.addLibraries({ libraries: testLibraryList }))).toEqual({
           ...testingState,
@@ -52,37 +54,26 @@ describe('app reducer', () => {
           },
         });
       });
-      describe('loadV1LibraryBlockIds saves block ids to v1BlockRequests', () => {
-        const blockIds = ['somv1id'];
-        expect(reducer(testingState, actions.loadV1LibraryBlockIds({ blockIds }))).toEqual({
-          ...testingState,
-          v1BlockRequests: blockIds,
-        });
-      });
+
       describe('setLibraryId sets the id', () => {
         expect(reducer(testingState, actions.setLibraryId({ selectedLibraryId: testValue }))).toEqual({
           ...testingState,
           selectedLibraryId: testValue,
         });
       });
-      describe('setLibraryBlocks sets the blocks for the library', () => {
-        expect(reducer(testingState, actions.setLibraryBlocks({ blocks: testValue }))).toEqual({
-          ...testingState,
-          blocksInSelectedLibrary: testValue,
-        });
-      });
-      describe('addLibraryBlock adds a block for the library', () => {
-        const block = 'newBlock';
-        expect(reducer(testingState, actions.addLibraryBlock({ block }))).toEqual({
-          ...testingState,
-          blocksInSelectedLibrary: [
-            ...testingState.blocksInSelectedLibrary,
-            block,
-          ],
-        });
-      });
     });
+
     describe('Library Settings Updates', () => {
+      const stateWithSettings = {
+        ...testingState,
+        settings: {
+          [testingState.selectedLibraryId]: {
+            blocks: [],
+            v1BlockRequests: {},
+          },
+        },
+      };
+
       describe('initialLibrarySettings sets the initial settings for an id', () => {
         expect(reducer(testingState, actions.initialLibrarySettings({ selectedLibraryId: testValue }))).toEqual({
           ...testingState,
@@ -93,12 +84,47 @@ describe('app reducer', () => {
         });
       });
 
+      describe('addLibraryBlock adds a block for the library', () => {
+        expect(reducer(stateWithSettings, actions.addLibraryBlock({ block: 'newBloC' }))).toEqual({
+          ...stateWithSettings,
+          settings: {
+            ...stateWithSettings.settings,
+            [stateWithSettings.selectedLibraryId]: {
+              ...stateWithSettings.settings[stateWithSettings.selectedLibraryId],
+              blocks: [
+                ...stateWithSettings.settings[stateWithSettings.selectedLibraryId].blocks,
+                'newBloC',
+              ],
+            },
+          },
+        });
+      });
+
+      describe('updateV1BlockRequestStatus updates the status of a v1 block request', () => {
+        expect(reducer(stateWithSettings, actions.updateV1BlockRequestStatus({ blockId: 'somebloc', status: 'stat' }))).toEqual({
+          ...stateWithSettings,
+          settings: {
+            ...stateWithSettings.settings,
+            [stateWithSettings.selectedLibraryId]: {
+              ...stateWithSettings.settings[stateWithSettings.selectedLibraryId],
+              v1BlockRequests: {
+                ...stateWithSettings.settings[stateWithSettings.selectedLibraryId].v1BlockRequests,
+                somebloc: 'stat',
+              },
+            },
+          },
+        });
+      });
+
       const testSettingsChanges = {
         libraryId: 'a lIb id',
+        version: 'veR',
         mode: 'a MOdE',
         count: 'A iNT',
         showReset: 'a vaLue',
-        candidates: 'sOme CandiDates',
+        blocks: ['bunchoblocks'],
+        candidates: ['sOme CandiDates'],
+        v1BlockRequests: { mockBlock: 'mockstatus' },
       };
       const setterTest = (action, target) => describe('action', () => {
         describe(`load ${target} from payload`, () => {
@@ -106,7 +132,7 @@ describe('app reducer', () => {
             ...testingState,
             settings: {
               ...testingState.settings,
-              [testSettingsChanges.libraryId]: {
+              [testingState.selectedLibraryId]: {
                 [target]: testSettingsChanges[target],
               },
             },
@@ -114,10 +140,13 @@ describe('app reducer', () => {
         });
       });
       [
+        ['setLibraryVersion', 'version'],
         ['setModeForLibrary', 'mode'],
         ['setCountForLibrary', 'count'],
         ['setShowResetForLibrary', 'showReset'],
+        ['setLibraryBlocks', 'blocks'],
         ['setCandidatesForLibrary', 'candidates'],
+        ['setV1BlockRequests', 'v1BlockRequests'],
       ].map(args => setterTest(...args));
     });
   });

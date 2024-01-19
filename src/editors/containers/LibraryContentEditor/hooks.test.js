@@ -4,7 +4,7 @@ import { renderHook } from '@testing-library/react-hooks';
 import * as requests from './data/requests';
 import { actions } from '../../data/redux';
 import * as module from './hooks';
-import { RequestKeys } from '../../data/constants/requests';
+import { RequestKeys, RequestStates } from '../../data/constants/requests';
 import modes from './constants';
 
 jest.mock('react-redux', () => ({
@@ -31,7 +31,9 @@ jest.mock('../../data/redux', () => ({
       initialLibrarySettings: jest.fn(),
       setLibraryBlocks: jest.fn(),
       addLibraryBlock: jest.fn(),
-      loadV1LibraryBlockIds: jest.fn(),
+      setV1BlockRequests: jest.fn(),
+      updateV1BlockRequestStatus: jest.fn(),
+      setCandidatesForLibrary: jest.fn(),
     },
     requests: {
       failRequest: jest.fn(),
@@ -76,7 +78,8 @@ describe('useLibraryHook', () => {
         library_key: 'v1id',
       },
     ];
-    it('should fetch v2 libraries, v1 libraries and block children info when block finishes loading', () => {
+
+    it('should fetch v2 libraries and v1 libraries when block finishes loading', () => {
       useDispatch.mockReturnValue(dispatch);
       renderHook(() => module.useLibraryHook({
         blockFailed: false,
@@ -85,8 +88,8 @@ describe('useLibraryHook', () => {
       }));
       expect(requests.fetchV2Libraries).toHaveBeenCalled();
       expect(requests.fetchV1Libraries).toHaveBeenCalled();
-      expect(requests.fetchChildrenInfo).toHaveBeenCalled();
     });
+
     it('should call addLibraries on successful response for fetchV2Libraries', () => {
       useDispatch.mockReturnValue(dispatch);
       renderHook(() => module.useLibraryHook({
@@ -102,6 +105,7 @@ describe('useLibraryHook', () => {
         },
       });
     });
+
     it('should call failRequest on failure response for fetchV2Libraries', () => {
       useDispatch.mockReturnValue(dispatch);
       renderHook(() => module.useLibraryHook({
@@ -116,6 +120,7 @@ describe('useLibraryHook', () => {
         error,
       });
     });
+
     it('should call addLibraries on successful response for fetchV1Libraries', () => {
       useDispatch.mockReturnValue(dispatch);
       renderHook(() => module.useLibraryHook({
@@ -131,6 +136,7 @@ describe('useLibraryHook', () => {
         },
       });
     });
+
     it('should call failRequest on failure response for fetchV1Libraries', () => {
       useDispatch.mockReturnValue(dispatch);
       renderHook(() => module.useLibraryHook({
@@ -142,33 +148,6 @@ describe('useLibraryHook', () => {
       onFailureCallback(error);
       expect(actions.requests.failRequest).toHaveBeenCalledWith({
         requestKey: RequestKeys.fetchV1Libraries,
-        error,
-      });
-    });
-    it('should call loadChildren on successful response for fetchChildrenInfo', () => {
-      useDispatch.mockReturnValue(dispatch);
-      renderHook(() => module.useLibraryHook({
-        blockFailed: false,
-        blockFinished: true,
-        blockValue,
-      }));
-      const onSuccessCallback = requests.fetchChildrenInfo.mock.calls[0][0].onSuccess;
-      onSuccessCallback({ data: { children: ['test-children-array'] } });
-      expect(actions.library.loadChildren).toHaveBeenCalledWith({
-        children: ['test-children-array'],
-      });
-    });
-    it('should call failRequest on failure response for fetchChildrenInfo', () => {
-      useDispatch.mockReturnValue(dispatch);
-      renderHook(() => module.useLibraryHook({
-        blockFailed: false,
-        blockFinished: true,
-        blockValue,
-      }));
-      const onFailureCallback = requests.fetchChildrenInfo.mock.calls[0][0].onFailure;
-      onFailureCallback(error);
-      expect(actions.requests.failRequest).toHaveBeenCalledWith({
-        requestKey: RequestKeys.fetchChildrenInfo,
         error,
       });
     });
@@ -184,13 +163,14 @@ describe('useLibraryHook', () => {
       }));
       expect(actions.library.initializeFromBlockValue).toHaveBeenCalledWith({
         libraryId: selectedLibraryId,
-        version,
         settings: {
           [selectedLibraryId]: {
+            version: blockValue.data.metadata.source_library_version,
             mode: modes.selected.value,
             count: blockValue.data.metadata.max_count,
             showReset: blockValue.data.metadata.allow_resetting_children,
             candidates: blockValue.data.metadata.candidates,
+            blocks: [],
           },
         },
       });
@@ -199,18 +179,10 @@ describe('useLibraryHook', () => {
 });
 
 describe('useLibrarySelectorHook', () => {
-  const libraries = {
-    v2lib: {
-      id: 'v2lib',
-      title: 'v2name',
-      version: 1,
-    },
-    v1lib: {
-      library_key: 'v1lib',
-      display_name: 'v1name',
-    },
+  const settings = {
+    v2lib: 'settingsFields',
+    otherlib: 'settingsFields',
   };
-  const settings = { v2lib: 'settingsFields' };
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -218,99 +190,140 @@ describe('useLibrarySelectorHook', () => {
   describe('onLibrarySelect', () => {
     const selectedLibraryId = 'v2lib';
 
-    it('should call setLibraryId and setLibraryVersion when a library is selected', () => {
+    it('should not call setLibraryId when selected library is the same as current library', () => {
       useDispatch.mockReturnValue(dispatch);
       const { result } = renderHook(() => module.useLibrarySelectorHook({
-        libraries,
+        selectedLibraryId,
         settings,
       }));
       result.current.onLibrarySelect(selectedLibraryId);
-      expect(actions.library.setLibraryId).toHaveBeenCalledWith({ selectedLibraryId });
-      expect(actions.library.setLibraryVersion).toHaveBeenCalledWith({ version: 1 });
+      expect(actions.library.setLibraryId).not.toHaveBeenCalled();
       expect(actions.library.initialLibrarySettings).not.toHaveBeenCalled();
     });
 
-    it('should not call setLibraryVersion when a v1 library is selected', () => {
-      const v1LibId = 'library-v1:v1lib';
+    it('should call setLibraryId when a library is selected', () => {
       useDispatch.mockReturnValue(dispatch);
       const { result } = renderHook(() => module.useLibrarySelectorHook({
-        libraries,
+        selectedLibraryId,
         settings,
       }));
-      result.current.onLibrarySelect(v1LibId);
-      expect(actions.library.setLibraryId).toHaveBeenCalledWith({ selectedLibraryId: v1LibId });
-      expect(actions.library.setLibraryVersion).not.toHaveBeenCalled();
+      result.current.onLibrarySelect('lib');
+      expect(actions.library.setLibraryId).toHaveBeenCalledWith({ selectedLibraryId: 'lib' });
     });
 
-    it('should call initialLibrarySettings when there are no settings', () => {
+    it('should call initialLibrarySettings when there are no settings for the selected library', () => {
       useDispatch.mockReturnValue(dispatch);
       const { result } = renderHook(() => module.useLibrarySelectorHook({
-        libraries,
+        selectedLibraryId,
         settings: {},
       }));
-      result.current.onLibrarySelect('v2lib');
-      expect(actions.library.initialLibrarySettings).toHaveBeenCalledWith({ selectedLibraryId });
+      result.current.onLibrarySelect('lib');
+      expect(actions.library.initialLibrarySettings).toHaveBeenCalledWith({ selectedLibraryId: 'lib' });
+    });
+
+    it('should not call initialLibrarySettings when there are settings for the selected library', () => {
+      useDispatch.mockReturnValue(dispatch);
+      const { result } = renderHook(() => module.useLibrarySelectorHook({
+        selectedLibraryId,
+        settings,
+      }));
+      result.current.onLibrarySelect('otherlib');
+      expect(actions.library.initialLibrarySettings).not.toHaveBeenCalled();
     });
   });
 });
 
 describe('useBlocksSelectorHook', () => {
-  const blocksInSelectedLibrary = [
+  const args = {
+    blocks: [],
+    candidates: ['block1', 'block3'],
+    libraries: { libId: { version: 'ver' } },
+    savedLibraryId: 'savedLib',
+    selectedLibraryId: 'libID',
+    v1BlockRequests: [],
+  };
+  const blocks = [
     { id: 'block1', display_name: 'textblock', block_type: 'html' },
     { id: 'block2', display_name: 'vidblock', block_type: 'video' },
     { id: 'block3', display_name: 'probblock', block_type: 'problem' },
   ];
-  const selectedLibraryId = 'libID';
   const v1LibraryId = 'library-v1:im+a+v1+lib';
-  let v1BlockRequests = [];
 
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
   describe('useEffect when selectedLibraryId changes', () => {
-    it('should fetch v1 library content with a v1 library Id', () => {
+    it('should fetch children when selectedLibraryId is the same as savedLibraryId', () => {
       useDispatch.mockReturnValue(dispatch);
-      renderHook(() => module.useBlocksSelectorHook({
-        blocksInSelectedLibrary,
-        selectedLibraryId: v1LibraryId,
-        v1BlockRequests,
-      }));
-      expect(requests.fetchV1LibraryContent).toHaveBeenCalled();
+      renderHook(() => module.useBlocksSelectorHook({ ...args, selectedLibraryId: args.savedLibraryId }));
+      expect(requests.fetchChildrenInfo).toHaveBeenCalled();
     });
 
-    it('should call setLibraryBlocks and loadV1LibraryBlockIds on successful response for fetchV1Libraries', () => {
+    it('should call setLibraryBlocks on successful response for fetchChildrenInfo', () => {
       useDispatch.mockReturnValue(dispatch);
-      renderHook(() => module.useBlocksSelectorHook({
-        blocksInSelectedLibrary,
-        selectedLibraryId: v1LibraryId,
-        v1BlockRequests,
-      }));
-      const onSuccessCallback = requests.fetchV1LibraryContent.mock.calls[0][0].onSuccess;
+      renderHook(() => module.useBlocksSelectorHook({ ...args, selectedLibraryId: args.savedLibraryId }));
+      const onSuccessCallback = requests.fetchChildrenInfo.mock.calls[0][0].onSuccess;
       onSuccessCallback({
         data: {
-          blocks: 'someblockDta',
-          version: 'VERv1',
+          children: [
+            {
+              id: 'blockID',
+              display_name: 'BloCKName',
+              category: 'blOckType',
+            },
+          ],
         },
       });
       expect(actions.library.setLibraryBlocks).toHaveBeenCalledWith({
-        blocks: [],
+        blocks: [
+          {
+            id: 'blockID',
+            display_name: 'BloCKName',
+            block_type: 'blOckType',
+          },
+        ],
       });
-      expect(actions.library.loadV1LibraryBlockIds).toHaveBeenCalledWith({
-        blockIds: 'someblockDta',
+    });
+
+    it('should call failRequest on failure response for fetchChildrenInfo', () => {
+      useDispatch.mockReturnValue(dispatch);
+      renderHook(() => module.useBlocksSelectorHook({ ...args, selectedLibraryId: args.savedLibraryId }));
+      const onFailureCallback = requests.fetchChildrenInfo.mock.calls[0][0].onFailure;
+      onFailureCallback(error);
+      expect(actions.requests.failRequest).toHaveBeenCalledWith({
+        requestKey: RequestKeys.fetchChildrenInfo,
+        error,
+      });
+    });
+
+    it('should fetch v1 library content when a v1 library is selected that is not the saved library and v1 block requests are not set up', () => {
+      useDispatch.mockReturnValue(dispatch);
+      renderHook(() => module.useBlocksSelectorHook({ ...args, selectedLibraryId: v1LibraryId }));
+      expect(requests.fetchV1LibraryContent).toHaveBeenCalled();
+    });
+
+    it('should call setLibraryVersion and setV1BlockRequests on successful response for fetchV1LibraryContent', () => {
+      useDispatch.mockReturnValue(dispatch);
+      renderHook(() => module.useBlocksSelectorHook({ ...args, selectedLibraryId: v1LibraryId }));
+      const onSuccessCallback = requests.fetchV1LibraryContent.mock.calls[0][0].onSuccess;
+      onSuccessCallback({
+        data: {
+          blocks: ['someblockDta'],
+          version: 'VERv1',
+        },
       });
       expect(actions.library.setLibraryVersion).toHaveBeenCalledWith({
         version: 'VERv1',
       });
+      expect(actions.library.setV1BlockRequests).toHaveBeenCalledWith({
+        v1BlockRequests: { someblockDta: RequestStates.inactive },
+      });
     });
 
-    it('should call failRequest on failure response for fetchV1Libraries', () => {
+    it('should call failRequest on failure response for fetchV1LibraryContent', () => {
       useDispatch.mockReturnValue(dispatch);
-      renderHook(() => module.useBlocksSelectorHook({
-        blocksInSelectedLibrary,
-        selectedLibraryId: v1LibraryId,
-        v1BlockRequests,
-      }));
+      renderHook(() => module.useBlocksSelectorHook({ ...args, selectedLibraryId: v1LibraryId }));
       const onFailureCallback = requests.fetchV1LibraryContent.mock.calls[0][0].onFailure;
       onFailureCallback(error);
       expect(actions.requests.failRequest).toHaveBeenCalledWith({
@@ -319,23 +332,16 @@ describe('useBlocksSelectorHook', () => {
       });
     });
 
-    it('should fetch v2 library content', () => {
+    it('should fetch v2 library content when a v2 library is selected that is not the saved library', () => {
       useDispatch.mockReturnValue(dispatch);
-      renderHook(() => module.useBlocksSelectorHook({
-        blocksInSelectedLibrary,
-        selectedLibraryId,
-        v1BlockRequests,
-      }));
+      renderHook(() => module.useBlocksSelectorHook({ ...args }));
+      expect(actions.library.setLibraryVersion).toHaveBeenCalled();
       expect(requests.fetchV2LibraryContent).toHaveBeenCalled();
     });
 
-    it('should call addLibraries on successful response for fetchV2Libraries', () => {
+    it('should call addLibraries on successful response for fetchV2LibraryContent', () => {
       useDispatch.mockReturnValue(dispatch);
-      renderHook(() => module.useBlocksSelectorHook({
-        blocksInSelectedLibrary,
-        selectedLibraryId,
-        v1BlockRequests,
-      }));
+      renderHook(() => module.useBlocksSelectorHook({ ...args }));
       const onSuccessCallback = requests.fetchV2LibraryContent.mock.calls[0][0].onSuccess;
       onSuccessCallback({ data: 'someData' });
       expect(actions.library.setLibraryBlocks).toHaveBeenCalledWith({
@@ -343,13 +349,9 @@ describe('useBlocksSelectorHook', () => {
       });
     });
 
-    it('should call failRequest on failure response for fetchV2Libraries', () => {
+    it('should call failRequest on failure response for fetchV2LibraryContent', () => {
       useDispatch.mockReturnValue(dispatch);
-      renderHook(() => module.useBlocksSelectorHook({
-        blocksInSelectedLibrary,
-        selectedLibraryId,
-        v1BlockRequests,
-      }));
+      renderHook(() => module.useBlocksSelectorHook({ ...args }));
       const onFailureCallback = requests.fetchV2LibraryContent.mock.calls[0][0].onFailure;
       onFailureCallback(error);
       expect(actions.requests.failRequest).toHaveBeenCalledWith({
@@ -360,22 +362,26 @@ describe('useBlocksSelectorHook', () => {
   });
 
   describe('useEffect when v1BlockRequests changes', () => {
-    v1BlockRequests = ['block1', 'block2'];
-    it('should fetch block data for each block', () => {
+    const v1BlockRequests = {
+      block1: RequestStates.inactive,
+      block2: RequestStates.inactive,
+      block3: RequestStates.inactive,
+    };
+    it('should fetch block data for each v1 block when blocks have not been loaded', () => {
       useDispatch.mockReturnValue(dispatch);
       renderHook(() => module.useBlocksSelectorHook({
-        blocksInSelectedLibrary,
-        selectedLibraryId,
+        ...args,
+        selectedLibraryId: v1LibraryId,
         v1BlockRequests,
       }));
-      expect(requests.fetchV1LibraryBlock).toHaveBeenCalledTimes(2);
+      expect(requests.fetchV1LibraryBlock).toHaveBeenCalledTimes(3);
     });
 
     it('should call addLibraryBlock on successful response for fetchV1LibraryBlock', () => {
       useDispatch.mockReturnValue(dispatch);
       renderHook(() => module.useBlocksSelectorHook({
-        blocksInSelectedLibrary,
-        selectedLibraryId,
+        ...args,
+        selectedLibraryId: v1LibraryId,
         v1BlockRequests,
       }));
       const onSuccessCallback = requests.fetchV1LibraryBlock.mock.calls[0][0].onSuccess;
@@ -394,33 +400,47 @@ describe('useBlocksSelectorHook', () => {
       });
     });
 
-    it('should call failRequest on failure response for fetchV1LibraryBlock', () => {
+    it('should update request status on failure response for fetchV1LibraryBlock', () => {
       useDispatch.mockReturnValue(dispatch);
       renderHook(() => module.useBlocksSelectorHook({
-        blocksInSelectedLibrary,
-        selectedLibraryId,
+        ...args,
+        selectedLibraryId: v1LibraryId,
         v1BlockRequests,
       }));
       const onFailureCallback = requests.fetchV1LibraryBlock.mock.calls[0][0].onFailure;
       onFailureCallback(error);
-      expect(actions.requests.failRequest).toHaveBeenCalledWith({
-        requestKey: RequestKeys.fetchV1LibraryBlock,
-        error,
+      expect(actions.library.updateV1BlockRequestStatus).toHaveBeenCalledWith({
+        blockId: 'block1',
+        status: RequestStates.failed,
       });
     });
   });
 
-  describe('blocksTableData should return an array for passing into paragon DataTable component', () => {
+  describe('data should return an array for passing into paragon DataTable component', () => {
     useDispatch.mockReturnValue(dispatch);
-    const { result } = renderHook(() => module.useBlocksSelectorHook({
-      blocksInSelectedLibrary,
-      selectedLibraryId,
-      v1BlockRequests,
-    }));
-    expect(result.current.blocksTableData).toEqual([
+    const { result } = renderHook(() => module.useBlocksSelectorHook({ ...args, blocks }));
+    expect(result.current.data).toEqual([
       { display_name: 'textblock', block_type: 'Text' },
       { display_name: 'vidblock', block_type: 'Video' },
       { display_name: 'probblock', block_type: 'Problem' },
     ]);
+  });
+
+  describe('initialRows should return initial row data for paragon DataTable component', () => {
+    useDispatch.mockReturnValue(dispatch);
+    const { result } = renderHook(() => module.useBlocksSelectorHook({ ...args, blocks }));
+    expect(result.current.initialRows).toEqual({ 0: true, 1: false, 2: true });
+  });
+
+  describe('onSelectedRowsChanged', () => {
+    const selected = { 0: true };
+    it('should call setCandidatesForLibrary with the selected candidate blocks', () => {
+      useDispatch.mockReturnValue(dispatch);
+      const { result } = renderHook(() => module.useBlocksSelectorHook({ ...args, blocks }));
+      result.current.onSelectedRowsChanged(selected);
+      expect(actions.library.setCandidatesForLibrary).toHaveBeenCalledWith({
+        candidates: ['block1'],
+      });
+    });
   });
 });
