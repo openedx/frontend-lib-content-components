@@ -31,11 +31,11 @@ const BlocksList = ({ blocks, onBlockSelected }) => {
   });
 
   const sections = getSectionsList(blocks);
-  const subSections = getChildrenFromList(
+  const subsections = getChildrenFromList(
     blockState.blockSelected,
     blocks,
   );
-  const listItems = blockState.hasNavigated ? subSections : sections;
+  const listItems = blockState.hasNavigated ? subsections : sections;
 
   const isBlockSelectedUnit = blockState.type === blockTypes.unit;
   const blockNameButtonClass = isBlockSelectedUnit ? 'col-12' : 'col-11';
