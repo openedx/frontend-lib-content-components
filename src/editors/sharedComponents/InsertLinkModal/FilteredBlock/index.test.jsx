@@ -18,7 +18,7 @@ const mockBlock = {
   children: ['block-children-1', 'block-children-2'],
 };
 
-describe('FilterBlock Component', () => {
+describe('FilteredBlock Component', () => {
   const mockOnBlockFilterClick = jest.fn();
 
   const setup = (

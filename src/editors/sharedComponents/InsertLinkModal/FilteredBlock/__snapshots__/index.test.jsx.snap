@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`FilterBlock Component snapshot 1`] = `
-<FilterBlock
+exports[`FilteredBlock Component snapshot 1`] = `
+<FilteredBlock
   block={
     Object {
       "blockId": "edx_block-1",
@@ -38,5 +38,5 @@ exports[`FilterBlock Component snapshot 1`] = `
       Block 1
     </span>
   </Button>
-</FilterBlock>
+</FilteredBlock>
 `;

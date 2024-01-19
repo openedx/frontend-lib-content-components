@@ -138,6 +138,7 @@ const InsertLinkModal = ({
               <Form.Control
                 placeholder={intl.formatMessage(messages.insertLinkModalInputPlaceholder)}
                 onChange={handleChangeInputUrl}
+                data-testid="url-input"
               />
               {invalidUrlInput && (
                 <Form.Control.Feedback type="invalid">

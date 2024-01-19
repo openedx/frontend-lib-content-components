@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useIntl } from '@edx/frontend-platform/i18n';
 import { SearchField } from '@edx/paragon';
-import FilterBlock from '../FilterBlock';
+import FilteredBlock from '../FilteredBlock';
 import { filterBlocksByText } from '../utils';
 
 import messages from './messages';
@@ -63,7 +63,7 @@ export const SearchBlocks = ({
       {blocksFilteredItemsFormat.length > 0 && (
         <div className="blocks-filter-container">
           {blocksFilteredItemsFormat.map((key) => (
-            <FilterBlock
+            <FilteredBlock
               key={key}
               block={blocks[key]}
               onBlockFilterClick={handleSelectedBlock}
@@ -76,8 +76,6 @@ export const SearchBlocks = ({
 };
 
 SearchBlocks.defaultProps = {
-  onSearchFilter: () => {},
-  onBlockSelected: () => {},
   searchInputValue: '',
 };
 
@@ -94,9 +92,9 @@ const blockShape = PropTypes.shape({
 
 SearchBlocks.propTypes = {
   blocks: PropTypes.objectOf(blockShape).isRequired,
-  onSearchFilter: PropTypes.func,
+  onSearchFilter: PropTypes.func.isRequired,
   searchInputValue: PropTypes.string,
-  onBlockSelected: PropTypes.func,
+  onBlockSelected: PropTypes.func.isRequired,
 };
 
 export default SearchBlocks;

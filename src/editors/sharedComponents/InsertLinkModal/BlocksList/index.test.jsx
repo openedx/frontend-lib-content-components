@@ -1,11 +1,9 @@
 import React from 'react';
+import '@testing-library/jest-dom/extend-expect';
+import { fireEvent, render } from '@testing-library/react';
 import { IntlProvider } from '@edx/frontend-platform/i18n';
-import Enzyme, { shallow } from 'enzyme';
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 
 import BlocksList from '.';
-
-Enzyme.configure({ adapter: new Adapter() });
 
 const mockBlocks = {
   'block-key': {
@@ -14,7 +12,7 @@ const mockBlocks = {
     lmsWebUrl: 'http://localhost/weburl',
     legacyWebUrl: 'http://localhost/legacy',
     studentViewUrl: 'http://localhost/studentview',
-    type: 'character',
+    type: 'chapter',
     displayName: 'Any display name',
     children: ['block-children-1', 'block-children-2'],
   },
@@ -38,25 +36,87 @@ const mockBlocks = {
   },
 };
 
+jest.unmock('@edx/frontend-platform/i18n');
+jest.unmock('@edx/paragon');
+jest.unmock('@edx/paragon/icons');
+
 describe('BlocksList Component', () => {
   // eslint-disable-next-line react/prop-types
   const IntlProviderWrapper = ({ children }) => (
-    <IntlProvider locale="en" messages={{}}>
+    <IntlProvider locale="en">
       {children}
     </IntlProvider>
   );
 
-  const wrapper = shallow(
+  let onBlockSelectedMock;
+
+  beforeEach(() => {
+    onBlockSelectedMock = jest.fn();
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  const renderComponent = (overrideProps = {}) => render(
     <IntlProviderWrapper>
-      <BlocksList blocks={mockBlocks} onBlockSelected={() => {}} />
+      <BlocksList
+        blocks={mockBlocks}
+        onBlockSelected={onBlockSelectedMock}
+        {...overrideProps}
+      />
     </IntlProviderWrapper>,
   );
 
-  test('renders without crashing', () => {
-    expect(wrapper.exists()).toBeTruthy();
+  test('snapshot', async () => {
+    const { container } = renderComponent();
+    expect(container).toMatchSnapshot();
   });
 
-  test('snapshot', () => {
-    expect(wrapper).toMatchSnapshot();
+  test('renders without crashing', () => {
+    const { getByText } = renderComponent();
+    expect(getByText('Any display name')).toBeInTheDocument();
+  });
+
+  test('should call onBlockSelected when block name is clicked ', () => {
+    const { getByTestId } = renderComponent();
+
+    const blockNameButton = getByTestId('block-name');
+    fireEvent.click(blockNameButton);
+    expect(onBlockSelectedMock).toHaveBeenCalledWith(mockBlocks['block-key']);
+  });
+
+  test('should not call onBlockSelected when block navigation is clicked ', () => {
+    const { getByTestId } = renderComponent();
+
+    const blockNavigateButton = getByTestId('block-navigation');
+    fireEvent.click(blockNavigateButton);
+    expect(onBlockSelectedMock).not.toHaveBeenCalled();
+  });
+
+  test('should show back button when navigation block happens ', () => {
+    const { getByTestId, getByText } = renderComponent();
+
+    const blockNavigateButton = getByTestId('block-navigation');
+    fireEvent.click(blockNavigateButton);
+
+    const backButton = getByTestId('block-back-navigation');
+    expect(getByText('Subsections')).toBeInTheDocument();
+    expect(getByText('Block children 1')).toBeInTheDocument();
+    expect(backButton).toBeInTheDocument();
+  });
+
+  test('should show previous block when back navigation button is clicked ', () => {
+    const { getByTestId, getByText } = renderComponent();
+
+    const blockNavigateButton = getByTestId('block-navigation');
+    fireEvent.click(blockNavigateButton);
+
+    const backButton = getByTestId('block-back-navigation');
+    expect(getByText('Subsections')).toBeInTheDocument();
+    expect(getByText('Block children 1')).toBeInTheDocument();
+    expect(backButton).toBeInTheDocument();
+    fireEvent.click(backButton);
+    expect(getByText('Any display name')).toBeInTheDocument();
   });
 });

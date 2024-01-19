@@ -88,6 +88,7 @@ const BlocksList = ({ blocks, onBlockSelected }) => {
             className="col-1"
             onClick={handleGoBack}
             iconBefore={ArrowBack}
+            data-testid="block-back-navigation"
           >
           &nbsp;
           </Button>
@@ -106,6 +107,7 @@ const BlocksList = ({ blocks, onBlockSelected }) => {
                 variant="tertiary"
                 className={`${blockNameButtonClass} py-4`}
                 onClick={() => handleSelectBlock(block)}
+                data-testid="block-name"
               >
                 <span className="w-100 text-left">{block.displayName}</span>
               </Button>
@@ -114,6 +116,7 @@ const BlocksList = ({ blocks, onBlockSelected }) => {
                 variant="tertiary"
                 className="col-1 py-4"
                 onClick={() => handleSelectBlock(block, true)}
+                data-testid="block-navigation"
                 iconAfter={ArrowForwardIos}
               >
                 &nbsp;

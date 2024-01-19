@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { formatBlockPath } from '../utils';
 
-const FilterBlock = ({ block, onBlockFilterClick }) => {
+const FilteredBlock = ({ block, onBlockFilterClick }) => {
   const { title, subTitle } = formatBlockPath(block.path);
 
   const handleBlockClick = () => {
@@ -35,9 +35,9 @@ const blockShape = PropTypes.shape({
   children: PropTypes.arrayOf(PropTypes.string),
 });
 
-FilterBlock.propTypes = {
+FilteredBlock.propTypes = {
   block: PropTypes.objectOf(blockShape).isRequired,
   onBlockFilterClick: PropTypes.func.isRequired,
 };
 
-export default FilterBlock;
+export default FilteredBlock;

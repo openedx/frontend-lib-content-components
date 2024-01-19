@@ -1,54 +1,59 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`BlocksList Component snapshot 1`] = `
-<IntlProvider
-  defaultFormats={Object {}}
-  defaultLocale="en"
-  fallbackOnEmptyString={true}
-  formats={Object {}}
-  locale="en"
-  messages={Object {}}
-  onError={[Function]}
-  onWarn={[Function]}
-  textComponent={Symbol(react.fragment)}
->
-  <BlocksList
-    blocks={
-      Object {
-        "block-children-1": Object {
-          "blockId": "edx_block-1",
-          "displayName": "Block children 1",
-          "id": "block-children-1",
-          "legacyWebUrl": "http://localhost/legacy",
-          "lmsWebUrl": "http://localhost/weburl",
-          "studentViewUrl": "http://localhost/studentview",
-          "type": "sequential",
-        },
-        "block-children-2": Object {
-          "blockId": "edx_block-2",
-          "displayName": "Block children 2",
-          "id": "block-children-2",
-          "legacyWebUrl": "http://localhost/legacy",
-          "lmsWebUrl": "http://localhost/weburl",
-          "studentViewUrl": "http://localhost/studentview",
-          "type": "sequential",
-        },
-        "block-key": Object {
-          "blockId": "edx_block-1",
-          "children": Array [
-            "block-children-1",
-            "block-children-2",
-          ],
-          "displayName": "Any display name",
-          "id": "block-key",
-          "legacyWebUrl": "http://localhost/legacy",
-          "lmsWebUrl": "http://localhost/weburl",
-          "studentViewUrl": "http://localhost/studentview",
-          "type": "character",
-        },
-      }
-    }
-    onBlockSelected={[Function]}
-  />
-</IntlProvider>
+<div>
+  <div
+    class="block-list-container"
+  >
+    <div
+      class="pgn-transition-replace-group position-relative"
+    >
+      <div
+        style="padding: .1px 0px;"
+      >
+        <div
+          class="w-100 d-flex justify-content-space-between p-3 pgn__action-row"
+        >
+          <button
+            class="col-11 py-4 btn btn-tertiary"
+            data-testid="block-name"
+            type="button"
+          >
+            <span
+              class="w-100 text-left"
+            >
+              Any display name
+            </span>
+          </button>
+          <button
+            class="col-1 py-4 btn btn-tertiary"
+            data-testid="block-navigation"
+            type="button"
+          >
+             
+            <span
+              class="pgn__icon btn-icon-after"
+            >
+              <svg
+                aria-hidden="true"
+                fill="none"
+                focusable="false"
+                height="24"
+                role="img"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="m6.49 20.13 1.77 1.77 9.9-9.9-9.9-9.9-1.77 1.77L14.62 12l-8.13 8.13Z"
+                  fill="currentColor"
+                />
+              </svg>
+            </span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 `;

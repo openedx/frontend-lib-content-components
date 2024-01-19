@@ -1,11 +1,11 @@
 import React from 'react';
+import '@testing-library/jest-dom/extend-expect';
+import { fireEvent, render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+
 import { IntlProvider } from '@edx/frontend-platform/i18n';
-import Enzyme, { shallow } from 'enzyme';
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 
 import SearchBlocks from '.';
-
-Enzyme.configure({ adapter: new Adapter() });
 
 const mockBlocks = {
   'block-key': {
@@ -35,38 +35,93 @@ const mockBlocks = {
     lmsWebUrl: 'http://localhost/weburl',
     legacyWebUrl: 'http://localhost/legacy',
     studentViewUrl: 'http://localhost/studentview',
-    type: 'sequential',
+    type: 'vertical',
     displayName: 'Block children 2',
     path: 'Any display name / Block children 2',
   },
 };
 
+jest.unmock('@edx/frontend-platform/i18n');
+jest.unmock('@edx/paragon');
+jest.unmock('@edx/paragon/icons');
+
 describe('SearchBlocks Component', () => {
   // eslint-disable-next-line react/prop-types
   const IntlProviderWrapper = ({ children }) => (
-    <IntlProvider locale="en" messages={{}}>
-      {children}
-    </IntlProvider>
+    <IntlProvider locale="en">{children}</IntlProvider>
   );
 
-  const onSearchFilterMock = jest.fn();
-  const onBlockSelectedMock = jest.fn();
+  let onSearchFilterMock;
+  let onBlockSelectedMock;
 
-  const wrapper = shallow(
+  beforeEach(() => {
+    onSearchFilterMock = jest.fn();
+    onBlockSelectedMock = jest.fn();
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  const renderComponent = (overrideProps = {}) => render(
     <IntlProviderWrapper>
       <SearchBlocks
         blocks={mockBlocks}
         onSearchFilter={onSearchFilterMock}
         onBlockSelected={onBlockSelectedMock}
+        {...overrideProps}
       />
     </IntlProviderWrapper>,
   );
 
-  test('renders without crashing', () => {
-    expect(wrapper.exists()).toBeTruthy();
+  test('snapshot', async () => {
+    const { container } = renderComponent();
+    expect(container).toMatchSnapshot();
   });
 
-  test('snapshot', () => {
-    expect(wrapper).toMatchSnapshot();
+  test('renders without crashing', () => {
+    const { getByTestId } = renderComponent();
+    expect(getByTestId('search-field')).toBeInTheDocument();
+  });
+
+  test('displays placeholder text in the SearchField', () => {
+    const { getByPlaceholderText } = renderComponent();
+
+    const searchField = getByPlaceholderText('Search course pages');
+    expect(searchField).toBeInTheDocument();
+  });
+
+  test('updates searchField state on input change', async () => {
+    renderComponent();
+
+    const inputElement = screen.getByRole('searchbox');
+    userEvent.type(inputElement, 'New value');
+
+    expect(onSearchFilterMock).toHaveBeenCalledWith(true);
+  });
+
+  test('updates searchField state on input change empty value', async () => {
+    renderComponent();
+
+    const inputElement = screen.getByRole('searchbox');
+    userEvent.type(inputElement, ' ');
+
+    expect(onSearchFilterMock).toHaveBeenCalledWith(false);
+  });
+
+  test('search a block when the searchInputValue matches', async () => {
+    const { getByTestId } = renderComponent({ searchInputValue: 'Block children 1' });
+
+    const blockFiltered = getByTestId('filter-block-item');
+    expect(blockFiltered).toBeInTheDocument();
+  });
+
+  test('should call onBlockSelected when a block is selected', async () => {
+    const { getByTestId } = renderComponent({ searchInputValue: 'Block children 1' });
+
+    const blockFiltered = getByTestId('filter-block-item');
+    expect(blockFiltered).toBeInTheDocument();
+    fireEvent.click(blockFiltered);
+    expect(onBlockSelectedMock).toHaveBeenCalledWith(mockBlocks['block-children-1']);
   });
 });
