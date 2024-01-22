@@ -1,10 +1,9 @@
 import React from 'react';
-import Enzyme, { shallow } from 'enzyme';
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
+import { render, fireEvent, screen } from '@testing-library/react';
+import '@testing-library/jest-dom';
+
 import { formatBlockPath } from '../utils';
 import BlockLink from './index';
-
-Enzyme.configure({ adapter: new Adapter() });
 
 describe('BlockLink Component', () => {
   const defaultProps = {
@@ -12,9 +11,18 @@ describe('BlockLink Component', () => {
     onCloseLink: jest.fn(),
   };
 
+  const renderComponent = (overrideProps = {}) => render(
+    <BlockLink {...defaultProps} {...overrideProps} />,
+  );
+
   test('renders with default props', () => {
-    const wrapper = shallow(<BlockLink {...defaultProps} />);
-    expect(wrapper.text()).toContain('Some Path');
+    renderComponent();
+    expect(screen.getByText('Some Path')).toBeInTheDocument();
+  });
+
+  test('snapshot', () => {
+    const { container } = renderComponent();
+    expect(container).toMatchSnapshot();
   });
 
   test('renders correctly with custom path', () => {
@@ -22,13 +30,13 @@ describe('BlockLink Component', () => {
       ...defaultProps,
       path: 'Custom Path',
     };
-    const wrapper = shallow(<BlockLink {...customProps} />);
-    expect(wrapper.text()).toContain('Custom Path');
+    renderComponent(customProps);
+    expect(screen.getByText('Custom Path')).toBeInTheDocument();
   });
 
   test('calls onCloseLink when the button is clicked', () => {
-    const wrapper = shallow(<BlockLink {...defaultProps} />);
-    wrapper.find({ 'data-testid': 'close-link-button' }).simulate('click');
+    renderComponent();
+    fireEvent.click(screen.getByTestId('close-link-button'));
     expect(defaultProps.onCloseLink).toHaveBeenCalledTimes(1);
   });
 
@@ -37,10 +45,11 @@ describe('BlockLink Component', () => {
       path: 'Root Section / Child 1',
       onCloseLink: jest.fn(),
     };
-    const wrapper = shallow(<BlockLink {...customProps} />);
+
+    renderComponent(customProps);
     const { title, subTitle } = formatBlockPath(customProps.path);
 
-    expect(wrapper.text()).toContain(title);
-    expect(wrapper.text()).toContain(subTitle);
+    expect(screen.getByText(title)).toBeInTheDocument();
+    expect(screen.getByText(subTitle)).toBeInTheDocument();
   });
 });
