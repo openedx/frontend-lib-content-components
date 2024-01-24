@@ -92,7 +92,6 @@ const BlocksList = ({ blocks, onBlockSelected }) => {
           >
           &nbsp;
           </Button>
-
           <p className="col-11 text-center">{messageBlockType[blockState.type]}</p>
         </ActionRow>
       )}
