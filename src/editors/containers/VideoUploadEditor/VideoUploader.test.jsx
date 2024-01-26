@@ -59,17 +59,19 @@ describe('VideoUploader', () => {
   it('calls onURLUpload when URL submit button is clicked', async () => {
     const onVideoUploadSpy = jest.spyOn(hooks, 'onVideoUpload').mockImplementation(() => onURLUploadMock);
 
-    const { getByPlaceholderText, getAllByRole } = await renderComponent(store, setLoadingMock);
+    act(async () => {
+      const { findByPlaceholderText, findAllByRole } = await renderComponent(store, setLoadingMock);
 
-    const urlInput = getByPlaceholderText('Paste your video ID or URL');
-    const urlSubmitButton = getAllByRole('button', { name: /submit/i });
-    expect(urlSubmitButton).toHaveLength(1);
+      const urlInput = await findByPlaceholderText('Paste your video ID or URL');
+      const urlSubmitButton = await findAllByRole('button', { name: /submit/i });
+      expect(urlSubmitButton).toHaveLength(1);
 
-    fireEvent.change(urlInput, { target: { value: 'https://example.com/video.mp4' } });
-    urlSubmitButton.forEach((button) => fireEvent.click(button));
-    expect(onURLUploadMock).toHaveBeenCalledWith('https://example.com/video.mp4');
+      fireEvent.change(urlInput, { target: { value: 'https://example.com/video.mp4' } });
+      urlSubmitButton.forEach((button) => fireEvent.click(button));
+      expect(onURLUploadMock).toHaveBeenCalledWith('https://example.com/video.mp4');
 
-    onVideoUploadSpy.mockRestore();
+      onVideoUploadSpy.mockRestore();
+    });
   });
 
   it('calls handleProcessUpload when file is selected', async () => {
@@ -77,18 +79,21 @@ describe('VideoUploader', () => {
     const mockDispatchFn = jest.fn();
     useDispatchSpy.mockReturnValue(mockDispatchFn);
 
-    const { getByTestId } = await renderComponent(store, setLoadingMock);
+    act(async () => {
+      const { findByTestId } = await renderComponent(store, setLoadingMock);
 
-    const fileInput = getByTestId('dropzone-container');
-    const file = new File(['file'], 'video.mp4', {
-      type: 'video/mp4',
+      const fileInput = await findByTestId('dropzone-container');
+      const file = new File(['file'], 'video.mp4', {
+        type: 'video/mp4',
+      });
+      Object.defineProperty(fileInput, 'files', {
+        value: [file],
+      });
+      fireEvent.drop(fileInput);
+
+      // Test dispacting thunkAction
+      expect(mockDispatchFn).toHaveBeenCalledWith(expect.any(Function));
+      useDispatchSpy.mockRestore();
     });
-    Object.defineProperty(fileInput, 'files', {
-      value: [file],
-    });
-    await act(async () => fireEvent.drop(fileInput));
-    // Test dispacting thunkAction
-    expect(mockDispatchFn).toHaveBeenCalledWith(expect.any(Function));
-    useDispatchSpy.mockRestore();
   });
 });
