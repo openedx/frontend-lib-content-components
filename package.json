@@ -39,8 +39,8 @@
   "homepage": "https://github.com/edx/frontend-lib-content-components#readme",
   "devDependencies": {
     "@edx/browserslist-config": "^1.1.1",
-    "@edx/frontend-build": "13.0.1",
-    "@edx/frontend-platform": "5.5.4",
+    "@edx/frontend-build": "13.0.14",
+    "@edx/frontend-platform": "6.2.0",
     "@edx/paragon": "^21.5.6",
     "@edx/react-unit-test-utils": "1.7.1",
     "@edx/reactifex": "^2.1.1",
