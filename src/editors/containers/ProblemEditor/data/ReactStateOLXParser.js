@@ -2,6 +2,9 @@ import _ from 'lodash-es';
 import { XMLParser, XMLBuilder } from 'fast-xml-parser';
 import { ProblemTypeKeys } from '../../../data/constants/problem';
 import { ToleranceTypes } from '../components/EditProblemView/SettingsWidget/settingsComponents/Tolerance/constants';
+import { findNodesAndRemoveTheirParentNodes } from './reactStateOLXHelpers';
+
+const HtmlBlockTags = ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'div', 'pre', 'blockquote', 'ol', 'ul', 'li', 'dl', 'dt', 'dd', 'hr', 'table', 'thead', 'caption', 'tbody', 'tr', 'th', 'td', 'colgroup', 'col', 'address', 'fieldset', 'legend'];
 
 class ReactStateOLXParser {
   constructor(problemState) {
@@ -193,30 +196,28 @@ class ReactStateOLXParser {
 
   /** addQuestion()
    * The editorObject saved to the class constuctor is parsed for the attribute question. The question is parsed and
-   * checked for label tags. After the question is fully updated, the questionObject is returned.
+   * checked for label tags. label tags are extracted from block-type tags like <p> or <h1>, and the block-type tag is
+   * deleted while label is kept. For example, <p><label>Question</label></p> becomes <label>Question</label>, while
+   * <p><span>Text</span></p> remains <p><span>Text</span></p>. The question is returned as an object representation.
    * @return {object} object representaion of question
    */
   addQuestion() {
     const { question } = this.editorObject;
-    const questionObject = this.richTextParser.parse(question);
+    const questionObjectArray = this.richTextParser.parse(question);
     /* Removes block tags like <p> or <h1> that surround the <label> format.
       Block tags are required by tinyMCE but have adverse effect on css in studio.
       */
-    questionObject.forEach((tag, ind) => {
-      const tagName = Object.keys(tag)[0];
-      let label = null;
-      tag[tagName].forEach(subTag => {
-        const subTagName = Object.keys(subTag)[0];
-        if (subTagName === 'label') {
-          label = subTag;
-        }
-      });
-      if (label) {
-        questionObject[ind] = label;
-      }
+    const result = findNodesAndRemoveTheirParentNodes({
+      arrayOfNodes: questionObjectArray,
+      nodesToFind: ['label'],
+      parentsToRemove: HtmlBlockTags,
     });
-    return questionObject;
+
+    return result;
   }
+
+  // findNodesWithChildTags(nodes, tagNames, recursive=false) {
+  //   const result = [];
 
   /** buildMultiSelectProblem()
    * OLX builder for multiple choice, checkbox, and dropdown problems. The question
@@ -259,11 +260,20 @@ class ReactStateOLXParser {
       default:
         break;
     }
-    const updatedString = `${problemTypeTag}\n${questionString}`;
+    const questionStringWithEmDescriptionReplace = this.replaceEmWithDescriptionTag(questionString);
+    const updatedString = `${problemTypeTag}\n${questionStringWithEmDescriptionReplace}`;
     const problemBodyString = problemBody.replace(problemTypeTag, updatedString);
     const fullProblemString = `<problem>${problemBodyString}${hintString}\n</problem>`;
 
     return fullProblemString;
+  }
+
+  replaceEmWithDescriptionTag(xmlString) {
+    const regexPattern = /<em class="olx_description">(.*?)<\/em>/g;
+    const replacement = '<description>$1</description>';
+
+    const updatedHtml = xmlString.replace(regexPattern, replacement);
+    return updatedHtml;
   }
 
   /** buildTextInput()
@@ -474,7 +484,7 @@ class ReactStateOLXParser {
 
   /** hasAttributeWithValue(obj, attr)
    * hasAttributeWithValue takes obj and atrr. The obj is checked for the attribute defined by attr.
-   * Returns true if atrribute is present, otherwise false.
+   * Returns true if attribute is present, otherwise false.
    * @param {object} obj - defined object
    * @param {string} attr - string of desired attribute
    * @return {bool}
