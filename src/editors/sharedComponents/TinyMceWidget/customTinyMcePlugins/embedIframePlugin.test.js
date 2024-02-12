@@ -104,7 +104,7 @@ describe('TinyMCE Embed IFrame Plugin', () => {
     jest.clearAllMocks();
   });
 
-  it('opens insert iframe modal on button action', () => {
+  test('opens insert iframe modal on button action', () => {
     // Invoke the plugin
     tinyMCEEmbedIframePlugin(editorMock);
 
@@ -112,7 +112,7 @@ describe('TinyMCE Embed IFrame Plugin', () => {
     expect(editorMock.windowManager.open).toHaveBeenCalled();
   });
 
-  it('opens insert iframe modal on button action validate onSubmit and OnChange function', () => {
+  test('opens insert iframe modal on button action validate onSubmit and OnChange function', () => {
     tinyMCEEmbedIframePlugin(editorMock);
 
     editorMock.ui.registry.addButton.mock.calls[0][1].onAction();
@@ -124,7 +124,7 @@ describe('TinyMCE Embed IFrame Plugin', () => {
     );
   });
 
-  it('opens insert iframe modal on button action validate title', () => {
+  test('opens insert iframe modal on button action validate title', () => {
     tinyMCEEmbedIframePlugin(editorMock);
 
     editorMock.ui.registry.addButton.mock.calls[0][1].onAction();
@@ -136,7 +136,7 @@ describe('TinyMCE Embed IFrame Plugin', () => {
     );
   });
 
-  it('opens insert iframe modal on button action validate buttons', () => {
+  test('opens insert iframe modal on button action validate buttons', () => {
     tinyMCEEmbedIframePlugin(editorMock);
 
     editorMock.ui.registry.addButton.mock.calls[0][1].onAction();
@@ -148,7 +148,7 @@ describe('TinyMCE Embed IFrame Plugin', () => {
     );
   });
 
-  it('opens insert iframe modal on button action validate tabs', () => {
+  test('opens insert iframe modal on button action validate tabs', () => {
     tinyMCEEmbedIframePlugin(editorMock);
 
     editorMock.ui.registry.addButton.mock.calls[0][1].onAction();
@@ -161,7 +161,7 @@ describe('TinyMCE Embed IFrame Plugin', () => {
       }),
     );
   });
-  it('tests onChange function in plugin', () => {
+  test('tests onChange function in plugin', () => {
     tinyMCEEmbedIframePlugin(editorMock);
     editorMock.ui.registry.addButton.mock.calls[0][1].onAction();
 
@@ -184,7 +184,7 @@ describe('TinyMCE Embed IFrame Plugin', () => {
     expect(apiMock.redial).toHaveBeenCalled();
   });
 
-  it('modifies generalTab items when sizeType is not inline', () => {
+  test('modifies generalTab items when sizeType is not inline', () => {
     tinyMCEEmbedIframePlugin(editorMock);
     editorMock.ui.registry.addButton.mock.calls[0][1].onAction();
 
@@ -220,7 +220,7 @@ describe('TinyMCE Embed IFrame Plugin', () => {
     }));
   });
 
-  it('adds sizeinput to generalTab items when sizeType is inline', () => {
+  test('adds sizeinput to generalTab items when sizeType is inline', () => {
     tinyMCEEmbedIframePlugin(editorMock);
     editorMock.ui.registry.addButton.mock.calls[0][1].onAction();
 
@@ -245,7 +245,7 @@ describe('TinyMCE Embed IFrame Plugin', () => {
     );
   });
 
-  it('tests onSubmit function in plugin', () => {
+  test('tests onSubmit function in plugin', () => {
     const dataMock = {
       source: 'https://www.example.com',
       sizeType: 'big',
@@ -266,7 +266,7 @@ describe('TinyMCE Embed IFrame Plugin', () => {
     expect(apiMock.close).toHaveBeenCalled();
   });
 
-  it('tests onSubmit function in plugin advanced properties', () => {
+  test('tests onSubmit function in plugin advanced properties', () => {
     const dataMock = {
       source: 'https://www.example.com',
       sizeType: 'big',
