@@ -89,9 +89,11 @@ function tinyMCEEmbedIframePlugin(editor) {
       onChange(api, field) {
         const { name } = field;
         const data = api.getData();
-        const { sizeType } = data;
+        const { sizeType, ...fields } = data;
+        const isSizeTypeFiled = name === 'sizeType';
+        const hasCustomSize = sizeType === 'inline';
 
-        if (sizeType !== 'inline' && name === 'sizeType') {
+        if (!hasCustomSize && isSizeTypeFiled) {
           const {
             body: {
               tabs: [generalTab],
@@ -102,11 +104,11 @@ function tinyMCEEmbedIframePlugin(editor) {
             (item) => item.type !== 'sizeinput',
           );
 
-          defaultConfig.initialData = { sizeType };
+          defaultConfig.initialData = { ...fields, sizeType };
           api.redial(defaultConfig);
         }
 
-        if (sizeType === 'inline' && name === 'sizeType') {
+        if (hasCustomSize && isSizeTypeFiled) {
           const {
             body: {
               tabs: [generalTab],
@@ -126,7 +128,7 @@ function tinyMCEEmbedIframePlugin(editor) {
             ];
           }
 
-          defaultConfig.initialData = { sizeType };
+          defaultConfig.initialData = { ...fields, sizeType };
           api.redial(defaultConfig);
         }
       },
