@@ -26,8 +26,8 @@ jest.mock('./utils', () => ({
 }));
 
 jest.unmock('@edx/frontend-platform/i18n');
-jest.unmock('@edx/paragon');
-jest.unmock('@edx/paragon/icons');
+jest.unmock('@openedx/paragon');
+jest.unmock('@openedx/paragon/icons');
 
 describe('InsertLinkModal', () => {
   const mockProps = {

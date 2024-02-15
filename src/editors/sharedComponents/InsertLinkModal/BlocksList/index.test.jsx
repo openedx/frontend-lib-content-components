@@ -37,8 +37,8 @@ const mockBlocks = {
 };
 
 jest.unmock('@edx/frontend-platform/i18n');
-jest.unmock('@edx/paragon');
-jest.unmock('@edx/paragon/icons');
+jest.unmock('@openedx/paragon');
+jest.unmock('@openedx/paragon/icons');
 
 describe('BlocksList Component', () => {
   // eslint-disable-next-line react/prop-types

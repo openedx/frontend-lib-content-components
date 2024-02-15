@@ -1,4 +1,4 @@
-import { Button } from '@edx/paragon';
+import { Button } from '@openedx/paragon';
 import PropTypes from 'prop-types';
 
 import formatBlockPath from '../formatBlockPath';

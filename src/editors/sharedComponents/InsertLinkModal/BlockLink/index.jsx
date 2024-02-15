@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
-import { Button } from '@edx/paragon';
-import { LinkOff } from '@edx/paragon/icons';
+import { Button } from '@openedx/paragon';
+import { LinkOff } from '@openedx/paragon/icons';
 import formatBlockPath from '../formatBlockPath';
 
 import './index.scss';

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Button, TransitionReplace, ActionRow } from '@edx/paragon';
-import { ArrowForwardIos, ArrowBack } from '@edx/paragon/icons';
+import { Button, TransitionReplace, ActionRow } from '@openedx/paragon';
+import { ArrowForwardIos, ArrowBack } from '@openedx/paragon/icons';
 import { useIntl } from '@edx/frontend-platform/i18n';
 
 import blockTypes from '../blockTypes';

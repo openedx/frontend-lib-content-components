@@ -7,7 +7,7 @@ import {
   Tabs,
   Tab,
   Form,
-} from '@edx/paragon';
+} from '@openedx/paragon';
 import BaseModal from '../BaseModal';
 import BlocksList from './BlocksList';
 import BlockLink from './BlockLink';
