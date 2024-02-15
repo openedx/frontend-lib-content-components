@@ -1,11 +1,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 
-import Enzyme from 'enzyme';
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 import 'babel-polyfill';
 import 'jest-canvas-mock';
-
-Enzyme.configure({ adapter: new Adapter() });
 
 /* need to mock window for tinymce on import, as it is JSDOM incompatible */
 
@@ -60,7 +56,7 @@ jest.mock('@edx/frontend-platform/i18n', () => {
   };
 });
 
-jest.mock('@edx/paragon', () => jest.requireActual('testUtils').mockNestedComponents({
+jest.mock('@openedx/paragon', () => jest.requireActual('testUtils').mockNestedComponents({
   Alert: {
     Heading: 'Alert.Heading',
   },
@@ -131,7 +127,7 @@ jest.mock('@edx/paragon', () => jest.requireActual('testUtils').mockNestedCompon
   Truncate: 'Truncate',
 }));
 
-jest.mock('@edx/paragon/icons', () => ({
+jest.mock('@openedx/paragon/icons', () => ({
   Close: jest.fn().mockName('icons.Close'),
   Edit: jest.fn().mockName('icons.Edit'),
   Locked: jest.fn().mockName('icons.Locked'),

@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { useIntl } from '@edx/frontend-platform/i18n';
 import {
   Icon, IconButton, Dropzone, InputGroup, FormControl,
-} from '@edx/paragon';
-import { ArrowForward, FileUpload, Close } from '@edx/paragon/icons';
+} from '@openedx/paragon';
+import { ArrowForward, FileUpload, Close } from '@openedx/paragon/icons';
 import { useDispatch } from 'react-redux';
 import { thunkActions } from '../../data/redux';
 import * as hooks from './hooks';
@@ -12,7 +12,7 @@ import messages from './messages';
 
 const URLUploader = () => {
   const [textInputValue, setTextInputValue] = React.useState('');
-  const onURLUpload = hooks.onVideoUpload();
+  const onURLUpload = hooks.onVideoUpload('selectedVideoUrl');
   const intl = useIntl();
   return (
     <div className="d-flex flex-column">
@@ -67,7 +67,7 @@ export const VideoUploader = ({ setLoading }) => {
     dispatch(thunkActions.video.uploadVideo({
       supportedFiles: [fileData],
       setLoadSpinner: setLoading,
-      postUploadRedirect: hooks.onVideoUpload(),
+      postUploadRedirect: hooks.onVideoUpload('selectedVideoId'),
     }));
   };
 

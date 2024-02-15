@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`TinyMceWidget snapshots ImageUploadModal is not rendered 1`] = `
-<Component
+<Provider
   store={
     Object {
       "dispatch": [Function],
@@ -73,11 +73,11 @@ exports[`TinyMceWidget snapshots ImageUploadModal is not rendered 1`] = `
     id="sOMeiD"
     onEditorChange={[Function]}
   />
-</Component>
+</Provider>
 `;
 
 exports[`TinyMceWidget snapshots SourcecodeModal is not rendered 1`] = `
-<Component
+<Provider
   store={
     Object {
       "dispatch": [Function],
@@ -163,11 +163,11 @@ exports[`TinyMceWidget snapshots SourcecodeModal is not rendered 1`] = `
     id="sOMeiD"
     onEditorChange={[Function]}
   />
-</Component>
+</Provider>
 `;
 
 exports[`TinyMceWidget snapshots renders as expected with default behavior 1`] = `
-<Component
+<Provider
   store={
     Object {
       "dispatch": [Function],
@@ -264,5 +264,5 @@ exports[`TinyMceWidget snapshots renders as expected with default behavior 1`] =
     id="sOMeiD"
     onEditorChange={[Function]}
   />
-</Component>
+</Provider>
 `;
