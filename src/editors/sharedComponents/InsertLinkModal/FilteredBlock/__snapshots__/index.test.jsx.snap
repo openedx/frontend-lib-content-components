@@ -3,9 +3,9 @@
 exports[`FilteredBlock Component snapshot 1`] = `
 <div>
   <button
-    class="d-flex flex-column w-100 align-items-start p-3"
+    class="d-flex flex-column w-100 align-items-start p-3 btn btn-tertiary"
     data-testid="filter-block-item"
-    variant="tertiary"
+    type="button"
   >
     <span
       class="h5 text-left"

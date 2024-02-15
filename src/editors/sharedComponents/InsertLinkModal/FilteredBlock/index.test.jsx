@@ -5,8 +5,8 @@ import '@testing-library/jest-dom';
 import FilterBlock from '.';
 
 jest.unmock('@edx/frontend-platform/i18n');
-jest.unmock('@edx/paragon');
-jest.unmock('@edx/paragon/icons');
+jest.unmock('@openedx/paragon');
+jest.unmock('@openedx/paragon/icons');
 
 describe('FilteredBlock Component', () => {
   const mockOnBlockFilterClick = jest.fn();
