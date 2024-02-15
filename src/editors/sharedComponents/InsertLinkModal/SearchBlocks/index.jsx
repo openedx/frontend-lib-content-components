@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { useIntl } from '@edx/frontend-platform/i18n';
 import { SearchField } from '@edx/paragon';
 import FilteredBlock from '../FilteredBlock';
-import { filterBlocksByText } from '../utils';
+import { filterBlocksByText } from './utils';
 
 import messages from './messages';
 import './index.scss';

@@ -1,7 +1,7 @@
 import { Button } from '@edx/paragon';
 import PropTypes from 'prop-types';
 
-import { formatBlockPath } from '../utils';
+import formatBlockPath from '../formatBlockPath';
 
 const FilteredBlock = ({ block, onBlockFilterClick }) => {
   const { title, subTitle } = formatBlockPath(block.path);

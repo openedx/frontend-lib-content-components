@@ -4,11 +4,8 @@ import { Button, TransitionReplace, ActionRow } from '@edx/paragon';
 import { ArrowForwardIos, ArrowBack } from '@edx/paragon/icons';
 import { useIntl } from '@edx/frontend-platform/i18n';
 
-import {
-  blockTypes,
-  getSectionsList,
-  getChildrenFromList,
-} from '../utils';
+import blockTypes from '../blockTypes';
+import { getSectionsList, getChildrenFromList } from './utils';
 
 import messages from './messages';
 import './index.scss';

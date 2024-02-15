@@ -2,7 +2,7 @@ import React from 'react';
 import { render, fireEvent, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 
-import { formatBlockPath } from '../utils';
+import formatBlockPath from '../formatBlockPath';
 import BlockLink from './index';
 
 describe('BlockLink Component', () => {
