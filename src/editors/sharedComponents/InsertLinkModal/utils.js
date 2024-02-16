@@ -59,3 +59,14 @@ export const isValidURL = (url) => {
     return false;
   }
 };
+
+/**
+ * Checks if a given URL string does not contain a protocol.
+ * @param {string} url - The URL string to be checked.
+ * @returns {boolean} - True if the URL is valid but does not have a protocol.
+ */
+export const isUrlWithoutProtocol = (url) => {
+  // Regular expression to match subdomain
+  const urlPattern = /^(?:[a-z0-9-]+\.)+[a-z0-9-]+\.[a-z]{2,}$/i;
+  return urlPattern.test(url);
+};

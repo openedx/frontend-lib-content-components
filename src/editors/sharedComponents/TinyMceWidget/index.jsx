@@ -14,7 +14,9 @@ import { selectors } from '../../data/redux';
 import ImageUploadModal from '../ImageUploadModal';
 import SourceCodeModal from '../SourceCodeModal';
 import InsertLinkModal from '../InsertLinkModal';
+import ConfirmLinkFormatAlert from '../InsertLinkModal/ConfirmLinkFormatAlert';
 import * as hooks from './hooks';
+import messages from './messages';
 
 const editorConfigDefaultProps = {
   setEditorRef: undefined,
@@ -49,12 +51,19 @@ export const TinyMceWidget = ({
   onChange,
   ...editorConfig
 }) => {
+  const translations = hooks.useTranslations(messages);
   const { isImgOpen, openImgModal, closeImgModal } = hooks.imgModalToggle();
   const { isSourceCodeOpen, openSourceCodeModal, closeSourceCodeModal } = hooks.sourceCodeModalToggle(editorRef);
   const { isInsertLinkOpen, openInsertLinkModal, closeInsertLinkModal } = hooks.insertLinkModalToggle();
   const { imagesRef } = hooks.useImages({ assets, editorContentHtml });
+  const { insertLinkModalUrl, setInsertLinkModalUrl, closeInsertLinkModalURL } = hooks.insertLinkModalToggleURLValue();
 
   const imageSelection = hooks.selectedImage(null);
+
+  const handleChangeFormatUrl = (url) => {
+    closeInsertLinkModal();
+    setInsertLinkModalUrl(url);
+  };
 
   return (
     <Provider store={store}>
@@ -70,6 +79,15 @@ export const TinyMceWidget = ({
         />
       )}
 
+      {insertLinkModalUrl && (
+        <ConfirmLinkFormatAlert
+          url={insertLinkModalUrl}
+          onCloseAlert={closeInsertLinkModalURL}
+          onCloseModalInsertLink={closeInsertLinkModal}
+          editorRef={editorRef}
+        />
+      )}
+
       {isInsertLinkOpen && (
         <InsertLinkModal
           isOpen={isInsertLinkOpen}
@@ -77,6 +95,7 @@ export const TinyMceWidget = ({
           courseId={courseId}
           editorRef={editorRef}
           lmsEndpointUrl={lmsEndpointUrl}
+          onOpenAlertUrlFormat={handleChangeFormatUrl}
         />
       )}
       {editorType === 'text' ? (
@@ -94,6 +113,7 @@ export const TinyMceWidget = ({
           openImgModal,
           openSourceCodeModal,
           openInsertLinkModal,
+          translations,
           editorType,
           editorRef,
           isLibrary,

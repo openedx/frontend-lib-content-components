@@ -23,6 +23,7 @@ exports[`TinyMceWidget snapshots ImageUploadModal is not rendered 1`] = `
     isOpen={true}
     lmsEndpointUrl="sOmEvaLue.cOm"
     onClose={[MockFunction closeModal]}
+    onOpenAlertUrlFormat={[Function]}
   />
   <SourceCodeModal
     close={[MockFunction modal.closeModal]}
@@ -67,6 +68,7 @@ exports[`TinyMceWidget snapshots ImageUploadModal is not rendered 1`] = `
         "setEditorRef": undefined,
         "setSelection": [MockFunction hooks.selectedImage.setSelection],
         "studioEndpointUrl": "sOmEoThERvaLue.cOm",
+        "translations": Object {},
         "updateContent": [Function],
       }
     }
@@ -124,6 +126,7 @@ exports[`TinyMceWidget snapshots SourcecodeModal is not rendered 1`] = `
     isOpen={true}
     lmsEndpointUrl="sOmEvaLue.cOm"
     onClose={[MockFunction closeModal]}
+    onOpenAlertUrlFormat={[Function]}
   />
   <Editor
     disabled={false}
@@ -157,6 +160,7 @@ exports[`TinyMceWidget snapshots SourcecodeModal is not rendered 1`] = `
         "setEditorRef": undefined,
         "setSelection": [MockFunction hooks.selectedImage.setSelection],
         "studioEndpointUrl": "sOmEoThERvaLue.cOm",
+        "translations": Object {},
         "updateContent": [Function],
       }
     }
@@ -214,6 +218,7 @@ exports[`TinyMceWidget snapshots renders as expected with default behavior 1`] =
     isOpen={true}
     lmsEndpointUrl="sOmEvaLue.cOm"
     onClose={[MockFunction closeModal]}
+    onOpenAlertUrlFormat={[Function]}
   />
   <SourceCodeModal
     close={[MockFunction modal.closeModal]}
@@ -258,6 +263,7 @@ exports[`TinyMceWidget snapshots renders as expected with default behavior 1`] =
         "setEditorRef": undefined,
         "setSelection": [MockFunction hooks.selectedImage.setSelection],
         "studioEndpointUrl": "sOmEoThERvaLue.cOm",
+        "translations": Object {},
         "updateContent": [Function],
       }
     }

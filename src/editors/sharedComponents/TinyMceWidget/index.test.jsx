@@ -58,6 +58,12 @@ jest.mock('./hooks', () => ({
     openInsertLinkModal: jest.fn().mockName('openModal'),
     closeInsertLinkModal: jest.fn().mockName('closeModal'),
   })),
+  insertLinkModalToggleURLValue: jest.fn(() => ({
+    insertLinkModalUrl: '',
+    setInsertLinkModalUrl: jest.fn().mockName('setInsertLinkModalUrl'),
+    closeInsertLinkModalURL: jest.fn().mockName('closeInsertLinkModalURL'),
+  })),
+  useTranslations: jest.fn(() => ({})),
   filterAssets: jest.fn(() => [{ staTICUrl: staticUrl }]),
   useImages: jest.fn(() => ({ imagesRef: { current: [{ externalUrl: staticUrl }] } })),
 }));

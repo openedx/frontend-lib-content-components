@@ -2,6 +2,7 @@ import {
   addPathToBlocks,
   formatBlocks,
   isValidURL,
+  isUrlWithoutProtocol,
 } from './utils';
 
 describe('utils', () => {
@@ -152,6 +153,27 @@ describe('utils', () => {
     test('returns false for a URL with spaces', () => {
       const urlWithSpaces = 'http://www.example with spaces.com';
       expect(isValidURL(urlWithSpaces)).toBe(false);
+    });
+  });
+
+  describe('isUrlWithoutProtocol function', () => {
+    test('returns true for valid URLs without a protocol', () => {
+      expect(isUrlWithoutProtocol('www.example.com')).toBe(true);
+      expect(isUrlWithoutProtocol('subdomain.example.com')).toBe(true);
+      expect(isUrlWithoutProtocol('subdomain1.subdomain2.example.com')).toBe(true);
+    });
+
+    test('returns false for valid URLs with a protocol', () => {
+      expect(isUrlWithoutProtocol('http://www.example.com')).toBe(false);
+      expect(isUrlWithoutProtocol('https://example.com')).toBe(false);
+    });
+
+    test('returns false for invalid or empty URLs', () => {
+      expect(isUrlWithoutProtocol('example.com')).toBe(false);
+      expect(isUrlWithoutProtocol('123.com')).toBe(false);
+      expect(isUrlWithoutProtocol('example')).toBe(false);
+      expect(isUrlWithoutProtocol('')).toBe(false);
+      expect(isUrlWithoutProtocol('example..com')).toBe(false);
     });
   });
 });

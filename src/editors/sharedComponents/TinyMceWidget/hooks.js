@@ -5,6 +5,7 @@ import {
   useEffect,
 } from 'react';
 import { a11ycheckerCss } from 'frontend-components-tinymce-advanced-plugins';
+import { useIntl } from '@edx/frontend-platform/i18n';
 import tinyMCEStyles from '../../data/constants/tinyMCEStyles';
 import { StrictDict } from '../../utils';
 import pluginConfig from './pluginConfig';
@@ -22,6 +23,8 @@ export const state = StrictDict({
   refReady: (val) => useState(val),
   // eslint-disable-next-line react-hooks/rules-of-hooks
   isInsertLinkModalOpen: (val) => useState(val),
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  insertLinkModalUrl: (val) => useState(val),
 });
 
 export const addImagesAndDimensionsToRef = ({ imagesRef, assets, editorContentHtml }) => {
@@ -134,6 +137,7 @@ export const setupCustomBehavior = ({
   openImgModal,
   openSourceCodeModal,
   openInsertLinkModal,
+  translations,
   editorType,
   imageUrls,
   images,
@@ -158,7 +162,7 @@ export const setupCustomBehavior = ({
   // insert link button
   editor.ui.registry.addButton(tinyMCE.buttons.insertLink, {
     icon: 'link',
-    tooltip: 'Insert link',
+    tooltip: translations?.insertLinkTooltipTitle ?? '',
     onAction: openInsertLinkModal,
   });
 
@@ -237,6 +241,7 @@ export const editorConfig = ({
   openImgModal,
   openSourceCodeModal,
   openInsertLinkModal,
+  translations = {},
   setSelection,
   updateContent,
   content,
@@ -276,6 +281,7 @@ export const editorConfig = ({
         openImgModal,
         openSourceCodeModal,
         openInsertLinkModal,
+        translations,
         lmsEndpointUrl,
         setImage: setSelection,
         content,
@@ -323,6 +329,29 @@ export const insertLinkModalToggle = () => {
     openInsertLinkModal: () => setIsInsertLinkOpen(true),
     closeInsertLinkModal: () => setIsInsertLinkOpen(false),
   };
+};
+
+export const insertLinkModalToggleURLValue = () => {
+  const [insertLinkModalUrl, setInsertLinkModalUrl] = module.state.insertLinkModalUrl('');
+  return {
+    insertLinkModalUrl,
+    setInsertLinkModalUrl: (url) => setInsertLinkModalUrl(url),
+    closeInsertLinkModalURL: () => setInsertLinkModalUrl(''),
+  };
+};
+
+export const useTranslations = (messages = {}) => {
+  const intl = useIntl();
+  const messagesKeys = Object.keys(messages);
+  const translationsFormatted = messagesKeys.reduce(
+    (prevMessages, messageKey) => ({
+      ...prevMessages,
+      [messageKey]: intl.formatMessage(messages[messageKey]),
+    }),
+    {},
+  );
+
+  return translationsFormatted;
 };
 
 export const sourceCodeModalToggle = (editorRef) => {

@@ -1,3 +1,5 @@
+import React from 'react';
+import { createIntl, useIntl } from '@edx/frontend-platform/i18n';
 import { MockUseState } from '../../../testUtils';
 
 import tinyMCE from '../../data/constants/tinyMCE';
@@ -11,6 +13,11 @@ jest.mock('react', () => ({
   useRef: jest.fn(val => ({ current: val })),
   useEffect: jest.fn(),
   useCallback: (cb, prereqs) => ({ cb, prereqs }),
+}));
+
+jest.mock('@edx/frontend-platform/i18n', () => ({
+  ...jest.requireActual('@edx/frontend-platform/i18n'),
+  useIntl: jest.fn(),
 }));
 
 const state = new MockUseState(module);
@@ -76,6 +83,7 @@ describe('TinyMceEditor hooks', () => {
     state.testGetter(state.keys.isSourceCodeModalOpen);
     state.testGetter(state.keys.imageSelection);
     state.testGetter(state.keys.isInsertLinkModalOpen);
+    state.testGetter(state.keys.insertLinkModalUrl);
   });
 
   describe('non-state hooks', () => {
@@ -118,6 +126,7 @@ describe('TinyMceEditor hooks', () => {
         const openImgModal = jest.fn();
         const openSourceCodeModal = jest.fn();
         const openInsertLinkModal = jest.fn();
+        const translations = {};
         const setImage = jest.fn();
         const updateContent = jest.fn();
         const editorType = 'expandable';
@@ -140,6 +149,7 @@ describe('TinyMceEditor hooks', () => {
           openImgModal,
           openSourceCodeModal,
           openInsertLinkModal,
+          translations,
           setImage,
           lmsEndpointUrl,
         })(editor);
@@ -231,6 +241,7 @@ describe('TinyMceEditor hooks', () => {
         studioEndpointUrl: 'sOmEoThEruRl.cOm',
         images: mockImagesRef,
         isLibrary: false,
+        translations: {},
       };
       const evt = 'fakeEvent';
       const editor = 'myEditor';
@@ -242,6 +253,7 @@ describe('TinyMceEditor hooks', () => {
         props.openSourceCodeModal = jest.fn();
         props.initializeEditor = jest.fn();
         props.updateContent = jest.fn();
+        props.openInsertLinkModal = jest.fn();
         jest.spyOn(module, moduleKeys.setupCustomBehavior)
           .mockImplementationOnce(setupCustomBehavior);
         output = module.editorConfig(props);
@@ -350,6 +362,8 @@ describe('TinyMceEditor hooks', () => {
             imageUrls: module.fetchImageUrls(props.images),
             images: mockImagesRef,
             lmsEndpointUrl: props.lmsEndpointUrl,
+            openInsertLinkModal: props.openInsertLinkModal,
+            translations: props.translations,
           }),
         );
       });
@@ -420,6 +434,74 @@ describe('TinyMceEditor hooks', () => {
       test('closeInsertLinkModal: calls setter with false', () => {
         hook.closeInsertLinkModal();
         expect(state.setState[hookKey]).toHaveBeenCalledWith(false);
+      });
+    });
+
+    describe('insertLinkModalToggleURLValue', () => {
+      const hookKey = state.keys.insertLinkModalUrl;
+      beforeEach(() => {
+        hook = module.insertLinkModalToggleURLValue();
+      });
+      test('insertLinkModalUrl: state value', () => {
+        expect(hook.insertLinkModalUrl).toEqual(state.stateVals[hookKey]);
+      });
+      test('setInsertLinkModalUrl: calls setter with a string', () => {
+        hook.setInsertLinkModalUrl('www.example.com');
+        expect(state.setState[hookKey]).toHaveBeenCalledWith('www.example.com');
+      });
+      test('closeInsertLinkModalURL: calls setter with empty string', () => {
+        hook.closeInsertLinkModalURL();
+        expect(state.setState[hookKey]).toHaveBeenCalledWith('');
+      });
+    });
+
+    describe('useTranslations', () => {
+      beforeEach(() => {
+        hook = module.useTranslations;
+        const intl = createIntl({
+          locale: 'en',
+          messages: {
+            'app.message1': 'This is message 1',
+            'app.message2': 'This is message 2',
+          },
+        });
+
+        jest.spyOn(React, 'useContext').mockReturnValue(intl);
+
+        const intlFormatMessage = {
+          formatMessage: jest.fn((message) => `Translated: ${message?.defaultMessage}`),
+        };
+
+        useIntl.mockReturnValue(intlFormatMessage);
+      });
+      test('should translate messages correctly', () => {
+        const testMessages = {
+          message1: {
+            id: 'app.message1',
+            defaultMessage: 'This is message 1',
+          },
+          message2: {
+            id: 'app.message2',
+            defaultMessage: 'This is message 2',
+          },
+        };
+
+        const result = hook(testMessages);
+
+        expect(result.message1).toBe('Translated: This is message 1');
+        expect(result.message2).toBe('Translated: This is message 2');
+      });
+
+      test('should return an empty object without messages', () => {
+        const testMessages = {};
+        const result = hook(testMessages);
+        expect(result).toEqual({});
+      });
+
+      test('should handle undefined messages', () => {
+        const testMessages = undefined;
+        const result = hook(testMessages);
+        expect(result).toEqual({});
       });
     });
 
