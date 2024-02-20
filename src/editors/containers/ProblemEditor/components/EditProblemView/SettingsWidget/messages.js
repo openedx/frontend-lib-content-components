@@ -83,12 +83,12 @@ const messages = defineMessages({
     description: 'Scoring weight input label',
   },
   scoringGradingMethodInputLabel: {
-    id: 'authoring.problemeditor.settings.scoring.gradingMethod.inputLabel',
+    id: 'authoring.problemeditor.settings.scoring.grading.method.inputLabel',
     defaultMessage: 'Grading Method',
     description: 'Grading method input label',
   },
   gradingMethodSummary: {
-    id: 'authoring.problemeditor.settings.scoring.gradingMethod',
+    id: 'authoring.problemeditor.settings.scoring.grading.method',
     defaultMessage: '{gradingMethod}',
     description: 'Summary text for scoring grading method',
   },
@@ -128,7 +128,7 @@ const messages = defineMessages({
     description: 'Summary text for scoring weight',
   },
   gradingMethodHint: {
-    id: 'authoring.problemeditor.settings.scoring.gradingMethod.hint',
+    id: 'authoring.problemeditor.settings.scoring.grading.method.hint',
     defaultMessage: 'Define the grading method for this problem. By default, it is the score of the last submission made by the student.',
     description: 'Summary text for scoring grading method',
   },

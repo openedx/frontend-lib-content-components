@@ -53,7 +53,7 @@ exports[`ScoringCard snapshot snapshot: scoring setting card 1`] = `
       <FormattedMessage
         defaultMessage="Define the grading method for this problem. By default, it is the score of the last submission made by the student."
         description="Summary text for scoring grading method"
-        id="authoring.problemeditor.settings.scoring.gradingMethod.hint"
+        id="authoring.problemeditor.settings.scoring.grading.method.hint"
       />
     </Form.Control.Feedback>
   </Form.Group>
@@ -168,7 +168,7 @@ exports[`ScoringCard snapshot snapshot: scoring setting card max attempts 1`] = 
       <FormattedMessage
         defaultMessage="Define the grading method for this problem. By default, it is the score of the last submission made by the student."
         description="Summary text for scoring grading method"
-        id="authoring.problemeditor.settings.scoring.gradingMethod.hint"
+        id="authoring.problemeditor.settings.scoring.grading.method.hint"
       />
     </Form.Control.Feedback>
   </Form.Group>
@@ -283,7 +283,7 @@ exports[`ScoringCard snapshot snapshot: scoring setting card zero zero weight 1`
       <FormattedMessage
         defaultMessage="Define the grading method for this problem. By default, it is the score of the last submission made by the student."
         description="Summary text for scoring grading method"
-        id="authoring.problemeditor.settings.scoring.gradingMethod.hint"
+        id="authoring.problemeditor.settings.scoring.grading.method.hint"
       />
     </Form.Control.Feedback>
   </Form.Group>
