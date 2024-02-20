@@ -1,8 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`ConfirmLinkFormatAlert snapshot 1`] = `
-<div
-  aria-hidden="true"
-  data-focus-on-hidden="true"
-/>
-`;

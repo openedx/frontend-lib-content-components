@@ -23,8 +23,6 @@ export const state = StrictDict({
   refReady: (val) => useState(val),
   // eslint-disable-next-line react-hooks/rules-of-hooks
   isInsertLinkModalOpen: (val) => useState(val),
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  insertLinkModalUrl: (val) => useState(val),
 });
 
 export const addImagesAndDimensionsToRef = ({ imagesRef, assets, editorContentHtml }) => {
@@ -328,15 +326,6 @@ export const insertLinkModalToggle = () => {
     isInsertLinkOpen,
     openInsertLinkModal: () => setIsInsertLinkOpen(true),
     closeInsertLinkModal: () => setIsInsertLinkOpen(false),
-  };
-};
-
-export const insertLinkModalToggleURLValue = () => {
-  const [insertLinkModalUrl, setInsertLinkModalUrl] = module.state.insertLinkModalUrl('');
-  return {
-    insertLinkModalUrl,
-    setInsertLinkModalUrl: (url) => setInsertLinkModalUrl(url),
-    closeInsertLinkModalURL: () => setInsertLinkModalUrl(''),
   };
 };
 

@@ -83,7 +83,6 @@ describe('TinyMceEditor hooks', () => {
     state.testGetter(state.keys.isSourceCodeModalOpen);
     state.testGetter(state.keys.imageSelection);
     state.testGetter(state.keys.isInsertLinkModalOpen);
-    state.testGetter(state.keys.insertLinkModalUrl);
   });
 
   describe('non-state hooks', () => {
@@ -434,24 +433,6 @@ describe('TinyMceEditor hooks', () => {
       test('closeInsertLinkModal: calls setter with false', () => {
         hook.closeInsertLinkModal();
         expect(state.setState[hookKey]).toHaveBeenCalledWith(false);
-      });
-    });
-
-    describe('insertLinkModalToggleURLValue', () => {
-      const hookKey = state.keys.insertLinkModalUrl;
-      beforeEach(() => {
-        hook = module.insertLinkModalToggleURLValue();
-      });
-      test('insertLinkModalUrl: state value', () => {
-        expect(hook.insertLinkModalUrl).toEqual(state.stateVals[hookKey]);
-      });
-      test('setInsertLinkModalUrl: calls setter with a string', () => {
-        hook.setInsertLinkModalUrl('www.example.com');
-        expect(state.setState[hookKey]).toHaveBeenCalledWith('www.example.com');
-      });
-      test('closeInsertLinkModalURL: calls setter with empty string', () => {
-        hook.closeInsertLinkModalURL();
-        expect(state.setState[hookKey]).toHaveBeenCalledWith('');
       });
     });
 

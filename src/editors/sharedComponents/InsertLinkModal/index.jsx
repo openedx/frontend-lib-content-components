@@ -12,7 +12,7 @@ import BaseModal from '../BaseModal';
 import BlocksList from './BlocksList';
 import BlockLink from './BlockLink';
 import SearchBlocks from './SearchBlocks';
-import { formatBlocks, isValidURL, isUrlWithoutProtocol } from './utils';
+import { formatBlocks, isValidURL } from './utils';
 import { getBlocksFromCourse } from './api';
 
 import messages from './messages';
@@ -22,7 +22,6 @@ const InsertLinkModal = ({
   courseId,
   isOpen,
   onClose,
-  onOpenAlertUrlFormat,
   editorRef,
 }) => {
   const intl = useIntl();
@@ -56,11 +55,6 @@ const InsertLinkModal = ({
     const editor = editorRef.current;
     const urlPath = blockSelected?.lmsWebUrl || inputUrlValue;
     if (editor && urlPath) {
-      const hasNotUrlProtocol = isUrlWithoutProtocol(urlPath);
-      if (hasNotUrlProtocol) {
-        onOpenAlertUrlFormat(urlPath);
-        return;
-      }
       const validateUrl = isValidURL(urlPath);
 
       if (!validateUrl) {
@@ -163,7 +157,6 @@ InsertLinkModal.propTypes = {
   courseId: PropTypes.string.isRequired,
   isOpen: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
-  onOpenAlertUrlFormat: PropTypes.func.isRequired,
   editorRef: PropTypes.shape({
     current: PropTypes.shape({
       selection: PropTypes.shape({
