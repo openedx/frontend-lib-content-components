@@ -17,6 +17,7 @@ import InsertLinkModal from '../InsertLinkModal';
 import ConfirmLinkFormatAlert from '../InsertLinkModal/ConfirmLinkFormatAlert';
 import * as hooks from './hooks';
 import messages from './messages';
+import './customTinyMcePlugins/embedIframePlugin';
 
 const editorConfigDefaultProps = {
   setEditorRef: undefined,
