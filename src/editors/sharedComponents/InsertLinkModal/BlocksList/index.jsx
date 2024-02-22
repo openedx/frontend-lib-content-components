@@ -108,15 +108,15 @@ const BlocksList = ({ blocks, onBlockSelected }) => {
                 <span className="w-100 text-left">{block.displayName}</span>
               </Button>
               {!isBlockSelectedUnit && (
-              <Button
-                variant="tertiary"
-                className="col-1 py-4"
-                onClick={() => handleSelectBlock(block, true)}
-                data-testid="block-navigation"
-                iconAfter={ArrowForwardIos}
-              >
+                <Button
+                  variant="tertiary"
+                  className="col-1 py-4"
+                  onClick={() => handleSelectBlock(block, true)}
+                  data-testid="block-navigation"
+                  iconAfter={ArrowForwardIos}
+                >
                 &nbsp;
-              </Button>
+                </Button>
               )}
             </ActionRow>
           </TransitionReplace>

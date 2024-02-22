@@ -1,6 +1,7 @@
 import React from 'react';
 import '@testing-library/jest-dom/extend-expect';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import { useSelector } from 'react-redux';
 import { IntlProvider } from '@edx/frontend-platform/i18n';
 import { logError } from '@edx/frontend-platform/logging';
 
@@ -25,6 +26,11 @@ jest.mock('./utils', () => ({
   isValidURL: jest.fn(),
 }));
 
+jest.mock('react-redux', () => ({
+  useSelector: jest.fn(),
+  useDispatch: jest.fn(),
+}));
+
 jest.unmock('@edx/frontend-platform/i18n');
 jest.unmock('@openedx/paragon');
 jest.unmock('@openedx/paragon/icons');
@@ -37,7 +43,7 @@ describe('InsertLinkModal', () => {
     editorRef: {
       current: {
         selection: {
-          getContent: jest.fn(),
+          getContent: () => '<a href="http://example.com" data-block-id="block123">Sample content</a>',
           setContent: jest.fn(),
         },
       },
@@ -51,6 +57,7 @@ describe('InsertLinkModal', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
+    useSelector.mockReturnValue({ selectedBlocks: {} });
   });
 
   const renderComponent = (overrideProps = {}) => render(
@@ -69,14 +76,12 @@ describe('InsertLinkModal', () => {
     expect(screen.getByText('Link to')).toBeInTheDocument();
   });
 
-  test('should show Course pages and URL tabs', () => {
+  test('should show Course pages tab', () => {
     renderComponent();
 
     const tabs = screen.getAllByRole('tab');
-    const [coursePagesTab, urlTab] = tabs;
-
+    const [coursePagesTab] = tabs;
     expect(coursePagesTab).toHaveTextContent('Course pages');
-    expect(urlTab).toHaveTextContent('URL');
   });
 
   test('should find Cancel and Save buttons', () => {
@@ -87,36 +92,6 @@ describe('InsertLinkModal', () => {
 
     const saveButton = screen.getByText('Save');
     expect(saveButton).toBeInTheDocument();
-  });
-
-  test('should show input for url when URL tab is clicked', () => {
-    const { getByTestId } = renderComponent();
-
-    const tabs = screen.getAllByRole('tab');
-    const [, urlTab] = tabs;
-
-    fireEvent.click(urlTab);
-
-    const urlInput = getByTestId('url-input');
-    expect(urlInput).toBeInTheDocument();
-  });
-
-  test('should show message when the url is invalid', () => {
-    const { getByTestId, getByText } = renderComponent();
-
-    const tabs = screen.getAllByRole('tab');
-    const [, urlTab] = tabs;
-
-    fireEvent.click(urlTab);
-
-    const urlInput = getByTestId('url-input');
-    fireEvent.change(urlInput, { target: { value: 'invalid-url' } });
-
-    const saveButton = getByText('Save');
-    fireEvent.click(saveButton);
-
-    const errorMessage = getByText('The url provided is invalid');
-    expect(errorMessage).toBeInTheDocument();
   });
 
   test('should call logError on API error', async () => {

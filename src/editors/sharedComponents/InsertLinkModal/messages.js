@@ -31,6 +31,11 @@ const messages = defineMessages({
     defaultMessage: 'The url provided is invalid',
     description: 'Feedback message error for url input',
   },
+  insertLinkModalUrlNotSelectedErrorMessage: {
+    id: 'insert.link.modal.url.not.selected.error.message',
+    defaultMessage: 'The text for the URL was not selected',
+    description: 'Feedback message error when user does not select a text for the link',
+  },
 });
 
 export default messages;

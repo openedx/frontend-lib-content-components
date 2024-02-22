@@ -30,7 +30,7 @@ export const SourceCodeModal = ({
         <Button {...saveBtnProps} variant="primary">
           <FormattedMessage {...messages.saveButtonLabel} />
         </Button>
-            )}
+      )}
       isOpen={isOpen}
       title={intl.formatMessage(messages.titleLabel)}
     >

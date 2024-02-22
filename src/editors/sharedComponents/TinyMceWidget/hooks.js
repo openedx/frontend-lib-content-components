@@ -159,7 +159,7 @@ export const setupCustomBehavior = ({
 
   // insert link button
   editor.ui.registry.addButton(tinyMCE.buttons.insertLink, {
-    icon: 'link',
+    icon: 'new-tab',
     tooltip: translations?.insertLinkTooltipTitle ?? '',
     onAction: openInsertLinkModal,
   });

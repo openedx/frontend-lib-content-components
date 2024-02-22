@@ -8,7 +8,6 @@ const pluginConfig = ({ isLibrary, placeholder, editorType }) => {
   const imageTools = isLibrary ? '' : plugins.imagetools;
   const imageUploadButton = isLibrary ? '' : buttons.imageUploadButton;
   const editImageSettings = isLibrary ? '' : buttons.editImageSettings;
-  const insertLinkButton = isLibrary ? '' : buttons.insertLink;
   const codePlugin = editorType === 'text' ? plugins.code : '';
   const codeButton = editorType === 'text' ? buttons.code : '';
   const labelButton = editorType === 'question' ? buttons.customLabelButton : '';
@@ -34,6 +33,7 @@ const pluginConfig = ({ isLibrary, placeholder, editorType }) => {
         plugins.a11ychecker,
         plugins.powerpaste,
         plugins.embediframe,
+        plugins.link,
       ].join(' '),
       menubar: false,
       toolbar: toolbar ? mapToolbars([
@@ -56,7 +56,8 @@ const pluginConfig = ({ isLibrary, placeholder, editorType }) => {
         [imageUploadButton, buttons.blockQuote, buttons.codeBlock],
         [buttons.table, buttons.emoticons, buttons.charmap, buttons.hr],
         [buttons.removeFormat, codeButton, buttons.a11ycheck, buttons.embediframe],
-        [insertLinkButton],
+        [buttons.link, buttons.unlink],
+        [buttons.insertLink],
       ]) : false,
       imageToolbar: mapToolbars([
         // [buttons.rotate.left, buttons.rotate.right],
