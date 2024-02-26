@@ -3,6 +3,7 @@ import VideoEditor from './containers/VideoEditor';
 import ProblemEditor from './containers/ProblemEditor';
 import VideoUploadEditor from './containers/VideoUploadEditor';
 import GameEditor from './containers/GameEditor';
+import LibraryContentEditor from './containers/LibraryContentEditor';
 
 // ADDED_EDITOR_IMPORTS GO HERE
 
@@ -13,6 +14,8 @@ const supportedEditors = {
   [blockTypes.video]: VideoEditor,
   [blockTypes.problem]: ProblemEditor,
   [blockTypes.video_upload]: VideoUploadEditor,
+  [blockTypes.library_content]: LibraryContentEditor,
+
   // ADDED_EDITORS GO BELOW
   [blockTypes.game]: GameEditor,
 };

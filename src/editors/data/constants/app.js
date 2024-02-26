@@ -5,6 +5,8 @@ export const blockTypes = StrictDict({
   html: 'html',
   video: 'video',
   problem: 'problem',
+  library_content: 'library_content',
+
   // ADDED_EDITORS GO BELOW
   video_upload: 'video_upload',
   game: 'game',

@@ -30,4 +30,5 @@ export const VideoUploadEditor = () => {
   );
 };
 
+VideoUploadEditor.displayName = 'VideoUploadEditor';
 export default VideoUploadEditor;

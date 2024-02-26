@@ -191,6 +191,24 @@ export const apiMethods = {
           license: module.processLicense(content.licenseType, content.licenseDetails),
         },
       };
+    } else if (blockType === 'library_content') {
+      response = {
+        category: blockType,
+        courseKey: learningContextId,
+        data: null,
+        id: blockId,
+        metadata: {
+          allow_resetting_children: content.showReset,
+          candidates: content.candidates,
+          capa_type: 'any',
+          display_name: title,
+          manual: content.manual,
+          max_count: content.count,
+          shuffle: content.shuffle,
+          source_library_id: content.libraryId,
+          source_library_version: content.libraryVersion.toString(),
+        },
+      };
     } else {
       throw new TypeError(`No Block in V2 Editors named /"${blockType}/", Cannot Save Content.`);
     }
