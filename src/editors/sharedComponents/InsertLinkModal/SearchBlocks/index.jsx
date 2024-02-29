@@ -13,6 +13,7 @@ export const SearchBlocks = ({
   onSearchFilter,
   searchInputValue = '',
   onBlockSelected,
+  disabledBlocks,
 }) => {
   const intl = useIntl();
   const [searchField, setSearchField] = useState(searchInputValue);
@@ -67,6 +68,7 @@ export const SearchBlocks = ({
               key={key}
               block={blocks[key]}
               onBlockFilterClick={handleSelectedBlock}
+              blockDisabled={disabledBlocks}
             />
           ))}
         </div>
@@ -77,6 +79,7 @@ export const SearchBlocks = ({
 
 SearchBlocks.defaultProps = {
   searchInputValue: '',
+  disabledBlocks: false,
 };
 
 const blockShape = PropTypes.shape({
@@ -95,6 +98,7 @@ SearchBlocks.propTypes = {
   onSearchFilter: PropTypes.func.isRequired,
   searchInputValue: PropTypes.string,
   onBlockSelected: PropTypes.func.isRequired,
+  disabledBlocks: PropTypes.bool,
 };
 
 export default SearchBlocks;

@@ -178,11 +178,13 @@ const InsertLinkModal = ({
               onSearchFilter={handleSearchedBlocks}
               searchInputValue={searchField}
               onBlockSelected={handleSelectedBlock}
+              disabledBlocks={errorUrlNotSelected}
             />
             {!blocksSearched && (
               <BlocksList
                 blocks={blocksList || {}}
                 onBlockSelected={handleSelectedBlock}
+                disableBlocks={errorUrlNotSelected}
               />
             )}
           </Tab>

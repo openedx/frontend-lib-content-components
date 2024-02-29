@@ -78,7 +78,7 @@ describe('BlocksList Component', () => {
     expect(getByText('Any display name')).toBeInTheDocument();
   });
 
-  test('should call onBlockSelected when block name is clicked ', () => {
+  test('should call onBlockSelected when block name is clicked', () => {
     const { getByTestId } = renderComponent();
 
     const blockNameButton = getByTestId('block-name');
@@ -86,7 +86,7 @@ describe('BlocksList Component', () => {
     expect(onBlockSelectedMock).toHaveBeenCalledWith(mockBlocks['block-key']);
   });
 
-  test('should not call onBlockSelected when block navigation is clicked ', () => {
+  test('should not call onBlockSelected when block navigation is clicked', () => {
     const { getByTestId } = renderComponent();
 
     const blockNavigateButton = getByTestId('block-navigation');
@@ -94,7 +94,7 @@ describe('BlocksList Component', () => {
     expect(onBlockSelectedMock).not.toHaveBeenCalled();
   });
 
-  test('should show back button when navigation block happens ', () => {
+  test('should show back button when navigation block happens', () => {
     const { getByTestId, getByText } = renderComponent();
 
     const blockNavigateButton = getByTestId('block-navigation');
@@ -106,7 +106,7 @@ describe('BlocksList Component', () => {
     expect(backButton).toBeInTheDocument();
   });
 
-  test('should show previous block when back navigation button is clicked ', () => {
+  test('should show previous block when back navigation button is clicked', () => {
     const { getByTestId, getByText } = renderComponent();
 
     const blockNavigateButton = getByTestId('block-navigation');
@@ -118,5 +118,14 @@ describe('BlocksList Component', () => {
     expect(backButton).toBeInTheDocument();
     fireEvent.click(backButton);
     expect(getByText('Any display name')).toBeInTheDocument();
+  });
+
+  test('should disabled buttons when prop disableBlocks is true', () => {
+    const { getByTestId } = renderComponent({ disableBlocks: true });
+    const backButton = getByTestId('block-navigation');
+    const blockNameButton = getByTestId('block-name');
+
+    expect(backButton).toHaveAttribute('disabled');
+    expect(blockNameButton).toHaveAttribute('disabled');
   });
 });

@@ -112,16 +112,25 @@ describe('SearchBlocks Component', () => {
   test('search a block when the searchInputValue matches', async () => {
     const { getByTestId } = renderComponent({ searchInputValue: 'Block children 1' });
 
-    const blockFiltered = getByTestId('filter-block-item');
+    const blockFiltered = getByTestId('filtered-block-item');
     expect(blockFiltered).toBeInTheDocument();
   });
 
   test('should call onBlockSelected when a block is selected', async () => {
     const { getByTestId } = renderComponent({ searchInputValue: 'Block children 1' });
 
-    const blockFiltered = getByTestId('filter-block-item');
+    const blockFiltered = getByTestId('filtered-block-item');
     expect(blockFiltered).toBeInTheDocument();
     fireEvent.click(blockFiltered);
     expect(onBlockSelectedMock).toHaveBeenCalledWith(mockBlocks['block-children-1']);
+  });
+
+  test('should disable the blocks filtered when disabledBlocks is true', async () => {
+    const { queryAllByTestId } = renderComponent({ searchInputValue: 'Block', disabledBlocks: true });
+
+    const blocksFiltered = queryAllByTestId('filtered-block-item');
+    blocksFiltered.forEach((button) => {
+      expect(button).toHaveAttribute('disabled');
+    });
   });
 });

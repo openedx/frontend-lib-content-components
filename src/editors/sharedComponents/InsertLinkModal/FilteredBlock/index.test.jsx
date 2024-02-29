@@ -43,7 +43,7 @@ describe('FilteredBlock Component', () => {
 
   test('calls onBlockFilterClick when the button is clicked', () => {
     const { getByTestId } = renderComponent();
-    const button = getByTestId('filter-block-item');
+    const button = getByTestId('filtered-block-item');
     fireEvent.click(button);
     expect(mockOnBlockFilterClick).toHaveBeenCalledWith(mockBlock);
   });
@@ -52,5 +52,11 @@ describe('FilteredBlock Component', () => {
     renderComponent();
     expect(screen.getByText('Path / To')).toBeInTheDocument();
     expect(screen.getByText('Block 1')).toBeInTheDocument();
+  });
+
+  test('should disabled the button when blockDisabled prop is true', () => {
+    const { getByTestId } = renderComponent({ blockDisabled: true });
+    const button = getByTestId('filtered-block-item');
+    expect(button).toHaveAttribute('disabled');
   });
 });

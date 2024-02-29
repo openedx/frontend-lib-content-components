@@ -10,7 +10,11 @@ import { getSectionsList, getChildrenFromList } from './utils';
 import messages from './messages';
 import './index.scss';
 
-const BlocksList = ({ blocks, onBlockSelected }) => {
+const BlocksList = ({
+  blocks,
+  onBlockSelected,
+  disableBlocks,
+}) => {
   const intl = useIntl();
   const messageBlockType = {
     [blockTypes.section]: intl.formatMessage(
@@ -104,6 +108,7 @@ const BlocksList = ({ blocks, onBlockSelected }) => {
                 className={`${blockNameButtonClass} py-4`}
                 onClick={() => handleSelectBlock(block)}
                 data-testid="block-name"
+                disabled={disableBlocks}
               >
                 <span className="w-100 text-left">{block.displayName}</span>
               </Button>
@@ -114,6 +119,7 @@ const BlocksList = ({ blocks, onBlockSelected }) => {
                   onClick={() => handleSelectBlock(block, true)}
                   data-testid="block-navigation"
                   iconAfter={ArrowForwardIos}
+                  disabled={disableBlocks}
                 >
                 &nbsp;
                 </Button>
@@ -137,9 +143,14 @@ const blockShape = PropTypes.shape({
   children: PropTypes.arrayOf(PropTypes.string),
 });
 
+BlocksList.defaultProps = {
+  disableBlocks: false,
+};
+
 BlocksList.propTypes = {
   blocks: PropTypes.objectOf(blockShape).isRequired,
   onBlockSelected: PropTypes.func.isRequired,
+  disableBlocks: PropTypes.bool,
 };
 
 export default BlocksList;
