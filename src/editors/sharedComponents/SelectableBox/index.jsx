@@ -31,12 +31,12 @@ const SelectableBox = React.forwardRef(({
 
   const isChecked = () => {
     switch (type) {
-    case 'radio':
-      return radioValue === value;
-    case 'checkbox':
-      return checkboxValues.includes(value);
-    default:
-      return radioValue === value;
+      case 'radio':
+        return radioValue === value;
+      case 'checkbox':
+        return checkboxValues.includes(value);
+      default:
+        return radioValue === value;
     }
   };
 
