@@ -21,13 +21,9 @@ const FormRadioSetContextProvider = ({
   defaultValue,
 }) => {
   const handleChange = (...args) => {
-    // eslint-disable-next-line no-console
-    console.log('FormRadioSetContextProvider.handleChange called with args: ', args);
     onChange(...args);
   };
   const isControlled = !defaultValue && value !== undefined;
-  // eslint-disable-next-line no-console
-  console.log('FormRadioSetContextProvider | isControlled: ', isControlled);
   const getRadioControlProps = (radioProps) => ({
     ...radioProps,
     name,

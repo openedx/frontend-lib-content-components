@@ -19,8 +19,6 @@ const RadioControl = React.forwardRef((props, ref) => {
   }
 
   const onChange = (...args) => {
-    // eslint-disable-next-line no-console
-    console.log('RadioControl.onChange called with args: ', args);
     if (radioProps.onChange) {
       radioProps.onChange(...args);
     }
