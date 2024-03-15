@@ -7,7 +7,6 @@ import {
   Button,
   Tabs,
   Tab,
-  Form,
 } from '@openedx/paragon';
 import { actions, selectors } from '../../data/redux/insertlink';
 import BaseModal from '../BaseModal';
@@ -33,7 +32,6 @@ const InsertLinkModal = ({
   const [blocksList, setBlocksList] = useState(null);
   const [, setInvalidUrlInput] = useState(false);
   const [inputUrlValue, setInputUrlValue] = useState('');
-  const [errorUrlNotSelected, setErrorUrlNotSelected] = useState(false);
   const dispatch = useDispatch();
   const { selectedBlocks } = useSelector(selectors.insertlinkState);
 
@@ -112,32 +110,42 @@ const InsertLinkModal = ({
     const editor = editorRef.current;
     if (editor) {
       const selectedHTML = editor.selection.getContent({ format: 'html' });
-      const regex = /data-block-id="([^"]+)"/;
-      const match = selectedHTML.match(regex);
+      const regexDataBlockId = /data-block-id="([^"]+)"/;
+      const regexHref = /href="([^"]+)"/;
+      const matchDataBlockId = selectedHTML.match(regexDataBlockId);
+      const matchHreUrl = selectedHTML.match(regexHref);
 
       // Extracting the value from the match
-      const dataBlockId = match ? match[1] : null;
+      const dataBlockId = matchDataBlockId ? matchDataBlockId[1] : null;
+      const hrefUrl = matchHreUrl ? matchHreUrl[1] : null;
+      const blockSelectedUrl = selectedBlocks?.[dataBlockId]?.lmsWebUrl;
+      const hasExternalUrl = hrefUrl !== blockSelectedUrl;
+
       if (selectedHTML && !dataBlockId) {
         const selectedNode = editor.selection.getNode();
         const parentNode = editor.dom.getParent(selectedNode, 'a');
         if (parentNode) {
           const dataBlockIdParent = parentNode.getAttribute('data-block-id');
+          const url = parentNode.getAttribute('href');
           const blockIsValid = dataBlockIdParent in selectedBlocks;
-          if (dataBlockIdParent && blockIsValid) {
+          const hasValidUrl = url === blockSelectedUrl;
+          if (dataBlockIdParent && blockIsValid && hasValidUrl) {
             setBlocksSelected(selectedBlocks[dataBlockIdParent]);
+          } else {
+            setBlocksSelected(null);
           }
         }
       }
 
-      if (dataBlockId) {
+      if (dataBlockId && hasExternalUrl) {
+        setBlocksSelected(null);
+      }
+
+      if (dataBlockId && !hasExternalUrl) {
         const blockIsValid = dataBlockId in selectedBlocks;
         if (dataBlockId && blockIsValid) {
           setBlocksSelected(selectedBlocks[dataBlockId]);
         }
-      }
-
-      if (!selectedHTML) {
-        setErrorUrlNotSelected(true);
       }
     }
   }, []);
@@ -148,7 +156,7 @@ const InsertLinkModal = ({
       close={onClose}
       title={intl.formatMessage(messages.insertLinkModalTitle)}
       confirmAction={(
-        <Button variant="primary" onClick={handleSave} disabled={errorUrlNotSelected}>
+        <Button variant="primary" onClick={handleSave}>
           {intl.formatMessage(messages.insertLinkModalButtonSave)}
         </Button>
       )}
@@ -167,24 +175,17 @@ const InsertLinkModal = ({
             title={intl.formatMessage(messages.insertLinkModalCoursePagesTabTitle)}
             className="col-12 w-100 tabs-container"
           >
-            {errorUrlNotSelected && (
-            <Form.Control.Feedback type="invalid" className="mt-4">
-              {intl.formatMessage(messages.insertLinkModalUrlNotSelectedErrorMessage)}
-            </Form.Control.Feedback>
-            )}
 
             <SearchBlocks
               blocks={blocksList || {}}
               onSearchFilter={handleSearchedBlocks}
               searchInputValue={searchField}
               onBlockSelected={handleSelectedBlock}
-              disabledBlocks={errorUrlNotSelected}
             />
             {!blocksSearched && (
               <BlocksList
                 blocks={blocksList || {}}
                 onBlockSelected={handleSelectedBlock}
-                disableBlocks={errorUrlNotSelected}
               />
             )}
           </Tab>

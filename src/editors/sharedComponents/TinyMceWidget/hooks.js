@@ -162,6 +162,11 @@ export const setupCustomBehavior = ({
     icon: 'new-tab',
     tooltip: translations?.insertLinkTooltipTitle ?? '',
     onAction: openInsertLinkModal,
+    onSetup(api) {
+      editor.on('SelectionChange', () => {
+        api.setDisabled(editor.selection.getContent().length === 0);
+      });
+    },
   });
 
   // overriding the code plugin's icon with 'HTML' text
