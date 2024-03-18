@@ -1,0 +1,59 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BlocksList Component snapshot 1`] = `
+<div>
+  <div
+    class="block-list-container"
+  >
+    <div
+      class="pgn-transition-replace-group position-relative"
+    >
+      <div
+        style="padding: .1px 0px;"
+      >
+        <div
+          class="w-100 d-flex justify-content-space-between p-3 pgn__action-row"
+        >
+          <button
+            class="col-11 py-4 btn btn-tertiary"
+            data-testid="block-name"
+            type="button"
+          >
+            <span
+              class="w-100 text-left"
+            >
+              Any display name
+            </span>
+          </button>
+          <button
+            class="col-1 py-4 btn btn-tertiary"
+            data-testid="block-navigation"
+            type="button"
+          >
+             
+            <span
+              class="pgn__icon btn-icon-after"
+            >
+              <svg
+                aria-hidden="true"
+                fill="none"
+                focusable="false"
+                height="24"
+                role="img"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="m6.49 20.13 1.77 1.77 9.9-9.9-9.9-9.9-1.77 1.77L14.62 12l-8.13 8.13Z"
+                  fill="currentColor"
+                />
+              </svg>
+            </span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

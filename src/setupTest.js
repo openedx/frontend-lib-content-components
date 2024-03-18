@@ -153,3 +153,9 @@ jest.mock('react-redux', () => {
 jest.mock('frontend-components-tinymce-advanced-plugins', () => ({
   a11ycheckerCss: '',
 }));
+
+global.ResizeObserver = jest.fn().mockImplementation(() => ({
+  observe: jest.fn(),
+  unobserve: jest.fn(),
+  disconnect: jest.fn(),
+}));

@@ -19,7 +19,6 @@ const pluginConfig = ({ isLibrary, placeholder, editorType }) => {
   return (
     StrictDict({
       plugins: [
-        plugins.link,
         plugins.lists,
         plugins.codesample,
         plugins.emoticons,
@@ -34,6 +33,7 @@ const pluginConfig = ({ isLibrary, placeholder, editorType }) => {
         plugins.a11ychecker,
         plugins.powerpaste,
         plugins.embediframe,
+        plugins.link,
       ].join(' '),
       menubar: false,
       toolbar: toolbar ? mapToolbars([
@@ -53,9 +53,11 @@ const pluginConfig = ({ isLibrary, placeholder, editorType }) => {
           buttons.outdent,
           buttons.indent,
         ],
-        [imageUploadButton, buttons.link, buttons.unlink, buttons.blockQuote, buttons.codeBlock],
+        [imageUploadButton, buttons.blockQuote, buttons.codeBlock],
         [buttons.table, buttons.emoticons, buttons.charmap, buttons.hr],
         [buttons.removeFormat, codeButton, buttons.a11ycheck, buttons.embediframe],
+        [buttons.link, buttons.unlink],
+        [buttons.insertLink],
       ]) : false,
       imageToolbar: mapToolbars([
         // [buttons.rotate.left, buttons.rotate.right],

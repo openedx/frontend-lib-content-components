@@ -74,23 +74,23 @@ export const SearchSort = ({
       </SelectMenu>
 
       { onFilterClick && (
-      <Dropdown>
-        <Dropdown.Toggle
-          data-testid="dropdown-filter"
-          className="text-gray-700"
-          id="gallery-filter-button"
-          variant="tertiary"
-        >
-          <FormattedMessage {...filterMessages[filterBy]} />
-        </Dropdown.Toggle>
-        <Dropdown.Menu>
-          {Object.keys(filterKeys).map(key => (
-            <Dropdown.Item data-testid={`dropdown-filter-${key}`} key={key} onClick={onFilterClick(key)}>
-              <FormattedMessage {...filterMessages[key]} />
-            </Dropdown.Item>
-          ))}
-        </Dropdown.Menu>
-      </Dropdown>
+        <Dropdown>
+          <Dropdown.Toggle
+            data-testid="dropdown-filter"
+            className="text-gray-700"
+            id="gallery-filter-button"
+            variant="tertiary"
+          >
+            <FormattedMessage {...filterMessages[filterBy]} />
+          </Dropdown.Toggle>
+          <Dropdown.Menu>
+            {Object.keys(filterKeys).map(key => (
+              <Dropdown.Item data-testid={`dropdown-filter-${key}`} key={key} onClick={onFilterClick(key)}>
+                <FormattedMessage {...filterMessages[key]} />
+              </Dropdown.Item>
+            ))}
+          </Dropdown.Menu>
+        </Dropdown>
       )}
 
       { showSwitch && (
