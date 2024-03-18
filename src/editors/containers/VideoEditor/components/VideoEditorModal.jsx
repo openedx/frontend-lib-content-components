@@ -12,13 +12,10 @@ export const {
 
 export const hooks = {
   initialize: (dispatch, selectedVideoId, selectedVideoUrl) => {
-    // eslint-disable-next-line react-hooks/rules-of-hooks
     dispatch(thunkActions.video.loadVideoData(selectedVideoId, selectedVideoUrl));
   },
-  returnToGallery: () => {
-    // eslint-disable-next-line react-hooks/rules-of-hooks
+  useReturnToGallery: () => {
     const learningContextId = useSelector(selectors.app.learningContextId);
-    // eslint-disable-next-line react-hooks/rules-of-hooks
     const blockId = useSelector(selectors.app.blockId);
     return () => (navigateTo(`/course/${learningContextId}/editor/course-videos/${blockId}`));
   },
@@ -33,7 +30,7 @@ const VideoEditorModal = ({
   const searchParams = new URLSearchParams(document.location.search);
   const selectedVideoId = searchParams.get('selectedVideoId');
   const selectedVideoUrl = searchParams.get('selectedVideoUrl');
-  const onReturn = hooks.returnToGallery();
+  const onReturn = hooks.useReturnToGallery();
   hooks.initialize(dispatch, selectedVideoId, selectedVideoUrl);
   return (
     <VideoSettingsModal {...{
