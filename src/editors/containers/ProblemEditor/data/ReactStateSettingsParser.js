@@ -21,6 +21,7 @@ class ReactStateSettingsParser {
 
     settings = popuplateItem(settings, 'number', 'max_attempts', stateSettings.scoring.attempts, true);
     settings = popuplateItem(settings, 'weight', 'weight', stateSettings.scoring);
+    settings = popuplateItem(settings, 'gradingMethod', 'grading_method', stateSettings.scoring);
     settings = popuplateItem(settings, 'on', 'showanswer', stateSettings.showAnswer);
     settings = popuplateItem(settings, 'afterAttempts', 'attempts_before_showanswer_button', stateSettings.showAnswer);
     settings = popuplateItem(settings, 'showResetButton', 'show_reset_button', stateSettings);

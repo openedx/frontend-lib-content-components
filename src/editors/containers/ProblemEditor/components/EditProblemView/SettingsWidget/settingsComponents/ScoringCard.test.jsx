@@ -3,6 +3,7 @@ import { shallow } from '@edx/react-unit-test-utils';
 import { formatMessage } from '../../../../../../../testUtils';
 import { scoringCardHooks } from '../hooks';
 import { ScoringCard } from './ScoringCard';
+import { GradingMethodKeys } from '../../../../../../data/constants/problem';
 
 jest.mock('../hooks', () => ({
   scoringCardHooks: jest.fn(),
@@ -15,6 +16,7 @@ describe('ScoringCard', () => {
       unlimited: false,
       number: 5,
     },
+    gradingMethod: GradingMethodKeys.LAST_SCORE,
     updateSettings: jest.fn().mockName('args.updateSettings'),
     intl: { formatMessage },
   };
@@ -29,6 +31,7 @@ describe('ScoringCard', () => {
     handleMaxAttemptChange: jest.fn().mockName('scoringCardHooks.handleMaxAttemptChange'),
     handleWeightChange: jest.fn().mockName('scoringCardHooks.handleWeightChange'),
     handleOnChange: jest.fn().mockName('scoringCardHooks.handleOnChange'),
+    handleGradingMethodChange: jest.fn().mockName('scoringCardHooks.handleGradingMethodChange'),
     local: 5,
   };
 
