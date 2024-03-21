@@ -50,6 +50,7 @@ jest.mock('@edx/frontend-platform/i18n', () => {
       formatMessage: PropTypes.func,
     }),
     defineMessages: m => m,
+    getLocale: () => 'getLocale',
     FormattedDate: () => 'FormattedDate',
     FormattedMessage: () => 'FormattedMessage',
     FormattedTime: () => 'FormattedTime',
