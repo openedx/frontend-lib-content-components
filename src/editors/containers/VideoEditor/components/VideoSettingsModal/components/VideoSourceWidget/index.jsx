@@ -96,25 +96,26 @@ export const VideoSourceWidget = ({
         <div className="mt-3">
           <FormattedMessage {...messages.fallbackVideoMessage} />
         </div>
-        {fallbackVideos.formValue.length > 0 ? fallbackVideos.formValue.map((videoUrl, index) => (
-          <Form.Row className="mt-3.5 mx-0 flex-nowrap">
-            <Form.Control
-              floatingLabel={intl.formatMessage(messages.fallbackVideoLabel)}
-              onChange={fallbackVideos.onChange(index)}
-              value={fallbackVideos.local[index]}
-              onBlur={fallbackVideos.onBlur(index)}
-            />
-            <IconButtonWithTooltip
-              key={`top-delete-${videoUrl}`}
-              tooltipPlacement="top"
-              tooltipContent={intl.formatMessage(messages.deleteFallbackVideo)}
-              src={DeleteOutline}
-              iconAs={Icon}
-              alt={intl.formatMessage(messages.deleteFallbackVideo)}
-              onClick={() => deleteFallbackVideo(videoUrl)}
-            />
-          </Form.Row>
-        )) : null}
+        {fallbackVideos.formValue.length > 0 ? fallbackVideos.formValue.map((videoUrl, index) => {
+          return (
+            <Form.Row className="mt-3.5 mx-0 flex-nowrap">
+              <Form.Control
+                floatingLabel={intl.formatMessage(messages.fallbackVideoLabel)}
+                onChange={fallbackVideos.onChange(index)}
+                value={fallbackVideos.local[index]}
+                onBlur={fallbackVideos.onBlur(index)}
+              />
+              <IconButtonWithTooltip
+                tooltipPlacement="top"
+                tooltipContent={intl.formatMessage(messages.deleteFallbackVideo)}
+                src={DeleteOutline}
+                iconAs={Icon}
+                alt={intl.formatMessage(messages.deleteFallbackVideo)}
+                onClick={() => deleteFallbackVideo(index)}
+              />
+            </Form.Row>
+          );
+        }) : null}
         <ActionRow className="mt-4.5">
           <Form.Checkbox
             checked={allowDownload.local}
