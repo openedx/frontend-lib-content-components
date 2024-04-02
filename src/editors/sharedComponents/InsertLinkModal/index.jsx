@@ -54,6 +54,7 @@ const InsertLinkModal = ({
     const editor = editorRef.current;
     const urlPath = blockSelected?.lmsWebUrl || inputUrlValue;
     const blockId = blockSelected?.blockId;
+    const linkRegex = /<a\b[^>]*><\/a>/gi;
     if (editor && urlPath) {
       const validateUrl = isValidURL(urlPath);
 
@@ -78,10 +79,18 @@ const InsertLinkModal = ({
       selectedRange.insertNode(newLinkNode);
       // Remove empty "a" tags after replacing URLs
       const editorContent = editor.getContent();
-      const modifiedContent = editorContent.replace(/<a\b[^>]*><\/a>/gi, '');
+      const modifiedContent = editorContent.replace(linkRegex, '');
       editor.setContent(modifiedContent);
 
       dispatch(actions.addBlock({ [blockId]: blockSelected }));
+    }
+
+    if (editor && !blockId) {
+      // eslint-disable-next-line react/prop-types
+      editor.execCommand('unlink');
+      const editorContent = editor.getContent();
+      const modifiedContent = editorContent.replace(linkRegex, '');
+      editor.setContent(modifiedContent);
     }
 
     onClose();
