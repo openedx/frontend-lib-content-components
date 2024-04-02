@@ -128,7 +128,8 @@ const InsertLinkModal = ({
           const dataBlockIdParent = parentNode.getAttribute('data-block-id');
           const url = parentNode.getAttribute('href');
           const blockIsValid = dataBlockIdParent in selectedBlocks;
-          const hasValidUrl = url === blockSelectedUrl;
+          const blockIdFormat = blockSelectedUrl ?? selectedBlocks?.[dataBlockIdParent]?.lmsWebUrl;
+          const hasValidUrl = url === blockIdFormat;
           if (dataBlockIdParent && blockIsValid && hasValidUrl) {
             setBlocksSelected(selectedBlocks[dataBlockIdParent]);
           } else {
