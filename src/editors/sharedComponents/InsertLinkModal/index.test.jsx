@@ -45,6 +45,8 @@ describe('InsertLinkModal', () => {
         selection: {
           getContent: () => '<a href="http://example.com" data-block-id="block123">Sample content</a>',
           setContent: jest.fn(),
+          getRng: jest.fn(),
+          getNode: jest.fn(),
         },
       },
     },

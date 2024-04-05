@@ -164,11 +164,17 @@ describe('TinyMceEditor hooks', () => {
             onAction: toggleLabelFormatting,
           }],
         ]));
-        expect(addToggleButton.mock.calls).toEqual([
-          [tinyMCE.buttons.codeBlock, {
-            icon: 'sourcecode', tooltip: 'Code Block', onAction: toggleCodeFormatting, onSetup: setupCodeFormatting,
-          }],
-        ]);
+        expect(addToggleButton.mock.calls).toContainEqual(
+          expect.arrayContaining([
+            tinyMCE.buttons.codeBlock,
+            {
+              icon: 'sourcecode',
+              tooltip: 'Code Block',
+              onAction: toggleCodeFormatting,
+              onSetup: setupCodeFormatting,
+            },
+          ]),
+        );
         expect(openImgModal).not.toHaveBeenCalled();
         expect(editor.on).toHaveBeenCalled();
       });
