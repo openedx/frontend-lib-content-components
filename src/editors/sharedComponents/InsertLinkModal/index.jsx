@@ -64,7 +64,9 @@ const InsertLinkModal = ({
       }
 
       const selectedRange = editor.selection.getRng();
-      const selectedText = editor.selection.getContent({ format: 'text' });
+      const selectedNode = editor.selection.getNode();
+      const textContent = editor.selection.getContent({ format: 'text' });
+      const selectedText = textContent || selectedNode.textContent;
 
       const newLinkNode = editor.dom.create('a', {
         href: urlPath,
@@ -73,11 +75,20 @@ const InsertLinkModal = ({
         target: '_blank',
       });
 
-      newLinkNode.textContent = selectedText;
+      if (textContent) {
+        // If the selected node is a text node, replace the selection with the new link
+        newLinkNode.textContent = selectedText;
 
-      selectedRange.deleteContents();
-      selectedRange.insertNode(newLinkNode);
-      // Remove empty "a" tags after replacing URLs
+        selectedRange.deleteContents();
+        selectedRange.insertNode(newLinkNode);
+      } else {
+        // If the selected node is an element node, wrap its text content in the new link
+        newLinkNode.textContent = selectedNode.textContent;
+        selectedNode.textContent = '';
+        selectedNode.appendChild(newLinkNode);
+      }
+
+      // Remove empty "a" tags after replacing URLs (if needed)
       const editorContent = editor.getContent();
       const modifiedContent = editorContent.replace(linkRegex, '');
       editor.setContent(modifiedContent);
@@ -86,11 +97,18 @@ const InsertLinkModal = ({
     }
 
     if (editor && !blockId) {
-      // eslint-disable-next-line react/prop-types
-      editor.execCommand('unlink');
-      const editorContent = editor.getContent();
-      const modifiedContent = editorContent.replace(linkRegex, '');
-      editor.setContent(modifiedContent);
+      const selectedNode = editor.selection.getNode();
+
+      if (selectedNode.nodeName === 'A') {
+        // If the selected node is a link, unwrap it
+        editor.dom.remove(selectedNode, true);
+      } else {
+        // If the selected node contains links, remove them
+        const links = selectedNode.querySelectorAll('a');
+        links.forEach(link => editor.dom.remove(link, true));
+      }
+      // Update the editor content
+      editor.setContent(editor.getContent());
     }
 
     onClose();
@@ -118,7 +136,8 @@ const InsertLinkModal = ({
     /* istanbul ignore next */
     const editor = editorRef.current;
     if (editor) {
-      const selectedHTML = editor.selection.getContent({ format: 'html' });
+      const selectionNode = editor.selection.getNode();
+      const selectedHTML = editor.selection.getContent({ format: 'html' }) || selectionNode.outerHTML;
       const regexDataBlockId = /data-block-id="([^"]+)"/;
       const regexHref = /href="([^"]+)"/;
       const matchDataBlockId = selectedHTML.match(regexDataBlockId);
@@ -214,14 +233,15 @@ InsertLinkModal.propTypes = {
       selection: PropTypes.shape({
         getContent: PropTypes.func,
         setContent: PropTypes.func,
-        getRng: PropTypes.func, // Add this line
-        getNode: PropTypes.func, // Add this line
+        getRng: PropTypes.func,
+        getNode: PropTypes.func,
       }),
       getContent: PropTypes.func,
       setContent: PropTypes.func,
       dom: PropTypes.shape({
         create: PropTypes.func,
         getParent: PropTypes.func,
+        remove: PropTypes.func,
       }),
     }),
   }).isRequired,

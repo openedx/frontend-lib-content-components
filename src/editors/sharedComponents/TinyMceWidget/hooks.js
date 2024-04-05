@@ -158,13 +158,22 @@ export const setupCustomBehavior = ({
   });
 
   // insert link button
-  editor.ui.registry.addButton(tinyMCE.buttons.insertLink, {
+  /* addButton only has setDisabled/isDisabled in api while
+    addToggleButton has setDisabled/isDisabled/setActive/isActive
+    addButton doc: https://www.tiny.cloud/docs/ui-components/typesoftoolbarbuttons/#basicbutton
+    addToggleButton: doc: https://www.tiny.cloud/docs/ui-components/typesoftoolbarbuttons/#togglebutton
+  */
+  editor.ui.registry.addToggleButton(tinyMCE.buttons.insertLink, {
     icon: 'new-tab',
     tooltip: translations?.insertLinkTooltipTitle ?? '',
     onAction: openInsertLinkModal,
     onSetup(api) {
       editor.on('SelectionChange', () => {
-        api.setDisabled(editor.selection.getContent().length === 0);
+        const node = editor.selection.getNode();
+        const isLink = node.nodeName === 'A';
+        const hasTextSelected = editor.selection.getContent().length > 0;
+        api.setActive(isLink);
+        api.setDisabled(!isLink && !hasTextSelected);
       });
     },
   });
