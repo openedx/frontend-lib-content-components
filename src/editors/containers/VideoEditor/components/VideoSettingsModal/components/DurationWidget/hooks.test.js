@@ -68,7 +68,6 @@ describe('Video Settings DurationWidget hooks', () => {
       });
     });
     describe('returns', () => {
-      let testMethod;
       beforeEach(() => {
         testMethod = hooks.durationWidget({ duration, updateField });
       });
