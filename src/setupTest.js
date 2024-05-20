@@ -124,7 +124,7 @@ jest.mock('@openedx/paragon', () => jest.requireActual('testUtils').mockNestedCo
   Stack: 'Stack',
   Toast: 'Toast',
   Truncate: 'Truncate',
-  useWindowSize: { height: '500px'}
+  useWindowSize: { height: '500px' },
 }));
 
 jest.mock('@openedx/paragon/icons', () => ({
