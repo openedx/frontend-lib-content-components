@@ -22,3 +22,9 @@ export const post = (...args) => getAuthenticatedHttpClient().post(...args);
 export const deleteObject = (...args) => getAuthenticatedHttpClient().delete(...args);
 
 export const client = getAuthenticatedHttpClient;
+
+export const replaceRelativeImageUrlsByAbsolute = (text, lmsEndpointUrl) => {
+  const relativeSrcRegExp = /(?<=src=")(\/.*?)(?=")/g;
+  const replaceRelativeToAbsoluteUrl = (relativeUrl) => `${lmsEndpointUrl}${relativeUrl}`;
+  return text.replaceAll(relativeSrcRegExp, replaceRelativeToAbsoluteUrl);
+};

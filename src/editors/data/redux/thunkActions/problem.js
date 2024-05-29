@@ -9,6 +9,7 @@ import ReactStateOLXParser from '../../../containers/ProblemEditor/data/ReactSta
 import { blankProblemOLX } from '../../../containers/ProblemEditor/data/mockData/olxTestData';
 import { camelizeKeys } from '../../../utils';
 import { fetchEditorContent } from '../../../containers/ProblemEditor/components/EditProblemView/hooks';
+import { preprocessProblemData } from '../../../containers/ProblemEditor/data/utils';
 
 export const switchToAdvancedEditor = () => (dispatch, getState) => {
   const state = getState();
@@ -47,15 +48,17 @@ export const getDataFromOlx = ({ rawOLX, rawSettings, defaultSettings }) => {
   return { settings: parsedSettings };
 };
 
-export const loadProblem = ({ rawOLX, rawSettings, defaultSettings }) => (dispatch) => {
+export const loadProblem = ({ rawOLX, rawSettings, defaultSettings }) => (dispatch, getState) => {
   if (isBlankProblem({ rawOLX })) {
     dispatch(actions.problem.setEnableTypeSelection(camelizeKeys(defaultSettings)));
   } else {
-    dispatch(actions.problem.load(getDataFromOlx({ rawOLX, rawSettings, defaultSettings })));
+    const dataFromOlx = getDataFromOlx({ rawOLX, rawSettings, defaultSettings });
+    preprocessProblemData(dataFromOlx, getState());
+    dispatch(actions.problem.load(dataFromOlx));
   }
 };
 
-export const fetchAdvancedSettings = ({ rawOLX, rawSettings }) => (dispatch) => {
+export const fetchAdvancedSettings = ({ rawOLX, rawSettings }) => (dispatch, getState) => {
   const advancedProblemSettingKeys = ['max_attempts', 'showanswer', 'show_reset_button', 'rerandomize'];
   dispatch(requests.fetchAdvancedSettings({
     onSuccess: (response) => {
@@ -66,9 +69,9 @@ export const fetchAdvancedSettings = ({ rawOLX, rawSettings }) => (dispatch) => 
         }
       });
       dispatch(actions.problem.updateField({ defaultSettings: camelizeKeys(defaultSettings) }));
-      loadProblem({ rawOLX, rawSettings, defaultSettings })(dispatch);
+      loadProblem({ rawOLX, rawSettings, defaultSettings })(dispatch, getState);
     },
-    onFailure: () => { loadProblem({ rawOLX, rawSettings, defaultSettings: {} })(dispatch); },
+    onFailure: () => { loadProblem({ rawOLX, rawSettings, defaultSettings: {} })(dispatch, getState); },
   }));
 };
 
