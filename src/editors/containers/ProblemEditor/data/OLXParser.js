@@ -491,6 +491,42 @@ export class OLXParser {
     return res;
   }
 
+  /** checkTextAfterProblemTypeTag(problemType)
+   * checkTextAfterProblemTypeTag takes a problemType. The problem type is used to determine
+   * if there is olx after the answer choices the problem. Simple problems are not expected
+   * to have olx after the answer choices and returns null. In the event that a problem has
+   * olx after the answer choices and error is raised resulting in a redirection to the
+   * advanced editor.
+   * @param {string} problemType - string of the olx problem type
+   * @return {null}
+   */
+  checkTextAfterProblemTypeTag(problemType) {
+    let problemTagIndex = this.richTextProblem.length - 1;
+    Object.entries(this.richTextProblem).forEach(([i, value]) => {
+      if (Object.keys(value).includes(problemType)) {
+        problemTagIndex = i;
+      }
+    });
+
+    // The richTextProblem array might have a new line character as the final element and the problem tag
+    // is the second to last element. The new line character should not impact the need for the advanced
+    // editor open so the index is checked against the length of the richTextProblem array minus 2.
+    if (problemTagIndex < this.richTextProblem.length - 1) {
+      const olxAfterProblemType = this.richTextProblem.slice(problemTagIndex + 1);
+      Object.values(olxAfterProblemType).forEach(value => {
+        const currentKey = Object.keys(value)[0];
+        const invalidText = currentKey === '#text' && value[currentKey] !== '\n';
+        const invalidKey = !nonQuestionKeys.includes(currentKey) && currentKey !== '#text';
+        if (invalidText) {
+          throw new Error(`OLX found after the ${problemType} tags, opening in advanced editor`);
+        }
+        if (invalidKey) {
+          throw new Error(`OLX found after the ${problemType} tags, opening in advanced editor`);
+        }
+      });
+    }
+  }
+
   replaceOlxDescriptionTag(questionString) {
     return questionString.replace(/<description>/gm, '<em class="olx_description">').replace(/<\/description>/gm, '</em>');
   }
@@ -634,14 +670,16 @@ export class OLXParser {
       throw new Error('Misc Attributes asscoiated with problem, opening in advanced editor');
     }
 
+    const problemType = this.getProblemType();
+
+    this.checkTextAfterProblemTypeTag(problemType);
+
     let answersObject = {};
     let additionalAttributes = {};
     let groupFeedbackList = [];
-    const problemType = this.getProblemType();
     const hints = this.getHints();
     const question = this.parseQuestions(problemType);
     const solutionExplanation = this.getSolutionExplanation(problemType);
-
     switch (problemType) {
       case ProblemTypeKeys.DROPDOWN:
         answersObject = this.parseMultipleChoiceAnswers(ProblemTypeKeys.DROPDOWN, 'optioninput', 'option');
