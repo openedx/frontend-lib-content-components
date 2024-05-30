@@ -1,11 +1,33 @@
+.selectTypeContainer {
+  max-width: 100%;
+}
+
 .editProblemView {
+  .editProblemView-mainColumn {
+    max-width: calc(100% - 345px);
+
+    @media (max-width: 767px) {
+      max-width: 100%;
+    }
+  }
   .editProblemView-settingsColumn {
     width: 320px;
     flex-grow: 0;
     flex-shrink: 0;
+    @media (max-width: 767px) {
+      width: 100%;
+    }
   }
   .advancedEditorTopMargin {
     margin-top: 40px;
+  }
+  .answer-option .mce-content-body:before {
+    @media (max-width: 767px) {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 90%;
+    }
   }
 }
 

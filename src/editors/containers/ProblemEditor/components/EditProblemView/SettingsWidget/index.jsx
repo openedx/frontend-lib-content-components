@@ -55,7 +55,7 @@ export const SettingsWidget = ({
   };
 
   return (
-    <div className="settingsWidget ml-4">
+    <div className="settingsWidget ml-md-4">
       <div className="mb-3">
         <TypeCard
           answers={answers}
