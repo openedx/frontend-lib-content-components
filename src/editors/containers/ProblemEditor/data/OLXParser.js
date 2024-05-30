@@ -491,26 +491,23 @@ export class OLXParser {
     return res;
   }
 
-  /** checkTextAfterProblemTypeTag(problemType)
+  /** hasOLXAfterProblemTypeTag(problemType)
    * checkTextAfterProblemTypeTag takes a problemType. The problem type is used to determine
    * if there is olx after the answer choices the problem. Simple problems are not expected
-   * to have olx after the answer choices and returns null. In the event that a problem has
-   * olx after the answer choices and error is raised resulting in a redirection to the
-   * advanced editor.
+   * to have olx after the answer choices and returns false. In the event that a problem has
+   * olx after the answer choices it returns true and will raise an error.
    * @param {string} problemType - string of the olx problem type
-   * @return {null}
+   * @return {bool}
    */
-  checkTextAfterProblemTypeTag(problemType) {
+  hasOLXAfterProblemTypeTag(problemType) {
     let problemTagIndex = this.richTextProblem.length - 1;
+    let hasExtraOLX = false;
     Object.entries(this.richTextProblem).forEach(([i, value]) => {
       if (Object.keys(value).includes(problemType)) {
         problemTagIndex = i;
       }
     });
 
-    // The richTextProblem array might have a new line character as the final element and the problem tag
-    // is the second to last element. The new line character should not impact the need for the advanced
-    // editor open so the index is checked against the length of the richTextProblem array minus 2.
     if (problemTagIndex < this.richTextProblem.length - 1) {
       const olxAfterProblemType = this.richTextProblem.slice(problemTagIndex + 1);
       Object.values(olxAfterProblemType).forEach(value => {
@@ -518,13 +515,13 @@ export class OLXParser {
         const invalidText = currentKey === '#text' && value[currentKey] !== '\n';
         const invalidKey = !nonQuestionKeys.includes(currentKey) && currentKey !== '#text';
         if (invalidText) {
-          throw new Error(`OLX found after the ${problemType} tags, opening in advanced editor`);
-        }
-        if (invalidKey) {
-          throw new Error(`OLX found after the ${problemType} tags, opening in advanced editor`);
+          hasExtraOLX = true;
+        } else if (invalidKey) {
+          hasExtraOLX = true;
         }
       });
     }
+    return hasExtraOLX;
   }
 
   replaceOlxDescriptionTag(questionString) {
@@ -672,7 +669,9 @@ export class OLXParser {
 
     const problemType = this.getProblemType();
 
-    this.checkTextAfterProblemTypeTag(problemType);
+    if (this.hasOLXAfterProblemTypeTag(problemType)) {
+      throw new Error(`OLX was found after the ${problemType} tags, opening in advanced editor`);
+    }
 
     let answersObject = {};
     let additionalAttributes = {};
