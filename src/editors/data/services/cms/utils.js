@@ -26,5 +26,5 @@ export const client = getAuthenticatedHttpClient;
 export const replaceRelativeImageUrlsByAbsolute = (text, lmsEndpointUrl) => {
   const relativeSrcRegExp = /(?<=src=")(\/.*?)(?=")/g;
   const replaceRelativeToAbsoluteUrl = (relativeUrl) => `${lmsEndpointUrl}${relativeUrl}`;
-  return text.replaceAll(relativeSrcRegExp, replaceRelativeToAbsoluteUrl);
+  return (text || '').replaceAll(relativeSrcRegExp, replaceRelativeToAbsoluteUrl);
 };
