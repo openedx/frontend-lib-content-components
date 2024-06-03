@@ -4,6 +4,7 @@ import {
   useCallback,
   useEffect,
 } from 'react';
+import { getLocale, isRtl } from '@edx/frontend-platform/i18n';
 import { a11ycheckerCss } from 'frontend-components-tinymce-advanced-plugins';
 import tinyMCEStyles from '../../data/constants/tinyMCEStyles';
 import { StrictDict } from '../../utils';
@@ -238,6 +239,7 @@ export const editorConfig = ({
     quickbarsInsertToolbar,
     quickbarsSelectionToolbar,
   } = pluginConfig({ isLibrary, placeholder, editorType });
+  const isLocaleRtl = isRtl(getLocale());
 
   return {
     onInit: (evt, editor) => {
@@ -254,6 +256,7 @@ export const editorConfig = ({
       content_style: tinyMCEStyles + a11ycheckerCss,
       min_height: minHeight,
       contextmenu: 'link table',
+      directionality: isLocaleRtl ? 'rtl' : 'ltr',
       document_base_url: lmsEndpointUrl,
       imagetools_cors_hosts: [removeProtocolFromUrl(lmsEndpointUrl), removeProtocolFromUrl(studioEndpointUrl)],
       imagetools_toolbar: imageToolbar,
