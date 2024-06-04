@@ -22,7 +22,7 @@ export const TextEditor = ({
   onClose,
   returnFunction,
   // redux
-  isRaw,
+  isRawEditor,
   blockValue,
   blockFailed,
   initializeEditor,
@@ -36,7 +36,7 @@ export const TextEditor = ({
   if (!refReady) { return null; }
 
   const selectEditor = () => {
-    if (isRaw) {
+    if (isRawEditor) {
       return (
         <RawEditor
           editorRef={editorRef}
@@ -59,7 +59,7 @@ export const TextEditor = ({
 
   return (
     <EditorContainer
-      getContent={hooks.getContent({ editorRef, isRaw, assets })}
+      getContent={hooks.getContent({ editorRef, isRawEditor, assets })}
       onClose={onClose}
       returnFunction={returnFunction}
     >
@@ -84,7 +84,6 @@ export const TextEditor = ({
 };
 TextEditor.defaultProps = {
   blockValue: null,
-  isRaw: null,
   assetsFinished: null,
   assets: null,
   returnFunction: null,
@@ -98,20 +97,21 @@ TextEditor.propTypes = {
   }),
   blockFailed: PropTypes.bool.isRequired,
   initializeEditor: PropTypes.func.isRequired,
-  isRaw: PropTypes.bool,
+  isRawEditor: PropTypes.bool.isRequired,
   assetsFinished: PropTypes.bool,
   assets: PropTypes.shape({}),
   // inject
   intl: intlShape.isRequired,
 };
 
-export const mapStateToProps = (state) => ({
+export const mapStateToProps = (state) => {
+  return ({
   blockValue: selectors.app.blockValue(state),
   blockFailed: selectors.requests.isFailed(state, { requestKey: RequestKeys.fetchBlock }),
-  isRaw: selectors.app.isRaw(state),
+  isRawEditor: state.app.isRawEditor,
   assetsFinished: selectors.requests.isFinished(state, { requestKey: RequestKeys.fetchAssets }),
   assets: selectors.app.assets(state),
-});
+})};
 
 export const mapDispatchToProps = {
   initializeEditor: actions.app.initializeEditor,

@@ -72,23 +72,6 @@ export const analytics = createSelector(
   ),
 );
 
-export const isRaw = createSelector(
-  [module.simpleSelectors.studioView],
-  (studioView) => {
-    if (!studioView?.data) {
-      return null;
-    }
-    const { html, content } = studioView.data;
-    if (html && html.includes('data-editor="raw"')) {
-      return true;
-    }
-    if (content && content.includes('data-editor="raw"')) {
-      return true;
-    }
-    return false;
-  },
-);
-
 export const isLibrary = createSelector(
   [
     module.simpleSelectors.learningContextId,
@@ -111,6 +94,5 @@ export default {
   returnUrl,
   displayTitle,
   analytics,
-  isRaw,
   isLibrary,
 };

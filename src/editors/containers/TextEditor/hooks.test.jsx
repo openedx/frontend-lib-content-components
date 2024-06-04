@@ -44,15 +44,15 @@ describe('TextEditor hooks', () => {
         tinyMceHookKeys.setAssetToStaticUrl,
       ).mockReturnValueOnce(rawContent);
       const assets = [];
-      test('returns correct content based on isRaw equals false', () => {
-        const getContent = module.getContent({ editorRef, isRaw: false, assets })();
+      test('returns correct content based on isRawEditor equals false', () => {
+        const getContent = module.getContent({ editorRef, isRawEditor: false, assets })();
         expect(spies.visualHtml.mock.calls.length).toEqual(1);
         expect(spies.visualHtml).toHaveBeenCalledWith({ editorValue: visualContent, assets });
         expect(getContent).toEqual(visualContent);
       });
-      test('returns correct content based on isRaw equals true', () => {
+      test('returns correct content based on isRawEditor equals true', () => {
         jest.clearAllMocks();
-        const getContent = module.getContent({ editorRef, isRaw: true, assets })();
+        const getContent = module.getContent({ editorRef, isRawEditor: true, assets })();
         expect(spies.rawHtml.mock.calls.length).toEqual(1);
         expect(spies.rawHtml).toHaveBeenCalledWith({ editorValue: rawContent, assets });
         expect(getContent).toEqual(rawContent);

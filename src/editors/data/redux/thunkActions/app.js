@@ -72,13 +72,25 @@ export const fetchCourseDetails = () => (dispatch) => {
  * @param {string} blockType
  */
 export const initialize = (data) => (dispatch) => {
+  const editorType = data.blockType;
   dispatch(actions.app.initialize(data));
   dispatch(module.fetchBlock());
   dispatch(module.fetchUnit());
-  dispatch(module.fetchStudioView());
-  dispatch(module.fetchAssets());
-  dispatch(module.fetchVideos());
-  dispatch(module.fetchCourseDetails());
+  switch (editorType) {
+  case 'problem':
+    dispatch(module.fetchAssets());
+    break;
+  case 'video':
+    dispatch(module.fetchVideos());
+    dispatch(module.fetchStudioView());
+    dispatch(module.fetchCourseDetails());
+    break;
+  case 'html':
+    dispatch(module.fetchAssets());
+    break;
+  default:
+    break;
+  }
 };
 
 /**

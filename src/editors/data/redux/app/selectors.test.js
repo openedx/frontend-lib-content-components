@@ -120,41 +120,6 @@ describe('app selectors unit tests', () => {
     });
   });
 
-  describe('isRaw', () => {
-    const studioViewCourseRaw = {
-      data: {
-        html: 'data-editor="raw"',
-      },
-    };
-    const studioViewV2LibraryRaw = {
-      data: {
-        content: 'data-editor="raw"',
-      },
-    };
-    const studioViewVisual = {
-      data: {
-        html: 'sOmEthIngElse',
-      },
-    };
-    it('is memoized based on studioView', () => {
-      expect(selectors.isRaw.preSelectors).toEqual([
-        simpleSelectors.studioView,
-      ]);
-    });
-    it('returns null if studioView is null', () => {
-      expect(selectors.isRaw.cb(null)).toEqual(null);
-    });
-    it('returns true if course studioView is raw', () => {
-      expect(selectors.isRaw.cb(studioViewCourseRaw)).toEqual(true);
-    });
-    it('returns true if v2 library studioView is raw', () => {
-      expect(selectors.isRaw.cb(studioViewV2LibraryRaw)).toEqual(true);
-    });
-    it('returns false if the studioView is not Raw', () => {
-      expect(selectors.isRaw.cb(studioViewVisual)).toEqual(false);
-    });
-  });
-
   describe('isLibrary', () => {
     const learningContextIdLibrary = 'library-v1:name';
     const learningContextIdCourse = 'course-v1:name';

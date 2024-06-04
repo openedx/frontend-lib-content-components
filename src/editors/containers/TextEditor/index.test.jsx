@@ -54,7 +54,7 @@ jest.mock('../../data/redux', () => ({
       blockValue: jest.fn(state => ({ blockValue: state })),
       lmsEndpointUrl: jest.fn(state => ({ lmsEndpointUrl: state })),
       studioEndpointUrl: jest.fn(state => ({ studioEndpointUrl: state })),
-      isRaw: jest.fn(state => ({ isRaw: state })),
+      isRawEditor: jest.fn(state => ({ isRawEditor: state })),
       isLibrary: jest.fn(state => ({ isLibrary: state })),
       assets: jest.fn(state => ({ assets: state })),
     },
@@ -77,7 +77,7 @@ describe('TextEditor', () => {
     blockValue: { data: { data: 'eDiTablE Text' } },
     blockFailed: false,
     initializeEditor: jest.fn().mockName('args.intializeEditor'),
-    isRaw: false,
+    isRawEditor: false,
     assetsFinished: true,
     assets: { sOmEaSsET: { staTICUrl: '/assets/sOmEaSsET' } },
     // inject
@@ -91,7 +91,7 @@ describe('TextEditor', () => {
       expect(shallow(<TextEditor {...props} assetsFinished={false} />).snapshot).toMatchSnapshot();
     });
     test('loaded, raw editor', () => {
-      expect(shallow(<TextEditor {...props} isRaw />).snapshot).toMatchSnapshot();
+      expect(shallow(<TextEditor {...props} isRawEditor />).snapshot).toMatchSnapshot();
     });
     test('block failed to load, Toast is shown', () => {
       expect(shallow(<TextEditor {...props} blockFailed />).snapshot).toMatchSnapshot();
