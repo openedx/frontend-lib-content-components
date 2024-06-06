@@ -16,7 +16,7 @@ import RawEditor from '../../sharedComponents/RawEditor';
 import * as hooks from './hooks';
 import messages from './messages';
 import TinyMceWidget from '../../sharedComponents/TinyMceWidget';
-import { prepareEditorRef } from '../../sharedComponents/TinyMceWidget/hooks';
+import { prepareEditorRef, replaceStaticWithAsset } from '../../sharedComponents/TinyMceWidget/hooks';
 
 export const TextEditor = ({
   onClose,
@@ -28,10 +28,15 @@ export const TextEditor = ({
   initializeEditor,
   assetsFinished,
   assets,
+  learningContextId,
   // inject
   intl,
 }) => {
   const { editorRef, refReady, setEditorRef } = prepareEditorRef();
+  const editorContent = blockValue ? replaceStaticWithAsset({
+    initialContent: blockValue.data.data,
+    learningContextId,
+  }) : '';
 
   if (!refReady) { return null; }
 
@@ -48,7 +53,7 @@ export const TextEditor = ({
       <TinyMceWidget
         editorType="text"
         editorRef={editorRef}
-        editorContentHtml={blockValue ? blockValue.data.data : ''}
+        editorContentHtml={editorContent}
         setEditorRef={setEditorRef}
         minHeight={500}
         height="100%"
@@ -100,6 +105,7 @@ TextEditor.propTypes = {
   isRawEditor: PropTypes.bool.isRequired,
   assetsFinished: PropTypes.bool,
   assets: PropTypes.shape({}),
+  learningContextId: PropTypes.string.isRequired,
   // inject
   intl: intlShape.isRequired,
 };
@@ -111,6 +117,7 @@ export const mapStateToProps = (state) => {
   isRawEditor: state.app.isRawEditor,
   assetsFinished: selectors.requests.isFinished(state, { requestKey: RequestKeys.fetchAssets }),
   assets: selectors.app.assets(state),
+  learningContextId: selectors.app.learningContextId(state),
 })};
 
 export const mapDispatchToProps = {

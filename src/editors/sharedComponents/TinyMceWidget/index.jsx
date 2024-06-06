@@ -1,5 +1,5 @@
 import React from 'react';
-import { Provider, connect } from 'react-redux';
+import { Provider, connect, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Editor } from '@tinymce/tinymce-react';
 
@@ -41,6 +41,7 @@ export const TinyMceWidget = ({
   id,
   editorContentHtml, // editorContent in html form
   // redux
+  learningContextId,
   assets,
   isLibrary,
   lmsEndpointUrl,
@@ -85,6 +86,7 @@ export const TinyMceWidget = ({
             editorType,
             editorRef,
             isLibrary,
+            learningContextId,
             lmsEndpointUrl,
             studioEndpointUrl,
             images: imagesRef,
@@ -112,6 +114,7 @@ TinyMceWidget.defaultProps = {
   ...editorConfigDefaultProps,
 };
 TinyMceWidget.propTypes = {
+  learningContextId: PropTypes.string,
   editorType: PropTypes.string,
   isLibrary: PropTypes.bool,
   assets: PropTypes.shape({}),
@@ -131,6 +134,7 @@ export const mapStateToProps = (state) => ({
   lmsEndpointUrl: selectors.app.lmsEndpointUrl(state),
   studioEndpointUrl: selectors.app.studioEndpointUrl(state),
   isLibrary: selectors.app.isLibrary(state),
+  learningContextId: selectors.app.learningContextId(state),
 });
 
 export default (connect(mapStateToProps)(TinyMceWidget));
