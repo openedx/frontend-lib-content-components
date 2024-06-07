@@ -47,7 +47,7 @@ describe('ProblemEditor', () => {
     blockFailed: false,
     studioViewFinished: false,
     initializeProblemEditor: jest.fn().mockName('args.intializeProblemEditor'),
-    assetsFinished: false,
+    imagesFinished: false,
     advancedSettingsFinished: false,
   };
   describe('snapshots', () => {
@@ -63,7 +63,7 @@ describe('ProblemEditor', () => {
       expect(wrapper.instance.findByType(Spinner)).toBeTruthy();
     });
     test('assets loaded, block and studio view not yet loaded, Spinner appears', () => {
-      const wrapper = shallow(<ProblemEditor {...props} assetsFinished />);
+      const wrapper = shallow(<ProblemEditor {...props} imagesFinished />);
       expect(wrapper.instance.findByType(Spinner)).toBeTruthy();
     });
     test('advanceSettings loaded, block and studio view not yet loaded, Spinner appears', () => {
@@ -75,7 +75,7 @@ describe('ProblemEditor', () => {
         {...props}
         blockFinished
         studioViewFinished
-        assetsFinished
+        imagesFinished
         advancedSettingsFinished
         blockFailed
       />);
@@ -86,7 +86,7 @@ describe('ProblemEditor', () => {
         {...props}
         blockFinished
         studioViewFinished
-        assetsFinished
+        imagesFinished
         advancedSettingsFinished
       />);
       expect(wrapper.instance.findByType('SelectTypeModal')).toHaveLength(1);
@@ -97,7 +97,7 @@ describe('ProblemEditor', () => {
         problemType="multiplechoiceresponse"
         blockFinished
         studioViewFinished
-        assetsFinished
+        imagesFinished
         advancedSettingsFinished
       />);
       expect(wrapper.instance.findByType('EditProblemView')).toHaveLength(1);
@@ -126,10 +126,10 @@ describe('ProblemEditor', () => {
         mapStateToProps(testState).studioViewFinished,
       ).toEqual(selectors.requests.isFinished(testState, { requestKey: RequestKeys.fetchStudioView }));
     });
-    test('assetsFinished from requests.isFinished', () => {
+    test('imagesFinished from requests.isFinished', () => {
       expect(
-        mapStateToProps(testState).assetsFinished,
-      ).toEqual(selectors.requests.isFinished(testState, { requestKey: RequestKeys.fetchAssets }));
+        mapStateToProps(testState).imagesFinished,
+      ).toEqual(selectors.requests.isFinished(testState, { requestKey: RequestKeys.fetchImages }));
     });
     test('advancedSettingsFinished from requests.isFinished', () => {
       expect(

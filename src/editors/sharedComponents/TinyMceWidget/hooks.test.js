@@ -352,19 +352,6 @@ describe('TinyMceEditor hooks', () => {
       });
     });
 
-    describe('filterAssets', () => {
-      const emptyAssets = {};
-      const assets = { sOmEaSsET: { contentType: 'image/' } };
-      test('returns an empty array', () => {
-        const emptyFilterAssets = module.filterAssets({ assets: emptyAssets });
-        expect(emptyFilterAssets).toEqual([]);
-      });
-      test('returns filtered array of images', () => {
-        const FilteredAssets = module.filterAssets({ assets });
-        expect(FilteredAssets).toEqual([{ contentType: 'image/' }]);
-      });
-    });
-
     describe('imgModalToggle', () => {
       const hookKey = state.keys.isImageModalOpen;
       beforeEach(() => {

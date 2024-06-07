@@ -8,7 +8,7 @@ export const RequestStates = StrictDict({
 });
 
 export const RequestKeys = StrictDict({
-  fetchAssets: 'fetchAssets',
+  fetchImages: 'fetchImages',
   fetchVideos: 'fetchVideos',
   fetchBlock: 'fetchBlock',
   fetchImages: 'fetchImages',
@@ -26,7 +26,7 @@ export const RequestKeys = StrictDict({
   getTranscriptFile: 'getTranscriptFile',
   checkTranscriptsForImport: 'checkTranscriptsForImport',
   importTranscript: 'importTranscript',
-  uploadImage: 'uploadImage',
+  uploadAsset: 'uploadAsset',
   fetchAdvancedSettings: 'fetchAdvancedSettings',
   fetchVideoFeatures: 'fetchVideoFeatures',
 });

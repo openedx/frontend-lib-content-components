@@ -47,7 +47,7 @@ describe('app reducer', () => {
       ['setBlockContent', 'blockContent'],
       ['setBlockTitle', 'blockTitle'],
       ['setSaveResponse', 'saveResponse'],
-      ['setAssets', 'assets'],
+      ['setImages', 'assets'],
       ['setVideos', 'videos'],
       ['setCourseDetails', 'courseDetails'],
     ].map(args => setterTest(...args));

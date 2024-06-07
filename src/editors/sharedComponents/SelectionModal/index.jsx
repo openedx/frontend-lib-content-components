@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { Button, Stack } from '@openedx/paragon';
@@ -56,6 +56,9 @@ export const SelectionModal = ({
     isLoaded,
     ...galleryProps,
   };
+
+  const [isSearching, setIsSearching] = useState(false);
+
   return (
     <BaseModal
       close={close}
@@ -84,7 +87,7 @@ export const SelectionModal = ({
       bodyStyle={{ background }}
       headerComponent={(
         <div style={{ margin: '18px 0' }}>
-          <SearchSort {...searchSortProps} />
+          <SearchSort {...{...searchSortProps, setIsSearching }} />
         </div>
       )}
       className="selection-modal"
@@ -113,7 +116,7 @@ export const SelectionModal = ({
         >
           <FormattedMessage {...galleryError.message} />
         </ErrorAlert>
-        {showGallery && <Gallery {...galleryPropsValues} />}
+        {showGallery && <Gallery {...{...galleryPropsValues, isSearching }} />}
         <FileInput fileInput={fileInput} acceptedFiles={Object.values(acceptedFiles).join()} />
       </Stack>
     </BaseModal>

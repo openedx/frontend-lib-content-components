@@ -26,8 +26,7 @@ export const TextEditor = ({
   blockValue,
   blockFailed,
   initializeEditor,
-  assetsFinished,
-  assets,
+  blockFinished,
   learningContextId,
   // inject
   intl,
@@ -64,7 +63,7 @@ export const TextEditor = ({
 
   return (
     <EditorContainer
-      getContent={hooks.getContent({ editorRef, isRawEditor, assets })}
+      getContent={hooks.getContent({ editorRef, isRawEditor })}
       onClose={onClose}
       returnFunction={returnFunction}
     >
@@ -73,7 +72,7 @@ export const TextEditor = ({
           <FormattedMessage {...messages.couldNotLoadTextContext} />
         </Toast>
 
-        {(!assetsFinished)
+        {(!blockFinished)
           ? (
             <div className="text-center p-6">
               <Spinner
@@ -89,8 +88,7 @@ export const TextEditor = ({
 };
 TextEditor.defaultProps = {
   blockValue: null,
-  assetsFinished: null,
-  assets: null,
+  blockFinished: null,
   returnFunction: null,
 };
 TextEditor.propTypes = {
@@ -103,8 +101,7 @@ TextEditor.propTypes = {
   blockFailed: PropTypes.bool.isRequired,
   initializeEditor: PropTypes.func.isRequired,
   isRawEditor: PropTypes.bool.isRequired,
-  assetsFinished: PropTypes.bool,
-  assets: PropTypes.shape({}),
+  blockFinished: PropTypes.bool,
   learningContextId: PropTypes.string.isRequired,
   // inject
   intl: intlShape.isRequired,
@@ -115,8 +112,7 @@ export const mapStateToProps = (state) => {
   blockValue: selectors.app.blockValue(state),
   blockFailed: selectors.requests.isFailed(state, { requestKey: RequestKeys.fetchBlock }),
   isRawEditor: state.app.isRawEditor,
-  assetsFinished: selectors.requests.isFinished(state, { requestKey: RequestKeys.fetchAssets }),
-  assets: selectors.app.assets(state),
+  blockFinished: selectors.requests.isFinished(state, { requestKey: RequestKeys.fetchBlock }),
   learningContextId: selectors.app.learningContextId(state),
 })};
 

@@ -35,11 +35,12 @@ export const fetchUnit = () => (dispatch) => {
   }));
 };
 
-export const fetchAssets = () => (dispatch) => {
-  dispatch(requests.fetchAssets({
-    onSuccess: (response) => dispatch(actions.app.setAssets(response)),
+export const fetchImages = ({ pageNumber }) => (dispatch) => {
+  dispatch(requests.fetchImages({
+    pageNumber,
+    onSuccess: ({ images, imageCount }) => dispatch(actions.app.setImages({ images, imageCount })),
     onFailure: (error) => dispatch(actions.requests.failRequest({
-      requestKey: RequestKeys.fetchAssets,
+      requestKey: RequestKeys.fetchImages,
       error,
     })),
   }));
@@ -78,7 +79,7 @@ export const initialize = (data) => (dispatch) => {
   dispatch(module.fetchUnit());
   switch (editorType) {
   case 'problem':
-    dispatch(module.fetchAssets());
+    dispatch(module.fetchImages({ pageNumber: 0 }));
     break;
   case 'video':
     dispatch(module.fetchVideos());
@@ -86,7 +87,7 @@ export const initialize = (data) => (dispatch) => {
     dispatch(module.fetchCourseDetails());
     break;
   case 'html':
-    dispatch(module.fetchAssets());
+    dispatch(module.fetchImages({ pageNumber: 0 }));
     break;
   default:
     break;
@@ -107,7 +108,7 @@ export const saveBlock = (content, returnToUnit) => (dispatch) => {
   }));
 };
 
-export const uploadImage = ({ file, setSelection }) => (dispatch) => {
+export const uploadAsset = ({ file, setSelection }) => (dispatch) => {
   dispatch(requests.uploadAsset({
     asset: file,
     onSuccess: (response) => setSelection(camelizeKeys(response.data.asset)),
@@ -122,6 +123,6 @@ export default StrictDict({
   fetchVideos,
   initialize,
   saveBlock,
-  fetchAssets,
-  uploadImage,
+  fetchImages,
+  uploadAsset,
 });

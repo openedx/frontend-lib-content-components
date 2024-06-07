@@ -23,21 +23,20 @@ export const state = StrictDict({
   refReady: (val) => useState(val),
 });
 
-export const addImagesAndDimensionsToRef = ({ imagesRef, assets, editorContentHtml }) => {
-  const imagesWithDimensions = module.filterAssets({ assets }).map((image) => {
+export const addImagesAndDimensionsToRef = ({ imagesRef, images, editorContentHtml }) => {
+  const imagesWithDimensions = Object.values(images).map((image) => {
     const imageFragment = module.getImageFromHtmlString(editorContentHtml, image.url);
     return { ...image, width: imageFragment?.width, height: imageFragment?.height };
   });
-
   imagesRef.current = imagesWithDimensions;
 };
 
-export const useImages = ({ assets, editorContentHtml }) => {
+export const useImages = ({ images, editorContentHtml }) => {
   const imagesRef = useRef([]);
 
   useEffect(() => {
-    module.addImagesAndDimensionsToRef({ imagesRef, assets, editorContentHtml });
-  }, []);
+    module.addImagesAndDimensionsToRef({ imagesRef, images, editorContentHtml });
+  }, [images]);
 
   return { imagesRef };
 };
@@ -271,7 +270,6 @@ export const editorConfig = ({
         setImage: setSelection,
         content,
         images,
-        imageUrls: module.fetchImageUrls(images),
         learningContextId,
       }),
       quickbars_insert_toolbar: quickbarsInsertToolbar,
@@ -385,15 +383,6 @@ export const openModalWithSelectedImage = ({
   openImgModal();
 };
 
-export const filterAssets = ({ assets }) => {
-  let images = [];
-  const assetsList = Object.values(assets);
-  if (assetsList.length > 0) {
-    images = assetsList.filter(asset => asset?.contentType?.startsWith('image/'));
-  }
-  return images;
-};
-
 export const setAssetToStaticUrl = ({ editorValue, lmsEndpointUrl }) => {
   /* For assets to remain usable across course instances, we convert their url to be course-agnostic.
    * For example, /assets/course/<asset hash>/filename gets converted to /static/filename. This is
@@ -411,7 +400,6 @@ export const setAssetToStaticUrl = ({ editorValue, lmsEndpointUrl }) => {
     if (src.startsWith('/asset')) {
       const assetBlockName = src.substring(src.indexOf('@') + 1, src.search(/("|&quot;)/));
       const nameFromEditorSrc = assetBlockName.substring(assetBlockName.indexOf('@') + 1);
-      const nameFromStudioSrc = assetBlockName.substring(assetBlockName.indexOf('/') + 1);
       portableUrl = getStaticUrl({ displayName: nameFromEditorSrc });
       const currentSrc = src.substring(0, src.search(/("|&quot;)/));
       const updatedContent = content.replace(currentSrc, portableUrl);
@@ -419,14 +407,6 @@ export const setAssetToStaticUrl = ({ editorValue, lmsEndpointUrl }) => {
     }
   });
   return content;
-};
-
-export const fetchImageUrls = (images) => {
-  const imageUrls = [];
-  images.current.forEach(image => {
-    imageUrls.push({ staticFullUrl: image.staticFullUrl, displayName: image.displayName });
-  });
-  return imageUrls;
 };
 
 export const selectedImage = (val) => {

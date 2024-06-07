@@ -52,7 +52,6 @@ jest.mock('./hooks', () => ({
     setSelection: jest.fn().mockName('hooks.selectedImage.setSelection'),
     clearSelection: jest.fn().mockName('hooks.selectedImage.clearSelection'),
   })),
-  filterAssets: jest.fn(() => [{ staTICUrl: staticUrl }]),
   useImages: jest.fn(() => ({ imagesRef: { current: [{ externalUrl: staticUrl }] } })),
 }));
 
@@ -114,10 +113,10 @@ describe('TinyMceWidget', () => {
         mapStateToProps(testState).studioEndpointUrl,
       ).toEqual(selectors.app.studioEndpointUrl(testState));
     });
-    test('assets from app.assets', () => {
+    test('images from app.images', () => {
       expect(
-        mapStateToProps(testState).assets,
-      ).toEqual(selectors.app.assets(testState));
+        mapStateToProps(testState).images,
+      ).toEqual(selectors.app.images(testState));
     });
     test('isLibrary from app.isLibrary', () => {
       expect(

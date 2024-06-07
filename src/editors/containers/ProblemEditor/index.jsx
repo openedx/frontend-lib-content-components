@@ -18,16 +18,15 @@ export const ProblemEditor = ({
   blockFailed,
   blockValue,
   initializeProblemEditor,
-  assetsFinished,
   advancedSettingsFinished,
 }) => {
   React.useEffect(() => {
-    if (blockFinished && assetsFinished && !blockFailed) {
+    if (blockFinished && !blockFailed) {
       initializeProblemEditor(blockValue);
     }
-  }, [blockFinished, assetsFinished, blockFailed]);
+  }, [blockFinished, blockFailed]);
 
-  if (!blockFinished || !assetsFinished || !advancedSettingsFinished) {
+  if (!blockFinished || !advancedSettingsFinished) {
     return (
       <div className="text-center p-6">
         <Spinner
@@ -54,14 +53,12 @@ export const ProblemEditor = ({
 };
 
 ProblemEditor.defaultProps = {
-  assetsFinished: null,
   returnFunction: null,
 };
 ProblemEditor.propTypes = {
   onClose: PropTypes.func.isRequired,
   returnFunction: PropTypes.func,
   // redux
-  assetsFinished: PropTypes.bool,
   advancedSettingsFinished: PropTypes.bool.isRequired,
   blockFinished: PropTypes.bool.isRequired,
   blockFailed: PropTypes.bool.isRequired,
@@ -75,7 +72,6 @@ export const mapStateToProps = (state) => ({
   blockFailed: selectors.requests.isFailed(state, { requestKey: RequestKeys.fetchBlock }),
   problemType: selectors.problem.problemType(state),
   blockValue: selectors.app.blockValue(state),
-  assetsFinished: selectors.requests.isFinished(state, { requestKey: RequestKeys.fetchAssets }),
   advancedSettingsFinished: selectors.requests.isFinished(state, { requestKey: RequestKeys.fetchAdvancedSettings }),
 });
 

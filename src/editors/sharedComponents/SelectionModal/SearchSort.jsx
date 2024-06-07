@@ -27,14 +27,19 @@ export const SearchSort = ({
   showSwitch,
   switchMessage,
   onSwitchClick,
+  setIsSearching,
 }) => {
   const intl = useIntl();
+  const handleOnChange = (e) => {
+    setIsSearching(true);
+    onSearchChange(e);
+  }
   return (
     <ActionRow>
       <Form.Group style={{ margin: 0 }}>
         <Form.Control
           autoFocus
-          onChange={onSearchChange}
+          onChange={handleOnChange}
           placeholder={intl.formatMessage(messages.searchPlaceholder)}
           trailingElement={
             searchString
@@ -134,6 +139,7 @@ SearchSort.propTypes = {
   showSwitch: PropTypes.bool,
   switchMessage: PropTypes.shape({}).isRequired,
   onSwitchClick: PropTypes.func,
+  setIsSearching: PropTypes.func.isRequired,
 };
 
 export default SearchSort;

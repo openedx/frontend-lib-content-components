@@ -78,7 +78,7 @@ describe('TextEditor', () => {
     blockFailed: false,
     initializeEditor: jest.fn().mockName('args.intializeEditor'),
     isRawEditor: false,
-    assetsFinished: true,
+    imagesFinished: true,
     assets: { sOmEaSsET: { staTICUrl: '/assets/sOmEaSsET' } },
     // inject
     intl: { formatMessage },
@@ -88,7 +88,7 @@ describe('TextEditor', () => {
       expect(shallow(<TextEditor {...props} />).snapshot).toMatchSnapshot();
     });
     test('not yet loaded, Spinner appears', () => {
-      expect(shallow(<TextEditor {...props} assetsFinished={false} />).snapshot).toMatchSnapshot();
+      expect(shallow(<TextEditor {...props} imagesFinished={false} />).snapshot).toMatchSnapshot();
     });
     test('loaded, raw editor', () => {
       expect(shallow(<TextEditor {...props} isRawEditor />).snapshot).toMatchSnapshot();
@@ -105,20 +105,20 @@ describe('TextEditor', () => {
         mapStateToProps(testState).blockValue,
       ).toEqual(selectors.app.blockValue(testState));
     });
-    test('assets from app.assets', () => {
+    test('images from app.images', () => {
       expect(
         mapStateToProps(testState).assets,
-      ).toEqual(selectors.app.assets(testState));
+      ).toEqual(selectors.app.images(testState));
     });
     test('blockFailed from requests.isFailed', () => {
       expect(
         mapStateToProps(testState).blockFailed,
       ).toEqual(selectors.requests.isFailed(testState, { requestKey: RequestKeys.fetchBlock }));
     });
-    test('assetssFinished from requests.isFinished', () => {
+    test('imagesFinished from requests.isFinished', () => {
       expect(
-        mapStateToProps(testState).assetsFinished,
-      ).toEqual(selectors.requests.isFinished(testState, { requestKey: RequestKeys.fetchAssets }));
+        mapStateToProps(testState).imagesFinished,
+      ).toEqual(selectors.requests.isFinished(testState, { requestKey: RequestKeys.fetchImages }));
     });
   });
 

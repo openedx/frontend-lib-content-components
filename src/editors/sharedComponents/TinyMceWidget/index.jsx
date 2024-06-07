@@ -1,5 +1,5 @@
 import React from 'react';
-import { Provider, connect, useDispatch } from 'react-redux';
+import { Provider, connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Editor } from '@tinymce/tinymce-react';
 
@@ -42,7 +42,7 @@ export const TinyMceWidget = ({
   editorContentHtml, // editorContent in html form
   // redux
   learningContextId,
-  assets,
+  images,
   isLibrary,
   lmsEndpointUrl,
   studioEndpointUrl,
@@ -51,7 +51,7 @@ export const TinyMceWidget = ({
 }) => {
   const { isImgOpen, openImgModal, closeImgModal } = hooks.imgModalToggle();
   const { isSourceCodeOpen, openSourceCodeModal, closeSourceCodeModal } = hooks.sourceCodeModalToggle(editorRef);
-  const { imagesRef } = hooks.useImages({ assets, editorContentHtml });
+  const { imagesRef } = hooks.useImages({ images, editorContentHtml });
 
   const imageSelection = hooks.selectedImage(null);
 
@@ -105,7 +105,7 @@ TinyMceWidget.defaultProps = {
   editorRef: null,
   lmsEndpointUrl: null,
   studioEndpointUrl: null,
-  assets: null,
+  images: null,
   id: null,
   disabled: false,
   editorContentHtml: undefined,
@@ -117,7 +117,7 @@ TinyMceWidget.propTypes = {
   learningContextId: PropTypes.string,
   editorType: PropTypes.string,
   isLibrary: PropTypes.bool,
-  assets: PropTypes.shape({}),
+  images: PropTypes.shape({}),
   editorRef: PropTypes.shape({}),
   lmsEndpointUrl: PropTypes.string,
   studioEndpointUrl: PropTypes.string,
@@ -130,7 +130,7 @@ TinyMceWidget.propTypes = {
 };
 
 export const mapStateToProps = (state) => ({
-  assets: selectors.app.assets(state),
+  images: selectors.app.images(state),
   lmsEndpointUrl: selectors.app.lmsEndpointUrl(state),
   studioEndpointUrl: selectors.app.studioEndpointUrl(state),
   isLibrary: selectors.app.isLibrary(state),
