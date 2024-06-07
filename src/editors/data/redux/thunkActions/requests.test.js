@@ -315,7 +315,7 @@ describe('requests thunkActions module', () => {
       });
     });
     describe('uploadAsset', () => {
-      const image = 'SoME iMage CoNtent As String';
+      const asset = 'SoME iMage CoNtent As String';
       testNetworkRequestAction({
         action: requests.uploadAsset,
         args: { asset, ...fetchParams },

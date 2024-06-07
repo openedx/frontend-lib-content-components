@@ -19,7 +19,7 @@ export const ExplanationWidget = ({
   const solutionContent = replaceStaticWithAsset({
     initialContent: settings?.solutionExplanation,
     learningContextId,
-  })
+  });
   if (!refReady) { return null; }
   return (
     <div className="tinyMceWidget mt-4 text-primary-500">

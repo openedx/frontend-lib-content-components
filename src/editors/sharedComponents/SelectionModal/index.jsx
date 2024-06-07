@@ -87,7 +87,7 @@ export const SelectionModal = ({
       bodyStyle={{ background }}
       headerComponent={(
         <div style={{ margin: '18px 0' }}>
-          <SearchSort {...{...searchSortProps, setIsSearching }} />
+          <SearchSort {...{ ...searchSortProps, setIsSearching }} />
         </div>
       )}
       className="selection-modal"
@@ -116,7 +116,7 @@ export const SelectionModal = ({
         >
           <FormattedMessage {...galleryError.message} />
         </ErrorAlert>
-        {showGallery && <Gallery {...{...galleryPropsValues, isSearching }} />}
+        {showGallery && <Gallery {...{ ...galleryPropsValues, isSearching }} />}
         <FileInput fileInput={fileInput} acceptedFiles={Object.values(acceptedFiles).join()} />
       </Stack>
     </BaseModal>

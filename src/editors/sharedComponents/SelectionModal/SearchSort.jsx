@@ -33,7 +33,8 @@ export const SearchSort = ({
   const handleOnChange = (e) => {
     setIsSearching(true);
     onSearchChange(e);
-  }
+  };
+
   return (
     <ActionRow>
       <Form.Group style={{ margin: 0 }}>

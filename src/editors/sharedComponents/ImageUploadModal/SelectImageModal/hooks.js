@@ -43,7 +43,12 @@ export const displayList = ({ sortBy, searchString, images }) => (
     imageList: images,
   }).sort(sortFunctions[sortBy in sortKeys ? sortKeys[sortBy] : sortKeys.dateNewest]));
 
-export const imgListHooks = ({ searchSortProps, setSelection, images, imageCount }) => {
+export const imgListHooks = ({
+  searchSortProps,
+  setSelection,
+  images,
+  imageCount,
+}) => {
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const dispatch = useDispatch();
   const [highlighted, setHighlighted] = module.state.highlighted(null);
@@ -76,7 +81,7 @@ export const imgListHooks = ({ searchSortProps, setSelection, images, imageCount
       onHighlightChange: (e) => setHighlighted(e.target.value),
       emptyGalleryLabel: messages.emptyGalleryLabel,
       allowPagination: true,
-      fetchNextPage: ({ pageNumber }) => dispatch(thunkActions.app.fetchImages({ pageNumber})),
+      fetchNextPage: ({ pageNumber }) => dispatch(thunkActions.app.fetchImages({ pageNumber })),
       assetCount: imageCount,
     },
     // highlight by id
@@ -138,9 +143,19 @@ export const fileInputHooks = ({ setSelection, clearSelection, imgList }) => {
   };
 };
 
-export const imgHooks = ({ setSelection, clearSelection, images, imageCount }) => {
+export const imgHooks = ({
+  setSelection,
+  clearSelection,
+  images,
+  imageCount,
+}) => {
   const searchSortProps = module.searchAndSortHooks();
-  const imgList = module.imgListHooks({ setSelection, searchSortProps, images, imageCount });
+  const imgList = module.imgListHooks({
+    setSelection,
+    searchSortProps,
+    images,
+    imageCount,
+  });
   const fileInput = module.fileInputHooks({
     setSelection,
     clearSelection,

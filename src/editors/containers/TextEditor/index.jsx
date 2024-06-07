@@ -107,14 +107,13 @@ TextEditor.propTypes = {
   intl: intlShape.isRequired,
 };
 
-export const mapStateToProps = (state) => {
-  return ({
+export const mapStateToProps = (state) => ({
   blockValue: selectors.app.blockValue(state),
   blockFailed: selectors.requests.isFailed(state, { requestKey: RequestKeys.fetchBlock }),
   isRawEditor: state.app.isRawEditor,
   blockFinished: selectors.requests.isFinished(state, { requestKey: RequestKeys.fetchBlock }),
   learningContextId: selectors.app.learningContextId(state),
-})};
+});
 
 export const mapDispatchToProps = {
   initializeEditor: actions.app.initializeEditor,

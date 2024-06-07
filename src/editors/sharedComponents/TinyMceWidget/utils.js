@@ -3,9 +3,7 @@ const getLocatorSafeName = ({ displayName }) => {
   return locatorSafeName;
 };
 
-export const getStaticUrl = ({ displayName }) => {
-  return `/static/${getLocatorSafeName({ displayName })}`;
-};
+export const getStaticUrl = ({ displayName }) => (`/static/${getLocatorSafeName({ displayName })}`);
 
 export const getRelativeUrl = ({ courseId, displayName }) => {
   if (displayName) {
@@ -13,4 +11,5 @@ export const getRelativeUrl = ({ courseId, displayName }) => {
     const assetPathShell = `/${assetCourseId}+type@asset+block@`;
     return `${assetPathShell}${displayName}`;
   }
+  return '';
 };

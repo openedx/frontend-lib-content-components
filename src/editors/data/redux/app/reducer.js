@@ -41,7 +41,7 @@ const app = createSlice({
       ...state,
       blockValue: payload,
       blockTitle: payload.data.display_name,
-      isRawEditor: payload.data.metadata?.editor === 'raw'
+      isRawEditor: payload.data.metadata?.editor === 'raw',
     }),
     setStudioView: (state, { payload }) => ({ ...state, studioView: payload }),
     setBlockContent: (state, { payload }) => ({ ...state, blockContent: payload }),
@@ -50,7 +50,7 @@ const app = createSlice({
     initializeEditor: (state) => ({ ...state, editorInitialized: true }),
     setImages: (state, { payload }) => ({
       ...state,
-      images: {...state.images, ...payload.images},
+      images: { ...state.images, ...payload.images },
       imageCount: payload.imageCount,
     }),
     setVideos: (state, { payload }) => ({ ...state, videos: payload }),

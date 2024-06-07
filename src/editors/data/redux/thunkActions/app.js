@@ -78,19 +78,19 @@ export const initialize = (data) => (dispatch) => {
   dispatch(module.fetchBlock());
   dispatch(module.fetchUnit());
   switch (editorType) {
-  case 'problem':
-    dispatch(module.fetchImages({ pageNumber: 0 }));
-    break;
-  case 'video':
-    dispatch(module.fetchVideos());
-    dispatch(module.fetchStudioView());
-    dispatch(module.fetchCourseDetails());
-    break;
-  case 'html':
-    dispatch(module.fetchImages({ pageNumber: 0 }));
-    break;
-  default:
-    break;
+    case 'problem':
+      dispatch(module.fetchImages({ pageNumber: 0 }));
+      break;
+    case 'video':
+      dispatch(module.fetchVideos());
+      dispatch(module.fetchStudioView());
+      dispatch(module.fetchCourseDetails());
+      break;
+    case 'html':
+      dispatch(module.fetchImages({ pageNumber: 0 }));
+      break;
+    default:
+      break;
   }
 };
 

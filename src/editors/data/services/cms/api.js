@@ -29,10 +29,11 @@ export const apiMethods = {
   fetchImages: ({ learningContextId, studioEndpointUrl, pageNumber }) => {
     const params = {
       asset_type: 'Images',
-      page: pageNumber
-    }
+      page: pageNumber,
+    };
     return get(
-      `${urls.courseAssets({ studioEndpointUrl, learningContextId })}`, { params },
+      `${urls.courseAssets({ studioEndpointUrl, learningContextId })}`,
+      { params },
     );
   },
   fetchVideos: ({ studioEndpointUrl, learningContextId }) => get(

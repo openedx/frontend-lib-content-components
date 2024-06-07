@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
-import { Pagination, Spinner } from '@openedx/paragon';
+import { Spinner } from '@openedx/paragon';
 import {
   FormattedMessage,
   useIntl,
@@ -33,8 +33,6 @@ export const Gallery = ({
   const [currentPageList, setCurrentPageList] = useState(displayList);
   const [currentPage, setCurrentPage] = useState(1);
 
-  console.log(currentPageList.length, displayList.length);
-
   useEffect(() => {
     if (allowPagination) {
       if (displayList.length <= 50 && isSearching) {
@@ -47,7 +45,7 @@ export const Gallery = ({
         setCurrentPageList(newPageList);
       }
     } else {
-      setCurrentPageList(displayList)
+      setCurrentPageList(displayList);
     }
   }, [displayList]);
 
@@ -101,14 +99,16 @@ export const Gallery = ({
         )) }
       </SelectableBox.Set>
       {allowPagination && (
-        <GalleryPagination {...{
-          fetchNextPage,
-          assetCount,
-          displayList,
-          currentPage,
-          setCurrentPage,
-          isSearching,
-        }} />
+        <GalleryPagination
+          {...{
+            fetchNextPage,
+            assetCount,
+            displayListLength: displayList.length,
+            currentPage,
+            setCurrentPage,
+            isSearching,
+          }}
+        />
       )}
     </div>
   );
@@ -139,6 +139,7 @@ Gallery.propTypes = {
   allowPagination: PropTypes.bool,
   fetchNextPage: PropTypes.func,
   assetCount: PropTypes.number,
+  isSearching: PropTypes.bool.isRequired,
 };
 
 export default Gallery;

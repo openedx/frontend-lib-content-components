@@ -191,7 +191,7 @@ export const setupCustomBehavior = ({
         lmsEndpointUrl,
         learningContextId,
       });
-      updateContent(newContent)
+      updateContent(newContent);
     });
   }
   editor.on('ExecCommand', (e) => {
@@ -400,7 +400,7 @@ export const setAssetToStaticUrl = ({ editorValue, lmsEndpointUrl }) => {
     if (src.startsWith('/asset')) {
       const assetBlockName = src.substring(src.indexOf('@') + 1, src.search(/("|&quot;)/));
       const nameFromEditorSrc = assetBlockName.substring(assetBlockName.indexOf('@') + 1);
-      portableUrl = getStaticUrl({ displayName: nameFromEditorSrc });
+      const portableUrl = getStaticUrl({ displayName: nameFromEditorSrc });
       const currentSrc = src.substring(0, src.search(/("|&quot;)/));
       const updatedContent = content.replace(currentSrc, portableUrl);
       content = updatedContent;

@@ -2,10 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Pagination } from '@openedx/paragon';
 
-
 const GalleryPagination = ({
   assetCount,
-  displayList,
+  displayListLength,
   fetchNextPage,
   currentPage,
   setCurrentPage,
@@ -16,21 +15,30 @@ const GalleryPagination = ({
     setCurrentPage(page);
   };
 
-  if (displayList.length <= 50 && assetCount <= 50 || isSearching && displayList.length <= 50) {
+  if ((displayListLength <= 50 && assetCount <= 50) || (isSearching && displayListLength <= 50)) {
     return null;
   }
 
   return (
-    <div className='row justify-content-center py-3'>
+    <div className="row justify-content-center py-3">
       <Pagination
         paginationLabel="pagination navigation"
-        pageCount={Math.ceil(assetCount/50)}
+        pageCount={Math.ceil(assetCount / 50)}
         currentPage={currentPage}
         onPageSelect={(page) => handlePageChange(page)}
         size="small"
       />
     </div>
   );
+};
+
+GalleryPagination.propTypes = {
+  isSearching: PropTypes.bool.isRequired,
+  assetCount: PropTypes.number.isRequired,
+  displayListLength: PropTypes.number.isRequired,
+  fetchNextPage: PropTypes.func.isRequired,
+  currentPage: PropTypes.number.isRequired,
+  setCurrentPage: PropTypes.func.isRequired,
 };
 
 export default GalleryPagination;
