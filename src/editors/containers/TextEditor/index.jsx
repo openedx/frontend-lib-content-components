@@ -22,7 +22,7 @@ export const TextEditor = ({
   onClose,
   returnFunction,
   // redux
-  isRawEditor,
+  showRawEditor,
   blockValue,
   blockFailed,
   initializeEditor,
@@ -40,7 +40,7 @@ export const TextEditor = ({
   if (!refReady) { return null; }
 
   const selectEditor = () => {
-    if (isRawEditor) {
+    if (showRawEditor) {
       return (
         <RawEditor
           editorRef={editorRef}
@@ -63,7 +63,7 @@ export const TextEditor = ({
 
   return (
     <EditorContainer
-      getContent={hooks.getContent({ editorRef, isRawEditor })}
+      getContent={hooks.getContent({ editorRef, showRawEditor })}
       onClose={onClose}
       returnFunction={returnFunction}
     >
@@ -100,7 +100,7 @@ TextEditor.propTypes = {
   }),
   blockFailed: PropTypes.bool.isRequired,
   initializeEditor: PropTypes.func.isRequired,
-  isRawEditor: PropTypes.bool.isRequired,
+  showRawEditor: PropTypes.bool.isRequired,
   blockFinished: PropTypes.bool,
   learningContextId: PropTypes.string.isRequired,
   // inject
@@ -110,7 +110,7 @@ TextEditor.propTypes = {
 export const mapStateToProps = (state) => ({
   blockValue: selectors.app.blockValue(state),
   blockFailed: selectors.requests.isFailed(state, { requestKey: RequestKeys.fetchBlock }),
-  isRawEditor: state.app.isRawEditor,
+  showRawEditor: selectors.app.showRawEditor(state),
   blockFinished: selectors.requests.isFinished(state, { requestKey: RequestKeys.fetchBlock }),
   learningContextId: selectors.app.learningContextId(state),
 });

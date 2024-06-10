@@ -76,20 +76,21 @@ export const replaceStaticWithAsset = ({
   lmsEndpointUrl,
 }) => {
   let content = initialContent;
-  const imageSrcs = content.split('src="').filter(src => src.startsWith('/static') || src.startsWith('/asset'));
-  imageSrcs.forEach(src => {
+  const srcs = content.split(/(src="|src=&quot;|href="|href=&quot)/g).filter(
+    src => src.startsWith('/static') || src.startsWith('/asset'),
+  );
+  srcs.forEach(src => {
     const currentContent = content;
     let staticFullUrl;
     const isStatic = src.startsWith('/static/');
-    // assets in expandable text areas so not support relative urls so all assets must have the lms
-    // endpoint prepended to the relative url
-    const isExpandableRelativeUrl = src.startsWith('/asset') && editorType === 'expandable';
     const assetSrc = src.substring(0, src.indexOf('"'));
     const staticName = assetSrc.substring(8);
     const assetName = assetSrc.replace(/\/assets\/.+[^/]\//g, '');
     const displayName = isStatic ? staticName : assetName;
-    const isCorrectAssetFormat = assetSrc.match(/\/asset-v1:\S+[+]\S+[@]\S+[+]\S+[@]/g)?.length;
-    if (isExpandableRelativeUrl) {
+    const isCorrectAssetFormat = assetSrc.match(/\/asset-v1:\S+[+]\S+[@]\S+[+]\S+[@]/g)?.length > 1;
+    // assets in expandable text areas so not support relative urls so all assets must have the lms
+    // endpoint prepended to the relative url
+    if (editorType === 'expandable') {
       if (isCorrectAssetFormat) {
         staticFullUrl = `${lmsEndpointUrl}${assetSrc}`;
       } else {

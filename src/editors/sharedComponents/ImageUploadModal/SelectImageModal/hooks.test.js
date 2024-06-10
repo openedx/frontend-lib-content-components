@@ -281,6 +281,7 @@ describe('SelectImageModal hooks', () => {
     const searchAndSortHooks = { search: 'props' };
     const fileInputHooks = { file: 'input hooks' };
     const images = { sOmEuiMAge: { staTICUrl: '/assets/sOmEuiMAge' } };
+    const imageCount = 1;
 
     const setSelection = jest.fn();
     const clearSelection = jest.fn();
@@ -292,7 +293,9 @@ describe('SelectImageModal hooks', () => {
         .mockReturnValueOnce(searchAndSortHooks);
       spies.file = jest.spyOn(hooks, hookKeys.fileInputHooks)
         .mockReturnValueOnce(fileInputHooks);
-      hook = hooks.imgHooks({ setSelection, clearSelection, images });
+      hook = hooks.imgHooks({
+        setSelection, clearSelection, images, imageCount,
+      });
     });
     it('forwards fileInputHooks as fileInput, called with uploadAsset prop', () => {
       expect(hook.fileInput).toEqual(fileInputHooks);
@@ -307,6 +310,7 @@ describe('SelectImageModal hooks', () => {
         setSelection,
         searchSortProps: searchAndSortHooks,
         images,
+        imageCount,
       });
     });
     it('forwards searchAndSortHooks as searchSortProps', () => {

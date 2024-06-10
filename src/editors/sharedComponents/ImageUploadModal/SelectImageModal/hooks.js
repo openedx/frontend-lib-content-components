@@ -128,7 +128,7 @@ export const fileInputHooks = ({ setSelection, clearSelection, imgList }) => {
       },
     })) {
       dispatch(
-        thunkActions.app.uploadImage({
+        thunkActions.app.uploadAsset({
           file: selectedFile,
           setSelection,
         }),

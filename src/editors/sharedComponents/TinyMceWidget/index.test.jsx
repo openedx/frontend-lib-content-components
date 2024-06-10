@@ -30,7 +30,8 @@ jest.mock('../../data/redux', () => ({
       lmsEndpointUrl: jest.fn(state => ({ lmsEndpointUrl: state })),
       studioEndpointUrl: jest.fn(state => ({ studioEndpointUrl: state })),
       isLibrary: jest.fn(state => ({ isLibrary: state })),
-      assets: jest.fn(state => ({ assets: state })),
+      images: jest.fn(state => ({ images: state })),
+      learningContextId: jest.fn(state => ({ learningContextId: state })),
     },
   },
 }));
@@ -69,12 +70,13 @@ describe('TinyMceWidget', () => {
     editorType: 'text',
     editorRef: { current: { value: 'something' } },
     isLibrary: false,
-    assets: { sOmEaSsET: { staTICUrl: staticUrl } },
+    images: { sOmEaSsET: { staTICUrl: staticUrl } },
     lmsEndpointUrl: 'sOmEvaLue.cOm',
     studioEndpointUrl: 'sOmEoThERvaLue.cOm',
     disabled: false,
     id: 'sOMeiD',
     updateContent: () => ({}),
+    learningContextId: 'course+org+run',
   };
   describe('snapshots', () => {
     imgModalToggle.mockReturnValue({
@@ -122,6 +124,11 @@ describe('TinyMceWidget', () => {
       expect(
         mapStateToProps(testState).isLibrary,
       ).toEqual(selectors.app.isLibrary(testState));
+    });
+    test('learningContextId from app.learningContextId', () => {
+      expect(
+        mapStateToProps(testState).learningContextId,
+      ).toEqual(selectors.app.learningContextId(testState));
     });
   });
 });

@@ -19,7 +19,7 @@ const initialState = {
   imageCount: 0,
   videos: {},
   courseDetails: {},
-  isRawEditor: false,
+  showRawEditor: false,
 };
 
 // eslint-disable-next-line no-unused-vars
@@ -41,7 +41,6 @@ const app = createSlice({
       ...state,
       blockValue: payload,
       blockTitle: payload.data.display_name,
-      isRawEditor: payload.data.metadata?.editor === 'raw',
     }),
     setStudioView: (state, { payload }) => ({ ...state, studioView: payload }),
     setBlockContent: (state, { payload }) => ({ ...state, blockContent: payload }),
@@ -55,6 +54,10 @@ const app = createSlice({
     }),
     setVideos: (state, { payload }) => ({ ...state, videos: payload }),
     setCourseDetails: (state, { payload }) => ({ ...state, courseDetails: payload }),
+    setShowRawEditor: (state, { payload }) => ({
+      ...state,
+      showRawEditor: payload.data?.metadata?.editor === 'raw',
+    }),
   },
 });
 

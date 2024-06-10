@@ -47,8 +47,9 @@ describe('app selectors unit tests', () => {
         simpleKeys.unitUrl,
         simpleKeys.blockTitle,
         simpleKeys.studioView,
-        simpleKeys.assets,
+        simpleKeys.images,
         simpleKeys.videos,
+        simpleKeys.showRawEditor,
       ].map(testSimpleSelector);
     });
   });

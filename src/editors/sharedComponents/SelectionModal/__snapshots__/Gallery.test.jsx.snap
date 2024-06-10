@@ -43,6 +43,8 @@ exports[`TextEditor Image Gallery component component snapshot: loaded but no im
   }
 >
   <Gallery
+    allowPagination={false}
+    assetCount={0}
     displayList={
       Array [
         Object {
@@ -62,12 +64,15 @@ exports[`TextEditor Image Gallery component component snapshot: loaded but no im
         "id": "emptyGalleryMsg",
       }
     }
+    fetchNextPage={null}
     galleryIsEmpty={true}
     height="375px"
     highlighted="props.highlighted"
     isLoaded={true}
+    isSearching={false}
     onHighlightChange={[MockFunction props.onHighlightChange]}
     searchIsEmpty={false}
+    setIsSearching={[MockFunction]}
     show={true}
     showIdsOnCards={false}
   />
@@ -117,6 +122,8 @@ exports[`TextEditor Image Gallery component component snapshot: loaded but searc
   }
 >
   <Gallery
+    allowPagination={false}
+    assetCount={0}
     displayList={
       Array [
         Object {
@@ -136,12 +143,15 @@ exports[`TextEditor Image Gallery component component snapshot: loaded but searc
         "id": "emptyGalleryMsg",
       }
     }
+    fetchNextPage={null}
     galleryIsEmpty={false}
     height="375px"
     highlighted="props.highlighted"
     isLoaded={true}
+    isSearching={false}
     onHighlightChange={[MockFunction props.onHighlightChange]}
     searchIsEmpty={true}
+    setIsSearching={[MockFunction]}
     show={true}
     showIdsOnCards={false}
   />
@@ -191,6 +201,8 @@ exports[`TextEditor Image Gallery component component snapshot: loaded, show gal
   }
 >
   <Gallery
+    allowPagination={false}
+    assetCount={0}
     displayList={
       Array [
         Object {
@@ -210,12 +222,15 @@ exports[`TextEditor Image Gallery component component snapshot: loaded, show gal
         "id": "emptyGalleryMsg",
       }
     }
+    fetchNextPage={null}
     galleryIsEmpty={false}
     height="375px"
     highlighted="props.highlighted"
     isLoaded={true}
+    isSearching={false}
     onHighlightChange={[MockFunction props.onHighlightChange]}
     searchIsEmpty={false}
+    setIsSearching={[MockFunction]}
     show={true}
     showIdsOnCards={false}
   />
@@ -265,6 +280,8 @@ exports[`TextEditor Image Gallery component component snapshot: not loaded, show
   }
 >
   <Gallery
+    allowPagination={false}
+    assetCount={0}
     displayList={
       Array [
         Object {
@@ -284,12 +301,15 @@ exports[`TextEditor Image Gallery component component snapshot: not loaded, show
         "id": "emptyGalleryMsg",
       }
     }
+    fetchNextPage={null}
     galleryIsEmpty={false}
     height="375px"
     highlighted="props.highlighted"
     isLoaded={false}
+    isSearching={false}
     onHighlightChange={[MockFunction props.onHighlightChange]}
     searchIsEmpty={false}
+    setIsSearching={[MockFunction]}
     show={true}
     showIdsOnCards={false}
   />

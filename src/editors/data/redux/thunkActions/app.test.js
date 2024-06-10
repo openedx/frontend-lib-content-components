@@ -103,7 +103,7 @@ describe('app thunkActions', () => {
   });
   describe('fetchImages', () => {
     beforeEach(() => {
-      thunkActions.fetchImages()(dispatch);
+      thunkActions.fetchImages({ pageNumber: 0 })(dispatch);
       [[dispatchedAction]] = dispatch.mock.calls;
     });
     it('dispatches fetchImages action', () => {
@@ -111,8 +111,8 @@ describe('app thunkActions', () => {
     });
     it('dispatches actions.app.setImages on success', () => {
       dispatch.mockClear();
-      dispatchedAction.fetchImages.onSuccess(testValue);
-      expect(dispatch).toHaveBeenCalledWith(actions.app.setImages(testValue));
+      dispatchedAction.fetchImages.onSuccess({ images: {}, imageCount: 0 });
+      expect(dispatch).toHaveBeenCalledWith(actions.app.setImages({ images: {}, imageCount: 0 }));
     });
     it('dispatches failRequest with fetchImages requestKey on failure', () => {
       dispatch.mockClear();
@@ -167,7 +167,7 @@ describe('app thunkActions', () => {
       }));
     });
   });
-  describe('initialize', () => {
+  describe('initialize without block type defined', () => {
     it('dispatches actions.app.initialize, and then fetches both block and unit', () => {
       const {
         fetchBlock,
@@ -188,9 +188,112 @@ describe('app thunkActions', () => {
         [actions.app.initialize(testValue)],
         [thunkActions.fetchBlock()],
         [thunkActions.fetchUnit()],
-        [thunkActions.fetchStudioView()],
+      ]);
+      thunkActions.fetchBlock = fetchBlock;
+      thunkActions.fetchUnit = fetchUnit;
+      thunkActions.fetchStudioView = fetchStudioView;
+      thunkActions.fetchImages = fetchImages;
+      thunkActions.fetchVideos = fetchVideos;
+      thunkActions.fetchCourseDetails = fetchCourseDetails;
+    });
+  });
+  describe('initialize with block type html', () => {
+    it('dispatches actions.app.initialize, and then fetches both block and unit', () => {
+      const {
+        fetchBlock,
+        fetchUnit,
+        fetchStudioView,
+        fetchImages,
+        fetchVideos,
+        fetchCourseDetails,
+      } = thunkActions;
+      thunkActions.fetchBlock = () => 'fetchBlock';
+      thunkActions.fetchUnit = () => 'fetchUnit';
+      thunkActions.fetchStudioView = () => 'fetchStudioView';
+      thunkActions.fetchImages = () => 'fetchImages';
+      thunkActions.fetchVideos = () => 'fetchVideos';
+      thunkActions.fetchCourseDetails = () => 'fetchCourseDetails';
+      const data = {
+        ...testValue,
+        blockType: 'html',
+      };
+      thunkActions.initialize(data)(dispatch);
+      expect(dispatch.mock.calls).toEqual([
+        [actions.app.initialize(data)],
+        [thunkActions.fetchBlock()],
+        [thunkActions.fetchUnit()],
         [thunkActions.fetchImages()],
+      ]);
+      thunkActions.fetchBlock = fetchBlock;
+      thunkActions.fetchUnit = fetchUnit;
+      thunkActions.fetchStudioView = fetchStudioView;
+      thunkActions.fetchImages = fetchImages;
+      thunkActions.fetchVideos = fetchVideos;
+      thunkActions.fetchCourseDetails = fetchCourseDetails;
+    });
+  });
+  describe('initialize with block type problem', () => {
+    it('dispatches actions.app.initialize, and then fetches both block and unit', () => {
+      const {
+        fetchBlock,
+        fetchUnit,
+        fetchStudioView,
+        fetchImages,
+        fetchVideos,
+        fetchCourseDetails,
+      } = thunkActions;
+      thunkActions.fetchBlock = () => 'fetchBlock';
+      thunkActions.fetchUnit = () => 'fetchUnit';
+      thunkActions.fetchStudioView = () => 'fetchStudioView';
+      thunkActions.fetchImages = () => 'fetchImages';
+      thunkActions.fetchVideos = () => 'fetchVideos';
+      thunkActions.fetchCourseDetails = () => 'fetchCourseDetails';
+      const data = {
+        ...testValue,
+        blockType: 'problem',
+      };
+      thunkActions.initialize(data)(dispatch);
+      expect(dispatch.mock.calls).toEqual([
+        [actions.app.initialize(data)],
+        [thunkActions.fetchBlock()],
+        [thunkActions.fetchUnit()],
+        [thunkActions.fetchImages()],
+      ]);
+      thunkActions.fetchBlock = fetchBlock;
+      thunkActions.fetchUnit = fetchUnit;
+      thunkActions.fetchStudioView = fetchStudioView;
+      thunkActions.fetchImages = fetchImages;
+      thunkActions.fetchVideos = fetchVideos;
+      thunkActions.fetchCourseDetails = fetchCourseDetails;
+    });
+  });
+  describe('initialize with block type video', () => {
+    it('dispatches actions.app.initialize, and then fetches both block and unit', () => {
+      const {
+        fetchBlock,
+        fetchUnit,
+        fetchStudioView,
+        fetchImages,
+        fetchVideos,
+        fetchCourseDetails,
+      } = thunkActions;
+      thunkActions.fetchBlock = () => 'fetchBlock';
+      thunkActions.fetchUnit = () => 'fetchUnit';
+      thunkActions.fetchStudioView = () => 'fetchStudioView';
+      thunkActions.fetchImages = () => 'fetchImages';
+      thunkActions.fetchVideos = () => 'fetchVideos';
+      thunkActions.fetchCourseDetails = () => 'fetchCourseDetails';
+      const data = {
+        ...testValue,
+        blockType: 'video',
+      };
+      thunkActions.initialize(data)(dispatch);
+      expect(dispatch.mock.calls).toEqual([
+        [actions.app.initialize(data)],
+        [thunkActions.fetchBlock()],
+        [thunkActions.fetchUnit()],
         [thunkActions.fetchVideos()],
+        [thunkActions.fetchStudioView()],
         [thunkActions.fetchCourseDetails()],
       ]);
       thunkActions.fetchBlock = fetchBlock;

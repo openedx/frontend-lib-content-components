@@ -7,7 +7,10 @@ import { RequestKeys } from '../../constants/requests';
 
 export const fetchBlock = () => (dispatch) => {
   dispatch(requests.fetchBlock({
-    onSuccess: (response) => dispatch(actions.app.setBlockValue(response)),
+    onSuccess: (response) => {
+      dispatch(actions.app.setBlockValue(response));
+      dispatch(actions.app.setShowRawEditor(response));
+    },
     onFailure: (error) => dispatch(actions.requests.failRequest({
       requestKey: RequestKeys.fetchBlock,
       error,
