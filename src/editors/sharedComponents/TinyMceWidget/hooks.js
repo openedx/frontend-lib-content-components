@@ -87,7 +87,7 @@ export const replaceStaticWithAsset = ({
     const staticName = assetSrc.substring(8);
     const assetName = assetSrc.replace(/\/assets\/.+[^/]\//g, '');
     const displayName = isStatic ? staticName : assetName;
-    const isCorrectAssetFormat = assetSrc.match(/\/asset-v1:\S+[+]\S+[@]\S+[+]\S+[@]/g)?.length > 1;
+    const isCorrectAssetFormat = assetSrc.match(/\/asset-v1:\S+[+]\S+[@]\S+[+]\S+[@]/g)?.length >= 1;
     // assets in expandable text areas so not support relative urls so all assets must have the lms
     // endpoint prepended to the relative url
     if (editorType === 'expandable') {
