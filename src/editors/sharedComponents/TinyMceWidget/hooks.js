@@ -5,6 +5,7 @@ import {
   useEffect,
 } from 'react';
 import { a11ycheckerCss } from 'frontend-components-tinymce-advanced-plugins';
+import { isEmpty } from 'lodash-es';
 import tinyMCEStyles from '../../data/constants/tinyMCEStyles';
 import { StrictDict } from '../../utils';
 import pluginConfig from './pluginConfig';
@@ -79,6 +80,9 @@ export const replaceStaticWithAsset = ({
   const srcs = content.split(/(src="|src=&quot;|href="|href=&quot)/g).filter(
     src => src.startsWith('/static') || src.startsWith('/asset'),
   );
+  if (isEmpty(srcs)) {
+    return initialContent;
+  }
   srcs.forEach(src => {
     const currentContent = content;
     let staticFullUrl;
