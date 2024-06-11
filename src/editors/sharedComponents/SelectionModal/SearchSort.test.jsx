@@ -38,7 +38,6 @@ describe('SearchSort component', () => {
     filterKeys,
     filterMessages,
     showSwitch: true,
-    setIsSearching: jest.fn(),
   };
 
   function getComponent(overrideProps = {}) {

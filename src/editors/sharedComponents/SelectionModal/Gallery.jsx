@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 import { Spinner } from '@openedx/paragon';
@@ -11,7 +11,7 @@ import {
 import SelectableBox from '../SelectableBox';
 import messages from './messages';
 import GalleryCard from './GalleryCard';
-import GalleryPagination from './GalleryPagination';
+import GalleryLoadMoreButton from './GalleryLoadMoreButton';
 
 export const Gallery = ({
   galleryIsEmpty,
@@ -24,32 +24,13 @@ export const Gallery = ({
   height,
   isLoaded,
   thumbnailFallback,
-  allowPagination,
+  allowLazyLoad,
   fetchNextPage,
   assetCount,
-  isSearching,
 }) => {
   const intl = useIntl();
-  const [currentPageList, setCurrentPageList] = useState(displayList);
-  const [currentPage, setCurrentPage] = useState(1);
 
-  useEffect(() => {
-    if (allowPagination) {
-      if (displayList.length <= 50 && isSearching) {
-        setCurrentPage(1);
-        setCurrentPageList(displayList);
-      } else {
-        const start = 50 * (currentPage - 1);
-        const end = 50 * currentPage;
-        const newPageList = displayList.slice(start, end);
-        setCurrentPageList(newPageList);
-      }
-    } else {
-      setCurrentPageList(displayList);
-    }
-  }, [displayList]);
-
-  if (!isLoaded) {
+  if (!isLoaded && !allowLazyLoad) {
     return (
       <div style={{
         position: 'absolute',
@@ -89,7 +70,7 @@ export const Gallery = ({
         type="radio"
         value={highlighted}
       >
-        { currentPageList.map(asset => (
+        {displayList.map(asset => (
           <GalleryCard
             key={asset.id}
             asset={asset}
@@ -98,15 +79,13 @@ export const Gallery = ({
           />
         )) }
       </SelectableBox.Set>
-      {allowPagination && (
-        <GalleryPagination
+      {allowLazyLoad && (
+        <GalleryLoadMoreButton
           {...{
             fetchNextPage,
             assetCount,
             displayListLength: displayList.length,
-            currentPage,
-            setCurrentPage,
-            isSearching,
+            isLoaded,
           }}
         />
       )}
@@ -120,7 +99,7 @@ Gallery.defaultProps = {
   height: '375px',
   show: true,
   thumbnailFallback: undefined,
-  allowPagination: false,
+  allowLazyLoad: false,
   fetchNextPage: null,
   assetCount: 0,
 };
@@ -136,10 +115,9 @@ Gallery.propTypes = {
   showIdsOnCards: PropTypes.bool,
   height: PropTypes.string,
   thumbnailFallback: PropTypes.element,
-  allowPagination: PropTypes.bool,
+  allowLazyLoad: PropTypes.bool,
   fetchNextPage: PropTypes.func,
   assetCount: PropTypes.number,
-  isSearching: PropTypes.bool.isRequired,
 };
 
 export default Gallery;

@@ -30,9 +30,7 @@ describe('TextEditor Image Gallery component', () => {
       isLoaded: true,
       fetchNextPage: null,
       assetCount: 0,
-      allowPagination: false,
-      isSearching: false,
-      setIsSearching: jest.fn(),
+      allowLazyLoad: false,
     };
     const shallowWithIntl = (component) => shallow(<IntlProvider locale="en">{component}</IntlProvider>);
     test('snapshot: not loaded, show spinner', () => {

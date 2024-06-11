@@ -80,7 +80,7 @@ export const imgListHooks = ({
       highlighted,
       onHighlightChange: (e) => setHighlighted(e.target.value),
       emptyGalleryLabel: messages.emptyGalleryLabel,
-      allowPagination: true,
+      allowLazyLoad: true,
       fetchNextPage: ({ pageNumber }) => dispatch(thunkActions.app.fetchImages({ pageNumber })),
       assetCount: imageCount,
     },
