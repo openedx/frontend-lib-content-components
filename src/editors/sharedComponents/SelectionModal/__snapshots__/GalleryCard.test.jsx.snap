@@ -18,7 +18,7 @@ exports[`GalleryCard component snapshot with duration badge 1`] = `
     <div
       className="position-relative"
       style={
-        Object {
+        {
           "height": "100px",
           "width": "200px",
         }
@@ -27,7 +27,7 @@ exports[`GalleryCard component snapshot with duration badge 1`] = `
       <Image
         src="props.img.externalUrl"
         style={
-          Object {
+          {
             "border": "none",
             "height": "100px",
             "width": "200px",
@@ -36,7 +36,7 @@ exports[`GalleryCard component snapshot with duration badge 1`] = `
       />
       <Badge
         style={
-          Object {
+          {
             "backgroundColor": "black",
             "bottom": "6px",
             "position": "absolute",
@@ -51,7 +51,7 @@ exports[`GalleryCard component snapshot with duration badge 1`] = `
     <div
       className="card-text px-3 py-2"
       style={
-        Object {
+        {
           "marginTop": "10px",
         }
       }
@@ -71,7 +71,7 @@ exports[`GalleryCard component snapshot with duration badge 1`] = `
       <p
         className="text-gray-500"
         style={
-          Object {
+          {
             "fontSize": "11px",
           }
         }
@@ -81,7 +81,7 @@ exports[`GalleryCard component snapshot with duration badge 1`] = `
           description="File date-added string"
           id="authoring.selectionmodal.addedDate.label"
           values={
-            Object {
+            {
               "date": <FormattedDate
                 value={12345}
               />,
@@ -115,7 +115,7 @@ exports[`GalleryCard component snapshot with duration transcripts 1`] = `
     <div
       className="position-relative"
       style={
-        Object {
+        {
           "height": "100px",
           "width": "200px",
         }
@@ -124,7 +124,7 @@ exports[`GalleryCard component snapshot with duration transcripts 1`] = `
       <Image
         src="props.img.externalUrl"
         style={
-          Object {
+          {
             "border": "none",
             "height": "100px",
             "width": "200px",
@@ -135,7 +135,7 @@ exports[`GalleryCard component snapshot with duration transcripts 1`] = `
     <div
       className="card-text px-3 py-2"
       style={
-        Object {
+        {
           "marginTop": "10px",
         }
       }
@@ -154,14 +154,14 @@ exports[`GalleryCard component snapshot with duration transcripts 1`] = `
       </h3>
       <div
         style={
-          Object {
+          {
             "margin": "0 0 5px 0",
           }
         }
       >
         <injectIntl(ShimmedIntlComponent)
           transcripts={
-            Array [
+            [
               "es",
             ]
           }
@@ -170,7 +170,7 @@ exports[`GalleryCard component snapshot with duration transcripts 1`] = `
       <p
         className="text-gray-500"
         style={
-          Object {
+          {
             "fontSize": "11px",
           }
         }
@@ -180,7 +180,7 @@ exports[`GalleryCard component snapshot with duration transcripts 1`] = `
           description="File date-added string"
           id="authoring.selectionmodal.addedDate.label"
           values={
-            Object {
+            {
               "date": <FormattedDate
                 value={12345}
               />,
@@ -214,7 +214,7 @@ exports[`GalleryCard component snapshot with status badge 1`] = `
     <div
       className="position-relative"
       style={
-        Object {
+        {
           "height": "100px",
           "width": "200px",
         }
@@ -223,7 +223,7 @@ exports[`GalleryCard component snapshot with status badge 1`] = `
       <Image
         src="props.img.externalUrl"
         style={
-          Object {
+          {
             "border": "none",
             "height": "100px",
             "width": "200px",
@@ -234,7 +234,7 @@ exports[`GalleryCard component snapshot with status badge 1`] = `
     <div
       className="card-text px-3 py-2"
       style={
-        Object {
+        {
           "marginTop": "10px",
         }
       }
@@ -254,7 +254,7 @@ exports[`GalleryCard component snapshot with status badge 1`] = `
       <p
         className="text-gray-500"
         style={
-          Object {
+          {
             "fontSize": "11px",
           }
         }
@@ -264,7 +264,7 @@ exports[`GalleryCard component snapshot with status badge 1`] = `
           description="File date-added string"
           id="authoring.selectionmodal.addedDate.label"
           values={
-            Object {
+            {
               "date": <FormattedDate
                 value={12345}
               />,
@@ -298,7 +298,7 @@ exports[`GalleryCard component snapshot with thumbnail fallback and load error 1
     <div
       className="position-relative"
       style={
-        Object {
+        {
           "height": "100px",
           "width": "200px",
         }
@@ -308,7 +308,7 @@ exports[`GalleryCard component snapshot with thumbnail fallback and load error 1
         onError={[Function]}
         src="props.img.externalUrl"
         style={
-          Object {
+          {
             "border": "none",
             "height": "100px",
             "width": "200px",
@@ -319,7 +319,7 @@ exports[`GalleryCard component snapshot with thumbnail fallback and load error 1
     <div
       className="card-text px-3 py-2"
       style={
-        Object {
+        {
           "marginTop": "10px",
         }
       }
@@ -339,7 +339,7 @@ exports[`GalleryCard component snapshot with thumbnail fallback and load error 1
       <p
         className="text-gray-500"
         style={
-          Object {
+          {
             "fontSize": "11px",
           }
         }
@@ -349,7 +349,7 @@ exports[`GalleryCard component snapshot with thumbnail fallback and load error 1
           description="File date-added string"
           id="authoring.selectionmodal.addedDate.label"
           values={
-            Object {
+            {
               "date": <FormattedDate
                 value={12345}
               />,
@@ -383,7 +383,7 @@ exports[`GalleryCard component snapshot with thumbnail fallback and no error 1`]
     <div
       className="position-relative"
       style={
-        Object {
+        {
           "height": "100px",
           "width": "200px",
         }
@@ -393,7 +393,7 @@ exports[`GalleryCard component snapshot with thumbnail fallback and no error 1`]
         onError={[Function]}
         src="props.img.externalUrl"
         style={
-          Object {
+          {
             "border": "none",
             "height": "100px",
             "width": "200px",
@@ -404,7 +404,7 @@ exports[`GalleryCard component snapshot with thumbnail fallback and no error 1`]
     <div
       className="card-text px-3 py-2"
       style={
-        Object {
+        {
           "marginTop": "10px",
         }
       }
@@ -424,7 +424,7 @@ exports[`GalleryCard component snapshot with thumbnail fallback and no error 1`]
       <p
         className="text-gray-500"
         style={
-          Object {
+          {
             "fontSize": "11px",
           }
         }
@@ -434,7 +434,7 @@ exports[`GalleryCard component snapshot with thumbnail fallback and no error 1`]
           description="File date-added string"
           id="authoring.selectionmodal.addedDate.label"
           values={
-            Object {
+            {
               "date": <FormattedDate
                 value={12345}
               />,
@@ -468,7 +468,7 @@ exports[`GalleryCard component snapshot: dateAdded=12345 1`] = `
     <div
       className="position-relative"
       style={
-        Object {
+        {
           "height": "100px",
           "width": "200px",
         }
@@ -477,7 +477,7 @@ exports[`GalleryCard component snapshot: dateAdded=12345 1`] = `
       <Image
         src="props.img.externalUrl"
         style={
-          Object {
+          {
             "border": "none",
             "height": "100px",
             "width": "200px",
@@ -488,7 +488,7 @@ exports[`GalleryCard component snapshot: dateAdded=12345 1`] = `
     <div
       className="card-text px-3 py-2"
       style={
-        Object {
+        {
           "marginTop": "10px",
         }
       }
@@ -508,7 +508,7 @@ exports[`GalleryCard component snapshot: dateAdded=12345 1`] = `
       <p
         className="text-gray-500"
         style={
-          Object {
+          {
             "fontSize": "11px",
           }
         }
@@ -518,7 +518,7 @@ exports[`GalleryCard component snapshot: dateAdded=12345 1`] = `
           description="File date-added string"
           id="authoring.selectionmodal.addedDate.label"
           values={
-            Object {
+            {
               "date": <FormattedDate
                 value={12345}
               />,

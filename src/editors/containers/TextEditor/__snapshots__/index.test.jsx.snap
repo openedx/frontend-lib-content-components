@@ -33,8 +33,8 @@ exports[`TextEditor snapshots block failed to load, Toast is shown 1`] = `
     <[object Object]
       editorContentHtml="eDiTablE Text"
       editorRef={
-        Object {
-          "current": Object {
+        {
+          "current": {
             "value": "something",
           },
         }
@@ -81,15 +81,15 @@ exports[`TextEditor snapshots loaded, raw editor 1`] = `
     </Toast>
     <RawEditor
       content={
-        Object {
-          "data": Object {
+        {
+          "data": {
             "data": "eDiTablE Text",
           },
         }
       }
       editorRef={
-        Object {
-          "current": Object {
+        {
+          "current": {
             "value": "something",
           },
         }
@@ -176,8 +176,8 @@ exports[`TextEditor snapshots renders as expected with default behavior 1`] = `
     <[object Object]
       editorContentHtml="eDiTablE Text"
       editorRef={
-        Object {
-          "current": Object {
+        {
+          "current": {
             "value": "something",
           },
         }
