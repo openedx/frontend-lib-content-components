@@ -31,6 +31,7 @@ jest.mock('../../data/redux', () => ({
       studioEndpointUrl: jest.fn(state => ({ studioEndpointUrl: state })),
       isLibrary: jest.fn(state => ({ isLibrary: state })),
       assets: jest.fn(state => ({ assets: state })),
+      learningContextId: jest.fn(state => ({ learningContext: state })),
     },
   },
 }));
@@ -52,6 +53,12 @@ jest.mock('./hooks', () => ({
     setSelection: jest.fn().mockName('hooks.selectedImage.setSelection'),
     clearSelection: jest.fn().mockName('hooks.selectedImage.clearSelection'),
   })),
+  insertLinkModalToggle: jest.fn(() => ({
+    isInsertLinkOpen: true,
+    openInsertLinkModal: jest.fn().mockName('openModal'),
+    closeInsertLinkModal: jest.fn().mockName('closeModal'),
+  })),
+  useTranslations: jest.fn(() => ({})),
   filterAssets: jest.fn(() => [{ staTICUrl: staticUrl }]),
   useImages: jest.fn(() => ({ imagesRef: { current: [{ externalUrl: staticUrl }] } })),
 }));

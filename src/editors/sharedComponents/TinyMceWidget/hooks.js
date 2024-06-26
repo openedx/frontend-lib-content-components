@@ -5,6 +5,7 @@ import {
   useEffect,
 } from 'react';
 import { a11ycheckerCss } from 'frontend-components-tinymce-advanced-plugins';
+import { useIntl } from '@edx/frontend-platform/i18n';
 import tinyMCEStyles from '../../data/constants/tinyMCEStyles';
 import { StrictDict } from '../../utils';
 import pluginConfig from './pluginConfig';
@@ -20,6 +21,8 @@ export const state = StrictDict({
   imageSelection: (val) => useState(val),
   // eslint-disable-next-line react-hooks/rules-of-hooks
   refReady: (val) => useState(val),
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  isInsertLinkModalOpen: (val) => useState(val),
 });
 
 export const addImagesAndDimensionsToRef = ({ imagesRef, assets, editorContentHtml }) => {
@@ -131,6 +134,8 @@ export const setupCustomBehavior = ({
   updateContent,
   openImgModal,
   openSourceCodeModal,
+  openInsertLinkModal,
+  translations,
   editorType,
   imageUrls,
   images,
@@ -151,6 +156,28 @@ export const setupCustomBehavior = ({
       editor, images, setImage, openImgModal,
     }),
   });
+
+  // insert link button
+  /* addButton only has setDisabled/isDisabled in api while
+    addToggleButton has setDisabled/isDisabled/setActive/isActive
+    addButton doc: https://www.tiny.cloud/docs/ui-components/typesoftoolbarbuttons/#basicbutton
+    addToggleButton: doc: https://www.tiny.cloud/docs/ui-components/typesoftoolbarbuttons/#togglebutton
+  */
+  editor.ui.registry.addToggleButton(tinyMCE.buttons.insertLink, {
+    icon: 'new-tab',
+    tooltip: translations?.insertLinkTooltipTitle ?? '',
+    onAction: openInsertLinkModal,
+    onSetup(api) {
+      editor.on('SelectionChange', () => {
+        const node = editor.selection.getNode();
+        const isLink = node.nodeName === 'A';
+        const hasTextSelected = editor.selection.getContent().length > 0;
+        api.setActive(isLink);
+        api.setDisabled(!isLink && !hasTextSelected);
+      });
+    },
+  });
+
   // overriding the code plugin's icon with 'HTML' text
   editor.ui.registry.addButton(tinyMCE.buttons.code, {
     text: 'HTML',
@@ -225,6 +252,8 @@ export const editorConfig = ({
   initializeEditor,
   openImgModal,
   openSourceCodeModal,
+  openInsertLinkModal,
+  translations = {},
   setSelection,
   updateContent,
   content,
@@ -263,6 +292,8 @@ export const editorConfig = ({
         updateContent,
         openImgModal,
         openSourceCodeModal,
+        openInsertLinkModal,
+        translations,
         lmsEndpointUrl,
         setImage: setSelection,
         content,
@@ -301,6 +332,29 @@ export const imgModalToggle = () => {
     openImgModal: () => setIsOpen(true),
     closeImgModal: () => setIsOpen(false),
   };
+};
+
+export const insertLinkModalToggle = () => {
+  const [isInsertLinkOpen, setIsInsertLinkOpen] = module.state.isInsertLinkModalOpen(false);
+  return {
+    isInsertLinkOpen,
+    openInsertLinkModal: () => setIsInsertLinkOpen(true),
+    closeInsertLinkModal: () => setIsInsertLinkOpen(false),
+  };
+};
+
+export const useTranslations = (messages = {}) => {
+  const intl = useIntl();
+  const messagesKeys = Object.keys(messages);
+  const translationsFormatted = messagesKeys.reduce(
+    (prevMessages, messageKey) => ({
+      ...prevMessages,
+      [messageKey]: intl.formatMessage(messages[messageKey]),
+    }),
+    {},
+  );
+
+  return translationsFormatted;
 };
 
 export const sourceCodeModalToggle = (editorRef) => {

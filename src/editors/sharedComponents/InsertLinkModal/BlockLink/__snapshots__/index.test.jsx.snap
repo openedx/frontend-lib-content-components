@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BlockLink Component snapshot 1`] = `
+<div>
+  <div
+    class="link-container d-flex row p-4 rounded border border-gray-400 mx-4 mt-3"
+  >
+    <div
+      class="col-10"
+    >
+      <p
+        class="text-left"
+      />
+      <p
+        class="h2 w-20 title"
+      >
+        Some Path
+      </p>
+    </div>
+    <div
+      class="col-2"
+    >
+      <button
+        class="d-flex justify-content-center align-items-center"
+        data-testid="close-link-button"
+        variant="tertiary"
+      >
+         
+      </button>
+    </div>
+  </div>
+</div>
+`;

@@ -13,7 +13,9 @@ import store from '../../data/store';
 import { selectors } from '../../data/redux';
 import ImageUploadModal from '../ImageUploadModal';
 import SourceCodeModal from '../SourceCodeModal';
+import InsertLinkModal from '../InsertLinkModal';
 import * as hooks from './hooks';
+import messages from './messages';
 import './customTinyMcePlugins/embedIframePlugin';
 
 const editorConfigDefaultProps = {
@@ -39,6 +41,7 @@ export const TinyMceWidget = ({
   editorRef,
   disabled,
   id,
+  courseId,
   editorContentHtml, // editorContent in html form
   // redux
   assets,
@@ -48,8 +51,10 @@ export const TinyMceWidget = ({
   onChange,
   ...editorConfig
 }) => {
+  const translations = hooks.useTranslations(messages);
   const { isImgOpen, openImgModal, closeImgModal } = hooks.imgModalToggle();
   const { isSourceCodeOpen, openSourceCodeModal, closeSourceCodeModal } = hooks.sourceCodeModalToggle(editorRef);
+  const { isInsertLinkOpen, openInsertLinkModal, closeInsertLinkModal } = hooks.insertLinkModalToggle();
   const { imagesRef } = hooks.useImages({ assets, editorContentHtml });
 
   const imageSelection = hooks.selectedImage(null);
@@ -67,6 +72,16 @@ export const TinyMceWidget = ({
           {...imageSelection}
         />
       )}
+
+      {isInsertLinkOpen && (
+        <InsertLinkModal
+          isOpen={isInsertLinkOpen}
+          onClose={closeInsertLinkModal}
+          courseId={courseId}
+          editorRef={editorRef}
+          lmsEndpointUrl={lmsEndpointUrl}
+        />
+      )}
       {editorType === 'text' ? (
         <SourceCodeModal
           isOpen={isSourceCodeOpen}
@@ -78,21 +93,21 @@ export const TinyMceWidget = ({
         id={id}
         disabled={disabled}
         onEditorChange={onChange}
-        {
-          ...hooks.editorConfig({
-            openImgModal,
-            openSourceCodeModal,
-            editorType,
-            editorRef,
-            isLibrary,
-            lmsEndpointUrl,
-            studioEndpointUrl,
-            images: imagesRef,
-            editorContentHtml,
-            ...imageSelection,
-            ...editorConfig,
-          })
-        }
+        {...hooks.editorConfig({
+          openImgModal,
+          openSourceCodeModal,
+          openInsertLinkModal,
+          translations,
+          editorType,
+          editorRef,
+          isLibrary,
+          lmsEndpointUrl,
+          studioEndpointUrl,
+          images: imagesRef,
+          editorContentHtml,
+          ...imageSelection,
+          ...editorConfig,
+        })}
       />
     </Provider>
   );
@@ -116,6 +131,7 @@ TinyMceWidget.propTypes = {
   isLibrary: PropTypes.bool,
   assets: PropTypes.shape({}),
   editorRef: PropTypes.shape({}),
+  courseId: PropTypes.string,
   lmsEndpointUrl: PropTypes.string,
   studioEndpointUrl: PropTypes.string,
   id: PropTypes.string,
@@ -131,6 +147,7 @@ export const mapStateToProps = (state) => ({
   lmsEndpointUrl: selectors.app.lmsEndpointUrl(state),
   studioEndpointUrl: selectors.app.studioEndpointUrl(state),
   isLibrary: selectors.app.isLibrary(state),
+  courseId: selectors.app.learningContextId(state),
 });
 
 export default (connect(mapStateToProps)(TinyMceWidget));

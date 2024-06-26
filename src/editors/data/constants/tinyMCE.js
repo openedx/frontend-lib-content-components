@@ -52,6 +52,7 @@ export const buttons = StrictDict({
   undo: 'undo',
   underline: 'underline',
   a11ycheck: 'a11ycheck',
+  insertLink: 'insertlink',
   embediframe: 'embediframe',
 });
 
