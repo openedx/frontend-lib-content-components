@@ -17,7 +17,7 @@ export const ExplanationWidget = ({
 }) => {
   const { editorRef, refReady, setEditorRef } = prepareEditorRef();
   const solutionContent = replaceStaticWithAsset({
-    initialContent: settings?.solutionExplanation,
+    initialContent: settings?.solutionExplanation || '',
     learningContextId,
   });
   if (!refReady) { return null; }
