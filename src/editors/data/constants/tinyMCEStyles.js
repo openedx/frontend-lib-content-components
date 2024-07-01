@@ -197,9 +197,6 @@ const getStyles = () => (
       color: #0075b4;
       text-decoration: none;
   }
-  .mce-content-body img {
-      max-width: 100%;
-  }
   .mce-content-body pre {
     margin: 1em 0;
     color: #3c3c3c;
@@ -227,6 +224,21 @@ const getStyles = () => (
   }
   .mce-content-body[dir=rtl][data-mce-placeholder]:not(.mce-visualblocks)::before {
     margin: 0;
+  }
+  .editProblemView-contentColumn {
+    max-width: calc(100% - 320px);
+  }
+  .answer-option .ml-1.flex-grow-1 {
+    max-width: 90%;
+  }
+  .answer-option .mce-content-body {
+    overflow: auto;
+  }
+  .settingsOption .container-fluid {
+    max-width: calc(100% - 50px);
+  }
+  .settingsOption .mce-content-body {
+    overflow: auto;
   }`
 );
 
