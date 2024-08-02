@@ -101,6 +101,19 @@ It will also configure the editor to be viewable in the gallery view. Adding the
 - To make this easier, we provide example files for `jest.config.js` and `setupTest.js` that are known to work.
 You can find them in the example/ folder.
 
+## Installing into Course Authoring MFE in dev mode
+
+This is tricky to do correctly, but something like this should work, allowing
+you to edit this code and see it reflected immediately in the MFE. Run these
+commands, starting from the course authoring MFE's working directory:
+
+```
+npm install
+rm -rf node_modules/@edx/frontend-lib-content-components && ln -s "$(realpath ../frontend-lib-content-components)" node_modules/@edx/frontend-lib-content-components
+cd ../frontend-lib-content-components
+rm -rf node_modules && ln -s ../frontend-app-course-authoring/node_modules node_modules
+```
+
 ## License
 
 The code in this repository is licensed under the AGPLv3 unless otherwise
