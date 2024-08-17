@@ -1,5 +1,14 @@
 # frontend-lib-content-components
 
+## 🚧 Being Moved 🚧
+
+
+We're in the process of moving this repository into `frontend-app-course-authoring`.
+
+
+Please see https://github.com/openedx/frontend-app-course-authoring/pull/1208
+
+
 # Purpose
 A library of high-level components for content handling (viewing, editing, etc. of HTML, video, problems, etc.), to be shared by multiple MFEs.
 
