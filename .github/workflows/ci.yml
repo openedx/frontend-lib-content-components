@@ -3,17 +3,19 @@ on: [push, pull_request]
 jobs:
   build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: [18, 20]
+    continue-on-error: ${{ matrix.node == 20 }}
     steps:
     - name: Checkout
       uses: actions/checkout@v2
       with:
         fetch-depth: 0
-    - name: Setup Nodejs Env
-      run: echo "NODE_VER=`cat .nvmrc`" >> $GITHUB_ENV
     - name: Setup Nodejs
-      uses: dcodeIO/setup-node-nvm@v4
-      with:
-        node-version: "${{ env.NODE_VER }}"
+      uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
     - name: Install dependencies
       run: npm ci
     - name: Validate package-lock.json changes
