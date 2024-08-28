@@ -40,7 +40,7 @@ export const sourceHooks = ({ dispatch, previousVideoId, setAlert }) => ({
 export const fallbackHooks = ({ fallbackVideos, dispatch }) => ({
   addFallbackVideo: () => dispatch(actions.video.updateField({ fallbackVideos: [...fallbackVideos, ''] })),
   deleteFallbackVideo: (videoUrl) => {
-    const updatedFallbackVideos = fallbackVideos.splice(fallbackVideos.indexOf(videoUrl), 1);
+    const updatedFallbackVideos = fallbackVideos.toSpliced(fallbackVideos.indexOf(videoUrl), 1);
     dispatch(actions.video.updateField({ fallbackVideos: updatedFallbackVideos }));
   },
 });
