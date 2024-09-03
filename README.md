@@ -1,12 +1,16 @@
 # frontend-lib-content-components
 
-## 🚧 Being Moved 🚧
+## 🚧 Moved 🚧
 
 
-We're in the process of moving this repository into `frontend-app-course-authoring`.
+The code in this repository has been merged into `frontend-app-course-authoring`.
+
+Please use that repo going forward.
+
+See https://github.com/openedx/frontend-app-course-authoring/pull/1208 for details.
 
 
-Please see https://github.com/openedx/frontend-app-course-authoring/pull/1208
+-------------------------
 
 
 # Purpose
