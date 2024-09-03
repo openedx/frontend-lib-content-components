@@ -2,10 +2,9 @@
 
 ## 🚧 Moved 🚧
 
+This package is **unsupported**. It will receive no further updates.
 
-The code in this repository has been merged into `frontend-app-course-authoring`.
-
-Please use that repo going forward.
+The code in this repository has been merged into [`frontend-app-course-authoring`](https://github.com/openedx/frontend-app-course-authoring). Please use that repo going forward.
 
 See https://github.com/openedx/frontend-app-course-authoring/pull/1208 for details.
 
